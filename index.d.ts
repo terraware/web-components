@@ -15,7 +15,7 @@ export function Autocomplete(props: AutocompleteProps): JSX.Element;
 export function CancelButton(props: CancelButtonProps): JSX.Element;
 export function Checkbox(props: CheckboxProps): JSX.Element;
 export function DatePicker(props: DatePickerProps): JSX.Element;
-export function DialaogCloseButton(props: DialogCloseButtonProps): JSX.Element;
+export function DialogCloseButton(props: DialogCloseButtonProps): JSX.Element;
 export function Divisor(props: DivisorProps): JSX.Element;
 export function Dropdown(props: DropdownProps): JSX.Element;
 export function Note(props: NoteProps): JSX.Element;
