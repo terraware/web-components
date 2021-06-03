@@ -15,7 +15,7 @@ import SummaryBox from './src/components/SummaryBox';
 import TextArea from './src/components/TextArea';
 import TextField from './src/components/TextField';
 import Table from './src/components/table';
-import { descendingComparator, getComparator, Order, stableSort } from './src/components/table/sort';
+import { descendingComparator, getComparator, stableSort } from './src/components/table/sort';
 import { TableColumnType, DetailsProps } from './src/components/table/types';
 import CellRenderer, {
     CellDateRenderer,
@@ -39,13 +39,7 @@ export {
     Table,
     CellRenderer,
     CellDateRenderer,
-    RendererProps,
-    EnhancedTableDetailsRow,
     descendingComparator,
     getComparator,
-    Order,
     stableSort,
-    TableColumnType,
-    DetailsProps,
-    TableRowType    
 };

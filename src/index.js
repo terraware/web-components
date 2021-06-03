@@ -1,17 +1,43 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+/*
+ * Defines the public components
+ */
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
-);
+import Autocomplete from './components/Autocomplete';
+import CancelButton from './components/CancelButton';
+import Checkbox from './components/Checkbox';
+import DatePicker from './components/DatePicker';
+import DialogCloseButton from './components/DialogCloseButton';
+import Divisor from './components/Divisor';
+import Dropdown from './components/Dropdown';
+import Note from './components/Note';
+import RadioButton from './components/RadioButton';
+import SummaryBox from './components/SummaryBox';
+import TextArea from './components/TextArea';
+import TextField from './components/TextField';
+import Table from './components/table';
+import { descendingComparator, getComparator, stableSort } from './components/table/sort';
+import CellRenderer, {
+    CellDateRenderer,
+  } from './components/table/TableCellRenderer';
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+
+export {
+    Autocomplete,
+    CancelButton,
+    Checkbox,
+    DatePicker,
+    DialogCloseButton,
+    Divisor,
+    Dropdown,
+    Note,
+    RadioButton,
+    SummaryBox,
+    TextArea,
+    TextField,
+    Table,
+    CellRenderer,
+    CellDateRenderer,
+    descendingComparator,
+    getComparator,
+    stableSort,
+};
