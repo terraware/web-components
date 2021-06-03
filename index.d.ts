@@ -9,6 +9,22 @@ import { Props as NoteProps } from "./src/components/Note";
 import { Props as RadioButtonProps } from "./src/components/RadioButton";
 import { Props as SummaryBoxProps } from "./src/components/SummaryBox";
 import { Props as TableProps } from "./src/components/table";
+import {
+  descendingComparator,
+  getComparator,
+  Order,
+  stableSort,
+} from "./src/components/table/sort";
+import CellRenderer, {
+  CellDateRenderer,
+  TableRowType,
+} from "./src/components/table/TableCellRenderer";
+import {
+  DetailsProps,
+  EnhancedTableDetailsRow,
+  RendererProps,
+  TableColumnType,
+} from "./src/components/table/types";
 import { Props as TextFieldProps } from "./src/components/TextField";
 
 export function Autocomplete(props: AutocompleteProps): JSX.Element;
@@ -24,3 +40,17 @@ export function SummaryBox(props: SummaryBoxProps): JSX.Element;
 export function TextArea(props: TextFieldProps): JSX.Element;
 export function TextField(props: TextFieldProps): JSX.Element;
 export function Table<T>(props: TableProps<T>): JSX.Element;
+
+export {
+  descendingComparator,
+  getComparator,
+  Order,
+  stableSort,
+  TableColumnType,
+  DetailsProps,
+  CellRenderer,
+  CellDateRenderer,
+  TableRowType,
+  RendererProps,
+  EnhancedTableDetailsRow,
+};
