@@ -1,6 +1,6 @@
-import { TextField as MUITextField } from '@material-ui/core';
-import React from 'react';
-import { Props } from './TextField';
+import { TextField as MUITextField } from "@material-ui/core";
+import React from "react";
+import { Props } from "../../TextField/src";
 
 export default function TextArea(props: Props): JSX.Element {
   const onChange = (
@@ -12,14 +12,14 @@ export default function TextArea(props: Props): JSX.Element {
   return (
     <MUITextField
       id={props.id}
-      value={props.value ?? ''}
+      value={props.value ?? ""}
       onChange={onChange}
       type={props.type}
       label={props.label}
       multiline
       rows={4}
-      variant='outlined'
-      size='small'
+      variant="outlined"
+      size="small"
       fullWidth={true}
       placeholder={props.placeholder}
     />

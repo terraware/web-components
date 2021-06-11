@@ -2,7 +2,7 @@
 import { action } from "@storybook/addon-actions";
 import { Story } from "@storybook/react";
 import React from "react";
-import Dropdown, { Props as DropdownProps } from "../components/Dropdown";
+import Dropdown, { Props as DropdownProps } from "../components/Dropdown/src";
 
 //👇 This default export determines where your story goes in the story list
 export default {

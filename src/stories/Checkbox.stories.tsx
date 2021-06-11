@@ -3,7 +3,7 @@
 import { action } from "@storybook/addon-actions";
 import { Story } from "@storybook/react";
 import React from "react";
-import Checkbox, { Props as CheckboxProps } from "../components/Checkbox";
+import Checkbox, { Props as CheckboxProps } from "../components/Chechbox/src";
 
 //👇 This default export determines where your story goes in the story list
 export default {

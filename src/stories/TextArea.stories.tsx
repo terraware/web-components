@@ -1,8 +1,8 @@
 import { action } from "@storybook/addon-actions";
 import { Story } from "@storybook/react";
 import React from "react";
-import TextArea from "../components/TextArea";
-import { Props as TextAreaProps } from "../components/TextField";
+import TextArea from "../components/TextArea/src";
+import { Props as TextAreaProps } from "../components/TextField/src";
 
 //👇 This default export determines where your story goes in the story list
 export default {

@@ -4,7 +4,7 @@ import { Story } from "@storybook/react";
 import React from "react";
 import CancelButton, {
   Props as CancelButtonProps,
-} from "../components/CancelButton";
+} from "../components/CancelButton/src";
 
 //👇 This default export determines where your story goes in the story list
 export default {

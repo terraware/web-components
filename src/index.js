@@ -2,23 +2,23 @@
  * Defines the public components
  */
 
-import Autocomplete from './components/Autocomplete';
-import CancelButton from './components/CancelButton';
-import Checkbox from './components/Checkbox';
-import DatePicker from './components/DatePicker';
-import DialogCloseButton from './components/DialogCloseButton';
-import Divisor from './components/Divisor';
-import Dropdown from './components/Dropdown';
-import Note from './components/Note';
-import RadioButton from './components/RadioButton';
-import SummaryBox from './components/SummaryBox';
-import TextArea from './components/TextArea';
-import TextField from './components/TextField';
-import Table from './components/table';
-import { descendingComparator, getComparator, stableSort } from './components/table/sort';
+import Autocomplete from './components/Autocomplete/src';
+import CancelButton from './components/CancelButton/src';
+import Checkbox from './components/Chechbox/src';
+import DatePicker from './components/DatePicker/src';
+import DialogCloseButton from './components/DialogCloseButton/src';
+import Divisor from './components/Divisor/src';
+import Dropdown from './components/Dropdown/src';
+import Note from './components/Note/src';
+import RadioButton from './components/RadioButton/src';
+import SummaryBox from './components/SummaryBox/src';
+import TextArea from './components/TextArea/src';
+import TextField from './components/TextField/src';
+import Table from './components/Table/src';
+import { descendingComparator, getComparator, stableSort } from './components/Table/sort';
 import CellRenderer, {
     CellDateRenderer,
-  } from './components/table/TableCellRenderer';
+  } from './components/Table/TableCellRenderer';
 
 
 export {
