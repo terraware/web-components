@@ -19,7 +19,7 @@
     "web-vitals": "^1.0.1"
   },
   "scripts": {
-    "start": "storybook",
+    "start": "start-storybook",
     "build": "build-storybook -c .storybook -o public",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
