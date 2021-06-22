@@ -38,7 +38,7 @@ export default function DatePicker(props: Props): JSX.Element {
 
   React.useEffect(() => {
     moment.locale([window.navigator.language, 'en']);
-  }, [window.navigator.language]);
+  }, []);
 
   return (
     <KeyboardDatePicker
