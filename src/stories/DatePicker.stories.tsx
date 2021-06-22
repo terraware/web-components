@@ -4,7 +4,9 @@ import MomentUtils from "@date-io/moment";
 import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 import { Story } from "@storybook/react";
 import React, { ReactElement } from "react";
-import DatePicker, { Props as DatePickerProps } from "../components/DatePicker";
+import DatePicker, {
+  Props as DatePickerProps,
+} from "../components/DatePicker/src";
 
 //👇 This default export determines where your story goes in the story list
 export default {

@@ -5,7 +5,7 @@ import { Story } from "@storybook/react";
 import React from "react";
 import Autocomplete, {
   Props as AutocompleteProps,
-} from "../components/Autocomplete";
+} from "../components/Autocomplete/src";
 
 //👇 This default export determines where your story goes in the story list
 export default {

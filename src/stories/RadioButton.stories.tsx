@@ -4,7 +4,7 @@ import { Story } from "@storybook/react";
 import React from "react";
 import RadioButton, {
   Props as RadioButtonProps,
-} from "../components/RadioButton";
+} from "../components/RadioButton/src";
 
 //👇 This default export determines where your story goes in the story list
 export default {

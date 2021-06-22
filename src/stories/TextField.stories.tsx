@@ -1,6 +1,8 @@
 import { Story } from "@storybook/react";
 import React from "react";
-import TextField, { Props as TextFieldProps } from "../components/TextField";
+import TextField, {
+  Props as TextFieldProps,
+} from "../components/TextField/src";
 
 //👇 This default export determines where your story goes in the story list
 export default {

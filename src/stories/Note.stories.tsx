@@ -2,7 +2,7 @@
 
 import { Story } from "@storybook/react";
 import React from "react";
-import Note, { Props as NoteProps } from "../components/Note";
+import Note, { Props as NoteProps } from "../components/Note/src";
 
 //👇 This default export determines where your story goes in the story list
 export default {

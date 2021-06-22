@@ -1,6 +1,8 @@
 import { Story } from "@storybook/react";
 import React from "react";
-import SummaryBox, { Props as SummaryBoxProps } from "../components/SummaryBox";
+import SummaryBox, {
+  Props as SummaryBoxProps,
+} from "../components/SummaryBox/src";
 
 //👇 This default export determines where your story goes in the story list
 export default {

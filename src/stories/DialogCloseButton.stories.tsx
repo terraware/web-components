@@ -5,7 +5,7 @@ import { Story } from "@storybook/react";
 import React from "react";
 import DialogCloseButton, {
   Props as DialogCloseButtonProps,
-} from "../components/DialogCloseButton";
+} from "../components/DialogCloseButton/src";
 
 //👇 This default export determines where your story goes in the story list
 export default {

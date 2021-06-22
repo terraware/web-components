@@ -2,7 +2,7 @@
 
 import { Story } from "@storybook/react";
 import React from "react";
-import Divisor, { Props as DivisorProps } from "../components/Divisor";
+import Divisor, { Props as DivisorProps } from "../components/Divisor/src";
 
 //👇 This default export determines where your story goes in the story list
 export default {

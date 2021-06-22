@@ -1,0 +1,7 @@
+{
+  "packages": [
+    "src/components/**/*"
+  ],
+  "npmClient": "yarn",
+  "version": "1.0.0"
+}

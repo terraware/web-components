@@ -2,7 +2,7 @@
 
 import { Story } from "@storybook/react";
 import React from "react";
-import Table, { Props as TableProps } from "../components/table/index";
+import Table, { Props as TableProps } from "../components/Table/src/index";
 
 //👇 This default export determines where your story goes in the story list
 export default {
