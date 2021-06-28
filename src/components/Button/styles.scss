@@ -16,7 +16,7 @@
     font-weight: $tw-fnt-btn-label-small-font-weight;
     font-family: $tw-fnt-btn-label-small-font-family;
     line-height: $tw-fnt-btn-label-small-line-height;
-    min-width: 80px;
+    min-width: $tw-sz-btn-small-min-width;
     padding: calc(
         (#{$tw-sz-btn-small-height} - #{$tw-fnt-btn-label-small-line-height}) /
           2
@@ -47,7 +47,7 @@
     font-weight: $tw-fnt-btn-label-medium-font-weight;
     font-family: $tw-fnt-btn-label-medium-font-family;
     line-height: $tw-fnt-btn-label-medium-line-height;
-    min-width: 100px;
+    min-width: $tw-sz-btn-medium-min-width;
     padding: calc(
         (#{$tw-sz-btn-medium-height} - #{$tw-fnt-btn-label-medium-line-height}) /
           2
@@ -78,7 +78,7 @@
     font-weight: $tw-fnt-btn-label-large-font-weight;
     font-family: $tw-fnt-btn-label-large-font-family;
     line-height: $tw-fnt-btn-label-large-line-height;
-    min-width: 120px;
+    min-width: $tw-sz-btn-large-min-width;
     padding: calc(
         (#{$tw-sz-btn-large-height} - #{$tw-fnt-btn-label-large-line-height}) /
           2
@@ -109,7 +109,7 @@
     font-weight: $tw-fnt-btn-label-xlarge-font-weight;
     font-family: $tw-fnt-btn-label-xlarge-font-family;
     line-height: $tw-fnt-btn-label-xlarge-line-height;
-    min-width: 140px;
+    $tw-sz-btn-x-large-min-width: 140px;
     padding: calc(
         (#{$tw-sz-btn-x-large-height} - #{$tw-fnt-btn-label-xlarge-line-height}) /
           2

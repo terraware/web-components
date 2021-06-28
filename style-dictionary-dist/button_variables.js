@@ -1,6 +1,6 @@
 /**
  * Do not edit directly
- * Generated on Fri, 25 Jun 2021 19:34:50 GMT
+ * Generated on Mon, 28 Jun 2021 19:26:48 GMT
  */
 
 module.exports = {
@@ -36,6 +36,10 @@ module.exports = {
   "TW_SZ_BTN_MEDIUM_HEIGHT": 40,
   "TW_SZ_BTN_LARGE_HEIGHT": 48,
   "TW_SZ_BTN_X_LARGE_HEIGHT": 56,
+  "TW_SZ_BTN_SMALL_MIN_WIDTH": 80,
+  "TW_SZ_BTN_MEDIUM_MIN_WIDTH": 100,
+  "TW_SZ_BTN_LARGE_MIN_WIDTH": 120,
+  "TW_SZ_BTN_X_LARGE_MIN_WIDTH": 140,
   "TW_SZ_BTN_STROKE": 2,
   "TW_SZ_BTN_STROKE_FOCUS": 2,
   "TW_FNT_BTN_LABEL_LARGE_FONT_FAMILY": "'Inter', 'Inter-SemiBold'",
