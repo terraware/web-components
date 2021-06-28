@@ -1,4 +1,77 @@
 @import "../../../style-dictionary-dist/button_variables.scss";
+
+@font-face {
+  font-family: "Inter";
+  src: local("Inter"), url(../../fonts/Inter.ttf) format("truetype");
+  /* other formats include: 'woff2', 'truetype, 'opentype',
+                            'embedded-opentype', and 'svg' */
+}
+
+.button {
+  border: 0;
+  border-style: solid;
+
+  &--small {
+    height: $tw-sz-btn-small-height;
+    font-size: $tw-fnt-btn-label-small-font-size;
+    font-weight: $tw-fnt-btn-label-small-font-weight;
+    font-family: $tw-fnt-btn-label-small-font-family;
+    line-height: $tw-fnt-btn-label-small-line-height;
+    min-width: 80px;
+    padding: calc(
+        (#{$tw-sz-btn-small-height} - #{$tw-fnt-btn-label-small-line-height}) /
+          2
+      )
+      calc(#{$tw-sz-btn-small-height}/ 2);
+    border-radius: calc(#{$tw-sz-btn-small-height} / 2);
+  }
+
+  &--medium {
+    height: $tw-sz-btn-medium-height;
+    font-size: $tw-fnt-btn-label-medium-font-size;
+    font-weight: $tw-fnt-btn-label-medium-font-weight;
+    font-family: $tw-fnt-btn-label-medium-font-family;
+    line-height: $tw-fnt-btn-label-medium-line-height;
+    min-width: 100px;
+    padding: calc(
+        (#{$tw-sz-btn-medium-height} - #{$tw-fnt-btn-label-medium-line-height}) /
+          2
+      )
+      calc(#{$tw-sz-btn-medium-height}/ 2);
+    border-radius: calc(#{$tw-sz-btn-medium-height} / 2);
+  }
+
+  &--large {
+    height: $tw-sz-btn-large-height;
+    font-size: $tw-fnt-btn-label-large-font-size;
+    font-weight: $tw-fnt-btn-label-large-font-weight;
+    font-family: $tw-fnt-btn-label-large-font-family;
+    line-height: $tw-fnt-btn-label-large-line-height;
+    min-width: 120px;
+    padding: calc(
+        (#{$tw-sz-btn-large-height} - #{$tw-fnt-btn-label-large-line-height}) /
+          2
+      )
+      calc(#{$tw-sz-btn-large-height}/ 2);
+    border-radius: calc(#{$tw-sz-btn-large-height} / 2);
+  }
+
+  &--xlarge {
+    height: $tw-sz-btn-x-large-height;
+    font-size: $tw-fnt-btn-label-xlarge-font-size;
+    font-weight: $tw-fnt-btn-label-xlarge-font-weight;
+    font-family: $tw-fnt-btn-label-xlarge-font-family;
+    line-height: $tw-fnt-btn-label-xlarge-line-height;
+    min-width: 140px;
+    padding: calc(
+        (#{$tw-sz-btn-x-large-height} - #{$tw-fnt-btn-label-xlarge-line-height}) /
+          2
+      )
+      calc(#{$tw-sz-btn-x-large-height}/ 2);
+    border-radius: calc(#{$tw-sz-btn-x-large-height} / 2);
+  }
+}
+
 .productive-primary {
   background-color: $tw-clr-btn-productive-primary-fill;
   color: $tw-clr-btn-productive-primary-label;
@@ -16,7 +89,8 @@
 .productive-secondary {
   background-color: $tw-clr-btn-productive-secondary-fill;
   color: $tw-clr-btn-productive-secondary-label;
-  border-color: $tw-clr-btn-productive-secondary-stroke;
+  border: 2px solid $tw-clr-btn-productive-secondary-stroke;
+  height: auto;
   &:hover {
     background-color: $tw-clr-btn-productive-secondary-fill-hover;
   }
@@ -41,52 +115,13 @@
 .passive-secondary {
   background-color: $tw-clr-btn-passive-secondary-fill;
   color: $tw-clr-btn-passive-secondary-label;
-  border-color: $tw-clr-btn-passive-secondary-stroke;
+  border: 2px solid $tw-clr-btn-passive-secondary-stroke;
+  height: auto;
   &:hover {
     background-color: $tw-clr-btn-passive-secondary-fill-hover;
   }
 
   &:active {
     background-color: $tw-clr-btn-passive-secondary-fill-active;
-  }
-}
-
-.button {
-  padding: calc(
-      (#{$tw-sz-btn-small-height} - #{$tw-fnt-btn-label-small-line-height}) / 2
-    )
-    calc(#{$tw-sz-btn-small-height}/ 2);
-  border-radius: calc(#{$tw-sz-btn-small-height} / 2);
-
-  &--small {
-    height: $tw-sz-btn-small-height;
-    font-size: $tw-fnt-btn-label-small-font-size;
-    font-weight: $tw-fnt-btn-label-small-font-weight;
-    font-family: $tw-fnt-btn-label-small-font-family;
-    line-height: $tw-fnt-btn-label-small-line-height;
-  }
-
-  &--medium {
-    height: $tw-sz-btn-medium-height;
-    font-size: $tw-fnt-btn-label-medium-font-size;
-    font-weight: $tw-fnt-btn-label-medium-font-weight;
-    font-family: $tw-fnt-btn-label-medium-font-family;
-    line-height: $tw-fnt-btn-label-medium-line-height;
-  }
-
-  &--large {
-    height: $tw-sz-btn-large-height;
-    font-size: $tw-fnt-btn-label-large-font-size;
-    font-weight: $tw-fnt-btn-label-large-font-weight;
-    font-family: $tw-fnt-btn-label-large-font-family;
-    line-height: $tw-fnt-btn-label-large-line-height;
-  }
-
-  &--xlarge {
-    height: $tw-sz-btn-x-large-height;
-    font-size: $tw-fnt-btn-label-xlarge-font-size;
-    font-weight: $tw-fnt-btn-label-xlarge-font-weight;
-    font-family: $tw-fnt-btn-label-xlarge-font-family;
-    line-height: $tw-fnt-btn-label-xlarge-line-height;
   }
 }
