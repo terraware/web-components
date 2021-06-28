@@ -109,7 +109,7 @@
     font-weight: $tw-fnt-btn-label-xlarge-font-weight;
     font-family: $tw-fnt-btn-label-xlarge-font-family;
     line-height: $tw-fnt-btn-label-xlarge-line-height;
-    $tw-sz-btn-x-large-min-width: 140px;
+    min-width: $tw-sz-btn-x-large-min-width;
     padding: calc(
         (#{$tw-sz-btn-x-large-height} - #{$tw-fnt-btn-label-xlarge-line-height}) /
           2
