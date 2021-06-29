@@ -47,6 +47,7 @@ export default function Dropdown({
     onChange(id, event.target.value as string);
   };
   const classes = useStyles();
+
   return (
     <FormControl
       variant='outlined'
@@ -62,9 +63,9 @@ export default function Dropdown({
         onChange={onChangeH}
         value={selected}
       >
-        {values?.map(({ label, value }) => (
+        {values?.map(({ labelv, value }) => (
           <MenuItem id={value} key={value} value={value}>
-            {label}
+            {labelv}
           </MenuItem>
         ))}
       </Select>

@@ -1,16 +1,14 @@
 // YourComponent.stories.js
 
-import { Story } from "@storybook/react";
-import React from "react";
-import Button, { Props as ButtonProps } from "../components/Button/Button";
+import { Story } from '@storybook/react';
+import React from 'react';
+import Button, { Props as ButtonProps } from '../components/Button/Button';
 
-//👇 This default export determines where your story goes in the story list
 export default {
-  title: "Button",
+  title: 'Button',
   component: Button,
 };
 
-//👇 We create a “template” of how args map to rendering
 const Template: Story<ButtonProps> = (args) => {
   return <Button {...args} />;
 };
@@ -18,5 +16,9 @@ const Template: Story<ButtonProps> = (args) => {
 export const Default = Template.bind({});
 
 Default.args = {
-  label: "Label",
+  label: 'Label',
+  type: 'productive',
+  priority: 'primary',
+  size: 'small',
+  disabled: false,
 };

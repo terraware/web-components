@@ -1,23 +1,23 @@
-import { createStyles, makeStyles, Theme } from "@material-ui/core";
-import TableCell from "@material-ui/core/TableCell";
-import TableHead from "@material-ui/core/TableHead";
-import TableRow from "@material-ui/core/TableRow";
-import TableSortLabel from "@material-ui/core/TableSortLabel";
-import DragIndicatorIcon from "@material-ui/icons/DragIndicator";
-import React from "react";
+import { createStyles, makeStyles, Theme } from '@material-ui/core';
+import TableCell from '@material-ui/core/TableCell';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import TableSortLabel from '@material-ui/core/TableSortLabel';
+import DragIndicatorIcon from '@material-ui/icons/DragIndicator';
+import React from 'react';
 import {
   SortableContainer,
   SortableElement,
   SortableHandle,
-} from "react-sortable-hoc";
-import { Order } from "./sort";
-import { TableColumnType } from "./types";
+} from 'react-sortable-hoc';
+import { Order } from './sort';
+import { TableColumnType } from './types';
 
 const dragIconStyles = makeStyles((theme) => ({
   root: {
     marginLeft: -20,
     color: theme.palette.common.white,
-    "&:hover": {
+    '&:hover': {
       color: theme.palette.neutral[600],
     },
   },
@@ -71,12 +71,12 @@ export default function EnhancedTableHead(props: Props): JSX.Element {
 
   return (
     <SortableHead
-      lockAxis="x"
-      axis="x"
+      lockAxis='x'
+      axis='x'
       onSortEnd={props.onReorderEnd}
-      useDragHandle
+      useDragHandle={true}
     >
-      <TableRow id="table-header">
+      <TableRow id='table-header'>
         {headCells.map((headCell, i) => (
           <SortableCell
             disabled={!props.onReorderEnd}
@@ -86,15 +86,15 @@ export default function EnhancedTableHead(props: Props): JSX.Element {
               <TableCell
                 id={`table-header-${headCell.id}`}
                 key={headCell.id}
-                align="left"
-                padding={headCell.disablePadding ? "none" : "default"}
+                align='left'
+                padding={headCell.disablePadding ? 'none' : 'default'}
                 sortDirection={orderBy === headCell.id ? order : false}
                 className={classes.headcell}
               >
                 {headCell.label && (
                   <TableSortLabel
                     active={orderBy === headCell.id}
-                    direction={orderBy === headCell.id ? order : "asc"}
+                    direction={orderBy === headCell.id ? order : 'asc'}
                     onClick={createSortHandler(headCell.id)}
                   >
                     {i > 0 && <DragHandle />}
@@ -111,7 +111,7 @@ export default function EnhancedTableHead(props: Props): JSX.Element {
 }
 
 const DragHandle = SortableHandle(() => (
-  <DragIndicatorIcon fontSize="small" classes={dragIconStyles()} />
+  <DragIndicatorIcon fontSize='small' classes={dragIconStyles()} />
 ));
 
 const SortableHead = SortableContainer(

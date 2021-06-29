@@ -8,7 +8,7 @@ export default function Divisor({ mt = 3 }: Props): JSX.Element {
   return (
     <>
       <Box mt={mt} />
-      <Divider light />
+      <Divider light={true} />
       <Box mt={mt} />
     </>
   );

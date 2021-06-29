@@ -1,18 +1,16 @@
 // YourComponent.stories.js
 
-import { Story } from "@storybook/react";
-import React from "react";
+import { Story } from '@storybook/react';
+import React from 'react';
 import RadioButton, {
   Props as RadioButtonProps,
-} from "../components/RadioButton";
+} from '../components/RadioButton';
 
-//👇 This default export determines where your story goes in the story list
 export default {
-  title: "RadioButton",
+  title: 'RadioButton',
   component: RadioButton,
 };
 
-//👇 We create a “template” of how args map to rendering
 const Template: Story<RadioButtonProps> = (args) => {
   return <RadioButton {...args} />;
 };
@@ -20,8 +18,8 @@ const Template: Story<RadioButtonProps> = (args) => {
 export const Default = Template.bind({});
 
 Default.args = {
-  id: "1",
-  name: "Test",
+  id: '1',
+  name: 'Test',
   label: <p>Test</p>,
   value: false,
 };

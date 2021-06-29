@@ -1,14 +1,13 @@
 // YourComponent.stories.js
 
-import MomentUtils from "@date-io/moment";
-import { MuiPickersUtilsProvider } from "@material-ui/pickers";
-import { Story } from "@storybook/react";
-import React, { ReactElement } from "react";
-import DatePicker, { Props as DatePickerProps } from "../components/DatePicker";
+import MomentUtils from '@date-io/moment';
+import { MuiPickersUtilsProvider } from '@material-ui/pickers';
+import { Story as StoryBook } from '@storybook/react';
+import React, { ReactElement } from 'react';
+import DatePicker, { Props as DatePickerProps } from '../components/DatePicker';
 
-//👇 This default export determines where your story goes in the story list
 export default {
-  title: "DatePicker",
+  title: 'DatePicker',
   component: DatePicker,
   decorators: [
     (
@@ -23,14 +22,13 @@ export default {
   ],
 };
 
-//👇 We create a “template” of how args map to rendering
-const Template: Story<DatePickerProps> = (args) => {
+const Template: StoryBook<DatePickerProps> = (args) => {
   return <DatePicker {...args} />;
 };
 
 export const Default = Template.bind({});
 
 Default.args = {
-  id: "1",
-  label: "Datepicker",
+  id: '1',
+  label: 'Datepicker',
 };

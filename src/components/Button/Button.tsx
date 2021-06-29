@@ -4,10 +4,10 @@ import './styles.scss';
 export interface Props {
   onClick: () => void;
   label: string;
-  type: 'productive' | 'passive' | 'destructive';
-  priority: 'primary' | 'secondary';
-  size: 'small' | 'medium' | 'large' | 'xlarge';
-  disabled: boolean;
+  type?: 'productive' | 'passive' | 'destructive';
+  priority?: 'primary' | 'secondary';
+  size?: 'small' | 'medium' | 'large' | 'xlarge';
+  disabled?: boolean;
 }
 
 export default function Button(props: Props): JSX.Element {
@@ -19,6 +19,7 @@ export default function Button(props: Props): JSX.Element {
     size = 'small',
     disabled = false,
   } = props;
+
   return (
     <button
       onClick={onClick}
