@@ -1,6 +1,6 @@
-import { Chip } from "@material-ui/core";
-import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
-import React from "react";
+import { Chip } from '@material-ui/core';
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
+import React from 'react';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -19,14 +19,15 @@ export interface Props {
 
 export default function CancelButton({ onClick, label }: Props): JSX.Element {
   const classes = useStyles();
+
   return (
     <Chip
-      id="cancel"
+      id='cancel'
       className={classes.cancel}
-      label={label ?? "Cancel"}
-      clickable
+      label={label ?? 'Cancel'}
+      clickable={true}
       onClick={onClick}
-      variant="outlined"
+      variant='outlined'
     />
   );
 }

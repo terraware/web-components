@@ -16,7 +16,7 @@ export default function TextArea(props: Props): JSX.Element {
       onChange={onChange}
       type={props.type}
       label={props.label}
-      multiline
+      multiline={true}
       rows={4}
       variant='outlined'
       size='small'

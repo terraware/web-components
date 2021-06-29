@@ -5,11 +5,11 @@ import {
   makeStyles,
   TableCell,
   Typography,
-} from "@material-ui/core";
-import EditIcon from "@material-ui/icons/Edit";
-import NotesIcon from "@material-ui/icons/Notes";
-import React from "react";
-import { RendererProps } from "./types";
+} from '@material-ui/core';
+import EditIcon from '@material-ui/icons/Edit';
+import NotesIcon from '@material-ui/icons/Notes';
+import React from 'react';
+import { RendererProps } from './types';
 
 export type TableRowType = Record<string, any>;
 
@@ -18,15 +18,16 @@ export default function CellRenderer(
 ): JSX.Element {
   const { column, value, onRowClick, index } = props;
   const id = `row${index}-${column.key}`;
-  if (column.type === "date" && typeof value === "string" && value) {
+  if (column.type === 'date' && typeof value === 'string' && value) {
     return <CellDateRenderer id={id} value={value} />;
-  } else if (column.type === "notes" && value && typeof value === "string") {
+  } else if (column.type === 'notes' && value && typeof value === 'string') {
     return <CellNotesRenderer id={id} value={value} />;
-  } else if (column.type === "boolean") {
+  } else if (column.type === 'boolean') {
     return <CellBooleanRenderer id={id} value={value} />;
-  } else if (column.type === "edit") {
+  } else if (column.type === 'edit') {
     return <CellEditRenderer id={id} onRowClick={onRowClick} />;
   }
+
   return <CellTextRenderer id={id} value={value} />;
 }
 
@@ -37,16 +38,16 @@ export function CellDateRenderer({
   id: string;
   value: string;
 }): JSX.Element {
-  const date = new Date(value).toLocaleDateString("en-US", {
-    day: "2-digit",
-    month: "2-digit",
-    year: "numeric",
-    timeZone: "UTC",
+  const date = new Date(value).toLocaleDateString('en-US', {
+    day: '2-digit',
+    month: '2-digit',
+    year: 'numeric',
+    timeZone: 'UTC',
   });
 
   return (
-    <TableCell id={id} align="left">
-      <Typography component="p" variant="body1">
+    <TableCell id={id} align='left'>
+      <Typography component='p' variant='body1'>
         {date}
       </Typography>
     </TableCell>
@@ -61,8 +62,8 @@ export function CellTextRenderer({
   value?: string | number | any[];
 }): JSX.Element {
   return (
-    <TableCell id={id} align="left">
-      <Typography component="p" variant="body1">
+    <TableCell id={id} align='left'>
+      <Typography component='p' variant='body1'>
         {value}
       </Typography>
     </TableCell>
@@ -77,9 +78,9 @@ export function CellBooleanRenderer({
   value?: string | number | any[];
 }): JSX.Element {
   return (
-    <TableCell id={id} align="left">
-      <Typography component="p" variant="body1">
-        {value === "true" ? "YES" : "NO"}
+    <TableCell id={id} align='left'>
+      <Typography component='p' variant='body1'>
+        {value === 'true' ? 'YES' : 'NO'}
       </Typography>
     </TableCell>
   );
@@ -93,9 +94,9 @@ export function CellNotesRenderer({
   value?: string;
 }): JSX.Element {
   return (
-    <TableCell id={id} align="left">
-      <Typography id={id} component="p" variant="body1">
-        {value && value.length > 0 ? <NotesIcon /> : ""}
+    <TableCell id={id} align='left'>
+      <Typography id={id} component='p' variant='body1'>
+        {value && value.length > 0 ? <NotesIcon /> : ''}
       </Typography>
     </TableCell>
   );
@@ -117,21 +118,24 @@ export function CellEditRenderer({
   onRowClick?: () => void;
 }): JSX.Element {
   const classes = useStyles();
+
   return (
-    <TableCell id={id} align="left">
+    <TableCell id={id} align='left'>
       <Link
         id={`${id}-button`}
-        href="#"
+        href='#'
         onClick={(event: React.SyntheticEvent) => {
           event.preventDefault();
-          onRowClick && onRowClick();
+          if (onRowClick) {
+            onRowClick();
+          }
         }}
       >
-        <Box display="flex">
-          <Typography component="p" variant="body1">
+        <Box display='flex'>
+          <Typography component='p' variant='body1'>
             Edit
           </Typography>
-          <EditIcon fontSize="small" className={classes.editIcon} />
+          <EditIcon fontSize='small' className={classes.editIcon} />
         </Box>
       </Link>
     </TableCell>

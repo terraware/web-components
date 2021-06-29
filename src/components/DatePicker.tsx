@@ -49,7 +49,7 @@ export default function DatePicker(props: Props): JSX.Element {
       KeyboardButtonProps={{
         'aria-label': props['aria-label'],
       }}
-      disableToolbar
+      disableToolbar={true}
       variant='inline'
       inputVariant='outlined'
       format={moment.localeData().longDateFormat('L')}

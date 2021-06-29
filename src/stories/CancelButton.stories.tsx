@@ -1,18 +1,16 @@
 // YourComponent.stories.js
 
-import { Story } from "@storybook/react";
-import React from "react";
+import { Story } from '@storybook/react';
+import React from 'react';
 import CancelButton, {
   Props as CancelButtonProps,
-} from "../components/CancelButton";
+} from '../components/CancelButton';
 
-//👇 This default export determines where your story goes in the story list
 export default {
-  title: "CancelButton",
+  title: 'CancelButton',
   component: CancelButton,
 };
 
-//👇 We create a “template” of how args map to rendering
 const Template: Story<CancelButtonProps> = (args) => {
   return <CancelButton {...args} />;
 };
@@ -20,5 +18,5 @@ const Template: Story<CancelButtonProps> = (args) => {
 export const Default = Template.bind({});
 
 Default.args = {
-  label: "Cancel",
+  label: 'Cancel',
 };
