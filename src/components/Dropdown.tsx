@@ -63,7 +63,7 @@ export default function Dropdown({
         onChange={onChangeH}
         value={selected}
       >
-        {values?.map(({ labelv, value }) => (
+        {values?.map(({ label: labelv, value }) => (
           <MenuItem id={value} key={value} value={value}>
             {labelv}
           </MenuItem>
