@@ -35,4 +35,5 @@ Default.args = {
   priority: 'primary',
   size: 'small',
   disabled: false,
+  icon: 'help',
 };
