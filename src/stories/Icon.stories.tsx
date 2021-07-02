@@ -16,5 +16,5 @@ const Template: Story<IconProps> = (args) => {
 export const Default = Template.bind({});
 
 Default.args = {
-  name: 'help',
+  name: 'lock',
 };

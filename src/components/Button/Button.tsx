@@ -1,5 +1,5 @@
 import React from 'react';
-import Icon, { IconType } from '../Icon/Icon';
+import Icon, { IconName, IconSize } from '../Icon/Icon';
 import './styles.scss';
 
 export interface Props {
@@ -7,9 +7,9 @@ export interface Props {
   label: string;
   type?: 'productive' | 'passive' | 'destructive';
   priority?: 'primary' | 'secondary';
-  size?: 'small' | 'medium' | 'large' | 'xlarge';
+  size?: IconSize;
   disabled?: boolean;
-  icon?: IconType;
+  icon?: IconName;
   processing?: boolean;
 }
 
@@ -20,9 +20,9 @@ export default function Button(props: Props): JSX.Element {
     type = 'productive',
     priority = 'primary',
     size = 'small',
-    disabled = false,
+    disabled,
     icon,
-    processing = false,
+    processing,
   } = props;
 
   return (

@@ -1,15 +1,16 @@
 import icons from './icons';
 import './styles.scss';
 
-export type IconType = 'lock' | 'processing';
+export type IconName = 'lock' | 'processing';
+export type IconSize = 'small' | 'medium' | 'large' | 'xlarge';
 
 export interface Props {
-  name: IconType;
-  size?: 'small' | 'medium' | 'large' | 'xlarge';
+  name: IconName;
+  size?: IconSize;
   type?: string;
 }
 
 export default function Icon({ size, name }: Props): JSX.Element {
-  const IconByName = icons[name];
-  return <IconByName className={`tw-icon tw-icon--${size}`}></IconByName>;
+  const SVGComponent = icons[name];
+  return <SVGComponent className={`tw-icon tw-icon--${size}`} />;
 }
