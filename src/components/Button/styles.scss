@@ -142,14 +142,15 @@
 
   &--xlarge {
     height: $tw-sz-btn-x-large-height;
-    font-size: $tw-fnt-btn-label-xlarge-font-size;
-    font-weight: $tw-fnt-btn-label-xlarge-font-weight;
-    font-family: $tw-fnt-btn-label-xlarge-font-family;
-    line-height: $tw-fnt-btn-label-xlarge-line-height;
+    font-size: $tw-fnt-btn-label-x-large-font-size;
+    font-weight: $tw-fnt-btn-label-x-large-font-weight;
+    font-family: $tw-fnt-btn-label-x-large-font-family;
+    line-height: $tw-fnt-btn-label-x-large-line-height;
     min-width: $tw-sz-btn-x-large-min-width;
     padding: calc(
-        (#{$tw-sz-btn-x-large-height} - #{$tw-fnt-btn-label-xlarge-line-height}) /
-          2
+        (
+            #{$tw-sz-btn-x-large-height} - #{$tw-fnt-btn-label-x-large-line-height}
+          ) / 2
       )
       calc(#{$tw-sz-btn-x-large-height}/ 2);
     border-radius: calc(#{$tw-sz-btn-x-large-height} / 2);
@@ -176,7 +177,7 @@
           (
             (
               (
-                  #{$tw-sz-btn-x-large-height} - #{$tw-fnt-btn-label-xlarge-line-height}
+                  #{$tw-sz-btn-x-large-height} - #{$tw-fnt-btn-label-x-large-line-height}
                 ) / 2
             )
           )
@@ -274,7 +275,7 @@
   &--xlarge {
     padding: calc(
         (
-            #{$tw-sz-btn-x-large-height} - (2 * #{$tw-sz-btn-stroke}) - #{$tw-fnt-btn-label-xlarge-line-height}
+            #{$tw-sz-btn-x-large-height} - (2 * #{$tw-sz-btn-stroke}) - #{$tw-fnt-btn-label-x-large-line-height}
           ) / 2
       )
       calc((#{$tw-sz-btn-x-large-height} - 2 * #{$tw-sz-btn-stroke}) / 2);
@@ -390,7 +391,7 @@
   &--xlarge {
     padding: calc(
         (
-            #{$tw-sz-btn-x-large-height} - (2 * #{$tw-sz-btn-stroke}) - #{$tw-fnt-btn-label-xlarge-line-height}
+            #{$tw-sz-btn-x-large-height} - (2 * #{$tw-sz-btn-stroke}) - #{$tw-fnt-btn-label-x-large-line-height}
           ) / 2
       )
       calc((#{$tw-sz-btn-x-large-height} - 2 * #{$tw-sz-btn-stroke}) / 2);
@@ -496,7 +497,7 @@
   &--xlarge {
     padding: calc(
         (
-            #{$tw-sz-btn-x-large-height} - (2 * #{$tw-sz-btn-stroke}) - #{$tw-fnt-btn-label-xlarge-line-height}
+            #{$tw-sz-btn-x-large-height} - (2 * #{$tw-sz-btn-stroke}) - #{$tw-fnt-btn-label-x-large-line-height}
           ) / 2
       )
       calc((#{$tw-sz-btn-x-large-height} - 2 * #{$tw-sz-btn-stroke}) / 2);
