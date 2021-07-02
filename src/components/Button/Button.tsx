@@ -28,7 +28,9 @@ export default function Button(props: Props): JSX.Element {
   return (
     <button
       onClick={onClick}
-      className={`button ${type}-${priority} button--${size} ${type}-${priority}--${size}`}
+      className={`button ${type}-${priority} button--${size} ${type}-${priority}--${size} ${
+        icon ? 'button-with-icon' : ''
+      }`}
       disabled={disabled}
     >
       {processing && <Icon name='processing' size={size}></Icon>}
