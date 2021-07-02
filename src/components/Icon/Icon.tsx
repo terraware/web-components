@@ -1,7 +1,7 @@
 import icons from './icons';
 import './styles.scss';
 
-export type IconName = 'lock' | 'processing';
+export type IconName = 'lock' | 'spinner';
 export type IconSize = 'small' | 'medium' | 'large' | 'xlarge';
 
 export interface Props {

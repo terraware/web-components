@@ -24,34 +24,20 @@
   &--small {
     width: $tw-sz-btn-small-icon;
     height: $tw-sz-btn-small-icon;
-    margin-right: calc(
-      (#{$tw-sz-btn-small-height} - #{$tw-fnt-btn-label-small-line-height}) / 2
-    );
   }
 
   &--medium {
     width: $tw-sz-btn-medium-icon;
     height: $tw-sz-btn-medium-icon;
-    margin-right: calc(
-      (#{$tw-sz-btn-medium-height} - #{$tw-fnt-btn-label-medium-line-height}) /
-        2
-    );
   }
 
   &--large {
     width: $tw-sz-btn-large-icon;
     height: $tw-sz-btn-large-icon;
-    margin-right: calc(
-      (#{$tw-sz-btn-large-height} - #{$tw-fnt-btn-label-large-line-height}) / 2
-    );
   }
 
   &--xlarge {
     width: $tw-sz-btn-x-large-icon;
     height: $tw-sz-btn-x-large-icon;
-    margin-right: calc(
-      (#{$tw-sz-btn-x-large-height} - #{$tw-fnt-btn-label-x-large-line-height}) /
-        2
-    );
   }
 }
