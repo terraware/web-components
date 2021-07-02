@@ -20,6 +20,10 @@ export default {
       options: ['small', 'medium', 'large', 'xlarge'],
       control: { type: 'radio' },
     },
+    icon: {
+      options: ['lock', null],
+      control: { type: 'radio' },
+    },
   },
 };
 
