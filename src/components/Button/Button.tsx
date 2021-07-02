@@ -31,9 +31,8 @@ export default function Button(props: Props): JSX.Element {
       className={`button ${type}-${priority} button--${size} ${type}-${priority}--${size}`}
       disabled={disabled}
     >
-      {icon && (
-        <Icon name={processing ? 'processing' : icon} size={size}></Icon>
-      )}
+      {processing && <Icon name='processing' size={size}></Icon>}
+      {!processing && icon && <Icon name={icon} size={size}></Icon>}
       {!processing && label}
     </button>
   );

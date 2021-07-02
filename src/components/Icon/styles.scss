@@ -5,6 +5,19 @@
   src: local('Inter'), url(../../fonts/Inter.ttf) format('truetype');
 }
 
+#spinner {
+  animation: Spin 1s infinite linear;
+}
+
+@keyframes Spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
 .tw-icon {
   vertical-align: bottom;
 

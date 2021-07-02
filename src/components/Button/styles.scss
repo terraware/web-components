@@ -139,6 +139,10 @@
   background-color: $tw-clr-btn-productive-primary-fill;
   color: $tw-clr-btn-productive-primary-label;
 
+  svg {
+    fill: $tw-clr-btn-productive-primary-label;
+  }
+
   &:hover {
     background-color: $tw-clr-btn-productive-primary-fill-hover;
   }
@@ -156,6 +160,10 @@
 .productive-secondary {
   background-color: $tw-clr-btn-productive-secondary-fill;
   color: $tw-clr-btn-productive-secondary-label;
+  svg {
+    fill: $tw-clr-btn-productive-secondary-label;
+  }
+
   border: $tw-sz-btn-stroke solid $tw-clr-btn-productive-secondary-stroke;
   &:hover {
     background-color: $tw-clr-btn-productive-secondary-fill-hover;
@@ -233,6 +241,9 @@
 .passive-primary {
   background-color: $tw-clr-btn-passive-primary-fill;
   color: $tw-clr-btn-passive-primary-label;
+  svg {
+    fill: $tw-clr-btn-passive-primary-label;
+  }
   &:hover {
     background-color: $tw-clr-btn-passive-primary-fill-hover;
   }
@@ -250,6 +261,9 @@
 .passive-secondary {
   background-color: $tw-clr-btn-passive-secondary-fill;
   color: $tw-clr-btn-passive-secondary-label;
+  svg {
+    fill: $tw-clr-btn-passive-secondary-label;
+  }
   border: $tw-sz-btn-stroke solid $tw-clr-btn-passive-secondary-stroke;
   &:hover {
     background-color: $tw-clr-btn-passive-secondary-fill-hover;
@@ -327,6 +341,9 @@
 .destructive-primary {
   background-color: $tw-clr-btn-destructive-primary-fill;
   color: $tw-clr-btn-destructive-primary-label;
+  svg {
+    fill: $tw-clr-btn-destructive-primary-label;
+  }
   &:hover {
     background-color: $tw-clr-btn-destructive-primary-fill-hover;
   }
@@ -344,6 +361,9 @@
 .destructive-secondary {
   background-color: $tw-clr-btn-destructive-secondary-fill;
   color: $tw-clr-btn-destructive-secondary-label;
+  svg {
+    fill: $tw-clr-btn-destructive-secondary-label;
+  }
   border: $tw-sz-btn-stroke solid $tw-clr-btn-destructive-secondary-stroke;
   &:hover {
     background-color: $tw-clr-btn-destructive-secondary-fill-hover;
