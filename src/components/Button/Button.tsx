@@ -24,8 +24,8 @@ export default function Button(props: Props): JSX.Element {
       className={`button ${type}-${priority} button--${size} ${type}-${priority}--${size} ${icon && !processing ? 'button-with-icon' : ''}`}
       disabled={disabled}
     >
-      {processing && <Icon name='spinner' size={size}></Icon>}
-      {!processing && icon && <Icon name={icon} size={size}></Icon>}
+      {processing && <Icon name='spinner' size={size} />}
+      {!processing && icon && <Icon name={icon} size={size} />}
       {!processing && label}
     </button>
   );

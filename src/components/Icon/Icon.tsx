@@ -9,5 +9,6 @@ export interface Props {
 
 export default function Icon({ size = 'small', name }: Props): JSX.Element {
   const SVGComponent = icons[name];
+
   return <SVGComponent className={`tw-icon tw-icon--${size}`} />;
 }
