@@ -1,5 +1,7 @@
 import React from 'react';
-import Icon, { IconName, IconSize } from '../Icon/Icon';
+import Icon from '../Icon/Icon';
+import { IconName } from '../Icon/icons';
+import { Size } from '../types';
 import './styles.scss';
 
 export interface Props {
@@ -7,7 +9,7 @@ export interface Props {
   label: string;
   type?: 'productive' | 'passive' | 'destructive';
   priority?: 'primary' | 'secondary';
-  size?: IconSize;
+  size?: Size;
   disabled?: boolean;
   icon?: IconName;
   processing?: boolean;
