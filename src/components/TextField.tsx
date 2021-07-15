@@ -1,8 +1,4 @@
-import {
-  createStyles,
-  makeStyles,
-  TextField as MUITextField,
-} from '@material-ui/core';
+import { createStyles, makeStyles, TextField as MUITextField } from '@material-ui/core';
 import React, { KeyboardEventHandler } from 'react';
 
 const useStyles = makeStyles(() =>
@@ -27,14 +23,13 @@ export interface Props {
   helperText?: string;
   placeholder?: string;
   required?: boolean;
+  autocomplete?: string;
 }
 
 export default function TextField(props: Props): JSX.Element {
   const classes = useStyles();
 
-  const onChange = (
-    event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
-  ) => {
+  const onChange = (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
     props.onChange(props.id, event.target.value);
   };
 
@@ -62,6 +57,7 @@ export default function TextField(props: Props): JSX.Element {
       error={props.error}
       helperText={props.helperText}
       required={props.required}
+      autoComplete={props.autocomplete}
     />
   );
 }
