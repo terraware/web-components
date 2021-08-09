@@ -31,6 +31,17 @@ export default function CellRenderer(
   return <CellTextRenderer id={id} value={value} />;
 }
 
+export const cellDateFormatter = (value?: string): string | undefined => {
+  if (value) {
+    return new Date(value).toLocaleDateString('en-US', {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric',
+      timeZone: 'UTC',
+    });
+  }
+};
+
 export function CellDateRenderer({
   id,
   value,
@@ -38,17 +49,10 @@ export function CellDateRenderer({
   id: string;
   value: string;
 }): JSX.Element {
-  const date = new Date(value).toLocaleDateString('en-US', {
-    day: '2-digit',
-    month: '2-digit',
-    year: 'numeric',
-    timeZone: 'UTC',
-  });
-
   return (
     <TableCell id={id} align='left'>
       <Typography component='p' variant='body1'>
-        {date}
+        {cellDateFormatter(value)}
       </Typography>
     </TableCell>
   );
