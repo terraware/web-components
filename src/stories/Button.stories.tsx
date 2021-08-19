@@ -21,7 +21,7 @@ export default {
       control: { type: 'radio' },
     },
     icon: {
-      options: ['lock', null],
+      options: ['lock', 'caretDown', 'plus', null],
       control: { type: 'radio' },
     },
   },
