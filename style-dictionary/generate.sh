@@ -15,6 +15,9 @@ curl https://terraformation.zeroheight.com/api/token_file/16bdf3d3fd23/share > j
 curl https://terraformation.zeroheight.com/api/token_file/4c841c034e3c/share > json/system/typography-color.json
 curl https://terraformation.zeroheight.com/api/token_file/383b3df56337/share > json/system/typography-font.json
 curl https://terraformation.zeroheight.com/api/token_file/c51547b17edb/share > json/system/typography-composite.json
+curl https://terraformation.zeroheight.com/api/token_file/27fbda37a0d5/share > json/system/size-and-space.json
+curl https://terraformation.zeroheight.com/api/token_file/e1207808261b/share > json/system/color-iconography.json
+curl https://terraformation.zeroheight.com/api/token_file/2adb63d624f6/share > json/system/size-iconography.json
 curl https://terraformation.zeroheight.com/api/token_file/cb5cd890ddf4/share > json/button/typography.json
 curl https://terraformation.zeroheight.com/api/token_file/2f90d49d4334/share > json/button/productive-colors.json
 curl https://terraformation.zeroheight.com/api/token_file/5e072293caf0/share > json/button/passive-colors.json
