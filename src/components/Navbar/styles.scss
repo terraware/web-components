@@ -24,6 +24,11 @@
 
   .nav-item-content {
     padding: $tw-sz-base-small;
+    display: flex;
+
+    .nav-item--label {
+      flex: 1 1 auto;
+    }
   }
 
   &:hover {
@@ -37,6 +42,8 @@
   button {
     background: none;
     border: none;
+    padding-right: $tw-spc-base-small;
+    padding-left: $tw-spc-base-x-small;
   }
 
   &--children-selected {

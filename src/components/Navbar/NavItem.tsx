@@ -41,7 +41,7 @@ export default function NavItem(props: NavItemProps): JSX.Element {
     <div className={`nav-item ${selected ? 'nav-item--selected' : ''} ${hasChildrenSelected() ? 'nav-item--children-selected' : ''}`}>
       <div className='nav-item-content'>
         {icon && <Icon name={icon} className='nav-item--icon' />}
-        {label}
+        <span className='nav-item--label'>{label}</span>
         {children && (
           <button onClick={() => setOpen(!open)}>
             <Icon name={open ? 'caretUp' : 'caretDown'} className='nav-item--arrow' />
