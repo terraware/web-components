@@ -1,12 +1,12 @@
 import React from 'react';
 import './styles.scss';
 
-export interface SubNavbarProps {
+export interface Props {
   children: JSX.Element | JSX.Element[];
 }
 
-export default function SubNavbar(props: SubNavbarProps): JSX.Element {
+export default function SubNavbar(props: Props): JSX.Element {
   const { children } = props;
 
-  return <div className='subnavbar'>{children}</div>;
+  return <div>{children}</div>;
 }

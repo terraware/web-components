@@ -1,4 +1,4 @@
-import React, { PropsWithChildren, ReactElement } from 'react';
+import React, { MouseEventHandler, PropsWithChildren, ReactElement } from 'react';
 import Icon from '../Icon/Icon';
 import { IconName } from '../Icon/icons';
 import './styles.scss';
@@ -10,10 +10,11 @@ export interface NavItemProps {
   children?: typeof SubNavbar;
   selected?: boolean;
   isSubItem?: boolean;
+  onClick?: MouseEventHandler<HTMLButtonElement>;
 }
 
 export default function NavItem(props: NavItemProps): JSX.Element {
-  const { label, icon, children, selected } = props;
+  const { label, icon, children, selected, onClick } = props;
 
   const hasChildrenSelected = () => {
     if (children) {
@@ -39,15 +40,11 @@ export default function NavItem(props: NavItemProps): JSX.Element {
 
   return (
     <div className={`nav-item ${selected ? 'nav-item--selected' : ''} ${hasChildrenSelected() ? 'nav-item--children-selected' : ''}`}>
-      <div className='nav-item-content'>
+      <button className='nav-item-content' onClick={onClick ?? (() => setOpen(!open))}>
         {icon && <Icon name={icon} className='nav-item--icon' />}
         <span className='nav-item--label'>{label}</span>
-        {children && (
-          <button onClick={() => setOpen(!open)}>
-            <Icon name={open ? 'caretUp' : 'caretDown'} className='nav-item--arrow' />
-          </button>
-        )}
-      </div>
+        {children && <Icon name={open ? 'caretUp' : 'caretDown'} className='nav-item--arrow' />}
+      </button>
       {children && open && children}
     </div>
   );

@@ -10,43 +10,29 @@ import SubNavbar from '../components/Navbar/SubNavbar';
 export default {
   title: 'Navbar',
   component: Navbar,
-  argTypes: {
-    type: {
-      options: ['productive', 'passive', 'destructive'],
-      control: { type: 'radio' },
-    },
-    priority: {
-      options: ['primary', 'secondary'],
-      control: { type: 'radio' },
-    },
-    size: {
-      options: ['small', 'medium', 'large', 'xlarge'],
-      control: { type: 'radio' },
-    },
-    icon: {
-      options: ['lock', 'caretDown', 'plus', null],
-      control: { type: 'radio' },
-    },
-  },
+  argTypes: {},
 };
 
 const Template: Story<NavbarProps> = (args) => {
+  const [selectedItem, setSelectedItem] = React.useState('projects');
+
+  console.log(selectedItem);
   return (
     <Navbar>
-      <NavItem label='Home' icon='lock' />
+      <NavItem label='Home' icon='lock' selected={selectedItem === 'home'} onClick={() => setSelectedItem('home')} />
       <NavItem label='Seeds' icon='lock'>
         <SubNavbar>
-          <NavItem label='Summary' selected={true} />
-          <NavItem label='Accessions' />
+          <NavItem label='Summary' selected={selectedItem === 'summary'} onClick={() => setSelectedItem('summary')} />
+          <NavItem label='Accessions' selected={selectedItem === 'accessions'} onClick={() => setSelectedItem('accessions')} />
         </SubNavbar>
       </NavItem>
-      <NavItem label='Plants' icon='lock' />
-      <NavItem label='Species' icon='lock' />
+      <NavItem label='Plants' icon='lock' selected={selectedItem === 'plants'} onClick={() => setSelectedItem('plants')} />
+      <NavItem label='Species' icon='lock' selected={selectedItem === 'species'} onClick={() => setSelectedItem('species')} />
       <NavSection />
-      <NavItem label='Projects' icon='lock' />
-      <NavItem label='Sites' icon='lock' />
+      <NavItem label='Projects' icon='lock' selected={selectedItem === 'projects'} onClick={() => setSelectedItem('projects')} />
+      <NavItem label='Sites' icon='lock' selected={selectedItem === 'sites'} onClick={() => setSelectedItem('sites')} />
       <NavSection />
-      <NavItem label='Admin' icon='lock' />
+      <NavItem label='Admin' icon='lock' selected={selectedItem === 'admin'} onClick={() => setSelectedItem('admin')} />
     </Navbar>
   );
 };
