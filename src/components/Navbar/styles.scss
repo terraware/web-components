@@ -1,6 +1,83 @@
-@import '../../../style-dictionary-dist/button_variables.scss';
+@import '../../../style-dictionary-dist/system_variables.scss';
 
 @font-face {
   font-family: 'Inter';
   src: local('Inter'), url(../../fonts/Inter.ttf) format('truetype');
+}
+
+.nav-section {
+  background-color: $tw-clr-nvgtn-side-nav-section-fill;
+  padding: $tw-spc-base-x-small $tw-spc-base-small;
+  .divider {
+    border-top: $tw-sz-dvdr-stroke solid $tw-clr-dvdr-fill;
+  }
+}
+
+.nav-item {
+  font-family: $tw-fnt-nvgtn-side-nav-item-label-font-family;
+  font-size: $tw-fnt-nvgtn-side-nav-item-label-font-size;
+  font-weight: $tw-fnt-nvgtn-side-nav-item-label-font-weight;
+  line-height: $tw-fnt-nvgtn-side-nav-item-label-line-height;
+  color: $tw-clr-nvgtn-side-nav-item-label;
+  background-color: $tw-clr-nvgtn-side-nav-item-fill;
+  margin-right: $tw-spc-base-x-small;
+
+  .nav-item-content {
+    padding: $tw-sz-base-small;
+  }
+
+  &:hover {
+    background-color: $tw-clr-nvgtn-side-nav-item-fill-hover;
+  }
+
+  &:active {
+    background-color: $tw-clr-nvgtn-side-nav-item-fill-active;
+  }
+
+  button {
+    background: none;
+    border: none;
+  }
+
+  &--children-selected {
+    background-color: $tw-clr-nvgtn-side-nav-item-fill-active;
+  }
+
+  &--selected {
+    background-color: $tw-clr-nvgtn-side-nav-item-fill-active;
+    position: relative;
+  }
+
+  &--selected:before {
+    content: '';
+    border: $tw-sz-nvgtn-side-nav-item-indicator solid $tw-clr-nvgtn-side-nav-item-indicator-fill;
+    border-bottom-right-radius: $tw-sz-nvgtn-side-nav-item-indicator;
+    border-top-right-radius: $tw-sz-nvgtn-side-nav-item-indicator;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+  }
+
+  &--icon {
+    fill: $tw-clr-icon-fill-text;
+    margin-right: $tw-spc-base-x-small;
+    line-height: $tw-sz-icon-small;
+    height: $tw-sz-icon-small;
+    width: $tw-sz-icon-small;
+  }
+
+  &--arrow {
+    fill: $tw-clr-icon-fill-gray;
+    height: $tw-sz-icon-small;
+    width: $tw-sz-icon-small;
+  }
+
+  .subnavbar .nav-item {
+    padding-right: $tw-spc-base-small;
+    background-color: $tw-clr-nvgtn-side-nav-item-fill-active;
+
+    &-content {
+      padding-left: calc(#{$tw-spc-base-small} * 2);
+    }
+  }
 }
