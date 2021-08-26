@@ -19,20 +19,20 @@ const Template: Story<NavbarProps> = (args) => {
   console.log(selectedItem);
   return (
     <Navbar>
-      <NavItem label='Home' icon='lock' selected={selectedItem === 'home'} onClick={() => setSelectedItem('home')} />
-      <NavItem label='Seeds' icon='lock'>
+      <NavItem label='Home' icon='home' selected={selectedItem === 'home'} onClick={() => setSelectedItem('home')} />
+      <NavItem label='Seeds' icon='seeds'>
         <SubNavbar>
           <NavItem label='Summary' selected={selectedItem === 'summary'} onClick={() => setSelectedItem('summary')} />
           <NavItem label='Accessions' selected={selectedItem === 'accessions'} onClick={() => setSelectedItem('accessions')} />
         </SubNavbar>
       </NavItem>
-      <NavItem label='Plants' icon='lock' selected={selectedItem === 'plants'} onClick={() => setSelectedItem('plants')} />
-      <NavItem label='Species' icon='lock' selected={selectedItem === 'species'} onClick={() => setSelectedItem('species')} />
+      <NavItem label='Plants' icon='restorationSite' selected={selectedItem === 'plants'} onClick={() => setSelectedItem('plants')} />
+      <NavItem label='Species' icon='species' selected={selectedItem === 'species'} onClick={() => setSelectedItem('species')} />
       <NavSection />
-      <NavItem label='Projects' icon='lock' selected={selectedItem === 'projects'} onClick={() => setSelectedItem('projects')} />
-      <NavItem label='Sites' icon='lock' selected={selectedItem === 'sites'} onClick={() => setSelectedItem('sites')} />
+      <NavItem label='Projects' icon='folder' selected={selectedItem === 'projects'} onClick={() => setSelectedItem('projects')} />
+      <NavItem label='Sites' icon='site' selected={selectedItem === 'sites'} onClick={() => setSelectedItem('sites')} />
       <NavSection />
-      <NavItem label='Admin' icon='lock' selected={selectedItem === 'admin'} onClick={() => setSelectedItem('admin')} />
+      <NavItem label='Admin' icon='key' selected={selectedItem === 'admin'} onClick={() => setSelectedItem('admin')} />
     </Navbar>
   );
 };
