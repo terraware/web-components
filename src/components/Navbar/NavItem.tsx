@@ -1,4 +1,4 @@
-import React, { MouseEventHandler, PropsWithChildren, ReactElement } from 'react';
+import React, { PropsWithChildren, ReactElement } from 'react';
 import Icon from '../Icon/Icon';
 import { IconName } from '../Icon/icons';
 import './styles.scss';
@@ -10,7 +10,7 @@ export interface NavItemProps {
   children?: typeof SubNavbar;
   selected?: boolean;
   isSubItem?: boolean;
-  onClick?: MouseEventHandler<HTMLButtonElement>;
+  onClick?: (open: boolean | undefined) => void;
 }
 
 export default function NavItem(props: NavItemProps): JSX.Element {
@@ -36,11 +36,20 @@ export default function NavItem(props: NavItemProps): JSX.Element {
     return false;
   };
 
+  const onClickHandler = () => {
+    if (onClick) {
+      onClick(!open);
+    }
+    if (children) {
+      setOpen(!open);
+    }
+  };
+
   const [open, setOpen] = React.useState(hasChildrenSelected());
 
   return (
     <div className={`nav-item ${selected ? 'nav-item--selected' : ''} ${hasChildrenSelected() ? 'nav-item--children-selected' : ''}`}>
-      <button className='nav-item-content' onClick={onClick ?? (() => setOpen(!open))}>
+      <button className='nav-item-content' onClick={onClickHandler}>
         {icon && <Icon name={icon} className='nav-item--icon' />}
         <span className='nav-item--label'>{label}</span>
         {children && <Icon name={open ? 'chevronUp' : 'chevronDown'} className='nav-item--arrow' />}

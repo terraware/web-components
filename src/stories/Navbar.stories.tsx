@@ -16,11 +16,19 @@ export default {
 const Template: Story<NavbarProps> = (args) => {
   const [selectedItem, setSelectedItem] = React.useState('projects');
 
+  const onClickHandler = (open: boolean | undefined) => {
+    if (open) {
+      setSelectedItem('summary');
+    } else {
+      setSelectedItem('home');
+    }
+  };
+
   console.log(selectedItem);
   return (
     <Navbar>
       <NavItem label='Home' icon='home' selected={selectedItem === 'home'} onClick={() => setSelectedItem('home')} />
-      <NavItem label='Seeds' icon='seeds'>
+      <NavItem label='Seeds' icon='seeds' onClick={onClickHandler}>
         <SubNavbar>
           <NavItem label='Summary' selected={selectedItem === 'summary'} onClick={() => setSelectedItem('summary')} />
           <NavItem label='Accessions' selected={selectedItem === 'accessions'} onClick={() => setSelectedItem('accessions')} />
