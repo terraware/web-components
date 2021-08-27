@@ -2,12 +2,12 @@ import React, { PropsWithChildren, ReactElement } from 'react';
 import Icon from '../Icon/Icon';
 import { IconName } from '../Icon/icons';
 import './styles.scss';
-import SubNavbar, { SubNavbarProps } from './SubNavbar';
+import { SubNavbarProps } from './SubNavbar';
 
 export interface NavItemProps {
   label: string;
   icon?: IconName;
-  children?: typeof SubNavbar;
+  children?: JSX.Element;
   selected?: boolean;
   isSubItem?: boolean;
   onClick?: (open: boolean | undefined) => void;
