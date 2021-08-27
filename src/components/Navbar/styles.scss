@@ -8,13 +8,14 @@
 .navbar {
   background-color: $tw-clr-nvgtn-side-nav-item-fill;
   width: $tw-sz-nvgtn-side-nav-width;
+  position: fixed;
   .logo {
     background-color: $tw-clr-nvgtn-side-nav-item-fill;
     padding-bottom: $tw-spc-base-small 0;
     margin-bottom: $tw-spc-base-small 0;
 
     svg {
-      padding: $tw-spc-base-medium $tw-spc-base-small;
+      margin: $tw-spc-base-medium $tw-spc-base-small;
       height: $tw-spc-base-small;
     }
   }
