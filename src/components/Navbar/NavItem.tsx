@@ -23,12 +23,14 @@ export default function NavItem(props: NavItemProps): JSX.Element {
         const subChildren = item.props.children;
         if (Array.isArray(subChildren)) {
           return subChildren.some((subChild) => {
-            const item = subChild as ReactElement<PropsWithChildren<NavItemProps>>;
-            return item.props.selected;
+            const subItem = subChild as ReactElement<PropsWithChildren<NavItemProps>>;
+
+            return subItem.props.selected;
           });
         } else {
-          const item = subChildren as ReactElement<PropsWithChildren<NavItemProps>>;
-          return item.props.selected;
+          const subItem = subChildren as ReactElement<PropsWithChildren<NavItemProps>>;
+
+          return subItem.props.selected;
         }
       }
     }
