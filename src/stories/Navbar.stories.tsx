@@ -24,7 +24,6 @@ const Template: Story<NavbarProps> = (args) => {
     }
   };
 
-  console.log(selectedItem);
   return (
     <Navbar>
       <NavItem label='Home' icon='home' selected={selectedItem === 'home'} onClick={() => setSelectedItem('home')} />
