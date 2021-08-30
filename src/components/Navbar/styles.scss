@@ -25,6 +25,15 @@
     .divider {
       border-top: $tw-sz-dvdr-stroke solid $tw-clr-dvdr-fill;
     }
+
+    &--title {
+      font-family: $tw-fnt-nvgtn-side-nav-section-title-font-family;
+      font-size: $tw-fnt-nvgtn-side-nav-section-title-font-size;
+      font-weight: $tw-fnt-nvgtn-side-nav-section-title-font-weight;
+      line-height: $tw-fnt-nvgtn-side-nav-section-title-line-height;
+      text-transform: $tw-fnt-nvgtn-side-nav-section-title-text-transform;
+      color: $tw-clr-nvgtn-side-nav-section-title;
+    }
   }
 
   .nav-item {

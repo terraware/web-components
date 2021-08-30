@@ -27,6 +27,7 @@ const Template: Story<NavbarProps> = (args) => {
   return (
     <Navbar>
       <NavItem label='Home' icon='home' selected={selectedItem === 'home'} onClick={() => setSelectedItem('home')} />
+      <NavSection title='Flora' />
       <NavItem label='Seeds' icon='seeds' onClick={onClickHandler}>
         <SubNavbar>
           <NavItem label='Summary' selected={selectedItem === 'summary'} onClick={() => setSelectedItem('summary')} />
@@ -35,6 +36,9 @@ const Template: Story<NavbarProps> = (args) => {
       </NavItem>
       <NavItem label='Plants' icon='restorationSite' selected={selectedItem === 'plants'} onClick={() => setSelectedItem('plants')} />
       <NavItem label='Species' icon='species' selected={selectedItem === 'species'} onClick={() => setSelectedItem('species')} />
+      <NavSection title='Hardware' />
+      <NavItem label='Seed Bank' icon='restorationSite' selected={selectedItem === 'seedbank'} onClick={() => setSelectedItem('seedbank')} />
+      <NavItem label='Drone Data' icon='species' selected={selectedItem === 'dronedata'} onClick={() => setSelectedItem('dronedata')} />
       <NavSection />
       <NavItem label='Projects' icon='folder' selected={selectedItem === 'projects'} onClick={() => setSelectedItem('projects')} />
       <NavItem label='Sites' icon='site' selected={selectedItem === 'sites'} onClick={() => setSelectedItem('sites')} />
