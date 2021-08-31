@@ -24,8 +24,8 @@ curl https://terraformation.zeroheight.com/api/token_file/decd4c60f4f9/share > j
 curl https://terraformation.zeroheight.com/api/token_file/c4a77df9398c/share > json/navbar/color-divider.json
 curl https://terraformation.zeroheight.com/api/token_file/f789865ce7b7/share > json/navbar/size-divider.json
 curl https://terraformation.zeroheight.com/api/token_file/bbbf7422d220/share > json/button/button-typography-composite.json
-curl https://terraformation.zeroheight.com/api/token_file/2f90d49d4334/share > json/button/color-button.json
-curl https://terraformation.zeroheight.com/api/token_file/cfb0cfaf26bf/share > json/button/color-size-and-space-button.json
+curl https://terraformation.zeroheight.com/api/token_file/2f90d49d4334/share > json/button/color-button-gradient.json
+curl https://terraformation.zeroheight.com/api/token_file/cfb0cfaf26bf/share > json/button/size-and-space-button.json
 
 
 node build.js
