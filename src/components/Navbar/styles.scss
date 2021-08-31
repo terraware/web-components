@@ -53,12 +53,14 @@
         flex: 1 1 auto;
         text-align: left;
       }
+
+      &:hover {
+        cursor: pointer;
+      }
     }
 
     &:hover {
       background-color: $tw-clr-nvgtn-side-nav-item-fill-hover;
-      cursor: pointer;
-
       // .nav-item {
       //   background-color: $tw-clr-nvgtn-side-nav-item-fill-hover;
       // }
