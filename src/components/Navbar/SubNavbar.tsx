@@ -9,5 +9,5 @@ export interface SubNavbarProps {
 export default function SubNavbar(props: SubNavbarProps): JSX.Element {
   const { children } = props;
 
-  return <div>{children}</div>;
+  return <div className='subnavbar'>{children}</div>;
 }
