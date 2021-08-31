@@ -24,5 +24,5 @@ function build(source, destination) {
   StyleDictionary.buildAllPlatforms();
 }
 
-build(['./json/button/**/*.json'], 'button_variables.scss');
-build(['./json/system/**/*.json'], 'system_variables.scss');
+build(['./json/system/**/*.json', './json/button/**/*.json'], 'button_variables.scss');
+build(['./json/system/**/*.json', './json/navbar/**/*.json'], 'navbar_variables.scss');
