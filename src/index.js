@@ -16,28 +16,25 @@ import TextArea from './components/TextArea';
 import TextField from './components/TextField';
 import Table from './components/table';
 import { descendingComparator, getComparator, stableSort } from './components/table/sort';
-import CellRenderer, {
-    CellDateRenderer,
-  } from './components/table/TableCellRenderer';
-
+import CellRenderer, { CellDateRenderer } from './components/table/TableCellRenderer';
 
 export {
-    Autocomplete,
-    CancelButton,
-    Checkbox,
-    DatePicker,
-    DialogCloseButton,
-    Divisor,
-    Dropdown,
-    Note,
-    RadioButton,
-    SummaryBox,
-    TextArea,
-    TextField,
-    Table,
-    CellRenderer,
-    CellDateRenderer,
-    descendingComparator,
-    getComparator,
-    stableSort,
+  Autocomplete,
+  CancelButton,
+  Checkbox,
+  DatePicker,
+  DialogCloseButton,
+  Divisor,
+  Dropdown,
+  Note,
+  RadioButton,
+  SummaryBox,
+  TextArea,
+  TextField,
+  Table,
+  CellRenderer,
+  CellDateRenderer,
+  descendingComparator,
+  getComparator,
+  stableSort,
 };

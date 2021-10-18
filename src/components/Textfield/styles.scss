@@ -1,0 +1,12 @@
+@import '../../../style-dictionary-dist/textfield_variables.scss';
+
+@font-face {
+  font-family: 'Inter';
+  src: local('Inter'), url(../../fonts/Inter.ttf) format('truetype');
+}
+
+.textfield {
+  .textfield-label {
+    font-family: $tw-fnt-frm-fld-label-font-family;
+  }
+}

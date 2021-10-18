@@ -4,8 +4,9 @@ rm -r style-dictionary-dist
 mkdir style-dictionary-dist
 rm -r style-dictionary/json
 mkdir -p style-dictionary/json/system
-mkdir -p style-dictionary/json/button
 mkdir -p style-dictionary/json/navbar
+mkdir -p style-dictionary/json/button
+mkdir -p style-dictionary/json/textfield
 
 cd style-dictionary
 curl https://terraformation.zeroheight.com/api/token_file/9e72dacc74ba/share > json/system/colors-neutral.json
@@ -26,6 +27,8 @@ curl https://terraformation.zeroheight.com/api/token_file/f789865ce7b7/share > j
 curl https://terraformation.zeroheight.com/api/token_file/bbbf7422d220/share > json/button/button-typography-composite.json
 curl https://terraformation.zeroheight.com/api/token_file/2f90d49d4334/share > json/button/color-button-gradient.json
 curl https://terraformation.zeroheight.com/api/token_file/cfb0cfaf26bf/share > json/button/size-and-space-button.json
-
+curl https://terraformation.zeroheight.com/api/token_file/fc808f8c9630/share > json/textfield/textfield-typography-composite.json
+curl https://terraformation.zeroheight.com/api/token_file/b80222c8ac34/share > json/textfield/color-textfield.json
+curl https://terraformation.zeroheight.com/api/token_file/849ec332bcba/share > json/textfield/size-and-space-textfield.json
 
 node build.js
