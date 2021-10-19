@@ -6,7 +6,116 @@
 }
 
 .textfield {
+  display: flex;
+  flex-flow: row wrap;
   .textfield-label {
     font-family: $tw-fnt-frm-fld-label-font-family;
+    font-size: $tw-fnt-frm-fld-label-font-size;
+    font-weight: $tw-fnt-frm-fld-label-font-weight;
+    line-height: $tw-fnt-frm-fld-label-line-height;
+    color: $tw-clr-frm-fld-label;
+    margin-bottom: $tw-spc-base-xx-small;
+    display: block;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .textfield-help-text {
+    font-family: $tw-fnt-frm-fld-help-text-font-family;
+    font-size: $tw-fnt-frm-fld-help-text-font-size;
+    font-weight: $tw-fnt-frm-fld-help-text-font-weight;
+    line-height: $tw-fnt-frm-fld-help-text-line-height;
+    color: $tw-clr-frm-fld-help-text;
+    display: block;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .textfield-value {
+    background-color: $tw-clr-frm-fld-text-input-fill;
+    border: 1px solid $tw-clr-frm-fld-text-input-stroke;
+    padding: $tw-spc-base-x-small;
+    border-radius: $tw-rds-frm-fld-text-input;
+    border-width: $tw-sz-frm-fld-text-input-stroke;
+    width: 100%;
+    max-width: 100%;
+    display: flex;
+
+    input {
+      border: none;
+      width: 100%;
+      font-family: $tw-fnt-frm-fld-help-text-font-family;
+      font-size: $tw-fnt-frm-fld-help-text-font-size;
+      font-weight: $tw-fnt-frm-fld-help-text-font-weight;
+      line-height: $tw-fnt-frm-fld-help-text-line-height;
+      color: $tw-clr-frm-fld-value;
+      &::placeholder {
+        font-family: $tw-fnt-frm-fld-text-placeholder-font-family;
+        font-size: $tw-fnt-frm-fld-text-placeholder-font-size;
+        font-weight: $tw-fnt-frm-fld-text-placeholder-font-weight;
+        line-height: $tw-fnt-frm-fld-text-placeholder-line-height;
+        color: $tw-clr-base-gray-300;
+      }
+      &:focus-visible {
+        outline: none;
+      }
+    }
+
+    // &--disabled {
+    //   opacity: $tw-clr-frm-fld-off;
+    // }
+
+    &--icon-right {
+      width: $tw-fnt-frm-fld-text-value-line-height;
+      height: $tw-fnt-frm-fld-text-value-line-height;
+      fill: $tw-clr-frm-fld-value;
+    }
+
+    &--icon-left {
+      width: $tw-fnt-frm-fld-text-value-line-height;
+      height: $tw-fnt-frm-fld-text-value-line-height;
+      fill: $tw-clr-frm-fld-value;
+    }
+  }
+
+  .textfield-error-text {
+    font-family: $tw-fnt-frm-fld-error-text-font-family;
+    font-size: $tw-fnt-frm-fld-error-text-font-size;
+    font-weight: $tw-fnt-frm-fld-error-text-font-weight;
+    line-height: $tw-fnt-frm-fld-error-text-line-height;
+    color: $tw-clr-frm-fld-error-text;
+    display: block;
+    width: 100%;
+    max-width: 100%;
+
+    &--icon {
+      fill: $tw-clr-frm-fld-error-text;
+      width: $tw-fnt-frm-fld-error-text-line-height;
+      height: $tw-fnt-frm-fld-error-text-line-height;
+      margin-left: $tw-spc-base-x-small;
+    }
+  }
+
+  .textfield-warning-text {
+    font-family: $tw-fnt-frm-fld-warning-text-font-family;
+    font-size: $tw-fnt-frm-fld-warning-text-font-size;
+    font-weight: $tw-fnt-frm-fld-warning-text-font-weight;
+    line-height: $tw-fnt-frm-fld-warning-text-line-height;
+    color: $tw-clr-frm-fld-warning-text;
+    display: block;
+    width: 100%;
+    max-width: 100%;
+
+    &--icon {
+      fill: $tw-clr-frm-fld-warning-text;
+      width: $tw-fnt-frm-fld-error-text-line-height;
+      height: $tw-fnt-frm-fld-error-text-line-height;
+      margin-left: $tw-spc-base-x-small;
+    }
+  }
+
+  .label-container {
+    display: flex;
+    width: 100%;
   }
 }

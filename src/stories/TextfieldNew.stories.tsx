@@ -7,18 +7,29 @@ import TextField, { Props as TextFieldProps } from '../components/Textfield/Text
 export default {
   title: 'TextField New',
   component: TextField,
+  argTypes: {
+    iconLeft: {
+      options: ['lock', 'caretDown', 'plus', null],
+      control: { type: 'radio' },
+    },
+    iconRight: {
+      options: ['lock', 'caretDown', 'plus', null],
+      control: { type: 'radio' },
+    },
+  },
 };
 
 const Template: Story<TextFieldProps> = (args) => {
-  return <TextField label='Field Label' helperText='Help Text' />;
+  return <TextField {...args} />;
 };
 
 export const Default = Template.bind({});
 
 Default.args = {
-  label: 'Label',
-  type: 'productive',
-  priority: 'primary',
-  size: 'small',
+  label: 'Field Label',
   disabled: false,
+  helperText: 'Help Text',
+  placeholder: 'placeholder',
+  errorText: '',
+  warningText: '',
 };

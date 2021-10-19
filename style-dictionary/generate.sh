@@ -4,7 +4,7 @@ rm -r style-dictionary-dist
 mkdir style-dictionary-dist
 rm -r style-dictionary/json
 mkdir -p style-dictionary/json/system
-mkdir -p style-dictionary/json/navbar
+# mkdir -p style-dictionary/json/navbar
 mkdir -p style-dictionary/json/button
 mkdir -p style-dictionary/json/textfield
 
