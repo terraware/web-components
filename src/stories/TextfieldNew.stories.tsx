@@ -32,4 +32,7 @@ Default.args = {
   placeholder: 'placeholder',
   errorText: '',
   warningText: '',
+  readonly: false,
+  display: false,
+  value: '',
 };

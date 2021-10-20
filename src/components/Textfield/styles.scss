@@ -33,7 +33,7 @@
 
   .textfield-value {
     background-color: $tw-clr-frm-fld-text-input-fill;
-    border: 1px solid $tw-clr-frm-fld-text-input-stroke;
+    border: $tw-sz-frm-fld-text-input-stroke solid $tw-clr-frm-fld-text-input-stroke;
     padding: $tw-spc-base-x-small;
     border-radius: $tw-rds-frm-fld-text-input;
     border-width: $tw-sz-frm-fld-text-input-stroke;
@@ -49,6 +49,7 @@
       font-weight: $tw-fnt-frm-fld-text-value-font-weight;
       line-height: $tw-fnt-frm-fld-text-value-line-height;
       color: $tw-clr-frm-fld-value;
+      background: transparent;
       &::placeholder {
         font-family: $tw-fnt-frm-fld-text-placeholder-font-family;
         font-size: $tw-fnt-frm-fld-text-placeholder-font-size;
@@ -59,6 +60,15 @@
       &:focus-visible {
         outline: none;
       }
+    }
+
+    &--display {
+      font-family: $tw-fnt-frm-fld-text-value-font-family;
+      font-size: $tw-fnt-frm-fld-text-value-font-size;
+      font-weight: $tw-fnt-frm-fld-text-value-font-weight;
+      line-height: $tw-fnt-frm-fld-text-value-line-height;
+      padding: 0;
+      margin: 0;
     }
 
     // &--disabled {
@@ -76,6 +86,51 @@
       height: $tw-fnt-frm-fld-text-value-line-height;
       fill: $tw-clr-frm-fld-value;
       margin-right: $tw-spc-base-x-small;
+    }
+
+    &:hover {
+      border: $tw-sz-frm-fld-text-input-stroke solid $tw-clr-frm-fld-text-input-stroke-hover;
+    }
+
+    &:active {
+      border: $tw-sz-frm-fld-text-input-stroke-active solid $tw-clr-frm-fld-text-input-stroke-hover;
+    }
+
+    &--error {
+      border: $tw-sz-frm-fld-text-input-stroke solid $tw-clr-frm-fld-text-input-stroke-error;
+      background-color: $tw-clr-frm-fld-text-input-fill-error;
+
+      &:hover {
+        border: $tw-sz-frm-fld-text-input-stroke solid $tw-clr-frm-fld-text-input-stroke-error;
+      }
+
+      &:active {
+        border: $tw-sz-frm-fld-text-input-stroke-active solid $tw-clr-frm-fld-text-input-stroke-error;
+      }
+    }
+
+    &--warning {
+      border: $tw-sz-frm-fld-text-input-stroke solid $tw-clr-frm-fld-text-input-stroke-warning;
+      background-color: $tw-clr-frm-fld-text-input-fill-warning;
+
+      &:hover {
+        border: $tw-sz-frm-fld-text-input-stroke solid $tw-clr-frm-fld-text-input-stroke-warning;
+      }
+
+      &:active {
+        border: $tw-sz-frm-fld-text-input-stroke-active solid $tw-clr-frm-fld-text-input-stroke-warning;
+      }
+    }
+
+    &--readonly {
+      background-color: $tw-clr-frm-fld-text-input-fill-read-only;
+      &:hover {
+        border: $tw-sz-frm-fld-text-input-stroke solid $tw-clr-frm-fld-text-input-stroke;
+      }
+
+      &:active {
+        border: $tw-sz-frm-fld-text-input-stroke solid $tw-clr-frm-fld-text-input-stroke;
+      }
     }
   }
 
