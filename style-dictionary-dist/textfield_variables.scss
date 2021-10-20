@@ -1,6 +1,6 @@
 
 // Do not edit directly
-// Generated on Mon, 18 Oct 2021 15:42:06 GMT
+// Generated on Wed, 20 Oct 2021 12:58:26 GMT
 
 $tw-clr-icon-fill-critical: #FE0003;
 $tw-clr-icon-fill-passive: #708284;
@@ -115,6 +115,21 @@ $tw-clr-base-semantic-success-text: #27764E;
 $tw-clr-base-semantic-warning: #BD6931;
 $tw-clr-base-semantic-warning-bg: #FEF2EE;
 $tw-clr-base-semantic-warning-text: #9A572B;
+$tw-clr-text-fill: #3A4445;
+$tw-clr-text-fill-inv: #FFFFFF;
+$tw-clr-text-fill-productive: #0067C8;
+$tw-opcty-base-000: 0;
+$tw-opcty-base-010: 0.1;
+$tw-opcty-base-020: 0.2;
+$tw-opcty-base-030: 0.3;
+$tw-opcty-base-040: 0.4;
+$tw-opcty-base-050: 0.5;
+$tw-opcty-base-060: 0.6;
+$tw-opcty-base-070: 0.7;
+$tw-opcty-base-080: 0.8;
+$tw-opcty-base-090: 0.9;
+$tw-opcty-base-100: 1;
+$tw-opcty-disabled: 0.5;
 $tw-spc-base-large: 32px;
 $tw-spc-base-medium: 24px;
 $tw-spc-base-none: 0;
@@ -135,9 +150,6 @@ $tw-sz-icon-large: 32px;
 $tw-sz-icon-medium: 24px;
 $tw-sz-icon-small: 16px;
 $tw-sz-icon-x-large: 48px;
-$tw-clr-text-fill: #3A4445;
-$tw-clr-text-fill-inv: #FFFFFF;
-$tw-clr-text-fill-productive: #0067C8;
 $tw-fnt-base-body-01-regular-font-family: 'Inter', sans-serif;
 $tw-fnt-base-body-01-regular-font-size: 20px;
 $tw-fnt-base-body-01-regular-font-weight: 400;
@@ -249,6 +261,7 @@ $tw-clr-frm-fld-value: #3A4445;
 $tw-clr-frm-fld-warning-text: #BD6931;
 $tw-rds-frm-fld-text-input: 4px;
 $tw-sz-frm-fld-text-input-stroke: 1px;
+$tw-sz-frm-fld-text-input-stroke-active: 2px;
 $tw-sz-frm-fld-textarea-input-height: [object Object];
 $tw-fnt-frm-fld-error-text-font-family: 'Inter', sans-serif;
 $tw-fnt-frm-fld-error-text-font-size: 14px;

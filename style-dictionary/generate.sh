@@ -4,7 +4,7 @@ rm -r style-dictionary-dist
 mkdir style-dictionary-dist
 rm -r style-dictionary/json
 mkdir -p style-dictionary/json/system
-# mkdir -p style-dictionary/json/navbar
+mkdir -p style-dictionary/json/navbar
 mkdir -p style-dictionary/json/button
 mkdir -p style-dictionary/json/textfield
 
@@ -13,12 +13,15 @@ curl https://terraformation.zeroheight.com/api/token_file/9e72dacc74ba/share > j
 curl https://terraformation.zeroheight.com/api/token_file/eea82bea776a/share > json/system/colors-primary.json
 curl https://terraformation.zeroheight.com/api/token_file/6314661a280a/share > json/system/colors-secondary.json
 curl https://terraformation.zeroheight.com/api/token_file/16bdf3d3fd23/share > json/system/colors-semantic.json
+curl https://terraformation.zeroheight.com/api/token_file/64c44c3af202/share > json/system/colors-typography.json
 curl https://terraformation.zeroheight.com/api/token_file/4c841c034e3c/share > json/system/typography-color.json
 curl https://terraformation.zeroheight.com/api/token_file/383b3df56337/share > json/system/typography-font.json
 curl https://terraformation.zeroheight.com/api/token_file/c51547b17edb/share > json/system/typography-composite.json
 curl https://terraformation.zeroheight.com/api/token_file/27fbda37a0d5/share > json/system/size-and-space.json
 curl https://terraformation.zeroheight.com/api/token_file/e1207808261b/share > json/system/color-iconography.json
 curl https://terraformation.zeroheight.com/api/token_file/2adb63d624f6/share > json/system/size-iconography.json
+curl https://terraformation.zeroheight.com/api/token_file/de2ec9230acd/share > json/system/opacity-base.json
+curl https://terraformation.zeroheight.com/api/token_file/8a1e3f4be355/share > json/system/opacity-semantic.json
 curl https://terraformation.zeroheight.com/api/token_file/381a96fe2ed1/share > json/navbar/navbar-text-composite.json
 curl https://terraformation.zeroheight.com/api/token_file/193dc5a8d136/share > json/navbar/color-navbar.json
 curl https://terraformation.zeroheight.com/api/token_file/decd4c60f4f9/share > json/navbar/size-navbar.json

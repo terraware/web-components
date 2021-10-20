@@ -61,9 +61,9 @@
       }
     }
 
-    // &--disabled {
-    //   opacity: $tw-clr-frm-fld-off;
-    // }
+    &--disabled {
+      opacity: $tw-opacity-semantic-off;
+    }
 
     &--icon-right {
       width: $tw-fnt-frm-fld-text-value-line-height;
