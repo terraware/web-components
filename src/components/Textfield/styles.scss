@@ -44,10 +44,10 @@
     input {
       border: none;
       width: 100%;
-      font-family: $tw-fnt-frm-fld-help-text-font-family;
-      font-size: $tw-fnt-frm-fld-help-text-font-size;
-      font-weight: $tw-fnt-frm-fld-help-text-font-weight;
-      line-height: $tw-fnt-frm-fld-help-text-line-height;
+      font-family: $tw-fnt-frm-fld-text-value-font-family;
+      font-size: $tw-fnt-frm-fld-text-value-font-size;
+      font-weight: $tw-fnt-frm-fld-text-value-font-weight;
+      line-height: $tw-fnt-frm-fld-text-value-line-height;
       color: $tw-clr-frm-fld-value;
       &::placeholder {
         font-family: $tw-fnt-frm-fld-text-placeholder-font-family;
@@ -61,9 +61,9 @@
       }
     }
 
-    &--disabled {
-      opacity: $tw-opacity-semantic-off;
-    }
+    // &--disabled {
+    //   opacity: $tw-opacity-semantic-off;
+    // }
 
     &--icon-right {
       width: $tw-fnt-frm-fld-text-value-line-height;
@@ -75,6 +75,7 @@
       width: $tw-fnt-frm-fld-text-value-line-height;
       height: $tw-fnt-frm-fld-text-value-line-height;
       fill: $tw-clr-frm-fld-value;
+      margin-right: $tw-spc-base-x-small;
     }
   }
 
@@ -92,7 +93,7 @@
       fill: $tw-clr-frm-fld-error-text;
       width: $tw-fnt-frm-fld-error-text-line-height;
       height: $tw-fnt-frm-fld-error-text-line-height;
-      margin-left: $tw-spc-base-x-small;
+      margin-right: $tw-spc-base-x-small;
     }
   }
 
@@ -110,7 +111,7 @@
       fill: $tw-clr-frm-fld-warning-text;
       width: $tw-fnt-frm-fld-error-text-line-height;
       height: $tw-fnt-frm-fld-error-text-line-height;
-      margin-left: $tw-spc-base-x-small;
+      margin-right: $tw-spc-base-x-small;
     }
   }
 
