@@ -29,6 +29,7 @@
     display: block;
     width: 100%;
     max-width: 100%;
+    margin-top: $tw-spc-base-xx-small;
   }
 
   .textfield-value {
@@ -50,6 +51,8 @@
       line-height: $tw-fnt-frm-fld-text-value-line-height;
       color: $tw-clr-frm-fld-value;
       background: transparent;
+      padding-top: 0;
+      padding-bottom: 0;
       &::placeholder {
         font-family: $tw-fnt-frm-fld-text-placeholder-font-family;
         font-size: $tw-fnt-frm-fld-text-placeholder-font-size;
@@ -71,9 +74,9 @@
       margin: 0;
     }
 
-    // &--disabled {
-    //   opacity: $tw-opacity-semantic-off;
-    // }
+    &--disabled {
+      opacity: $tw-opcty-semantic-off;
+    }
 
     &--icon-right {
       width: $tw-fnt-frm-fld-text-value-line-height;
@@ -173,5 +176,6 @@
   .label-container {
     display: flex;
     width: 100%;
+    margin-top: $tw-spc-base-xx-small;
   }
 }

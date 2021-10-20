@@ -20,7 +20,12 @@ export default {
 };
 
 const Template: Story<TextFieldProps> = (args) => {
-  return <TextField {...args} />;
+  const [value, setValue] = React.useState('');
+  const handleChange = (e: React.FormEvent<HTMLInputElement>) => {
+    setValue(e.currentTarget.value as string);
+  };
+
+  return <TextField {...args} value={value} onChange={handleChange} />;
 };
 
 export const Default = Template.bind({});
@@ -34,5 +39,4 @@ Default.args = {
   warningText: '',
   readonly: false,
   display: false,
-  value: '',
 };

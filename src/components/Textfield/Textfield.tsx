@@ -1,11 +1,11 @@
 import classNames from 'classnames';
-import React from 'react';
+import React, { ChangeEventHandler } from 'react';
 import Icon from '../Icon/Icon';
 import { IconName } from '../Icon/icons';
 import './styles.scss';
 
 export interface Props {
-  onClick?: () => void;
+  onChange?: ChangeEventHandler<HTMLInputElement> | undefined;
   label: string;
   disabled?: boolean;
   iconLeft?: IconName;
@@ -22,7 +22,7 @@ export interface Props {
 }
 
 export default function TextField(props: Props): JSX.Element {
-  const { value, onClick, label, disabled, iconLeft, iconRight, id, className, helperText, placeholder, errorText, warningText, readonly, display } = props;
+  const { value, onChange, label, disabled, iconLeft, iconRight, id, className, helperText, placeholder, errorText, warningText, readonly, display } = props;
 
   const textfieldClass = classNames({
     'textfield-value': true,
@@ -40,7 +40,7 @@ export default function TextField(props: Props): JSX.Element {
       {!display && (
         <div id={id} className={textfieldClass}>
           {iconLeft && <Icon name={iconLeft} className='textfield-value--icon-left' />}
-          <input value={value} disabled={readonly} placeholder={placeholder} />
+          <input value={value} disabled={readonly} placeholder={placeholder} onChange={onChange} />
           {iconRight && <Icon name={iconRight} className='textfield-value--icon-right' />}
         </div>
       )}
