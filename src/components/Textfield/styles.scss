@@ -32,6 +32,26 @@
     margin-top: $tw-spc-base-xx-small;
   }
 
+  textarea {
+    font-family: $tw-fnt-frm-fld-text-value-font-family;
+    font-size: $tw-fnt-frm-fld-text-value-font-size;
+    font-weight: $tw-fnt-frm-fld-text-value-font-weight;
+    line-height: $tw-fnt-frm-fld-text-value-line-height;
+    color: $tw-clr-frm-fld-value;
+    padding-top: 0;
+    padding-bottom: 0;
+    &::placeholder {
+      font-family: $tw-fnt-frm-fld-text-placeholder-font-family;
+      font-size: $tw-fnt-frm-fld-text-placeholder-font-size;
+      font-weight: $tw-fnt-frm-fld-text-placeholder-font-weight;
+      line-height: $tw-fnt-frm-fld-text-placeholder-line-height;
+      color: $tw-clr-base-gray-300;
+    }
+    &:focus-visible {
+      outline: none;
+    }
+  }
+
   .textfield-value {
     background-color: $tw-clr-frm-fld-text-input-fill;
     border: $tw-sz-frm-fld-text-input-stroke solid $tw-clr-frm-fld-text-input-stroke;
@@ -41,6 +61,14 @@
     width: 100%;
     max-width: 100%;
     display: flex;
+
+    &:hover {
+      border: $tw-sz-frm-fld-text-input-stroke solid $tw-clr-frm-fld-text-input-stroke-hover;
+    }
+
+    &:active {
+      border: $tw-sz-frm-fld-text-input-stroke-active solid $tw-clr-frm-fld-text-input-stroke-hover;
+    }
 
     input {
       border: none;
@@ -76,6 +104,13 @@
 
     &--disabled {
       opacity: $tw-opcty-semantic-off;
+      &:hover {
+        border: $tw-sz-frm-fld-text-input-stroke solid $tw-clr-frm-fld-text-input-stroke;
+      }
+
+      &:active {
+        border: $tw-sz-frm-fld-text-input-stroke solid $tw-clr-frm-fld-text-input-stroke;
+      }
     }
 
     &--icon-right {
@@ -89,14 +124,6 @@
       height: $tw-fnt-frm-fld-text-value-line-height;
       fill: $tw-clr-frm-fld-value;
       margin-right: $tw-spc-base-x-small;
-    }
-
-    &:hover {
-      border: $tw-sz-frm-fld-text-input-stroke solid $tw-clr-frm-fld-text-input-stroke-hover;
-    }
-
-    &:active {
-      border: $tw-sz-frm-fld-text-input-stroke-active solid $tw-clr-frm-fld-text-input-stroke-hover;
     }
 
     &--error {

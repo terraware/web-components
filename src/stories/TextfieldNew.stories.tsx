@@ -16,6 +16,10 @@ export default {
       options: ['lock', 'caretDown', 'plus', null],
       control: { type: 'radio' },
     },
+    type: {
+      options: ['text', 'textarea'],
+      control: { type: 'radio' },
+    },
   },
 };
 
@@ -39,4 +43,5 @@ Default.args = {
   warningText: '',
   readonly: false,
   display: false,
+  type: 'text',
 };

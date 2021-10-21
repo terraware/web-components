@@ -4,8 +4,10 @@ import Icon from '../Icon/Icon';
 import { IconName } from '../Icon/icons';
 import './styles.scss';
 
+type TextfieldType = 'text' | 'textarea';
+
 export interface Props {
-  onChange?: ChangeEventHandler<HTMLInputElement> | undefined;
+  onChange?: ChangeEventHandler<HTMLInputElement> | ChangeEventHandler<HTMLTextAreaElement> | undefined;
   label: string;
   disabled?: boolean;
   iconLeft?: IconName;
@@ -19,10 +21,27 @@ export interface Props {
   value?: string;
   readonly?: boolean;
   display?: boolean;
+  type: TextfieldType;
 }
 
 export default function TextField(props: Props): JSX.Element {
-  const { value, onChange, label, disabled, iconLeft, iconRight, id, className, helperText, placeholder, errorText, warningText, readonly, display } = props;
+  const {
+    value,
+    onChange,
+    label,
+    disabled,
+    iconLeft,
+    iconRight,
+    id,
+    className,
+    helperText,
+    placeholder,
+    errorText,
+    warningText,
+    readonly,
+    display,
+    type,
+  } = props;
 
   const textfieldClass = classNames({
     'textfield-value': true,
@@ -37,13 +56,22 @@ export default function TextField(props: Props): JSX.Element {
       <label htmlFor={id} className='textfield-label'>
         {label}
       </label>
-      {!display && (
-        <div id={id} className={textfieldClass}>
-          {iconLeft && <Icon name={iconLeft} className='textfield-value--icon-left' />}
-          <input value={value} disabled={readonly} placeholder={placeholder} onChange={onChange} />
-          {iconRight && <Icon name={iconRight} className='textfield-value--icon-right' />}
-        </div>
-      )}
+      {!display &&
+        (type === 'text' ? (
+          <div id={id} className={textfieldClass}>
+            {iconLeft && <Icon name={iconLeft} className='textfield-value--icon-left' />}
+            <input value={value} disabled={readonly || disabled} placeholder={placeholder} onChange={onChange as ChangeEventHandler<HTMLInputElement>} />
+            {iconRight && <Icon name={iconRight} className='textfield-value--icon-right' />}
+          </div>
+        ) : (
+          <textarea
+            className={textfieldClass}
+            value={value}
+            disabled={readonly || disabled}
+            placeholder={placeholder}
+            onChange={onChange as ChangeEventHandler<HTMLTextAreaElement>}
+          />
+        ))}
       {display && <p className='textfield-value--display'>{value}</p>}
       {errorText && (
         <div className='label-container'>
