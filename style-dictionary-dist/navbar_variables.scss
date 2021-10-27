@@ -1,13 +1,14 @@
 
 // Do not edit directly
-// Generated on Wed, 01 Sep 2021 12:41:21 GMT
+// Generated on Wed, 20 Oct 2021 16:15:45 GMT
 
-$tw-clr-icon-fill-blue: #007DF2;
-$tw-clr-icon-fill-gray: #708284;
-$tw-clr-icon-fill-green: #308F5F;
-$tw-clr-icon-fill-red: #FE0003;
+$tw-clr-icon-fill-critical: #FE0003;
+$tw-clr-icon-fill-passive: #708284;
+$tw-clr-icon-fill-productive: #007DF2;
+$tw-clr-icon-fill-success: #308F5F;
 $tw-clr-icon-fill-text: #3A4445;
 $tw-clr-icon-fill-text-inv: #FFFFFF;
+$tw-clr-icon-fill-warning: #BD6931;
 $tw-clr-base-black: #000000;
 $tw-clr-base-gray-025: #F9FAFA;
 $tw-clr-base-gray-050: #F2F4F5;
@@ -101,14 +102,34 @@ $tw-clr-base-yellow-700: #685215;
 $tw-clr-base-yellow-800: #52400F;
 $tw-clr-base-semantic-critical: #FE0003;
 $tw-clr-base-semantic-critical-bg: #FFF1F1;
+$tw-clr-base-semantic-critical-text: #D40002;
 $tw-clr-base-semantic-passive: #708284;
 $tw-clr-base-semantic-passive-bg: #F2F4F5;
+$tw-clr-base-semantic-passive-text: #5C6B6C;
 $tw-clr-base-semantic-productive: #007DF2;
 $tw-clr-base-semantic-productive-bg: #F0F4FF;
+$tw-clr-base-semantic-productive-text: #0067C8;
 $tw-clr-base-semantic-success: #308F5F;
 $tw-clr-base-semantic-success-bg: #D6FDE5;
+$tw-clr-base-semantic-success-text: #27764E;
 $tw-clr-base-semantic-warning: #BD6931;
 $tw-clr-base-semantic-warning-bg: #FEF2EE;
+$tw-clr-base-semantic-warning-text: #9A572B;
+$tw-clr-text-fill: #3A4445;
+$tw-clr-text-fill-inv: #FFFFFF;
+$tw-clr-text-fill-productive: #0067C8;
+$tw-opcty-base-000: 0;
+$tw-opcty-base-010: 0.1;
+$tw-opcty-base-020: 0.2;
+$tw-opcty-base-030: 0.3;
+$tw-opcty-base-040: 0.4;
+$tw-opcty-base-050: 0.5;
+$tw-opcty-base-060: 0.6;
+$tw-opcty-base-070: 0.7;
+$tw-opcty-base-080: 0.8;
+$tw-opcty-base-090: 0.9;
+$tw-opcty-base-100: 1;
+$tw-opcty-semantic-off: 0.5;
 $tw-spc-base-large: 32px;
 $tw-spc-base-medium: 24px;
 $tw-spc-base-none: 0;
@@ -129,8 +150,6 @@ $tw-sz-icon-large: 32px;
 $tw-sz-icon-medium: 24px;
 $tw-sz-icon-small: 16px;
 $tw-sz-icon-x-large: 48px;
-$tw-clr-text-fill: #3A4445;
-$tw-clr-text-fill-inv: #FFFFFF;
 $tw-fnt-base-body-01-regular-font-family: 'Inter', sans-serif;
 $tw-fnt-base-body-01-regular-font-size: 20px;
 $tw-fnt-base-body-01-regular-font-weight: 400;

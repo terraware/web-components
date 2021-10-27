@@ -24,3 +24,4 @@ function build(source, destination) {
 
 build(['./json/system/**/*.json', './json/button/**/*.json'], 'button_variables.scss');
 build(['./json/system/**/*.json', './json/navbar/**/*.json'], 'navbar_variables.scss');
+build(['./json/system/**/*.json', './json/textfield/**/*.json'], 'textfield_variables.scss');
