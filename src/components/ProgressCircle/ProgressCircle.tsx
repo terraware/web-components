@@ -13,6 +13,7 @@ export interface Props {
 
 export default function ProgressCircle(props: Props): JSX.Element {
   const { size = 'small', determinate, value } = props;
+
   return (
     <Box className='circleContainer'>
       <CircularProgress variant='determinate' value={100} className={`${size} circleTrack`} />
