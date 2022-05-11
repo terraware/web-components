@@ -3,6 +3,7 @@ import { ReactComponent as CaretDown } from './caret-down.svg';
 import { ReactComponent as CaretUp } from './caret-up.svg';
 import { ReactComponent as ChevronDown } from './chevron-down.svg';
 import { ReactComponent as ChevronUp } from './chevron-up.svg';
+import { ReactComponent as Close } from './close.svg';
 import { ReactComponent as Error } from './error.svg';
 import { ReactComponent as Folder } from './folder.svg';
 import { ReactComponent as Home } from './home.svg';
@@ -19,8 +20,9 @@ import { ReactComponent as Warning } from './warning.svg';
 export type IconName =
   | 'caretDown'
   | 'caretUp'
-  | 'chevronUp'
   | 'chevronDown'
+  | 'chevronUp'
+  | 'close'
   | 'error'
   | 'folder'
   | 'home'
@@ -42,8 +44,9 @@ type SVGComponent = React.FunctionComponent<
 const icons: Record<IconName, SVGComponent> = {
   caretDown: CaretDown,
   caretUp: CaretUp,
-  chevronUp: ChevronUp,
   chevronDown: ChevronDown,
+  chevronUp: ChevronUp,
+  close: Close,
   folder: Folder,
   home: Home,
   key: Key,

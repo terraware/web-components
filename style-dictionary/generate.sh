@@ -8,6 +8,7 @@ mkdir -p style-dictionary/json/navbar
 mkdir -p style-dictionary/json/button
 mkdir -p style-dictionary/json/textfield
 mkdir -p style-dictionary/json/progressCircle
+mkdir -p style-dictionary/json/dialogBox
 
 cd style-dictionary
 curl https://terraformation.zeroheight.com/api/token_file/9e72dacc74ba/share > json/system/colors-neutral.json
@@ -23,17 +24,19 @@ curl https://terraformation.zeroheight.com/api/token_file/e1207808261b/share > j
 curl https://terraformation.zeroheight.com/api/token_file/2adb63d624f6/share > json/system/size-iconography.json
 curl https://terraformation.zeroheight.com/api/token_file/de2ec9230acd/share > json/system/opacity-base.json
 curl https://terraformation.zeroheight.com/api/token_file/8a1e3f4be355/share > json/system/opacity-semantic.json
+curl https://terraformation.zeroheight.com/api/token_file/c4a77df9398c/share > json/system/color-divider.json
+curl https://terraformation.zeroheight.com/api/token_file/f789865ce7b7/share > json/system/size-divider.json
 curl https://terraformation.zeroheight.com/api/token_file/381a96fe2ed1/share > json/navbar/navbar-text-composite.json
 curl https://terraformation.zeroheight.com/api/token_file/193dc5a8d136/share > json/navbar/color-navbar.json
 curl https://terraformation.zeroheight.com/api/token_file/decd4c60f4f9/share > json/navbar/size-navbar.json
-curl https://terraformation.zeroheight.com/api/token_file/c4a77df9398c/share > json/navbar/color-divider.json
-curl https://terraformation.zeroheight.com/api/token_file/f789865ce7b7/share > json/navbar/size-divider.json
 curl https://terraformation.zeroheight.com/api/token_file/bbbf7422d220/share > json/button/button-typography-composite.json
 curl https://terraformation.zeroheight.com/api/token_file/2f90d49d4334/share > json/button/color-button-gradient.json
 curl https://terraformation.zeroheight.com/api/token_file/cfb0cfaf26bf/share > json/button/size-and-space-button.json
 curl https://terraformation.zeroheight.com/api/token_file/fc808f8c9630/share > json/textfield/textfield-typography-composite.json
 curl https://terraformation.zeroheight.com/api/token_file/b80222c8ac34/share > json/textfield/color-textfield.json
 curl https://terraformation.zeroheight.com/api/token_file/849ec332bcba/share > json/textfield/size-and-space-textfield.json
- curl https://terraformation.zeroheight.com/api/token_file/9c41ae0a15cf/share > json/progressCircle/size-and-space-composite.json
+curl https://terraformation.zeroheight.com/api/token_file/9c41ae0a15cf/share > json/progressCircle/size-and-space-composite.json
+curl https://terraformation.zeroheight.com/api/token_file/131d87d7c06b/share > json/DialogBox/size-and-space-composite.json
+curl  https://terraformation.zeroheight.com/api/token_file/1d5b0c904390/share > json/DialogBox/shadow-shadow.json
 
 node build.js
