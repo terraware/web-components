@@ -10,8 +10,8 @@ export interface Props {
   message?: string;
   children?: ReactNode;
   leftButton?: ReactNode;
-  rightButtons?: ReactNode[];
-  middleButtons?: ReactNode[];
+  rightButtons?: JSX.Element[];
+  middleButtons?: JSX.Element[];
 }
 
 export default function DialogBox(props: Props): JSX.Element {
@@ -36,7 +36,8 @@ export default function DialogBox(props: Props): JSX.Element {
               <div className='left-button'>{leftButton}</div>
               <div className='right-buttons'>
                 {rightButtons?.map((rb, index) => {
-                  return <Fragment key={`rb-${index}`}>{rb}</Fragment>;
+                  const rbWithKey = { ...rb, key: `rb-${index}` };
+                  return rbWithKey;
                 })}
               </div>
             </div>
@@ -44,7 +45,8 @@ export default function DialogBox(props: Props): JSX.Element {
           {middleButtons && (
             <div className='dialog-box--actions-container'>
               {middleButtons?.map((mb, index) => {
-                return <Fragment key={`mb-${index}`}>{mb}</Fragment>;
+                const mbWithKey = { ...mb, key: `mb-${index}` };
+                return mbWithKey;
               })}
             </div>
           )}
