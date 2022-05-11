@@ -19,8 +19,8 @@ export const Default = Template.bind({});
 Default.args = {
   leftButton: <Button id='new-species' label='Test' onClick={() => true} size='small' />,
   rightButtons: [
-    <Button id='new-species' label='Test' onClick={() => true} size='small' />,
-    <Button id='new-species' label='Test' onClick={() => true} size='small' />,
+    <Button id='new-species' label='Test' onClick={() => true} size='small' key='1' />,
+    <Button id='new-species' label='Test' onClick={() => true} size='small' key='2' />,
   ],
   // middleButtons: [
   //   <Button id='new-species' label='Test' onClick={() => true} size='small' />,

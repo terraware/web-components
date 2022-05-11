@@ -37,6 +37,7 @@ export default function DialogBox(props: Props): JSX.Element {
               <div className='right-buttons'>
                 {rightButtons?.map((rb, index) => {
                   const rbWithKey = { ...rb, key: `rb-${index}` };
+
                   return rbWithKey;
                 })}
               </div>
@@ -46,6 +47,7 @@ export default function DialogBox(props: Props): JSX.Element {
             <div className='dialog-box--actions-container'>
               {middleButtons?.map((mb, index) => {
                 const mbWithKey = { ...mb, key: `mb-${index}` };
+
                 return mbWithKey;
               })}
             </div>
