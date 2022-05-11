@@ -20,7 +20,7 @@ export default function DialogBox(props: Props): JSX.Element {
   const hasFooter = leftButton || rightButtons || middleButtons;
 
   return (
-    <div className={`dialog-box--${size}`}>
+    <div className={`dialog-box dialog-box--${size}`}>
       <div className='dialog-box--header'>
         <p className='title'>{title}</p>
         <Icon name={'close'} className='icon-close' />

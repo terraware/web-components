@@ -7,14 +7,14 @@
 
 .dialog-box {
   border: 1px solid $tw-clr-dvdr-fill;
-  box-shadow: $tw-elvtn-base-800;
+  box-shadow: 0px 16px 32px rgba(58, 68, 69, 0.2);
   border-radius: $tw-sz-base-small;
 
- &--small {
-width: 320px;
- }
- &--medium {
-  width: 480x;
+&--small {
+  width: 320px;
+}
+&--medium {
+  width: 480px;
 }
 &--large {
   width: 640px;
@@ -26,32 +26,38 @@ width: 320px;
 &--header {
   background-color: $tw-clr-base-gray-050;
   border-bottom: 1px solid $tw-clr-dvdr-fill;
-  padding: $tw-spc-base-small 0;
-.title {
-  font-family: $tw-fnt-dlg-bx-title-font-family;
-  font-size: $tw-fnt-dlg-bx-title-font-size;
-  font-weight: $tw-fnt-dlg-bx-title-font-weight;
-  line-height: $tw-fnt-dlg-bx-title-line-height;
-  color: $tw-clr-text-fill
-}
+  padding: $tw-spc-base-small;
+  display: flex;
+  justify-content: space-between;
+  border-radius: $tw-sz-base-small $tw-sz-base-small 0 0;
+  .title {
+    font-family: $tw-fnt-dlg-bx-title-font-family;
+    font-size: $tw-fnt-dlg-bx-title-font-size;
+    font-weight: $tw-fnt-dlg-bx-title-font-weight;
+    line-height: $tw-fnt-dlg-bx-title-line-height;
+    color: $tw-clr-text-fill;
+    text-align: center;
+    margin: 0;
+    width: 100%;
+  }
 
-.icon-close {
-  color: $tw-clr-icon-fill-passive;
-  height: $tw-sz-base-medium;
-  width: $tw-sz-base-medium;
-
-}
+  .icon-close {
+    fill: $tw-clr-icon-fill-passive;
+    height: $tw-sz-base-medium;
+    width: $tw-sz-base-medium;
+  }
 }
 
 &--body {
   color: $tw-clr-base-white;
   border-bottom: 1px solid $tw-clr-dvdr-fill;
-  padding: $tw-spc-base-medium 0;
+  padding: $tw-spc-base-medium;
+  text-align: center;
 }
 
 &--body-no-footer {
   color: $tw-clr-base-white;
-  padding: $tw-spc-base-medium 0;
+  padding: $tw-spc-base-medium;
 }
 
 &--message {
@@ -59,8 +65,9 @@ width: 320px;
   font-size: $tw-fnt-dlg-bx-message-font-size;
   font-weight: $tw-fnt-dlg-bx-message-font-weight;
   line-height: $tw-fnt-dlg-bx-message-line-height;
-  color: $tw-clr-text-fill
-  width: 100%
+  color: $tw-clr-text-fill;
+  width: 100%;
+  text-align: center;
 }
 
 &--footer {

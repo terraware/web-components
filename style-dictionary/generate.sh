@@ -24,11 +24,11 @@ curl https://terraformation.zeroheight.com/api/token_file/e1207808261b/share > j
 curl https://terraformation.zeroheight.com/api/token_file/2adb63d624f6/share > json/system/size-iconography.json
 curl https://terraformation.zeroheight.com/api/token_file/de2ec9230acd/share > json/system/opacity-base.json
 curl https://terraformation.zeroheight.com/api/token_file/8a1e3f4be355/share > json/system/opacity-semantic.json
+curl https://terraformation.zeroheight.com/api/token_file/c4a77df9398c/share > json/system/color-divider.json
+curl https://terraformation.zeroheight.com/api/token_file/f789865ce7b7/share > json/system/size-divider.json
 curl https://terraformation.zeroheight.com/api/token_file/381a96fe2ed1/share > json/navbar/navbar-text-composite.json
 curl https://terraformation.zeroheight.com/api/token_file/193dc5a8d136/share > json/navbar/color-navbar.json
 curl https://terraformation.zeroheight.com/api/token_file/decd4c60f4f9/share > json/navbar/size-navbar.json
-curl https://terraformation.zeroheight.com/api/token_file/c4a77df9398c/share > json/navbar/color-divider.json
-curl https://terraformation.zeroheight.com/api/token_file/f789865ce7b7/share > json/navbar/size-divider.json
 curl https://terraformation.zeroheight.com/api/token_file/bbbf7422d220/share > json/button/button-typography-composite.json
 curl https://terraformation.zeroheight.com/api/token_file/2f90d49d4334/share > json/button/color-button-gradient.json
 curl https://terraformation.zeroheight.com/api/token_file/cfb0cfaf26bf/share > json/button/size-and-space-button.json
