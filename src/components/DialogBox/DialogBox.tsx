@@ -9,9 +9,9 @@ export interface Props {
   size: 'small' | 'medium' | 'large' | 'x-large';
   message?: string;
   children?: ReactNode;
-  leftButton?: typeof Button;
-  rightButtons?: typeof Button[];
-  middleButtons?: typeof Button[];
+  leftButton?: ReactNode;
+  rightButtons?: ReactNode[];
+  middleButtons?: ReactNode[];
 }
 
 export default function DialogBox(props: Props): JSX.Element {

@@ -26,7 +26,7 @@
 &--header {
   background-color: $tw-clr-base-gray-050;
   border-bottom: 1px solid $tw-clr-dvdr-fill;
-  padding: $tw-spc-base-small;
+  padding: $tw-spc-base-small $tw-spc-base-medium;
   display: flex;
   justify-content: space-between;
   border-radius: $tw-sz-base-small $tw-sz-base-small 0 0;
@@ -71,15 +71,21 @@
 }
 
 &--footer {
+  border-radius: 0 0 $tw-sz-base-small $tw-sz-base-small;
   background-color: $tw-clr-base-gray-050;
-  padding: $tw-spc-base-medium 0;
+  padding: $tw-spc-base-medium $tw-spc-base-medium;
+  button + button {
+    margin-left: $tw-spc-base-x-small;
+  }
 }
 
 &--footer-container {
   display: flex;
+  justify-content: space-between;
 }
 
 &--actions-container {
   display: flex;
+  justify-content: center;
 }
 }

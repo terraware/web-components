@@ -2,6 +2,7 @@
 
 import { Story } from '@storybook/react';
 import React from 'react';
+import Button from '../components/Button/Button';
 import DialogBox, { Props as DialogBoxProps } from '../components/DialogBox/DialogBox';
 
 export default {
@@ -15,4 +16,14 @@ const Template: Story<DialogBoxProps> = (args) => {
 
 export const Default = Template.bind({});
 
-Default.args = {};
+Default.args = {
+  leftButton: <Button id='new-species' label='Test' onClick={() => true} size='small' />,
+  rightButtons: [
+    <Button id='new-species' label='Test' onClick={() => true} size='small' />,
+    <Button id='new-species' label='Test' onClick={() => true} size='small' />,
+  ],
+  // middleButtons: [
+  //   <Button id='new-species' label='Test' onClick={() => true} size='small' />,
+  //   <Button id='new-species' label='Test' onClick={() => true} size='small' />,
+  // ],
+};
