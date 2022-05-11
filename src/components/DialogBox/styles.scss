@@ -1,0 +1,78 @@
+@import '../../../style-dictionary-dist/dialogBox_variables.scss';
+
+@font-face {
+  font-family: 'Inter';
+  src: local('Inter'), url(../../fonts/Inter.ttf) format('truetype');
+}
+
+.dialog-box {
+  border: 1px solid $tw-clr-dvdr-fill;
+  box-shadow: $tw-elvtn-base-800;
+  border-radius: $tw-sz-base-small;
+
+ &--small {
+width: 320px;
+ }
+ &--medium {
+  width: 480x;
+}
+&--large {
+  width: 640px;
+}
+&--x-large {
+  width: 800px;
+}
+
+&--header {
+  background-color: $tw-clr-base-gray-050;
+  border-bottom: 1px solid $tw-clr-dvdr-fill;
+  padding: $tw-spc-base-small 0;
+.title {
+  font-family: $tw-fnt-dlg-bx-title-font-family;
+  font-size: $tw-fnt-dlg-bx-title-font-size;
+  font-weight: $tw-fnt-dlg-bx-title-font-weight;
+  line-height: $tw-fnt-dlg-bx-title-line-height;
+  color: $tw-clr-text-fill
+}
+
+.icon-close {
+  color: $tw-clr-icon-fill-passive;
+  height: $tw-sz-base-medium;
+  width: $tw-sz-base-medium;
+
+}
+}
+
+&--body {
+  color: $tw-clr-base-white;
+  border-bottom: 1px solid $tw-clr-dvdr-fill;
+  padding: $tw-spc-base-medium 0;
+}
+
+&--body-no-footer {
+  color: $tw-clr-base-white;
+  padding: $tw-spc-base-medium 0;
+}
+
+&--message {
+  font-family: $tw-fnt-dlg-bx-message-font-family;
+  font-size: $tw-fnt-dlg-bx-message-font-size;
+  font-weight: $tw-fnt-dlg-bx-message-font-weight;
+  line-height: $tw-fnt-dlg-bx-message-line-height;
+  color: $tw-clr-text-fill
+  width: 100%
+}
+
+&--footer {
+  background-color: $tw-clr-base-gray-050;
+  padding: $tw-spc-base-medium 0;
+}
+
+&--footer-container {
+  display: flex;
+}
+
+&--actions-container {
+  display: flex;
+}
+}
