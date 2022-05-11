@@ -20,8 +20,8 @@ Small.args = {
   message: 'Message',
   size: 'small',
   middleButtons: [
-    <Button id='new-species' label='Test' onClick={() => true} size='small' />,
-    <Button id='new-species' label='Test' onClick={() => true} size='small' />,
+    <Button id='new-species' label='Test' onClick={() => true} size='small' key={'1'} />,
+    <Button id='new-species' label='Test' onClick={() => true} size='small' key={'2'} />,
   ],
 };
 
@@ -31,8 +31,8 @@ Medium.args = {
   message: 'Message',
   size: 'medium',
   middleButtons: [
-    <Button id='new-species' label='Test' onClick={() => true} size='small' />,
-    <Button id='new-species' label='Test' onClick={() => true} size='small' />,
+    <Button id='new-species' label='Test' onClick={() => true} size='small' key={'1'} />,
+    <Button id='new-species' label='Test' onClick={() => true} size='small' key={'2'} />,
   ],
 };
 
@@ -42,8 +42,8 @@ Large.args = {
   message: 'Message',
   size: 'large',
   middleButtons: [
-    <Button id='new-species' label='Test' onClick={() => true} size='small' />,
-    <Button id='new-species' label='Test' onClick={() => true} size='small' />,
+    <Button id='new-species' label='Test' onClick={() => true} size='small' key={'1'} />,
+    <Button id='new-species' label='Test' onClick={() => true} size='small' key={'2'} />,
   ],
 };
 
@@ -53,8 +53,8 @@ XLarge.args = {
   message: 'Message',
   size: 'x-large',
   middleButtons: [
-    <Button id='new-species' label='Test' onClick={() => true} size='small' />,
-    <Button id='new-species' label='Test' onClick={() => true} size='small' />,
+    <Button id='new-species' label='Test' onClick={() => true} size='small' key={'1'} />,
+    <Button id='new-species' label='Test' onClick={() => true} size='small' key={'2'} />,
   ],
 };
 
