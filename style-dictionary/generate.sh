@@ -37,5 +37,6 @@ curl https://terraformation.zeroheight.com/api/token_file/b80222c8ac34/share > j
 curl https://terraformation.zeroheight.com/api/token_file/849ec332bcba/share > json/textfield/size-and-space-textfield.json
 curl https://terraformation.zeroheight.com/api/token_file/9c41ae0a15cf/share > json/progressCircle/size-and-space-composite.json
 curl https://terraformation.zeroheight.com/api/token_file/131d87d7c06b/share > json/DialogBox/size-and-space-composite.json
+curl  https://terraformation.zeroheight.com/api/token_file/1d5b0c904390/share > json/DialogBox/shadow-shadow.json
 
 node build.js

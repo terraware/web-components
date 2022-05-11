@@ -4,7 +4,7 @@ function build(source, destination) {
     platforms: {
       scss: {
         transformGroup: 'scss',
-        transforms: ['name/css_composite', 'value/gradient'],
+        transforms: ['name/css_composite', 'value/gradient', 'value/shadow'],
         buildPath: '../style-dictionary-dist/',
         files: [
           {
@@ -18,6 +18,7 @@ function build(source, destination) {
 
   StyleDictionary.registerTransform(require('./transforms/name_css_composite.js'));
   StyleDictionary.registerTransform(require('./transforms/value_gradient.js'));
+  StyleDictionary.registerTransform(require('./transforms/value_shadow.js'));
 
   StyleDictionary.buildAllPlatforms();
 }
