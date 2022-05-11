@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import React, { ChangeEventHandler, ReactNode } from 'react';
+import React, { ChangeEventHandler, Fragment, ReactNode } from 'react';
 import './styles.scss';
 import Button from '../Button/Button';
 import Icon from '../Icon/Icon';
@@ -34,10 +34,20 @@ export default function DialogBox(props: Props): JSX.Element {
           {leftButton && (
             <div className='dialog-box--footer-container'>
               <div className='left-button'>{leftButton}</div>
-              <div className='right-buttons'>{rightButtons?.map((rb) => rb)}</div>
+              <div className='right-buttons'>
+                {rightButtons?.map((rb, index) => {
+                  return <Fragment key={`rb-${index}`}>{rb}</Fragment>;
+                })}
+              </div>
             </div>
           )}
-          {middleButtons && <div className='dialog-box--actions-container'>{middleButtons?.map((mb) => mb)}</div>}
+          {middleButtons && (
+            <div className='dialog-box--actions-container'>
+              {middleButtons?.map((mb, index) => {
+                return <Fragment key={`mb-${index}`}>{mb}</Fragment>;
+              })}
+            </div>
+          )}
         </div>
       )}
     </div>
