@@ -6,7 +6,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ### Step 1: Install dependencies
 
-```
+```shell
 yarn
 ```
 
@@ -59,6 +59,6 @@ yarn lint
 
 Update the `style-dictionary/generate.sh` script to download the tokens json and then run
 
-```
+```shell
 yarn build-dictionary
 ```
