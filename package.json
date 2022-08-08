@@ -12,10 +12,11 @@
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
     "classnames": "^2.3.1",
+    "license-report": "^6.0.0",
     "moment": "^2.29.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "react-scripts": "4.0.3",
+    "react-scripts": "^4.0.3",
     "react-sortable-hoc": "^2.0.0",
     "sass": "^1.35.1",
     "tinycolor2": "^1.4.2",
@@ -29,7 +30,8 @@
     "storybook": "start-storybook",
     "build-storybook": "build-storybook -s public",
     "build-dictionary": "./style-dictionary/generate.sh",
-    "lint": "tslint --project tsconfig.json"
+    "lint": "tslint --project tsconfig.json",
+    "license-report": "license-report --only=prod --output=html > public/license-report.html"
   },
   "eslintConfig": {
     "extends": [
