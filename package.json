@@ -1,7 +1,7 @@
 {
   "name": "web-components",
   "version": "0.1.0",
-  "private": false,
+  "private": true,
   "license": "Apache-2.0",
   "dependencies": {
     "@date-io/moment": "^2.10.11",
