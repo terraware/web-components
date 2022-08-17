@@ -10,6 +10,9 @@ function build(source, destination) {
           {
             format: 'scss/variables',
             destination: destination,
+            options: {
+              showFileHeader: false, // this is needed so we can generate output without dirtying git tree if there are no changes
+            },
           },
         ],
       },
