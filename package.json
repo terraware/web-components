@@ -28,11 +28,12 @@
     "build": "build-storybook -c .storybook -o public",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "storybook": "start-storybook",
-    "build-storybook": "build-storybook -s public",
-    "build-dictionary": "./style-dictionary/generate.sh",
+    "storybook": "echo '>>>>> Starting Story-Book! <<<<<' && start-storybook",
+    "build-storybook": "echo '>>>>> Building Story-Book! <<<<<' && build-storybook -s public",
+    "build-dictionary": "echo '>>>> Building dictionary of styles! <<<<<' && ./style-dictionary/generate.sh",
     "lint": "tslint --project tsconfig.json",
-    "license-report": "license-report --only=prod --department.value=terraware --related.value=terraware --output=html > license-report.html"
+    "license-report": "license-report --only=prod --department.value=terraware --related.value=terraware --output=html > license-report.html",
+    "check-updates": "yarn build-dictionary && yarn storybook"
   },
   "eslintConfig": {
     "extends": [
