@@ -13,6 +13,11 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - name: Set Environment
+        run: ./.github/scripts/set-environment.sh
+        env:
+          NPM_REGISTRY_AUTH_TOKEN: ${{ env.NPM_REGISTRY_AUTH_TOKEN }}
+
       - name: Setup Node
         uses: actions/setup-node@v1
         with:
@@ -27,3 +32,16 @@ jobs:
 
       - name: test
         run: yarn test
+
+      - name: build
+        run: yarn build-dist
+
+      - name: license report
+        run: yarn license-report
+
+      - name: update npm registry
+        run: ./.github/scripts/update-npm.sh
+        env:
+          ARTIFACT_REGISTRY_PROVIDER: ${{ env.ARTIFACT_REGISTRY_PROVIDER }}
+          ARTIFACT_REGISTRY: ${{ env.ARTIFACT_REGISTRY }}
+          ARTIFACT_REGISTRY_AUTH_TOKEN: ${{ env.ARTIFACT_REGISTRY_AUTH_TOKEN }}
