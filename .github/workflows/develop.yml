@@ -17,6 +17,7 @@ jobs:
         run: ./.github/scripts/set-environment.sh
         env:
           NPM_REGISTRY_AUTH_TOKEN: ${{ secrets.FAKE_SECRET }}
+          TEST_VAR: ${{ secrets.FAKE_SECRET }}
 
       - name: Setup Node
         uses: actions/setup-node@v1
