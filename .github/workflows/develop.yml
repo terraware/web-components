@@ -45,9 +45,15 @@ jobs:
         env:
           ARTIFACT_REGISTRY_PROVIDER: ${{ env.ARTIFACT_REGISTRY_PROVIDER }}
 
+      - name: setup node env for npm
+        if: env.ARTIFACT_REGISTRY_PROVIDER == 'npm'
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16.x'
+          registry-url: 'https://registry.npmjs.org'
+
       - name: publish npm package
         if: env.UPDATE_NPM_PACKAGE == 'true'
-        run: |
-            npm config set @terraware:registry https://registry.npmjs.org
-            npm config set https://registry.npmjs.org/:_authToken ${{ secrets.NPM_REGISTRY_AUTH_TOKEN }}
-            cd dist && npm publish --scope @terraware
+        run: cd dist && npm publish --scope @terraware
+        env:
+            NODE_AUTH_TOKEN: ${{ secrets.NPM_REGISTRY_AUTH_TOKEN }}
