@@ -7,6 +7,12 @@ echo "Artifact Registry Provider = $ARTIFACT_REGISTRY_PROVIDER"
 # TODO: add support for AWS Code artifact
 if [ $ARTIFACT_REGISTRY_PROVIDER == 'npm' ]; then
 
+  if [ $ARTIFACT_REGISTRY_AUTH_TOKEN == 'fake_token']; then
+    echo "Is Fake Token"
+  else
+    echo "Is Not Fake Token"
+  fi
+
   npm config set @terraware:registry https://registry.npmjs.org
   npm config set https://registry.npmjs.org/:_authToken $ARTIFACT_REGISTRY_AUTH_TOKEN
 
