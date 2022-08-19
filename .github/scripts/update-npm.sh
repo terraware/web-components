@@ -10,7 +10,7 @@ if [ $ARTIFACT_REGISTRY_PROVIDER == 'npm' ]; then
   if [ $ARTIFACT_REGISTRY_AUTH_TOKEN == 'fake_token']; then
     echo "Is Fake Token"
   else
-    echo "Is Not Fake Token"
+    echo "Is Not Fake Token $ARTIFACT_REGISTRY_AUTH_TOKEN"
   fi
 
   npm config set @terraware:registry https://registry.npmjs.org
