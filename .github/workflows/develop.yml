@@ -40,9 +40,14 @@ jobs:
       - name: license report
         run: yarn license-report
 
-      - name: update npm registry
-        run: ./.github/scripts/update-npm.sh
+      - name: compare artifact package version
+        run: ./.github/scripts/compare-artifact-package-versions.sh
         env:
           ARTIFACT_REGISTRY_PROVIDER: ${{ env.ARTIFACT_REGISTRY_PROVIDER }}
-          ARTIFACT_REGISTRY: ${{ env.ARTIFACT_REGISTRY }}
-          ARTIFACT_REGISTRY_AUTH_TOKEN: ${{ env.ARTIFACT_REGISTRY_AUTH_TOKEN }}
+
+      - name: publish npm package
+        if: UPDATE_NPM_PACKAGE == 'true'
+        run: |
+            npm config set @terraware:registry https://registry.npmjs.org
+            npm config set https://registry.npmjs.org/:_authToken ${{ secrets.NPM_REGISTRY_AUTH_TOKEN }}
+            cd dist && npm publish

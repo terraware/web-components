@@ -7,15 +7,6 @@ echo "Artifact Registry Provider = $ARTIFACT_REGISTRY_PROVIDER"
 # TODO: add support for AWS Code artifact
 if [ $ARTIFACT_REGISTRY_PROVIDER == 'npm' ]; then
 
-  if [ $ARTIFACT_REGISTRY_AUTH_TOKEN == 'fake_token']; then
-    echo "Is Fake Token"
-  else
-    echo "Is Not Fake Token $ARTIFACT_REGISTRY_AUTH_TOKEN"
-  fi
-
-  npm config set @terraware:registry https://registry.npmjs.org
-  npm config set https://registry.npmjs.org/:_authToken $ARTIFACT_REGISTRY_AUTH_TOKEN
-
   echo "Checking npm registry for current version"
   NPM_PACKAGE_VERSION=`npm show @terraware/web-components version`
   echo "Got npm package version $NPM_PACKAGE_VERSION"
@@ -27,9 +18,8 @@ if [ $ARTIFACT_REGISTRY_PROVIDER == 'npm' ]; then
   if [ $PACKAGE_JSON_VERSION == $NPM_PACKAGE_VERSION ]; then
     echo "Package is up to date"
   else
-    echo "Updating package in npm"
-    cd dist && npm publish
-    echo "Done updating package in npm"
+    echo "Package needs update"
+    echo "UPDATE_NPM_PACKAGE=true" >> $GITHUB_ENV
   fi
 
 else
