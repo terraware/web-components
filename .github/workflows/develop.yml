@@ -16,7 +16,7 @@ jobs:
       - name: Set Environment
         run: ./.github/scripts/set-environment.sh
         env:
-          NPM_REGISTRY_AUTH_TOKEN: ${{ env.NPM_REGISTRY_AUTH_TOKEN }}
+          NPM_REGISTRY_AUTH_TOKEN: ${{ secrets.NPM_REGISTRY_AUTH_TOKEN }}
 
       - name: Setup Node
         uses: actions/setup-node@v1
