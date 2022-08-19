@@ -8,7 +8,7 @@ echo "Artifact Registry Provider = $ARTIFACT_REGISTRY_PROVIDER"
 if [ $ARTIFACT_REGISTRY_PROVIDER == 'npm' ]; then
 
   npm config set @terraware:registry https://registry.npmjs.org
-  npm config set //registry.npmjs.org/:_authToken $ARTIFACT_REGISTRY_AUTH_TOKEN
+  npm config set https://registry.npmjs.org/:_authToken $ARTIFACT_REGISTRY_AUTH_TOKEN
 
   echo "Checking npm registry for current version"
   NPM_PACKAGE_VERSION=`npm show @terraware/web-components version`
