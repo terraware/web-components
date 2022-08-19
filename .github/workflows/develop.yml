@@ -46,7 +46,7 @@ jobs:
           ARTIFACT_REGISTRY_PROVIDER: ${{ env.ARTIFACT_REGISTRY_PROVIDER }}
 
       - name: publish npm package
-        if: UPDATE_NPM_PACKAGE == 'true'
+        if: env.UPDATE_NPM_PACKAGE == 'true'
         run: |
             npm config set @terraware:registry https://registry.npmjs.org
             npm config set https://registry.npmjs.org/:_authToken ${{ secrets.NPM_REGISTRY_AUTH_TOKEN }}
