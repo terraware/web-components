@@ -5,7 +5,7 @@ set -euo pipefail
 echo "Artifact Registry Provider = $ARTIFACT_REGISTRY_PROVIDER"
 
 # TODO: add support for AWS Code artifact
-if [ $ARTIFACT_REGISTRY_PROVIDER == 'npm' ]; then
+if [ $ARTIFACT_REGISTRY_PROVIDER = 'npm' ]; then
 
   echo "Checking npm registry for current version"
   NPM_PACKAGE_VERSION=`npm show @terraware/web-components version`
