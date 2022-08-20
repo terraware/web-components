@@ -12,6 +12,7 @@ elif [[ "$GITHUB_REF" == refs/heads/main ]]; then
   ARTIFACT_REGISTRY_PROVIDER=npm
 else
   echo "Nothing to do"
+  exit
 fi
 
 # Set registry envars

@@ -15,14 +15,12 @@ jobs:
 
       - name: Set Environment
         run: ./.github/scripts/set-environment.sh
-        env:
-          NPM_REGISTRY_AUTH_TOKEN: ${{ secrets.FAKE_SECRET }}
-          TEST_VAR: ${{ secrets.FAKE_SECRET }}
 
       - name: Setup Node
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v3
         with:
-          node-version: 14.x
+          node-version: '16.x'
+          registry-url: 'https://registry.npmjs.org'
 
       - name: Install Dependencies
         run: |
@@ -44,13 +42,6 @@ jobs:
         run: ./.github/scripts/compare-artifact-package-versions.sh
         env:
           ARTIFACT_REGISTRY_PROVIDER: ${{ env.ARTIFACT_REGISTRY_PROVIDER }}
-
-      - name: setup node env for npm
-        if: env.ARTIFACT_REGISTRY_PROVIDER == 'npm'
-        uses: actions/setup-node@v3
-        with:
-          node-version: '16.x'
-          registry-url: 'https://registry.npmjs.org'
 
       - name: publish npm package
         if: env.UPDATE_NPM_PACKAGE == 'true'
