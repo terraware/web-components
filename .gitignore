@@ -27,3 +27,5 @@ dist/*
 
 # avoid checking in creds
 .npmrc
+
+package-lock.json
