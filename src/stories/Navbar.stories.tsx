@@ -20,8 +20,12 @@ const Template: Story<NavbarProps> = (args) => {
     setSelectedItem('home');
   };
 
+  // tslint:disable-next-line:no-empty
+  const showNavbar = (show: any) => {
+  };
+
   return (
-    <Navbar setShowNavBar={(v) => {}}>
+    <Navbar setShowNavBar={showNavbar}>
       <NavItem label='Home' icon='home' selected={selectedItem === 'home'} onClick={() => setSelectedItem('home')} />
       <NavSection title='Flora' />
       <NavItem label='Seeds' icon='seeds' onClick={onClickHandler}/>
