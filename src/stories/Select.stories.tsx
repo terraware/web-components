@@ -10,6 +10,7 @@ export default {
 };
 
 const Template: Story<SelectProps> = (args) => {
+  // tslint:disable-next-line:no-unused-vars
   const [value, setValue] = React.useState('');
   const handleChange = (e: React.FormEvent<HTMLInputElement>) => {
     setValue(e.currentTarget.value as string);

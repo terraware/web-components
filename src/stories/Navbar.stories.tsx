@@ -16,24 +16,17 @@ export default {
 const Template: Story<NavbarProps> = (args) => {
   const [selectedItem, setSelectedItem] = React.useState('projects');
 
-  const onClickHandler = (open: boolean | undefined) => {
-    if (open) {
-      setSelectedItem('summary');
-    } else {
-      setSelectedItem('home');
-    }
+  const onClickHandler = () => {
+    setSelectedItem('home');
   };
 
   return (
-    <Navbar>
+    <Navbar setShowNavBar={(v) => {}}>
       <NavItem label='Home' icon='home' selected={selectedItem === 'home'} onClick={() => setSelectedItem('home')} />
       <NavSection title='Flora' />
-      <NavItem label='Seeds' icon='seeds' onClick={onClickHandler}>
-        <SubNavbar>
-          <NavItem label='Summary' selected={selectedItem === 'summary'} onClick={() => setSelectedItem('summary')} />
-          <NavItem label='Accessions' selected={selectedItem === 'accessions'} onClick={() => setSelectedItem('accessions')} />
-        </SubNavbar>
-      </NavItem>
+      <NavItem label='Seeds' icon='seeds' onClick={onClickHandler}/>
+      <NavItem label='Summary' selected={selectedItem === 'summary'} onClick={() => setSelectedItem('summary')} />
+      <NavItem label='Accessions' selected={selectedItem === 'accessions'} onClick={() => setSelectedItem('accessions')} />
       <NavItem label='Plants' icon='restorationSite' selected={selectedItem === 'plants'} onClick={() => setSelectedItem('plants')} />
       <NavItem label='Species' icon='species' selected={selectedItem === 'species'} onClick={() => setSelectedItem('species')} />
       <NavSection title='Hardware' />
