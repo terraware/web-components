@@ -1,5 +1,4 @@
-import { TextField } from '@material-ui/core';
-import { Autocomplete as MUIAutocomplete } from '@material-ui/lab';
+import { Autocomplete as MUIAutocomplete, TextField } from '@mui/material';
 import React, { ChangeEvent } from 'react';
 
 export interface Props {
@@ -8,6 +7,8 @@ export interface Props {
   values: string[];
   onChange: (id: string, value: string) => void;
   selected: string | undefined;
+  disabled?: boolean;
+  freeSolo: boolean;
 }
 
 export type DropdownItem = {
@@ -21,6 +22,8 @@ export default function Autocomplete({
   values,
   onChange,
   selected,
+  disabled,
+  freeSolo,
 }: Props): JSX.Element {
   const onChangeHandler = (event: ChangeEvent<any>, value: string | null) => {
     if (event) {
@@ -34,17 +37,16 @@ export default function Autocomplete({
 
   return (
     <MUIAutocomplete
+      disabled={disabled}
       id={id}
       options={values}
       getOptionLabel={(option) => (option ? option : '')}
       onChange={onChangeHandler}
       onInputChange={onChangeHandler}
       inputValue={selected}
-      freeSolo={true}
+      freeSolo={freeSolo}
       forcePopupIcon={true}
-      renderInput={(params) => (
-        <TextField {...params} label={label} variant='outlined' size='small' />
-      )}
+      renderInput={(params) => <TextField {...params} label={label} variant='outlined' size='small' />}
     />
   );
 }

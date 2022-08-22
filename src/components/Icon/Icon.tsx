@@ -1,4 +1,4 @@
-import { Size } from '../types';
+import { Size } from '../Size';
 import icons, { IconName } from './icons';
 import './styles.scss';
 

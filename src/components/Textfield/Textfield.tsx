@@ -1,18 +1,21 @@
 import classNames from 'classnames';
-import React, { ChangeEventHandler } from 'react';
+import React from 'react';
 import Icon from '../Icon/Icon';
 import { IconName } from '../Icon/icons';
 import './styles.scss';
+import { isWhitespaces } from '../../utils/text';
 
 type TextfieldType = 'text' | 'textarea';
 
+type Handler = (id: string, value: unknown) => void;
+
 export interface Props {
-  onChange?: ChangeEventHandler<HTMLInputElement> | ChangeEventHandler<HTMLTextAreaElement> | undefined;
+  onChange?: Handler;
   label: string;
   disabled?: boolean;
   iconLeft?: IconName;
   iconRight?: IconName;
-  id?: string;
+  id: string;
   className?: string;
   helperText?: string;
   placeholder?: string;
@@ -22,6 +25,8 @@ export interface Props {
   readonly?: boolean;
   display?: boolean;
   type: TextfieldType;
+  onKeyDown?: (key: string) => void;
+  onClickRightIcon?: () => void;
 }
 
 export default function TextField(props: Props): JSX.Element {
@@ -41,6 +46,8 @@ export default function TextField(props: Props): JSX.Element {
     readonly,
     display,
     type,
+    onKeyDown,
+    onClickRightIcon,
   } = props;
 
   const textfieldClass = classNames({
@@ -51,6 +58,34 @@ export default function TextField(props: Props): JSX.Element {
     'textfield-value--readonly': readonly,
   });
 
+  const textfieldOnChange = (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+    const textValue = event.target.value;
+    if (isWhitespaces(textValue)) {
+      return;
+    }
+    if (onChange) {
+      onChange(id, textValue);
+    }
+  };
+
+  const onKeyDownHandler = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (onKeyDown) {
+      onKeyDown(e.key);
+    }
+  };
+
+  const renderRightIcon = () => {
+    if (iconRight === 'cancel' && !value) {
+      return null;
+    }
+
+    return (
+      <button onClick={onClickRightIcon} className='textfield-value--icon-container'>
+        <Icon name={iconRight!} className='textfield-value--icon-right' />
+      </button>
+    );
+  };
+
   return (
     <div className={`textfield ${className}`}>
       <label htmlFor={id} className='textfield-label'>
@@ -60,8 +95,14 @@ export default function TextField(props: Props): JSX.Element {
         (type === 'text' ? (
           <div id={id} className={textfieldClass}>
             {iconLeft && <Icon name={iconLeft} className='textfield-value--icon-left' />}
-            <input value={value} disabled={readonly || disabled} placeholder={placeholder} onChange={onChange as ChangeEventHandler<HTMLInputElement>} />
-            {iconRight && <Icon name={iconRight} className='textfield-value--icon-right' />}
+            <input
+              value={value || ''}
+              disabled={readonly || disabled}
+              placeholder={placeholder}
+              onChange={textfieldOnChange}
+              onKeyDown={onKeyDownHandler}
+            />
+            {iconRight ? renderRightIcon() : null}
           </div>
         ) : (
           <textarea
@@ -69,12 +110,12 @@ export default function TextField(props: Props): JSX.Element {
             value={value}
             disabled={readonly || disabled}
             placeholder={placeholder}
-            onChange={onChange as ChangeEventHandler<HTMLTextAreaElement>}
+            onChange={textfieldOnChange}
           />
         ))}
       {display && <p className='textfield-value--display'>{value}</p>}
       {errorText && (
-        <div className='label-container'>
+        <div className='textfield-label-container'>
           <Icon name='error' className='textfield-error-text--icon' />
           <label htmlFor={id} className='textfield-error-text'>
             {errorText}
@@ -82,16 +123,18 @@ export default function TextField(props: Props): JSX.Element {
         </div>
       )}
       {warningText && (
-        <div className='label-container'>
+        <div className='textfield-label-container'>
           <Icon name='warning' className='textfield-warning-text--icon' />
           <label htmlFor={id} className='textfield-warning-text'>
             {warningText}
           </label>
         </div>
       )}
-      <label htmlFor={id} className='textfield-help-text'>
-        {helperText}
-      </label>
+      {helperText && (
+        <label htmlFor={id} className='textfield-help-text'>
+          {helperText}
+        </label>
+      )}
     </div>
   );
 }

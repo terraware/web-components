@@ -1,4 +1,4 @@
-@import '../../../style-dictionary-dist/button_variables.scss';
+@import '../../style-dictionary-dist/button_variables.scss';
 
 @font-face {
   font-family: 'Inter';
@@ -10,6 +10,10 @@
   border-style: solid;
   position: relative;
 
+  &:hover {
+    cursor: pointer;
+  }
+
   &--small {
     height: $tw-sz-btn-small-height;
     font-size: $tw-fnt-btn-label-small-font-size;
@@ -17,7 +21,8 @@
     font-family: $tw-fnt-btn-label-small-font-family;
     line-height: $tw-fnt-btn-label-small-line-height;
     min-width: $tw-sz-btn-small-min-width;
-    padding: calc((#{$tw-sz-btn-small-height} - #{$tw-fnt-btn-label-small-line-height}) / 2) calc(#{$tw-sz-btn-small-height}/ 2);
+    padding: calc((#{$tw-sz-btn-small-height} - #{$tw-fnt-btn-label-small-line-height}) / 2)
+      calc(#{$tw-sz-btn-small-height}/ 2);
     border-radius: calc(#{$tw-sz-btn-small-height} / 2);
 
     &:focus {
@@ -35,10 +40,18 @@
     }
 
     &.button-with-icon {
-      padding-left: calc((#{$tw-sz-btn-small-height} / 2) - (((#{$tw-sz-btn-small-height} - #{$tw-fnt-btn-label-small-line-height}) / 2)));
+      padding-left: calc(
+        (#{$tw-sz-btn-small-height} / 2) - (((#{$tw-sz-btn-small-height} - #{$tw-fnt-btn-label-small-line-height}) / 2))
+      );
 
       .tw-icon--small {
         margin-right: calc((#{$tw-sz-btn-small-height} - #{$tw-fnt-btn-label-small-line-height}) / 2);
+      }
+    }
+    &.button-no-label.button-with-icon {
+      padding: 6px;
+      .tw-icon--small {
+        margin-right: 0;
       }
     }
   }
@@ -50,7 +63,8 @@
     font-family: $tw-fnt-btn-label-medium-font-family;
     line-height: $tw-fnt-btn-label-medium-line-height;
     min-width: $tw-sz-btn-medium-min-width;
-    padding: calc((#{$tw-sz-btn-medium-height} - #{$tw-fnt-btn-label-medium-line-height}) / 2) calc(#{$tw-sz-btn-medium-height}/ 2);
+    padding: calc((#{$tw-sz-btn-medium-height} - #{$tw-fnt-btn-label-medium-line-height}) / 2)
+      calc(#{$tw-sz-btn-medium-height}/ 2);
     border-radius: calc(#{$tw-sz-btn-medium-height} / 2);
 
     &:focus {
@@ -67,9 +81,18 @@
       }
     }
     &.button-with-icon {
-      padding-left: calc((#{$tw-sz-btn-medium-height} / 2) - (((#{$tw-sz-btn-medium-height} - #{$tw-fnt-btn-label-medium-line-height}) / 2)));
+      padding-left: calc(
+        (#{$tw-sz-btn-medium-height} / 2) -
+          (((#{$tw-sz-btn-medium-height} - #{$tw-fnt-btn-label-medium-line-height}) / 2))
+      );
       .tw-icon--medium {
         margin-right: calc((#{$tw-sz-btn-medium-height} - #{$tw-fnt-btn-label-medium-line-height}) / 2);
+      }
+    }
+    &.button-no-label.button-with-icon {
+      padding: 8px;
+      .tw-icon--medium {
+        margin-right: 0;
       }
     }
   }
@@ -81,7 +104,8 @@
     font-family: $tw-fnt-btn-label-large-font-family;
     line-height: $tw-fnt-btn-label-large-line-height;
     min-width: $tw-sz-btn-large-min-width;
-    padding: calc((#{$tw-sz-btn-large-height} - #{$tw-fnt-btn-label-large-line-height}) / 2) calc(#{$tw-sz-btn-large-height}/ 2);
+    padding: calc((#{$tw-sz-btn-large-height} - #{$tw-fnt-btn-label-large-line-height}) / 2)
+      calc(#{$tw-sz-btn-large-height}/ 2);
     border-radius: calc(#{$tw-sz-btn-large-height} / 2);
 
     &:focus {
@@ -98,9 +122,17 @@
       }
     }
     &.button-with-icon {
-      padding-left: calc((#{$tw-sz-btn-large-height} / 2) - (((#{$tw-sz-btn-large-height} - #{$tw-fnt-btn-label-large-line-height}) / 2)));
+      padding-left: calc(
+        (#{$tw-sz-btn-large-height} / 2) - (((#{$tw-sz-btn-large-height} - #{$tw-fnt-btn-label-large-line-height}) / 2))
+      );
       .tw-icon--large {
         margin-right: calc((#{$tw-sz-btn-large-height} - #{$tw-fnt-btn-label-large-line-height}) / 2);
+      }
+    }
+    &.button-no-label.button-with-icon {
+      padding: 10px;
+      .tw-icon--large {
+        margin-right: 0;
       }
     }
   }
@@ -112,7 +144,8 @@
     font-family: $tw-fnt-btn-label-x-large-font-family;
     line-height: $tw-fnt-btn-label-x-large-line-height;
     min-width: $tw-sz-btn-x-large-min-width;
-    padding: calc((#{$tw-sz-btn-x-large-height} - #{$tw-fnt-btn-label-x-large-line-height}) / 2) calc(#{$tw-sz-btn-x-large-height}/ 2);
+    padding: calc((#{$tw-sz-btn-x-large-height} - #{$tw-fnt-btn-label-x-large-line-height}) / 2)
+      calc(#{$tw-sz-btn-x-large-height}/ 2);
     border-radius: calc(#{$tw-sz-btn-x-large-height} / 2);
 
     &:focus {
@@ -129,11 +162,25 @@
       }
     }
     &.button-with-icon {
-      padding-left: calc((#{$tw-sz-btn-x-large-height} / 2) - (((#{$tw-sz-btn-x-large-height} - #{$tw-fnt-btn-label-x-large-line-height}) / 2)));
+      padding-left: calc(
+        (#{$tw-sz-btn-x-large-height} / 2) -
+          (((#{$tw-sz-btn-x-large-height} - #{$tw-fnt-btn-label-x-large-line-height}) / 2))
+      );
       .tw-icon--xlarge {
         margin-right: calc((#{$tw-sz-btn-x-large-height} - #{$tw-fnt-btn-label-x-large-line-height}) / 2);
       }
     }
+
+    &.button-no-label.button-with-icon {
+      padding: 12px;
+      .tw-icon--xlarge {
+        margin-right: 0;
+      }
+    }
+  }
+
+  &.button-no-label {
+    min-width: auto;
   }
 }
 
@@ -188,27 +235,31 @@
   }
 
   &--small {
-    padding: calc((#{$tw-sz-btn-small-height} - (2 * #{$tw-sz-btn-stroke}) - #{$tw-fnt-btn-label-small-line-height}) / 2)
+    padding: calc(
+        (#{$tw-sz-btn-small-height} - (2 * #{$tw-sz-btn-stroke}) - #{$tw-fnt-btn-label-small-line-height}) / 2
+      )
       calc((#{$tw-sz-btn-small-height} - 2 * #{$tw-sz-btn-stroke}) / 2);
-    border-radius: calc((#{$tw-sz-btn-small-height} - 2 * #{$tw-sz-btn-stroke}) / 2);
   }
 
   &--medium {
-    padding: calc((#{$tw-sz-btn-medium-height} - (2 * #{$tw-sz-btn-stroke}) - #{$tw-fnt-btn-label-medium-line-height}) / 2)
+    padding: calc(
+        (#{$tw-sz-btn-medium-height} - (2 * #{$tw-sz-btn-stroke}) - #{$tw-fnt-btn-label-medium-line-height}) / 2
+      )
       calc((#{$tw-sz-btn-medium-height} - 2 * #{$tw-sz-btn-stroke}) / 2);
-    border-radius: calc((#{$tw-sz-btn-medium-height} - 2 * #{$tw-sz-btn-stroke}) / 2);
   }
 
   &--large {
-    padding: calc((#{$tw-sz-btn-large-height} - (2 * #{$tw-sz-btn-stroke}) - #{$tw-fnt-btn-label-large-line-height}) / 2)
+    padding: calc(
+        (#{$tw-sz-btn-large-height} - (2 * #{$tw-sz-btn-stroke}) - #{$tw-fnt-btn-label-large-line-height}) / 2
+      )
       calc((#{$tw-sz-btn-large-height} - 2 * #{$tw-sz-btn-stroke}) / 2);
-    border-radius: calc((#{$tw-sz-btn-large-height} - 2 * #{$tw-sz-btn-stroke}) / 2);
   }
 
   &--xlarge {
-    padding: calc((#{$tw-sz-btn-x-large-height} - (2 * #{$tw-sz-btn-stroke}) - #{$tw-fnt-btn-label-x-large-line-height}) / 2)
+    padding: calc(
+        (#{$tw-sz-btn-x-large-height} - (2 * #{$tw-sz-btn-stroke}) - #{$tw-fnt-btn-label-x-large-line-height}) / 2
+      )
       calc((#{$tw-sz-btn-x-large-height} - 2 * #{$tw-sz-btn-stroke}) / 2);
-    border-radius: calc((#{$tw-sz-btn-x-large-height} - 2 * #{$tw-sz-btn-stroke}) / 2);
   }
 
   &:disabled {
@@ -278,27 +329,31 @@
   }
 
   &--small {
-    padding: calc((#{$tw-sz-btn-small-height} - (2 * #{$tw-sz-btn-stroke}) - #{$tw-fnt-btn-label-small-line-height}) / 2)
+    padding: calc(
+        (#{$tw-sz-btn-small-height} - (2 * #{$tw-sz-btn-stroke}) - #{$tw-fnt-btn-label-small-line-height}) / 2
+      )
       calc((#{$tw-sz-btn-small-height} - 2 * #{$tw-sz-btn-stroke}) / 2);
-    border-radius: calc((#{$tw-sz-btn-small-height} - 2 * #{$tw-sz-btn-stroke}) / 2);
   }
 
   &--medium {
-    padding: calc((#{$tw-sz-btn-medium-height} - (2 * #{$tw-sz-btn-stroke}) - #{$tw-fnt-btn-label-medium-line-height}) / 2)
+    padding: calc(
+        (#{$tw-sz-btn-medium-height} - (2 * #{$tw-sz-btn-stroke}) - #{$tw-fnt-btn-label-medium-line-height}) / 2
+      )
       calc((#{$tw-sz-btn-medium-height} - 2 * #{$tw-sz-btn-stroke}) / 2);
-    border-radius: calc((#{$tw-sz-btn-medium-height} - 2 * #{$tw-sz-btn-stroke}) / 2);
   }
 
   &--large {
-    padding: calc((#{$tw-sz-btn-large-height} - (2 * #{$tw-sz-btn-stroke}) - #{$tw-fnt-btn-label-large-line-height}) / 2)
+    padding: calc(
+        (#{$tw-sz-btn-large-height} - (2 * #{$tw-sz-btn-stroke}) - #{$tw-fnt-btn-label-large-line-height}) / 2
+      )
       calc((#{$tw-sz-btn-large-height} - 2 * #{$tw-sz-btn-stroke}) / 2);
-    border-radius: calc((#{$tw-sz-btn-large-height} - 2 * #{$tw-sz-btn-stroke}) / 2);
   }
 
   &--xlarge {
-    padding: calc((#{$tw-sz-btn-x-large-height} - (2 * #{$tw-sz-btn-stroke}) - #{$tw-fnt-btn-label-x-large-line-height}) / 2)
+    padding: calc(
+        (#{$tw-sz-btn-x-large-height} - (2 * #{$tw-sz-btn-stroke}) - #{$tw-fnt-btn-label-x-large-line-height}) / 2
+      )
       calc((#{$tw-sz-btn-x-large-height} - 2 * #{$tw-sz-btn-stroke}) / 2);
-    border-radius: calc((#{$tw-sz-btn-x-large-height} - 2 * #{$tw-sz-btn-stroke}) / 2);
   }
 }
 
@@ -359,26 +414,30 @@
   }
 
   &--small {
-    padding: calc((#{$tw-sz-btn-small-height} - (2 * #{$tw-sz-btn-stroke}) - #{$tw-fnt-btn-label-small-line-height}) / 2)
+    padding: calc(
+        (#{$tw-sz-btn-small-height} - (2 * #{$tw-sz-btn-stroke}) - #{$tw-fnt-btn-label-small-line-height}) / 2
+      )
       calc((#{$tw-sz-btn-small-height} - 2 * #{$tw-sz-btn-stroke}) / 2);
-    border-radius: calc((#{$tw-sz-btn-small-height} - 2 * #{$tw-sz-btn-stroke}) / 2);
   }
 
   &--medium {
-    padding: calc((#{$tw-sz-btn-medium-height} - (2 * #{$tw-sz-btn-stroke}) - #{$tw-fnt-btn-label-medium-line-height}) / 2)
+    padding: calc(
+        (#{$tw-sz-btn-medium-height} - (2 * #{$tw-sz-btn-stroke}) - #{$tw-fnt-btn-label-medium-line-height}) / 2
+      )
       calc((#{$tw-sz-btn-medium-height} - 2 * #{$tw-sz-btn-stroke}) / 2);
-    border-radius: calc((#{$tw-sz-btn-medium-height} - 2 * #{$tw-sz-btn-stroke}) / 2);
   }
 
   &--large {
-    padding: calc((#{$tw-sz-btn-large-height} - (2 * #{$tw-sz-btn-stroke}) - #{$tw-fnt-btn-label-large-line-height}) / 2)
+    padding: calc(
+        (#{$tw-sz-btn-large-height} - (2 * #{$tw-sz-btn-stroke}) - #{$tw-fnt-btn-label-large-line-height}) / 2
+      )
       calc((#{$tw-sz-btn-large-height} - 2 * #{$tw-sz-btn-stroke}) / 2);
-    border-radius: calc((#{$tw-sz-btn-large-height} - 2 * #{$tw-sz-btn-stroke}) / 2);
   }
 
   &--xlarge {
-    padding: calc((#{$tw-sz-btn-x-large-height} - (2 * #{$tw-sz-btn-stroke}) - #{$tw-fnt-btn-label-x-large-line-height}) / 2)
+    padding: calc(
+        (#{$tw-sz-btn-x-large-height} - (2 * #{$tw-sz-btn-stroke}) - #{$tw-fnt-btn-label-x-large-line-height}) / 2
+      )
       calc((#{$tw-sz-btn-x-large-height} - 2 * #{$tw-sz-btn-stroke}) / 2);
-    border-radius: calc((#{$tw-sz-btn-x-large-height} - 2 * #{$tw-sz-btn-stroke}) / 2);
   }
 }

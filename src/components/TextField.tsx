@@ -1,13 +1,13 @@
-import { createStyles, makeStyles, TextField as MUITextField } from '@material-ui/core';
+import { TextField as MUITextField } from '@mui/material';
 import React, { KeyboardEventHandler } from 'react';
+import { makeStyles } from '@mui/styles';
+import { isWhitespaces } from '../utils/text';
 
-const useStyles = makeStyles(() =>
-  createStyles({
-    adornedEnd: {
-      paddingRight: 0,
-    },
-  })
-);
+const useStyles = makeStyles(() => ({
+  adornedEnd: {
+    paddingRight: 0,
+  },
+}));
 
 export interface Props {
   id: string;
@@ -30,7 +30,11 @@ export default function TextField(props: Props): JSX.Element {
   const classes = useStyles();
 
   const onChange = (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
-    props.onChange(props.id, event.target.value);
+    const textValue = event.target.value;
+    if (isWhitespaces(textValue)) {
+      return;
+    }
+    props.onChange(props.id, textValue);
   };
 
   return (

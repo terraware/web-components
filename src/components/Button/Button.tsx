@@ -1,12 +1,12 @@
 import React from 'react';
 import Icon from '../Icon/Icon';
 import { IconName } from '../Icon/icons';
-import { Size } from '../types';
+import { Size } from '../Size';
 import './styles.scss';
 
 export interface Props {
-  onClick: () => void;
-  label: string;
+  onClick: (event?: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+  label?: string;
   type?: 'productive' | 'passive' | 'destructive';
   priority?: 'primary' | 'secondary';
   size?: Size;
@@ -18,18 +18,31 @@ export interface Props {
 }
 
 export default function Button(props: Props): JSX.Element {
-  const { onClick, label, type = 'productive', priority = 'primary', size = 'small', disabled, icon, processing, id, className } = props;
+  const {
+    onClick,
+    label,
+    type = 'productive',
+    priority = 'primary',
+    size = 'small',
+    disabled,
+    icon,
+    processing,
+    id,
+    className,
+  } = props;
 
   return (
     <button
       id={id}
       onClick={onClick}
-      className={`button ${type}-${priority} button--${size} ${type}-${priority}--${size} ${icon && !processing ? 'button-with-icon' : ''}${className ?? ''}`}
+      className={`button ${type}-${priority} button--${size} ${type}-${priority}--${size} ${
+        icon && !processing ? 'button-with-icon' : ''
+      } ${!label ? 'button-no-label' : ''} ${className ?? ''}`}
       disabled={disabled}
     >
       {processing && <Icon name='spinner' size={size} />}
       {!processing && icon && <Icon name={icon} size={size} />}
-      {!processing && label}
+      {!processing && !!label && label}
     </button>
   );
 }

@@ -1,20 +1,19 @@
-import { Chip } from '@material-ui/core';
-import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
+import { Chip } from '@mui/material';
+import { Theme } from '@mui/material';
 import React from 'react';
+import { makeStyles } from '@mui/styles';
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    cancel: {
-      backgroundColor: theme.palette.common.white,
-      borderColor: theme.palette.neutral[400],
-      borderWidth: 1,
-    },
-  })
-);
+const useStyles = makeStyles((theme: Theme) => ({
+  cancel: {
+    backgroundColor: theme.palette.common.white,
+    borderColor: theme.palette.neutral[400],
+    borderWidth: 1,
+  },
+}));
 
 export interface Props {
   onClick: () => void;
-  label?: string;
+  label: string;
 }
 
 export default function CancelButton({ onClick, label }: Props): JSX.Element {
@@ -24,7 +23,7 @@ export default function CancelButton({ onClick, label }: Props): JSX.Element {
     <Chip
       id='cancel'
       className={classes.cancel}
-      label={label ?? 'Cancel'}
+      label={label}
       clickable={true}
       onClick={onClick}
       variant='outlined'

@@ -1,11 +1,9 @@
-import { TextField as MUITextField } from '@material-ui/core';
+import { TextField as MUITextField } from '@mui/material';
 import React from 'react';
 import { Props } from './TextField';
 
 export default function TextArea(props: Props): JSX.Element {
-  const onChange = (
-    event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
-  ) => {
+  const onChange = (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
     props.onChange(props.id, event.target.value);
   };
 
@@ -22,6 +20,7 @@ export default function TextArea(props: Props): JSX.Element {
       size='small'
       fullWidth={true}
       placeholder={props.placeholder}
+      disabled={props.disabled}
     />
   );
 }
