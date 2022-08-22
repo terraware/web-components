@@ -13,10 +13,14 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - name: Set Environment
+        run: .github/scripts/set-environment.sh
+
       - name: Setup Node
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v3
         with:
-          node-version: 14.x
+          node-version: '16.x'
+          registry-url: 'https://registry.npmjs.org'
 
       - name: Install Dependencies
         run: |
@@ -25,5 +29,17 @@ jobs:
       - name: linter
         run: yarn lint
 
-      - name: test
-        run: yarn test
+      - name: build
+        run: yarn build-dist
+
+      - name: license report
+        run: yarn license-report
+
+      - name: compare artifact package version
+        run: .github/scripts/compare-artifact-package-versions.sh
+
+      - name: publish npm package
+        if: env.UPDATE_NPM_PACKAGE == 'true'
+        run: cd dist && npm publish --scope @terraware
+        env:
+            NODE_AUTH_TOKEN: ${{ secrets.NPM_REGISTRY_AUTH_TOKEN }}
