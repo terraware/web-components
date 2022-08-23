@@ -10,7 +10,6 @@
     "src/react-app-env.d.ts",
     "src/reportWebVitals.js",
     "src/setupTests.js",
-    "src/stories",
-    "src/theme.ts"
+    "src/stories"
   ]
 }
