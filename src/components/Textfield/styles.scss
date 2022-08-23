@@ -1,4 +1,6 @@
-@import '../../../style-dictionary-dist/textfield_variables.scss';
+@use 'sass:math';
+
+@import '../../style-dictionary-dist/textfield_variables.scss';
 
 @font-face {
   font-family: 'Inter';
@@ -67,7 +69,8 @@
     }
 
     &:active {
-      border: $tw-sz-frm-fld-text-input-stroke-active solid $tw-clr-frm-fld-text-input-stroke-hover;
+      border: math.div($tw-sz-frm-fld-text-input-stroke-active, 2) solid $tw-clr-frm-fld-text-input-stroke-hover;
+      outline: math.div($tw-sz-frm-fld-text-input-stroke-active, 2) solid $tw-clr-frm-fld-text-input-stroke-hover;
     }
 
     input {
@@ -111,6 +114,11 @@
       &:active {
         border: $tw-sz-frm-fld-text-input-stroke solid $tw-clr-frm-fld-text-input-stroke;
       }
+    }
+
+    &--icon-container {
+      background: none;
+      border: 0;
     }
 
     &--icon-right {
@@ -200,7 +208,7 @@
     }
   }
 
-  .label-container {
+  .textfield-label-container {
     display: flex;
     width: 100%;
     margin-top: $tw-spc-base-xx-small;

@@ -25,8 +25,8 @@ export default {
 
 const Template: Story<TextFieldProps> = (args) => {
   const [value, setValue] = React.useState('');
-  const handleChange = (e: React.FormEvent<HTMLInputElement>) => {
-    setValue(e.currentTarget.value as string);
+  const handleChange = (id: string, v: unknown) => {
+    setValue(v as string);
   };
 
   return <TextField {...args} value={value} onChange={handleChange} />;

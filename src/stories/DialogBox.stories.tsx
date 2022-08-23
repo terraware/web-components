@@ -11,11 +11,12 @@ export default {
 };
 
 const Template: Story<DialogBoxProps> = (args) => {
-  return <DialogBox {...args} />;
+  return <DialogBox {...args} open={true} />;
 };
 
 export const Small = Template.bind({});
 Small.args = {
+  open: true,
   title: 'Title',
   message: 'Message',
   size: 'small',

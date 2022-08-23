@@ -1,6 +1,6 @@
 import React from 'react'
-import {ThemeProvider} from '@material-ui/core'
-import {StylesProvider} from "@material-ui/core";
+import {ThemeProvider} from '@mui/material';
+import {StylesProvider} from '@mui/styles';
 
 
 export const parameters = {

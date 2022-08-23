@@ -1,6 +1,8 @@
+import { ReactNode } from 'react';
+
 export interface TableColumnType {
   key: string;
-  name: string;
+  name: string | JSX.Element;
   type: 'string' | 'number' | 'date' | 'notes' | 'edit' | 'boolean';
 }
 
@@ -8,8 +10,9 @@ export interface RendererProps<T> {
   index: number;
   row: T;
   column: TableColumnType;
-  value?: string | number | unknown[];
+  value?: string | number | unknown[] | ReactNode;
   onRowClick?: () => void;
+  reloadData?: () => void;
 }
 
 export type EnhancedTableDetailsRow = {
@@ -17,17 +20,14 @@ export type EnhancedTableDetailsRow = {
 };
 
 export interface DetailsProps<T> {
-  accessionId: string;
+  accessionId: number;
   index: number;
   expandText: string;
   rowName: string;
   defaultSort: string;
   columns: TableColumnType[];
   onClick: (parentValue: EnhancedTableDetailsRow) => void;
-  onSelect: (
-    value: EnhancedTableDetailsRow,
-    parentValue: EnhancedTableDetailsRow
-  ) => void;
+  onSelect: (value: EnhancedTableDetailsRow, parentValue: EnhancedTableDetailsRow) => void;
   Renderer: (props: RendererProps<T>) => JSX.Element;
   row: EnhancedTableDetailsRow;
 }

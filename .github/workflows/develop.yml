@@ -24,7 +24,7 @@ jobs:
 
       - name: Install Dependencies
         run: |
-          yarn install
+          yarn install --network-timeout 100000
           git checkout -- package.json
       - name: linter
         run: yarn lint

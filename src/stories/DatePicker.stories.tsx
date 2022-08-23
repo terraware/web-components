@@ -1,9 +1,7 @@
 // YourComponent.stories.js
 
-import MomentUtils from '@date-io/moment';
-import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import { Story as StoryBook } from '@storybook/react';
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useState } from 'react';
 import DatePicker, { Props as DatePickerProps } from '../components/DatePicker';
 
 export default {
@@ -12,18 +10,24 @@ export default {
   decorators: [
     (
       Story: typeof React.Component
-    ): ReactElement<typeof MuiPickersUtilsProvider> => {
+    ): ReactElement => {
       return (
-        <MuiPickersUtilsProvider utils={MomentUtils}>
-          <Story />
-        </MuiPickersUtilsProvider>
+        <Story />
       );
     },
   ],
 };
 
 const Template: StoryBook<DatePickerProps> = (args) => {
-  return <DatePicker {...args} />;
+  const [value, setValue] = useState<string|undefined|null>();
+
+  return (
+    <DatePicker
+      {...args}
+      value={value}
+      onChange={(i, v) => setValue(v)}
+    />
+  );
 };
 
 export const Default = Template.bind({});

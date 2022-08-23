@@ -1,13 +1,11 @@
 {
-  "presets": [["react-app", { "absoluteRuntime": false }]],
+  "presets": [
+    ["@babel/preset-typescript", { isTSX: true, allExtensions: true }],
+    ["react-app", { "absoluteRuntime": false }]
+  ],
   "ignore": [
-    "src/App.js",
-    "src/App.css",
-    "src/logo.svg",
     "src/react-app-env.d.ts",
-    "src/reportWebVitals.js",
     "src/setupTests.js",
-    "src/stories",
-    "src/theme.ts"
+    "src/stories"
   ]
 }

@@ -5,7 +5,7 @@ function build(source, destination) {
       scss: {
         transformGroup: 'scss',
         transforms: ['name/css_composite', 'value/gradient', 'value/shadow'],
-        buildPath: '../style-dictionary-dist/',
+        buildPath: '../src/style-dictionary-dist/',
         files: [
           {
             format: 'scss/variables',

@@ -1,4 +1,4 @@
-@import '../../../style-dictionary-dist/textfield_variables.scss';
+@import '../../style-dictionary-dist/textfield_variables.scss';
 
 @font-face {
   font-family: 'Inter';
@@ -11,6 +11,12 @@
 
   .textfield-container {
     position: relative;
+    height: 43px;
+    width: 228px;
+
+    &--fullWidth {
+      width: 100%;
+    }
   }
   .textfield-label {
     font-family: $tw-fnt-frm-fld-label-font-family;
@@ -69,7 +75,8 @@
     }
 
     &:active {
-      border: $tw-sz-frm-fld-text-input-stroke-active solid $tw-clr-frm-fld-text-input-stroke-hover;
+      border: $tw-sz-frm-fld-text-input-stroke solid $tw-clr-frm-fld-text-input-stroke-hover;
+      outline: $tw-sz-frm-fld-text-input-stroke solid $tw-clr-frm-fld-text-input-stroke-hover;
     }
 
     input {
@@ -106,6 +113,7 @@
 
     &--disabled {
       opacity: $tw-opcty-semantic-off;
+      pointer-events: none;
       &:hover {
         border: $tw-sz-frm-fld-text-input-stroke solid $tw-clr-frm-fld-text-input-stroke;
       }
@@ -137,7 +145,8 @@
       }
 
       &:active {
-        border: $tw-sz-frm-fld-text-input-stroke-active solid $tw-clr-frm-fld-text-input-stroke-error;
+        border: $tw-sz-frm-fld-text-input-stroke solid $tw-clr-frm-fld-text-input-stroke-error;
+        outline: $tw-sz-frm-fld-text-input-stroke solid $tw-clr-frm-fld-text-input-stroke-error;
       }
     }
 
@@ -150,12 +159,12 @@
       }
 
       &:active {
-        border: $tw-sz-frm-fld-text-input-stroke-active solid $tw-clr-frm-fld-text-input-stroke-warning;
+        border: $tw-sz-frm-fld-text-input-stroke solid $tw-clr-frm-fld-text-input-stroke-warning;
+        outline: $tw-sz-frm-fld-text-input-stroke solid $tw-clr-frm-fld-text-input-stroke-warning;
       }
     }
 
     &--readonly {
-      background-color: $tw-clr-frm-fld-text-input-fill-read-only;
       &:hover {
         border: $tw-sz-frm-fld-text-input-stroke solid $tw-clr-frm-fld-text-input-stroke;
       }
@@ -163,6 +172,10 @@
       &:active {
         border: $tw-sz-frm-fld-text-input-stroke solid $tw-clr-frm-fld-text-input-stroke;
       }
+    }
+
+    &--readonly input {
+      cursor: auto;
     }
   }
 
@@ -202,13 +215,15 @@
     }
   }
 
-  .label-container {
+  .textfield-label-container {
+    position: relative;
     display: flex;
     width: 100%;
     margin-top: $tw-spc-base-xx-small;
   }
 
   .options-container {
+    z-index: 3;
     width: 100%;
     position: absolute;
     top: 42px;
@@ -219,6 +234,13 @@
     margin: 0;
     margin-top: $tw-spc-base-xx-small;
     border-radius: $tw-rds-frm-fld-text-input;
+    max-height: 140px;
+    overflow: scroll;
+
+    &.fixed-menu {
+      position: fixed;
+      z-index: 11;
+    }
 
     .select-value {
       font-family: $tw-fnt-frm-fld-select-value-font-family;
@@ -247,5 +269,14 @@
         opacity: $tw-opcty-semantic-off;
       }
     }
+  }
+
+  .scroll-block {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 10;
   }
 }

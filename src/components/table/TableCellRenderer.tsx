@@ -1,21 +1,25 @@
-import {
-  Box,
-  createStyles,
-  Link,
-  makeStyles,
-  TableCell,
-  Typography,
-} from '@material-ui/core';
-import EditIcon from '@material-ui/icons/Edit';
-import NotesIcon from '@material-ui/icons/Notes';
-import React from 'react';
+import { Edit, Notes } from '@mui/icons-material';
+import { Box, Link, TableCell, Theme, Typography } from '@mui/material';
+import React, { ReactNode } from 'react';
 import { RendererProps } from './types';
+import { makeStyles } from '@mui/styles';
+import { getDateDisplayValue, preventDefaultEvent } from '../../utils';
+
+const useStyles = makeStyles((theme: Theme) => ({
+  editIcon: {
+    marginLeft: theme.spacing(1),
+  },
+  textRoot: {
+    maxWidth: 400,
+  },
+  date: {
+    whiteSpace: 'nowrap',
+  },
+}));
 
 export type TableRowType = Record<string, any>;
 
-export default function CellRenderer(
-  props: RendererProps<TableRowType>
-): JSX.Element {
+export default function CellRenderer(props: RendererProps<TableRowType>): JSX.Element {
   const { column, value, onRowClick, index } = props;
   const id = `row${index}-${column.key}`;
   if (column.type === 'date' && typeof value === 'string' && value) {
@@ -33,24 +37,15 @@ export default function CellRenderer(
 
 export const cellDateFormatter = (value?: string): string | undefined => {
   if (value) {
-    return new Date(value).toLocaleDateString('en-US', {
-      day: '2-digit',
-      month: '2-digit',
-      year: 'numeric',
-      timeZone: 'UTC',
-    });
+    return getDateDisplayValue(value);
   }
 };
 
-export function CellDateRenderer({
-  id,
-  value,
-}: {
-  id: string;
-  value: string;
-}): JSX.Element {
+export function CellDateRenderer({ id, value }: { id: string; value: string }): JSX.Element {
+  const classes = useStyles();
+
   return (
-    <TableCell id={id} align='left'>
+    <TableCell id={id} align='left' className={classes.date}>
       <Typography component='p' variant='body1'>
         {cellDateFormatter(value)}
       </Typography>
@@ -63,11 +58,13 @@ export function CellTextRenderer({
   value,
 }: {
   id: string;
-  value?: string | number | any[];
+  value?: string | number | any[] | ReactNode;
 }): JSX.Element {
+  const classes = useStyles();
+
   return (
-    <TableCell id={id} align='left'>
-      <Typography component='p' variant='body1'>
+    <TableCell id={id} align='left' title={typeof value === 'string' ? value : ''}>
+      <Typography component='p' variant='body1' noWrap={true} classes={{ root: classes.textRoot }}>
         {value}
       </Typography>
     </TableCell>
@@ -79,7 +76,7 @@ export function CellBooleanRenderer({
   value,
 }: {
   id: string;
-  value?: string | number | any[];
+  value?: string | number | any[] | ReactNode;
 }): JSX.Element {
   return (
     <TableCell id={id} align='left'>
@@ -90,37 +87,17 @@ export function CellBooleanRenderer({
   );
 }
 
-export function CellNotesRenderer({
-  id,
-  value,
-}: {
-  id: string;
-  value?: string;
-}): JSX.Element {
+export function CellNotesRenderer({ id, value }: { id: string; value?: string }): JSX.Element {
   return (
     <TableCell id={id} align='left'>
       <Typography id={id} component='p' variant='body1'>
-        {value && value.length > 0 ? <NotesIcon /> : ''}
+        {value && value.length > 0 ? <Notes /> : ''}
       </Typography>
     </TableCell>
   );
 }
 
-const useStyles = makeStyles((theme) =>
-  createStyles({
-    editIcon: {
-      marginLeft: theme.spacing(1),
-    },
-  })
-);
-
-export function CellEditRenderer({
-  id,
-  onRowClick,
-}: {
-  id: string;
-  onRowClick?: () => void;
-}): JSX.Element {
+export function CellEditRenderer({ id, onRowClick }: { id: string; onRowClick?: () => void }): JSX.Element {
   const classes = useStyles();
 
   return (
@@ -129,7 +106,7 @@ export function CellEditRenderer({
         id={`${id}-button`}
         href='#'
         onClick={(event: React.SyntheticEvent) => {
-          event.preventDefault();
+          preventDefaultEvent(event);
           if (onRowClick) {
             onRowClick();
           }
@@ -139,7 +116,7 @@ export function CellEditRenderer({
           <Typography component='p' variant='body1'>
             Edit
           </Typography>
-          <EditIcon fontSize='small' className={classes.editIcon} />
+          <Edit fontSize='small' className={classes.editIcon} />
         </Box>
       </Link>
     </TableCell>
