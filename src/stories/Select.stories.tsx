@@ -2,7 +2,7 @@
 
 import { Story } from '@storybook/react';
 import React from 'react';
-import Select, { Props as SelectProps } from '../components/Select/Select';
+import Select, { SelectProps } from '../components/Select/Select';
 
 export default {
   title: 'Select',
@@ -12,8 +12,8 @@ export default {
 const Template: Story<SelectProps> = (args) => {
   // tslint:disable-next-line:no-unused-vars
   const [value, setValue] = React.useState('');
-  const handleChange = (e: React.FormEvent<HTMLInputElement>) => {
-    setValue(e.currentTarget.value as string);
+  const handleChange = (str: string) => {
+    setValue(str);
   };
 
   return <Select {...args} onChange={handleChange} />;

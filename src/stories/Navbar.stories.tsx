@@ -5,7 +5,6 @@ import React from 'react';
 import Navbar, { Props as NavbarProps } from '../components/Navbar/Navbar';
 import NavItem from '../components/Navbar/NavItem';
 import NavSection from '../components/Navbar/NavSection';
-import SubNavbar from '../components/Navbar/SubNavbar';
 
 export default {
   title: 'Navbar',
