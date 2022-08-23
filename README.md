@@ -76,3 +76,9 @@ Update the `style-dictionary/generate.sh` script to download the tokens json and
 ```
 yarn build-dictionary
 ```
+
+## Generating assets from svgs
+
+Copy svgs to `./assets`.
+Run `yarn generate-assets`, see new files under `./src/components/Icon/icons/assets` as asset React components.
+Integrate new asset React component into `./src/components/Icon/icons/index.tsx`;

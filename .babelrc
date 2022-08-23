@@ -4,11 +4,7 @@
     ["react-app", { "absoluteRuntime": false }]
   ],
   "ignore": [
-    "src/App.js",
-    "src/App.css",
-    "src/logo.svg",
     "src/react-app-env.d.ts",
-    "src/reportWebVitals.js",
     "src/setupTests.js",
     "src/stories"
   ]

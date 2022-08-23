@@ -2,6 +2,7 @@ import { Theme, Toolbar, Typography } from '@mui/material';
 import { TopBarButton } from '.';
 import Button from '../Button/Button';
 import { makeStyles } from '@mui/styles';
+import React from 'react';
 
 const styles = makeStyles((theme: Theme) => ({
   toolbar: {
