@@ -2,7 +2,7 @@ import React, { ReactNode } from 'react';
 import { ReactComponent as Logo } from './logo.svg';
 import './styles.scss';
 import Icon from '../Icon/Icon';
-import useDeviceInfo from '../../utils/useDeviceInfo';
+import { useDeviceInfo } from '../../utils';
 import { makeStyles } from '@mui/styles';
 
 export interface Props {

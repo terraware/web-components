@@ -1,10 +1,9 @@
 import { Edit, Notes } from '@mui/icons-material';
 import { Box, Link, TableCell, Theme, Typography } from '@mui/material';
 import React, { ReactNode } from 'react';
-import preventDefaultEvent from '../../utils/preventDefaultEvent';
 import { RendererProps } from './types';
 import { makeStyles } from '@mui/styles';
-import getDateDisplayValue from '../../utils/date';
+import { getDateDisplayValue, preventDefaultEvent } from '../../utils';
 
 const useStyles = makeStyles((theme: Theme) => ({
   editIcon: {

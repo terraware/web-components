@@ -3,7 +3,7 @@ import React from 'react';
 import Icon from '../Icon/Icon';
 import { IconName } from '../Icon/icons';
 import './styles.scss';
-import { isWhitespaces } from '../../utils/text';
+import { isWhitespaces } from '../../utils';
 
 type TextfieldType = 'text' | 'textarea';
 

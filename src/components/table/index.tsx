@@ -19,7 +19,7 @@ import { DetailsRendererProps, RendererProps, TableColumnType } from './types';
 import { makeStyles } from '@mui/styles';
 import { DndContext, KeyboardSensor, MouseSensor, TouchSensor, useSensor, useSensors } from '@dnd-kit/core';
 import { sortableKeyboardCoordinates } from '@dnd-kit/sortable';
-import useDeviceInfo from '../../utils/useDeviceInfo';
+import { useDeviceInfo } from '../../utils';
 
 const tableStyles = makeStyles((theme: Theme) => ({
   hover: {
