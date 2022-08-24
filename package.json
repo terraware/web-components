@@ -1,6 +1,6 @@
 {
   "name": "@terraware/web-components",
-  "version": "1.0.2",
+  "version": "1.0.4",
   "author": "Terraformation Inc.",
   "license": "Apache-2.0",
   "repository": {
@@ -12,9 +12,6 @@
   },
   "homepage": "https://github.com/terraware/web-components#readme",
   "private": false,
-  "files": [
-    "dist"
-  ],
   "main": "index.js",
   "dependencies": {
     "@date-io/date-fns": "^2.14.0",
