@@ -27,6 +27,7 @@ import Table from './components/table';
 import { descendingComparator, getComparator, SortOrder, stableSort } from './components/table/sort';
 import CellRenderer, { CellDateRenderer, TableRowType } from './components/table/TableCellRenderer';
 import { EnhancedTableDetailsRow, RendererProps, TableColumnType } from './components/table/types';
+import * as Svg from './components/svg';
 
 export type { IconName } from './components/Icon/icons/';
 export type { Size } from './components/Size';
@@ -57,6 +58,7 @@ export {
   Select,
   stableSort,
   SummaryBox,
+  Svg,
   Textfield,
   Table,
 };

@@ -38,6 +38,7 @@ export { default as Info } from './Info';
 export { default as Key } from './Key';
 export { default as Leaf } from './Leaf';
 export { default as Lock } from './Lock';
+export { default as Logo } from './Logo';
 export { default as MenuVertical } from './MenuVertical';
 export { default as Notification } from './Notification';
 export { default as Person } from './Person';
