@@ -11,10 +11,10 @@ export function descendingComparator<T>(a: T, b: T, orderBy: keyof T): 1 | -1 | 
   return 0;
 }
 
-export type Order = 'asc' | 'desc';
+export type SortOrder = 'asc' | 'desc';
 
 export function getComparator<Key extends keyof any>(
-  order: Order,
+  order: SortOrder,
   orderBy: Key,
   sorting: (a: any, b: any, orderBy: any) => 1 | -1 | 0
 ): (a: { [key in Key]?: string | number | [] }, b: { [key in Key]?: string | number | [] }) => number {

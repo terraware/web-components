@@ -4,7 +4,7 @@ import { CSS } from '@dnd-kit/utilities';
 import { DragHandle } from '@mui/icons-material';
 import { TableCell, TableSortLabel, Theme } from '@mui/material';
 import { makeStyles } from '@mui/styles';
-import { Order } from './sort';
+import { SortOrder } from './sort';
 interface HeadCell {
   disablePadding: boolean;
   id: string;
@@ -13,7 +13,7 @@ interface HeadCell {
 
 type Props = {
   headCell: HeadCell;
-  order: Order;
+  order: SortOrder;
   orderBy?: string;
   onRequestSort: (event: React.MouseEvent<unknown>, property: string) => void;
   i: number;
@@ -53,11 +53,7 @@ export default function TableHeaderItem(props: Props): JSX.Element {
       style={style}
     >
       {headCell.label && (
-        <TableSortLabel
-          active={orderBy === headCell.id}
-          direction={orderBy === headCell.id ? order : 'asc'}
-          onClick={createSortHandler(headCell.id)}
-        >
+        <TableSortLabel active={orderBy === headCell.id} direction={orderBy === headCell.id ? order : 'asc'} onClick={createSortHandler(headCell.id)}>
           {i > 0 && <DragHandle classes={dragIconStyles()} {...attributes} {...listeners} />}
           {headCell.label}
         </TableSortLabel>

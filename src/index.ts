@@ -23,20 +23,26 @@ import { Size } from './components/Size';
 import SummaryBox from './components/SummaryBox';
 import Textfield from './components/Textfield/Textfield';
 import Table from './components/table';
-import { descendingComparator, getComparator, stableSort } from './components/table/sort';
-import CellRenderer, { CellDateRenderer } from './components/table/TableCellRenderer';
+import { descendingComparator, getComparator, SortOrder, stableSort } from './components/table/sort';
+import CellRenderer, { CellDateRenderer, TableRowType } from './components/table/TableCellRenderer';
+import { EnhancedTableDetailsRow, RendererProps, TableColumnType } from './components/table/types';
 
 export type { IconName } from './components/Icon/icons/';
 export type { Size } from './components/Size';
+export type { EnhancedTableDetailsRow, RendererProps, TableColumnType, TableRowType, SortOrder };
 
 export {
   Autocomplete,
   Button,
+  CellRenderer,
+  CellDateRenderer,
   Checkbox,
   DatePicker,
+  descendingComparator,
   DialogBox,
   Divisor,
   Dropdown,
+  getComparator,
   icons,
   Icon,
   NavFooter,
@@ -47,12 +53,8 @@ export {
   ProgressCircle,
   RadioButton,
   Select,
+  stableSort,
   SummaryBox,
   Textfield,
   Table,
-  CellRenderer,
-  CellDateRenderer,
-  descendingComparator,
-  getComparator,
-  stableSort,
 };
