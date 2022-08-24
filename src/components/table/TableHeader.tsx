@@ -1,6 +1,6 @@
 import { Checkbox, TableCell, TableRow } from '@mui/material';
 import React from 'react';
-import { Order } from './sort';
+import { SortOrder } from './sort';
 import { TableColumnType } from './types';
 import { SortableContext } from '@dnd-kit/sortable';
 import TableHeaderItem from './TableHeaderItem';
@@ -8,7 +8,7 @@ import { HeadCell } from '.';
 
 interface Props {
   onRequestSort: (event: React.MouseEvent<unknown>, property: string) => void;
-  order: Order;
+  order: SortOrder;
   orderBy?: string;
   columns: TableColumnType[];
   onReorderEnd?: ({ oldIndex, newIndex }: any) => void;
@@ -47,16 +47,7 @@ export default function EnhancedTableHead(props: Props): JSX.Element {
         )}
         <SortableContext items={headCells}>
           {headCells.map((headCell, i) => {
-            return (
-              <TableHeaderItem
-                headCell={headCell}
-                order={order}
-                orderBy={orderBy}
-                onRequestSort={onRequestSort}
-                i={i}
-                key={i}
-              />
-            );
+            return <TableHeaderItem headCell={headCell} order={order} orderBy={orderBy} onRequestSort={onRequestSort} i={i} key={i} />;
           })}
         </SortableContext>
       </TableRow>

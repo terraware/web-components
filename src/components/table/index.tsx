@@ -1,18 +1,7 @@
-import {
-  Box,
-  Checkbox,
-  Pagination,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableRow,
-  Theme,
-  Typography,
-} from '@mui/material';
+import { Box, Checkbox, Pagination, Table, TableBody, TableCell, TableContainer, TableRow, Theme, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import EnhancedTableToolbar from './EnhancedTableToolbar';
-import { descendingComparator, getComparator, Order, stableSort } from './sort';
+import { descendingComparator, getComparator, SortOrder, stableSort } from './sort';
 import TableCellRenderer from './TableCellRenderer';
 import TableHeader from './TableHeader';
 import { DetailsRendererProps, RendererProps, TableColumnType } from './types';
@@ -50,14 +39,14 @@ export interface HeadCell {
 export interface Props<T> {
   id?: string;
   orderBy: string;
-  order?: Order;
+  order?: SortOrder;
   columns: TableColumnType[];
   rows: T[];
   Renderer?: (props: RendererProps<T>) => JSX.Element;
   onSelect?: (value: T) => void;
   DetailsRenderer?: (props: DetailsRendererProps) => JSX.Element;
   sortComparator?: (a: T, b: T, orderBy: keyof T) => 1 | -1 | 0;
-  sortHandler?: (order: Order, orderBy: string) => void;
+  sortHandler?: (order: SortOrder, orderBy: string) => void;
   isInactive?: (row: T) => boolean;
   onReorderEnd?: ({ oldIndex, newIndex }: any) => void;
   isClickable?: (row: T) => boolean;
@@ -103,7 +92,7 @@ export default function EnhancedTable<T>({
   reloadData,
 }: Props<T>): JSX.Element {
   const classes = tableStyles();
-  const [order, setOrder] = React.useState<Order>(_order);
+  const [order, setOrder] = React.useState<SortOrder>(_order);
   const [orderBy, setOrderBy] = React.useState(_orderBy);
   const [maxItemsPerPage] = useState(100);
   const [itemsToSkip, setItemsToSkip] = useState(0);
@@ -207,18 +196,10 @@ export default function EnhancedTable<T>({
 
   return (
     <>
-      {showTopBar && (
-        <EnhancedTableToolbar numSelected={selectedRows ? selectedRows.length : 0} topBarButtons={topBarButtons} />
-      )}
+      {showTopBar && <EnhancedTableToolbar numSelected={selectedRows ? selectedRows.length : 0} topBarButtons={topBarButtons} />}
       <TableContainer id={id}>
         <DndContext sensors={sensors} onDragEnd={handleDragEnd}>
-          <Table
-            stickyHeader={true}
-            aria-labelledby='tableTitle'
-            size='medium'
-            aria-label='enhanced table'
-            className={classes.table}
-          >
+          <Table stickyHeader={true} aria-labelledby='tableTitle' size='medium' aria-label='enhanced table' className={classes.table}>
             <TableHeader
               order={order}
               orderBy={orderBy}
@@ -238,10 +219,7 @@ export default function EnhancedTable<T>({
                 </TableRow>
               )}
               {rows &&
-                stableSort(
-                  rows.slice(itemsToSkip, itemsToSkip + maxItemsPerPage),
-                  getComparator(order, orderBy, sortComparator)
-                ).map((row, index) => {
+                stableSort(rows.slice(itemsToSkip, itemsToSkip + maxItemsPerPage), getComparator(order, orderBy, sortComparator)).map((row, index) => {
                   const onClick = onSelect && !controlledOnSelect ? () => onSelect(row as T) : undefined;
                   const isItemSelected = isSelected(row as T);
 
@@ -260,9 +238,7 @@ export default function EnhancedTable<T>({
                             handleClick(e, row as T);
                           }
                         }}
-                        className={`${isInactive && isInactive(row as T) ? classes.inactiveRow : undefined} ${
-                          classes.tableRow
-                        }`}
+                        className={`${isInactive && isInactive(row as T) ? classes.inactiveRow : undefined} ${classes.tableRow}`}
                         selected={isItemSelected}
                         aria-checked={isItemSelected}
                       >
