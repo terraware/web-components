@@ -16,30 +16,32 @@ import TextArea from './src/components/TextArea';
 import TextField from './src/components/TextField';
 import Table from './src/components/table';
 import { descendingComparator, getComparator, stableSort } from './src/components/table/sort';
-import { TableColumnType, DetailsProps } from './src/components/table/types';
-import CellRenderer, {
-    CellDateRenderer,
-    TableRowType
-  } from './src/components/table/TableCellRenderer';
-  import { RendererProps, EnhancedTableDetailsRow} from './src/components/table/types';
+import { TableColumnType } from './src/components/table/types';
+import CellRenderer, { CellDateRenderer, TableRowType } from './src/components/table/TableCellRenderer';
+import { RendererProps, EnhancedTableDetailsRow } from './src/components/table/types';
 
 export {
-    Autocomplete,
-    CancelButton,
-    Checkbox,
-    DatePicker,
-    DialogCloseButton,
-    Divisor,
-    Dropdown,
-    Note,
-    RadioButton,
-    SummaryBox,
-    TextArea,
-    TextField,
-    Table,
-    CellRenderer,
-    CellDateRenderer,
-    descendingComparator,
-    getComparator,
-    stableSort,
+  Autocomplete,
+  CancelButton,
+  Checkbox,
+  DatePicker,
+  DialogCloseButton,
+  Divisor,
+  Dropdown,
+  Note,
+  RadioButton,
+  SummaryBox,
+  TextArea,
+  TextField,
+  Table,
+  TableRowType,
+  CellRenderer,
+  CellDateRenderer,
+  descendingComparator,
+  getComparator,
+  stableSort,
+  EnhancedTableDetailsRow,
+  RendererProps,
+  TableColumnType,
+  Order,
 };
