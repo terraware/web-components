@@ -9,6 +9,7 @@ import DatePicker from './components/DatePicker';
 import DialogBox from './components/DialogBox/DialogBox';
 import Divisor from './components/Divisor';
 import Dropdown from './components/Dropdown';
+import ErrorBox from './components/ErrorBox/ErrorBox';
 import Icon from './components/Icon/Icon';
 import icons from './components/Icon/icons';
 import Navbar from './components/Navbar/Navbar';
@@ -42,6 +43,7 @@ export {
   DialogBox,
   Divisor,
   Dropdown,
+  ErrorBox,
   getComparator,
   icons,
   Icon,
