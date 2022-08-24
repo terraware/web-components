@@ -33,11 +33,15 @@ export type { Size } from './components/Size';
 export {
   Autocomplete,
   Button,
+  CellRenderer,
+  CellDateRenderer,
   Checkbox,
   DatePicker,
+  descendingComparator,
   DialogBox,
   Divisor,
   Dropdown,
+  getComparator,
   icons,
   Icon,
   NavFooter,
@@ -48,13 +52,9 @@ export {
   ProgressCircle,
   RadioButton,
   Select,
+  stableSort,
   SummaryBox,
   Textfield,
   Table,
-  CellRenderer,
-  CellDateRenderer,
-  descendingComparator,
-  getComparator,
-  stableSort,
 };
-export type { TableRowType, EnhancedTableDetailsRow, RendererProps, TableColumnType, SortOrder };
+export type { EnhancedTableDetailsRow, RendererProps, TableColumnType, TableRowType, SortOrder };
