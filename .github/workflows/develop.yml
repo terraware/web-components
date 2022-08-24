@@ -43,6 +43,8 @@ jobs:
              npm pkg delete eslintConfig
              npm pkg delete resolutions
              npm pkg delete browserslist
+             pwd
+             cat `pwd`/package.json
 
       - name: compare artifact package version
         run: .github/scripts/compare-artifact-package-versions.sh
