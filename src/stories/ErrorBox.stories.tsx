@@ -8,15 +8,7 @@ export default {
 };
 
 const Template: Story<ErrorBoxProps> = (args) => {
-  return (
-    <ErrorBox
-      {...args}
-      text={'This is an error message'}
-      title={'Error Title'}
-      buttonText={'Help!'}
-      onClick={() => window.alert('You clicked help.')}
-    />
-  );
+  return <ErrorBox {...args} />;
 };
 
 export const Default = Template.bind({});
