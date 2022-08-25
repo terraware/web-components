@@ -1,5 +1,3 @@
-// YourComponent.stories.js
-
 import { Story } from '@storybook/react';
 import React from 'react';
 import TextField, { Props as TextFieldProps } from '../components/Textfield/Textfield';

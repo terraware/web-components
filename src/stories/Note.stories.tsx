@@ -1,5 +1,3 @@
-// YourComponent.stories.js
-
 import { Story } from '@storybook/react';
 import React from 'react';
 import Note, { Props as NoteProps } from '../components/Note';

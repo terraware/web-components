@@ -1,5 +1,3 @@
-// YourComponent.stories.js
-
 import { Story } from '@storybook/react';
 import React from 'react';
 import Button, { Props as ButtonProps } from '../components/Button/Button';

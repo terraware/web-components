@@ -9,6 +9,7 @@ import DatePicker from './components/DatePicker';
 import DialogBox from './components/DialogBox/DialogBox';
 import Divisor from './components/Divisor';
 import Dropdown from './components/Dropdown';
+import ErrorBox from './components/ErrorBox/ErrorBox';
 import Icon from './components/Icon/Icon';
 import icons from './components/Icon/icons';
 import Navbar from './components/Navbar/Navbar';
@@ -26,6 +27,7 @@ import Table from './components/table';
 import { descendingComparator, getComparator, SortOrder, stableSort } from './components/table/sort';
 import CellRenderer, { CellDateRenderer, TableRowType } from './components/table/TableCellRenderer';
 import { EnhancedTableDetailsRow, RendererProps, TableColumnType } from './components/table/types';
+import * as Svg from './components/svg';
 
 export type { IconName } from './components/Icon/icons/';
 export type { Size } from './components/Size';
@@ -42,6 +44,7 @@ export {
   DialogBox,
   Divisor,
   Dropdown,
+  ErrorBox,
   getComparator,
   icons,
   Icon,
@@ -55,6 +58,7 @@ export {
   Select,
   stableSort,
   SummaryBox,
+  Svg,
   Textfield,
   Table,
 };

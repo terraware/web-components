@@ -80,5 +80,5 @@ yarn build-dictionary
 ## Generating assets from svgs
 
 Copy svgs to `./assets`.
-Run `yarn generate-assets`, see new files under `./src/components/Icon/icons/assets` as asset React components.
-Integrate new asset React component into `./src/components/Icon/icons/index.tsx`;
+Run `yarn generate-assets`, see new files under `./src/components/svg` as asset React components.
+Integrate new asset React component into `./src/components/Icon/icons/index.tsx` if needed as an icon;

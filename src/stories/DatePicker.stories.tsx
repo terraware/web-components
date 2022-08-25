@@ -1,5 +1,3 @@
-// YourComponent.stories.js
-
 import { Story as StoryBook } from '@storybook/react';
 import React, { ReactElement, useState } from 'react';
 import DatePicker, { Props as DatePickerProps } from '../components/DatePicker';

@@ -1,5 +1,5 @@
 import React, { ReactNode } from 'react';
-import { ReactComponent as Logo } from './logo.svg';
+import { Logo } from '../svg';
 import './styles.scss';
 import Icon from '../Icon/Icon';
 import { useDeviceInfo } from '../../utils';
