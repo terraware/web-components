@@ -269,13 +269,23 @@ export default function EnhancedTable<T>({
       </TableContainer>
       {showPagination && (
         <Box display='flex' alignItems='center' justifyContent='flex-end' paddingTop='24px' paddingBottom='24px'>
-          {itemsToSkip + maxItemsPerPage < rows.length ? (
-            <Typography paddingRight='24px' fontSize='14px'>
-              {itemsToSkip + 1} to {itemsToSkip + maxItemsPerPage} of {rows.length}
-            </Typography>
+          {/*
+            Calculate pagination numbers to show.
+            If the table is empty (rows.length === 0) override calculation and show '0 of 0'
+          */}
+          {rows.length ? (
+            itemsToSkip + maxItemsPerPage < rows.length ? (
+              <Typography paddingRight='24px' fontSize='14px'>
+                {itemsToSkip + 1} to {itemsToSkip + maxItemsPerPage} of {rows.length}
+              </Typography>
+            ) : (
+              <Typography paddingRight='24px' fontSize='14px'>
+                {itemsToSkip + 1} to {rows.length} of {rows.length}
+              </Typography>
+            )
           ) : (
             <Typography paddingRight='24px' fontSize='14px'>
-              {itemsToSkip + 1} to {rows.length} of {rows.length}
+              0 of 0
             </Typography>
           )}
           <Pagination
