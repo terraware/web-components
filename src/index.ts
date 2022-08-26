@@ -28,6 +28,7 @@ import { descendingComparator, getComparator, SortOrder, stableSort } from './co
 import CellRenderer, { CellDateRenderer, TableRowType } from './components/table/TableCellRenderer';
 import { EnhancedTableDetailsRow, RendererProps, TableColumnType } from './components/table/types';
 import * as Svg from './components/svg';
+import Message from './components/Message/Message';
 
 export type { IconName } from './components/Icon/icons/';
 export type { Size } from './components/Size';
@@ -48,6 +49,7 @@ export {
   getComparator,
   icons,
   Icon,
+  Message,
   NavFooter,
   NavItem,
   NavSection,
