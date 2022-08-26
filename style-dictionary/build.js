@@ -31,3 +31,4 @@ build(['./json/system/**/*.json', './json/navbar/**/*.json'], 'navbar_variables.
 build(['./json/system/**/*.json', './json/textfield/**/*.json'], 'textfield_variables.scss');
 build(['./json/system/**/*.json', './json/progressCircle/**/*.json'], 'progressCircle_variables.scss');
 build(['./json/system/**/*.json', './json/dialogBox/**/*.json'], 'dialogBox_variables.scss');
+build(['./json/system/**/*.json', './json/message/**/*.json'], 'message_variables.scss');

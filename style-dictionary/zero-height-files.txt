@@ -78,3 +78,6 @@ output=json/DialogBox/size-and-space-composite.json
 
 url=https://terraformation.zeroheight.com/api/token_file/1d5b0c904390/share
 output=json/DialogBox/shadow-shadow.json
+
+url=https://terraformation.zeroheight.com/api/token_file/66d5e9fe69a2/share
+output=json/message/typography-composite.json

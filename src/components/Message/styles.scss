@@ -1,0 +1,190 @@
+@import '../../style-dictionary-dist/message_variables.scss';
+
+@font-face {
+  font-family: 'Inter';
+  src: local('Inter'), url(../../fonts/Inter.ttf) format('truetype');
+}
+
+
+.tw-message {
+  &.tw-message--page {
+    width: 584px;
+    &.tw-message--container {
+      margin: $tw-spc-base-small 0;
+    }
+    &.tw-message--title-container {
+      display: flex;
+    }
+  }
+
+  border-radius: $tw-sz-base-x-small;
+  display: flex;
+
+  width: 480px;
+  &--container {
+    margin: $tw-spc-base-small;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+  }
+  &--title-container {
+    h1 {
+      font-family: $tw-fnt-mssg-title-font-family;
+      font-size: $tw-fnt-mssg-title-font-size;
+      font-weight: $tw-fnt-mssg-title-font-weight;
+      line-height: $tw-fnt-mssg-title-line-height;
+      color: $tw-clr-text-fill;
+      padding: 0;
+      margin: 0 0 $tw-spc-base-x-small 0;
+    }
+  }
+
+  &--main-content {
+    display: flex;
+    width: 100%;
+    
+    h2 {
+      font-family: $tw-fnt-mssg-body-font-family;
+      font-size: $tw-fnt-mssg-body-font-size;
+      font-weight: $tw-fnt-mssg-body-font-weight;
+      line-height: $tw-fnt-mssg-body-line-height;
+      color: $tw-clr-text-fill;
+      padding: 0;
+      margin: 0;
+    }
+
+    .main-content--icon {
+      width: $tw-sz-base-medium;
+      height: $tw-sz-base-medium;
+      margin-right: $tw-spc-base-small;
+    }
+  }
+
+  &--main-body {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  &--actions-container {
+    align-self: end;
+
+    button:first-child {
+      margin-right: $tw-spc-base-x-small;
+    }
+  }
+
+  &--action-text {
+    font-family: $tw-fnt-mssg-body-font-family;
+    font-size: $tw-fnt-mssg-body-font-size;
+    font-weight: $tw-fnt-mssg-body-font-weight;
+    line-height: $tw-fnt-mssg-body-line-height;
+    color: $tw-clr-text-fill-productive;
+    margin-left: $tw-spc-base-x-small;
+    background: none;
+    border: 0;
+    cursor: pointer;
+    height: fit-content;
+  }
+
+  &--left-side {
+    padding: $tw-spc-base-small $tw-spc-base-small 0 $tw-spc-base-small;
+    .left-side--icon {
+      fill: $tw-clr-icon-fill-text-inv;
+      width: $tw-sz-base-medium;
+      height: $tw-sz-base-medium;
+    }
+  }
+
+  .toast-message--close-icon {
+    margin-left: $tw-spc-base-x-small;
+    fill: $tw-clr-icon-fill-passive;
+    width: $tw-sz-base-medium;
+    height: $tw-sz-base-medium;
+  }
+
+  .page-message--close-icon {
+    margin-left: $tw-spc-base-x-small;
+    fill: $tw-clr-icon-fill-passive;
+    width: $tw-sz-base-medium;
+    height: $tw-sz-base-medium;
+  }
+  
+  .icon-container {
+    background: none;
+    border: 0;
+    cursor: pointer;
+    height: fit-content;
+  }
+
+  &--info {
+    &.tw-message--page {
+      border: 1px solid $tw-clr-base-semantic-passive;
+      background-color: $tw-clr-base-semantic-passive-bg;
+      .main-content--icon {
+        fill:$tw-clr-base-semantic-passive;
+      }
+    }
+    border: 1px solid $tw-clr-icon-fill-passive;
+    &.tw-message--toast {
+    box-shadow: 0 2px $tw-clr-icon-fill-passive;
+    }
+    .tw-message--left-side {
+      background-color: $tw-clr-icon-fill-passive;
+    }
+  }
+
+  &--critical {
+    &.tw-message--page {
+      border: 1px solid $tw-clr-base-semantic-critical;
+      background-color: $tw-clr-base-semantic-critical-bg;
+
+      .main-content--icon {
+        fill: $tw-clr-base-semantic-critical
+      }
+    }
+    border: 1px solid $tw-clr-icon-fill-critical;
+    &.tw-message--toast {
+    box-shadow: 0 2px $tw-clr-icon-fill-critical;
+    }
+    .tw-message--left-side {
+      background-color: $tw-clr-icon-fill-critical;
+    }
+  }
+
+  &--warning {
+    &.tw-message--page {
+      border: 1px solid $tw-clr-base-semantic-warning;
+      background-color: $tw-clr-base-semantic-warning-bg;
+
+      .main-content--icon {
+        fill: $tw-clr-base-semantic-warning;
+      }
+    }
+    border: 1px solid $tw-clr-icon-fill-warning;
+    &.tw-message--toast {
+    box-shadow: 0 2px $tw-clr-icon-fill-warning;
+    }
+    .tw-message--left-side {
+      background-color: $tw-clr-icon-fill-warning;
+    }
+  }
+
+  &--success {
+    &.tw-message--page {
+      border: 1px solid $tw-clr-base-semantic-success;
+      background-color: $tw-clr-base-semantic-success-bg;
+
+      .main-content--icon {
+        fill: $tw-clr-base-semantic-success;
+      }
+    }
+    border: 1px solid $tw-clr-icon-fill-success;
+    &.tw-message--toast {
+    box-shadow: 0 2px $tw-clr-icon-fill-success;
+    }
+    .tw-message--left-side {
+      background-color: $tw-clr-icon-fill-success;
+    }
+  }
+}
