@@ -21,7 +21,6 @@ Toast.args = {
   type: 'toast',
   priority: 'info',
   showCloseButton: false,
-  open: true,
 };
 
 export const Page = Template.bind({});
@@ -35,5 +34,4 @@ Page.args = {
     <Button label='Test' onClick={() => true} size='small' key={'1'} priority='secondary' type='passive' />,
     <Button label='Test' onClick={() => true} size='small' key={'2'} priority='secondary' type='passive' />,
   ],
-  open: true,
 };
