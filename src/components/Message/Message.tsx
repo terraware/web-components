@@ -7,8 +7,8 @@ import { useDeviceInfo } from '../../utils';
 export interface Props {
   type: 'page' | 'toast';
   priority: 'info' | 'critical' | 'warning' | 'success';
-  title?: string;
-  body: string;
+  title?: string | string[];
+  body: string | string[];
   actionText?: string;
   actionHandler?: () => void;
   pageButtons?: JSX.Element[];
