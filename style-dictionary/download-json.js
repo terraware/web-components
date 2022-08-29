@@ -1,13 +1,13 @@
 const fs = require('fs');
 const https = require('https');
 const zeroHeightFiles = require('./zero-height-files.json');
-  
-// loop through zeroheight files and write them to destination 
+
+// loop through zeroheight files and write them to destination
 const promises = [];
 
 zeroHeightFiles.forEach(file => {
 
-  const promise = new Promise((resolve, reject) => { 
+const promise = new Promise((resolve, reject) => {
 
     https.get(file.url,(res) => {
       // Image will be stored at this path
@@ -17,7 +17,7 @@ zeroHeightFiles.forEach(file => {
 
       filePath.on('finish',() => {
         filePath.close();
-        console.log(`Download ${file.url} to ${file.output} completed.`); 
+        console.log(`Download ${file.url} to ${file.output} completed.`);
         resolve(true);
       });
 
