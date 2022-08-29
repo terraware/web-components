@@ -21,6 +21,11 @@
   display: flex;
 
   width: 480px;
+
+  &.tw-message--mobile {
+    width: 100%;
+  }
+
   &--container {
     margin: $tw-spc-base-small;
     display: flex;
