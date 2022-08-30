@@ -11,7 +11,7 @@ export default {
   component: SimpleAutocomplete,
 };
 
-const SimpleAutocompleteTemplate: Story<SimpleAutocompleteProps> = (args) => {
+const Template: Story<SimpleAutocompleteProps> = (args) => {
   const [selected, setSelected] = React.useState('');
   const handleChange = (id: string, value: string) => {
     action('onChange')(value);
@@ -21,9 +21,9 @@ const SimpleAutocompleteTemplate: Story<SimpleAutocompleteProps> = (args) => {
   return <SimpleAutocomplete {...args} selected={selected} onChange={handleChange} />;
 };
 
-export const SimpleAutocompleteStory = SimpleAutocompleteTemplate.bind({});
+export const Default = Template.bind({});
 
-SimpleAutocompleteStory.args = {
+Default.args = {
   id: '1',
   label: 'Test',
   options: ['Test 1', 'Test 2', 'Hello'],

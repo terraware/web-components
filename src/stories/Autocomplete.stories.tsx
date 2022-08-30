@@ -21,7 +21,7 @@ const defaultValue: Value = {
   commonName: '',
 };
 
-const AutocompleteTemplate: Story<AutocompleteProps<Value>> = (args) => {
+const Template: Story<AutocompleteProps<Value>> = (args) => {
   const [selected, setSelected] = React.useState<Value>(defaultValue);
   const handleChange = (id: string, value: Value | string) => {
     action('onChange')(value);
@@ -75,9 +75,9 @@ const AutocompleteTemplate: Story<AutocompleteProps<Value>> = (args) => {
   );
 };
 
-export const AutocompleteStory = AutocompleteTemplate.bind({});
+export const Default = Template.bind({});
 
-AutocompleteStory.args = {
+Default.args = {
   id: '1',
   label: 'Test',
   options: [
