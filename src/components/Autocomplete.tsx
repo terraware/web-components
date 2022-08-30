@@ -1,36 +1,39 @@
 import { Autocomplete as MUIAutocomplete, TextField } from '@mui/material';
 import React, { ChangeEvent } from 'react';
 
-export interface Props {
+export interface Props<T> {
   id: string;
   label: string;
-  values: string[];
-  onChange: (id: string, value: string) => void;
-  selected: string | undefined;
+  options: T[];
+  onChange: (id: string, value: T | string) => void;
+  selected: T | undefined;
   disabled?: boolean;
   freeSolo: boolean;
+  renderOption?: (props: object, option: T, state: object) => React.ReactNode;
+  optionLabel: (option: any) => string;
+  optionSelected?: (option: T, value: T) => boolean;
+  defaultValue: T;
 }
 
-export type DropdownItem = {
-  label: string;
-  value: string;
-};
-
-export default function Autocomplete({
+export default function Autocomplete<T>({
   id,
   label,
-  values,
+  options,
   onChange,
   selected,
   disabled,
   freeSolo,
-}: Props): JSX.Element {
-  const onChangeHandler = (event: ChangeEvent<any>, value: string | null) => {
+  renderOption,
+  optionLabel,
+  optionSelected,
+  defaultValue,
+}: Props<T>): JSX.Element {
+  const onChangeHandler = (event: ChangeEvent<any>, value: string | T | null) => {
     if (event) {
       if (value) {
         onChange(id, value);
       } else {
-        onChange(id, '');
+        onChange(id, defaultValue);
       }
     }
   };
@@ -39,14 +42,39 @@ export default function Autocomplete({
     <MUIAutocomplete
       disabled={disabled}
       id={id}
-      options={values}
-      getOptionLabel={(option) => (option ? option : '')}
+      options={options}
+      getOptionLabel={optionLabel}
+      isOptionEqualToValue={optionSelected}
+      renderOption={renderOption}
       onChange={onChangeHandler}
       onInputChange={onChangeHandler}
-      inputValue={selected}
+      inputValue={optionLabel(selected)}
       freeSolo={freeSolo}
       forcePopupIcon={true}
       renderInput={(params) => <TextField {...params} label={label} variant='outlined' size='small' />}
+    />
+  );
+}
+
+// Default string based autocomplete
+
+export interface SimpleAutocompleteProps {
+  id: string;
+  label: string;
+  options: string[];
+  onChange: (id: string, value: string) => void;
+  selected: string | undefined;
+  disabled?: boolean;
+  freeSolo: boolean;
+}
+
+export function SimpleAutocomplete(props: SimpleAutocompleteProps): JSX.Element {
+  return (
+    <Autocomplete
+      {...props}
+      optionLabel={(option) => (option ? option : '')}
+      optionSelected={(option, value) => option === value}
+      defaultValue={''}
     />
   );
 }

@@ -2,7 +2,7 @@
  * Defines the public components
  */
 
-import Autocomplete from './components/Autocomplete';
+import Autocomplete, { SimpleAutocomplete } from './components/Autocomplete';
 import Button from './components/Button/Button';
 import Checkbox from './components/Checkbox';
 import DatePicker from './components/DatePicker';
@@ -58,6 +58,7 @@ export {
   ProgressCircle,
   RadioButton,
   Select,
+  SimpleAutocomplete,
   stableSort,
   SummaryBox,
   Svg,
