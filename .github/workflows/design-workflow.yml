@@ -46,16 +46,12 @@ jobs:
           git config --global user.email ${{ github.event.inputs.email }}
           git config --global user.name ${{ github.actor }}
 
-      - name: Create commit message file
-        run: node .github/scripts/commit-message.js
-        env:
-          JIRA: ${{ github.event.inputs.jira }}
-          DESCRIPTION: ${{ github.event.inputs.description }}
-
       - name: Commit changes
         run: |
           git add -A
-          git commit -F /tmp/commit-message
+          git commit -m "$TITLE"
+        env:
+          TITLE: "${{ github.event.inputs.jira }} ${{ github.event.inputs.description }}"
 
       - name: Push changes
         run: git push -u origin `git branch --show-current`
