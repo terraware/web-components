@@ -4,7 +4,11 @@ on:
   workflow_dispatch:
     inputs:
       description:
-        description: 'What is the change in 5 words or less?'
+        description: 'What are we updating (eg. update button destructive color)?'
+        default: ''
+        required: true
+      jira:
+        description: 'What is the related JIRA (eg. SW-1234)?'
         default: ''
         required: true
       email:
@@ -26,7 +30,7 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
 
       - name: Create branch
-        run: git checkout -b `echo design-workflow-${{ github.actor }}-${{ github.event.inputs.description }} | sed "s/ /-/g"`
+        run: git checkout -b `echo design-workflow-${{ github.actor }}-${{ github.event.inputs.jira }}-\`date +"%y-%m-%d"\`  | sed "s/ /-/g"`
 
       - name: Install Dependencies
         run: yarn install --network-timeout 100000
@@ -51,6 +55,6 @@ jobs:
         run: git push -u origin `git branch --show-current`
 
       - name: Create PR
-        run: gh pr create --fill
+        run: gh pr create --title "${{ github.event.inputs.jira }} - ${{ github.event.inputs.description }}" --body "${{ github.event.inputs.description }}"
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
