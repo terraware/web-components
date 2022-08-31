@@ -8,7 +8,7 @@ on:
         default: ''
         required: true
       jira:
-        description: 'What is the related JIRA (eg. SW-1234)?'
+        description: 'What is the related Jira (eg. SW-1234)?'
         default: ''
         required: true
       email:
