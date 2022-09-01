@@ -33,7 +33,12 @@ jobs:
         run: git checkout -b $(echo design-workflow-${{ github.actor }}-${{ github.event.inputs.jira }}-$(date +%y-%m-%d-%s) | tr ' ' -)
 
       - name: Install Dependencies
-        run: yarn install --network-timeout 100000
+        run: |
+          npm pkg delete dependencies
+          yarn install --network-timeout 100000
+          git checkout package.json
+          git checkout yarn.lock
+          git status
 
       - name: Build dictionary 
         run: yarn build-dictionary
