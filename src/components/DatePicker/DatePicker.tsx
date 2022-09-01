@@ -18,8 +18,6 @@ export interface Props {
   helperText?: string;
   disabled?: boolean;
   className?: string;
-  autocomplete?: string;
-  autoOk?: boolean;
 }
 
 export default function DatePicker(props: Props): JSX.Element {
