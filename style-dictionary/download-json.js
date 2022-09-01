@@ -35,9 +35,8 @@ const promise = new Promise((resolve, reject) => {
 // Wait for downloads to complete
 return Promise.all(promises)
   .then(() => {
-    console.log('Done downloading all!');
+    process.stdout.write('Done downloading all!');
   })
   .catch((err) => {
-    console.error(err);
-    process.exit(1);
+    process.stderr.write(err);
   });

@@ -101,11 +101,11 @@
   },
   {
     "url": "https://terraformation.zeroheight.com/api/token_file/131d87d7c06b/share",
-    "output": "json/DialogBox/size-and-space-composite.json"
+    "output": "json/dialogBox/size-and-space-composite.json"
   },
   {
     "url": "https://terraformation.zeroheight.com/api/token_file/1d5b0c904390/share",
-    "output": "json/DialogBox/shadow-shadow.json"
+    "output": "json/dialogBox/shadow-shadow.json"
   },
   {
     "url": "https://terraformation.zeroheight.com/api/token_file/66d5e9fe69a2/share",
