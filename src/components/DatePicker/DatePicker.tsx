@@ -4,6 +4,7 @@ import React, { KeyboardEventHandler } from 'react';
 import { TextField } from '@mui/material';
 import { LocalizationProvider, DesktopDatePicker } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import './styles.scss';
 
 export interface Props {
   id: string;
@@ -28,17 +29,23 @@ export default function DatePicker(props: Props): JSX.Element {
   }, [window.navigator.language]);
 
   return (
-    <LocalizationProvider dateAdapter={AdapterDateFns}>
-      <DesktopDatePicker
-        label={props.label}
-        inputFormat='yyyy-MM-dd'
-        value={props.value ? moment(props.value, 'YYYY-MM-DD').toDate() : null}
-        onChange={(newValue: string | null) => {
-          props.onChange(props.id, newValue);
-        }}
-        renderInput={(params) => <TextField {...params} id={props.id} onKeyPress={props.onKeyPress} />}
-        disabled={props.disabled}
-      />
-    </LocalizationProvider>
+    <div className={`date-picker ${props.className}`}>
+      <LocalizationProvider dateAdapter={AdapterDateFns}>
+        {props.label && (
+          <label htmlFor={props.id} className='textfield-label'>
+            {props.label}
+          </label>
+        )}
+        <DesktopDatePicker
+          inputFormat='yyyy-MM-dd'
+          value={props.value ? moment(props.value, 'YYYY-MM-DD').toDate() : null}
+          onChange={(newValue: string | null) => {
+            props.onChange(props.id, newValue);
+          }}
+          renderInput={(params) => <TextField {...params} id={props.id} onKeyPress={props.onKeyPress} />}
+          disabled={props.disabled}
+        />
+      </LocalizationProvider>
+    </div>
   );
 }
