@@ -3,7 +3,14 @@ import { Story } from '@storybook/react';
 import React from 'react';
 import Autocomplete, {
   Props as AutocompleteProps,
-} from '../components/Autocomplete';
+} from '../components/Autocomplete/Autocomplete';
+import { makeStyles } from '@mui/styles';
+
+const useStyles = makeStyles(() => ({
+  container: {
+    width: '300px',
+  },
+}));
 
 export default {
   title: 'Autocomplete',
@@ -11,13 +18,14 @@ export default {
 };
 
 const Template: Story<AutocompleteProps> = (args) => {
+  const classes = useStyles();
   const [selected, setSelected] = React.useState('');
   const handleChange = (id: string, value: string) => {
     action('onChange')(value);
     setSelected(value);
   };
 
-  return <Autocomplete {...args} selected={selected} onChange={handleChange} />;
+  return <Autocomplete {...args} selected={selected} onChange={handleChange} className={classes.container} />;
 };
 
 export const Default = Template.bind({});

@@ -2,7 +2,7 @@
  * Defines the public components
  */
 
-import Autocomplete from './components/Autocomplete';
+import Autocomplete from './components/Autocomplete/Autocomplete';
 import Button from './components/Button/Button';
 import Checkbox from './components/Checkbox';
 import DatePicker from './components/DatePicker/DatePicker';

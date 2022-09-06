@@ -1,5 +1,6 @@
 import { Autocomplete as MUIAutocomplete, TextField } from '@mui/material';
 import React, { ChangeEvent } from 'react';
+import './styles.scss';
 
 export interface Props {
   id: string;
@@ -7,8 +8,9 @@ export interface Props {
   values: string[];
   onChange: (id: string, value: string) => void;
   selected: string | undefined;
-  disabled?: boolean;
   freeSolo: boolean;
+  disabled?: boolean;
+  className?: string;
 }
 
 export type DropdownItem = {
@@ -22,8 +24,9 @@ export default function Autocomplete({
   values,
   onChange,
   selected,
-  disabled,
   freeSolo,
+  disabled,
+  className,
 }: Props): JSX.Element {
   const onChangeHandler = (event: ChangeEvent<any>, value: string | null) => {
     if (event) {
@@ -34,6 +37,17 @@ export default function Autocomplete({
       }
     }
   };
+
+  const renderInput = (params: object) => (
+    <div className={`auto-complete ${className}`}>
+      {label && (
+        <label htmlFor={id} className='textfield-label'>
+          {label}
+        </label>
+      )}
+      <TextField {...params} variant='outlined' size='small' />
+    </div>
+  );
 
   return (
     <MUIAutocomplete
@@ -46,7 +60,7 @@ export default function Autocomplete({
       inputValue={selected}
       freeSolo={freeSolo}
       forcePopupIcon={true}
-      renderInput={(params) => <TextField {...params} label={label} variant='outlined' size='small' />}
+      renderInput={renderInput}
     />
   );
 }
