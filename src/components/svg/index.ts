@@ -27,6 +27,7 @@ export { default as IconCancel } from './IconCancel';
 export { default as IconChargingBattery } from './IconChargingBattery';
 export { default as IconCheckmark } from './IconCheckmark';
 export { default as IconDashboard } from './IconDashboard';
+export { default as IconEdit } from './IconEdit';
 export { default as IconHeartMonitor } from './IconHeartMonitor';
 export { default as IconMail } from './IconMail';
 export { default as IconManager } from './IconManager';
