@@ -6,6 +6,11 @@ on:
   pull_request:
     branches: [main]
 
+concurrency:
+  group: ${{ github.ref }}-${{ github.workflow }}
+  # Cancel in-progress builds on PRs, but not on staging deploys.
+  cancel-in-progress: ${{ github.ref != 'main' }}
+
 jobs:
   deployment:
     runs-on: ubuntu-latest
