@@ -11,6 +11,7 @@ export interface Props {
   freeSolo: boolean;
   disabled?: boolean;
   className?: string;
+  isV1?: boolean; // deprecated
 }
 
 export type DropdownItem = {
@@ -27,6 +28,7 @@ export default function Autocomplete({
   freeSolo,
   disabled,
   className,
+  isV1,
 }: Props): JSX.Element {
   const onChangeHandler = (event: ChangeEvent<any>, value: string | null) => {
     if (event) {
@@ -40,12 +42,12 @@ export default function Autocomplete({
 
   const renderInput = (params: object) => (
     <div className={`auto-complete ${className}`}>
-      {label && (
+      {label && isV1 !== true && (
         <label htmlFor={id} className='textfield-label'>
           {label}
         </label>
       )}
-      <TextField {...params} variant='outlined' size='small' />
+      <TextField label={isV1 ? label : undefined} {...params} variant='outlined' size='small' placeholder={label} />
     </div>
   );
 

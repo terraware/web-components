@@ -30,10 +30,21 @@ const Template: Story<AutocompleteProps> = (args) => {
 
 export const Default = Template.bind({});
 
+export const V1 = Template.bind({});
+
 Default.args = {
   id: '1',
   label: 'Test',
   values: ['Test 1', 'Test 2', 'Hello'],
   onChange: () => true,
   selected: '',
+};
+
+V1.args = {
+  id: '1',
+  label: 'Test',
+  values: ['Test 1', 'Test 2', 'Hello'],
+  onChange: () => true,
+  selected: '',
+  isV1: true,
 };
