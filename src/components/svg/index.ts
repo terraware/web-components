@@ -34,6 +34,7 @@ export { default as IconManager } from './IconManager';
 export { default as IconMenu } from './IconMenu';
 export { default as IconOrg } from './IconOrg';
 export { default as IconSeedBank } from './IconSeedBank';
+export { default as IconTrashCan } from './IconTrashCan';
 export { default as IconWifi } from './IconWifi';
 export { default as Info } from './Info';
 export { default as Key } from './Key';
