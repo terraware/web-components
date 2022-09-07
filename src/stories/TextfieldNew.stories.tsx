@@ -1,5 +1,6 @@
 import { Story } from '@storybook/react';
 import React from 'react';
+import { Box } from '@mui/material';
 import TextField, { Props as TextFieldProps } from '../components/Textfield/Textfield';
 
 export default {
@@ -27,10 +28,16 @@ const Template: Story<TextFieldProps> = (args) => {
     setValue(v as string);
   };
 
-  return <TextField {...args} value={value} onChange={handleChange} />;
+  return (
+    <Box sx={{marginTop: '30px'}}>
+      <TextField {...args} value={value} onChange={handleChange} />
+    </Box>
+  );
 };
 
 export const Default = Template.bind({});
+
+export const WithTooltip = Template.bind({});
 
 Default.args = {
   label: 'Field Label',
@@ -42,4 +49,17 @@ Default.args = {
   readonly: false,
   display: false,
   type: 'text',
+};
+
+WithTooltip.args = {
+  label: 'Field Label',
+  disabled: false,
+  helperText: 'Help Text',
+  placeholder: 'placeholder',
+  errorText: '',
+  warningText: '',
+  readonly: false,
+  display: false,
+  type: 'text',
+  tooltipText: 'Hello world!',
 };

@@ -1,5 +1,6 @@
 import classNames from 'classnames';
 import React from 'react';
+import { Tooltip } from '@mui/material';
 import Icon from '../Icon/Icon';
 import { IconName } from '../Icon/icons';
 import './styles.scss';
@@ -27,6 +28,7 @@ export interface Props {
   type: TextfieldType;
   onKeyDown?: (key: string) => void;
   onClickRightIcon?: () => void;
+  tooltipText?: string;
 }
 
 export default function TextField(props: Props): JSX.Element {
@@ -48,6 +50,7 @@ export default function TextField(props: Props): JSX.Element {
     type,
     onKeyDown,
     onClickRightIcon,
+    tooltipText,
   } = props;
 
   const textfieldClass = classNames({
@@ -90,6 +93,15 @@ export default function TextField(props: Props): JSX.Element {
     <div className={`textfield ${className}`}>
       <label htmlFor={id} className='textfield-label'>
         {label}
+        {tooltipText !== undefined && (
+          <div className='textfield-label--icon-tooltip-container'>
+            <Tooltip title={tooltipText} placement='top' arrow={true}>
+              <span>
+                <Icon name='info' className='textfield-label--icon-tooltip'/>
+              </span>
+            </Tooltip>
+          </div>
+        )}
       </label>
       {!display &&
         (type === 'text' ? (
