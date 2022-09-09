@@ -6,7 +6,7 @@ import { IconName } from '../Icon/icons';
 import './styles.scss';
 import { isWhitespaces } from '../../utils';
 
-type TextfieldType = 'text' | 'textarea';
+type TextfieldType = 'text' | 'textarea' | 'number';
 
 type Handler = (id: string, value: unknown) => void;
 
@@ -22,13 +22,15 @@ export interface Props {
   placeholder?: string;
   errorText?: string;
   warningText?: string;
-  value?: string;
+  value?: string | number;
   readonly?: boolean;
   display?: boolean;
   type: TextfieldType;
   onKeyDown?: (key: string) => void;
   onClickRightIcon?: () => void;
   tooltipText?: string;
+  min?: number;
+  max?: number;
 }
 
 export default function TextField(props: Props): JSX.Element {
@@ -51,6 +53,8 @@ export default function TextField(props: Props): JSX.Element {
     onKeyDown,
     onClickRightIcon,
     tooltipText,
+    min,
+    max,
   } = props;
 
   const textfieldClass = classNames({
@@ -89,6 +93,19 @@ export default function TextField(props: Props): JSX.Element {
     );
   };
 
+  const typeProps: { [key: string]: unknown } = {
+    type,
+  };
+
+  if (type === 'number') {
+    if (min !== undefined) {
+      typeProps.min = min;
+    }
+    if (max !== undefined) {
+      typeProps.max = max;
+    }
+  }
+
   return (
     <div className={`textfield ${className}`}>
       <label htmlFor={id} className='textfield-label'>
@@ -104,15 +121,16 @@ export default function TextField(props: Props): JSX.Element {
         )}
       </label>
       {!display &&
-        (type === 'text' ? (
+        ((type === 'text' || type === 'number') ? (
           <div id={id} className={textfieldClass}>
             {iconLeft && <Icon name={iconLeft} className='textfield-value--icon-left' />}
             <input
-              value={value || ''}
+              value={value || (type === 'text' ? '' : (min || 0))}
               disabled={readonly || disabled}
               placeholder={placeholder}
               onChange={textfieldOnChange}
               onKeyDown={onKeyDownHandler}
+              { ...typeProps }
             />
             {iconRight ? renderRightIcon() : null}
           </div>

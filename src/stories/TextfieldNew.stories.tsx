@@ -35,9 +35,26 @@ const Template: Story<TextFieldProps> = (args) => {
   );
 };
 
+const NumberTemplate: Story<TextFieldProps> = (args) => {
+  const [value, setValue] = React.useState(0);
+  const handleChange = (id: string, v: unknown) => {
+    setValue(v as number);
+  };
+
+  return (
+    <Box sx={{marginTop: '30px'}}>
+      <TextField {...args} value={value} onChange={handleChange} type='number' />
+    </Box>
+  );
+};
+
 export const Default = Template.bind({});
 
 export const WithTooltip = Template.bind({});
+
+export const TextArea = Template.bind({});
+
+export const NumberField = NumberTemplate.bind({});
 
 Default.args = {
   label: 'Field Label',
@@ -62,4 +79,29 @@ WithTooltip.args = {
   display: false,
   type: 'text',
   tooltipText: 'Hello world!',
+};
+
+TextArea.args = {
+  label: 'TextArea Label',
+  disabled: false,
+  helperText: 'Help Text',
+  placeholder: 'placeholder',
+  errorText: '',
+  warningText: '',
+  readonly: false,
+  display: false,
+  type: 'textarea',
+};
+
+NumberField.args = {
+  label: 'Number Label',
+  disabled: false,
+  helperText: 'Help Text',
+  placeholder: 'placeholder',
+  errorText: '',
+  warningText: '',
+  readonly: false,
+  display: false,
+  min: 5,
+  max: 25,
 };
