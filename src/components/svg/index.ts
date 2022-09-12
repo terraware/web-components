@@ -32,6 +32,7 @@ export { default as IconHeartMonitor } from './IconHeartMonitor';
 export { default as IconMail } from './IconMail';
 export { default as IconManager } from './IconManager';
 export { default as IconMenu } from './IconMenu';
+export { default as IconMyLocation } from './IconMyLocation';
 export { default as IconOrg } from './IconOrg';
 export { default as IconSeedBank } from './IconSeedBank';
 export { default as IconTrashCan } from './IconTrashCan';
