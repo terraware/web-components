@@ -30,7 +30,7 @@ Default.args = {
   warningText: '',
   readonly: false,
   options: ['test 1', 'test 2', 'test 3'],
-  selectedValue: 'test2',
+  selectedValue: 'test 2',
 };
 
 type Value = {
