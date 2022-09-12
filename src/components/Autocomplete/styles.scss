@@ -20,4 +20,14 @@
     width: 100%;
     max-width: 100%;
   }
+
+  .MuiInputBase-root {
+    border: 1px solid $tw-clr-base-semantic-passive;
+    position: unset;
+    padding: 0;
+  }
+
+  input {
+    padding: calc(#{$tw-spc-base-xx-small} * 2.5) calc(#{$tw-spc-base-xx-small} * 3);
+  }
 }
