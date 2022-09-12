@@ -16,7 +16,7 @@ const Template: Story<SelectProps> = (args) => {
     setValue(str);
   };
 
-  return <Select {...args} selectedValue={value} onChange={handleChange} />;
+  return <Select {...args} onChange={handleChange} />;
 };
 
 export const Default = Template.bind({});
@@ -30,6 +30,7 @@ Default.args = {
   warningText: '',
   readonly: false,
   options: ['test 1', 'test 2', 'test 3'],
+  selectedValue: 'test 2',
 };
 
 type Value = {
@@ -72,7 +73,6 @@ const TemplateSelectT: Story<SelectTProps<Value>> = (args) => {
       renderOption={renderOption}
       toT={toT}
       displayLabel={displayLabel}
-      selectedValue={value}
     />
   );
 };
@@ -96,5 +96,9 @@ ComplexSelect.args = {
   }, {
     name: 'Yoda',
     age: 500
-  }]
+  }],
+  selectedValue: {
+    name: 'Eeyore',
+    age: 8
+  },
 };
