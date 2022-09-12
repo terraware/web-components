@@ -72,10 +72,10 @@ export default function SelectT<T>(props: SelectTProps<T>): JSX.Element {
   const dropdownRef = useRef<HTMLUListElement>(null);
 
   useEffect(() => {
-    if (options && selectedValue && selectedIndex === -1) {
-      let newIndex = -1;
+    let newIndex = -1;
+    if (options && selectedValue) {
       options.find((option, index) => {
-        if (newIndex === -1 && isEqual(option, selectedValue)) {
+        if (isEqual(option, selectedValue)) {
           newIndex = index;
 
           return true;
@@ -83,11 +83,9 @@ export default function SelectT<T>(props: SelectTProps<T>): JSX.Element {
 
         return false;
       });
-      if (newIndex !== -1) {
-        setSelectedIndex(newIndex);
-      }
-    } else if (!options) {
-      setSelectedIndex(-1);
+    }
+    if (newIndex !== selectedIndex) {
+      setSelectedIndex(newIndex);
     }
   }, [options, selectedValue, selectedIndex]);
 
