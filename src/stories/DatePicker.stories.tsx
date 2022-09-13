@@ -1,4 +1,5 @@
 import { Story as StoryBook } from '@storybook/react';
+import { action } from '@storybook/addon-actions';
 import React, { ReactElement, useState } from 'react';
 import DatePicker, { Props as DatePickerProps } from '../components/DatePicker/DatePicker';
 
@@ -16,6 +17,10 @@ export default {
   ],
 };
 
+const onError = (reason: any, value: any) => {
+  action(`Invalid date ${value.toString()}, ${reason.toString()}`);
+};
+
 const Template: StoryBook<DatePickerProps> = (args) => {
   const [value, setValue] = useState<string|undefined|null>();
 
@@ -24,6 +29,7 @@ const Template: StoryBook<DatePickerProps> = (args) => {
       {...args}
       value={value}
       onChange={(i, v) => setValue(v)}
+      onError={onError}
     />
   );
 };
@@ -35,4 +41,6 @@ Default.args = {
   label: 'Datepicker',
   minDate: undefined,
   maxDate: Date.now(),
+  errorText: '',
+  helperText: '',
 };
