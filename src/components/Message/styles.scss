@@ -132,7 +132,7 @@
     }
     border: 1px solid $tw-clr-icon-fill-passive;
     &.tw-message--toast {
-    box-shadow: 0 2px $tw-clr-icon-fill-passive;
+      box-shadow: 0 2px $tw-clr-icon-fill-passive;
     }
     .tw-message--left-side {
       background-color: $tw-clr-icon-fill-passive;
@@ -150,7 +150,7 @@
     }
     border: 1px solid $tw-clr-icon-fill-critical;
     &.tw-message--toast {
-    box-shadow: 0 2px $tw-clr-icon-fill-critical;
+      box-shadow: 0 2px $tw-clr-icon-fill-critical;
     }
     .tw-message--left-side {
       background-color: $tw-clr-icon-fill-critical;
@@ -168,7 +168,7 @@
     }
     border: 1px solid $tw-clr-icon-fill-warning;
     &.tw-message--toast {
-    box-shadow: 0 2px $tw-clr-icon-fill-warning;
+      box-shadow: 0 2px $tw-clr-icon-fill-warning;
     }
     .tw-message--left-side {
       background-color: $tw-clr-icon-fill-warning;
@@ -186,10 +186,14 @@
     }
     border: 1px solid $tw-clr-icon-fill-success;
     &.tw-message--toast {
-    box-shadow: 0 2px $tw-clr-icon-fill-success;
+      box-shadow: 0 2px $tw-clr-icon-fill-success;
     }
     .tw-message--left-side {
       background-color: $tw-clr-icon-fill-success;
     }
+  }
+
+  &.tw-message--toast {
+    background-color: $tw-clr-base-white;
   }
 }

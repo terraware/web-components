@@ -9,7 +9,11 @@ export default {
 };
 
 const Template: Story<MessageProps> = (args) => {
-  return <Message {...args} />;
+  return (
+    <div style={{padding: '100px', backgroundColor: '#f5f5f5'}}>
+      <Message {...args} />
+    </div>
+  );
 };
 
 export const Toast = Template.bind({});
