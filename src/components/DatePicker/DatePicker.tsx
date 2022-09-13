@@ -13,7 +13,8 @@ export interface Props {
   onChange: (id: string, value?: string | null) => void;
   'aria-label': string;
   onKeyPress?: KeyboardEventHandler;
-  maxDate?: string;
+  minDate?: any;
+  maxDate?: any;
   error?: boolean;
   helperText?: string;
   disabled?: boolean;
@@ -35,6 +36,8 @@ export default function DatePicker(props: Props): JSX.Element {
           </label>
         )}
         <DesktopDatePicker
+          minDate={props.minDate}
+          maxDate={props.maxDate}
           inputFormat='yyyy-MM-dd'
           value={props.value ? moment(props.value, 'YYYY-MM-DD').toDate() : null}
           onChange={(newValue: string | null) => {

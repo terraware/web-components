@@ -33,4 +33,6 @@ export const Default = Template.bind({});
 Default.args = {
   id: '1',
   label: 'Datepicker',
+  minDate: undefined,
+  maxDate: Date.now(),
 };
