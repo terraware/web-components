@@ -73,6 +73,7 @@
     padding: $tw-spc-base-small $tw-spc-base-medium;
     display: flex;
     justify-content: space-between;
+    align-items: center;
     border-radius: $tw-sz-base-small $tw-sz-base-small 0 0;
     .title {
       font-family: $tw-fnt-dlg-bx-title-font-family;
