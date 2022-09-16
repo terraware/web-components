@@ -29,6 +29,7 @@ import Home from '../../svg/Home';
 import IconEdit from '../../svg/IconEdit';
 import IconMenu from '../../svg/IconMenu';
 import IconMyLocation from '../../svg/IconMyLocation';
+import IconSynced from '../../svg/IconSynced';
 import IconTrashCan from '../../svg/IconTrashCan';
 import Info from '../../svg/Info';
 import Key from '../../svg/Key';
@@ -91,6 +92,7 @@ export type IconName =
   | 'iconEdit'
   | 'iconMenu'
   | 'iconMyLocation'
+  | 'iconSynced'
   | 'iconTrashCan'
   | 'info'
   | 'key'
@@ -157,6 +159,7 @@ const icons: Record<IconName, SVGComponent> = {
   iconEdit: IconEdit,
   iconMenu: IconMenu,
   iconMyLocation: IconMyLocation,
+  iconSynced: IconSynced,
   iconTrashCan: IconTrashCan,
   info: Info,
   key: Key,
