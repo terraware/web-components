@@ -1,4 +1,6 @@
+import { deepmerge } from '@mui/utils';
 import { createTheme } from '@mui/material/styles';
+import TerrawareTheme from './style-dictionary-dist/TerrawareTheme';
 
 declare module '@mui/material/styles/createPalette' {
   interface Palette {
@@ -57,7 +59,7 @@ declare module '@mui/material/styles/createPalette' {
   }
 }
 
-export default createTheme({
+const defaultTheme = {
   typography: {
     fontFamily: 'Inter',
   },
@@ -121,4 +123,6 @@ export default createTheme({
       800: '#3A4445',
     },
   },
-});
+};
+
+export default createTheme(deepmerge(defaultTheme, TerrawareTheme));
