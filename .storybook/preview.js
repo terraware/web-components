@@ -13,7 +13,7 @@ export const parameters = {
   },
 }
 
-import theme from '../src/theme'
+import { theme } from '../src/'
 
 export const decorators = [
   (Story) => (

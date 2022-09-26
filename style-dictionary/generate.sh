@@ -13,5 +13,9 @@ mkdir -p style-dictionary/json/message
 cd style-dictionary
 echo "Downloading json"
 node download-json.js
+echo
 echo "Building style dictionary"
 node build.js
+echo
+echo "Building theme"
+node build-theme.js
