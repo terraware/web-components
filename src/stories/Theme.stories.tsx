@@ -12,11 +12,11 @@ export default {
 const COLORS = Object.keys(TerrawareTheme.palette);
 
 const Template: Story<{}> = () => {
-  const [colorValue, setColorValue] = React.useState('');
+  const theme = useTheme();
+  const [colorValue, setColorValue] = React.useState(theme.palette.ClrIconFillProductive);
   const [colorStr, setColorStr] = React.useState('');
   const [bgColorValue, setBgColorValue] = React.useState('');
   const [bgColorStr, setBgColorStr] = React.useState('');
-  const theme = useTheme();
   const palette = theme.palette as unknown as { [key: string]: string };
 
   const handleChangeColor = (str: string) => {
