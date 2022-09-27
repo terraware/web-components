@@ -1,3 +1,361 @@
+import { PaletteOptions } from '@mui/material/styles/createPalette';
+
+declare module '@mui/material/styles/createPalette' {
+  export interface Palette {
+    ClrBtnDestructivePrimaryFill?: React.CSSProperties['color'];
+    ClrBtnDestructivePrimaryFillActive?: React.CSSProperties['color'];
+    ClrBtnDestructivePrimaryFillHover?: React.CSSProperties['color'];
+    ClrBtnDestructivePrimaryLabel?: React.CSSProperties['color'];
+    ClrBtnDestructiveSecondaryFill?: React.CSSProperties['color'];
+    ClrBtnDestructiveSecondaryFillActive?: React.CSSProperties['color'];
+    ClrBtnDestructiveSecondaryFillHover?: React.CSSProperties['color'];
+    ClrBtnDestructiveSecondaryLabel?: React.CSSProperties['color'];
+    ClrBtnDestructiveSecondaryStroke?: React.CSSProperties['color'];
+    ClrBtnPassivePrimaryFill?: React.CSSProperties['color'];
+    ClrBtnPassivePrimaryFillActive?: React.CSSProperties['color'];
+    ClrBtnPassivePrimaryFillHover?: React.CSSProperties['color'];
+    ClrBtnPassivePrimaryLabel?: React.CSSProperties['color'];
+    ClrBtnPassiveSecondaryFill?: React.CSSProperties['color'];
+    ClrBtnPassiveSecondaryFillActive?: React.CSSProperties['color'];
+    ClrBtnPassiveSecondaryFillHover?: React.CSSProperties['color'];
+    ClrBtnPassiveSecondaryLabel?: React.CSSProperties['color'];
+    ClrBtnPassiveSecondaryStroke?: React.CSSProperties['color'];
+    ClrBtnProductivePrimaryFill?: React.CSSProperties['color'];
+    ClrBtnProductivePrimaryFillActive?: React.CSSProperties['color'];
+    ClrBtnProductivePrimaryFillHover?: React.CSSProperties['color'];
+    ClrBtnProductivePrimaryLabel?: React.CSSProperties['color'];
+    ClrBtnProductiveSecondaryFill?: React.CSSProperties['color'];
+    ClrBtnProductiveSecondaryFillActive?: React.CSSProperties['color'];
+    ClrBtnProductiveSecondaryFillHover?: React.CSSProperties['color'];
+    ClrBtnProductiveSecondaryLabel?: React.CSSProperties['color'];
+    ClrBtnProductiveSecondaryStroke?: React.CSSProperties['color'];
+    ClrBtnStrokeFocus?: React.CSSProperties['color'];
+    ClrNvgtnSideNavItemFill?: React.CSSProperties['color'];
+    ClrNvgtnSideNavItemFillActive?: React.CSSProperties['color'];
+    ClrNvgtnSideNavItemFillHover?: React.CSSProperties['color'];
+    ClrNvgtnSideNavItemIndicatorFill?: React.CSSProperties['color'];
+    ClrNvgtnSideNavItemLabel?: React.CSSProperties['color'];
+    ClrNvgtnSideNavSectionFill?: React.CSSProperties['color'];
+    ClrNvgtnSideNavSectionTitle?: React.CSSProperties['color'];
+    ClrDvdrFill?: React.CSSProperties['color'];
+    ClrIconFillCritical?: React.CSSProperties['color'];
+    ClrIconFillPassive?: React.CSSProperties['color'];
+    ClrIconFillProductive?: React.CSSProperties['color'];
+    ClrIconFillSuccess?: React.CSSProperties['color'];
+    ClrIconFillText?: React.CSSProperties['color'];
+    ClrIconFillTextInv?: React.CSSProperties['color'];
+    ClrIconFillWarning?: React.CSSProperties['color'];
+    ClrBaseBlack?: React.CSSProperties['color'];
+    ClrBaseGray025?: React.CSSProperties['color'];
+    ClrBaseGray050?: React.CSSProperties['color'];
+    ClrBaseGray075?: React.CSSProperties['color'];
+    ClrBaseGray100?: React.CSSProperties['color'];
+    ClrBaseGray200?: React.CSSProperties['color'];
+    ClrBaseGray300?: React.CSSProperties['color'];
+    ClrBaseGray400?: React.CSSProperties['color'];
+    ClrBaseGray500?: React.CSSProperties['color'];
+    ClrBaseGray600?: React.CSSProperties['color'];
+    ClrBaseGray700?: React.CSSProperties['color'];
+    ClrBaseGray800?: React.CSSProperties['color'];
+    ClrBaseGray900?: React.CSSProperties['color'];
+    ClrBaseTransparent?: React.CSSProperties['color'];
+    ClrBaseWhite?: React.CSSProperties['color'];
+    ClrBaseBluePrimary?: React.CSSProperties['color'];
+    ClrBaseGreenPrimary?: React.CSSProperties['color'];
+    ClrBaseOrangePrimary?: React.CSSProperties['color'];
+    ClrBaseTealPrimary?: React.CSSProperties['color'];
+    ClrBaseBlue050?: React.CSSProperties['color'];
+    ClrBaseBlue100?: React.CSSProperties['color'];
+    ClrBaseBlue200?: React.CSSProperties['color'];
+    ClrBaseBlue300?: React.CSSProperties['color'];
+    ClrBaseBlue400?: React.CSSProperties['color'];
+    ClrBaseBlue500?: React.CSSProperties['color'];
+    ClrBaseBlue600?: React.CSSProperties['color'];
+    ClrBaseBlue700?: React.CSSProperties['color'];
+    ClrBaseBlue800?: React.CSSProperties['color'];
+    ClrBaseGreen050?: React.CSSProperties['color'];
+    ClrBaseGreen100?: React.CSSProperties['color'];
+    ClrBaseGreen200?: React.CSSProperties['color'];
+    ClrBaseGreen300?: React.CSSProperties['color'];
+    ClrBaseGreen400?: React.CSSProperties['color'];
+    ClrBaseGreen500?: React.CSSProperties['color'];
+    ClrBaseGreen600?: React.CSSProperties['color'];
+    ClrBaseGreen700?: React.CSSProperties['color'];
+    ClrBaseGreen800?: React.CSSProperties['color'];
+    ClrBaseOrange050?: React.CSSProperties['color'];
+    ClrBaseOrange100?: React.CSSProperties['color'];
+    ClrBaseOrange200?: React.CSSProperties['color'];
+    ClrBaseOrange300?: React.CSSProperties['color'];
+    ClrBaseOrange400?: React.CSSProperties['color'];
+    ClrBaseOrange500?: React.CSSProperties['color'];
+    ClrBaseOrange600?: React.CSSProperties['color'];
+    ClrBaseOrange700?: React.CSSProperties['color'];
+    ClrBaseOrange800?: React.CSSProperties['color'];
+    ClrBasePink050?: React.CSSProperties['color'];
+    ClrBasePink100?: React.CSSProperties['color'];
+    ClrBasePink200?: React.CSSProperties['color'];
+    ClrBasePink300?: React.CSSProperties['color'];
+    ClrBasePink400?: React.CSSProperties['color'];
+    ClrBasePink500?: React.CSSProperties['color'];
+    ClrBasePink600?: React.CSSProperties['color'];
+    ClrBasePink700?: React.CSSProperties['color'];
+    ClrBasePink800?: React.CSSProperties['color'];
+    ClrBasePurple050?: React.CSSProperties['color'];
+    ClrBasePurple100?: React.CSSProperties['color'];
+    ClrBasePurple200?: React.CSSProperties['color'];
+    ClrBasePurple300?: React.CSSProperties['color'];
+    ClrBasePurple400?: React.CSSProperties['color'];
+    ClrBasePurple500?: React.CSSProperties['color'];
+    ClrBasePurple600?: React.CSSProperties['color'];
+    ClrBasePurple700?: React.CSSProperties['color'];
+    ClrBasePurple800?: React.CSSProperties['color'];
+    ClrBaseRed050?: React.CSSProperties['color'];
+    ClrBaseRed100?: React.CSSProperties['color'];
+    ClrBaseRed200?: React.CSSProperties['color'];
+    ClrBaseRed300?: React.CSSProperties['color'];
+    ClrBaseRed400?: React.CSSProperties['color'];
+    ClrBaseRed500?: React.CSSProperties['color'];
+    ClrBaseRed600?: React.CSSProperties['color'];
+    ClrBaseRed700?: React.CSSProperties['color'];
+    ClrBaseRed800?: React.CSSProperties['color'];
+    ClrBaseTeal050?: React.CSSProperties['color'];
+    ClrBaseTeal100?: React.CSSProperties['color'];
+    ClrBaseTeal200?: React.CSSProperties['color'];
+    ClrBaseTeal300?: React.CSSProperties['color'];
+    ClrBaseTeal400?: React.CSSProperties['color'];
+    ClrBaseTeal500?: React.CSSProperties['color'];
+    ClrBaseTeal600?: React.CSSProperties['color'];
+    ClrBaseTeal700?: React.CSSProperties['color'];
+    ClrBaseTeal800?: React.CSSProperties['color'];
+    ClrBaseYellow050?: React.CSSProperties['color'];
+    ClrBaseYellow100?: React.CSSProperties['color'];
+    ClrBaseYellow200?: React.CSSProperties['color'];
+    ClrBaseYellow300?: React.CSSProperties['color'];
+    ClrBaseYellow400?: React.CSSProperties['color'];
+    ClrBaseYellow500?: React.CSSProperties['color'];
+    ClrBaseYellow600?: React.CSSProperties['color'];
+    ClrBaseYellow700?: React.CSSProperties['color'];
+    ClrBaseYellow800?: React.CSSProperties['color'];
+    ClrBaseSemanticCritical?: React.CSSProperties['color'];
+    ClrBaseSemanticCriticalBg?: React.CSSProperties['color'];
+    ClrBaseSemanticCriticalText?: React.CSSProperties['color'];
+    ClrBaseSemanticPassive?: React.CSSProperties['color'];
+    ClrBaseSemanticPassiveBg?: React.CSSProperties['color'];
+    ClrBaseSemanticPassiveText?: React.CSSProperties['color'];
+    ClrBaseSemanticProductive?: React.CSSProperties['color'];
+    ClrBaseSemanticProductiveBg?: React.CSSProperties['color'];
+    ClrBaseSemanticProductiveText?: React.CSSProperties['color'];
+    ClrBaseSemanticSuccess?: React.CSSProperties['color'];
+    ClrBaseSemanticSuccessBg?: React.CSSProperties['color'];
+    ClrBaseSemanticSuccessText?: React.CSSProperties['color'];
+    ClrBaseSemanticWarning?: React.CSSProperties['color'];
+    ClrBaseSemanticWarningBg?: React.CSSProperties['color'];
+    ClrBaseSemanticWarningText?: React.CSSProperties['color'];
+    ClrTextFill?: React.CSSProperties['color'];
+    ClrTextFillInv?: React.CSSProperties['color'];
+    ClrTextFillProductive?: React.CSSProperties['color'];
+    ClrFrmFldErrorText?: React.CSSProperties['color'];
+    ClrFrmFldHelpText?: React.CSSProperties['color'];
+    ClrFrmFldLabel?: React.CSSProperties['color'];
+    ClrFrmFldPlaceholder?: React.CSSProperties['color'];
+    ClrFrmFldRadioButtonCheckboxFillChecked?: React.CSSProperties['color'];
+    ClrFrmFldRadioButtonCheckboxSelectionLabel?: React.CSSProperties['color'];
+    ClrFrmFldSelectMenuFill?: React.CSSProperties['color'];
+    ClrFrmFldSelectMenuItemFillActive?: React.CSSProperties['color'];
+    ClrFrmFldSelectMenuItemFillHover?: React.CSSProperties['color'];
+    ClrFrmFldSelectMenuItemFillSelected?: React.CSSProperties['color'];
+    ClrFrmFldSelectMenuStroke?: React.CSSProperties['color'];
+    ClrFrmFldSelectValueSelected?: React.CSSProperties['color'];
+    ClrFrmFldTextInputFill?: React.CSSProperties['color'];
+    ClrFrmFldTextInputFillError?: React.CSSProperties['color'];
+    ClrFrmFldTextInputFillReadOnly?: React.CSSProperties['color'];
+    ClrFrmFldTextInputFillWarning?: React.CSSProperties['color'];
+    ClrFrmFldTextInputStroke?: React.CSSProperties['color'];
+    ClrFrmFldTextInputStrokeError?: React.CSSProperties['color'];
+    ClrFrmFldTextInputStrokeHover?: React.CSSProperties['color'];
+    ClrFrmFldTextInputStrokeWarning?: React.CSSProperties['color'];
+    ClrFrmFldValue?: React.CSSProperties['color'];
+    ClrFrmFldWarningText?: React.CSSProperties['color'];
+  }
+
+  export interface PaletteOptions {
+    ClrBtnDestructivePrimaryFill?: React.CSSProperties['color'];
+    ClrBtnDestructivePrimaryFillActive?: React.CSSProperties['color'];
+    ClrBtnDestructivePrimaryFillHover?: React.CSSProperties['color'];
+    ClrBtnDestructivePrimaryLabel?: React.CSSProperties['color'];
+    ClrBtnDestructiveSecondaryFill?: React.CSSProperties['color'];
+    ClrBtnDestructiveSecondaryFillActive?: React.CSSProperties['color'];
+    ClrBtnDestructiveSecondaryFillHover?: React.CSSProperties['color'];
+    ClrBtnDestructiveSecondaryLabel?: React.CSSProperties['color'];
+    ClrBtnDestructiveSecondaryStroke?: React.CSSProperties['color'];
+    ClrBtnPassivePrimaryFill?: React.CSSProperties['color'];
+    ClrBtnPassivePrimaryFillActive?: React.CSSProperties['color'];
+    ClrBtnPassivePrimaryFillHover?: React.CSSProperties['color'];
+    ClrBtnPassivePrimaryLabel?: React.CSSProperties['color'];
+    ClrBtnPassiveSecondaryFill?: React.CSSProperties['color'];
+    ClrBtnPassiveSecondaryFillActive?: React.CSSProperties['color'];
+    ClrBtnPassiveSecondaryFillHover?: React.CSSProperties['color'];
+    ClrBtnPassiveSecondaryLabel?: React.CSSProperties['color'];
+    ClrBtnPassiveSecondaryStroke?: React.CSSProperties['color'];
+    ClrBtnProductivePrimaryFill?: React.CSSProperties['color'];
+    ClrBtnProductivePrimaryFillActive?: React.CSSProperties['color'];
+    ClrBtnProductivePrimaryFillHover?: React.CSSProperties['color'];
+    ClrBtnProductivePrimaryLabel?: React.CSSProperties['color'];
+    ClrBtnProductiveSecondaryFill?: React.CSSProperties['color'];
+    ClrBtnProductiveSecondaryFillActive?: React.CSSProperties['color'];
+    ClrBtnProductiveSecondaryFillHover?: React.CSSProperties['color'];
+    ClrBtnProductiveSecondaryLabel?: React.CSSProperties['color'];
+    ClrBtnProductiveSecondaryStroke?: React.CSSProperties['color'];
+    ClrBtnStrokeFocus?: React.CSSProperties['color'];
+    ClrNvgtnSideNavItemFill?: React.CSSProperties['color'];
+    ClrNvgtnSideNavItemFillActive?: React.CSSProperties['color'];
+    ClrNvgtnSideNavItemFillHover?: React.CSSProperties['color'];
+    ClrNvgtnSideNavItemIndicatorFill?: React.CSSProperties['color'];
+    ClrNvgtnSideNavItemLabel?: React.CSSProperties['color'];
+    ClrNvgtnSideNavSectionFill?: React.CSSProperties['color'];
+    ClrNvgtnSideNavSectionTitle?: React.CSSProperties['color'];
+    ClrDvdrFill?: React.CSSProperties['color'];
+    ClrIconFillCritical?: React.CSSProperties['color'];
+    ClrIconFillPassive?: React.CSSProperties['color'];
+    ClrIconFillProductive?: React.CSSProperties['color'];
+    ClrIconFillSuccess?: React.CSSProperties['color'];
+    ClrIconFillText?: React.CSSProperties['color'];
+    ClrIconFillTextInv?: React.CSSProperties['color'];
+    ClrIconFillWarning?: React.CSSProperties['color'];
+    ClrBaseBlack?: React.CSSProperties['color'];
+    ClrBaseGray025?: React.CSSProperties['color'];
+    ClrBaseGray050?: React.CSSProperties['color'];
+    ClrBaseGray075?: React.CSSProperties['color'];
+    ClrBaseGray100?: React.CSSProperties['color'];
+    ClrBaseGray200?: React.CSSProperties['color'];
+    ClrBaseGray300?: React.CSSProperties['color'];
+    ClrBaseGray400?: React.CSSProperties['color'];
+    ClrBaseGray500?: React.CSSProperties['color'];
+    ClrBaseGray600?: React.CSSProperties['color'];
+    ClrBaseGray700?: React.CSSProperties['color'];
+    ClrBaseGray800?: React.CSSProperties['color'];
+    ClrBaseGray900?: React.CSSProperties['color'];
+    ClrBaseTransparent?: React.CSSProperties['color'];
+    ClrBaseWhite?: React.CSSProperties['color'];
+    ClrBaseBluePrimary?: React.CSSProperties['color'];
+    ClrBaseGreenPrimary?: React.CSSProperties['color'];
+    ClrBaseOrangePrimary?: React.CSSProperties['color'];
+    ClrBaseTealPrimary?: React.CSSProperties['color'];
+    ClrBaseBlue050?: React.CSSProperties['color'];
+    ClrBaseBlue100?: React.CSSProperties['color'];
+    ClrBaseBlue200?: React.CSSProperties['color'];
+    ClrBaseBlue300?: React.CSSProperties['color'];
+    ClrBaseBlue400?: React.CSSProperties['color'];
+    ClrBaseBlue500?: React.CSSProperties['color'];
+    ClrBaseBlue600?: React.CSSProperties['color'];
+    ClrBaseBlue700?: React.CSSProperties['color'];
+    ClrBaseBlue800?: React.CSSProperties['color'];
+    ClrBaseGreen050?: React.CSSProperties['color'];
+    ClrBaseGreen100?: React.CSSProperties['color'];
+    ClrBaseGreen200?: React.CSSProperties['color'];
+    ClrBaseGreen300?: React.CSSProperties['color'];
+    ClrBaseGreen400?: React.CSSProperties['color'];
+    ClrBaseGreen500?: React.CSSProperties['color'];
+    ClrBaseGreen600?: React.CSSProperties['color'];
+    ClrBaseGreen700?: React.CSSProperties['color'];
+    ClrBaseGreen800?: React.CSSProperties['color'];
+    ClrBaseOrange050?: React.CSSProperties['color'];
+    ClrBaseOrange100?: React.CSSProperties['color'];
+    ClrBaseOrange200?: React.CSSProperties['color'];
+    ClrBaseOrange300?: React.CSSProperties['color'];
+    ClrBaseOrange400?: React.CSSProperties['color'];
+    ClrBaseOrange500?: React.CSSProperties['color'];
+    ClrBaseOrange600?: React.CSSProperties['color'];
+    ClrBaseOrange700?: React.CSSProperties['color'];
+    ClrBaseOrange800?: React.CSSProperties['color'];
+    ClrBasePink050?: React.CSSProperties['color'];
+    ClrBasePink100?: React.CSSProperties['color'];
+    ClrBasePink200?: React.CSSProperties['color'];
+    ClrBasePink300?: React.CSSProperties['color'];
+    ClrBasePink400?: React.CSSProperties['color'];
+    ClrBasePink500?: React.CSSProperties['color'];
+    ClrBasePink600?: React.CSSProperties['color'];
+    ClrBasePink700?: React.CSSProperties['color'];
+    ClrBasePink800?: React.CSSProperties['color'];
+    ClrBasePurple050?: React.CSSProperties['color'];
+    ClrBasePurple100?: React.CSSProperties['color'];
+    ClrBasePurple200?: React.CSSProperties['color'];
+    ClrBasePurple300?: React.CSSProperties['color'];
+    ClrBasePurple400?: React.CSSProperties['color'];
+    ClrBasePurple500?: React.CSSProperties['color'];
+    ClrBasePurple600?: React.CSSProperties['color'];
+    ClrBasePurple700?: React.CSSProperties['color'];
+    ClrBasePurple800?: React.CSSProperties['color'];
+    ClrBaseRed050?: React.CSSProperties['color'];
+    ClrBaseRed100?: React.CSSProperties['color'];
+    ClrBaseRed200?: React.CSSProperties['color'];
+    ClrBaseRed300?: React.CSSProperties['color'];
+    ClrBaseRed400?: React.CSSProperties['color'];
+    ClrBaseRed500?: React.CSSProperties['color'];
+    ClrBaseRed600?: React.CSSProperties['color'];
+    ClrBaseRed700?: React.CSSProperties['color'];
+    ClrBaseRed800?: React.CSSProperties['color'];
+    ClrBaseTeal050?: React.CSSProperties['color'];
+    ClrBaseTeal100?: React.CSSProperties['color'];
+    ClrBaseTeal200?: React.CSSProperties['color'];
+    ClrBaseTeal300?: React.CSSProperties['color'];
+    ClrBaseTeal400?: React.CSSProperties['color'];
+    ClrBaseTeal500?: React.CSSProperties['color'];
+    ClrBaseTeal600?: React.CSSProperties['color'];
+    ClrBaseTeal700?: React.CSSProperties['color'];
+    ClrBaseTeal800?: React.CSSProperties['color'];
+    ClrBaseYellow050?: React.CSSProperties['color'];
+    ClrBaseYellow100?: React.CSSProperties['color'];
+    ClrBaseYellow200?: React.CSSProperties['color'];
+    ClrBaseYellow300?: React.CSSProperties['color'];
+    ClrBaseYellow400?: React.CSSProperties['color'];
+    ClrBaseYellow500?: React.CSSProperties['color'];
+    ClrBaseYellow600?: React.CSSProperties['color'];
+    ClrBaseYellow700?: React.CSSProperties['color'];
+    ClrBaseYellow800?: React.CSSProperties['color'];
+    ClrBaseSemanticCritical?: React.CSSProperties['color'];
+    ClrBaseSemanticCriticalBg?: React.CSSProperties['color'];
+    ClrBaseSemanticCriticalText?: React.CSSProperties['color'];
+    ClrBaseSemanticPassive?: React.CSSProperties['color'];
+    ClrBaseSemanticPassiveBg?: React.CSSProperties['color'];
+    ClrBaseSemanticPassiveText?: React.CSSProperties['color'];
+    ClrBaseSemanticProductive?: React.CSSProperties['color'];
+    ClrBaseSemanticProductiveBg?: React.CSSProperties['color'];
+    ClrBaseSemanticProductiveText?: React.CSSProperties['color'];
+    ClrBaseSemanticSuccess?: React.CSSProperties['color'];
+    ClrBaseSemanticSuccessBg?: React.CSSProperties['color'];
+    ClrBaseSemanticSuccessText?: React.CSSProperties['color'];
+    ClrBaseSemanticWarning?: React.CSSProperties['color'];
+    ClrBaseSemanticWarningBg?: React.CSSProperties['color'];
+    ClrBaseSemanticWarningText?: React.CSSProperties['color'];
+    ClrTextFill?: React.CSSProperties['color'];
+    ClrTextFillInv?: React.CSSProperties['color'];
+    ClrTextFillProductive?: React.CSSProperties['color'];
+    ClrFrmFldErrorText?: React.CSSProperties['color'];
+    ClrFrmFldHelpText?: React.CSSProperties['color'];
+    ClrFrmFldLabel?: React.CSSProperties['color'];
+    ClrFrmFldPlaceholder?: React.CSSProperties['color'];
+    ClrFrmFldRadioButtonCheckboxFillChecked?: React.CSSProperties['color'];
+    ClrFrmFldRadioButtonCheckboxSelectionLabel?: React.CSSProperties['color'];
+    ClrFrmFldSelectMenuFill?: React.CSSProperties['color'];
+    ClrFrmFldSelectMenuItemFillActive?: React.CSSProperties['color'];
+    ClrFrmFldSelectMenuItemFillHover?: React.CSSProperties['color'];
+    ClrFrmFldSelectMenuItemFillSelected?: React.CSSProperties['color'];
+    ClrFrmFldSelectMenuStroke?: React.CSSProperties['color'];
+    ClrFrmFldSelectValueSelected?: React.CSSProperties['color'];
+    ClrFrmFldTextInputFill?: React.CSSProperties['color'];
+    ClrFrmFldTextInputFillError?: React.CSSProperties['color'];
+    ClrFrmFldTextInputFillReadOnly?: React.CSSProperties['color'];
+    ClrFrmFldTextInputFillWarning?: React.CSSProperties['color'];
+    ClrFrmFldTextInputStroke?: React.CSSProperties['color'];
+    ClrFrmFldTextInputStrokeError?: React.CSSProperties['color'];
+    ClrFrmFldTextInputStrokeHover?: React.CSSProperties['color'];
+    ClrFrmFldTextInputStrokeWarning?: React.CSSProperties['color'];
+    ClrFrmFldValue?: React.CSSProperties['color'];
+    ClrFrmFldWarningText?: React.CSSProperties['color'];
+  }
+}
+
 type ThemeDictionary = {
   [key: string]: any;
 };
@@ -178,654 +536,7 @@ const TerrawareTheme: ThemeDictionary = {
     "ClrFrmFldTextInputStrokeWarning": "#BD6931",
     "ClrFrmFldValue": "#3A4445",
     "ClrFrmFldWarningText": "#9A572B"
-  },
-  "terraware": {
-    "FntBtnLabelFontFamily": "'Inter', sans-serif",
-    "FntBtnLabelFontWeight": 600,
-    "FntBtnLabelLargeFontFamily": "'Inter', sans-serif",
-    "FntBtnLabelLargeFontSize": "20px",
-    "FntBtnLabelLargeFontWeight": 600,
-    "FntBtnLabelLargeLineHeight": "28px",
-    "FntBtnLabelMediumFontFamily": "'Inter', sans-serif",
-    "FntBtnLabelMediumFontSize": "16px",
-    "FntBtnLabelMediumFontWeight": 600,
-    "FntBtnLabelMediumLineHeight": "24px",
-    "FntBtnLabelSmallFontFamily": "'Inter', sans-serif",
-    "FntBtnLabelSmallFontSize": "14px",
-    "FntBtnLabelSmallFontWeight": 600,
-    "FntBtnLabelSmallLineHeight": "20px",
-    "FntBtnLabelXLargeFontFamily": "'Inter', sans-serif",
-    "FntBtnLabelXLargeFontSize": "24px",
-    "FntBtnLabelXLargeFontWeight": 600,
-    "FntBtnLabelXLargeLineHeight": "32px",
-    "ClrBtnDestructivePrimaryFill": "#D40002",
-    "ClrBtnDestructivePrimaryFillActive": "#AD0001",
-    "ClrBtnDestructivePrimaryFillHover": "#D40002",
-    "ClrBtnDestructivePrimaryLabel": "#FFFFFF",
-    "ClrBtnDestructiveSecondaryFill": "#FFFFFF00",
-    "ClrBtnDestructiveSecondaryFillActive": "#D4000233",
-    "ClrBtnDestructiveSecondaryFillHover": "#D400021A",
-    "ClrBtnDestructiveSecondaryLabel": "#D40002",
-    "ClrBtnDestructiveSecondaryStroke": "#D40002",
-    "ClrBtnPassivePrimaryFill": "#A9B7B8",
-    "ClrBtnPassivePrimaryFillActive": "#859799",
-    "ClrBtnPassivePrimaryFillHover": "#A9B7B8",
-    "ClrBtnPassivePrimaryLabel": "#3A4445",
-    "ClrBtnPassiveSecondaryFill": "#FFFFFF00",
-    "ClrBtnPassiveSecondaryFillActive": "#A9B7B866",
-    "ClrBtnPassiveSecondaryFillHover": "#A9B7B833",
-    "ClrBtnPassiveSecondaryLabel": "#3A4445",
-    "ClrBtnPassiveSecondaryStroke": "#3A4445",
-    "ClrBtnProductivePrimaryFill": "#0067C8",
-    "ClrBtnProductivePrimaryFillActive": "#0053A5",
-    "ClrBtnProductivePrimaryFillHover": "#0067C8",
-    "ClrBtnProductivePrimaryLabel": "#FFFFFF",
-    "ClrBtnProductiveSecondaryFill": "#FFFFFF00",
-    "ClrBtnProductiveSecondaryFillActive": "#0067C833",
-    "ClrBtnProductiveSecondaryFillHover": "#0067C819",
-    "ClrBtnProductiveSecondaryLabel": "#0067C8",
-    "ClrBtnProductiveSecondaryStroke": "#0067C8",
-    "ClrBtnStrokeFocus": "#0067C8",
-    "SzBtnLargeHeight": "48px",
-    "SzBtnLargeIcon": "28px",
-    "SzBtnLargeMinWidth": "120px",
-    "SzBtnMediumHeight": "40px",
-    "SzBtnMediumIcon": "24px",
-    "SzBtnMediumMinWidth": "100px",
-    "SzBtnSmallHeight": "32px",
-    "SzBtnSmallIcon": "20px",
-    "SzBtnSmallMinWidth": "80px",
-    "SzBtnStroke": "2px",
-    "SzBtnStrokeFocus": "2px",
-    "SzBtnXLargeHeight": "56px",
-    "SzBtnXLargeIcon": "32px",
-    "SzBtnXLargeMinWidth": "140px",
-    "ElvtnBase200": {
-      "x": 0,
-      "y": "2px",
-      "blur": {
-        "value": "4px",
-        "filePath": "./json/system/size-and-space.json",
-        "isSource": true,
-        "original": {
-          "value": "4px"
-        },
-        "name": "TwSzBaseXxSmall",
-        "attributes": {
-          "category": "tw-sz-base-xx-small"
-        },
-        "path": [
-          "tw-sz-base-xx-small"
-        ]
-      },
-      "spread": 0,
-      "color": {
-        "value": "#3A4445",
-        "filePath": "./json/system/colors-neutral.json",
-        "isSource": true,
-        "original": {
-          "value": "#3A4445"
-        },
-        "name": "TwClrBaseGray800",
-        "attributes": {
-          "category": "tw-clr-base-gray-800"
-        },
-        "path": [
-          "tw-clr-base-gray-800"
-        ]
-      },
-      "opacity": {
-        "value": "0.2",
-        "filePath": "./json/system/opacity-base.json",
-        "isSource": true,
-        "original": {
-          "value": "0.2"
-        },
-        "name": "TwOpctyBase020",
-        "attributes": {
-          "category": "tw-opcty-base-020"
-        },
-        "path": [
-          "tw-opcty-base-020"
-        ]
-      }
-    },
-    "ElvtnBase400": {
-      "x": 0,
-      "y": {
-        "value": "4px",
-        "filePath": "./json/system/size-and-space.json",
-        "isSource": true,
-        "original": {
-          "value": "4px"
-        },
-        "name": "TwSzBaseXxSmall",
-        "attributes": {
-          "category": "tw-sz-base-xx-small"
-        },
-        "path": [
-          "tw-sz-base-xx-small"
-        ]
-      },
-      "blur": {
-        "value": "8px",
-        "filePath": "./json/system/size-and-space.json",
-        "isSource": true,
-        "original": {
-          "value": "8px"
-        },
-        "name": "TwSzBaseXSmall",
-        "attributes": {
-          "category": "tw-sz-base-x-small"
-        },
-        "path": [
-          "tw-sz-base-x-small"
-        ]
-      },
-      "spread": 0,
-      "color": {
-        "value": "#3A4445",
-        "filePath": "./json/system/colors-neutral.json",
-        "isSource": true,
-        "original": {
-          "value": "#3A4445"
-        },
-        "name": "TwClrBaseGray800",
-        "attributes": {
-          "category": "tw-clr-base-gray-800"
-        },
-        "path": [
-          "tw-clr-base-gray-800"
-        ]
-      },
-      "opacity": {
-        "value": "0.2",
-        "filePath": "./json/system/opacity-base.json",
-        "isSource": true,
-        "original": {
-          "value": "0.2"
-        },
-        "name": "TwOpctyBase020",
-        "attributes": {
-          "category": "tw-opcty-base-020"
-        },
-        "path": [
-          "tw-opcty-base-020"
-        ]
-      }
-    },
-    "ElvtnBase600": {
-      "x": 0,
-      "y": {
-        "value": "8px",
-        "filePath": "./json/system/size-and-space.json",
-        "isSource": true,
-        "original": {
-          "value": "8px"
-        },
-        "name": "TwSzBaseXSmall",
-        "attributes": {
-          "category": "tw-sz-base-x-small"
-        },
-        "path": [
-          "tw-sz-base-x-small"
-        ]
-      },
-      "blur": {
-        "value": "16px",
-        "filePath": "./json/system/size-and-space.json",
-        "isSource": true,
-        "original": {
-          "value": "16px"
-        },
-        "name": "TwSzBaseSmall",
-        "attributes": {
-          "category": "tw-sz-base-small"
-        },
-        "path": [
-          "tw-sz-base-small"
-        ]
-      },
-      "spread": 0,
-      "color": {
-        "value": "#3A4445",
-        "filePath": "./json/system/colors-neutral.json",
-        "isSource": true,
-        "original": {
-          "value": "#3A4445"
-        },
-        "name": "TwClrBaseGray800",
-        "attributes": {
-          "category": "tw-clr-base-gray-800"
-        },
-        "path": [
-          "tw-clr-base-gray-800"
-        ]
-      },
-      "opacity": {
-        "value": "0.2",
-        "filePath": "./json/system/opacity-base.json",
-        "isSource": true,
-        "original": {
-          "value": "0.2"
-        },
-        "name": "TwOpctyBase020",
-        "attributes": {
-          "category": "tw-opcty-base-020"
-        },
-        "path": [
-          "tw-opcty-base-020"
-        ]
-      }
-    },
-    "ElvtnBase800": {
-      "x": 0,
-      "y": {
-        "value": "16px",
-        "filePath": "./json/system/size-and-space.json",
-        "isSource": true,
-        "original": {
-          "value": "16px"
-        },
-        "name": "TwSzBaseSmall",
-        "attributes": {
-          "category": "tw-sz-base-small"
-        },
-        "path": [
-          "tw-sz-base-small"
-        ]
-      },
-      "blur": {
-        "value": "32px",
-        "filePath": "./json/system/size-and-space.json",
-        "isSource": true,
-        "original": {
-          "value": "32px"
-        },
-        "name": "TwSzBaseLarge",
-        "attributes": {
-          "category": "tw-sz-base-large"
-        },
-        "path": [
-          "tw-sz-base-large"
-        ]
-      },
-      "spread": 0,
-      "color": {
-        "value": "#3A4445",
-        "filePath": "./json/system/colors-neutral.json",
-        "isSource": true,
-        "original": {
-          "value": "#3A4445"
-        },
-        "name": "TwClrBaseGray800",
-        "attributes": {
-          "category": "tw-clr-base-gray-800"
-        },
-        "path": [
-          "tw-clr-base-gray-800"
-        ]
-      },
-      "opacity": {
-        "value": "0.2",
-        "filePath": "./json/system/opacity-base.json",
-        "isSource": true,
-        "original": {
-          "value": "0.2"
-        },
-        "name": "TwOpctyBase020",
-        "attributes": {
-          "category": "tw-opcty-base-020"
-        },
-        "path": [
-          "tw-opcty-base-020"
-        ]
-      }
-    },
-    "FntDlgBxMessageFontFamily": "'Inter', sans-serif",
-    "FntDlgBxMessageFontSize": "16px",
-    "FntDlgBxMessageFontWeight": 400,
-    "FntDlgBxMessageLineHeight": "24px",
-    "FntDlgBxTitleFontFamily": "'Inter', sans-serif",
-    "FntDlgBxTitleFontSize": "20px",
-    "FntDlgBxTitleFontWeight": 600,
-    "FntDlgBxTitleLineHeight": "28px",
-    "FntMssgBodyFontFamily": "'Inter', sans-serif",
-    "FntMssgBodyFontSize": "16px",
-    "FntMssgBodyFontWeight": 400,
-    "FntMssgBodyLineHeight": "24px",
-    "FntMssgTitleFontFamily": "'Inter', sans-serif",
-    "FntMssgTitleFontSize": "16px",
-    "FntMssgTitleFontWeight": 600,
-    "FntMssgTitleLineHeight": "24px",
-    "ClrNvgtnSideNavItemFill": "#F9FAFA",
-    "ClrNvgtnSideNavItemFillActive": "#EDF0F1",
-    "ClrNvgtnSideNavItemFillHover": "#F2F4F5",
-    "ClrNvgtnSideNavItemIndicatorFill": "#0067C8",
-    "ClrNvgtnSideNavItemLabel": "#3A4445",
-    "ClrNvgtnSideNavSectionFill": "#F9FAFA",
-    "ClrNvgtnSideNavSectionTitle": "#3A4445",
-    "FntNvgtnSideNavItemLabelFontFamily": "'Inter', sans-serif",
-    "FntNvgtnSideNavItemLabelFontSize": "14px",
-    "FntNvgtnSideNavItemLabelFontWeight": 500,
-    "FntNvgtnSideNavItemLabelLineHeight": "16px",
-    "FntNvgtnSideNavSectionTitleFontFamily": "'Inter', sans-serif",
-    "FntNvgtnSideNavSectionTitleFontSize": "12px",
-    "FntNvgtnSideNavSectionTitleFontWeight": 400,
-    "FntNvgtnSideNavSectionTitleLineHeight": "16px",
-    "FntNvgtnSideNavSectionTitleTextTransform": "uppercase",
-    "SzNvgtnSideNavItemIndicator": "4px",
-    "SzNvgtnSideNavWidth": "200px",
-    "FntPrgrssCircleValueLargeFontFamily": "'Inter', sans-serif",
-    "FntPrgrssCircleValueLargeFontSize": "48px",
-    "FntPrgrssCircleValueLargeFontWeight": 400,
-    "FntPrgrssCircleValueLargeLineHeight": "60px",
-    "FntPrgrssCircleValueMediumFontFamily": "'Inter', sans-serif",
-    "FntPrgrssCircleValueMediumFontSize": "24px",
-    "FntPrgrssCircleValueMediumFontWeight": 400,
-    "FntPrgrssCircleValueMediumLineHeight": "32px",
-    "FntPrgrssCircleValueSmallFontFamily": "'Inter', sans-serif",
-    "FntPrgrssCircleValueSmallFontSize": "12px",
-    "FntPrgrssCircleValueSmallFontWeight": 400,
-    "FntPrgrssCircleValueSmallLineHeight": "16px",
-    "ClrDvdrFill": "#A9B7B8",
-    "ClrIconFillCritical": "#FE0003",
-    "ClrIconFillPassive": "#708284",
-    "ClrIconFillProductive": "#007DF2",
-    "ClrIconFillSuccess": "#308F5F",
-    "ClrIconFillText": "#3A4445",
-    "ClrIconFillTextInv": "#FFFFFF",
-    "ClrIconFillWarning": "#BD6931",
-    "ClrBaseBlack": "#000000",
-    "ClrBaseGray025": "#F9FAFA",
-    "ClrBaseGray050": "#F2F4F5",
-    "ClrBaseGray075": "#EDF0F1",
-    "ClrBaseGray100": "#E5EAEA",
-    "ClrBaseGray200": "#CAD2D3",
-    "ClrBaseGray300": "#A9B7B8",
-    "ClrBaseGray400": "#859799",
-    "ClrBaseGray500": "#708284",
-    "ClrBaseGray600": "#5C6B6C",
-    "ClrBaseGray700": "#4B5758",
-    "ClrBaseGray800": "#3A4445",
-    "ClrBaseGray900": "#2B3233",
-    "ClrBaseTransparent": "#FFFFFF00",
-    "ClrBaseWhite": "#FFFFFF",
-    "ClrBaseBluePrimary": "#0067C8",
-    "ClrBaseGreenPrimary": "#308F5F",
-    "ClrBaseOrangePrimary": "#DE7935",
-    "ClrBaseTealPrimary": "#30C6D1",
-    "ClrBaseBlue050": "#F0F4FF",
-    "ClrBaseBlue100": "#E2E9FF",
-    "ClrBaseBlue200": "#BED0FF",
-    "ClrBaseBlue300": "#92B4FF",
-    "ClrBaseBlue400": "#4E92FF",
-    "ClrBaseBlue500": "#007DF2",
-    "ClrBaseBlue600": "#0067C8",
-    "ClrBaseBlue700": "#0053A5",
-    "ClrBaseBlue800": "#004184",
-    "ClrBaseGreen050": "#D6FDE5",
-    "ClrBaseGreen100": "#A6FCCA",
-    "ClrBaseGreen200": "#53EA9F",
-    "ClrBaseGreen300": "#46CB89",
-    "ClrBaseGreen400": "#38A76F",
-    "ClrBaseGreen500": "#308F5F",
-    "ClrBaseGreen600": "#27764E",
-    "ClrBaseGreen700": "#1F6040",
-    "ClrBaseGreen800": "#164B34",
-    "ClrBaseOrange050": "#FEF2EE",
-    "ClrBaseOrange100": "#FCE5DE",
-    "ClrBaseOrange200": "#FAC4B1",
-    "ClrBaseOrange300": "#F89E74",
-    "ClrBaseOrange400": "#DE7935",
-    "ClrBaseOrange500": "#BD6931",
-    "ClrBaseOrange600": "#9A572B",
-    "ClrBaseOrange700": "#7E4622",
-    "ClrBaseOrange800": "#643719",
-    "ClrBasePink050": "#FFF1F4",
-    "ClrBasePink100": "#FFE2E9",
-    "ClrBasePink200": "#FFBFD0",
-    "ClrBasePink300": "#FF94B4",
-    "ClrBasePink400": "#FF5294",
-    "ClrBasePink500": "#F6007F",
-    "ClrBasePink600": "#CD0069",
-    "ClrBasePink700": "#A80055",
-    "ClrBasePink800": "#860043",
-    "ClrBasePurple050": "#F6F2FE",
-    "ClrBasePurple100": "#EEE6FD",
-    "ClrBasePurple200": "#DBC8FC",
-    "ClrBasePurple300": "#C7A4FA",
-    "ClrBasePurple400": "#B178F7",
-    "ClrBasePurple500": "#A456F5",
-    "ClrBasePurple600": "#9525EE",
-    "ClrBasePurple700": "#7A1CC3",
-    "ClrBasePurple800": "#61159D",
-    "ClrBaseRed050": "#FFF1F1",
-    "ClrBaseRed100": "#FFE3E3",
-    "ClrBaseRed200": "#FFC1C1",
-    "ClrBaseRed300": "#FF9797",
-    "ClrBaseRed400": "#FF5A5B",
-    "ClrBaseRed500": "#FE0003",
-    "ClrBaseRed600": "#D40002",
-    "ClrBaseRed700": "#AD0001",
-    "ClrBaseRed800": "#8B0001",
-    "ClrBaseTeal050": "#D8FAFE",
-    "ClrBaseTeal100": "#ADF6FE",
-    "ClrBaseTeal200": "#39E5F1",
-    "ClrBaseTeal300": "#30C6D1",
-    "ClrBaseTeal400": "#2EA2AB",
-    "ClrBaseTeal500": "#288B93",
-    "ClrBaseTeal600": "#1F7278",
-    "ClrBaseTeal700": "#175D62",
-    "ClrBaseTeal800": "#114A4E",
-    "ClrBaseYellow050": "#FEF3E1",
-    "ClrBaseYellow100": "#FDE7C3",
-    "ClrBaseYellow200": "#FBCA47",
-    "ClrBaseYellow300": "#DAAF38",
-    "ClrBaseYellow400": "#B38F2C",
-    "ClrBaseYellow500": "#9A7B25",
-    "ClrBaseYellow600": "#7F641C",
-    "ClrBaseYellow700": "#685215",
-    "ClrBaseYellow800": "#52400F",
-    "ClrBaseSemanticCritical": "#FE0003",
-    "ClrBaseSemanticCriticalBg": "#FFF1F1",
-    "ClrBaseSemanticCriticalText": "#D40002",
-    "ClrBaseSemanticPassive": "#708284",
-    "ClrBaseSemanticPassiveBg": "#F2F4F5",
-    "ClrBaseSemanticPassiveText": "#5C6B6C",
-    "ClrBaseSemanticProductive": "#007DF2",
-    "ClrBaseSemanticProductiveBg": "#F0F4FF",
-    "ClrBaseSemanticProductiveText": "#0067C8",
-    "ClrBaseSemanticSuccess": "#308F5F",
-    "ClrBaseSemanticSuccessBg": "#D6FDE5",
-    "ClrBaseSemanticSuccessText": "#27764E",
-    "ClrBaseSemanticWarning": "#BD6931",
-    "ClrBaseSemanticWarningBg": "#FEF2EE",
-    "ClrBaseSemanticWarningText": "#9A572B",
-    "ClrTextFill": "#3A4445",
-    "ClrTextFillInv": "#FFFFFF",
-    "ClrTextFillProductive": "#0067C8",
-    "OpctyBase000": 0,
-    "OpctyBase010": "0.1",
-    "OpctyBase020": "0.2",
-    "OpctyBase030": "0.3",
-    "OpctyBase040": "0.4",
-    "OpctyBase050": "0.5",
-    "OpctyBase060": "0.6",
-    "OpctyBase070": "0.7",
-    "OpctyBase080": "0.8",
-    "OpctyBase090": "0.9",
-    "OpctyBase100": 1,
-    "OpctySemanticOff": "0.5",
-    "SpcBaseLarge": "32px",
-    "SpcBaseMedium": "24px",
-    "SpcBaseNone": 0,
-    "SpcBaseSmall": "16px",
-    "SpcBaseXLarge": "48px",
-    "SpcBaseXSmall": "8px",
-    "SpcBaseXxLarge": "64px",
-    "SpcBaseXxSmall": "4px",
-    "SzBaseLarge": "32px",
-    "SzBaseMedium": "24px",
-    "SzBaseNone": 0,
-    "SzBaseSmall": "16px",
-    "SzBaseXLarge": "48px",
-    "SzBaseXSmall": "8px",
-    "SzBaseXxLarge": "64px",
-    "SzBaseXxSmall": "4px",
-    "SzDvdrStroke": "1px",
-    "SzIconLarge": "32px",
-    "SzIconMedium": "24px",
-    "SzIconSmall": "16px",
-    "SzIconXLarge": "48px",
-    "FntBaseBody01RegularFontFamily": "'Inter', sans-serif",
-    "FntBaseBody01RegularFontSize": "20px",
-    "FntBaseBody01RegularFontWeight": 400,
-    "FntBaseBody01RegularLineHeight": "28px",
-    "FntBaseBody02RegularFontFamily": "'Inter', sans-serif",
-    "FntBaseBody02RegularFontSize": "16px",
-    "FntBaseBody02RegularFontWeight": 400,
-    "FntBaseBody02RegularLineHeight": "24px",
-    "FntBaseBody03RegularFontFamily": "'Inter', sans-serif",
-    "FntBaseBody03RegularFontSize": "14px",
-    "FntBaseBody03RegularFontWeight": 400,
-    "FntBaseBody03RegularLineHeight": "20px",
-    "FntBaseBody04RegularFontFamily": "'Inter', sans-serif",
-    "FntBaseBody04RegularFontSize": "12px",
-    "FntBaseBody04RegularFontWeight": 400,
-    "FntBaseBody04RegularLineHeight": "16px",
-    "FntBaseDisplay01BoldFontFamily": "'Inter', sans-serif",
-    "FntBaseDisplay01BoldFontSize": "84px",
-    "FntBaseDisplay01BoldFontWeight": 700,
-    "FntBaseDisplay01BoldLineHeight": "108px",
-    "FntBaseDisplay02BoldFontFamily": "'Inter', sans-serif",
-    "FntBaseDisplay02BoldFontSize": "72px",
-    "FntBaseDisplay02BoldFontWeight": 700,
-    "FntBaseDisplay02BoldLineHeight": "92px",
-    "FntBaseDisplay03BoldFontFamily": "'Inter', sans-serif",
-    "FntBaseDisplay03BoldFontSize": "60px",
-    "FntBaseDisplay03BoldFontWeight": 700,
-    "FntBaseDisplay03BoldLineHeight": "76px",
-    "FntBaseDisplay04BoldFontFamily": "'Inter', sans-serif",
-    "FntBaseDisplay04BoldFontSize": "48px",
-    "FntBaseDisplay04BoldFontWeight": 700,
-    "FntBaseDisplay04BoldLineHeight": "60px",
-    "FntBaseHeadline01SemiBoldFontFamily": "'Inter', sans-serif",
-    "FntBaseHeadline01SemiBoldFontSize": "48px",
-    "FntBaseHeadline01SemiBoldFontWeight": 600,
-    "FntBaseHeadline01SemiBoldLineHeight": "60px",
-    "FntBaseHeadline02SemiBoldFontFamily": "'Inter', sans-serif",
-    "FntBaseHeadline02SemiBoldFontSize": "40px",
-    "FntBaseHeadline02SemiBoldFontWeight": 600,
-    "FntBaseHeadline02SemiBoldLineHeight": "52px",
-    "FntBaseHeadline03SemiBoldFontFamily": "'Inter', sans-serif",
-    "FntBaseHeadline03SemiBoldFontSize": "34px",
-    "FntBaseHeadline03SemiBoldFontWeight": 600,
-    "FntBaseHeadline03SemiBoldLineHeight": "44px",
-    "FntBaseHeadline04SemiBoldFontFamily": "'Inter', sans-serif",
-    "FntBaseHeadline04SemiBoldFontSize": "28px",
-    "FntBaseHeadline04SemiBoldFontWeight": 600,
-    "FntBaseHeadline04SemiBoldLineHeight": "36px",
-    "FntBaseHeadline05SemiBoldFontFamily": "'Inter', sans-serif",
-    "FntBaseHeadline05SemiBoldFontSize": "24px",
-    "FntBaseHeadline05SemiBoldFontWeight": 600,
-    "FntBaseHeadline05SemiBoldLineHeight": "32px",
-    "FntBaseHeadline06SemiBoldFontFamily": "'Inter', sans-serif",
-    "FntBaseHeadline06SemiBoldFontSize": "20px",
-    "FntBaseHeadline06SemiBoldFontWeight": 600,
-    "FntBaseHeadline06SemiBoldLineHeight": "28px",
-    "FntBaseFontFamily": "'Inter', sans-serif",
-    "FntBaseFontSizeBody01": "20px",
-    "FntBaseFontSizeBody02": "16px",
-    "FntBaseFontSizeBody03": "14px",
-    "FntBaseFontSizeBody04": "12px",
-    "FntBaseFontSizeDisplay01": "84px",
-    "FntBaseFontSizeDisplay02": "72px",
-    "FntBaseFontSizeDisplay03": "60px",
-    "FntBaseFontSizeDisplay04": "48px",
-    "FntBaseFontSizeHeadline01": "48px",
-    "FntBaseFontSizeHeadline02": "40px",
-    "FntBaseFontSizeHeadline03": "34px",
-    "FntBaseFontSizeHeadline04": "28px",
-    "FntBaseFontSizeHeadline05": "24px",
-    "FntBaseFontSizeHeadline06": "20px",
-    "FntBaseFontWeight": 400,
-    "FntBaseFontWeightBold": 700,
-    "FntBaseFontWeightMedium": 500,
-    "FntBaseFontWeightSemiBold": 600,
-    "FntBaseLineHeightBody01": "28px",
-    "FntBaseLineHeightBody02": "24px",
-    "FntBaseLineHeightBody03": "20px",
-    "FntBaseLineHeightBody04": "16px",
-    "FntBaseLineHeightDisplay01": "108px",
-    "FntBaseLineHeightDisplay02": "92px",
-    "FntBaseLineHeightDisplay03": "76px",
-    "FntBaseLineHeightDisplay04": "60px",
-    "FntBaseLineHeightHeadline01": "60px",
-    "FntBaseLineHeightHeadline02": "52px",
-    "FntBaseLineHeightHeadline03": "44px",
-    "FntBaseLineHeightHeadline04": "36px",
-    "FntBaseLineHeightHeadline05": "32px",
-    "FntBaseLineHeightHeadline06": "28px",
-    "ClrFrmFldErrorText": "#D40002",
-    "ClrFrmFldHelpText": "#5C6B6C",
-    "ClrFrmFldLabel": "#5C6B6C",
-    "ClrFrmFldPlaceholder": "#A9B7B8",
-    "ClrFrmFldRadioButtonCheckboxFillChecked": "#0067C8",
-    "ClrFrmFldRadioButtonCheckboxSelectionLabel": "#3A4445",
-    "ClrFrmFldSelectMenuFill": "#FFFFFF",
-    "ClrFrmFldSelectMenuItemFillActive": "#0067C833",
-    "ClrFrmFldSelectMenuItemFillHover": "#0067C81A",
-    "ClrFrmFldSelectMenuItemFillSelected": "#0067C8",
-    "ClrFrmFldSelectMenuStroke": "#708284",
-    "ClrFrmFldSelectValueSelected": "#FFFFFF",
-    "ClrFrmFldTextInputFill": "#FFFFFF",
-    "ClrFrmFldTextInputFillError": "#FFF1F1",
-    "ClrFrmFldTextInputFillReadOnly": "#F2F4F5",
-    "ClrFrmFldTextInputFillWarning": "#FEF2EE",
-    "ClrFrmFldTextInputStroke": "#708284",
-    "ClrFrmFldTextInputStrokeError": "#FE0003",
-    "ClrFrmFldTextInputStrokeHover": "#0067C8",
-    "ClrFrmFldTextInputStrokeWarning": "#BD6931",
-    "ClrFrmFldValue": "#3A4445",
-    "ClrFrmFldWarningText": "#9A572B",
-    "RdsFrmFldTextInput": "4px",
-    "SzFrmFldTextInputStroke": "1px",
-    "SzFrmFldTextInputStrokeActive": "2px",
-    "SzFrmFldTextareaInputHeight": "24px * 2.5",
-    "FntFrmFldErrorTextFontFamily": "'Inter', sans-serif",
-    "FntFrmFldErrorTextFontSize": "14px",
-    "FntFrmFldErrorTextFontWeight": 500,
-    "FntFrmFldErrorTextLineHeight": "20px",
-    "FntFrmFldHelpTextFontFamily": "'Inter', sans-serif",
-    "FntFrmFldHelpTextFontSize": "14px",
-    "FntFrmFldHelpTextFontWeight": 400,
-    "FntFrmFldHelpTextLineHeight": "20px",
-    "FntFrmFldLabelFontFamily": "'Inter', sans-serif",
-    "FntFrmFldLabelFontSize": "14px",
-    "FntFrmFldLabelFontWeight": 400,
-    "FntFrmFldLabelLineHeight": "20px",
-    "FntFrmFldRadioButtonCheckboxSelectionLabelFontFamily": "'Inter', sans-serif",
-    "FntFrmFldRadioButtonCheckboxSelectionLabelFontSize": "16px",
-    "FntFrmFldRadioButtonCheckboxSelectionLabelFontWeight": 500,
-    "FntFrmFldRadioButtonCheckboxSelectionLabelLineHeight": "24px",
-    "FntFrmFldSelectValueFontFamily": "'Inter', sans-serif",
-    "FntFrmFldSelectValueFontSize": "16px",
-    "FntFrmFldSelectValueFontWeight": 500,
-    "FntFrmFldSelectValueLineHeight": "24px",
-    "FntFrmFldTextPlaceholderFontFamily": "'Inter', sans-serif",
-    "FntFrmFldTextPlaceholderFontSize": "16px",
-    "FntFrmFldTextPlaceholderFontWeight": 500,
-    "FntFrmFldTextPlaceholderLineHeight": "24px",
-    "FntFrmFldTextValueFontFamily": "'Inter', sans-serif",
-    "FntFrmFldTextValueFontSize": "16px",
-    "FntFrmFldTextValueFontWeight": 500,
-    "FntFrmFldTextValueLineHeight": "24px",
-    "FntFrmFldWarningTextFontFamily": "'Inter', sans-serif",
-    "FntFrmFldWarningTextFontSize": "14px",
-    "FntFrmFldWarningTextFontWeight": 500,
-    "FntFrmFldWarningTextLineHeight": "20px"
   }
-};
+}
 
 export default TerrawareTheme;

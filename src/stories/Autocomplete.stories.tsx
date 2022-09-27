@@ -1,14 +1,16 @@
 import { action } from '@storybook/addon-actions';
 import { Story } from '@storybook/react';
+import { Theme } from '@mui/material';
 import React from 'react';
 import Autocomplete, {
   Props as AutocompleteProps,
 } from '../components/Autocomplete/Autocomplete';
 import { makeStyles } from '@mui/styles';
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme: Theme) => ({
   container: {
     width: '300px',
+    backgroundColor: theme.palette.ClrBaseWhite,
   },
 }));
 
