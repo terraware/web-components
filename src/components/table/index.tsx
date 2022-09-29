@@ -9,6 +9,7 @@ import { makeStyles } from '@mui/styles';
 import { DndContext, KeyboardSensor, MouseSensor, TouchSensor, useSensor, useSensors } from '@dnd-kit/core';
 import { sortableKeyboardCoordinates } from '@dnd-kit/sortable';
 import { useDeviceInfo } from '../../utils';
+import { IconName } from '../Icon/icons';
 
 const tableStyles = makeStyles((theme: Theme) => ({
   hover: {
@@ -62,9 +63,10 @@ export interface Props<T> {
 }
 
 export type TopBarButton = {
-  buttonText: string;
+  buttonText?: string;
   buttonType: 'productive' | 'passive' | 'destructive' | undefined;
   onButtonClick: () => void;
+  icon?: IconName;
 };
 
 export default function EnhancedTable<T>({
