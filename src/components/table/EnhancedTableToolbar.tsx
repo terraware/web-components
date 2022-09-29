@@ -9,7 +9,7 @@ const styles = makeStyles((theme: Theme) => ({
     background: '#EDF0F1',
   },
   flexText: {
-    flex: '1 1 100%',
+    flex: '1 1 auto',
   },
   buttonSpacing: {
     marginLeft: theme.spacing(1),
@@ -39,6 +39,7 @@ export default function EnhancedTableToolbar(props: EnhancedTableToolbarProps): 
             priority='secondary'
             type={tbButton.buttonType}
             onClick={tbButton.onButtonClick}
+            icon={tbButton.icon}
           />
         );
       })}
