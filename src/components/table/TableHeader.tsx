@@ -1,4 +1,4 @@
-import { Checkbox, TableCell, TableRow } from '@mui/material';
+import { Checkbox, TableHead, TableCell, TableRow } from '@mui/material';
 import React from 'react';
 import { SortOrder } from './sort';
 import { TableColumnType } from './types';
@@ -22,6 +22,7 @@ function columnsToHeadCells(columns: TableColumnType[]): HeadCell[] {
     id: c.key,
     disablePadding: false,
     label: typeof c.name === 'string' ? c.name.toUpperCase() : c.name,
+    className: c.className,
   }));
 }
 
@@ -33,7 +34,7 @@ export default function EnhancedTableHead(props: Props): JSX.Element {
   }, [props.columns]);
 
   return (
-    <thead>
+    <TableHead>
       <TableRow id='table-header'>
         {numSelected !== undefined && rowCount !== undefined && rowCount > 0 && onSelectAllClick && (
           <TableCell padding='checkbox'>
@@ -51,6 +52,6 @@ export default function EnhancedTableHead(props: Props): JSX.Element {
           })}
         </SortableContext>
       </TableRow>
-    </thead>
+    </TableHead>
   );
 }
