@@ -20,19 +20,20 @@ const useStyles = makeStyles((theme: Theme) => ({
 export type TableRowType = Record<string, any>;
 
 export default function CellRenderer(props: RendererProps<TableRowType>): JSX.Element {
-  const { column, value, onRowClick, index } = props;
+  const { column, value, onRowClick, index, className } = props;
   const id = `row${index}-${column.key}`;
+
   if (column.type === 'date' && typeof value === 'string' && value) {
-    return <CellDateRenderer id={id} value={value} />;
+    return <CellDateRenderer id={id} value={value} className={className} />;
   } else if (column.type === 'notes' && value && typeof value === 'string') {
-    return <CellNotesRenderer id={id} value={value} />;
+    return <CellNotesRenderer id={id} value={value} className={className} />;
   } else if (column.type === 'boolean') {
-    return <CellBooleanRenderer id={id} value={value} />;
+    return <CellBooleanRenderer id={id} value={value} className={className} />;
   } else if (column.type === 'edit') {
-    return <CellEditRenderer id={id} onRowClick={onRowClick} />;
+    return <CellEditRenderer id={id} onRowClick={onRowClick} className={className} />;
   }
 
-  return <CellTextRenderer id={id} value={value} />;
+  return <CellTextRenderer id={id} value={value} className={className} />;
 }
 
 export const cellDateFormatter = (value?: string): string | undefined => {
@@ -41,11 +42,19 @@ export const cellDateFormatter = (value?: string): string | undefined => {
   }
 };
 
-export function CellDateRenderer({ id, value }: { id: string; value: string }): JSX.Element {
+export function CellDateRenderer({
+  id,
+  value,
+  className,
+}: {
+  id: string;
+  value: string,
+  className?: string;
+}): JSX.Element {
   const classes = useStyles();
 
   return (
-    <TableCell id={id} align='left' className={classes.date}>
+    <TableCell id={id} align='left' className={classes.date + ' ' + className}>
       <Typography component='p' variant='body1'>
         {cellDateFormatter(value)}
       </Typography>
@@ -56,14 +65,16 @@ export function CellDateRenderer({ id, value }: { id: string; value: string }): 
 export function CellTextRenderer({
   id,
   value,
+  className,
 }: {
   id: string;
   value?: string | number | any[] | ReactNode;
+  className?: string;
 }): JSX.Element {
   const classes = useStyles();
 
   return (
-    <TableCell id={id} align='left' title={typeof value === 'string' ? value : ''}>
+    <TableCell id={id} align='left' title={typeof value === 'string' ? value : ''} className={className}>
       <Typography component='p' variant='body1' noWrap={true} classes={{ root: classes.textRoot }}>
         {value}
       </Typography>
@@ -74,12 +85,14 @@ export function CellTextRenderer({
 export function CellBooleanRenderer({
   id,
   value,
+  className,
 }: {
   id: string;
   value?: string | number | any[] | ReactNode;
+  className?: string;
 }): JSX.Element {
   return (
-    <TableCell id={id} align='left'>
+    <TableCell id={id} align='left' className={className}>
       <Typography component='p' variant='body1'>
         {value === 'true' ? 'YES' : 'NO'}
       </Typography>
@@ -87,9 +100,17 @@ export function CellBooleanRenderer({
   );
 }
 
-export function CellNotesRenderer({ id, value }: { id: string; value?: string }): JSX.Element {
+export function CellNotesRenderer({
+  id,
+  value,
+  className,
+}: {
+  id: string;
+  value?: string
+  className?: string;
+}): JSX.Element {
   return (
-    <TableCell id={id} align='left'>
+    <TableCell id={id} align='left' className={className}>
       <Typography id={id} component='p' variant='body1'>
         {value && value.length > 0 ? <Notes /> : ''}
       </Typography>
@@ -97,11 +118,19 @@ export function CellNotesRenderer({ id, value }: { id: string; value?: string })
   );
 }
 
-export function CellEditRenderer({ id, onRowClick }: { id: string; onRowClick?: () => void }): JSX.Element {
+export function CellEditRenderer({
+  id,
+  onRowClick,
+  className,
+}: {
+  id: string;
+  onRowClick?: () => void;
+  className?: string;
+}): JSX.Element {
   const classes = useStyles();
 
   return (
-    <TableCell id={id} align='left'>
+    <TableCell id={id} align='left' className={className}>
       <Link
         id={`${id}-button`}
         href='#'

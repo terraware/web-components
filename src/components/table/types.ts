@@ -4,6 +4,7 @@ export interface TableColumnType {
   key: string;
   name: string | JSX.Element;
   type: 'string' | 'number' | 'date' | 'notes' | 'edit' | 'boolean';
+  className?: string;
 }
 
 export interface RendererProps<T> {
@@ -13,6 +14,7 @@ export interface RendererProps<T> {
   value?: string | number | unknown[] | ReactNode;
   onRowClick?: () => void;
   reloadData?: () => void;
+  className?: string;
 }
 
 export type EnhancedTableDetailsRow = {

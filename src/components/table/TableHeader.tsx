@@ -22,6 +22,7 @@ function columnsToHeadCells(columns: TableColumnType[]): HeadCell[] {
     id: c.key,
     disablePadding: false,
     label: typeof c.name === 'string' ? c.name.toUpperCase() : c.name,
+    className: c.className,
   }));
 }
 

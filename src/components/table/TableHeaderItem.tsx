@@ -9,6 +9,7 @@ interface HeadCell {
   disablePadding: boolean;
   id: string;
   label: string | JSX.Element;
+  className?: string;
 }
 
 type Props = {
@@ -51,6 +52,7 @@ export default function TableHeaderItem(props: Props): JSX.Element {
       padding={headCell.disablePadding ? 'none' : 'normal'}
       sortDirection={orderBy === headCell.id ? order : false}
       style={style}
+      className={headCell.className || ''}
     >
       {headCell.label && (
         <TableSortLabel active={orderBy === headCell.id} direction={orderBy === headCell.id ? order : 'asc'} onClick={createSortHandler(headCell.id)}>
