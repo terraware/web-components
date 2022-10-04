@@ -29,11 +29,6 @@ const tableStyles = makeStyles((theme: Theme) => ({
       backgroundColor: 'initial',
     },
   },
-  tableContainer: {
-    '&.MuiTableContainer-root': {
-      overflowX: 'initial',
-    }
-  },
 }));
 
 export interface HeadCell {
@@ -204,7 +199,7 @@ export default function EnhancedTable<T>({
   return (
     <>
       {showTopBar && <EnhancedTableToolbar numSelected={selectedRows ? selectedRows.length : 0} topBarButtons={topBarButtons} />}
-      <TableContainer id={id} className={classes.tableContainer}>
+      <TableContainer id={id}>
         <DndContext sensors={sensors} onDragEnd={handleDragEnd}>
           <Table stickyHeader={true} aria-labelledby='tableTitle' size='medium' aria-label='enhanced table' className={classes.table}>
             <TableHeader
