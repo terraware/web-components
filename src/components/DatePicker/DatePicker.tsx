@@ -1,6 +1,6 @@
 import moment from 'moment-timezone';
 import 'moment/min/locales';
-import React, { KeyboardEventHandler } from 'react';
+import React, { useState, KeyboardEventHandler } from 'react';
 import { TextField } from '@mui/material';
 import { LocalizationProvider, DesktopDatePicker } from '@mui/x-date-pickers';
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
@@ -11,7 +11,7 @@ export interface Props {
   id: string;
   label: React.ReactNode;
   value?: string | null;
-  onChange: (id: string, value?: string | null) => void;
+  onChange: (id: string, value?: string | null, valid?: boolean) => void;
   'aria-label': string;
   onKeyPress?: KeyboardEventHandler;
   minDate?: any;
@@ -24,6 +24,7 @@ export interface Props {
 }
 
 export default function DatePicker(props: Props): JSX.Element {
+  const [temporalValue, setTemporalValue] = useState(props.value || null);
   React.useEffect(() => {
     moment.locale([window.navigator.language, 'en']);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -63,11 +64,10 @@ export default function DatePicker(props: Props): JSX.Element {
           minDate={props.minDate ? moment(props.minDate) : undefined}
           maxDate={props.maxDate ? moment(props.maxDate) : undefined}
           inputFormat='yyyy-MM-DD'
-          value={props.value ? moment(props.value, 'YYYY-MM-DD').toDate() : null}
+          value={temporalValue}
           onChange={(newValue: any) => {
-            if (newValue?.isValid()) {
-              props.onChange(props.id, newValue?.toDate());
-            }
+            setTemporalValue(newValue);
+            props.onChange(props.id, newValue?.toDate(), newValue.isValid());
           }}
           renderInput={renderInput}
           disabled={props.disabled}
