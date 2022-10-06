@@ -5,10 +5,9 @@ export const getTodaysDateFormatted = () => {
 };
 
 export const isInTheFuture = (date: any) => {
-  const d = new Date(date);
-  const utc = Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate());
+  const d = new Date(getDateDisplayValue(date)).getTime();
 
-  return utc > Date.now();
+  return d > Date.now();
 };
 
 export default getDateDisplayValue;
