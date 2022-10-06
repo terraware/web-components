@@ -125,7 +125,7 @@ export default function TextField(props: Props): JSX.Element {
           <div id={id} className={textfieldClass}>
             {iconLeft && <Icon name={iconLeft} className='textfield-value--icon-left' />}
             <input
-              value={value || (type === 'text' ? '' : (min || 0))}
+              value={value || ''}
               disabled={readonly || disabled}
               placeholder={placeholder}
               onChange={textfieldOnChange}
