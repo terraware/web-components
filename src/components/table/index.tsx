@@ -221,50 +221,52 @@ export default function EnhancedTable<T>({
                 </TableRow>
               )}
               {rows &&
-                stableSort(rows.slice(itemsToSkip, itemsToSkip + maxItemsPerPage), getComparator(order, orderBy, sortComparator)).map((row, index) => {
-                  const onClick = onSelect && !controlledOnSelect ? () => onSelect(row as T) : undefined;
-                  const isItemSelected = isSelected(row as T);
+                stableSort(rows, getComparator(order, orderBy, sortComparator))
+                  .slice(itemsToSkip, itemsToSkip + maxItemsPerPage)
+                  .map((row, index) => {
+                    const onClick = onSelect && !controlledOnSelect ? () => onSelect(row as T) : undefined;
+                    const isItemSelected = isSelected(row as T);
 
-                  return (
-                    <React.Fragment key={index}>
-                      <TableRow
-                        id={`row${index + 1}`}
-                        classes={{ hover: classes.hover }}
-                        hover={Boolean(onSelect) && (isClickable ? isClickable(row as T) : true) && !hasEditColumn}
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          if (onClick && !hasEditColumn && (isClickable ? isClickable(row as T) : true)) {
-                            onClick();
-                          }
-                          if (!onClick && !hasEditColumn && (isClickable ? isClickable(row as T) : true)) {
-                            handleClick(e, row as T);
-                          }
-                        }}
-                        className={`${isInactive && isInactive(row as T) ? classes.inactiveRow : undefined} ${classes.tableRow}`}
-                        selected={isItemSelected}
-                        aria-checked={isItemSelected}
-                      >
-                        {showCheckbox && (
-                          <TableCell padding='checkbox'>
-                            <Checkbox color='primary' checked={isItemSelected} />
-                          </TableCell>
-                        )}
-                        {columns.map((c) => (
-                          <Renderer
-                            index={index + 1}
-                            key={c.key}
-                            row={row as T}
-                            column={c}
-                            value={row[c.key]}
-                            onRowClick={onSelect && controlledOnSelect ? () => onSelect(row as T) : onClick}
-                            reloadData={reloadData}
-                          />
-                        ))}
-                      </TableRow>
-                      {DetailsRenderer && <DetailsRenderer index={index} row={row} />}
-                    </React.Fragment>
-                  );
-                })}
+                    return (
+                      <React.Fragment key={index}>
+                        <TableRow
+                          id={`row${index + 1}`}
+                          classes={{ hover: classes.hover }}
+                          hover={Boolean(onSelect) && (isClickable ? isClickable(row as T) : true) && !hasEditColumn}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            if (onClick && !hasEditColumn && (isClickable ? isClickable(row as T) : true)) {
+                              onClick();
+                            }
+                            if (!onClick && !hasEditColumn && (isClickable ? isClickable(row as T) : true)) {
+                              handleClick(e, row as T);
+                            }
+                          }}
+                          className={`${isInactive && isInactive(row as T) ? classes.inactiveRow : undefined} ${classes.tableRow}`}
+                          selected={isItemSelected}
+                          aria-checked={isItemSelected}
+                        >
+                          {showCheckbox && (
+                            <TableCell padding='checkbox'>
+                              <Checkbox color='primary' checked={isItemSelected} />
+                            </TableCell>
+                          )}
+                          {columns.map((c) => (
+                            <Renderer
+                              index={index + 1}
+                              key={c.key}
+                              row={row as T}
+                              column={c}
+                              value={row[c.key]}
+                              onRowClick={onSelect && controlledOnSelect ? () => onSelect(row as T) : onClick}
+                              reloadData={reloadData}
+                            />
+                          ))}
+                        </TableRow>
+                        {DetailsRenderer && <DetailsRenderer index={index} row={row} />}
+                      </React.Fragment>
+                    );
+                  })}
             </TableBody>
           </Table>
         </DndContext>
