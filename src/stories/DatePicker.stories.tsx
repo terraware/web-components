@@ -19,7 +19,7 @@ export default {
 };
 
 const onError = (reason: any, value: any) => {
-  action(`Invalid date ${value.toString()}, ${reason.toString()}`);
+  action(`Invalid date ${value?.toString()}, ${reason?.toString()}`);
 };
 
 const Template: StoryBook<DatePickerProps> = (args) => {
