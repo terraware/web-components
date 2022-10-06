@@ -31,10 +31,8 @@ const Template: StoryBook<DatePickerProps> = (args) => {
       <DatePicker
         {...args}
         value={value}
-        onUpdate={(i, v, valid) => {
-          if (valid) {
-            setValue(v);
-          }
+        onChange={(i, v) => {
+          setValue(v);
         }}
         onError={onError}
       />
