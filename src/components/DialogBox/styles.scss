@@ -17,7 +17,7 @@
   inset: 0px;
 
   &.mobile {
-    margin: 0 5px;
+    margin: 0 $tw-spc-base-small;
     .dialog-box {
       &--footer {
         button {
