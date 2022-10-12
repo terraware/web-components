@@ -38,6 +38,7 @@ export { default as IconMenu } from './IconMenu';
 export { default as IconMyLocation } from './IconMyLocation';
 export { default as IconOrg } from './IconOrg';
 export { default as IconSeedBank } from './IconSeedBank';
+export { default as IconSeedling } from './IconSeedling';
 export { default as IconSynced } from './IconSynced';
 export { default as IconTrashCan } from './IconTrashCan';
 export { default as IconWifi } from './IconWifi';
