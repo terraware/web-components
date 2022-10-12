@@ -1,9 +1,9 @@
 import { Theme, Tooltip, TooltipProps } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 
-import Icon from './Icon/Icon';
-import { IconName } from './Icon/icons';
-import { useDeviceInfo } from '../utils';
+import Icon from '../Icon/Icon';
+import { IconName } from '../Icon/icons';
+import { useDeviceInfo } from '../../utils';
 
 const useStyles = makeStyles((theme: Theme) => ({
   arrow: {
