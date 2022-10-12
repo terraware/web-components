@@ -38,7 +38,7 @@ export default function IconTooltip({ iconName = 'info', placement = 'top-start'
 
   return (
     <Tooltip
-      arrow
+      arrow={true}
       classes={{
         arrow: classes.arrow,
         tooltip: classes.tooltip,
