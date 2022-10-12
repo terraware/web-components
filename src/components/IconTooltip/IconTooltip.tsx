@@ -7,20 +7,21 @@ import { useDeviceInfo } from '../../utils';
 
 const useStyles = makeStyles((theme: Theme) => ({
   arrow: {
-    color: '#3A4445',
+    color: theme.palette.ClrBaseGray800,
     marginLeft: '3px',
     marginTop: '-1px',
   },
   icon: {
-    fill: '#3A4445',
+    fill: theme.palette.ClrBaseGray800,
     verticalAlign: 'text-top',
   },
   tooltip: {
-    backgroundColor: '#3A4445',
+    backgroundColor: theme.palette.ClrBaseGray800,
     borderRadius: '8px',
+    color: theme.palette.ClrBaseWhite,
     padding: '8px',
     '& a': {
-      color: '#fff',
+      color: theme.palette.ClrBaseWhite,
     },
   },
 }));
