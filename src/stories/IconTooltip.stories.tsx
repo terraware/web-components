@@ -17,3 +17,18 @@ Default.args = {
   placement: 'top-start',
   title: 'This is a simple icon tooltip with default icon & placement and only text content.',
 };
+
+export const HTML = Template.bind({});
+HTML.args = {
+  iconName: 'info',
+  placement: 'top-start',
+  title: (
+    <>
+      This is a simple icon tooltip with default icon & placement and some HTML content. Try this{' '}
+      <a href='https://www.google.com' target='_blank' rel='noreferrer'>
+        Google link
+      </a>
+      .
+    </>
+  ),
+};
