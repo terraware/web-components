@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-type IconTooltipProps = {
+export type IconTooltipProps = {
   iconName?: IconName;
   placement?: TooltipProps['placement'];
   title: TooltipProps['title'];
