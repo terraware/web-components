@@ -11,7 +11,7 @@ import Divisor from './components/Divisor';
 import Dropdown, { DropdownV1 } from './components/Dropdown';
 import ErrorBox from './components/ErrorBox/ErrorBox';
 import Icon from './components/Icon/Icon';
-import IconTooltip from './components/IconTooltip/IconTooltip';
+import IconTooltip from './components/IconTooltip';
 import icons from './components/Icon/icons';
 import Navbar from './components/Navbar/Navbar';
 import NavFooter from './components/Navbar/NavFooter';
