@@ -101,4 +101,5 @@ ComplexSelect.args = {
     name: 'Eeyore',
     age: 8
   },
+  tooltipTitle: 'Hello world!',
 };

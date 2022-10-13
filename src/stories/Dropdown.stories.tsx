@@ -48,4 +48,5 @@ Default.args = {
     { label: 'Two', value: '2' },
   ],
   selectedValue: '2',
+  tooltipTitle: 'A handy tooltip',
 };

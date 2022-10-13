@@ -78,7 +78,7 @@ WithTooltip.args = {
   readonly: false,
   display: false,
   type: 'text',
-  tooltipText: 'Hello world!',
+  tooltipTitle: 'Hello world!',
 };
 
 TextArea.args = {
