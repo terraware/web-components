@@ -4,6 +4,7 @@ import BlobbyGrayIconUploadToTheCloud from '../../svg/BlobbyGrayIconUploadToTheC
 import BlobbyIconHappy from '../../svg/BlobbyIconHappy';
 import BlobbyIconLeaf from '../../svg/BlobbyIconLeaf';
 import BlobbyIconLibrary from '../../svg/BlobbyIconLibrary';
+import BlobbyIconNursery from '../../svg/BlobbyIconNursery';
 import BlobbyIconSeedBank from '../../svg/BlobbyIconSeedBank';
 import BlobbyIconWrench from '../../svg/BlobbyIconWrench';
 import Bug from '../../svg/Bug';
@@ -32,6 +33,7 @@ import IconFile from '../../svg/IconFile';
 import IconMenu from '../../svg/IconMenu';
 import IconMenuHorizontal from '../../svg/IconMenuHorizontal';
 import IconMyLocation from '../../svg/IconMyLocation';
+import IconNursery from '../../svg/IconNursery';
 import IconSeedling from '../../svg/IconSeedling';
 import IconSynced from '../../svg/IconSynced';
 import IconTrashCan from '../../svg/IconTrashCan';
@@ -72,6 +74,7 @@ export type IconName =
   | 'blobbyIconHappy'
   | 'blobbyIconLeaf'
   | 'blobbyIconLibrary'
+  | 'blobbyIconNursery'
   | 'blobbyIconWrench'
   | 'bug'
   | 'calendar'
@@ -99,6 +102,7 @@ export type IconName =
   | 'iconMenu'
   | 'iconMenuHorizontal'
   | 'iconMyLocation'
+  | 'iconNursery'
   | 'iconSeedling'
   | 'iconSynced'
   | 'iconTrashCan'
@@ -143,6 +147,7 @@ const icons: Record<IconName, SVGComponent> = {
   blobbyIconHappy: BlobbyIconHappy,
   blobbyIconLeaf: BlobbyIconLeaf,
   blobbyIconLibrary: BlobbyIconLibrary,
+  blobbyIconNursery: BlobbyIconNursery,
   blobbyIconWrench: BlobbyIconWrench,
   bug: Bug,
   calendar: Calendar,
@@ -169,6 +174,7 @@ const icons: Record<IconName, SVGComponent> = {
   iconFile: IconFile,
   iconMenu: IconMenu,
   iconMenuHorizontal: IconMenuHorizontal,
+  iconNursery: IconNursery,
   iconMyLocation: IconMyLocation,
   iconSeedling: IconSeedling,
   iconSynced: IconSynced,
