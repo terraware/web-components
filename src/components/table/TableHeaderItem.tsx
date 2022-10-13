@@ -6,7 +6,7 @@ import { TableCell, TableSortLabel, Theme, TooltipProps } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 
 import { SortOrder } from './sort';
-import { IconTooltip } from '../..';
+import IconTooltip from '../IconTooltip';
 
 interface HeadCell {
   disablePadding: boolean;
