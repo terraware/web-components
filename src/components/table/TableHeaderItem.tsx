@@ -4,8 +4,10 @@ import { CSS } from '@dnd-kit/utilities';
 import { DragHandle } from '@mui/icons-material';
 import { TableCell, TableSortLabel, Theme, TooltipProps } from '@mui/material';
 import { makeStyles } from '@mui/styles';
+
 import { SortOrder } from './sort';
 import { IconTooltip } from '../..';
+
 interface HeadCell {
   disablePadding: boolean;
   id: string;
@@ -21,6 +23,7 @@ type Props = {
   onRequestSort: (event: React.MouseEvent<unknown>, property: string) => void;
   i: number;
 };
+
 export default function TableHeaderItem(props: Props): JSX.Element {
   const { headCell, order, orderBy, onRequestSort, i } = props;
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
