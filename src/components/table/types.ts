@@ -1,10 +1,12 @@
 import { ReactNode } from 'react';
+import { TooltipProps } from '@mui/material';
 
 export interface TableColumnType {
   key: string;
   name: string | JSX.Element;
   type: 'string' | 'number' | 'date' | 'notes' | 'edit' | 'boolean';
   className?: string;
+  tooltipTitle?: TooltipProps['title'];
 }
 
 export interface RendererProps<T> {

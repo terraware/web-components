@@ -1,8 +1,7 @@
-import classNames from 'classnames';
-import React, { ChangeEvent, KeyboardEvent, useEffect, useRef, useState } from 'react';
-import Icon from '../Icon/Icon';
+import { TooltipProps } from '@mui/material';
+import React from 'react';
+
 import './styles.scss';
-import { isWhitespaces } from '../../utils';
 import SelectT from './SelectT';
 
 export interface SelectProps {
@@ -23,6 +22,7 @@ export interface SelectProps {
   onBlur?: () => void;
   onFocus?: () => void;
   fixedMenu?: boolean;
+  tooltipTitle?: TooltipProps['title'];
 }
 
 export default function Select(props: SelectProps): JSX.Element {

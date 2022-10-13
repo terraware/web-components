@@ -1,4 +1,4 @@
-import { Box, Checkbox, Pagination, Table, TableBody, TableCell, TableContainer, TableRow, Theme, Typography } from '@mui/material';
+import { Box, Checkbox, Pagination, Table, TableBody, TableCell, TableContainer, TableRow, Theme, TooltipProps, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import EnhancedTableToolbar from './EnhancedTableToolbar';
 import { descendingComparator, getComparator, SortOrder, stableSort } from './sort';
@@ -35,6 +35,7 @@ export interface HeadCell {
   disablePadding: boolean;
   id: string;
   label: string | JSX.Element;
+  tooltipTitle?: TooltipProps['title'];
 }
 
 export interface Props<T> {
@@ -170,6 +171,7 @@ export default function EnhancedTable<T>({
       id: c.key,
       disablePadding: false,
       label: typeof c.name === 'string' ? c.name.toUpperCase() : c.name,
+      tooltipTitle: c.tooltipTitle,
     }));
   }
 

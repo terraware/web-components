@@ -43,7 +43,7 @@ Default.args = {
   orderBy: 'name',
   columns: [
     { key: 'name', name: 'Name', type: 'string' },
-    { key: 'middlename', name: 'Middlename', type: 'string' },
+    { key: 'middlename', name: 'Middlename', type: 'string', tooltipTitle: 'Middle name is optional' },
     { key: 'lastname', name: 'Lastname', type: 'string' },
   ],
   rows: Array(50).fill({name: '', middlename: '', lastname: ''}).map((i, j) => {

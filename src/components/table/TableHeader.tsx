@@ -23,6 +23,7 @@ function columnsToHeadCells(columns: TableColumnType[]): HeadCell[] {
     disablePadding: false,
     label: typeof c.name === 'string' ? c.name.toUpperCase() : c.name,
     className: c.className,
+    tooltipTitle: c.tooltipTitle,
   }));
 }
 
