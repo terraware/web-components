@@ -1,10 +1,10 @@
 import classNames from 'classnames';
 import React from 'react';
-import { Tooltip } from '@mui/material';
 import Icon from '../Icon/Icon';
 import { IconName } from '../Icon/icons';
 import './styles.scss';
 import { isWhitespaces } from '../../utils';
+import IconTooltip from '../IconTooltip';
 
 type TextfieldType = 'text' | 'textarea' | 'number';
 
@@ -112,11 +112,10 @@ export default function TextField(props: Props): JSX.Element {
         {label}
         {tooltipText !== undefined && (
           <div className='textfield-label--icon-tooltip-container'>
-            <Tooltip title={tooltipText} placement='top' arrow={true}>
-              <span>
-                <Icon name='info' className='textfield-label--icon-tooltip'/>
-              </span>
-            </Tooltip>
+            <IconTooltip
+              title={tooltipText}
+              placement={'top'}
+            />
           </div>
         )}
       </label>

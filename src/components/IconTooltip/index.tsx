@@ -9,7 +9,6 @@ import { useDeviceInfo } from '../../utils';
 const useStyles = makeStyles((theme: Theme) => ({
   arrow: {
     color: theme.palette.ClrBaseGray800,
-    marginLeft: '3px',
     marginTop: '-1px',
   },
   icon: {
