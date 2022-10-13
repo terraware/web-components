@@ -111,7 +111,7 @@ export default function TextField(props: Props): JSX.Element {
     <div className={`textfield ${className}`}>
       <label htmlFor={id} className='textfield-label'>
         {label}
-        {tooltipTitle && <IconTooltip title={tooltipTitle} />}
+        {tooltipTitle && <IconTooltip placement='top' title={tooltipTitle} />}
       </label>
       {!display &&
         ((type === 'text' || type === 'number') ? (
