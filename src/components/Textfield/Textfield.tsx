@@ -1,10 +1,11 @@
 import classNames from 'classnames';
 import React from 'react';
-import { Tooltip } from '@mui/material';
+import { Tooltip, TooltipProps } from '@mui/material';
 import Icon from '../Icon/Icon';
 import { IconName } from '../Icon/icons';
 import './styles.scss';
 import { isWhitespaces } from '../../utils';
+import IconTooltip from '../IconTooltip';
 
 type TextfieldType = 'text' | 'textarea' | 'number';
 
@@ -28,7 +29,7 @@ export interface Props {
   type: TextfieldType;
   onKeyDown?: (key: string) => void;
   onClickRightIcon?: () => void;
-  tooltipText?: string;
+  tooltipTitle?: TooltipProps['title'];
   min?: number;
   max?: number;
 }
@@ -52,7 +53,7 @@ export default function TextField(props: Props): JSX.Element {
     type,
     onKeyDown,
     onClickRightIcon,
-    tooltipText,
+    tooltipTitle,
     min,
     max,
   } = props;
@@ -110,15 +111,7 @@ export default function TextField(props: Props): JSX.Element {
     <div className={`textfield ${className}`}>
       <label htmlFor={id} className='textfield-label'>
         {label}
-        {tooltipText !== undefined && (
-          <div className='textfield-label--icon-tooltip-container'>
-            <Tooltip title={tooltipText} placement='top' arrow={true}>
-              <span>
-                <Icon name='info' className='textfield-label--icon-tooltip'/>
-              </span>
-            </Tooltip>
-          </div>
-        )}
+        {tooltipTitle && <IconTooltip title={tooltipTitle} />}
       </label>
       {!display &&
         ((type === 'text' || type === 'number') ? (
@@ -130,7 +123,7 @@ export default function TextField(props: Props): JSX.Element {
               placeholder={placeholder}
               onChange={textfieldOnChange}
               onKeyDown={onKeyDownHandler}
-              { ...typeProps }
+              {...typeProps}
             />
             {iconRight ? renderRightIcon() : null}
           </div>

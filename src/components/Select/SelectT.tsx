@@ -1,7 +1,10 @@
+import { TooltipProps } from '@mui/material';
 import classNames from 'classnames';
 import React, { ChangeEvent, KeyboardEvent, useEffect, useRef, useState } from 'react';
-import Icon from '../Icon/Icon';
+
 import './styles.scss';
+import Icon from '../Icon/Icon';
+import IconTooltip from '../IconTooltip';
 import { isWhitespaces } from '../../utils';
 
 export interface SelectTProps<T> {
@@ -26,6 +29,7 @@ export interface SelectTProps<T> {
   renderOption: (option: T) => React.ReactNode;
   toT: (input: string) => T;
   displayLabel: (option: any) => string;
+  tooltipTitle?: TooltipProps['title'];
 }
 
 export default function SelectT<T>(props: SelectTProps<T>): JSX.Element {
@@ -51,6 +55,7 @@ export default function SelectT<T>(props: SelectTProps<T>): JSX.Element {
     renderOption,
     toT,
     displayLabel,
+    tooltipTitle,
   } = props;
 
   const selectClass = classNames({
@@ -193,7 +198,7 @@ export default function SelectT<T>(props: SelectTProps<T>): JSX.Element {
     <div className={`select ${className}`}>
       {label && (
         <label htmlFor={id} className='textfield-label'>
-          {label}
+          {label} {tooltipTitle && <IconTooltip title={tooltipTitle} />}
         </label>
       )}
       <div className={`textfield-container ${fullWidth ? 'textfield-container--fullWidth' : ''}`}>

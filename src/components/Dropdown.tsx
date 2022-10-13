@@ -1,4 +1,4 @@
-import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from '@mui/material';
+import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, TooltipProps } from '@mui/material';
 import SelectT from './Select/SelectT';
 import { makeStyles } from '@mui/styles';
 import React from 'react';
@@ -11,6 +11,7 @@ export interface Props {
   selected: string | undefined;
   disabled?: boolean;
 }
+
 const useStyles = makeStyles(() => ({
   formControl: {
     width: '100%',
@@ -60,6 +61,7 @@ export interface DropdownProps {
   onBlur?: () => void;
   onFocus?: () => void;
   fixedMenu?: boolean;
+  tooltipTitle?: TooltipProps['title'];
 }
 
 /**
@@ -87,6 +89,7 @@ export default function Dropdown(props: DropdownProps): JSX.Element {
       toT={(str: string) => ({ label: str, value: str } as DropdownItem)}
       displayLabel={(option: DropdownItem) => option?.label || ''}
       onChange={(option: DropdownItem) => onChange(option.value)}
+      tooltipTitle={props.tooltipTitle}
     />
   );
 }
