@@ -9,18 +9,15 @@ import { useDeviceInfo } from '../../utils';
 const useStyles = makeStyles((theme: Theme) => ({
   arrow: {
     color: theme.palette.ClrBaseGray800,
-    marginLeft: '3px',
-    marginTop: '-1px',
   },
   icon: {
     fill: theme.palette.ClrBaseGray800,
-    paddingLeft: '.5em',
-    paddingRight: '.5em',
+    marginLeft: '.5em',
+    marginRight: '.5em',
     verticalAlign: 'text-top',
   },
   tooltip: {
     backgroundColor: theme.palette.ClrBaseGray800,
-    borderRadius: '8px',
     color: theme.palette.ClrBaseWhite,
     padding: '8px',
     '& a': {
