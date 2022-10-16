@@ -1,5 +1,5 @@
 import { Box, Checkbox, Pagination, Table, TableBody, TableCell, TableContainer, TableRow, Theme, TooltipProps, Typography } from '@mui/material';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import EnhancedTableToolbar from './EnhancedTableToolbar';
 import { descendingComparator, getComparator, SortOrder, stableSort } from './sort';
 import TableCellRenderer from './TableCellRenderer';
@@ -61,6 +61,8 @@ export interface Props<T> {
   showPagination?: boolean;
   controlledOnSelect?: boolean;
   reloadData?: () => void;
+  floatHeader?: boolean;
+  headerWindowOffset?: number;
 }
 
 export type TopBarButton = {
@@ -93,6 +95,8 @@ export default function EnhancedTable<T>({
   showPagination = true,
   controlledOnSelect,
   reloadData,
+  floatHeader,
+  headerWindowOffset,
 }: Props<T>): JSX.Element {
   const classes = tableStyles();
   const [order, setOrder] = React.useState<SortOrder>(_order);
@@ -100,6 +104,7 @@ export default function EnhancedTable<T>({
   const [maxItemsPerPage] = useState(100);
   const [itemsToSkip, setItemsToSkip] = useState(0);
   const { isMobile } = useDeviceInfo();
+  const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (setSelectedRows && rows.length >= 0) {
@@ -201,7 +206,7 @@ export default function EnhancedTable<T>({
   return (
     <>
       {showTopBar && <EnhancedTableToolbar numSelected={selectedRows ? selectedRows.length : 0} topBarButtons={topBarButtons} />}
-      <TableContainer id={id}>
+      <TableContainer id={id} ref={containerRef}>
         <DndContext sensors={sensors} onDragEnd={handleDragEnd}>
           <Table stickyHeader={true} aria-labelledby='tableTitle' size='medium' aria-label='enhanced table' className={classes.table}>
             <TableHeader
@@ -213,6 +218,9 @@ export default function EnhancedTable<T>({
               numSelected={showCheckbox ? selectedRows?.length : undefined}
               onSelectAllClick={showCheckbox ? handleSelectAllClick : undefined}
               rowCount={showCheckbox ? rows?.length : undefined}
+              containerRef={containerRef}
+              floatHeader={floatHeader}
+              additionalOffset={headerWindowOffset}
             />
             <TableBody>
               {rows.length < 1 && emptyTableMessage && (

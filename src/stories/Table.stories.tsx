@@ -56,3 +56,10 @@ Default.args = {
     }
   }),
 };
+
+export const FloatingHeader = Template.bind({});
+
+FloatingHeader.args = {
+  ...Default.args,
+  floatHeader: true,
+};
