@@ -8,7 +8,7 @@ interface SVGRProps {
 const SvgSpinner = ({ title, titleId, ...props }: SVGProps<SVGSVGElement> & SVGRProps) => (
   <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48' xmlSpace='preserve' aria-labelledby={titleId} {...props}>
     {title ? <title id={titleId}>{title}</title> : null}
-    <circle cx={24} cy={24} r={20} />
+    <circle fill='none' cx={24} cy={24} r={20} />
     <path d='M24 12c-.8 0-1.5-.7-1.5-1.5v-5c0-.8.7-1.5 1.5-1.5s1.5.7 1.5 1.5v5c0 .8-.7 1.5-1.5 1.5z' />
     <path opacity={0.1} d='M24 44c-.8 0-1.5-.7-1.5-1.5v-5c0-.8.7-1.5 1.5-1.5s1.5.7 1.5 1.5v5c0 .8-.7 1.5-1.5 1.5z' />
     <path opacity={0.55} d='M10.5 25.5h-5c-.8 0-1.5-.7-1.5-1.5s.7-1.5 1.5-1.5h5c.8 0 1.5.7 1.5 1.5s-.7 1.5-1.5 1.5z' />
