@@ -1,6 +1,6 @@
 {
   "name": "@terraware/web-components",
-  "version": "1.0.45",
+  "version": "1.0.45_svg_no_assets",
   "author": "Terraformation Inc.",
   "license": "Apache-2.0",
   "repository": {
@@ -45,7 +45,7 @@
     "build-storybook": "build-storybook -s public",
     "build-dictionary": "./style-dictionary/generate.sh",
     "transpile": "rm -rf dist && NODE_ENV=production babel src/ --extensions '.tsx,.ts' --out-dir dist --copy-files --no-copy-ignored && cp package.json dist/",
-    "generate-assets": "node assets/remove_fill && yarn svgr --icon --title-prop --no-dimensions --typescript -d src/components/svg assets",
+    "generate-assets": "yarn svgr --icon --title-prop --no-dimensions --typescript -d src/components/svg assets",
     "generate-types": "yarn -p typescript tsc",
     "build-dist": "yarn transpile && yarn generate-types",
     "lint": "tslint --project tsconfig.json",
