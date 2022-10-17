@@ -94,7 +94,7 @@ export default function EnhancedTable<T>({
   showPagination = true,
   controlledOnSelect,
   reloadData,
-  stickyHeader,
+  stickyHeader = true,
 }: Props<T>): JSX.Element {
   const classes = tableStyles();
   const [order, setOrder] = React.useState<SortOrder>(_order);

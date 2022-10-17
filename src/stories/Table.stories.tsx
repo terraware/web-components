@@ -56,10 +56,3 @@ Default.args = {
     }
   }),
 };
-
-export const StickyHeader = Template.bind({})
-
-StickyHeader.args = {
-  ...Default.args,
-  stickyHeader: true,
-};
