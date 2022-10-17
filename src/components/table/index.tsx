@@ -61,6 +61,7 @@ export interface Props<T> {
   showPagination?: boolean;
   controlledOnSelect?: boolean;
   reloadData?: () => void;
+  stickyHeader?: boolean;
 }
 
 export type TopBarButton = {
@@ -93,6 +94,7 @@ export default function EnhancedTable<T>({
   showPagination = true,
   controlledOnSelect,
   reloadData,
+  stickyHeader,
 }: Props<T>): JSX.Element {
   const classes = tableStyles();
   const [order, setOrder] = React.useState<SortOrder>(_order);
@@ -202,7 +204,7 @@ export default function EnhancedTable<T>({
     <>
       {showTopBar && <EnhancedTableToolbar numSelected={selectedRows ? selectedRows.length : 0} topBarButtons={topBarButtons} />}
       <DndContext sensors={sensors} onDragEnd={handleDragEnd}>
-        <Table stickyHeader={true} aria-labelledby='tableTitle' size='medium' aria-label='enhanced table' className={classes.table}>
+        <Table stickyHeader={stickyHeader} aria-labelledby='tableTitle' size='medium' aria-label='enhanced table' className={classes.table}>
           <TableHeader
             order={order}
             orderBy={orderBy}
