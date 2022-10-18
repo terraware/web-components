@@ -1,6 +1,14 @@
 export function descendingComparator<T>(a: T, b: T, orderBy: keyof T): 1 | -1 | 0 {
+  // first attempt to parse into a numeric value and compare
+  const numCompare = descendingNumComparator(a, b, orderBy);
+  if (numCompare !== null) {
+    return numCompare;
+  }
+
+  // if non-numeric, compare using the javascript built-in compare for this type
   const bValue = b[orderBy] ?? '';
   const aValue = a[orderBy] ?? '';
+
   if (bValue < aValue) {
     return -1;
   }
@@ -9,6 +17,23 @@ export function descendingComparator<T>(a: T, b: T, orderBy: keyof T): 1 | -1 | 
   }
 
   return 0;
+}
+
+function descendingNumComparator<T>(a: T, b: T, orderBy: keyof T): 1 | -1 | 0 | null {
+  const aNumValue = parseFloat((a[orderBy] ?? '0.0') as string);
+  const bNumValue = parseFloat((b[orderBy] ?? '0.0') as string);
+  if (!isNaN(aNumValue) && !isNaN(bNumValue)) {
+    if (bNumValue < aNumValue) {
+      return -1;
+    }
+    if (bNumValue > aNumValue) {
+      return 1;
+    }
+
+    return 0;
+  }
+
+  return null;
 }
 
 export type SortOrder = 'asc' | 'desc';
