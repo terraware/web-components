@@ -47,7 +47,7 @@ export interface Props<T> {
   Renderer?: (props: RendererProps<T>) => JSX.Element;
   onSelect?: (value: T) => void;
   DetailsRenderer?: (props: DetailsRendererProps) => JSX.Element;
-  sortComparator?: (a: T, b: T, orderBy: keyof T) => 1 | -1 | 0;
+  sortComparator?: (a: T, b: T, orderBy: keyof T) => number;
   sortHandler?: (order: SortOrder, orderBy: string) => void;
   isInactive?: (row: T) => boolean;
   onReorderEnd?: ({ oldIndex, newIndex }: any) => void;

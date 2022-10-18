@@ -28,15 +28,15 @@ test('compare equal string fields', () => {
 
 test('compare unequal number fields with same whole number digits', () => {
   const cmp = descendingComparator(rowA, rowB, 'number1');
-  expect(cmp).toEqual(1);
+  expect(Math.sign(cmp)).toEqual(1);
 });
 
 test('compare unequal number fields with differing whole number digits', () => {
   const cmp = descendingComparator(rowA, rowB, 'number2');
-  expect(cmp).toEqual(-1);
+  expect(Math.sign(cmp)).toEqual(-1);
 });
 
 test('compare equal number fields', () => {
   const cmp = descendingComparator(rowA, rowB, 'number3');
-  expect(cmp).toEqual(0);
+  expect(Math.sign(cmp)).toEqual(0);
 });
