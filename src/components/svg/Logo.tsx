@@ -6,9 +6,9 @@ interface SVGRProps {
 }
 
 const SvgLogo = ({ title, titleId, ...props }: SVGProps<SVGSVGElement> & SVGRProps) => (
-  <svg viewBox='0 0 137 16' fill='none' xmlns='http://www.w3.org/2000/svg' aria-labelledby={titleId} {...props}>
+  <svg viewBox='0 0 137 16' xmlns='http://www.w3.org/2000/svg' aria-labelledby={titleId} {...props}>
     {title ? <title id={titleId}>{title}</title> : null}
-    <g clipPath='url(#logo_svg__a)' fill='#000'>
+    <g clipPath='url(#logo_svg__a)'>
       <path d='M30.222 11.128A28.13 28.13 0 0 0 19.16 6.979V3.095c0-1.054-.197-1.91-.658-2.37C18.172.262 17.514 0 16.724 0h-2.238v1.383h1.843c.922 0 1.251.658 1.251 1.777v3.622c-.79-.066-1.646-.132-2.436-.132-.658 0-1.251 0-1.91.066V0l-1.646.46v6.388C7.374 7.374 3.425 8.888 0 11.128a34.28 34.28 0 0 1 11.588-3.424v5.201c0 1.054.198 1.91.659 2.37.395.462.988.725 1.778.725h2.304v-1.383h-1.843c-.922 0-1.251-.658-1.251-1.778V7.572c.658-.066 1.25-.066 1.909-.066.437 0 .856.017 1.267.034.395.016.782.032 1.17.032V16l1.645-.46V7.77a32.88 32.88 0 0 1 10.996 3.358ZM53.86 9.942c0-1.25.33-1.975 1.383-1.975l.658-.066V6.387h-1.12c-.855 0-1.514.329-1.974.79-.527.593-.725 1.514-.725 2.7v3.95h1.778V9.942ZM59.983 7.967c-1.053 0-1.382.724-1.382 1.975v3.885h-1.778v-3.95c0-1.186.198-2.107.724-2.7.461-.461 1.12-.79 1.976-.79h1.119V7.9l-.659.066ZM88.626 7.967c-1.054 0-1.383.724-1.383 1.975v3.885h-1.778v-3.95c0-1.186.197-2.107.724-2.7.461-.461 1.12-.79 1.976-.79h1.119V7.9l-.659.066Z' />
       <path
         fillRule='evenodd'
@@ -25,7 +25,7 @@ const SvgLogo = ({ title, titleId, ...props }: SVGProps<SVGSVGElement> & SVGRPro
     </g>
     <defs>
       <clipPath id='logo_svg__a'>
-        <path fill='#fff' d='M0 0h136.428v16H0z' />
+        <path d='M0 0h136.428v16H0z' />
       </clipPath>
     </defs>
   </svg>
