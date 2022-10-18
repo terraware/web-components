@@ -1,6 +1,6 @@
 {
   "name": "@terraware/web-components",
-  "version": "1.0.45_svg_no_assets",
+  "version": "1.0.45",
   "author": "Terraformation Inc.",
   "license": "Apache-2.0",
   "repository": {
@@ -31,7 +31,6 @@
     "react-dom": "^17.0.2",
     "react-responsive": "^9.0.0-beta.6",
     "react-sortable-hoc": "^2.0.0",
-    "remove-svg-properties": "^0.3.4",
     "sass": "^1.35.1",
     "tinycolor2": "^1.4.2",
     "web-vitals": "^1.0.1"
@@ -109,7 +108,6 @@
     "typescript": "^4.3.2"
   },
   "resolutions": {
-    "babel-loader": "8.1.0",
-    "graceful-fs": "^4.2.10"
+    "babel-loader": "8.1.0"
   }
 }
