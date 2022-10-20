@@ -17,7 +17,7 @@ const Template: Story<{}> = () => {
   const theme = useTheme();
   const [colorValue, setColorValue] = React.useState(theme.palette.ClrIconFillProductive);
   const [colorStr, setColorStr] = React.useState('');
-  const [bgColorValue, setBgColorValue] = React.useState('');
+  const [bgColorValue, setBgColorValue] = React.useState(theme.palette.TwClrBgBrandTertiary);
   const [bgColorStr, setBgColorStr] = React.useState('');
   const palette = theme.palette as unknown as { [key: string]: string };
 
