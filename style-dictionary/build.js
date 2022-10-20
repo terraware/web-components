@@ -19,9 +19,9 @@ function build(source, destination) {
     },
   });
 
-  StyleDictionary.registerTransform(require('./transforms/name_css_composite.js'));
-  StyleDictionary.registerTransform(require('./transforms/value_gradient.js'));
-  StyleDictionary.registerTransform(require('./transforms/value_shadow.js'));
+  StyleDictionary.registerTransform(require('../style-dictionary-utils/transforms/name_css_composite.js'));
+  StyleDictionary.registerTransform(require('../style-dictionary-utils/transforms/value_gradient.js'));
+  StyleDictionary.registerTransform(require('../style-dictionary-utils/transforms/value_shadow.js'));
 
   StyleDictionary.buildAllPlatforms();
 }

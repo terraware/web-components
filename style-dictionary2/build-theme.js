@@ -3,7 +3,7 @@ function build(source, destination) {
     source,
     platforms: {
       js: {
-        transformGroup: 'js',
+        transforms: ['attribute/cti', 'name/cti/kebab', 'size/rem', 'color/hex'],
         buildPath: '../src/style-dictionary-dist2/',
         files: [
           {
@@ -31,9 +31,9 @@ const TERRAWARE_PALETTE = `type ThemeDictionary = {
   [key: string]: any;
 };
 
-const TerrawareTheme: ThemeDictionary = <TERRAWARE_PALETTE>
+const TerrawareTheme2: ThemeDictionary = <TERRAWARE_PALETTE>
 
-export default TerrawareTheme;`;
+export default TerrawareTheme2;`;
 
   const paletteDefinition = (paletteTokenNames) => {
     const terrawarePaletteDefinition =  paletteTokenNames.map(tokenName => `    ${tokenName}?: React.CSSProperties['color'];`)
@@ -59,7 +59,7 @@ export default TerrawareTheme;`;
           tokenValue = parseInt(value, 10);
         }
 
-        if (name.toLowerCase().startsWith('twclr')) {
+        if (name.toLowerCase().startsWith('tw-clr')) {
           theme.palette[name] = tokenValue;
         }
       });
