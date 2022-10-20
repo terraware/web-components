@@ -3,6 +3,7 @@ import { Box, useTheme } from '@mui/material';
 import React from 'react';
 import Select from '../components/Select/Select';
 import TerrawareTheme from '../style-dictionary-dist/TerrawareTheme';
+import TerrawareTheme2 from "../style-dictionary-dist2/TerrawareTheme2";
 
 export default {
   title: 'Theme',
@@ -10,6 +11,7 @@ export default {
 };
 
 const COLORS = Object.keys(TerrawareTheme.palette);
+const COLORS2 = Object.keys(TerrawareTheme2.palette);
 
 const Template: Story<{}> = () => {
   const theme = useTheme();
@@ -26,7 +28,7 @@ const Template: Story<{}> = () => {
 
   const handleChangeBgColor = (str: string) => {
     setBgColorStr(str);
-    setBgColorValue(palette[str] || palette[COLORS[0]] as string);
+    setBgColorValue(palette[str] || palette[COLORS2[0]] as string);
   };
 
   return (
@@ -48,7 +50,7 @@ const Template: Story<{}> = () => {
       </Box>
       <Select
         selectedValue={colorStr}
-        label='Color'
+        label='Color (from TerrawareTheme)'
         onChange={handleChangeColor}
         options={COLORS}
         fullWidth={true}
@@ -56,9 +58,9 @@ const Template: Story<{}> = () => {
       <Box sx={{marginBottom: '25px'}} />
       <Select
         selectedValue={bgColorStr}
-        label='BgColor'
+        label='BgColor (from TerrawareTheme2)'
         onChange={handleChangeBgColor}
-        options={COLORS}
+        options={COLORS2}
         fullWidth={true}
       />
     </Box>

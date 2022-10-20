@@ -126,4 +126,4 @@ const defaultTheme = {
   },
 };
 
-export default createTheme(deepmerge(defaultTheme, TerrawareTheme, TerrawareTheme2));
+export default createTheme(deepmerge(deepmerge(defaultTheme, TerrawareTheme), TerrawareTheme2));
