@@ -3,7 +3,7 @@ function build(source, destination) {
     source,
     platforms: {
       js: {
-        transforms: ['attribute/cti', 'name/cti/kebab', 'size/rem', 'color/hex'],
+        transformGroup: 'js',
         buildPath: '../src/style-dictionary-dist2/',
         files: [
           {
@@ -59,7 +59,7 @@ export default TerrawareTheme2;`;
           tokenValue = parseInt(value, 10);
         }
 
-        if (name.toLowerCase().startsWith('tw-clr')) {
+        if (name.toLowerCase().startsWith('twclr')) {
           theme.palette[name] = tokenValue;
         }
       });
