@@ -3,7 +3,7 @@ import { Box, useTheme } from '@mui/material';
 import React from 'react';
 import Select from '../components/Select/Select';
 import TerrawareTheme from '../style-dictionary-dist/TerrawareTheme';
-import TerrawareTheme2 from "../style-dictionary-dist2/TerrawareTheme2";
+import TerrawareTheme2 from '../style-dictionary-dist2/TerrawareTheme2';
 
 export default {
   title: 'Theme',
