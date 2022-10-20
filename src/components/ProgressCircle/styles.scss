@@ -1,4 +1,5 @@
 @import '../../style-dictionary-dist/progressCircle_variables.scss';
+@import '../../style-dictionary-dist2/terraware.scss';
 
 .circle-container {
   position: relative;
@@ -8,11 +9,11 @@
 .circle-fill {
   position: absolute;
   left: 0;
-  color: $tw-clr-base-semantic-productive;
+  color: $tw-clr-bg-brand;
 }
 
 .circle-track {
-  color: $tw-clr-base-semantic-productive-bg !important;
+  color: $tw-clr-bg-brand-tertiary !important;
   &--small {
     width: $tw-spc-base-x-large !important;
     height: $tw-spc-base-x-large !important;
@@ -65,20 +66,20 @@
     font-size: $tw-fnt-prgrss-circle-value-small-font-size;
     font-weight: $tw-fnt-prgrss-circle-value-small-font-weight;
     line-height: $tw-fnt-prgrss-circle-value-small-line-height;
-    color: $tw-clr-text-fill;
+    color: $tw-clr-txt;
   }
   &--medium {
     font-family: $tw-fnt-prgrss-circle-value-medium-font-family;
     font-size: $tw-fnt-prgrss-circle-value-medium-font-size;
     font-weight: $tw-fnt-prgrss-circle-value-medium-font-weight;
     line-height: $tw-fnt-prgrss-circle-value-medium-line-height;
-    color: $tw-clr-text-fill;
+    color: $tw-clr-txt;
   }
   &--large {
     font-family: $tw-fnt-prgrss-circle-value-large-font-family;
     font-size: $tw-fnt-prgrss-circle-value-large-font-size;
     font-weight: $tw-fnt-prgrss-circle-value-large-font-weight;
     line-height: $tw-fnt-prgrss-circle-value-large-line-height;
-    color: $tw-clr-text-fill;
+    color: $tw-clr-txt;
   }
 }

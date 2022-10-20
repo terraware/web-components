@@ -51,7 +51,8 @@
     },
     "linterOptions": {
       "exclude": [
-          "src/style-dictionary-dist/TerrawareTheme.ts"
+          "src/style-dictionary-dist/TerrawareTheme.ts",
+          "src/style-dictionary-dist2/TerrawareTheme2.ts"
       ]
     }
 }

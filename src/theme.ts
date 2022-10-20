@@ -1,6 +1,7 @@
 import { deepmerge } from '@mui/utils';
 import { createTheme } from '@mui/material/styles';
 import TerrawareTheme from './style-dictionary-dist/TerrawareTheme';
+import TerrawareTheme2 from './style-dictionary-dist2/TerrawareTheme2';
 
 declare module '@mui/material/styles/createPalette' {
   interface Palette {
@@ -125,4 +126,4 @@ const defaultTheme = {
   },
 };
 
-export default createTheme(deepmerge(defaultTheme, TerrawareTheme));
+export default createTheme(deepmerge(deepmerge(defaultTheme, TerrawareTheme), TerrawareTheme2));

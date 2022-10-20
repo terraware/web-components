@@ -5,7 +5,7 @@ function build(source, destination) {
       scss: {
         transformGroup: 'scss',
         transforms: ['name/css_composite', 'value/gradient', 'value/shadow'],
-        buildPath: '../src/style-dictionary-dist/',
+        buildPath: '../src/style-dictionary-dist2/',
         files: [
           {
             format: 'scss/variables',
@@ -26,9 +26,4 @@ function build(source, destination) {
   StyleDictionary.buildAllPlatforms();
 }
 
-build(['./json/system/**/*.json', './json/button/**/*.json'], 'button_variables.scss');
-build(['./json/system/**/*.json', './json/navbar/**/*.json'], 'navbar_variables.scss');
-build(['./json/system/**/*.json', './json/textfield/**/*.json'], 'textfield_variables.scss');
-build(['./json/system/**/*.json', './json/progressCircle/**/*.json'], 'progressCircle_variables.scss');
-build(['./json/system/**/*.json', './json/dialogBox/**/*.json'], 'dialogBox_variables.scss');
-build(['./json/system/**/*.json', './json/message/**/*.json'], 'message_variables.scss');
+build(['./json//**/*.json'], 'terraware.scss');
