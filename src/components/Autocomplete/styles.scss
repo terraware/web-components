@@ -1,4 +1,5 @@
 @import '../../style-dictionary-dist/textfield_variables.scss';
+@import '../../style-dictionary-dist2/terraware.scss';
 
 @font-face {
   font-family: 'Inter';
@@ -14,7 +15,7 @@
     font-size: $tw-fnt-frm-fld-label-font-size;
     font-weight: $tw-fnt-frm-fld-label-font-weight;
     line-height: $tw-fnt-frm-fld-label-line-height;
-    color: $tw-clr-frm-fld-label;
+    color: $tw-clr-txt-secondary;
     margin-bottom: $tw-spc-base-xx-small;
     display: block;
     width: 100%;
@@ -22,7 +23,7 @@
   }
 
   .MuiInputBase-root {
-    border: 1px solid $tw-clr-base-semantic-passive;
+    border: 1px solid $tw-clr-bg-info;
     position: unset;
     padding: 0;
   }

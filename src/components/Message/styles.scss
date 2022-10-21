@@ -1,4 +1,5 @@
 @import '../../style-dictionary-dist/message_variables.scss';
+@import '../../style-dictionary-dist2/terraware.scss';
 
 @font-face {
   font-family: 'Inter';
@@ -38,7 +39,7 @@
       font-size: $tw-fnt-mssg-title-font-size;
       font-weight: $tw-fnt-mssg-title-font-weight;
       line-height: $tw-fnt-mssg-title-line-height;
-      color: $tw-clr-text-fill;
+      color: $tw-clr-txt;
       padding: 0;
       margin: 0 0 $tw-spc-base-x-small 0;
     }
@@ -53,7 +54,7 @@
       font-size: $tw-fnt-mssg-body-font-size;
       font-weight: $tw-fnt-mssg-body-font-weight;
       line-height: $tw-fnt-mssg-body-line-height;
-      color: $tw-clr-text-fill;
+      color: $tw-clr-txt;
       padding: 0;
       margin: 0;
     }
@@ -84,7 +85,7 @@
     font-size: $tw-fnt-mssg-body-font-size;
     font-weight: $tw-fnt-mssg-body-font-weight;
     line-height: $tw-fnt-mssg-body-line-height;
-    color: $tw-clr-text-fill-productive;
+    color: $tw-clr-txt-brand;
     margin-left: $tw-spc-base-x-small;
     background: none;
     border: 0;
@@ -95,7 +96,7 @@
   &--left-side {
     padding: $tw-spc-base-small $tw-spc-base-small 0 $tw-spc-base-small;
     .left-side--icon {
-      fill: $tw-clr-icon-fill-text-inv;
+      fill: $tw-clr-icn-inverse;
       width: $tw-sz-base-medium;
       height: $tw-sz-base-medium;
     }
@@ -103,14 +104,14 @@
 
   .toast-message--close-icon {
     margin-left: $tw-spc-base-x-small;
-    fill: $tw-clr-icon-fill-passive;
+    fill: $tw-clr-icn-secondary;
     width: $tw-sz-base-medium;
     height: $tw-sz-base-medium;
   }
 
   .page-message--close-icon {
     margin-left: $tw-spc-base-x-small;
-    fill: $tw-clr-icon-fill-passive;
+    fill: $tw-clr-icn-secondary;
     width: $tw-sz-base-medium;
     height: $tw-sz-base-medium;
   }
@@ -124,72 +125,72 @@
 
   &--info {
     &.tw-message--page {
-      border: 1px solid $tw-clr-base-semantic-passive;
-      background-color: $tw-clr-base-semantic-passive-bg;
+      border: 1px solid $tw-clr-bg-info;
+      background-color: $tw-clr-bg-info-tertiary;
       .main-content--icon {
-        fill:$tw-clr-base-semantic-passive;
+        fill:$tw-clr-bg-info;
       }
     }
-    border: 1px solid $tw-clr-icon-fill-passive;
+    border: 1px solid $tw-clr-icn-secondary;
     &.tw-message--toast {
-      box-shadow: 0 2px $tw-clr-icon-fill-passive;
+      box-shadow: 0 2px $tw-clr-icn-secondary;
     }
     .tw-message--left-side {
-      background-color: $tw-clr-icon-fill-passive;
+      background-color: $tw-clr-icn-secondary;
     }
   }
 
   &--critical {
     &.tw-message--page {
-      border: 1px solid $tw-clr-base-semantic-critical;
-      background-color: $tw-clr-base-semantic-critical-bg;
+      border: 1px solid $tw-clr-bg-danger;
+      background-color: $tw-clr-bg-danger-tertiary;
 
       .main-content--icon {
-        fill: $tw-clr-base-semantic-critical
+        fill: $tw-clr-bg-danger
       }
     }
-    border: 1px solid $tw-clr-icon-fill-critical;
+    border: 1px solid $tw-clr-icn-danger;
     &.tw-message--toast {
-      box-shadow: 0 2px $tw-clr-icon-fill-critical;
+      box-shadow: 0 2px $tw-clr-icn-danger;
     }
     .tw-message--left-side {
-      background-color: $tw-clr-icon-fill-critical;
+      background-color: $tw-clr-icn-danger;
     }
   }
 
   &--warning {
     &.tw-message--page {
-      border: 1px solid $tw-clr-base-semantic-warning;
-      background-color: $tw-clr-base-semantic-warning-bg;
+      border: 1px solid $tw-clr-bg-warning;
+      background-color: $tw-clr-bg-warning-tertiary;
 
       .main-content--icon {
-        fill: $tw-clr-base-semantic-warning;
+        fill: $tw-clr-bg-warning;
       }
     }
-    border: 1px solid $tw-clr-icon-fill-warning;
+    border: 1px solid $tw-clr-icn-warning;
     &.tw-message--toast {
-      box-shadow: 0 2px $tw-clr-icon-fill-warning;
+      box-shadow: 0 2px $tw-clr-icn-warning;
     }
     .tw-message--left-side {
-      background-color: $tw-clr-icon-fill-warning;
+      background-color: $tw-clr-icn-warning;
     }
   }
 
   &--success {
     &.tw-message--page {
-      border: 1px solid $tw-clr-base-semantic-success;
-      background-color: $tw-clr-base-semantic-success-bg;
+      border: 1px solid $tw-clr-bg-success;
+      background-color: $tw-clr-bg-success-tertiary;
 
       .main-content--icon {
-        fill: $tw-clr-base-semantic-success;
+        fill: $tw-clr-bg-success;
       }
     }
-    border: 1px solid $tw-clr-icon-fill-success;
+    border: 1px solid $tw-clr-icn-success;
     &.tw-message--toast {
-      box-shadow: 0 2px $tw-clr-icon-fill-success;
+      box-shadow: 0 2px $tw-clr-icn-success;
     }
     .tw-message--left-side {
-      background-color: $tw-clr-icon-fill-success;
+      background-color: $tw-clr-icn-success;
     }
   }
 

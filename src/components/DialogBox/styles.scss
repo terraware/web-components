@@ -1,4 +1,5 @@
 @import '../../style-dictionary-dist/dialogBox_variables.scss';
+@import '../../style-dictionary-dist2/terraware.scss';
 
 @font-face {
   font-family: 'Inter';
@@ -40,7 +41,7 @@
 }
 
 .dialog-box {
-  border: 1px solid $tw-clr-dvdr-fill;
+  border: 1px solid $tw-clr-brdr-tertiary;
   box-shadow: $tw-elvtn-base-800;
   border-radius: $tw-sz-base-small;
   display: flex;
@@ -69,7 +70,7 @@
 
   &--header {
     background-color: $tw-clr-base-gray-050;
-    border-bottom: 1px solid $tw-clr-dvdr-fill;
+    border-bottom: 1px solid $tw-clr-brdr-tertiary;
     padding: $tw-spc-base-small $tw-spc-base-medium;
     display: flex;
     justify-content: space-between;
@@ -80,14 +81,14 @@
       font-size: $tw-fnt-dlg-bx-title-font-size;
       font-weight: $tw-fnt-dlg-bx-title-font-weight;
       line-height: $tw-fnt-dlg-bx-title-line-height;
-      color: $tw-clr-text-fill;
+      color: $tw-clr-txt;
       text-align: center;
       margin: 0;
       width: 100%;
     }
 
     .icon-close {
-      fill: $tw-clr-icon-fill-passive;
+      fill: $tw-clr-icn-secondary;
       height: $tw-sz-base-medium;
       width: $tw-sz-base-medium;
     }
@@ -95,7 +96,7 @@
 
   &--body {
     background: $tw-clr-base-white;
-    border-bottom: 1px solid $tw-clr-dvdr-fill;
+    border-bottom: 1px solid $tw-clr-brdr-tertiary;
     padding: $tw-spc-base-medium;
     text-align: center;
     &.scrolled {
@@ -116,7 +117,7 @@
     font-size: $tw-fnt-dlg-bx-message-font-size;
     font-weight: $tw-fnt-dlg-bx-message-font-weight;
     line-height: $tw-fnt-dlg-bx-message-line-height;
-    color: $tw-clr-text-fill;
+    color: $tw-clr-txt;
     width: 100%;
     text-align: center;
   }
