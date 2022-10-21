@@ -1,6 +1,9 @@
-import { createMuiTheme } from '@material-ui/core/styles';
+import { deepmerge } from '@mui/utils';
+import { createTheme } from '@mui/material/styles';
+import TerrawareTheme from './style-dictionary-dist/TerrawareTheme';
+import TerrawareTheme2 from './style-dictionary-dist2/TerrawareTheme2';
 
-declare module '@material-ui/core/styles/createPalette' {
+declare module '@mui/material/styles/createPalette' {
   interface Palette {
     neutral: Palette['grey'];
     state: {
@@ -11,6 +14,21 @@ declare module '@material-ui/core/styles/createPalette' {
       2: React.CSSProperties['color'];
       3: React.CSSProperties['color'];
       4: React.CSSProperties['color'];
+    };
+    blue: {
+      600: React.CSSProperties['color'];
+    };
+    red: {
+      50: React.CSSProperties['color'];
+      600: React.CSSProperties['color'];
+    };
+    green: {
+      50: React.CSSProperties['color'];
+      600: React.CSSProperties['color'];
+    };
+    gray: {
+      200: React.CSSProperties['color'];
+      800: React.CSSProperties['color'];
     };
   }
   interface PaletteOptions {
@@ -24,15 +42,33 @@ declare module '@material-ui/core/styles/createPalette' {
       3: React.CSSProperties['color'];
       4: React.CSSProperties['color'];
     };
+    blue: {
+      600: React.CSSProperties['color'];
+    };
+    red: {
+      50: React.CSSProperties['color'];
+      600: React.CSSProperties['color'];
+    };
+    green: {
+      50: React.CSSProperties['color'];
+      600: React.CSSProperties['color'];
+    };
+    gray: {
+      200: React.CSSProperties['color'];
+      800: React.CSSProperties['color'];
+    };
   }
 }
 
-export default createMuiTheme({
-  overrides: {
+const defaultTheme = {
+  typography: {
+    fontFamily: 'Inter',
+  },
+  components: {
     MuiCssBaseline: {
-      '@global': {
+      styleOverrides: {
         '*::-webkit-scrollbar': {
-          '-webkit-appearance': 'none',
+          WebkitAppearance: 'none',
           width: '7px',
           height: '7px',
         },
@@ -40,15 +76,18 @@ export default createMuiTheme({
           borderRadius: '4px',
           backgroundColor: '#6C757D',
         },
+        body: {
+          color: '#3a4445',
+        },
       },
     },
   },
   palette: {
     primary: {
-      main: '#00974E',
+      main: '#0067C8',
     },
     secondary: {
-      main: '#CD5B38',
+      main: '#D40002',
     },
     state: {
       5: '#CD5B38',
@@ -69,5 +108,22 @@ export default createMuiTheme({
       700: '#495057',
       800: '#343A40',
     },
+    blue: {
+      600: '#0067C8',
+    },
+    red: {
+      50: '#FFF1F1',
+      600: '#D40002',
+    },
+    green: {
+      50: '#D6FDE5',
+      600: '#27764E',
+    },
+    gray: {
+      200: '#CAD2D3',
+      800: '#3A4445',
+    },
   },
-});
+};
+
+export default createTheme(deepmerge(deepmerge(defaultTheme, TerrawareTheme), TerrawareTheme2));

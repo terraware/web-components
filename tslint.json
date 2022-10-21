@@ -48,6 +48,11 @@
       "no-var-keyword": true,
       "ter-prefer-arrow-callback": true,
       "prefer-const": true
+    },
+    "linterOptions": {
+      "exclude": [
+          "src/style-dictionary-dist/TerrawareTheme.ts",
+          "src/style-dictionary-dist2/TerrawareTheme2.ts"
+      ]
     }
-  }
-  
+}

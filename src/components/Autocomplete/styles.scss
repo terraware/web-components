@@ -1,0 +1,34 @@
+@import '../../style-dictionary-dist/textfield_variables.scss';
+@import '../../style-dictionary-dist2/terraware.scss';
+
+@font-face {
+  font-family: 'Inter';
+  src: local('Inter'), url(../../fonts/Inter.ttf) format('truetype');
+}
+
+.auto-complete {
+  display: flex;
+  flex-flow: row wrap;
+
+  .textfield-label {
+    font-family: $tw-fnt-frm-fld-label-font-family;
+    font-size: $tw-fnt-frm-fld-label-font-size;
+    font-weight: $tw-fnt-frm-fld-label-font-weight;
+    line-height: $tw-fnt-frm-fld-label-line-height;
+    color: $tw-clr-txt-secondary;
+    margin-bottom: $tw-spc-base-xx-small;
+    display: block;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .MuiInputBase-root {
+    border: 1px solid $tw-clr-bg-info;
+    position: unset;
+    padding: 0;
+  }
+
+  input {
+    padding: calc(#{$tw-spc-base-xx-small} * 2.5) calc(#{$tw-spc-base-xx-small} * 3);
+  }
+}

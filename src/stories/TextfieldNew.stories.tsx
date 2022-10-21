@@ -1,7 +1,6 @@
-// YourComponent.stories.js
-
 import { Story } from '@storybook/react';
 import React from 'react';
+import { Box } from '@mui/material';
 import TextField, { Props as TextFieldProps } from '../components/Textfield/Textfield';
 
 export default {
@@ -25,14 +24,37 @@ export default {
 
 const Template: Story<TextFieldProps> = (args) => {
   const [value, setValue] = React.useState('');
-  const handleChange = (e: React.FormEvent<HTMLInputElement>) => {
-    setValue(e.currentTarget.value as string);
+  const handleChange = (id: string, v: unknown) => {
+    setValue(v as string);
   };
 
-  return <TextField {...args} value={value} onChange={handleChange} />;
+  return (
+    <Box sx={{marginTop: '30px'}}>
+      <TextField {...args} value={value} onChange={handleChange} />
+    </Box>
+  );
+};
+
+const NumberTemplate: Story<TextFieldProps> = (args) => {
+  const [value, setValue] = React.useState(0);
+  const handleChange = (id: string, v: unknown) => {
+    setValue(v as number);
+  };
+
+  return (
+    <Box sx={{marginTop: '30px'}}>
+      <TextField {...args} value={value} onChange={handleChange} type='number' />
+    </Box>
+  );
 };
 
 export const Default = Template.bind({});
+
+export const WithTooltip = Template.bind({});
+
+export const TextArea = Template.bind({});
+
+export const NumberField = NumberTemplate.bind({});
 
 Default.args = {
   label: 'Field Label',
@@ -44,4 +66,42 @@ Default.args = {
   readonly: false,
   display: false,
   type: 'text',
+};
+
+WithTooltip.args = {
+  label: 'Field Label',
+  disabled: false,
+  helperText: 'Help Text',
+  placeholder: 'placeholder',
+  errorText: '',
+  warningText: '',
+  readonly: false,
+  display: false,
+  type: 'text',
+  tooltipTitle: 'Hello world!',
+};
+
+TextArea.args = {
+  label: 'TextArea Label',
+  disabled: false,
+  helperText: 'Help Text',
+  placeholder: 'placeholder',
+  errorText: '',
+  warningText: '',
+  readonly: false,
+  display: false,
+  type: 'textarea',
+};
+
+NumberField.args = {
+  label: 'Number Label',
+  disabled: false,
+  helperText: 'Help Text',
+  placeholder: 'placeholder',
+  errorText: '',
+  warningText: '',
+  readonly: false,
+  display: false,
+  min: 5,
+  max: 25,
 };

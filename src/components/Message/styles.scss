@@ -1,0 +1,200 @@
+@import '../../style-dictionary-dist/message_variables.scss';
+@import '../../style-dictionary-dist2/terraware.scss';
+
+@font-face {
+  font-family: 'Inter';
+  src: local('Inter'), url(../../fonts/Inter.ttf) format('truetype');
+}
+
+
+.tw-message {
+  &.tw-message--page {
+    width: 584px;
+    &.tw-message--container {
+      margin: $tw-spc-base-small 0;
+    }
+    &.tw-message--title-container {
+      display: flex;
+    }
+  }
+
+  border-radius: $tw-sz-base-x-small;
+  display: flex;
+
+  width: 480px;
+
+  &.tw-message--mobile {
+    width: 100%;
+  }
+
+  &--container {
+    margin: $tw-spc-base-small;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+  }
+  &--title-container {
+    h1 {
+      font-family: $tw-fnt-mssg-title-font-family;
+      font-size: $tw-fnt-mssg-title-font-size;
+      font-weight: $tw-fnt-mssg-title-font-weight;
+      line-height: $tw-fnt-mssg-title-line-height;
+      color: $tw-clr-txt;
+      padding: 0;
+      margin: 0 0 $tw-spc-base-x-small 0;
+    }
+  }
+
+  &--main-content {
+    display: flex;
+    width: 100%;
+    
+    h2 {
+      font-family: $tw-fnt-mssg-body-font-family;
+      font-size: $tw-fnt-mssg-body-font-size;
+      font-weight: $tw-fnt-mssg-body-font-weight;
+      line-height: $tw-fnt-mssg-body-line-height;
+      color: $tw-clr-txt;
+      padding: 0;
+      margin: 0;
+    }
+
+    .main-content--icon {
+      width: $tw-sz-base-medium;
+      height: $tw-sz-base-medium;
+      margin-right: $tw-spc-base-small;
+    }
+  }
+
+  &--main-body {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  &--actions-container {
+    align-self: end;
+
+    button:first-child {
+      margin-right: $tw-spc-base-x-small;
+    }
+  }
+
+  &--action-text {
+    font-family: $tw-fnt-mssg-body-font-family;
+    font-size: $tw-fnt-mssg-body-font-size;
+    font-weight: $tw-fnt-mssg-body-font-weight;
+    line-height: $tw-fnt-mssg-body-line-height;
+    color: $tw-clr-txt-brand;
+    margin-left: $tw-spc-base-x-small;
+    background: none;
+    border: 0;
+    cursor: pointer;
+    height: fit-content;
+  }
+
+  &--left-side {
+    padding: $tw-spc-base-small $tw-spc-base-small 0 $tw-spc-base-small;
+    .left-side--icon {
+      fill: $tw-clr-icn-inverse;
+      width: $tw-sz-base-medium;
+      height: $tw-sz-base-medium;
+    }
+  }
+
+  .toast-message--close-icon {
+    margin-left: $tw-spc-base-x-small;
+    fill: $tw-clr-icn-secondary;
+    width: $tw-sz-base-medium;
+    height: $tw-sz-base-medium;
+  }
+
+  .page-message--close-icon {
+    margin-left: $tw-spc-base-x-small;
+    fill: $tw-clr-icn-secondary;
+    width: $tw-sz-base-medium;
+    height: $tw-sz-base-medium;
+  }
+  
+  .icon-container {
+    background: none;
+    border: 0;
+    cursor: pointer;
+    height: fit-content;
+  }
+
+  &--info {
+    &.tw-message--page {
+      border: 1px solid $tw-clr-bg-info;
+      background-color: $tw-clr-bg-info-tertiary;
+      .main-content--icon {
+        fill:$tw-clr-bg-info;
+      }
+    }
+    border: 1px solid $tw-clr-icn-secondary;
+    &.tw-message--toast {
+      box-shadow: 0 2px $tw-clr-icn-secondary;
+    }
+    .tw-message--left-side {
+      background-color: $tw-clr-icn-secondary;
+    }
+  }
+
+  &--critical {
+    &.tw-message--page {
+      border: 1px solid $tw-clr-bg-danger;
+      background-color: $tw-clr-bg-danger-tertiary;
+
+      .main-content--icon {
+        fill: $tw-clr-bg-danger
+      }
+    }
+    border: 1px solid $tw-clr-icn-danger;
+    &.tw-message--toast {
+      box-shadow: 0 2px $tw-clr-icn-danger;
+    }
+    .tw-message--left-side {
+      background-color: $tw-clr-icn-danger;
+    }
+  }
+
+  &--warning {
+    &.tw-message--page {
+      border: 1px solid $tw-clr-bg-warning;
+      background-color: $tw-clr-bg-warning-tertiary;
+
+      .main-content--icon {
+        fill: $tw-clr-bg-warning;
+      }
+    }
+    border: 1px solid $tw-clr-icn-warning;
+    &.tw-message--toast {
+      box-shadow: 0 2px $tw-clr-icn-warning;
+    }
+    .tw-message--left-side {
+      background-color: $tw-clr-icn-warning;
+    }
+  }
+
+  &--success {
+    &.tw-message--page {
+      border: 1px solid $tw-clr-bg-success;
+      background-color: $tw-clr-bg-success-tertiary;
+
+      .main-content--icon {
+        fill: $tw-clr-bg-success;
+      }
+    }
+    border: 1px solid $tw-clr-icn-success;
+    &.tw-message--toast {
+      box-shadow: 0 2px $tw-clr-icn-success;
+    }
+    .tw-message--left-side {
+      background-color: $tw-clr-icn-success;
+    }
+  }
+
+  &.tw-message--toast {
+    background-color: $tw-clr-base-white;
+  }
+}

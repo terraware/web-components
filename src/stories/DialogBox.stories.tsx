@@ -1,5 +1,3 @@
-// YourComponent.stories.js
-
 import { Story } from '@storybook/react';
 import React from 'react';
 import Button from '../components/Button/Button';
@@ -11,11 +9,12 @@ export default {
 };
 
 const Template: Story<DialogBoxProps> = (args) => {
-  return <DialogBox {...args} />;
+  return <DialogBox {...args} open={true} />;
 };
 
 export const Small = Template.bind({});
 Small.args = {
+  open: true,
   title: 'Title',
   message: 'Message',
   size: 'small',

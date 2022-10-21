@@ -1,0 +1,11 @@
+{
+  "presets": [
+    ["@babel/preset-typescript", { isTSX: true, allExtensions: true }],
+    ["react-app", { "absoluteRuntime": false }]
+  ],
+  "ignore": [
+    "src/react-app-env.d.ts",
+    "src/setupTests.js",
+    "src/stories"
+  ]
+}

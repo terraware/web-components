@@ -1,5 +1,5 @@
-import { FormControlLabel, Radio } from '@material-ui/core';
-import React from 'react';
+import { FormControlLabel, Radio } from '@mui/material';
+import React, { SyntheticEvent } from 'react';
 
 export interface Props {
   id: string;
@@ -10,10 +10,7 @@ export interface Props {
 }
 
 export default function RadioButton(props: Props): JSX.Element {
-  const onChange = (
-    event: React.ChangeEvent<Record<string, never>>,
-    checked: boolean
-  ) => {
+  const onChange = (event: SyntheticEvent<Element, Event>, checked: boolean) => {
     props.onChange(props.id, checked);
   };
 
@@ -22,13 +19,7 @@ export default function RadioButton(props: Props): JSX.Element {
       id={props.id}
       onChange={onChange}
       label={props.label}
-      control={
-        <Radio
-          id={'radio-' + props.id}
-          color='primary'
-          checked={props.value ?? false}
-        />
-      }
+      control={<Radio id={'radio-' + props.id} color='primary' checked={props.value ?? false} />}
     />
   );
 }
