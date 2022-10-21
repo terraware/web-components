@@ -34,7 +34,7 @@
     font-size: $tw-fnt-frm-fld-help-text-font-size;
     font-weight: $tw-fnt-frm-fld-help-text-font-weight;
     line-height: $tw-fnt-frm-fld-help-text-line-height;
-    color: $tw-clr-frm-fld-help-text;
+    color: $tw-clr-txt-secondary;
     display: block;
     width: 100%;
     max-width: 100%;
@@ -46,7 +46,7 @@
     font-size: $tw-fnt-frm-fld-text-value-font-size;
     font-weight: $tw-fnt-frm-fld-text-value-font-weight;
     line-height: $tw-fnt-frm-fld-text-value-line-height;
-    color: $tw-clr-frm-fld-value;
+    color: $tw-clr-txt;
     padding-top: 0;
     padding-bottom: 0;
     &::placeholder {
@@ -62,20 +62,20 @@
   }
 
   .textfield-value {
-    background-color: $tw-clr-frm-fld-text-input-fill;
-    border: $tw-sz-frm-fld-text-input-stroke solid $tw-clr-frm-fld-text-input-stroke;
+    background-color: $tw-clr-bg;
+    border: $tw-sz-frm-fld-text-input-stroke solid $tw-clr-brdr-secondary;
     padding: $tw-spc-base-x-small;
     border-radius: $tw-rds-frm-fld-text-input;
     border-width: $tw-sz-frm-fld-text-input-stroke;
     display: flex;
 
     &:hover {
-      border: $tw-sz-frm-fld-text-input-stroke solid $tw-clr-frm-fld-text-input-stroke-hover;
+      border: $tw-sz-frm-fld-text-input-stroke solid $tw-clr-brdr-hover;
     }
 
     &:active {
-      border: $tw-sz-frm-fld-text-input-stroke solid $tw-clr-frm-fld-text-input-stroke-hover;
-      outline: $tw-sz-frm-fld-text-input-stroke solid $tw-clr-frm-fld-text-input-stroke-hover;
+      border: $tw-sz-frm-fld-text-input-stroke solid $tw-clr-brdr-hover;
+      outline: $tw-sz-frm-fld-text-input-stroke solid $tw-clr-brdr-hover;
     }
 
     input {
@@ -85,7 +85,7 @@
       font-size: $tw-fnt-frm-fld-text-value-font-size;
       font-weight: $tw-fnt-frm-fld-text-value-font-weight;
       line-height: $tw-fnt-frm-fld-text-value-line-height;
-      color: $tw-clr-frm-fld-value;
+      color: $tw-clr-txt;
       background: transparent;
       padding-top: 0;
       padding-bottom: 0;
@@ -114,62 +114,62 @@
       opacity: $tw-opcty-semantic-off;
       pointer-events: none;
       &:hover {
-        border: $tw-sz-frm-fld-text-input-stroke solid $tw-clr-frm-fld-text-input-stroke;
+        border: $tw-sz-frm-fld-text-input-stroke solid $tw-clr-brdr-secondary;
       }
 
       &:active {
-        border: $tw-sz-frm-fld-text-input-stroke solid $tw-clr-frm-fld-text-input-stroke;
+        border: $tw-sz-frm-fld-text-input-stroke solid $tw-clr-brdr-secondary;
       }
     }
 
     &--icon-right {
       width: $tw-fnt-frm-fld-text-value-line-height;
       height: $tw-fnt-frm-fld-text-value-line-height;
-      fill: $tw-clr-frm-fld-value;
+      fill: $tw-clr-txt;
     }
 
     &--icon-left {
       width: $tw-fnt-frm-fld-text-value-line-height;
       height: $tw-fnt-frm-fld-text-value-line-height;
-      fill: $tw-clr-frm-fld-value;
+      fill: $tw-clr-txt;
       margin-right: $tw-spc-base-x-small;
     }
 
     &--error {
-      border: $tw-sz-frm-fld-text-input-stroke solid $tw-clr-frm-fld-text-input-stroke-error;
-      background-color: $tw-clr-frm-fld-text-input-fill-error;
+      border: $tw-sz-frm-fld-text-input-stroke solid $tw-clr-brdr-danger;
+      background-color: $tw-clr-bg-danger-tertiary;
 
       &:hover {
-        border: $tw-sz-frm-fld-text-input-stroke solid $tw-clr-frm-fld-text-input-stroke-error;
+        border: $tw-sz-frm-fld-text-input-stroke solid $tw-clr-brdr-danger;
       }
 
       &:active {
-        border: $tw-sz-frm-fld-text-input-stroke solid $tw-clr-frm-fld-text-input-stroke-error;
-        outline: $tw-sz-frm-fld-text-input-stroke solid $tw-clr-frm-fld-text-input-stroke-error;
+        border: $tw-sz-frm-fld-text-input-stroke solid $tw-clr-brdr-danger;
+        outline: $tw-sz-frm-fld-text-input-stroke solid $tw-clr-brdr-danger;
       }
     }
 
     &--warning {
-      border: $tw-sz-frm-fld-text-input-stroke solid $tw-clr-frm-fld-text-input-stroke-warning;
-      background-color: $tw-clr-frm-fld-text-input-fill-warning;
+      border: $tw-sz-frm-fld-text-input-stroke solid $tw-clr-brdr-warning;
+      background-color: $tw-clr-bg-warning-tertiary;
 
       &:hover {
-        border: $tw-sz-frm-fld-text-input-stroke solid $tw-clr-frm-fld-text-input-stroke-warning;
+        border: $tw-sz-frm-fld-text-input-stroke solid $tw-clr-brdr-warning;
       }
 
       &:active {
-        border: $tw-sz-frm-fld-text-input-stroke solid $tw-clr-frm-fld-text-input-stroke-warning;
-        outline: $tw-sz-frm-fld-text-input-stroke solid $tw-clr-frm-fld-text-input-stroke-warning;
+        border: $tw-sz-frm-fld-text-input-stroke solid $tw-clr-brdr-warning;
+        outline: $tw-sz-frm-fld-text-input-stroke solid $tw-clr-brdr-warning;
       }
     }
 
     &--readonly {
       &:hover {
-        border: $tw-sz-frm-fld-text-input-stroke solid $tw-clr-frm-fld-text-input-stroke;
+        border: $tw-sz-frm-fld-text-input-stroke solid $tw-clr-brdr-secondary;
       }
 
       &:active {
-        border: $tw-sz-frm-fld-text-input-stroke solid $tw-clr-frm-fld-text-input-stroke;
+        border: $tw-sz-frm-fld-text-input-stroke solid $tw-clr-brdr-secondary;
       }
     }
 
@@ -183,13 +183,13 @@
     font-size: $tw-fnt-frm-fld-error-text-font-size;
     font-weight: $tw-fnt-frm-fld-error-text-font-weight;
     line-height: $tw-fnt-frm-fld-error-text-line-height;
-    color: $tw-clr-frm-fld-error-text;
+    color: $tw-clr-txt-danger;
     display: block;
     width: 100%;
     max-width: 100%;
 
     &--icon {
-      fill: $tw-clr-frm-fld-error-text;
+      fill: $tw-clr-txt-danger;
       width: $tw-fnt-frm-fld-error-text-line-height;
       height: $tw-fnt-frm-fld-error-text-line-height;
       margin-right: $tw-spc-base-x-small;
@@ -201,13 +201,13 @@
     font-size: $tw-fnt-frm-fld-warning-text-font-size;
     font-weight: $tw-fnt-frm-fld-warning-text-font-weight;
     line-height: $tw-fnt-frm-fld-warning-text-line-height;
-    color: $tw-clr-frm-fld-warning-text;
+    color: $tw-clr-txt-warning;
     display: block;
     width: 100%;
     max-width: 100%;
 
     &--icon {
-      fill: $tw-clr-frm-fld-warning-text;
+      fill: $tw-clr-txt-warning;
       width: $tw-fnt-frm-fld-error-text-line-height;
       height: $tw-fnt-frm-fld-error-text-line-height;
       margin-right: $tw-spc-base-x-small;
@@ -228,8 +228,8 @@
     top: 42px;
     list-style-type: none;
     padding: $tw-spc-base-x-small 0;
-    background: $tw-clr-frm-fld-select-menu-fill;
-    border: 1px solid $tw-clr-frm-fld-select-menu-stroke;
+    background: $tw-clr-bg;
+    border: 1px solid $tw-clr-brdr-secondary;
     margin: 0;
     margin-top: $tw-spc-base-xx-small;
     border-radius: $tw-rds-frm-fld-text-input;
@@ -250,18 +250,18 @@
       cursor: pointer;
 
       &:hover {
-        background-color: $tw-clr-frm-fld-select-menu-item-fill-hover;
-        color: $tw-clr-frm-fld-value;
+        background-color: $tw-clr-bg-selected-ghost-hover;
+        color: $tw-clr-txt;
       }
 
       &:active {
-        background-color: $tw-clr-frm-fld-select-menu-item-fill-active;
-        color: $tw-clr-frm-fld-value;
+        background-color: $tw-clr-bg-selected-ghost-active;
+        color: $tw-clr-txt;
       }
 
       &--selected {
-        background-color: $tw-clr-frm-fld-select-menu-item-fill-selected;
-        color: $tw-clr-frm-fld-select-value-selected;
+        background-color: $tw-clr-bg-selected;
+        color: $tw-clr-txt-on-selected;
       }
 
       &--disabled {

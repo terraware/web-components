@@ -6,7 +6,7 @@
 }
 
 .navbar {
-  background-color: $tw-clr-nvgtn-side-nav-item-fill;
+  background-color: $tw-clr-bg-hover;
   height: 100%;
   position: fixed;
   z-index: 1100;
@@ -15,7 +15,7 @@
   flex-direction: column;
 
   .logo {
-    background-color: $tw-clr-nvgtn-side-nav-item-fill;
+    background-color: $tw-clr-bg-hover;
     padding-bottom: $tw-spc-base-small 0;
     margin-bottom: $tw-spc-base-small 0;
 
@@ -25,10 +25,10 @@
     }
   }
   .nav-section {
-    background-color: $tw-clr-nvgtn-side-nav-section-fill;
+    background-color: $tw-clr-bg-hover;
     padding: $tw-spc-base-x-small $tw-spc-base-small;
     .divider {
-      border-top: $tw-sz-dvdr-stroke solid $tw-clr-dvdr-fill;
+      border-top: $tw-sz-dvdr-stroke solid $tw-clr-brdr-tertiary;
     }
 
     &--title {
@@ -37,7 +37,7 @@
       font-weight: $tw-fnt-nvgtn-side-nav-section-title-font-weight;
       line-height: $tw-fnt-nvgtn-side-nav-section-title-line-height;
       text-transform: $tw-fnt-nvgtn-side-nav-section-title-text-transform;
-      color: $tw-clr-nvgtn-side-nav-section-title;
+      color: $tw-clr-txt;
       display: block;
       margin-top: $tw-spc-base-small;
     }
@@ -48,8 +48,8 @@
     font-size: $tw-fnt-nvgtn-side-nav-item-label-font-size;
     font-weight: $tw-fnt-nvgtn-side-nav-item-label-font-weight;
     line-height: $tw-fnt-nvgtn-side-nav-item-label-line-height;
-    color: $tw-clr-nvgtn-side-nav-item-label;
-    background-color: $tw-clr-nvgtn-side-nav-item-fill;
+    color: $tw-clr-txt;
+    background-color: $tw-clr-bg-hover;
 
     .nav-item-content {
       padding: $tw-sz-base-small;
@@ -71,14 +71,14 @@
     }
 
     &:hover {
-      background-color: $tw-clr-nvgtn-side-nav-item-fill-hover;
+      background-color: $tw-clr-bg-secondary;
       // .nav-item {
-      //   background-color: $tw-clr-nvgtn-side-nav-item-fill-hover;
+      //   background-color: $tw-clr-bg-secondary;
       // }
     }
 
     &:active {
-      background-color: $tw-clr-nvgtn-side-nav-item-fill-active;
+      background-color: $tw-clr-bg-secondary-hover;
     }
 
     button {
@@ -89,27 +89,27 @@
     }
 
     &--children-selected {
-      background-color: $tw-clr-nvgtn-side-nav-item-fill-active;
+      background-color: $tw-clr-bg-secondary-hover;
 
       &:hover {
-        background-color: $tw-clr-nvgtn-side-nav-item-fill-active;
+        background-color: $tw-clr-bg-secondary-hover;
 
         & > .nav-item-content {
-          background-color: $tw-clr-nvgtn-side-nav-item-fill-hover;
+          background-color: $tw-clr-bg-secondary;
         }
       }
 
       .nav-item {
-        background-color: $tw-clr-nvgtn-side-nav-item-fill-active;
+        background-color: $tw-clr-bg-secondary-hover;
 
         &:hover {
-          background-color: $tw-clr-nvgtn-side-nav-item-fill-hover;
+          background-color: $tw-clr-bg-secondary;
         }
       }
     }
 
     &--selected {
-      background-color: $tw-clr-nvgtn-side-nav-item-fill-active;
+      background-color: $tw-clr-bg-secondary-hover;
       position: relative;
     }
 
@@ -121,11 +121,11 @@
       top: 0;
       bottom: 0;
       width: $tw-sz-nvgtn-side-nav-item-indicator;
-      background-color: $tw-clr-nvgtn-side-nav-item-indicator-fill;
+      background-color: $tw-clr-bg-selected;
     }
 
     &--icon {
-      fill: $tw-clr-icon-fill-text;
+      fill: $tw-clr-icn;
       margin-right: $tw-spc-base-x-small;
       line-height: $tw-sz-icon-small;
       height: $tw-sz-icon-small;
@@ -138,13 +138,13 @@
       margin-left: $tw-spc-base-x-small;
 
       path {
-        fill: $tw-clr-icon-fill-passive;
+        fill: $tw-clr-icn-secondary;
       }
     }
 
     .subnavbar .nav-item {
       padding-right: $tw-spc-base-small;
-      background-color: $tw-clr-nvgtn-side-nav-item-fill-active;
+      background-color: $tw-clr-bg-secondary-hover;
 
       &-content {
         padding-left: calc(#{$tw-spc-base-small} * 2);

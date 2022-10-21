@@ -35,7 +35,7 @@
         left: calc(#{-$tw-sz-btn-stroke} * 2);
         right: calc(#{-$tw-sz-btn-stroke} * 2);
         border-radius: calc(#{$tw-sz-btn-small-height + $tw-sz-btn-stroke * 4} / 2);
-        border: $tw-sz-btn-stroke solid $tw-clr-btn-stroke-focus;
+        border: $tw-sz-btn-stroke solid $tw-clr-brdr-focus;
       }
     }
 
@@ -78,7 +78,7 @@
         left: calc(#{-$tw-sz-btn-stroke} * 2);
         right: calc(#{-$tw-sz-btn-stroke} * 2);
         border-radius: calc(#{$tw-sz-btn-medium-height + $tw-sz-btn-stroke * 4} / 2);
-        border: $tw-sz-btn-stroke solid $tw-clr-btn-stroke-focus;
+        border: $tw-sz-btn-stroke solid $tw-clr-brdr-focus;
       }
     }
     &.button-with-icon {
@@ -120,7 +120,7 @@
         left: calc(#{-$tw-sz-btn-stroke} * 2);
         right: calc(#{-$tw-sz-btn-stroke} * 2);
         border-radius: calc(#{$tw-sz-btn-large-height + $tw-sz-btn-stroke * 4} / 2);
-        border: $tw-sz-btn-stroke solid $tw-clr-btn-stroke-focus;
+        border: $tw-sz-btn-stroke solid $tw-clr-brdr-focus;
       }
     }
     &.button-with-icon {
@@ -161,7 +161,7 @@
         left: calc(#{-$tw-sz-btn-stroke} * 2);
         right: calc(#{-$tw-sz-btn-stroke} * 2);
         border-radius: calc(#{$tw-sz-btn-x-large-height + $tw-sz-btn-stroke * 4} / 2);
-        border: $tw-sz-btn-stroke solid $tw-clr-btn-stroke-focus;
+        border: $tw-sz-btn-stroke solid $tw-clr-brdr-focus;
       }
     }
     &.button-with-icon {
@@ -189,44 +189,44 @@
 }
 
 .productive-primary {
-  background-color: $tw-clr-btn-productive-primary-fill;
-  color: $tw-clr-btn-productive-primary-label;
+  background-color: $tw-clr-bg-brand;
+  color: $tw-clr-txt-on-brand;
 
   svg {
-    fill: $tw-clr-btn-productive-primary-label;
+    fill: $tw-clr-txt-on-brand;
   }
 
   &:hover {
-    background: $tw-clr-btn-productive-primary-fill-hover;
+    background: $tw-clr-bg-brand-hover;
   }
 
   &:active {
-    background-color: $tw-clr-btn-productive-primary-fill-active;
+    background-color: $tw-clr-bg-brand-active;
   }
 
   &:disabled {
-    background-color: rgba($tw-clr-btn-productive-primary-fill, 0.4);
-    color: rgba($tw-clr-btn-productive-primary-label, 0.4);
+    background-color: rgba($tw-clr-bg-brand, 0.4);
+    color: rgba($tw-clr-txt-on-brand, 0.4);
     svg {
-      fill: rgba($tw-clr-btn-productive-primary-label, 0.4);
+      fill: rgba($tw-clr-txt-on-brand, 0.4);
     }
   }
 }
 
 .productive-secondary {
-  background-color: $tw-clr-btn-productive-secondary-fill;
-  color: $tw-clr-btn-productive-secondary-label;
+  background-color: $tw-clr-bg-brand-ghost;
+  color: $tw-clr-txt-brand;
   svg {
-    fill: $tw-clr-btn-productive-secondary-label;
+    fill: $tw-clr-txt-brand;
   }
 
-  border: $tw-sz-btn-stroke solid $tw-clr-btn-productive-secondary-stroke;
+  border: $tw-sz-btn-stroke solid $tw-clr-brdr-brand;
   &:hover {
-    background: $tw-clr-btn-productive-secondary-fill-hover;
+    background: $tw-clr-bg-brand-ghost-hover;
   }
 
   &:active {
-    background-color: $tw-clr-btn-productive-secondary-fill-active;
+    background-color: $tw-clr-bg-brand-ghost-active;
   }
 
   &:focus {
@@ -267,51 +267,51 @@
   }
 
   &:disabled {
-    background-color: rgba($tw-clr-btn-productive-secondary-fill, 0.4);
-    border: $tw-sz-btn-stroke solid rgba($tw-clr-btn-productive-secondary-stroke, 0.4);
-    color: rgba($tw-clr-btn-productive-secondary-label, 0.4);
+    background-color: rgba($tw-clr-bg-brand-ghost, 0.4);
+    border: $tw-sz-btn-stroke solid rgba($tw-clr-brdr-brand, 0.4);
+    color: rgba($tw-clr-txt-brand, 0.4);
     svg {
-      fill: rgba($tw-clr-btn-productive-secondary-label, 0.4);
+      fill: rgba($tw-clr-txt-brand, 0.4);
     }
   }
 }
 
 .passive-primary {
-  background-color: $tw-clr-btn-passive-primary-fill;
-  color: $tw-clr-btn-passive-primary-label;
+  background-color: $tw-clr-bg-tertiary;
+  color: $tw-clr-txt;
   svg {
-    fill: $tw-clr-btn-passive-primary-label;
+    fill: $tw-clr-txt;
   }
   &:hover {
-    background: $tw-clr-btn-passive-primary-fill-hover;
+    background: $tw-clr-bg-tertiary-hover;
   }
 
   &:active {
-    background-color: $tw-clr-btn-passive-primary-fill-active;
+    background-color: $tw-clr-bg-tertiary-active;
   }
 
   &:disabled {
-    background-color: rgba($tw-clr-btn-passive-primary-fill, 0.4);
-    color: rgba($tw-clr-btn-passive-primary-label, 0.4);
+    background-color: rgba($tw-clr-bg-tertiary, 0.4);
+    color: rgba($tw-clr-txt, 0.4);
     svg {
-      fill: rgba($tw-clr-btn-passive-primary-label, 0.4);
+      fill: rgba($tw-clr-txt, 0.4);
     }
   }
 }
 
 .passive-secondary {
-  background-color: $tw-clr-btn-passive-secondary-fill;
-  color: $tw-clr-btn-passive-secondary-label;
+  background-color: $tw-clr-bg-ghost;
+  color: $tw-clr-txt;
   svg {
-    fill: $tw-clr-btn-passive-secondary-label;
+    fill: $tw-clr-txt;
   }
-  border: $tw-sz-btn-stroke solid $tw-clr-btn-passive-secondary-stroke;
+  border: $tw-sz-btn-stroke solid $tw-clr-brdr;
   &:hover {
-    background: $tw-clr-btn-passive-secondary-fill-hover;
+    background: $tw-clr-bg-ghost-hover;
   }
 
   &:active {
-    background-color: $tw-clr-btn-passive-secondary-fill-active;
+    background-color: $tw-clr-bg-ghost-active;
   }
 
   &:focus {
@@ -324,11 +324,11 @@
   }
 
   &:disabled {
-    background-color: rgba($tw-clr-btn-passive-secondary-fill, 0.4);
-    border: $tw-sz-btn-stroke solid rgba($tw-clr-btn-passive-secondary-stroke, 0.4);
-    color: rgba($tw-clr-btn-passive-secondary-label, 0.4);
+    background-color: rgba($tw-clr-bg-ghost, 0.4);
+    border: $tw-sz-btn-stroke solid rgba($tw-clr-brdr, 0.4);
+    color: rgba($tw-clr-txt, 0.4);
     svg {
-      fill: rgba($tw-clr-btn-passive-secondary-label, 0.4);
+      fill: rgba($tw-clr-txt, 0.4);
     }
   }
 
@@ -362,49 +362,49 @@
 }
 
 .destructive-primary {
-  background-color: $tw-clr-btn-destructive-primary-fill;
-  color: $tw-clr-btn-destructive-primary-label;
+  background-color: $tw-clr-bg-danger;
+  color: $tw-clr-txt-on-danger;
   svg {
-    fill: $tw-clr-btn-destructive-primary-label;
+    fill: $tw-clr-txt-on-danger;
   }
   &:hover {
-    background: $tw-clr-btn-destructive-primary-fill-hover;
+    background: $tw-clr-bg-danger-hover;
   }
 
   &:active {
-    background-color: $tw-clr-btn-destructive-primary-fill-active;
+    background-color: $tw-clr-bg-danger-active;
   }
 
   &:disabled {
-    background-color: rgba($tw-clr-btn-destructive-primary-fill, 0.4);
-    color: rgba($tw-clr-btn-destructive-primary-label, 0.4);
+    background-color: rgba($tw-clr-bg-danger, 0.4);
+    color: rgba($tw-clr-txt-on-danger, 0.4);
     svg {
-      fill: rgba($tw-clr-btn-destructive-primary-label, 0.4);
+      fill: rgba($tw-clr-txt-on-danger, 0.4);
     }
   }
 }
 
 .destructive-secondary {
-  background-color: $tw-clr-btn-destructive-secondary-fill;
-  color: $tw-clr-btn-destructive-secondary-label;
+  background-color: $tw-clr-bg-danger-ghost;
+  color: $tw-clr-txt-danger;
   svg {
-    fill: $tw-clr-btn-destructive-secondary-label;
+    fill: $tw-clr-txt-danger;
   }
-  border: $tw-sz-btn-stroke solid $tw-clr-btn-destructive-secondary-stroke;
+  border: $tw-sz-btn-stroke solid $tw-clr-brdr-danger;
   &:hover {
-    background: $tw-clr-btn-destructive-secondary-fill-hover;
+    background: $tw-clr-bg-danger-ghost-hover;
   }
 
   &:active {
-    background-color: $tw-clr-btn-destructive-secondary-fill-active;
+    background-color: $tw-clr-bg-danger-ghost-active;
   }
 
   &:disabled {
-    background-color: rgba($tw-clr-btn-destructive-secondary-fill, 0.4);
-    border: $tw-sz-btn-stroke solid rgba($tw-clr-btn-destructive-secondary-stroke, 0.4);
-    color: rgba($tw-clr-btn-destructive-secondary-label, 0.4);
+    background-color: rgba($tw-clr-bg-danger-ghost, 0.4);
+    border: $tw-sz-btn-stroke solid rgba($tw-clr-brdr-danger, 0.4);
+    color: rgba($tw-clr-txt-danger, 0.4);
     svg {
-      fill: rgba($tw-clr-btn-destructive-secondary-label, 0.4);
+      fill: rgba($tw-clr-txt-danger, 0.4);
     }
   }
 
