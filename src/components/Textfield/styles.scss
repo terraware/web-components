@@ -85,6 +85,11 @@
       outline: math.div($tw-sz-frm-fld-text-input-stroke-active, 2) solid $tw-clr-brdr-hover;
     }
 
+    &:focus-within {
+      border: math.div($tw-sz-frm-fld-text-input-stroke-active, 2) solid $tw-clr-frm-fld-text-input-stroke-hover;
+      outline: math.div($tw-sz-frm-fld-text-input-stroke-active, 2) solid $tw-clr-frm-fld-text-input-stroke-hover;
+    }
+
     input {
       border: none;
       width: 100%;
@@ -155,7 +160,13 @@
       }
 
       &:active {
-        border: $tw-sz-frm-fld-text-input-stroke-active solid $tw-clr-brdr-danger;
+        border: math.div($tw-sz-frm-fld-text-input-stroke-active, 2) solid $tw-clr-brdr-danger;
+        outline: math.div($tw-sz-frm-fld-text-input-stroke-active, 2) solid $tw-clr-brdr-danger;
+      }
+
+      &:focus-within {
+        border: math.div($tw-sz-frm-fld-text-input-stroke-active, 2) solid $tw-clr-brdr-danger;
+        outline: math.div($tw-sz-frm-fld-text-input-stroke-active, 2) solid $tw-clr-brdr-danger;
       }
     }
 
@@ -168,7 +179,13 @@
       }
 
       &:active {
-        border: $tw-sz-frm-fld-text-input-stroke-active solid $tw-clr-brdr-warning;
+        border: math.div($tw-sz-frm-fld-text-input-stroke-active, 2) solid $tw-clr-brdr-warning;
+        outline: math.div($tw-sz-frm-fld-text-input-stroke-active, 2) solid $tw-clr-brdr-warning;
+      }
+
+      &:focus-within {
+        border: math.div($tw-sz-frm-fld-text-input-stroke-active, 2) solid $tw-clr-brdr-warning;
+        outline: math.div($tw-sz-frm-fld-text-input-stroke-active, 2) solid $tw-clr-brdr-warning;
       }
     }
 
