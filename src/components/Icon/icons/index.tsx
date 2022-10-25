@@ -29,7 +29,9 @@ import Help from '../../svg/Help';
 import Home from '../../svg/Home';
 import IconColumns from '../../svg/IconColumns';
 import IconEdit from '../../svg/IconEdit';
+import IconExport from '../../svg/IconExport';
 import IconFile from '../../svg/IconFile';
+import IconImport from '../../svg/IconImport';
 import IconMenu from '../../svg/IconMenu';
 import IconMenuHorizontal from '../../svg/IconMenuHorizontal';
 import IconMyLocation from '../../svg/IconMyLocation';
@@ -98,7 +100,9 @@ export type IconName =
   | 'home'
   | 'iconColumns'
   | 'iconEdit'
+  | 'iconExport'
   | 'iconFile'
+  | 'iconImport'
   | 'iconMenu'
   | 'iconMenuHorizontal'
   | 'iconMyLocation'
@@ -171,7 +175,9 @@ const icons: Record<IconName, SVGComponent> = {
   home: Home,
   iconColumns: IconColumns,
   iconEdit: IconEdit,
+  iconExport: IconExport,
   iconFile: IconFile,
+  iconImport: IconImport,
   iconMenu: IconMenu,
   iconMenuHorizontal: IconMenuHorizontal,
   iconNursery: IconNursery,
