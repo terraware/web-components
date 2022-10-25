@@ -1,3 +1,5 @@
+@use 'sass:math';
+
 @import '../../style-dictionary-dist/textfield_variables.scss';
 @import '../../style-dictionary-dist2/terraware.scss';
 
@@ -75,8 +77,13 @@
     }
 
     &:active {
-      border: $tw-sz-frm-fld-text-input-stroke solid $tw-clr-brdr-hover;
-      outline: $tw-sz-frm-fld-text-input-stroke solid $tw-clr-brdr-hover;
+      border: math.div($tw-sz-frm-fld-text-input-stroke-active, 2) solid $tw-clr-brdr-hover;
+      outline: math.div($tw-sz-frm-fld-text-input-stroke-active, 2) solid $tw-clr-brdr-hover;
+    }
+
+    &:focus-within {
+      border: math.div($tw-sz-frm-fld-text-input-stroke-active, 2) solid $tw-clr-brdr-hover;
+      outline: math.div($tw-sz-frm-fld-text-input-stroke-active, 2) solid $tw-clr-brdr-hover;
     }
 
     input {
@@ -145,8 +152,13 @@
       }
 
       &:active {
-        border: $tw-sz-frm-fld-text-input-stroke solid $tw-clr-brdr-danger;
-        outline: $tw-sz-frm-fld-text-input-stroke solid $tw-clr-brdr-danger;
+        border: math.div($tw-sz-frm-fld-text-input-stroke-active, 2) solid $tw-clr-brdr-danger;
+        outline: math.div($tw-sz-frm-fld-text-input-stroke-active, 2) solid $tw-clr-brdr-danger;
+      }
+
+      &:focus-within {
+        border: math.div($tw-sz-frm-fld-text-input-stroke-active, 2) solid $tw-clr-brdr-danger;
+        outline: math.div($tw-sz-frm-fld-text-input-stroke-active, 2) solid $tw-clr-brdr-danger;
       }
     }
 
@@ -159,8 +171,13 @@
       }
 
       &:active {
-        border: $tw-sz-frm-fld-text-input-stroke solid $tw-clr-brdr-warning;
-        outline: $tw-sz-frm-fld-text-input-stroke solid $tw-clr-brdr-warning;
+        border: math.div($tw-sz-frm-fld-text-input-stroke-active, 2) solid $tw-clr-brdr-warning;
+        outline: math.div($tw-sz-frm-fld-text-input-stroke-active, 2) solid $tw-clr-brdr-warning;
+      }
+
+      &:focus-within {
+        border: math.div($tw-sz-frm-fld-text-input-stroke-active, 2) solid $tw-clr-brdr-warning;
+        outline: math.div($tw-sz-frm-fld-text-input-stroke-active, 2) solid $tw-clr-brdr-warning;
       }
     }
 
