@@ -45,7 +45,7 @@ export interface Props<T> {
   columns: TableColumnType[];
   rows: T[];
   Renderer?: (props: RendererProps<T>) => JSX.Element;
-  onSelect?: (value: T) => void;
+  onSelect?: (value: T, fromColumn?: string) => void;
   DetailsRenderer?: (props: DetailsRendererProps) => JSX.Element;
   sortComparator?: (a: T, b: T, orderBy: keyof T) => number;
   sortHandler?: (order: SortOrder, orderBy: string) => void;
@@ -203,7 +203,7 @@ export default function EnhancedTable<T>({
   return (
     <>
       {showTopBar && <EnhancedTableToolbar numSelected={selectedRows ? selectedRows.length : 0} topBarButtons={topBarButtons} />}
-      <TableContainer id={id} sx={{overflowX: 'visible'}}>
+      <TableContainer id={id} sx={{ overflowX: 'visible' }}>
         <DndContext sensors={sensors} onDragEnd={handleDragEnd}>
           <Table stickyHeader={stickyHeader} aria-labelledby='tableTitle' size='medium' aria-label='enhanced table' className={classes.table}>
             <TableHeader
@@ -262,7 +262,7 @@ export default function EnhancedTable<T>({
                               row={row as T}
                               column={c}
                               value={row[c.key]}
-                              onRowClick={onSelect && controlledOnSelect ? () => onSelect(row as T) : onClick}
+                              onRowClick={onSelect && controlledOnSelect ? () => onSelect(row as T, c.key) : onClick}
                               reloadData={reloadData}
                             />
                           ))}
