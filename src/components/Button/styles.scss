@@ -244,6 +244,14 @@
         (#{$tw-sz-btn-small-height} - (2 * #{$tw-sz-btn-stroke}) - #{$tw-fnt-btn-label-small-line-height}) / 2
       )
       calc((#{$tw-sz-btn-small-height} - 2 * #{$tw-sz-btn-stroke}) / 2);
+
+    &.button-no-label.button-with-icon {
+      padding-left: 4px;
+      padding-right: 4px;
+      .tw-icon--small {
+        margin-right: 0;
+      }
+    }
   }
 
   &--medium {
@@ -251,6 +259,14 @@
         (#{$tw-sz-btn-medium-height} - (2 * #{$tw-sz-btn-stroke}) - #{$tw-fnt-btn-label-medium-line-height}) / 2
       )
       calc((#{$tw-sz-btn-medium-height} - 2 * #{$tw-sz-btn-stroke}) / 2);
+
+    &.button-no-label.button-with-icon {
+      padding-left: 6px;
+      padding-right: 6px;
+      .tw-icon--small {
+        margin-right: 0;
+      }
+    }
   }
 
   &--large {
@@ -258,6 +274,14 @@
         (#{$tw-sz-btn-large-height} - (2 * #{$tw-sz-btn-stroke}) - #{$tw-fnt-btn-label-large-line-height}) / 2
       )
       calc((#{$tw-sz-btn-large-height} - 2 * #{$tw-sz-btn-stroke}) / 2);
+
+    &.button-no-label.button-with-icon {
+      padding-left: 8px;
+      padding-right: 8px;
+      .tw-icon--small {
+        margin-right: 0;
+      }
+    }
   }
 
   &--xlarge {
@@ -265,6 +289,14 @@
         (#{$tw-sz-btn-x-large-height} - (2 * #{$tw-sz-btn-stroke}) - #{$tw-fnt-btn-label-x-large-line-height}) / 2
       )
       calc((#{$tw-sz-btn-x-large-height} - 2 * #{$tw-sz-btn-stroke}) / 2);
+
+    &.button-no-label.button-with-icon {
+      padding-left: 10px;
+      padding-right: 10px;
+      .tw-icon--small {
+        margin-right: 0;
+      }
+    }
   }
 
   &:disabled {
