@@ -17,7 +17,7 @@ export const Default = Template.bind({});
 
 Default.args = {
   stringList: ['elephant', 'foo', 'bar', 'baz', 'spam', 'bacon', 'eggs'],
-  maxChars: 25,
+  maxLengthPx: 200,
   showAllStyle: {fontSize: 14},
   textStyle: {fontSize: 14},
 };

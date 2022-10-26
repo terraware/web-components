@@ -1,5 +1,5 @@
-import { Link, Theme, Tooltip, Typography, TypographyProps } from '@mui/material';
-import { useState } from 'react';
+import { Link, Theme, Tooltip, Typography, useTheme } from '@mui/material';
+import { useEffect, useMemo, useState } from 'react';
 import { makeStyles } from '@mui/styles';
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -18,15 +18,6 @@ const useStyles = makeStyles((theme: Theme) => ({
     padding: '8px',
   },
 }));
-
-export interface Props {
-  stringList: string[];
-  maxChars: number;
-  moreSeparator?: string;
-  moreText?: string;
-  textStyle?: TypographyProps['sx'];
-  showAllStyle?: TypographyProps['sx'];
-}
 
 /**
  * Represents the result of truncating the string list
@@ -77,10 +68,19 @@ function computeFromStringList(
   };
 }
 
+export interface Props {
+  stringList: string[];
+  maxLengthPx: number;
+  moreSeparator?: string;
+  moreText?: string;
+  textStyle?: Record<string, any>;
+  showAllStyle?: Record<string, any>;
+}
+
 export default function TextTruncated(props: Props): JSX.Element {
   const {
     stringList,
-    maxChars,
+    maxLengthPx,
     moreSeparator = '... ',
     moreText = 'more',
     textStyle,
@@ -88,8 +88,35 @@ export default function TextTruncated(props: Props): JSX.Element {
   } = props;
   const [showAllOpen, setShowAllOpen] = useState(false);
   const classes = useStyles();
-  const maxExcludingSuffix =
-    maxChars - moreSeparator.length - moreText.length - 1 - Math.ceil(Math.log10(stringList.length));
+  const [canvasContext, setCanvasContext] = useState<CanvasRenderingContext2D>();
+  const theme = useTheme();
+
+  useEffect(() => {
+    const canvas = document.createElement('canvas');
+    setCanvasContext(canvas?.getContext('2d') ?? undefined);
+  }, []);
+
+  const pixelsPerChar = useMemo(() => {
+    // compute the pixels per character, averaged over the comma-separated joined stringList
+    const fullText = stringList.join(', ');
+    let result = 0;
+    if (canvasContext) {
+      const fontSize = (textStyle && textStyle.fontSize) || theme.typography.fontSize;
+      const fontFamily = (textStyle && textStyle.fontFamily) || theme.typography.fontFamily;
+
+      canvasContext.font = `${fontSize}px ${fontFamily}`;
+      result = canvasContext.measureText(fullText).width;
+    }
+
+    return result / fullText.length;
+  }, [stringList, textStyle, canvasContext]);
+
+  let maxExcludingSuffix = stringList.join(', ').length;
+  if (pixelsPerChar > 0) {
+    const maxChars = maxLengthPx / pixelsPerChar;
+    maxExcludingSuffix =
+      maxChars - moreSeparator.length - moreText.length - 1 - Math.ceil(Math.log10(stringList.length));
+  }
   const textToDisplay = computeFromStringList(stringList, maxExcludingSuffix);
 
   return (
