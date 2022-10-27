@@ -25,6 +25,7 @@ import SelectT from './components/Select/SelectT';
 import { Size } from './components/Size';
 import SummaryBox from './components/SummaryBox';
 import Textfield from './components/Textfield/Textfield';
+import TextTruncated from './components/TextTruncated';
 import Table from './components/table';
 import { descendingComparator, getComparator, SortOrder, stableSort } from './components/table/sort';
 import CellRenderer, { CellDateRenderer, TableRowType } from './components/table/TableCellRenderer';
@@ -68,6 +69,7 @@ export {
   SummaryBox,
   Svg,
   Textfield,
+  TextTruncated,
   Table,
   theme,
 };
