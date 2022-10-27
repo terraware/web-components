@@ -1,5 +1,5 @@
 import { Link, Theme, Tooltip, Typography, useTheme } from '@mui/material';
-import { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { makeStyles } from '@mui/styles';
 
 const useStyles = makeStyles((theme: Theme) => ({
