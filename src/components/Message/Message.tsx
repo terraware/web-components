@@ -33,10 +33,10 @@ export default function Message(props: Props): JSX.Element | null {
           <div className='tw-message--main-body'>
             {title && (
               <div className='tw-message--title-container'>
-                <h1>{title}</h1>
+                <h4>{title}</h4>
               </div>
             )}
-            <h2>{body}</h2>
+            <p>{body}</p>
             {type === 'page' && pageButtons && pageButtons.length > 0 ? (
               <div className='tw-message--actions-container'>
                 {pageButtons?.map((pageButton, index) => {

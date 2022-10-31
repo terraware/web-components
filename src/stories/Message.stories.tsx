@@ -18,8 +18,8 @@ const Template: Story<MessageProps> = (args) => {
 
 export const Toast = Template.bind({});
 Toast.args = {
-  title: 'Toast message title text',
-  body: 'Body message text',
+  title: 'Message title text',
+  body: 'Message body text',
   actionText: 'Undo',
   actionHandler: () => window.alert('You clicked the action.'),
   type: 'toast',
@@ -29,8 +29,8 @@ Toast.args = {
 
 export const Page = Template.bind({});
 Page.args = {
-  title: 'Page message title text',
-  body: 'Body message text',
+  title: 'Message Title Text',
+  body: 'Message body text.',
   type: 'page',
   priority: 'info',
   showCloseButton: false,

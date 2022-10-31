@@ -9,7 +9,7 @@
 
 .tw-message {
   &.tw-message--page {
-    width: 584px;
+    width: 100%;
     &.tw-message--container {
       margin: $tw-spc-base-small 0;
     }
@@ -20,11 +20,15 @@
 
   border-radius: $tw-sz-base-x-small;
   display: flex;
-
   width: 480px;
 
   &.tw-message--mobile {
     width: 100%;
+  }
+
+  &.tw-message--toast {
+    background-color: $tw-clr-bg;
+    box-shadow: 0 $tw-sz-base-x-small $tw-sz-base-small 0 rgba($tw-clr-base-gray-800, $tw-opcty-base-020);
   }
 
   &--container {
@@ -34,22 +38,22 @@
     width: 100%;
   }
   &--title-container {
-    h1 {
+    h4 {
       font-family: $tw-fnt-mssg-title-font-family;
       font-size: $tw-fnt-mssg-title-font-size;
       font-weight: $tw-fnt-mssg-title-font-weight;
       line-height: $tw-fnt-mssg-title-line-height;
       color: $tw-clr-txt;
       padding: 0;
-      margin: 0 0 $tw-spc-base-x-small 0;
+      margin: 0 0 $tw-spc-base-x-small;
     }
   }
 
   &--main-content {
     display: flex;
     width: 100%;
-    
-    h2 {
+
+    p {
       font-family: $tw-fnt-mssg-body-font-family;
       font-size: $tw-fnt-mssg-body-font-size;
       font-weight: $tw-fnt-mssg-body-font-weight;
@@ -94,6 +98,7 @@
   }
 
   &--left-side {
+    border-radius: ($tw-sz-base-x-small - 1) 0 0 ($tw-sz-base-x-small - 1);
     padding: $tw-spc-base-small $tw-spc-base-small 0 $tw-spc-base-small;
     .left-side--icon {
       fill: $tw-clr-icn-inverse;
@@ -124,77 +129,77 @@
   }
 
   &--info {
+    border: 1px solid $tw-clr-brdr-info;
+
     &.tw-message--page {
-      border: 1px solid $tw-clr-bg-info;
+      border: 1px solid $tw-clr-brdr-info;
       background-color: $tw-clr-bg-info-tertiary;
       .main-content--icon {
-        fill:$tw-clr-bg-info;
+        fill:$tw-clr-icn-info;
       }
     }
-    border: 1px solid $tw-clr-icn-secondary;
-    &.tw-message--toast {
-      box-shadow: 0 2px $tw-clr-icn-secondary;
-    }
     .tw-message--left-side {
-      background-color: $tw-clr-icn-secondary;
+      background-color: $tw-clr-bg-info;
     }
+    .left-side--icon {
+      fill: $tw-clr-icn-on-info;
+    }  
   }
 
   &--critical {
+    border: 1px solid $tw-clr-brdr-danger;
+
     &.tw-message--page {
-      border: 1px solid $tw-clr-bg-danger;
+      border: 1px solid $tw-clr-brdr-danger;
       background-color: $tw-clr-bg-danger-tertiary;
 
       .main-content--icon {
-        fill: $tw-clr-bg-danger
+        fill: $tw-clr-icn-danger;
       }
     }
-    border: 1px solid $tw-clr-icn-danger;
-    &.tw-message--toast {
-      box-shadow: 0 2px $tw-clr-icn-danger;
-    }
     .tw-message--left-side {
-      background-color: $tw-clr-icn-danger;
+      background-color: $tw-clr-bg-danger;
     }
-  }
+    .left-side--icon {
+      fill: $tw-clr-icn-on-danger;
+    }
+ }
 
   &--warning {
+    border: 1px solid $tw-clr-brdr-warning;
+
     &.tw-message--page {
-      border: 1px solid $tw-clr-bg-warning;
+      border: 1px solid $tw-clr-brdr-warning;
       background-color: $tw-clr-bg-warning-tertiary;
 
       .main-content--icon {
-        fill: $tw-clr-bg-warning;
+        fill: $tw-clr-icn-warning;
       }
     }
-    border: 1px solid $tw-clr-icn-warning;
-    &.tw-message--toast {
-      box-shadow: 0 2px $tw-clr-icn-warning;
-    }
     .tw-message--left-side {
-      background-color: $tw-clr-icn-warning;
+      background-color: $tw-clr-bg-warning;
+    }
+    .left-side--icon {
+      fill: $tw-clr-icn-on-warning;
     }
   }
 
   &--success {
+    border: 1px solid $tw-clr-brdr-success;
+
     &.tw-message--page {
-      border: 1px solid $tw-clr-bg-success;
+      border: 1px solid $tw-clr-brdr-success;
       background-color: $tw-clr-bg-success-tertiary;
 
       .main-content--icon {
-        fill: $tw-clr-bg-success;
+        fill: $tw-clr-icn-success;
       }
     }
-    border: 1px solid $tw-clr-icn-success;
-    &.tw-message--toast {
-      box-shadow: 0 2px $tw-clr-icn-success;
-    }
     .tw-message--left-side {
-      background-color: $tw-clr-icn-success;
+      background-color: $tw-clr-bg-success;
     }
-  }
-
-  &.tw-message--toast {
-    background-color: $tw-clr-base-white;
+    .left-side--icon {
+      fill: $tw-clr-icn-on-success;
+    }
   }
 }
