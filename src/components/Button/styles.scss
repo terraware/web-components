@@ -15,6 +15,16 @@
     cursor: pointer;
   }
 
+  &:focus {
+    outline: $tw-sz-btn-stroke solid $tw-clr-brdr-focus;
+    outline-offset: 2px;
+  }
+
+
+  &:disabled {
+    opacity: $tw-opcty-semantic-off;
+  }
+
   &--small {
     height: $tw-sz-btn-small-height;
     font-size: $tw-fnt-btn-label-small-font-size;
@@ -25,20 +35,6 @@
     padding: calc((#{$tw-sz-btn-small-height} - #{$tw-fnt-btn-label-small-line-height}) / 2)
       calc(#{$tw-sz-btn-small-height}/ 2);
     border-radius: calc(#{$tw-sz-btn-small-height} / 2);
-
-    &:focus {
-      &:after {
-        content: '';
-        display: block;
-        position: absolute;
-        top: calc(#{-$tw-sz-btn-stroke} * 2);
-        bottom: calc(#{-$tw-sz-btn-stroke} * 2);
-        left: calc(#{-$tw-sz-btn-stroke} * 2);
-        right: calc(#{-$tw-sz-btn-stroke} * 2);
-        border-radius: calc(#{$tw-sz-btn-small-height + $tw-sz-btn-stroke * 4} / 2);
-        border: $tw-sz-btn-stroke solid $tw-clr-brdr-focus;
-      }
-    }
 
     &.button-with-icon {
       padding-left: calc(
@@ -69,19 +65,6 @@
       calc(#{$tw-sz-btn-medium-height}/ 2);
     border-radius: calc(#{$tw-sz-btn-medium-height} / 2);
 
-    &:focus {
-      &:after {
-        content: '';
-        display: block;
-        position: absolute;
-        top: calc(#{-$tw-sz-btn-stroke} * 2);
-        bottom: calc(#{-$tw-sz-btn-stroke} * 2);
-        left: calc(#{-$tw-sz-btn-stroke} * 2);
-        right: calc(#{-$tw-sz-btn-stroke} * 2);
-        border-radius: calc(#{$tw-sz-btn-medium-height + $tw-sz-btn-stroke * 4} / 2);
-        border: $tw-sz-btn-stroke solid $tw-clr-brdr-focus;
-      }
-    }
     &.button-with-icon {
       padding-left: calc(
         (#{$tw-sz-btn-medium-height} / 2) -
@@ -111,19 +94,6 @@
       calc(#{$tw-sz-btn-large-height}/ 2);
     border-radius: calc(#{$tw-sz-btn-large-height} / 2);
 
-    &:focus {
-      &:after {
-        content: '';
-        display: block;
-        position: absolute;
-        top: calc(#{-$tw-sz-btn-stroke} * 2);
-        bottom: calc(#{-$tw-sz-btn-stroke} * 2);
-        left: calc(#{-$tw-sz-btn-stroke} * 2);
-        right: calc(#{-$tw-sz-btn-stroke} * 2);
-        border-radius: calc(#{$tw-sz-btn-large-height + $tw-sz-btn-stroke * 4} / 2);
-        border: $tw-sz-btn-stroke solid $tw-clr-brdr-focus;
-      }
-    }
     &.button-with-icon {
       padding-left: calc(
         (#{$tw-sz-btn-large-height} / 2) - (((#{$tw-sz-btn-large-height} - #{$tw-fnt-btn-label-large-line-height}) / 2))
@@ -152,19 +122,6 @@
       calc(#{$tw-sz-btn-x-large-height}/ 2);
     border-radius: calc(#{$tw-sz-btn-x-large-height} / 2);
 
-    &:focus {
-      &:after {
-        content: '';
-        display: block;
-        position: absolute;
-        top: calc(#{-$tw-sz-btn-stroke} * 2);
-        bottom: calc(#{-$tw-sz-btn-stroke} * 2);
-        left: calc(#{-$tw-sz-btn-stroke} * 2);
-        right: calc(#{-$tw-sz-btn-stroke} * 2);
-        border-radius: calc(#{$tw-sz-btn-x-large-height + $tw-sz-btn-stroke * 4} / 2);
-        border: $tw-sz-btn-stroke solid $tw-clr-brdr-focus;
-      }
-    }
     &.button-with-icon {
       padding-left: calc(
         (#{$tw-sz-btn-x-large-height} / 2) -
@@ -198,20 +155,13 @@
   }
 
   &:hover {
-    background: $tw-clr-bg-brand-hover;
+    background-color: $tw-clr-bg-brand-hover;
   }
 
   &:active {
     background-color: $tw-clr-bg-brand-active;
   }
 
-  &:disabled {
-    background-color: rgba($tw-clr-bg-brand, 0.4);
-    color: rgba($tw-clr-txt-on-brand, 0.4);
-    svg {
-      fill: rgba($tw-clr-txt-on-brand, 0.4);
-    }
-  }
 }
 
 .productive-secondary {
@@ -223,20 +173,11 @@
 
   border: $tw-sz-btn-stroke solid $tw-clr-brdr-brand;
   &:hover {
-    background: $tw-clr-bg-brand-ghost-hover;
+    background-color: $tw-clr-bg-brand-ghost-hover;
   }
 
   &:active {
     background-color: $tw-clr-bg-brand-ghost-active;
-  }
-
-  &:focus {
-    &:after {
-      top: calc((#{-$tw-sz-btn-stroke} * 2) + #{-$tw-sz-btn-stroke});
-      bottom: calc((#{-$tw-sz-btn-stroke} * 2) + #{-$tw-sz-btn-stroke});
-      left: calc((#{-$tw-sz-btn-stroke} * 2) + #{-$tw-sz-btn-stroke});
-      right: calc((#{-$tw-sz-btn-stroke} * 2) + #{-$tw-sz-btn-stroke});
-    }
   }
 
   &--small {
@@ -298,15 +239,6 @@
       }
     }
   }
-
-  &:disabled {
-    background-color: rgba($tw-clr-bg-brand-ghost, 0.4);
-    border: $tw-sz-btn-stroke solid rgba($tw-clr-brdr-brand, 0.4);
-    color: rgba($tw-clr-txt-brand, 0.4);
-    svg {
-      fill: rgba($tw-clr-txt-brand, 0.4);
-    }
-  }
 }
 
 .passive-primary {
@@ -316,20 +248,13 @@
     fill: $tw-clr-txt;
   }
   &:hover {
-    background: $tw-clr-bg-tertiary-hover;
+    background-color: $tw-clr-bg-tertiary-hover;
   }
 
   &:active {
     background-color: $tw-clr-bg-tertiary-active;
   }
 
-  &:disabled {
-    background-color: rgba($tw-clr-bg-tertiary, 0.4);
-    color: rgba($tw-clr-txt, 0.4);
-    svg {
-      fill: rgba($tw-clr-txt, 0.4);
-    }
-  }
 }
 
 .passive-secondary {
@@ -340,29 +265,11 @@
   }
   border: $tw-sz-btn-stroke solid $tw-clr-brdr;
   &:hover {
-    background: $tw-clr-bg-ghost-hover;
+    background-color: $tw-clr-bg-ghost-hover;
   }
 
   &:active {
     background-color: $tw-clr-bg-ghost-active;
-  }
-
-  &:focus {
-    &:after {
-      top: calc((#{-$tw-sz-btn-stroke} * 2) + #{-$tw-sz-btn-stroke});
-      bottom: calc((#{-$tw-sz-btn-stroke} * 2) + #{-$tw-sz-btn-stroke});
-      left: calc((#{-$tw-sz-btn-stroke} * 2) + #{-$tw-sz-btn-stroke});
-      right: calc((#{-$tw-sz-btn-stroke} * 2) + #{-$tw-sz-btn-stroke});
-    }
-  }
-
-  &:disabled {
-    background-color: rgba($tw-clr-bg-ghost, 0.4);
-    border: $tw-sz-btn-stroke solid rgba($tw-clr-brdr, 0.4);
-    color: rgba($tw-clr-txt, 0.4);
-    svg {
-      fill: rgba($tw-clr-txt, 0.4);
-    }
   }
 
   &--small {
@@ -401,20 +308,13 @@
     fill: $tw-clr-txt-on-danger;
   }
   &:hover {
-    background: $tw-clr-bg-danger-hover;
+    background-color: $tw-clr-bg-danger-hover;
   }
 
   &:active {
     background-color: $tw-clr-bg-danger-active;
   }
 
-  &:disabled {
-    background-color: rgba($tw-clr-bg-danger, 0.4);
-    color: rgba($tw-clr-txt-on-danger, 0.4);
-    svg {
-      fill: rgba($tw-clr-txt-on-danger, 0.4);
-    }
-  }
 }
 
 .destructive-secondary {
@@ -425,29 +325,11 @@
   }
   border: $tw-sz-btn-stroke solid $tw-clr-brdr-danger;
   &:hover {
-    background: $tw-clr-bg-danger-ghost-hover;
+    background-color: $tw-clr-bg-danger-ghost-hover;
   }
 
   &:active {
     background-color: $tw-clr-bg-danger-ghost-active;
-  }
-
-  &:disabled {
-    background-color: rgba($tw-clr-bg-danger-ghost, 0.4);
-    border: $tw-sz-btn-stroke solid rgba($tw-clr-brdr-danger, 0.4);
-    color: rgba($tw-clr-txt-danger, 0.4);
-    svg {
-      fill: rgba($tw-clr-txt-danger, 0.4);
-    }
-  }
-
-  &:focus {
-    &:after {
-      top: calc((#{-$tw-sz-btn-stroke} * 2) + #{-$tw-sz-btn-stroke});
-      bottom: calc((#{-$tw-sz-btn-stroke} * 2) + #{-$tw-sz-btn-stroke});
-      left: calc((#{-$tw-sz-btn-stroke} * 2) + #{-$tw-sz-btn-stroke});
-      right: calc((#{-$tw-sz-btn-stroke} * 2) + #{-$tw-sz-btn-stroke});
-    }
   }
 
   &--small {
