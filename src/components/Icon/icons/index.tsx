@@ -27,6 +27,7 @@ import Filter from '../../svg/Filter';
 import Folder from '../../svg/Folder';
 import Help from '../../svg/Help';
 import Home from '../../svg/Home';
+import IconArrowRight from '../../svg/IconArrowRight';
 import IconColumns from '../../svg/IconColumns';
 import IconEdit from '../../svg/IconEdit';
 import IconExport from '../../svg/IconExport';
@@ -98,6 +99,7 @@ export type IconName =
   | 'folder'
   | 'help'
   | 'home'
+  | 'iconArrowRight'
   | 'iconColumns'
   | 'iconEdit'
   | 'iconExport'
@@ -173,6 +175,7 @@ const icons: Record<IconName, SVGComponent> = {
   folder: Folder,
   help: Help,
   home: Home,
+  iconArrowRight: IconArrowRight,
   iconColumns: IconColumns,
   iconEdit: IconEdit,
   iconExport: IconExport,
