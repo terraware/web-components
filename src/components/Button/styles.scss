@@ -151,7 +151,7 @@
   color: $tw-clr-txt-on-brand;
 
   svg {
-    fill: $tw-clr-txt-on-brand;
+    fill: $tw-clr-icn-on-brand;
   }
 
   &:hover {
@@ -168,7 +168,7 @@
   background-color: $tw-clr-bg-brand-ghost;
   color: $tw-clr-txt-brand;
   svg {
-    fill: $tw-clr-txt-brand;
+    fill: $tw-clr-icn-brand;
   }
 
   border: $tw-sz-btn-stroke solid $tw-clr-brdr-brand;
@@ -245,7 +245,7 @@
   background-color: $tw-clr-bg-tertiary;
   color: $tw-clr-txt;
   svg {
-    fill: $tw-clr-txt;
+    fill: $tw-clr-icn;
   }
   &:hover {
     background-color: $tw-clr-bg-tertiary-hover;
@@ -261,7 +261,7 @@
   background-color: $tw-clr-bg-ghost;
   color: $tw-clr-txt;
   svg {
-    fill: $tw-clr-txt;
+    fill: $tw-clr-icn;
   }
   border: $tw-sz-btn-stroke solid $tw-clr-brdr;
   &:hover {
@@ -305,7 +305,7 @@
   background-color: $tw-clr-bg-danger;
   color: $tw-clr-txt-on-danger;
   svg {
-    fill: $tw-clr-txt-on-danger;
+    fill: $tw-clr-icn-on-danger;
   }
   &:hover {
     background-color: $tw-clr-bg-danger-hover;
@@ -321,7 +321,7 @@
   background-color: $tw-clr-bg-danger-ghost;
   color: $tw-clr-txt-danger;
   svg {
-    fill: $tw-clr-txt-danger;
+    fill: $tw-clr-icn-danger;
   }
   border: $tw-sz-btn-stroke solid $tw-clr-brdr-danger;
   &:hover {
