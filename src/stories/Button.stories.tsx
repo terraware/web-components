@@ -19,7 +19,7 @@ export default {
       control: { type: 'radio' },
     },
     icon: {
-      options: ['lock', 'caretDown', 'plus', null],
+      options: ['plus', 'iconTrashCan', 'iconEdit', 'menuVertical', null],
       control: { type: 'radio' },
     },
   },

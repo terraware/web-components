@@ -24,8 +24,8 @@ export const Default = Template.bind({});
 Default.args = {
   label: 'Field Label',
   disabled: false,
-  helperText: 'Help Text',
-  placeholder: 'placeholder',
+  helperText: 'Help text.',
+  placeholder: 'Placeholder...',
   errorText: '',
   warningText: '',
   readonly: false,
@@ -82,8 +82,8 @@ export const ComplexSelect = TemplateSelectT.bind({});
 ComplexSelect.args = {
   label: 'Field Label',
   disabled: false,
-  helperText: 'Help Text',
-  placeholder: 'placeholder',
+  helperText: 'Help text.',
+  placeholder: 'Placeholder...',
   errorText: '',
   warningText: '',
   readonly: false,

@@ -8,11 +8,11 @@ export default {
   component: TextField,
   argTypes: {
     iconLeft: {
-      options: ['lock', 'caretDown', 'plus', null],
+      options: ['search', 'chevronDown', null],
       control: { type: 'radio' },
     },
     iconRight: {
-      options: ['lock', 'caretDown', 'plus', null],
+      options: ['calendar', 'chevronDown', null],
       control: { type: 'radio' },
     },
     type: {
@@ -59,8 +59,8 @@ export const NumberField = NumberTemplate.bind({});
 Default.args = {
   label: 'Field Label',
   disabled: false,
-  helperText: 'Help Text',
-  placeholder: 'placeholder',
+  helperText: 'Help text.',
+  placeholder: 'Placeholder...',
   errorText: '',
   warningText: '',
   readonly: false,
@@ -71,8 +71,8 @@ Default.args = {
 WithTooltip.args = {
   label: 'Field Label',
   disabled: false,
-  helperText: 'Help Text',
-  placeholder: 'placeholder',
+  helperText: 'Help text.',
+  placeholder: 'Placeholder...',
   errorText: '',
   warningText: '',
   readonly: false,
@@ -82,10 +82,10 @@ WithTooltip.args = {
 };
 
 TextArea.args = {
-  label: 'TextArea Label',
+  label: 'Field Label',
   disabled: false,
-  helperText: 'Help Text',
-  placeholder: 'placeholder',
+  helperText: 'Help text.',
+  placeholder: 'Placeholder...',
   errorText: '',
   warningText: '',
   readonly: false,
@@ -96,8 +96,8 @@ TextArea.args = {
 NumberField.args = {
   label: 'Number Label',
   disabled: false,
-  helperText: 'Help Text',
-  placeholder: 'placeholder',
+  helperText: 'Help text.',
+  placeholder: 'Placeholder...',
   errorText: '',
   warningText: '',
   readonly: false,

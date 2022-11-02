@@ -19,25 +19,24 @@
 }
 
 .tw-icon {
-  vertical-align: bottom;
 
   &--small {
-    width: $tw-sz-btn-small-icon;
-    height: $tw-sz-btn-small-icon;
+    width: $tw-sz-icon-small;
+    height: $tw-sz-icon-small;
   }
 
   &--medium {
-    width: $tw-sz-btn-medium-icon;
-    height: $tw-sz-btn-medium-icon;
+    width: $tw-sz-icon-medium;
+    height: $tw-sz-icon-medium;
   }
 
   &--large {
-    width: $tw-sz-btn-large-icon;
-    height: $tw-sz-btn-large-icon;
+    width: $tw-sz-icon-large;
+    height: $tw-sz-icon-large;
   }
 
   &--xlarge {
-    width: $tw-sz-btn-x-large-icon;
-    height: $tw-sz-btn-x-large-icon;
+    width: $tw-sz-icon-x-large;
+    height: $tw-sz-icon-x-large;
   }
 }
