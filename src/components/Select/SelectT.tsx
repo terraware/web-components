@@ -44,7 +44,7 @@ export default function SelectT<T>(props: SelectTProps<T>): JSX.Element {
     placeholder,
     errorText,
     warningText,
-    readonly = true,
+    readonly,
     options,
     fullWidth,
     hideArrow,
