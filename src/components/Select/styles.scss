@@ -174,7 +174,6 @@
     }
 
     &--readonly {
-      background-color: $tw-clr-bg-secondary;
       &:hover {
         border: $tw-sz-frm-fld-text-input-stroke solid $tw-clr-brdr-secondary;
       }
