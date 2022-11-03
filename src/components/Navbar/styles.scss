@@ -7,16 +7,17 @@
 }
 
 .navbar {
-  background-color: $tw-clr-bg-hover;
   height: 100%;
   position: fixed;
   z-index: 1100;
   width: $tw-sz-nvgtn-side-nav-width;
   display: flex;
   flex-direction: column;
+  padding-left: $tw-sz-base-small;
+  padding-right: $tw-sz-base-small;
+  padding-top: $tw-sz-base-small;
 
   .nav-section {
-    background-color: $tw-clr-bg-hover;
     padding: $tw-spc-base-x-small $tw-spc-base-small;
     .divider {
       border-top: $tw-sz-dvdr-stroke solid $tw-clr-brdr-tertiary;
@@ -40,7 +41,7 @@
     font-weight: $tw-fnt-nvgtn-side-nav-item-label-font-weight;
     line-height: $tw-fnt-nvgtn-side-nav-item-label-line-height;
     color: $tw-clr-txt;
-    background-color: $tw-clr-bg-hover;
+    border-radius: 32px;
 
     .nav-item-content {
       padding: $tw-sz-base-small;
@@ -53,7 +54,6 @@
         text-align: left;
         font-size: 14px;
         font-weight: 500;
-        color: #3a4445;
       }
 
       &:hover {
@@ -91,32 +91,21 @@
       }
 
       .nav-item {
-        background-color: $tw-clr-bg-secondary-hover;
+        background-color: $tw-clr-bg-ghost;
 
         &:hover {
-          background-color: $tw-clr-bg-secondary;
+          background-color: $tw-clr-bg-ghost-hover;
         }
       }
     }
 
     &--selected {
-      background-color: $tw-clr-bg-secondary-hover;
+      background-color: $tw-clr-bg-ghost-hover;
       position: relative;
     }
 
-    &--selected:before {
-      content: '';
-      border-bottom-right-radius: $tw-sz-nvgtn-side-nav-item-indicator;
-      border-top-right-radius: $tw-sz-nvgtn-side-nav-item-indicator;
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      width: $tw-sz-nvgtn-side-nav-item-indicator;
-      background-color: $tw-clr-bg-selected;
-    }
-
     &--icon {
-      fill: $tw-clr-icn;
+      fill: $tw-clr-icn-secondary;
       margin-right: $tw-spc-base-x-small;
       line-height: $tw-sz-icon-small;
       height: $tw-sz-icon-small;
