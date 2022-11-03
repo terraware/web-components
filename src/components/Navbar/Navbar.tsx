@@ -1,9 +1,9 @@
+import { makeStyles } from '@mui/styles';
 import React, { ReactNode } from 'react';
-import { Logo } from '../svg';
+
 import './styles.scss';
 import Icon from '../Icon/Icon';
 import { useDeviceInfo } from '../../utils';
-import { makeStyles } from '@mui/styles';
 
 export interface Props {
   children: ReactNode;
@@ -34,11 +34,7 @@ export default function Navbar(props: Props): JSX.Element {
 
   return (
     <div className='navbar'>
-      {isDesktop ? (
-        <div className='logo'>
-          <Logo />
-        </div>
-      ) : (
+      {!isDesktop && (
         <div className={classes.navBarTop}>
           <button onClick={() => setShowNavBar(false)} className={classes.closeButton}>
             <Icon name='close' className={classes.icon} />

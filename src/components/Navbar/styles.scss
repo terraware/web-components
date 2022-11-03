@@ -15,16 +15,6 @@
   display: flex;
   flex-direction: column;
 
-  .logo {
-    background-color: $tw-clr-bg-hover;
-    padding-bottom: $tw-spc-base-small 0;
-    margin-bottom: $tw-spc-base-small 0;
-
-    svg {
-      margin: $tw-spc-base-medium $tw-spc-base-small;
-      height: $tw-spc-base-small;
-    }
-  }
   .nav-section {
     background-color: $tw-clr-bg-hover;
     padding: $tw-spc-base-x-small $tw-spc-base-small;
