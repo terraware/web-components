@@ -11,9 +11,9 @@ const useStyles = makeStyles((theme: Theme) => ({
     color: theme.palette.ClrBaseGray800,
   },
   icon: {
-    fill: theme.palette.ClrBaseGray800,
-    marginLeft: '.5em',
-    marginRight: '.5em',
+    fill: theme.palette.TwClrIcnSecondary,
+    marginLeft: '4px',
+    marginRight: '4px',
     verticalAlign: 'text-top',
   },
   tooltip: {

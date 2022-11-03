@@ -25,7 +25,7 @@
     font-size: $tw-fnt-frm-fld-label-font-size;
     font-weight: $tw-fnt-frm-fld-label-font-weight;
     line-height: $tw-fnt-frm-fld-label-line-height;
-    color: $tw-clr-frm-fld-label;
+    color: $tw-clr-txt-secondary;
     margin-bottom: $tw-spc-base-xx-small;
     display: block;
     width: 100%;
@@ -44,31 +44,11 @@
     margin-top: $tw-spc-base-xx-small;
   }
 
-  textarea {
-    font-family: $tw-fnt-frm-fld-text-value-font-family;
-    font-size: $tw-fnt-frm-fld-text-value-font-size;
-    font-weight: $tw-fnt-frm-fld-text-value-font-weight;
-    line-height: $tw-fnt-frm-fld-text-value-line-height;
-    color: $tw-clr-txt;
-    padding-top: 0;
-    padding-bottom: 0;
-    &::placeholder {
-      font-family: $tw-fnt-frm-fld-text-placeholder-font-family;
-      font-size: $tw-fnt-frm-fld-text-placeholder-font-size;
-      font-weight: $tw-fnt-frm-fld-text-placeholder-font-weight;
-      line-height: $tw-fnt-frm-fld-text-placeholder-line-height;
-      color: $tw-clr-base-gray-300;
-    }
-    &:focus-visible {
-      outline: none;
-    }
-  }
-
   .textfield-value {
     background-color: $tw-clr-bg;
     border: $tw-sz-frm-fld-text-input-stroke solid $tw-clr-brdr-secondary;
-    padding: $tw-spc-base-x-small;
-    border-radius: $tw-rds-frm-fld-text-input;
+    padding: #{$tw-spc-base-x-small - $tw-sz-frm-fld-text-input-stroke};
+    border-radius: $tw-sz-base-xx-small;
     border-width: $tw-sz-frm-fld-text-input-stroke;
     display: flex;
 
@@ -77,13 +57,14 @@
     }
 
     &:active {
-      border: math.div($tw-sz-frm-fld-text-input-stroke-active, 2) solid $tw-clr-brdr-hover;
-      outline: math.div($tw-sz-frm-fld-text-input-stroke-active, 2) solid $tw-clr-brdr-hover;
+      border: $tw-sz-frm-fld-text-input-stroke solid $tw-clr-brdr-active;
+      outline: $tw-sz-frm-fld-text-input-stroke-active solid $tw-clr-brdr-active;
     }
 
     &:focus-within {
-      border: math.div($tw-sz-frm-fld-text-input-stroke-active, 2) solid $tw-clr-brdr-hover;
-      outline: math.div($tw-sz-frm-fld-text-input-stroke-active, 2) solid $tw-clr-brdr-hover;
+      border: $tw-sz-frm-fld-text-input-stroke solid $tw-clr-brdr-active;
+      outline: $tw-sz-frm-fld-text-input-stroke-active solid $tw-clr-brdr-active;
+      outline-offset: -$tw-sz-frm-fld-text-input-stroke;
     }
 
     input {
@@ -94,6 +75,7 @@
       font-weight: $tw-fnt-frm-fld-text-value-font-weight;
       line-height: $tw-fnt-frm-fld-text-value-line-height;
       color: $tw-clr-txt;
+      cursor: pointer;
       background: transparent;
       padding-top: 0;
       padding-bottom: 0;
@@ -102,7 +84,7 @@
         font-size: $tw-fnt-frm-fld-text-placeholder-font-size;
         font-weight: $tw-fnt-frm-fld-text-placeholder-font-weight;
         line-height: $tw-fnt-frm-fld-text-placeholder-line-height;
-        color: $tw-clr-base-gray-300;
+        color: $tw-clr-txt-tertiary;
       }
       &:focus-visible {
         outline: none;
@@ -114,32 +96,40 @@
       font-size: $tw-fnt-frm-fld-text-value-font-size;
       font-weight: $tw-fnt-frm-fld-text-value-font-weight;
       line-height: $tw-fnt-frm-fld-text-value-line-height;
-      padding: 0;
+      padding: $tw-spc-base-x-small 0;
       margin: 0;
     }
 
     &--disabled {
       opacity: $tw-opcty-semantic-off;
       pointer-events: none;
+
       &:hover {
         border: $tw-sz-frm-fld-text-input-stroke solid $tw-clr-brdr-secondary;
       }
 
       &:active {
         border: $tw-sz-frm-fld-text-input-stroke solid $tw-clr-brdr-secondary;
+        outline: 0;
+      }
+
+      &:focus-within {
+        border: $tw-sz-frm-fld-text-input-stroke solid $tw-clr-brdr-secondary;
+        outline: 0;
       }
     }
 
     &--icon-right {
       width: $tw-fnt-frm-fld-text-value-line-height;
       height: $tw-fnt-frm-fld-text-value-line-height;
-      fill: $tw-clr-txt;
+      fill: $tw-clr-icn;
+      margin-left: $tw-spc-base-x-small;
     }
 
     &--icon-left {
       width: $tw-fnt-frm-fld-text-value-line-height;
       height: $tw-fnt-frm-fld-text-value-line-height;
-      fill: $tw-clr-txt;
+      fill: $tw-clr-icn-secondary;
       margin-right: $tw-spc-base-x-small;
     }
 
@@ -148,17 +138,18 @@
       background-color: $tw-clr-bg-danger-tertiary;
 
       &:hover {
-        border: $tw-sz-frm-fld-text-input-stroke solid $tw-clr-brdr-danger;
+        border: $tw-sz-frm-fld-text-input-stroke solid $tw-clr-brdr-danger-hover;
       }
 
       &:active {
-        border: math.div($tw-sz-frm-fld-text-input-stroke-active, 2) solid $tw-clr-brdr-danger;
-        outline: math.div($tw-sz-frm-fld-text-input-stroke-active, 2) solid $tw-clr-brdr-danger;
+        border: $tw-sz-frm-fld-text-input-stroke solid $tw-clr-brdr-danger-active;
+        outline: $tw-sz-frm-fld-text-input-stroke-active solid $tw-clr-brdr-danger-active;
       }
-
+  
       &:focus-within {
-        border: math.div($tw-sz-frm-fld-text-input-stroke-active, 2) solid $tw-clr-brdr-danger;
-        outline: math.div($tw-sz-frm-fld-text-input-stroke-active, 2) solid $tw-clr-brdr-danger;
+        border: $tw-sz-frm-fld-text-input-stroke solid $tw-clr-brdr-danger-active;
+        outline: $tw-sz-frm-fld-text-input-stroke-active solid $tw-clr-brdr-danger-active;
+        outline-offset: -$tw-sz-frm-fld-text-input-stroke;
       }
     }
 
@@ -167,27 +158,35 @@
       background-color: $tw-clr-bg-warning-tertiary;
 
       &:hover {
-        border: $tw-sz-frm-fld-text-input-stroke solid $tw-clr-brdr-warning;
+        border: $tw-sz-frm-fld-text-input-stroke solid $tw-clr-brdr-warning-hover;
       }
 
       &:active {
-        border: math.div($tw-sz-frm-fld-text-input-stroke-active, 2) solid $tw-clr-brdr-warning;
-        outline: math.div($tw-sz-frm-fld-text-input-stroke-active, 2) solid $tw-clr-brdr-warning;
+        border: $tw-sz-frm-fld-text-input-stroke solid $tw-clr-brdr-warning-active;
+        outline: $tw-sz-frm-fld-text-input-stroke-active solid $tw-clr-brdr-warning-active;
       }
-
+  
       &:focus-within {
-        border: math.div($tw-sz-frm-fld-text-input-stroke-active, 2) solid $tw-clr-brdr-warning;
-        outline: math.div($tw-sz-frm-fld-text-input-stroke-active, 2) solid $tw-clr-brdr-warning;
+        border: $tw-sz-frm-fld-text-input-stroke solid $tw-clr-brdr-warning-active;
+        outline: $tw-sz-frm-fld-text-input-stroke-active solid $tw-clr-brdr-warning-active;
+        outline-offset: -$tw-sz-frm-fld-text-input-stroke;
       }
     }
 
     &--readonly {
+      background-color: $tw-clr-bg-secondary;
       &:hover {
         border: $tw-sz-frm-fld-text-input-stroke solid $tw-clr-brdr-secondary;
       }
 
       &:active {
         border: $tw-sz-frm-fld-text-input-stroke solid $tw-clr-brdr-secondary;
+        outline: 0;
+      }
+
+      &:focus-within {
+        border: $tw-sz-frm-fld-text-input-stroke solid $tw-clr-brdr-secondary;
+        outline: 0;
       }
     }
 
@@ -196,6 +195,13 @@
     }
   }
 
+  .textfield-label-container {
+    position: relative;
+    display: flex;
+    width: 100%;
+    margin-top: $tw-spc-base-xx-small;
+  }
+  
   .textfield-error-text {
     font-family: $tw-fnt-frm-fld-error-text-font-family;
     font-size: $tw-fnt-frm-fld-error-text-font-size;
@@ -207,7 +213,7 @@
     max-width: 100%;
 
     &--icon {
-      fill: $tw-clr-txt-danger;
+      fill: $tw-clr-icn-danger;
       width: $tw-fnt-frm-fld-error-text-line-height;
       height: $tw-fnt-frm-fld-error-text-line-height;
       margin-right: $tw-spc-base-x-small;
@@ -225,34 +231,26 @@
     max-width: 100%;
 
     &--icon {
-      fill: $tw-clr-txt-warning;
+      fill: $tw-clr-icn-warning;
       width: $tw-fnt-frm-fld-error-text-line-height;
       height: $tw-fnt-frm-fld-error-text-line-height;
       margin-right: $tw-spc-base-x-small;
     }
   }
 
-  .textfield-label-container {
-    position: relative;
-    display: flex;
-    width: 100%;
-    margin-top: $tw-spc-base-xx-small;
-  }
-
   .options-container {
     z-index: 3;
-    width: 100%;
+    width: calc(100% - 2px);
     position: absolute;
-    top: 42px;
+    top: 44px;
     list-style-type: none;
     padding: $tw-spc-base-x-small 0;
     background: $tw-clr-bg;
     border: 1px solid $tw-clr-brdr-secondary;
-    margin: 0;
-    margin-top: $tw-spc-base-xx-small;
+    margin: $tw-spc-base-xx-small 0 0;
     border-radius: $tw-rds-frm-fld-text-input;
     max-height: 140px;
-    overflow: scroll;
+    overflow-y: auto;
 
     &.fixed-menu {
       position: fixed;

@@ -52,7 +52,7 @@ export default function Button(props: Props): JSX.Element {
       ${!label ? 'button-no-label' : ''} ${className ?? ''}`}
       disabled={disabled}
     >
-      {processing && <Icon name='spinner' size={size} />}
+      {processing && <Icon name='spinner' size={size} className='icon-spinner' />}
       {!processing && icon && <Icon name={icon} size={size} />}
       {!processing && !!label && label}
     </button>
