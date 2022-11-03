@@ -252,7 +252,11 @@ export default function EnhancedTable<T>({
                         >
                           {showCheckbox && (
                             <TableCell padding='checkbox'>
-                              <Checkbox color='primary' checked={isItemSelected} />
+                              <Checkbox
+                                color='primary'
+                                checked={isItemSelected}
+                                onClick={(e) => (!isClickable || !isClickable(row as T) ? handleClick(e, row as T) : null)}
+                              />
                             </TableCell>
                           )}
                           {columns.map((c) => (
