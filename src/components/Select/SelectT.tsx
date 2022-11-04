@@ -219,7 +219,7 @@ export default function SelectT<T>(props: SelectTProps<T>): JSX.Element {
                     data-key={displayLabel(option).charAt(0).toUpperCase()}
                     data-selected={selectedIndex === index}
                     key={index}
-                    onClick={() => !readonly ?? onOptionSelected(option, index)}
+                    onClick={() => (!readonly ? onOptionSelected(option, index) : undefined)}
                     className={`${itemClass} ${selectedIndex === index ? 'select-value--selected' : ''} `}
                   >
                     {renderOption(option)}
