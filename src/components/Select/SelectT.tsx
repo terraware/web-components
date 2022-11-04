@@ -30,6 +30,7 @@ export interface SelectTProps<T> {
   toT: (input: string) => T;
   displayLabel: (option: any) => string;
   tooltipTitle?: TooltipProps['title'];
+  allowEditingValue?: boolean;
 }
 
 export default function SelectT<T>(props: SelectTProps<T>): JSX.Element {
@@ -44,7 +45,7 @@ export default function SelectT<T>(props: SelectTProps<T>): JSX.Element {
     placeholder,
     errorText,
     warningText,
-    readonly = true,
+    readonly,
     options,
     fullWidth,
     hideArrow,
@@ -56,6 +57,7 @@ export default function SelectT<T>(props: SelectTProps<T>): JSX.Element {
     toT,
     displayLabel,
     tooltipTitle,
+    allowEditingValue,
   } = props;
 
   const selectClass = classNames({
@@ -107,12 +109,7 @@ export default function SelectT<T>(props: SelectTProps<T>): JSX.Element {
   const handleClick = (event: any) => {
     // Don't respond to user clicks inside the input box because those are
     // already handled by toggleOptions()
-    if (
-      dropdownRef.current &&
-      !dropdownRef.current.contains(event.target) &&
-      inputRef.current &&
-      !inputRef.current.contains(event.target)
-    ) {
+    if (dropdownRef.current && !dropdownRef.current.contains(event.target) && inputRef.current && !inputRef.current.contains(event.target)) {
       setOpenedOptions(false);
     }
   };
@@ -131,9 +128,7 @@ export default function SelectT<T>(props: SelectTProps<T>): JSX.Element {
         const dropdownBottom = dropdownRef.current.clientHeight + bbox.top + bbox.height;
         const windowHeightThreshold = window.innerHeight - bbox.height;
         if (dropdownBottom > windowHeightThreshold) {
-          dropdownRef.current.style.maxHeight = `${
-            dropdownRef.current.clientHeight - (dropdownBottom - windowHeightThreshold)
-          }px`;
+          dropdownRef.current.style.maxHeight = `${dropdownRef.current.clientHeight - (dropdownBottom - windowHeightThreshold)}px`;
         }
       }
     }
@@ -205,7 +200,7 @@ export default function SelectT<T>(props: SelectTProps<T>): JSX.Element {
         <div id={id} className={selectClass} onClick={toggleOptions} ref={inputRef}>
           <input
             value={displayLabel(selectedValue)}
-            readOnly={readonly}
+            readOnly={!allowEditingValue || readonly}
             placeholder={placeholder}
             onChange={onChangeHandler}
             onKeyDown={onKeyDownHandler}
@@ -224,7 +219,7 @@ export default function SelectT<T>(props: SelectTProps<T>): JSX.Element {
                     data-key={displayLabel(option).charAt(0).toUpperCase()}
                     data-selected={selectedIndex === index}
                     key={index}
-                    onClick={() => onOptionSelected(option, index)}
+                    onClick={() => !readonly ?? onOptionSelected(option, index)}
                     className={`${itemClass} ${selectedIndex === index ? 'select-value--selected' : ''} `}
                   >
                     {renderOption(option)}
