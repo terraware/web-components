@@ -2,9 +2,9 @@ name: Deployment
 
 on:
   push:
-    branches: [main]
+    branches: [main, feature/visual-updates]
   pull_request:
-    branches: [main]
+    branches: [main, feature/visual-updates]
 
 concurrency:
   group: ${{ github.ref }}-${{ github.workflow }}
