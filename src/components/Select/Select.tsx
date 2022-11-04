@@ -23,6 +23,7 @@ export interface SelectProps {
   onFocus?: () => void;
   fixedMenu?: boolean;
   tooltipTitle?: TooltipProps['title'];
+  editable?: boolean;
 }
 
 export default function Select(props: SelectProps): JSX.Element {
