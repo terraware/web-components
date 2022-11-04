@@ -30,7 +30,7 @@ export interface SelectTProps<T> {
   toT: (input: string) => T;
   displayLabel: (option: any) => string;
   tooltipTitle?: TooltipProps['title'];
-  allowEditingValue?: boolean;
+  editable?: boolean;
 }
 
 export default function SelectT<T>(props: SelectTProps<T>): JSX.Element {
@@ -57,7 +57,7 @@ export default function SelectT<T>(props: SelectTProps<T>): JSX.Element {
     toT,
     displayLabel,
     tooltipTitle,
-    allowEditingValue,
+    editable,
   } = props;
 
   const selectClass = classNames({
@@ -200,7 +200,7 @@ export default function SelectT<T>(props: SelectTProps<T>): JSX.Element {
         <div id={id} className={selectClass} onClick={toggleOptions} ref={inputRef}>
           <input
             value={displayLabel(selectedValue)}
-            readOnly={!allowEditingValue || readonly}
+            readOnly={!editable || readonly}
             placeholder={placeholder}
             onChange={onChangeHandler}
             onKeyDown={onKeyDownHandler}
