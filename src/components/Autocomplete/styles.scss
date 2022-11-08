@@ -23,7 +23,8 @@
   }
 
   .MuiInputBase-root {
-    border: 1px solid $tw-clr-bg-info;
+    border: 1px solid $tw-clr-brdr-secondary;
+    border-radius: $tw-spc-base-x-small;
     position: unset;
     padding: 0;
   }
