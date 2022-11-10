@@ -7,6 +7,7 @@ export { default as BlobbyIconNursery } from './BlobbyIconNursery';
 export { default as BlobbyIconOrganization } from './BlobbyIconOrganization';
 export { default as BlobbyIconPeople } from './BlobbyIconPeople';
 export { default as BlobbyIconSeedBank } from './BlobbyIconSeedBank';
+export { default as BlobbyIconSite } from './BlobbyIconSite';
 export { default as BlobbyIconWrench } from './BlobbyIconWrench';
 export { default as Bug } from './Bug';
 export { default as Calendar } from './Calendar';
