@@ -6,6 +6,7 @@ import BlobbyIconLeaf from '../../svg/BlobbyIconLeaf';
 import BlobbyIconLibrary from '../../svg/BlobbyIconLibrary';
 import BlobbyIconNursery from '../../svg/BlobbyIconNursery';
 import BlobbyIconSeedBank from '../../svg/BlobbyIconSeedBank';
+import BlobbyIconSite from '../../svg/BlobbyIconSite';
 import BlobbyIconWrench from '../../svg/BlobbyIconWrench';
 import Bug from '../../svg/Bug';
 import Calendar from '../../svg/Calendar';
@@ -79,6 +80,7 @@ export type IconName =
   | 'blobbyIconLeaf'
   | 'blobbyIconLibrary'
   | 'blobbyIconNursery'
+  | 'blobbyIconSite'
   | 'blobbyIconWrench'
   | 'bug'
   | 'calendar'
@@ -156,6 +158,7 @@ const icons: Record<IconName, SVGComponent> = {
   blobbyIconLeaf: BlobbyIconLeaf,
   blobbyIconLibrary: BlobbyIconLibrary,
   blobbyIconNursery: BlobbyIconNursery,
+  blobbyIconSite: BlobbyIconSite,
   blobbyIconWrench: BlobbyIconWrench,
   bug: Bug,
   calendar: Calendar,
