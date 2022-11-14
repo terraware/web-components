@@ -29,6 +29,7 @@ import Folder from '../../svg/Folder';
 import Futures from '../../svg/IconFutures';
 import Help from '../../svg/Help';
 import Home from '../../svg/Home';
+import IconAdd from '../../svg/IconAdd';
 import IconArrowRight from '../../svg/IconArrowRight';
 import IconColumns from '../../svg/IconColumns';
 import IconEdit from '../../svg/IconEdit';
@@ -103,6 +104,7 @@ export type IconName =
   | 'futures'
   | 'help'
   | 'home'
+  | 'iconAdd'
   | 'iconArrowRight'
   | 'iconColumns'
   | 'iconEdit'
@@ -181,6 +183,7 @@ const icons: Record<IconName, SVGComponent> = {
   futures: Futures,
   help: Help,
   home: Home,
+  iconAdd: IconAdd,
   iconArrowRight: IconArrowRight,
   iconColumns: IconColumns,
   iconEdit: IconEdit,
