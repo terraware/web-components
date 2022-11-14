@@ -25,6 +25,7 @@ export { default as Filter } from './Filter';
 export { default as Folder } from './Folder';
 export { default as Help } from './Help';
 export { default as Home } from './Home';
+export { default as IconAdd } from './IconAdd';
 export { default as IconArrowRight } from './IconArrowRight';
 export { default as IconCancel } from './IconCancel';
 export { default as IconChargingBattery } from './IconChargingBattery';
