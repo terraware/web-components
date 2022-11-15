@@ -26,16 +26,16 @@ const Template: Story<NavbarProps> = (args) => {
       <NavItem label='Home' icon='home' selected={selectedItem === 'home'} onClick={() => setSelectedItem('home')} />
       <NavItem label='Species' icon='species' selected={selectedItem === 'species'} onClick={() => setSelectedItem('species')} />
       <NavSection />
-      <NavItem label='Seeds' icon='seeds' onClick={() => setSelectedItem('seeds')}>
+      <NavItem label='Seeds' icon='seeds' onClick={() => setSelectedItem('seeds-dashboard')}>
         <SubNavbar>
-          <NavItem label='Dashboard' icon='dashboard' selected={selectedItem === 'seeds-dashboard'} onClick={() => setSelectedItem('seeds-dashboard')} />
-          <NavItem label='Accessions' icon='seeds' selected={selectedItem === 'accessions'} onClick={() => setSelectedItem('accessions')} />
-          <NavItem label='Monitoring' icon='monitoringNav' selected={selectedItem === 'monitoring'} onClick={() => setSelectedItem('monitoring')} />
+          <NavItem label='Dashboard' selected={selectedItem === 'seeds-dashboard'} onClick={() => setSelectedItem('seeds-dashboard')} />
+          <NavItem label='Accessions' selected={selectedItem === 'accessions'} onClick={() => setSelectedItem('accessions')} />
+          <NavItem label='Monitoring' selected={selectedItem === 'monitoring'} onClick={() => setSelectedItem('monitoring')} />
         </SubNavbar>
       </NavItem>
-      <NavItem label='Seedlings' icon='iconSeedling' onClick={() => setSelectedItem('seedlings')}>
+      <NavItem label='Seedlings' icon='iconSeedling' onClick={() => setSelectedItem('inventory')}>
         <SubNavbar>
-          <NavItem label='Inventory' icon='iconSeedling' selected={selectedItem === 'inventory'} onClick={() => setSelectedItem('inventory')} />
+          <NavItem label='Inventory' selected={selectedItem === 'inventory'} onClick={() => setSelectedItem('inventory')} />
         </SubNavbar>
       </NavItem>
       <NavSection title='Settings' />
