@@ -3,6 +3,7 @@ import React from 'react';
 import Navbar, { Props as NavbarProps } from '../components/Navbar/Navbar';
 import NavItem from '../components/Navbar/NavItem';
 import NavSection from '../components/Navbar/NavSection';
+import SubNavbar from '../components/Navbar/SubNavbar';
 
 export default {
   title: 'Navbar',
@@ -11,33 +12,37 @@ export default {
 };
 
 const Template: Story<NavbarProps> = (args) => {
-  const [selectedItem, setSelectedItem] = React.useState('projects');
+  const [selectedItem, setSelectedItem] = React.useState('accessions');
 
   const onClickHandler = () => {
     setSelectedItem('home');
   };
 
   // tslint:disable-next-line:no-empty
-  const showNavbar = (show: any) => {
-  };
+  const showNavbar = (show: any) => {};
 
   return (
     <Navbar setShowNavBar={showNavbar}>
       <NavItem label='Home' icon='home' selected={selectedItem === 'home'} onClick={() => setSelectedItem('home')} />
-      <NavSection title='Flora' />
-      <NavItem label='Seeds' icon='seeds' onClick={onClickHandler}/>
-      <NavItem label='Summary' selected={selectedItem === 'summary'} onClick={() => setSelectedItem('summary')} />
-      <NavItem label='Accessions' selected={selectedItem === 'accessions'} onClick={() => setSelectedItem('accessions')} />
-      <NavItem label='Plants' icon='restorationSite' selected={selectedItem === 'plants'} onClick={() => setSelectedItem('plants')} />
       <NavItem label='Species' icon='species' selected={selectedItem === 'species'} onClick={() => setSelectedItem('species')} />
-      <NavSection title='Hardware' />
-      <NavItem label='Seed Bank' icon='restorationSite' selected={selectedItem === 'seedbank'} onClick={() => setSelectedItem('seedbank')} />
-      <NavItem label='Drone Data' icon='species' selected={selectedItem === 'dronedata'} onClick={() => setSelectedItem('dronedata')} />
       <NavSection />
-      <NavItem label='Projects' icon='folder' selected={selectedItem === 'projects'} onClick={() => setSelectedItem('projects')} />
-      <NavItem label='Sites' icon='leaf' selected={selectedItem === 'sites'} onClick={() => setSelectedItem('sites')} />
-      <NavSection />
-      <NavItem label='Admin' icon='key' selected={selectedItem === 'admin'} onClick={() => setSelectedItem('admin')} />
+      <NavItem label='Seeds' icon='seeds' onClick={() => setSelectedItem('seeds')}>
+        <SubNavbar>
+          <NavItem label='Dashboard' icon='dashboard' selected={selectedItem === 'seeds-dashboard'} onClick={() => setSelectedItem('seeds-dashboard')} />
+          <NavItem label='Accessions' icon='seeds' selected={selectedItem === 'accessions'} onClick={() => setSelectedItem('accessions')} />
+          <NavItem label='Monitoring' icon='monitoringNav' selected={selectedItem === 'monitoring'} onClick={() => setSelectedItem('monitoring')} />
+        </SubNavbar>
+      </NavItem>
+      <NavItem label='Seedlings' icon='iconSeedling' onClick={() => setSelectedItem('seedlings')}>
+        <SubNavbar>
+          <NavItem label='Inventory' icon='iconSeedling' selected={selectedItem === 'inventory'} onClick={() => setSelectedItem('inventory')} />
+        </SubNavbar>
+      </NavItem>
+      <NavSection title='Settings' />
+      <NavItem label='Organization' icon='organizationNav' selected={selectedItem === 'organization'} onClick={() => setSelectedItem('organization')} />
+      <NavItem label='People' icon='peopleNav' selected={selectedItem === 'people'} onClick={() => setSelectedItem('people')} />
+      <NavItem label='Seed Banks' icon='seedbankNav' selected={selectedItem === 'seedbanks'} onClick={() => setSelectedItem('seedbanks')} />
+      <NavItem label='Nurseries' icon='iconNursery' selected={selectedItem === 'nurseries'} onClick={() => setSelectedItem('nurseries')} />
     </Navbar>
   );
 };
