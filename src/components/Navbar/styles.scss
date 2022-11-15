@@ -9,7 +9,7 @@
 .navbar {
   height: 100%;
   position: fixed;
-  z-index: 1100;
+  z-index: 1101;
   width: $tw-sz-nvgtn-side-nav-width;
   display: flex;
   flex-direction: column;
@@ -80,13 +80,13 @@
     }
 
     &--children-selected {
-      background-color: $tw-clr-bg-secondary-hover;
+      background-color: transparent;
 
       &:hover {
-        background-color: $tw-clr-bg-secondary-hover;
+        background-color: transparent;
 
         & > .nav-item-content {
-          background-color: $tw-clr-bg-secondary;
+          background-color: transparent;
         }
       }
 
@@ -95,6 +95,11 @@
 
         &:hover {
           background-color: $tw-clr-bg-ghost-hover;
+        }
+
+        &--selected {
+          background-color: $tw-clr-bg-ghost-hover;
+          position: relative;
         }
       }
     }
@@ -123,8 +128,8 @@
     }
 
     .subnavbar .nav-item {
+      padding-left: $tw-spc-base-small;
       padding-right: $tw-spc-base-small;
-      background-color: $tw-clr-bg-secondary-hover;
 
       &-content {
         padding-left: calc(#{$tw-spc-base-small} * 2);
