@@ -9,6 +9,7 @@ import './styles.scss';
 
 export interface Props {
   id: string;
+  autoFocus?: boolean;
   label: React.ReactNode;
   value?: string | null;
   onChange: (id: string, value?: string | null) => void;
@@ -35,6 +36,7 @@ export default function DatePicker(props: Props): JSX.Element {
       <TextField
         {...params}
         id={props.id}
+        autoFocus={props.autoFocus}
         onKeyPress={props.onKeyPress}
       />
       {props.errorText && (

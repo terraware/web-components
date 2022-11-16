@@ -12,6 +12,7 @@ type TextfieldType = 'text' | 'textarea' | 'number';
 type Handler = (id: string, value: unknown) => void;
 
 export interface Props {
+  autoFocus?: boolean;
   onChange?: Handler;
   label: string;
   disabled?: boolean;
@@ -37,6 +38,7 @@ export interface Props {
 export default function TextField(props: Props): JSX.Element {
   const {
     value,
+    autoFocus,
     onChange,
     label,
     disabled,
@@ -118,6 +120,7 @@ export default function TextField(props: Props): JSX.Element {
           <div id={id} className={textfieldClass}>
             {iconLeft && <Icon name={iconLeft} className='textfield-value--icon-left' />}
             <input
+              autoFocus={autoFocus}
               value={value || ''}
               disabled={readonly || disabled}
               placeholder={placeholder}
@@ -129,6 +132,7 @@ export default function TextField(props: Props): JSX.Element {
           </div>
         ) : (
           <textarea
+            autoFocus={autoFocus}
             className={textfieldClass}
             value={value}
             disabled={readonly || disabled}
