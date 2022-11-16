@@ -49,4 +49,5 @@ Default.args = {
   maxDate: Date.now(),
   errorText: '',
   helperText: '',
+  autoFocus: false,
 };
