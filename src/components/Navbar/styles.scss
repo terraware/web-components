@@ -42,6 +42,7 @@
     line-height: $tw-fnt-nvgtn-side-nav-item-label-line-height;
     color: $tw-clr-txt;
     border-radius: 32px;
+    mix-blend-mode: multiply;
 
     .nav-item-content {
       padding: $tw-sz-base-small;
