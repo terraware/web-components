@@ -37,7 +37,7 @@ export default function EnhancedTableHead(props: Props): JSX.Element {
       id: c.key,
       disablePadding: false,
       label: typeof c.name === 'string' ? c.name.toUpperCase() : c.name,
-      className: classes.headerCell + ' ' + c.className,
+      className: `${classes.headerCell} ${c.className}`,
       tooltipTitle: c.tooltipTitle,
     }));
   }

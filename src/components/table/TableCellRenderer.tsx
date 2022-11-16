@@ -57,7 +57,7 @@ export function CellDateRenderer({
   const classes = useStyles();
 
   return (
-    <TableCell id={id} align='left' className={classes.date + ' ' + classes.default + ' ' + className}>
+    <TableCell id={id} align='left' className={`${classes.date} ${classes.default} ${className}`}>
       <Typography component='p' variant='body1'>
         {cellDateFormatter(value)}
       </Typography>
@@ -77,7 +77,7 @@ export function CellTextRenderer({
   const classes = useStyles();
 
   return (
-    <TableCell id={id} align='left' title={typeof value === 'string' ? value : ''} className={classes.default + ' ' + className}>
+    <TableCell id={id} align='left' title={typeof value === 'string' ? value : ''} className={`${classes.default} ${className}`}>
       <Typography component='p' variant='body1' noWrap={true} classes={{ root: classes.textRoot }}>
         {value}
       </Typography>
@@ -97,7 +97,7 @@ export function CellBooleanRenderer({
   const classes = useStyles();
 
   return (
-    <TableCell id={id} align='left' className={classes.default + ' ' + className}>
+    <TableCell id={id} align='left' className={`${classes.default} ${className}`}>
       <Typography component='p' variant='body1'>
         {value === 'true' ? 'YES' : 'NO'}
       </Typography>
@@ -117,7 +117,7 @@ export function CellNotesRenderer({
   const classes = useStyles();
 
   return (
-    <TableCell id={id} align='left' className={classes.default + ' ' + className}>
+    <TableCell id={id} align='left' className={`${classes.default} ${className}`}>
       <Typography id={id} component='p' variant='body1'>
         {value && value.length > 0 ? <Notes /> : ''}
       </Typography>
@@ -137,7 +137,7 @@ export function CellEditRenderer({
   const classes = useStyles();
 
   return (
-    <TableCell id={id} align='left' className={classes.default + ' ' + className}>
+    <TableCell id={id} align='left' className={`${classes.default} ${className}`}>
       <Link
         id={`${id}-button`}
         href='#'
