@@ -16,7 +16,9 @@ const useStyles = makeStyles((theme: Theme) => ({
     whiteSpace: 'nowrap',
   },
   default: {
-    borderBottom: `1px solid ${theme.palette.TwClrBrdrSecondary} !important`
+    '&.MuiTableCell-root': {
+      borderBottom: `1px solid ${theme.palette.TwClrBrdrSecondary}`
+    }
   },
 }));
 

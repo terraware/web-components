@@ -9,7 +9,9 @@ import { makeStyles } from '@mui/styles';
 
 const useStyles = makeStyles((theme: Theme) => ({
   headerCell: {
-    borderBottom: `2px solid ${theme.palette.TwClrBrdrSecondary} !important`,
+    '&.MuiTableCell-root': {
+      borderBottom: `2px solid ${theme.palette.TwClrBrdrSecondary}`
+    }
   },
 }));
 
