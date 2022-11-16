@@ -95,6 +95,7 @@ export function CellBooleanRenderer({
   className?: string;
 }): JSX.Element {
   const classes = useStyles();
+
   return (
     <TableCell id={id} align='left' className={classes.default + ' ' + className}>
       <Typography component='p' variant='body1'>
@@ -114,6 +115,7 @@ export function CellNotesRenderer({
   className?: string;
 }): JSX.Element {
   const classes = useStyles();
+  
   return (
     <TableCell id={id} align='left' className={classes.default + ' ' + className}>
       <Typography id={id} component='p' variant='body1'>
