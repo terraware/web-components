@@ -30,7 +30,9 @@ const tableStyles = makeStyles((theme: Theme) => ({
     },
   },
   cellDefault: {
-    borderBottom: `1px solid ${theme.palette.TwClrBrdrSecondary} !important`
+    '&.MuiTableCell-root': {
+      borderBottom: `1px solid ${theme.palette.TwClrBrdrSecondary}`
+    }
   },
 }));
 
