@@ -115,7 +115,7 @@ export function CellNotesRenderer({
   className?: string;
 }): JSX.Element {
   const classes = useStyles();
-  
+
   return (
     <TableCell id={id} align='left' className={classes.default + ' ' + className}>
       <Typography id={id} component='p' variant='body1'>
