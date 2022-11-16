@@ -41,8 +41,12 @@ const Template: Story<NavbarProps> = (args) => {
       <NavSection title='Settings' />
       <NavItem label='Organization' icon='organizationNav' selected={selectedItem === 'organization'} onClick={() => setSelectedItem('organization')} />
       <NavItem label='People' icon='peopleNav' selected={selectedItem === 'people'} onClick={() => setSelectedItem('people')} />
-      <NavItem label='Seed Banks' icon='seedbankNav' selected={selectedItem === 'seedbanks'} onClick={() => setSelectedItem('seedbanks')} />
-      <NavItem label='Nurseries' icon='iconNursery' selected={selectedItem === 'nurseries'} onClick={() => setSelectedItem('nurseries')} />
+      <NavItem label='Locations' icon='iconLocations' onClick={() => setSelectedItem('seedbanks')}>
+        <SubNavbar>
+          <NavItem label='Seed Banks' selected={selectedItem === 'seedbanks'} onClick={() => setSelectedItem('seedbanks')} />
+          <NavItem label='Nurseries' selected={selectedItem === 'nurseries'} onClick={() => setSelectedItem('nurseries')} />
+        </SubNavbar>
+      </NavItem>
     </Navbar>
   );
 };
