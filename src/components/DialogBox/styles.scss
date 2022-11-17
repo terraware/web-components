@@ -16,7 +16,8 @@
   inset: 0px;
 
   &--skrim {
-    background: linear-gradient(180deg, rgba($tw-clr-base-gray-025, $tw-opcty-base-060), rgba(#EFF5EF, $tw-opcty-base-060));
+    background-color: rgba($tw-clr-base-gray-025, $tw-opcty-base-060);
+    background-image: linear-gradient(180deg, rgba($tw-clr-base-green-050, $tw-opcty-base-000), rgba($tw-clr-base-green-050, 0.24));
     height: 100%;
     display: flex;
     align-items: center;
