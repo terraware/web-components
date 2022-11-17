@@ -7,8 +7,6 @@
 }
 
 .dialog-box-container {
-  background: rgba(249, 250, 250, 0.8);
-  backdrop-filter: blur(3px);
   height: 100%;
   display: flex;
   align-items: center;
@@ -16,6 +14,17 @@
   position: fixed;
   z-index: 1300;
   inset: 0px;
+
+  &--skrim {
+    background: linear-gradient(180deg, rgba($tw-clr-base-gray-025, $tw-opcty-base-060), rgba(#EFF5EF, $tw-opcty-base-060));
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    z-index: 1300;
+    inset: 0px;
+  }
 
   &.mobile {
     margin: 0 $tw-spc-base-small;

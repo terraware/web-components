@@ -15,10 +15,11 @@ export interface Props {
   onClose?: () => void;
   open: boolean;
   scrolled?: boolean;
+  skrim?: boolean;
 }
 
 export default function DialogBox(props: Props): JSX.Element | null {
-  const { title, size, message, children, leftButton, rightButtons, middleButtons, onClose, open, scrolled } = props;
+  const { title, size, message, children, leftButton, rightButtons, middleButtons, onClose, open, scrolled, skrim } = props;
 
   const hasFooter = leftButton || rightButtons || middleButtons;
 
@@ -26,7 +27,7 @@ export default function DialogBox(props: Props): JSX.Element | null {
 
   return open ? (
     <div
-      className={`dialog-box-container ${open ? 'dialog-box--opened' : 'dialog-box--closed'} ${
+      className={`dialog-box-container${skrim ? '--skrim' : ''} ${open ? 'dialog-box--opened' : 'dialog-box--closed'} ${
         isMobile ? 'mobile' : ''
       }`}
     >
