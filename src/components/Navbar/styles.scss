@@ -45,7 +45,7 @@
     mix-blend-mode: multiply;
 
     .nav-item-content {
-      padding: 12px;
+      padding: 12px 16px;
       display: flex;
       width: 100%;
       font-weight: $tw-fnt-nvgtn-side-nav-item-label-font-weight;
@@ -88,6 +88,8 @@
 
         & > .nav-item-content {
           background-color: transparent;
+          cursor: default;
+          pointer-events: none;
         }
       }
 
