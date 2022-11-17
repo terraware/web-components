@@ -33,6 +33,7 @@ export default function DialogBox(props: Props): JSX.Element | null {
     >
       <div className={`dialog-box dialog-box--${size}`}>
         <div className='dialog-box--header'>
+          <div className='close-icon-spacer'/>
           <p className='title'>{title}</p>
           <IconButton onClick={onClose} size='small'>
             <Icon name='close' className='icon-close' />

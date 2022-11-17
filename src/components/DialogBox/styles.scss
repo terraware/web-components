@@ -102,6 +102,15 @@
       height: $tw-sz-base-medium;
       width: $tw-sz-base-medium;
     }
+
+    .MuiButtonBase-root {
+      padding: $tw-spc-base-xx-small;
+    }
+
+    .close-icon-spacer {
+      height: calc(#{$tw-sz-base-medium} + 2*#{$tw-spc-base-xx-small});
+      width: calc(#{$tw-sz-base-medium} + 2*#{$tw-spc-base-xx-small});
+    }
   }
 
   &--body {
