@@ -48,7 +48,7 @@
     "generate-types": "yarn -p typescript tsc",
     "build-dist": "yarn transpile && yarn generate-types",
     "lint": "tslint --project tsconfig.json",
-    "license-report": "license-report --only=prod --department.value=terraware --related.value=terraware --output=html > dist/license-report.html",
+    "license-report": "license-report --only=prod --department.value=terraware --related.value=terraware --output=html > license-report.html",
     "check-updates": "yarn build-dictionary && yarn storybook"
   },
   "eslintConfig": {
