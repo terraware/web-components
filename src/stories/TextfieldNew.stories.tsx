@@ -12,7 +12,7 @@ export default {
       control: { type: 'radio' },
     },
     iconRight: {
-      options: ['calendar', 'chevronDown', null],
+      options: ['calendar', 'chevronDown', 'cancel', null],
       control: { type: 'radio' },
     },
     type: {
