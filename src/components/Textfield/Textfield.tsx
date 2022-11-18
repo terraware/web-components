@@ -91,7 +91,7 @@ export default function TextField(props: Props): JSX.Element {
 
     return (
       <button onClick={onClickRightIcon} className='textfield-value--icon-container'>
-        <Icon name={iconRight!} className='textfield-value--icon-right' />
+        <Icon name={iconRight!} className={`textfield-value--icon-right${iconRight === 'cancel' ? '--cancel' : ''}`} />
       </button>
     );
   };
