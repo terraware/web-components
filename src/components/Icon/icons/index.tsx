@@ -1,5 +1,6 @@
 import React from 'react';
 
+import BlobbyGrayIconImage from '../../svg/BlobbyGrayIconImage';
 import BlobbyGrayIconUploadToTheCloud from '../../svg/BlobbyGrayIconUploadToTheCloud';
 import BlobbyIconHappy from '../../svg/BlobbyIconHappy';
 import BlobbyIconLeaf from '../../svg/BlobbyIconLeaf';
@@ -73,6 +74,7 @@ import Warning from '../../svg/Warning';
 import Wifi from '../../svg/IconWifi';
 
 export type IconName =
+  | 'blobbyGrayIconImage'
   | 'blobbyGrayIconUploadToTheCloud'
   | 'blobbyIconSeedBank'
   | 'blobbyIconHappy'
@@ -150,6 +152,7 @@ type SVGComponent = React.FunctionComponent<
   }
 >;
 const icons: Record<IconName, SVGComponent> = {
+  blobbyGrayIconImage: BlobbyGrayIconImage,
   blobbyGrayIconUploadToTheCloud: BlobbyGrayIconUploadToTheCloud,
   blobbyIconSeedBank: BlobbyIconSeedBank,
   blobbyIconHappy: BlobbyIconHappy,
