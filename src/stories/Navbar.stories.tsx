@@ -7,7 +7,9 @@ import NavSection from '../components/Navbar/NavSection';
 export default {
   title: 'Navbar',
   component: Navbar,
-  argTypes: {},
+  argTypes: {
+    backgroundTransparent: false,
+  },
 };
 
 const Template: Story<NavbarProps> = (args) => {
@@ -22,7 +24,7 @@ const Template: Story<NavbarProps> = (args) => {
   };
 
   return (
-    <Navbar setShowNavBar={showNavbar}>
+    <Navbar setShowNavBar={showNavbar} backgroundTransparent={args.backgroundTransparent}>
       <NavItem label='Home' icon='home' selected={selectedItem === 'home'} onClick={() => setSelectedItem('home')} />
       <NavSection title='Flora' />
       <NavItem label='Seeds' icon='seeds' onClick={onClickHandler}/>

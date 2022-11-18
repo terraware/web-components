@@ -8,6 +8,7 @@ import { useDeviceInfo } from '../../utils';
 export interface Props {
   children: ReactNode;
   setShowNavBar: React.Dispatch<React.SetStateAction<boolean>>;
+  backgroundTransparent?: boolean;
 }
 
 const useStyles = makeStyles(() => ({
@@ -28,12 +29,12 @@ const useStyles = makeStyles(() => ({
 }));
 
 export default function Navbar(props: Props): JSX.Element {
-  const { children, setShowNavBar } = props;
+  const { children, setShowNavBar, backgroundTransparent } = props;
   const { isDesktop } = useDeviceInfo();
   const classes = useStyles();
 
   return (
-    <div className='navbar'>
+    <div className={'navbar' + (backgroundTransparent ? ' transparent' : '')}>
       {!isDesktop && (
         <div className={classes.navBarTop}>
           <button onClick={() => setShowNavBar(false)} className={classes.closeButton}>
