@@ -1,3 +1,4 @@
+export { default as BlobbyGrayIconImage } from './BlobbyGrayIconImage';
 export { default as BlobbyGrayIconUploadToTheCloud } from './BlobbyGrayIconUploadToTheCloud';
 export { default as BlobbyIconHappy } from './BlobbyIconHappy';
 export { default as BlobbyIconHeartMonitor } from './BlobbyIconHeartMonitor';
