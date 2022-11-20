@@ -108,6 +108,6 @@
     "typescript": "^4.3.2"
   },
   "resolutions": {
-    "babel-loader": "8.1.0"
+    "babel-loader": "9.1.0"
   }
 }
