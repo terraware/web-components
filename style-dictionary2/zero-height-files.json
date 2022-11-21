@@ -4,11 +4,11 @@
     "output": "json/base-neutrals.json"
   },
   {
-    "url": "https://terraformation.zeroheight.com/api/token_file/6314661a280a/share",
+    "url": "https://terraformation.zeroheight.com/api/token_file/ef1ad7406f60/share",
     "output": "json/base-colors.json"
   },
   {
-    "url": "https://terraformation.zeroheight.com/api/token_file/3c4e48194000/share",
+    "url": "https://terraformation.zeroheight.com/api/token_file/27c7140ddd23/share",
     "output": "json/semantic.json"
   }
 ]
