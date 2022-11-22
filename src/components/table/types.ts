@@ -14,7 +14,7 @@ export interface RendererProps<T> {
   row: T;
   column: TableColumnType;
   value?: string | number | unknown[] | ReactNode;
-  onRowClick?: () => void;
+  onRowClick?: (newValue?: string) => void;
   reloadData?: () => void;
   className?: string;
 }
