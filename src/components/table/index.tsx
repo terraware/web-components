@@ -45,7 +45,10 @@ export interface Props<T> {
   columns: TableColumnType[];
   rows: T[];
   Renderer?: (props: RendererProps<T>) => JSX.Element;
-  onSelect?: (value: T, fromColumn?: string, newValue?: string) => void; // onSelect function will be called automatically when selecting a row. If controlledSelect is set to true, this function can also be called from the renderer using the onRowClick function and can receive an optional "newValue" parameter from that call
+  // onSelect function will be called automatically when selecting a row. If controlledSelect is set to true,
+  // this function can be called from the renderer using the onRowClick function and can receive
+  // an optional "newValue" parameter from that call
+  onSelect?: (value: T, fromColumn?: string, newValue?: string) => void;
   DetailsRenderer?: (props: DetailsRendererProps) => JSX.Element;
   sortComparator?: (a: T, b: T, orderBy: keyof T) => number;
   sortHandler?: (order: SortOrder, orderBy: string) => void;
