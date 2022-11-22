@@ -17,6 +17,10 @@
   padding-right: $tw-sz-base-small;
   padding-top: $tw-sz-base-small;
 
+  &.transparent {
+    background-color: transparent !important;
+  }
+
   .nav-section {
     padding: $tw-spc-base-x-small $tw-spc-base-small;
     .divider {

@@ -8,7 +8,9 @@ import SubNavbar from '../components/Navbar/SubNavbar';
 export default {
   title: 'Navbar',
   component: Navbar,
-  argTypes: {},
+  argTypes: {
+    backgroundTransparent: false,
+  },
 };
 
 const Template: Story<NavbarProps> = (args) => {
@@ -22,7 +24,7 @@ const Template: Story<NavbarProps> = (args) => {
   const showNavbar = (show: any) => {};
 
   return (
-    <Navbar setShowNavBar={showNavbar}>
+    <Navbar setShowNavBar={showNavbar} backgroundTransparent={args.backgroundTransparent}>
       <NavItem label='Home' icon='home' selected={selectedItem === 'home'} onClick={() => setSelectedItem('home')} />
       <NavItem label='Species' icon='species' selected={selectedItem === 'species'} onClick={() => setSelectedItem('species')} />
       <NavSection />
