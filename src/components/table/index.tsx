@@ -45,7 +45,7 @@ export interface Props<T> {
   columns: TableColumnType[];
   rows: T[];
   Renderer?: (props: RendererProps<T>) => JSX.Element;
-  onSelect?: (value: T, fromColumn?: string) => void;
+  onSelect?: (value: T, fromColumn?: string, newValue?: string) => void;
   DetailsRenderer?: (props: DetailsRendererProps) => JSX.Element;
   sortComparator?: (a: T, b: T, orderBy: keyof T) => number;
   sortHandler?: (order: SortOrder, orderBy: string) => void;
@@ -266,7 +266,7 @@ export default function EnhancedTable<T>({
                               row={row as T}
                               column={c}
                               value={row[c.key]}
-                              onRowClick={onSelect && controlledOnSelect ? () => onSelect(row as T, c.key) : onClick}
+                              onRowClick={onSelect && controlledOnSelect ? (newValue?: string) => onSelect(row as T, c.key, newValue) : onClick}
                               reloadData={reloadData}
                             />
                           ))}
