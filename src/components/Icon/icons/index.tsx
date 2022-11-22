@@ -39,6 +39,7 @@ import IconMenu from '../../svg/IconMenu';
 import IconMenuHorizontal from '../../svg/IconMenuHorizontal';
 import IconMyLocation from '../../svg/IconMyLocation';
 import IconNursery from '../../svg/IconNursery';
+import IconRestorationSite from '../../svg/IconRestorationSite';
 import IconSeedling from '../../svg/IconSeedling';
 import IconSynced from '../../svg/IconSynced';
 import IconTrashCan from '../../svg/IconTrashCan';
@@ -113,6 +114,7 @@ export type IconName =
   | 'iconMenuHorizontal'
   | 'iconMyLocation'
   | 'iconNursery'
+  | 'iconRestorationSite'
   | 'iconSeedling'
   | 'iconSynced'
   | 'iconTrashCan'
@@ -191,6 +193,7 @@ const icons: Record<IconName, SVGComponent> = {
   iconMenuHorizontal: IconMenuHorizontal,
   iconNursery: IconNursery,
   iconMyLocation: IconMyLocation,
+  iconRestorationSite: IconRestorationSite,
   iconSeedling: IconSeedling,
   iconSynced: IconSynced,
   iconTrashCan: IconTrashCan,
