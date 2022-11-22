@@ -1,6 +1,6 @@
 {
   "name": "@terraware/web-components",
-  "version": "1.0.67",
+  "version": "1.0.68",
   "author": "Terraformation Inc.",
   "license": "Apache-2.0",
   "repository": {
@@ -49,6 +49,7 @@
     "build-dist": "yarn transpile && yarn generate-types",
     "lint": "tslint --project tsconfig.json",
     "license-report": "license-report --only=prod --department.value=terraware --relatedTo.value=web-components --output=html > license-report.html",
+    "license-report-dist": "license-report --only=prod --department.value=terraware --relatedTo.value=web-components --output=html > dist/license-report.html",
     "check-updates": "yarn build-dictionary && yarn storybook"
   },
   "eslintConfig": {
