@@ -1,5 +1,8 @@
+import hexRgb from 'hex-rgb';
+import sd from 'style-dictionary';
+
 function build(source, destination) {
-  const StyleDictionary = require('style-dictionary').extend({
+  const StyleDictionary = sd.extend({
     source,
     platforms: {
       js: {
@@ -54,6 +57,10 @@ export default TerrawareTheme2;`;
       dictionary.allTokens.map(token => {
         const { name, value } = token;
         let tokenValue = value.value || value;
+
+        tokenValue = tokenValue.replace(/rgba\((#[0-9|a-f|A-F]+),\s*(\d*\.?\d*)\)/g, (match, hex, opacity) => {
+          return hexRgb(hex, {alpha: parseFloat(opacity), format: 'css'});
+        });
 
         if (typeof(value) === 'string' && value.match(/^\d+$/)) {
           tokenValue = parseInt(value, 10);
