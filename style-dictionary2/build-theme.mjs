@@ -56,7 +56,6 @@ export default TerrawareTheme2;`;
       };
       dictionary.allTokens.map(token => {
         const { name, value } = token;
-        // console.log(token);
         let tokenValue = value.value || value;
 
         tokenValue = tokenValue.replace(/rgba\((#[0-9|a-f|A-F]+),\s*(\d*\.?\d*)\)/g, (match, hex, opacity) => {
