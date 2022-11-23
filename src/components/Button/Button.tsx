@@ -5,11 +5,12 @@ import { Size } from '../Size';
 import './styles.scss';
 
 import { makeStyles } from '@mui/styles';
+import { Theme } from '@mui/material';
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme: Theme) => ({
   svgIconFill: {
     '& path': {
-      fill: 'currentColor',
+      fill: theme.palette.TwClrBgGhostHover,
     },
   },
 }));

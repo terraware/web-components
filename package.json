@@ -97,6 +97,7 @@
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
     "fs": "^0.0.1-security",
+    "hex-rgb": "^5.0.0",
     "license-report": "^6.0.0",
     "react-scripts": "^4.0.3",
     "style-dictionary": "^3.0.1",
