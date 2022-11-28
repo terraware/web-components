@@ -140,6 +140,7 @@ export default function TextTruncated(props: Props): JSX.Element {
               component='button'
               onClick={() => setShowAllOpen(!showAllOpen)}
               onBlur={() => setShowAllOpen(false)}
+              sx={{color: theme.palette.TwClrTxtBrand, textDecorationColor: `${theme.palette.TwClrTxtBrand}80`}}
             >
               <Typography sx={{...textStyle, marginTop: '-3px'}}>{
                 (textToDisplay.numberMore > 0 ? textToDisplay.numberMore + ' ' : '') + moreText

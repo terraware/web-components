@@ -61,11 +61,13 @@
 
   .MuiInputBase-root {
     border: 1px solid $tw-clr-bg-info;
+    border-radius: $tw-sz-base-x-small;
     position: unset;
   }
 
   input {
     padding: calc(#{$tw-spc-base-xx-small} * 2.5) calc(#{$tw-spc-base-xx-small} * 3);
     background-color: $tw-clr-base-white;
+    border-radius: $tw-sz-base-x-small 0 0 $tw-sz-base-x-small;
   }
 }
