@@ -7,15 +7,15 @@ echo "Artifact Registry Provider = $ARTIFACT_REGISTRY_PROVIDER"
 # TODO: add support for AWS Code artifact
 if [[ $ARTIFACT_REGISTRY_PROVIDER == 'npm' ]]; then
 
-  echo "Checking npm registry for current version"
-  NPM_PACKAGE_VERSION=`npm show @terraware/web-components version`
-  echo "Got npm package version $NPM_PACKAGE_VERSION"
-
   echo "Checking version in git package.json"
   PACKAGE_JSON_VERSION=`node -e "process.stdout.write(require(__dirname + '../../dist/package.json').version)"`
   echo "Got package json version $PACKAGE_JSON_VERSION"
 
-  if [ $PACKAGE_JSON_VERSION == $NPM_PACKAGE_VERSION ]; then
+  echo "Checking if version exists in npm repository"
+  npm view @terraware/web-components@${PACKAGE_JSON_VERSION} maintainers > /tmp/npm-output
+  cat /tmp/npm-output
+
+  if [ -s /tmp/npm-output ]; then
     echo "Package is up to date"
   else
     echo "Package needs update"
