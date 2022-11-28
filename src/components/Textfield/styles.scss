@@ -70,14 +70,16 @@
     }
 
     &:active {
-      border: $tw-sz-frm-fld-text-input-stroke solid $tw-clr-brdr-hover;
+      padding: #{$tw-spc-base-x-small - $tw-sz-frm-fld-text-input-stroke-active};
+      border: $tw-sz-frm-fld-text-input-stroke-active solid $tw-clr-brdr-hover;
       outline: $tw-sz-frm-fld-text-input-stroke-active solid $tw-clr-brdr-active;
     }
 
     &:focus-within {
-      border: $tw-sz-frm-fld-text-input-stroke solid $tw-clr-brdr-hover;
+      padding: #{$tw-spc-base-x-small - $tw-sz-frm-fld-text-input-stroke-active};
+      border: $tw-sz-frm-fld-text-input-stroke-active solid $tw-clr-brdr-hover;
       outline: $tw-sz-frm-fld-text-input-stroke-active solid $tw-clr-brdr-active;
-      outline-offset: -$tw-sz-frm-fld-text-input-stroke;
+      outline-offset: -$tw-sz-frm-fld-text-input-stroke-active;
     }
 
     input {
