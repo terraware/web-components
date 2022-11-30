@@ -18,7 +18,7 @@
     }
   }
 
-  border-radius: $tw-sz-base-x-small;
+  border-radius: $tw-sz-base-small;
   display: flex;
   width: 480px;
 
@@ -27,8 +27,21 @@
   }
 
   &.tw-message--toast {
-    background-color: $tw-clr-bg;
+    position: fixed;
     box-shadow: 0 $tw-sz-base-x-small $tw-sz-base-small 0 rgba($tw-clr-base-gray-800, $tw-opcty-base-020);
+
+    &.tw-message--desktop {
+      top: $tw-spc-base-medium;
+      left: 50%;
+      transform: translate(-50%);
+    }
+
+    &.tw-message--mobile {
+      bottom: $tw-spc-base-large;
+      left: 50%;
+      transform: translate(-50%);
+      width: 90%;
+    }
   }
 
   &--container {
@@ -98,7 +111,7 @@
   }
 
   &--left-side {
-    border-radius: ($tw-sz-base-x-small - 1) 0 0 ($tw-sz-base-x-small - 1);
+    border-radius: ($tw-sz-base-small - 1) 0 0 ($tw-sz-base-small - 1);
     padding: $tw-spc-base-small $tw-spc-base-small 0 $tw-spc-base-small;
     .left-side--icon {
       fill: $tw-clr-icn-inverse;
@@ -130,10 +143,10 @@
 
   &--info {
     border: 1px solid $tw-clr-brdr-info;
+    background-color: $tw-clr-bg-info-tertiary;
 
     &.tw-message--page {
       border: 1px solid $tw-clr-brdr-info;
-      background-color: $tw-clr-bg-info-tertiary;
       .main-content--icon {
         fill:$tw-clr-icn-info;
       }
@@ -148,10 +161,10 @@
 
   &--critical {
     border: 1px solid $tw-clr-brdr-danger;
+    background-color: $tw-clr-bg-danger-tertiary;
 
     &.tw-message--page {
       border: 1px solid $tw-clr-brdr-danger;
-      background-color: $tw-clr-bg-danger-tertiary;
 
       .main-content--icon {
         fill: $tw-clr-icn-danger;
@@ -167,10 +180,10 @@
 
   &--warning {
     border: 1px solid $tw-clr-brdr-warning;
+    background-color: $tw-clr-bg-warning-tertiary;
 
     &.tw-message--page {
       border: 1px solid $tw-clr-brdr-warning;
-      background-color: $tw-clr-bg-warning-tertiary;
 
       .main-content--icon {
         fill: $tw-clr-icn-warning;
@@ -186,10 +199,10 @@
 
   &--success {
     border: 1px solid $tw-clr-brdr-success;
+    background-color: $tw-clr-bg-success-tertiary;
 
     &.tw-message--page {
       border: 1px solid $tw-clr-brdr-success;
-      background-color: $tw-clr-bg-success-tertiary;
 
       .main-content--icon {
         fill: $tw-clr-icn-success;

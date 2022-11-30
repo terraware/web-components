@@ -21,7 +21,7 @@ export default function Message(props: Props): JSX.Element | null {
   const { isMobile } = useDeviceInfo();
 
   return (
-    <div className={`tw-message tw-message--${type} tw-message--${priority} ${isMobile ? 'tw-message--mobile' : ''}`}>
+    <div className={`tw-message tw-message--${type} tw-message--${priority} ${isMobile ? 'tw-message--mobile' : 'tw-message--desktop'}`}>
       {type === 'toast' && (
         <div className='tw-message--left-side'>
           <Icon name={priority} className='left-side--icon' />
