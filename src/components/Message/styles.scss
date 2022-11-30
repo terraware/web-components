@@ -27,21 +27,7 @@
   }
 
   &.tw-message--toast {
-    position: fixed;
     box-shadow: 0 $tw-sz-base-x-small $tw-sz-base-small 0 rgba($tw-clr-base-gray-800, $tw-opcty-base-020);
-
-    &.tw-message--desktop {
-      top: $tw-spc-base-medium;
-      left: 50%;
-      transform: translate(-50%);
-    }
-
-    &.tw-message--mobile {
-      bottom: $tw-spc-base-large;
-      left: 50%;
-      transform: translate(-50%);
-      width: 90%;
-    }
   }
 
   &--container {
