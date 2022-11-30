@@ -24,7 +24,6 @@ import Critical from '../../svg/Critical';
 import Dashboard from '../../svg/IconDashboard';
 import Edit from '../../svg/Edit';
 import Error from '../../svg/Error';
-import Export from '../../svg/Export';
 import Filter from '../../svg/Filter';
 import Folder from '../../svg/Folder';
 import Futures from '../../svg/IconFutures';
@@ -102,7 +101,6 @@ export type IconName =
   | 'dashboard'
   | 'edit'
   | 'error'
-  | 'export'
   | 'filter'
   | 'folder'
   | 'futures'
@@ -184,7 +182,6 @@ const icons: Record<IconName, SVGComponent> = {
   dashboard: Dashboard,
   edit: Edit,
   error: Error,
-  export: Export,
   filter: Filter,
   folder: Folder,
   futures: Futures,
