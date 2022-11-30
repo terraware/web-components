@@ -21,7 +21,6 @@ export { default as Close } from './Close';
 export { default as Critical } from './Critical';
 export { default as Edit } from './Edit';
 export { default as Error } from './Error';
-export { default as Export } from './Export';
 export { default as Filter } from './Filter';
 export { default as Folder } from './Folder';
 export { default as Help } from './Help';
