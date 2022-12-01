@@ -33,7 +33,7 @@
     "react-sortable-hoc": "^2.0.0",
     "sass": "^1.35.1",
     "tinycolor2": "^1.4.2",
-    "web-vitals": "^1.0.1"
+    "web-vitals": "^3.0.0"
   },
   "scripts": {
     "start": "start-storybook",
@@ -95,8 +95,8 @@
     "@storybook/react": "^6.3.7",
     "@svgr/cli": "^6.3.1",
     "@testing-library/jest-dom": "^5.11.4",
-    "@testing-library/react": "^11.1.0",
-    "@testing-library/user-event": "^12.1.10",
+    "@testing-library/react": "^13.0.0",
+    "@testing-library/user-event": "^14.0.0",
     "fs": "^0.0.1-security",
     "hex-rgb": "^5.0.0",
     "license-report": "^6.0.0",
@@ -110,6 +110,7 @@
     "typescript": "^4.3.2"
   },
   "resolutions": {
-    "babel-loader": "8.1.0"
+    "babel-loader": "8.3.0",
+    "@storybook/react/**/loader-utils": "^2.0.4"
   }
 }
