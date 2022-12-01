@@ -10,10 +10,6 @@ elif [[ "$GITHUB_REF" == refs/heads/main ]]; then
   # TODO: use AWS code artifact repository for staging
   # For now, staging takes care of prod npm update.
   ARTIFACT_REGISTRY_PROVIDER=npm
-elif [[ "$GITHUB_REF" == refs/heads/feature/visual-updates ]]; then
-  # While this effort is in progress, we would like to publish to npm
-  # from this feature branch. The versions will be in the 2.x.x series.
-  ARTIFACT_REGISTRY_PROVIDER=npm
 else
   echo "Nothing to do"
   ARTIFACT_REGISTRY_PROVIDER=
