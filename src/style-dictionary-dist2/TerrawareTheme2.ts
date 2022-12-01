@@ -20,6 +20,15 @@ declare module '@mui/material/styles/createPalette' {
     TwClrBaseGreen600?: React.CSSProperties['color'];
     TwClrBaseGreen700?: React.CSSProperties['color'];
     TwClrBaseGreen800?: React.CSSProperties['color'];
+    TwClrBaseLightGreen050?: React.CSSProperties['color'];
+    TwClrBaseLightGreen100?: React.CSSProperties['color'];
+    TwClrBaseLightGreen200?: React.CSSProperties['color'];
+    TwClrBaseLightGreen300?: React.CSSProperties['color'];
+    TwClrBaseLightGreen400?: React.CSSProperties['color'];
+    TwClrBaseLightGreen500?: React.CSSProperties['color'];
+    TwClrBaseLightGreen600?: React.CSSProperties['color'];
+    TwClrBaseLightGreen700?: React.CSSProperties['color'];
+    TwClrBaseLightGreen800?: React.CSSProperties['color'];
     TwClrBaseOrange050?: React.CSSProperties['color'];
     TwClrBaseOrange100?: React.CSSProperties['color'];
     TwClrBaseOrange200?: React.CSSProperties['color'];
@@ -56,15 +65,6 @@ declare module '@mui/material/styles/createPalette' {
     TwClrBaseRed600?: React.CSSProperties['color'];
     TwClrBaseRed700?: React.CSSProperties['color'];
     TwClrBaseRed800?: React.CSSProperties['color'];
-    TwClrBaseTeal050?: React.CSSProperties['color'];
-    TwClrBaseTeal100?: React.CSSProperties['color'];
-    TwClrBaseTeal200?: React.CSSProperties['color'];
-    TwClrBaseTeal300?: React.CSSProperties['color'];
-    TwClrBaseTeal400?: React.CSSProperties['color'];
-    TwClrBaseTeal500?: React.CSSProperties['color'];
-    TwClrBaseTeal600?: React.CSSProperties['color'];
-    TwClrBaseTeal700?: React.CSSProperties['color'];
-    TwClrBaseTeal800?: React.CSSProperties['color'];
     TwClrBaseYellow050?: React.CSSProperties['color'];
     TwClrBaseYellow100?: React.CSSProperties['color'];
     TwClrBaseYellow200?: React.CSSProperties['color'];
@@ -166,9 +166,9 @@ declare module '@mui/material/styles/createPalette' {
     TwClrTxtSuccess?: React.CSSProperties['color'];
     TwClrBgWarning?: React.CSSProperties['color'];
     TwClrBgWarningTertiary?: React.CSSProperties['color'];
-    TwClrBrdrWarningHover?: React.CSSProperties['color'];
     TwClrBrdrWarning?: React.CSSProperties['color'];
     TwClrBrdrWarningActive?: React.CSSProperties['color'];
+    TwClrBrdrWarningHover?: React.CSSProperties['color'];
     TwClrIcnOnWarning?: React.CSSProperties['color'];
     TwClrIcnWarning?: React.CSSProperties['color'];
     TwClrTxtOnWarning?: React.CSSProperties['color'];
@@ -194,6 +194,15 @@ declare module '@mui/material/styles/createPalette' {
     TwClrBaseGreen600?: React.CSSProperties['color'];
     TwClrBaseGreen700?: React.CSSProperties['color'];
     TwClrBaseGreen800?: React.CSSProperties['color'];
+    TwClrBaseLightGreen050?: React.CSSProperties['color'];
+    TwClrBaseLightGreen100?: React.CSSProperties['color'];
+    TwClrBaseLightGreen200?: React.CSSProperties['color'];
+    TwClrBaseLightGreen300?: React.CSSProperties['color'];
+    TwClrBaseLightGreen400?: React.CSSProperties['color'];
+    TwClrBaseLightGreen500?: React.CSSProperties['color'];
+    TwClrBaseLightGreen600?: React.CSSProperties['color'];
+    TwClrBaseLightGreen700?: React.CSSProperties['color'];
+    TwClrBaseLightGreen800?: React.CSSProperties['color'];
     TwClrBaseOrange050?: React.CSSProperties['color'];
     TwClrBaseOrange100?: React.CSSProperties['color'];
     TwClrBaseOrange200?: React.CSSProperties['color'];
@@ -230,15 +239,6 @@ declare module '@mui/material/styles/createPalette' {
     TwClrBaseRed600?: React.CSSProperties['color'];
     TwClrBaseRed700?: React.CSSProperties['color'];
     TwClrBaseRed800?: React.CSSProperties['color'];
-    TwClrBaseTeal050?: React.CSSProperties['color'];
-    TwClrBaseTeal100?: React.CSSProperties['color'];
-    TwClrBaseTeal200?: React.CSSProperties['color'];
-    TwClrBaseTeal300?: React.CSSProperties['color'];
-    TwClrBaseTeal400?: React.CSSProperties['color'];
-    TwClrBaseTeal500?: React.CSSProperties['color'];
-    TwClrBaseTeal600?: React.CSSProperties['color'];
-    TwClrBaseTeal700?: React.CSSProperties['color'];
-    TwClrBaseTeal800?: React.CSSProperties['color'];
     TwClrBaseYellow050?: React.CSSProperties['color'];
     TwClrBaseYellow100?: React.CSSProperties['color'];
     TwClrBaseYellow200?: React.CSSProperties['color'];
@@ -340,9 +340,9 @@ declare module '@mui/material/styles/createPalette' {
     TwClrTxtSuccess?: React.CSSProperties['color'];
     TwClrBgWarning?: React.CSSProperties['color'];
     TwClrBgWarningTertiary?: React.CSSProperties['color'];
-    TwClrBrdrWarningHover?: React.CSSProperties['color'];
     TwClrBrdrWarning?: React.CSSProperties['color'];
     TwClrBrdrWarningActive?: React.CSSProperties['color'];
+    TwClrBrdrWarningHover?: React.CSSProperties['color'];
     TwClrIcnOnWarning?: React.CSSProperties['color'];
     TwClrIcnWarning?: React.CSSProperties['color'];
     TwClrTxtOnWarning?: React.CSSProperties['color'];
@@ -356,177 +356,177 @@ type ThemeDictionary = {
 
 const TerrawareTheme2: ThemeDictionary = {
   "palette": {
-    "TwClrBaseBlue050": "#F0F4FF",
-    "TwClrBaseBlue100": "#E2E9FF",
-    "TwClrBaseBlue200": "#BED0FF",
-    "TwClrBaseBlue300": "#92B4FF",
-    "TwClrBaseBlue400": "#4E92FF",
-    "TwClrBaseBlue500": "#007DF2",
-    "TwClrBaseBlue600": "#0067C8",
-    "TwClrBaseBlue700": "#0053A5",
-    "TwClrBaseBlue800": "#004184",
-    "TwClrBaseGreen050": "#D6FDE5",
-    "TwClrBaseGreen100": "#A6FCCA",
-    "TwClrBaseGreen200": "#53EA9F",
-    "TwClrBaseGreen300": "#46CB89",
-    "TwClrBaseGreen400": "#38A76F",
-    "TwClrBaseGreen500": "#308F5F",
-    "TwClrBaseGreen600": "#27764E",
-    "TwClrBaseGreen700": "#1F6040",
-    "TwClrBaseGreen800": "#164B34",
-    "TwClrBaseOrange050": "#FEF2EE",
-    "TwClrBaseOrange100": "#FCE5DE",
-    "TwClrBaseOrange200": "#FAC4B1",
-    "TwClrBaseOrange300": "#F89E74",
-    "TwClrBaseOrange400": "#DE7935",
-    "TwClrBaseOrange500": "#BD6931",
-    "TwClrBaseOrange600": "#9A572B",
-    "TwClrBaseOrange700": "#7E4622",
-    "TwClrBaseOrange800": "#643719",
-    "TwClrBasePink050": "#FFF1F4",
-    "TwClrBasePink100": "#FFE2E9",
-    "TwClrBasePink200": "#FFBFD0",
-    "TwClrBasePink300": "#FF94B4",
-    "TwClrBasePink400": "#FF5294",
-    "TwClrBasePink500": "#F6007F",
-    "TwClrBasePink600": "#CD0069",
-    "TwClrBasePink700": "#A80055",
-    "TwClrBasePink800": "#860043",
-    "TwClrBasePurple050": "#F6F2FE",
-    "TwClrBasePurple100": "#EEE6FD",
-    "TwClrBasePurple200": "#DBC8FC",
-    "TwClrBasePurple300": "#C7A4FA",
-    "TwClrBasePurple400": "#B178F7",
-    "TwClrBasePurple500": "#A456F5",
-    "TwClrBasePurple600": "#9525EE",
-    "TwClrBasePurple700": "#7A1CC3",
-    "TwClrBasePurple800": "#61159D",
-    "TwClrBaseRed050": "#FFF1F1",
-    "TwClrBaseRed100": "#FFE3E3",
-    "TwClrBaseRed200": "#FFC1C1",
-    "TwClrBaseRed300": "#FF9797",
-    "TwClrBaseRed400": "#FF5A5B",
-    "TwClrBaseRed500": "#FE0003",
-    "TwClrBaseRed600": "#D40002",
-    "TwClrBaseRed700": "#AD0001",
-    "TwClrBaseRed800": "#8B0001",
-    "TwClrBaseTeal050": "#D8FAFE",
-    "TwClrBaseTeal100": "#ADF6FE",
-    "TwClrBaseTeal200": "#39E5F1",
-    "TwClrBaseTeal300": "#30C6D1",
-    "TwClrBaseTeal400": "#2EA2AB",
-    "TwClrBaseTeal500": "#288B93",
-    "TwClrBaseTeal600": "#1F7278",
-    "TwClrBaseTeal700": "#175D62",
-    "TwClrBaseTeal800": "#114A4E",
-    "TwClrBaseYellow050": "#FEF3E1",
-    "TwClrBaseYellow100": "#FDE7C3",
-    "TwClrBaseYellow200": "#FBCA47",
-    "TwClrBaseYellow300": "#DAAF38",
-    "TwClrBaseYellow400": "#B38F2C",
-    "TwClrBaseYellow500": "#9A7B25",
-    "TwClrBaseYellow600": "#7F641C",
-    "TwClrBaseYellow700": "#685215",
-    "TwClrBaseYellow800": "#52400F",
+    "TwClrBaseBlue050": "#EFF1F8",
+    "TwClrBaseBlue100": "#DDE1F1",
+    "TwClrBaseBlue200": "#BDC4E4",
+    "TwClrBaseBlue300": "#9EA9D7",
+    "TwClrBaseBlue400": "#808ECA",
+    "TwClrBaseBlue500": "#6172BE",
+    "TwClrBaseBlue600": "#4658AA",
+    "TwClrBaseBlue700": "#35437F",
+    "TwClrBaseBlue800": "#242D57",
+    "TwClrBaseGreen050": "#E2F6EC",
+    "TwClrBaseGreen100": "#C2EBD6",
+    "TwClrBaseGreen200": "#84D6AC",
+    "TwClrBaseGreen300": "#41C07F",
+    "TwClrBaseGreen400": "#36A36B",
+    "TwClrBaseGreen500": "#2C8658",
+    "TwClrBaseGreen600": "#236A46",
+    "TwClrBaseGreen700": "#1A5035",
+    "TwClrBaseGreen800": "#123624",
+    "TwClrBaseLightGreen050": "#EAF3DC",
+    "TwClrBaseLightGreen100": "#D4E8BA",
+    "TwClrBaseLightGreen200": "#ACD278",
+    "TwClrBaseLightGreen300": "#86BA3E",
+    "TwClrBaseLightGreen400": "#719E34",
+    "TwClrBaseLightGreen500": "#5D822B",
+    "TwClrBaseLightGreen600": "#496622",
+    "TwClrBaseLightGreen700": "#384D1A",
+    "TwClrBaseLightGreen800": "#263411",
+    "TwClrBaseOrange050": "#F8EFE5",
+    "TwClrBaseOrange100": "#F1DFCB",
+    "TwClrBaseOrange200": "#E3C099",
+    "TwClrBaseOrange300": "#D5A167",
+    "TwClrBaseOrange400": "#C78237",
+    "TwClrBaseOrange500": "#A36A2D",
+    "TwClrBaseOrange600": "#815424",
+    "TwClrBaseOrange700": "#61401B",
+    "TwClrBaseOrange800": "#422B12",
+    "TwClrBasePink050": "#F9EDF2",
+    "TwClrBasePink100": "#F3DCE6",
+    "TwClrBasePink200": "#E7B9CD",
+    "TwClrBasePink300": "#DC97B5",
+    "TwClrBasePink400": "#D0749B",
+    "TwClrBasePink500": "#C34D7F",
+    "TwClrBasePink600": "#A13664",
+    "TwClrBasePink700": "#7A294C",
+    "TwClrBasePink800": "#531C34",
+    "TwClrBasePurple050": "#F4EFF9",
+    "TwClrBasePurple100": "#E8DEF2",
+    "TwClrBasePurple200": "#D3BEE6",
+    "TwClrBasePurple300": "#BD9FDA",
+    "TwClrBasePurple400": "#A880CE",
+    "TwClrBasePurple500": "#9360C1",
+    "TwClrBasePurple600": "#7A43AD",
+    "TwClrBasePurple700": "#5D3383",
+    "TwClrBasePurple800": "#3E2359",
+    "TwClrBaseRed050": "#FAEEED",
+    "TwClrBaseRed100": "#F4DBD9",
+    "TwClrBaseRed200": "#EBBAB7",
+    "TwClrBaseRed300": "#E19893",
+    "TwClrBaseRed400": "#D7756F",
+    "TwClrBaseRed500": "#CB4D45",
+    "TwClrBaseRed600": "#A8362F",
+    "TwClrBaseRed700": "#802923",
+    "TwClrBaseRed800": "#571C18",
+    "TwClrBaseYellow050": "#F5F1DC",
+    "TwClrBaseYellow100": "#EBE2B5",
+    "TwClrBaseYellow200": "#D7C76F",
+    "TwClrBaseYellow300": "#C0AB35",
+    "TwClrBaseYellow400": "#A3912D",
+    "TwClrBaseYellow500": "#867725",
+    "TwClrBaseYellow600": "#6A5E1D",
+    "TwClrBaseYellow700": "#504716",
+    "TwClrBaseYellow800": "#36300F",
     "TwClrBaseBlack": "#000000",
-    "TwClrBaseGray025": "#F9FAFA",
-    "TwClrBaseGray050": "#F2F4F5",
-    "TwClrBaseGray075": "#EDF0F1",
-    "TwClrBaseGray100": "#E5EAEA",
-    "TwClrBaseGray200": "#CAD2D3",
-    "TwClrBaseGray300": "#A9B7B8",
-    "TwClrBaseGray400": "#859799",
-    "TwClrBaseGray500": "#708284",
-    "TwClrBaseGray600": "#5C6B6C",
-    "TwClrBaseGray700": "#4B5758",
-    "TwClrBaseGray800": "#3A4445",
-    "TwClrBaseGray900": "#2B3233",
+    "TwClrBaseGray025": "#F9F8F7",
+    "TwClrBaseGray050": "#F1F0EC",
+    "TwClrBaseGray075": "#EBEAE4",
+    "TwClrBaseGray100": "#E3E1D9",
+    "TwClrBaseGray200": "#CBC6B7",
+    "TwClrBaseGray300": "#B2AB93",
+    "TwClrBaseGray400": "#9A9172",
+    "TwClrBaseGray500": "#7F775B",
+    "TwClrBaseGray600": "#645E48",
+    "TwClrBaseGray700": "#4B4736",
+    "TwClrBaseGray800": "#333025",
+    "TwClrBaseGray900": "#1D1B15",
     "TwClrBaseTransparent": "#FFFFFF00",
     "TwClrBaseWhite": "#FFFFFF",
     "TwClrBg": "#FFFFFF",
-    "TwClrBgActive": "#F2F4F5",
-    "TwClrBgGhost": "#FFFFFF00",
-    "TwClrBgGhostActive": "#A9B7B866",
-    "TwClrBgGhostHover": "#A9B7B833",
-    "TwClrBgHover": "#F9FAFA",
-    "TwClrBgInverse": "#3A4445",
-    "TwClrBgSecondary": "#F2F4F5",
-    "TwClrBgSecondaryActive": "#E5EAEA",
-    "TwClrBgSecondaryHover": "#EDF0F1",
-    "TwClrBgTertiary": "#CAD2D3",
-    "TwClrBgTertiaryActive": "#A9B7B8",
-    "TwClrBgTertiaryHover": "#CAD2D3",
-    "TwClrBrdr": "#3A4445",
-    "TwClrBrdrActive": "#0067C8",
-    "TwClrBrdrFocus": "#0067C8",
-    "TwClrBrdrHover": "#0067C8",
-    "TwClrBrdrSecondary": "#708284",
-    "TwClrBrdrTertiary": "#A9B7B8",
-    "TwClrIcn": "#3A4445",
+    "TwClrBgActive": "#F1F0EC",
+    "TwClrBgGhost": "rgb(255 255 255 / 0%)",
+    "TwClrBgGhostActive": "rgb(178 171 147 / 40%)",
+    "TwClrBgGhostHover": "rgb(178 171 147 / 20%)",
+    "TwClrBgHover": "#F9F8F7",
+    "TwClrBgInverse": "#333025",
+    "TwClrBgSecondary": "#F1F0EC",
+    "TwClrBgSecondaryActive": "#E3E1D9",
+    "TwClrBgSecondaryHover": "#EBEAE4",
+    "TwClrBgTertiary": "#CBC6B7",
+    "TwClrBgTertiaryActive": "#B2AB93",
+    "TwClrBgTertiaryHover": "linear-gradient(rgb(178 171 147 / 50%), rgb(178 171 147 / 50%)), linear-gradient(#CBC6B7, #CBC6B7)",
+    "TwClrBrdr": "#333025",
+    "TwClrBrdrActive": "linear-gradient(rgb(70 88 170 / 50%), rgb(70 88 170 / 50%)), linear-gradient(#6172BE, #6172BE)",
+    "TwClrBrdrFocus": "#4658AA",
+    "TwClrBrdrHover": "#6172BE",
+    "TwClrBrdrSecondary": "#7F775B",
+    "TwClrBrdrTertiary": "#B2AB93",
+    "TwClrIcn": "#333025",
     "TwClrIcnInverse": "#FFFFFF",
-    "TwClrIcnSecondary": "#708284",
-    "TwClrTxt": "#3A4445",
+    "TwClrIcnSecondary": "#7F775B",
+    "TwClrTxt": "#333025",
     "TwClrTxtInverse": "#FFFFFF",
-    "TwClrTxtSecondary": "#5C6B6C",
-    "TwClrTxtTertiary": "#A9B7B8",
-    "TwClrBgBrand": "#0067C8",
-    "TwClrBgBrandActive": "#0053A5",
-    "TwClrBgBrandGhost": "#0067C800",
-    "TwClrBgBrandGhostActive": "#0067C833",
-    "TwClrBgBrandGhostHover": "#0067C819",
-    "TwClrBgBrandHover": "#0067C8",
-    "TwClrBgBrandTertiary": "#F0F4FF",
-    "TwClrBrdrBrand": "#0067C8",
-    "TwClrIcnBrand": "#007DF2",
+    "TwClrTxtSecondary": "#645E48",
+    "TwClrTxtTertiary": "#B2AB93",
+    "TwClrBgBrand": "#2C8658",
+    "TwClrBgBrandActive": "#4658AA",
+    "TwClrBgBrandGhost": "rgb(44 134 88 / 0%)",
+    "TwClrBgBrandGhostActive": "rgb(44 134 88 / 20%)",
+    "TwClrBgBrandGhostHover": "rgb(44 134 88 / 10%)",
+    "TwClrBgBrandHover": "linear-gradient(rgb(35 106 70 / 50%), rgb(35 106 70 / 50%)), linear-gradient(#2C8658, #2C8658)",
+    "TwClrBgBrandTertiary": "#E2F6EC",
+    "TwClrBrdrBrand": "#2C8658",
+    "TwClrIcnBrand": "#2C8658",
     "TwClrIcnOnBrand": "#FFFFFF",
-    "TwClrTxtBrand": "#0067C8",
+    "TwClrTxtBrand": "#2C8658",
     "TwClrTxtOnBrand": "#FFFFFF",
-    "TwClrBgDanger": "#D40002",
-    "TwClrBgDangerActive": "#AD0001",
-    "TwClrBgDangerGhost": "#D4000200",
-    "TwClrBgDangerGhostActive": "#D4000233",
-    "TwClrBgDangerGhostHover": "#D400021A",
-    "TwClrBgDangerHover": "#D40002",
-    "TwClrBgDangerTertiary": "#FFF1F1",
-    "TwClrBrdrDanger": "#FE0003",
-    "TwClrBrdrDangerActive": "#FE0003",
-    "TwClrBrdrDangerHover": "#FE0003",
-    "TwClrIcnDanger": "#FE0003",
+    "TwClrBgDanger": "#CB4D45",
+    "TwClrBgDangerActive": "#A8362F",
+    "TwClrBgDangerGhost": "rgb(203 77 69 / 0%)",
+    "TwClrBgDangerGhostActive": "rgb(203 77 69 / 20%)",
+    "TwClrBgDangerGhostHover": "rgb(203 77 69 / 10%)",
+    "TwClrBgDangerHover": "linear-gradient(rgb(168 54 47 / 50%), rgb(168 54 47 / 50%)), linear-gradient(#CB4D45, #CB4D45)",
+    "TwClrBgDangerTertiary": "#FAEEED",
+    "TwClrBrdrDanger": "#CB4D45",
+    "TwClrBrdrDangerActive": "#A8362F",
+    "TwClrBrdrDangerHover": "linear-gradient(rgb(168 54 47 / 50%), rgb(168 54 47 / 50%)), linear-gradient(#CB4D45, #CB4D45)",
+    "TwClrIcnDanger": "#CB4D45",
     "TwClrIcnOnDanger": "#FFFFFF",
-    "TwClrTxtDanger": "#D40002",
+    "TwClrTxtDanger": "#CB4D45",
     "TwClrTxtOnDanger": "#FFFFFF",
-    "TwClrBgInfo": "#708284",
-    "TwClrBgInfoTertiary": "#F2F4F5",
-    "TwClrBrdrInfo": "#708284",
-    "TwClrIcnInfo": "#708284",
+    "TwClrBgInfo": "#7F775B",
+    "TwClrBgInfoTertiary": "#F1F0EC",
+    "TwClrBrdrInfo": "#7F775B",
+    "TwClrIcnInfo": "#7F775B",
     "TwClrIcnOnInfo": "#FFFFFF",
-    "TwClrTxtInfo": "#5C6B6C",
+    "TwClrTxtInfo": "#645E48",
     "TwClrTxtOnInfo": "#FFFFFF",
-    "TwClrBgSelected": "#0067C8",
-    "TwClrBgSelectedGhost": "#0067C800",
-    "TwClrBgSelectedGhostActive": "#0067C833",
-    "TwClrBgSelectedGhostHover": "#0067C819",
-    "TwClrBrdrSelected": "#0067C8",
+    "TwClrBgSelected": "#6172BE",
+    "TwClrBgSelectedGhost": "rgb(97 114 190 / 0%)",
+    "TwClrBgSelectedGhostActive": "rgb(97 114 190 / 20%)",
+    "TwClrBgSelectedGhostHover": "rgb(97 114 190 / 10%)",
+    "TwClrBrdrSelected": "#6172BE",
     "TwClrIcnOnSelected": "#FFFFFF",
-    "TwClrIcnSelected": "#0067C8",
+    "TwClrIcnSelected": "#6172BE",
     "TwClrTxtOnSelected": "#FFFFFF",
-    "TwClrTxtSelected": "#0067C8",
-    "TwClrBgSuccess": "#308F5F",
-    "TwClrBgSuccessTertiary": "#D6FDE5",
-    "TwClrBrdrSuccess": "#308F5F",
+    "TwClrTxtSelected": "#6172BE",
+    "TwClrBgSuccess": "#5D822B",
+    "TwClrBgSuccessTertiary": "#EAF3DC",
+    "TwClrBrdrSuccess": "#5D822B",
     "TwClrIcnOnSuccess": "#FFFFFF",
-    "TwClrIcnSuccess": "#308F5F",
+    "TwClrIcnSuccess": "#5D822B",
     "TwClrTxtOnSuccess": "#FFFFFF",
-    "TwClrTxtSuccess": "#27764E",
-    "TwClrBgWarning": "#BD6931",
-    "TwClrBgWarningTertiary": "#FEF2EE",
-    "TwClrBrdrWarningHover": "#BD6931",
-    "TwClrBrdrWarning": "#BD6931",
-    "TwClrBrdrWarningActive": "#BD6931",
+    "TwClrTxtSuccess": "#5D822B",
+    "TwClrBgWarning": "#A36A2D",
+    "TwClrBgWarningTertiary": "#F8EFE5",
+    "TwClrBrdrWarning": "#A36A2D",
+    "TwClrBrdrWarningActive": "#815424",
+    "TwClrBrdrWarningHover": "linear-gradient(rgb(129 84 36 / 50%), rgb(129 84 36 / 50%)), linear-gradient(#A36A2D, #A36A2D)",
     "TwClrIcnOnWarning": "#FFFFFF",
-    "TwClrIcnWarning": "#BD6931",
+    "TwClrIcnWarning": "#A36A2D",
     "TwClrTxtOnWarning": "#FFFFFF",
-    "TwClrTxtWarning": "#9A572B"
+    "TwClrTxtWarning": "#A36A2D"
   }
 }
 

@@ -12,7 +12,7 @@ export default {
       control: { type: 'radio' },
     },
     iconRight: {
-      options: ['calendar', 'chevronDown', null],
+      options: ['calendar', 'chevronDown', 'cancel', null],
       control: { type: 'radio' },
     },
     type: {
@@ -66,6 +66,7 @@ Default.args = {
   readonly: false,
   display: false,
   type: 'text',
+  autoFocus: false,
 };
 
 WithTooltip.args = {
@@ -79,6 +80,7 @@ WithTooltip.args = {
   display: false,
   type: 'text',
   tooltipTitle: 'Hello world!',
+  autoFocus: false,
 };
 
 TextArea.args = {
@@ -91,6 +93,7 @@ TextArea.args = {
   readonly: false,
   display: false,
   type: 'textarea',
+  autoFocus: false,
 };
 
 NumberField.args = {
@@ -104,4 +107,5 @@ NumberField.args = {
   display: false,
   min: 5,
   max: 25,
+  autoFocus: false,
 };

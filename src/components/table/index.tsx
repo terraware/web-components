@@ -29,6 +29,11 @@ const tableStyles = makeStyles((theme: Theme) => ({
       backgroundColor: 'initial',
     },
   },
+  cellDefault: {
+    '&.MuiTableCell-root': {
+      borderBottom: `1px solid ${theme.palette.TwClrBrdrSecondary}`
+    }
+  },
 }));
 
 export interface HeadCell {
@@ -65,6 +70,7 @@ export interface Props<T> {
   controlledOnSelect?: boolean;
   reloadData?: () => void;
   stickyHeader?: boolean;
+  hideHeader?: boolean;
 }
 
 export type TopBarButton = {
@@ -98,6 +104,7 @@ export default function EnhancedTable<T>({
   controlledOnSelect,
   reloadData,
   stickyHeader = true,
+  hideHeader,
 }: Props<T>): JSX.Element {
   const classes = tableStyles();
   const [order, setOrder] = React.useState<SortOrder>(_order);
@@ -209,16 +216,18 @@ export default function EnhancedTable<T>({
       <TableContainer id={id} sx={{ overflowX: 'visible' }}>
         <DndContext sensors={sensors} onDragEnd={handleDragEnd}>
           <Table stickyHeader={stickyHeader} aria-labelledby='tableTitle' size='medium' aria-label='enhanced table' className={classes.table}>
-            <TableHeader
-              order={order}
-              orderBy={orderBy}
-              onRequestSort={handleRequestSort}
-              columns={columns}
-              onReorderEnd={onReorderEnd}
-              numSelected={showCheckbox ? selectedRows?.length : undefined}
-              onSelectAllClick={showCheckbox ? handleSelectAllClick : undefined}
-              rowCount={showCheckbox ? rows?.length : undefined}
-            />
+            {!hideHeader && (
+              <TableHeader
+                order={order}
+                orderBy={orderBy}
+                onRequestSort={handleRequestSort}
+                columns={columns}
+                onReorderEnd={onReorderEnd}
+                numSelected={showCheckbox ? selectedRows?.length : undefined}
+                onSelectAllClick={showCheckbox ? handleSelectAllClick : undefined}
+                rowCount={showCheckbox ? rows?.length : undefined}
+              />
+            )}
             <TableBody>
               {rows.length < 1 && emptyTableMessage && (
                 <TableRow>
@@ -254,7 +263,7 @@ export default function EnhancedTable<T>({
                           aria-checked={isItemSelected}
                         >
                           {showCheckbox && (
-                            <TableCell padding='checkbox'>
+                            <TableCell padding='checkbox' className={classes.cellDefault}>
                               <Checkbox
                                 color='primary'
                                 checked={isItemSelected}
@@ -283,7 +292,7 @@ export default function EnhancedTable<T>({
         </DndContext>
       </TableContainer>
       {showPagination && (
-        <Box display='flex' alignItems='center' justifyContent='flex-end' paddingTop='24px' paddingBottom='24px'>
+        <Box display='flex' alignItems='center' justifyContent='flex-end' paddingTop='24px'>
           {/*
             Calculate pagination numbers to show.
             If the table is empty (rows.length === 0) override calculation and show '0 of 0'

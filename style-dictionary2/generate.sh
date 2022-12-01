@@ -12,4 +12,4 @@ echo "Building style dictionary"
 node build.js
 echo
 echo "Building theme"
-node build-theme.js
+node build-theme.mjs

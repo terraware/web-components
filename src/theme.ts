@@ -61,6 +61,15 @@ declare module '@mui/material/styles/createPalette' {
 }
 
 const defaultTheme = {
+  breakpoints: {
+    values: {
+      xs: 0,
+      sm: 600,
+      md: 900,
+      lg: 1200,
+      xl: 1400, // custom xl to transition background on Home page
+    },
+  },
   typography: {
     fontFamily: 'Inter',
   },

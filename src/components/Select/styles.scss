@@ -48,7 +48,7 @@
     background-color: $tw-clr-bg;
     border: $tw-sz-frm-fld-text-input-stroke solid $tw-clr-brdr-secondary;
     padding: #{$tw-spc-base-x-small - $tw-sz-frm-fld-text-input-stroke};
-    border-radius: $tw-sz-base-xx-small;
+    border-radius: $tw-sz-base-x-small;
     border-width: $tw-sz-frm-fld-text-input-stroke;
     display: flex;
 
@@ -248,7 +248,7 @@
     background: $tw-clr-bg;
     border: 1px solid $tw-clr-brdr-secondary;
     margin: $tw-spc-base-xx-small 0 0;
-    border-radius: $tw-rds-frm-fld-text-input;
+    border-radius: $tw-sz-base-x-small;
     max-height: 140px;
     overflow-y: auto;
 

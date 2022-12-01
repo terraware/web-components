@@ -24,17 +24,19 @@ import Critical from '../../svg/Critical';
 import Dashboard from '../../svg/IconDashboard';
 import Edit from '../../svg/Edit';
 import Error from '../../svg/Error';
-import Export from '../../svg/Export';
 import Filter from '../../svg/Filter';
 import Folder from '../../svg/Folder';
+import Futures from '../../svg/IconFutures';
 import Help from '../../svg/Help';
 import Home from '../../svg/Home';
+import IconAdd from '../../svg/IconAdd';
 import IconArrowRight from '../../svg/IconArrowRight';
 import IconColumns from '../../svg/IconColumns';
 import IconEdit from '../../svg/IconEdit';
 import IconExport from '../../svg/IconExport';
 import IconFile from '../../svg/IconFile';
 import IconImport from '../../svg/IconImport';
+import IconLocations from '../../svg/IconLocations';
 import IconMenu from '../../svg/IconMenu';
 import IconMenuHorizontal from '../../svg/IconMenuHorizontal';
 import IconMyLocation from '../../svg/IconMyLocation';
@@ -99,17 +101,19 @@ export type IconName =
   | 'dashboard'
   | 'edit'
   | 'error'
-  | 'export'
   | 'filter'
   | 'folder'
+  | 'futures'
   | 'help'
   | 'home'
+  | 'iconAdd'
   | 'iconArrowRight'
   | 'iconColumns'
   | 'iconEdit'
   | 'iconExport'
   | 'iconFile'
   | 'iconImport'
+  | 'iconLocations'
   | 'iconMenu'
   | 'iconMenuHorizontal'
   | 'iconMyLocation'
@@ -178,17 +182,19 @@ const icons: Record<IconName, SVGComponent> = {
   dashboard: Dashboard,
   edit: Edit,
   error: Error,
-  export: Export,
   filter: Filter,
   folder: Folder,
+  futures: Futures,
   help: Help,
   home: Home,
+  iconAdd: IconAdd,
   iconArrowRight: IconArrowRight,
   iconColumns: IconColumns,
   iconEdit: IconEdit,
   iconExport: IconExport,
   iconFile: IconFile,
   iconImport: IconImport,
+  iconLocations: IconLocations,
   iconMenu: IconMenu,
   iconMenuHorizontal: IconMenuHorizontal,
   iconNursery: IconNursery,

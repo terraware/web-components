@@ -60,7 +60,7 @@
     background-color: $tw-clr-bg;
     border: $tw-sz-frm-fld-text-input-stroke solid $tw-clr-brdr-secondary;
     padding: #{$tw-spc-base-x-small - $tw-sz-frm-fld-text-input-stroke};
-    border-radius: $tw-sz-base-xx-small;
+    border-radius: $tw-sz-base-x-small;
     width: 100%;
     max-width: 100%;
     display: flex;
@@ -70,14 +70,16 @@
     }
 
     &:active {
-      border: $tw-sz-frm-fld-text-input-stroke solid $tw-clr-brdr-hover;
+      padding: #{$tw-spc-base-x-small - $tw-sz-frm-fld-text-input-stroke-active};
+      border: $tw-sz-frm-fld-text-input-stroke-active solid $tw-clr-brdr-hover;
       outline: $tw-sz-frm-fld-text-input-stroke-active solid $tw-clr-brdr-active;
     }
 
     &:focus-within {
-      border: $tw-sz-frm-fld-text-input-stroke solid $tw-clr-brdr-hover;
+      padding: #{$tw-spc-base-x-small - $tw-sz-frm-fld-text-input-stroke-active};
+      border: $tw-sz-frm-fld-text-input-stroke-active solid $tw-clr-brdr-hover;
       outline: $tw-sz-frm-fld-text-input-stroke-active solid $tw-clr-brdr-active;
-      outline-offset: -$tw-sz-frm-fld-text-input-stroke;
+      outline-offset: -$tw-sz-frm-fld-text-input-stroke-active;
     }
 
     input {
@@ -142,6 +144,15 @@
       fill: $tw-clr-icn-secondary;
       margin-left: $tw-spc-base-x-small;
       vertical-align: top;
+
+      &--cancel {
+        width: $tw-sz-base-small;
+        height: $tw-sz-base-small;
+        fill: $tw-clr-icn-secondary;
+        margin-left: $tw-spc-base-x-small;
+        margin-right: $tw-spc-base-xx-small;
+        vertical-align: top;
+      }
     }
 
     &--icon-left {
