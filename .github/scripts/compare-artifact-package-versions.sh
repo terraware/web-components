@@ -12,10 +12,15 @@ if [[ $ARTIFACT_REGISTRY_PROVIDER == 'npm' ]]; then
   echo "Got package json version $PACKAGE_JSON_VERSION"
 
   echo "Checking if version exists in npm repository"
-  npm show @terraware/web-components versions --json | grep ${PACKAGE_JSON_VERSION} > /tmp/npm-output
-  cat /tmp/npm-output
+  npm show @terraware/web-components versions --json > /tmp/npm-versions
+  VERSION_EXISTS=false
+  while read line; do
+    if ( echo $line | grep ${PACKAGE_JSON_VERSION} ) then
+      VERSION_EXISTS=true
+    fi
+  done < /tmp/npm-versions
 
-  if [ -s /tmp/npm-output ]; then
+  if ( $VERSION_EXISTS ); then
     echo "Package is up to date"
   else
     echo "Package needs update"
