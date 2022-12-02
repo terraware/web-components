@@ -19,15 +19,13 @@ export default function NavItem(props: NavItemProps): JSX.Element {
   const { label, icon, children, selected, onClick, id, isFooter } = props;
 
   const hasChildrenSelected = useCallback(() => {
-    if (children) {
-      if (children.props.children) {
-        const subChildren = children.props.children;
-        if (Array.isArray(subChildren)) {
-          return subChildren.some((subChild) => subChild.props.selected);
-        }
-
-        return subChildren.props.selected;
+    if (children && children.props && children.props.children) {
+      const subChildren = children.props.children;
+      if (Array.isArray(subChildren)) {
+        return subChildren.some((subChild) => subChild.props && subChild.props.selected);
       }
+
+      return subChildren.props && subChildren.props.selected;
     }
 
     return false;
