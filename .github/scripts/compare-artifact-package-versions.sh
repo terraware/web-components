@@ -12,7 +12,7 @@ if [[ $ARTIFACT_REGISTRY_PROVIDER == 'npm' ]]; then
   echo "Got package json version $PACKAGE_JSON_VERSION"
 
   echo "Checking if version exists in npm repository"
-  npm view @terraware/web-components@${PACKAGE_JSON_VERSION} maintainers > /tmp/npm-output
+  npm show @terraware/web-components versions --json | grep ${PACKAGE_JSON_VERSION} > /tmp/npm-output
   cat /tmp/npm-output
 
   if [ -s /tmp/npm-output ]; then
