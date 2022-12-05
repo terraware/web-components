@@ -6,7 +6,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   arrow: {
     color: `${theme.palette.TwClrBg} !important`,
     '&:before': {
-      border: `1px solid ${theme.palette.TwClrBrdrTertiary}`
+      border: `1px solid ${theme.palette.TwClrBrdrTertiary}`,
     },
   },
   tooltip: {
@@ -38,15 +38,12 @@ interface TextDisplay {
  * @param strings list of strings to process
  * @param maxLength max displayable length
  */
-function computeFromStringList(
-  strings: string[],
-  maxLength: number,
-): TextDisplay {
+function computeFromStringList(strings: string[], maxLength: number): TextDisplay {
   if (strings[0].length > maxLength) {
     // case in which the first string is too long to fit by itself
     return {
       text: strings[0].substring(0, maxLength),
-      numberMore: strings.length === 1 ? -1 : strings.length - 1
+      numberMore: strings.length === 1 ? -1 : strings.length - 1,
     };
   }
 
@@ -78,14 +75,7 @@ export interface Props {
 }
 
 export default function TextTruncated(props: Props): JSX.Element {
-  const {
-    stringList,
-    maxLengthPx,
-    moreSeparator = '... ',
-    moreText = 'more',
-    textStyle,
-    showAllStyle,
-  } = props;
+  const { stringList, maxLengthPx, moreSeparator = '... ', moreText = 'more', textStyle, showAllStyle } = props;
   const [showAllOpen, setShowAllOpen] = useState(false);
   const classes = useStyles();
   const [canvasContext, setCanvasContext] = useState<CanvasRenderingContext2D>();
@@ -114,42 +104,39 @@ export default function TextTruncated(props: Props): JSX.Element {
   let maxExcludingSuffix = stringList.join(', ').length;
   if (pixelsPerChar > 0) {
     const maxChars = maxLengthPx / pixelsPerChar;
-    maxExcludingSuffix =
-      maxChars - moreSeparator.length - moreText.length - 1 - Math.ceil(Math.log10(stringList.length));
+    maxExcludingSuffix = maxChars - moreSeparator.length - moreText.length - 1 - Math.ceil(Math.log10(stringList.length));
   }
   const textToDisplay = computeFromStringList(stringList, maxExcludingSuffix);
 
+  const onClickHanlder = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setShowAllOpen(!showAllOpen);
+  };
+
   return (
     <Typography sx={textStyle}>
-      {textToDisplay.text}{textToDisplay.numberMore !== 0 ? moreSeparator : ''}
-      {textToDisplay.numberMore !== 0
-        ? (<Tooltip
-            arrow={true}
-            classes={{
-              arrow: classes.arrow,
-              tooltip: classes.tooltip,
-            }}
-            open={showAllOpen}
-            title={(
-              <Typography sx={showAllStyle}>
-                {stringList.join(', ')}
-              </Typography>
-            )}
+      {textToDisplay.text}
+      {textToDisplay.numberMore !== 0 ? moreSeparator : ''}
+      {textToDisplay.numberMore !== 0 ? (
+        <Tooltip
+          arrow={true}
+          classes={{
+            arrow: classes.arrow,
+            tooltip: classes.tooltip,
+          }}
+          open={showAllOpen}
+          title={<Typography sx={showAllStyle}>{stringList.join(', ')}</Typography>}
+        >
+          <Link
+            component='button'
+            onClick={onClickHanlder}
+            onBlur={() => setShowAllOpen(false)}
+            sx={{ color: theme.palette.TwClrTxtBrand, textDecorationColor: `${theme.palette.TwClrTxtBrand}80` }}
           >
-            <Link
-              component='button'
-              onClick={() => setShowAllOpen(!showAllOpen)}
-              onBlur={() => setShowAllOpen(false)}
-              sx={{color: theme.palette.TwClrTxtBrand, textDecorationColor: `${theme.palette.TwClrTxtBrand}80`}}
-            >
-              <Typography sx={{...textStyle, marginTop: '-3px'}}>{
-                (textToDisplay.numberMore > 0 ? textToDisplay.numberMore + ' ' : '') + moreText
-              }</Typography>
-            </Link>
-          </Tooltip>
-        )
-        : null
-      }
+            <Typography sx={{ ...textStyle, marginTop: '-3px' }}>{(textToDisplay.numberMore > 0 ? textToDisplay.numberMore + ' ' : '') + moreText}</Typography>
+          </Link>
+        </Tooltip>
+      ) : null}
     </Typography>
   );
 }
