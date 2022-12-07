@@ -16,11 +16,11 @@
   padding-left: $tw-sz-base-small;
   padding-right: $tw-sz-base-small;
   padding-top: $tw-sz-base-small;
-  mix-blend-mode: multiply;
 
   &.transparent {
     background-color: transparent !important;
     background-image: unset !important;
+    mix-blend-mode: multiply;
   }
 
   .nav-section {
