@@ -111,6 +111,7 @@ declare module '@mui/material/styles/createPalette' {
     TwClrIcn?: React.CSSProperties['color'];
     TwClrIcnInverse?: React.CSSProperties['color'];
     TwClrIcnSecondary?: React.CSSProperties['color'];
+    TwClrShdw?: React.CSSProperties['color'];
     TwClrTxt?: React.CSSProperties['color'];
     TwClrTxtInverse?: React.CSSProperties['color'];
     TwClrTxtSecondary?: React.CSSProperties['color'];
@@ -285,6 +286,7 @@ declare module '@mui/material/styles/createPalette' {
     TwClrIcn?: React.CSSProperties['color'];
     TwClrIcnInverse?: React.CSSProperties['color'];
     TwClrIcnSecondary?: React.CSSProperties['color'];
+    TwClrShdw?: React.CSSProperties['color'];
     TwClrTxt?: React.CSSProperties['color'];
     TwClrTxtInverse?: React.CSSProperties['color'];
     TwClrTxtSecondary?: React.CSSProperties['color'];
@@ -465,6 +467,7 @@ const TerrawareTheme2: ThemeDictionary = {
     "TwClrIcn": "#333025",
     "TwClrIcnInverse": "#FFFFFF",
     "TwClrIcnSecondary": "#7F775B",
+    "TwClrShdw": "#333025",
     "TwClrTxt": "#333025",
     "TwClrTxtInverse": "#FFFFFF",
     "TwClrTxtSecondary": "#645E48",
