@@ -14,9 +14,9 @@ export interface Props {
 const useStyles = makeStyles(() => ({
   icon: {
     fill: '#708284',
-    width: '27px',
-    height: '27px',
-    margin: '15px 0 15px 14px',
+    width: '16px',
+    height: '16px',
+    margin: '15px 0',
   },
   closeButton: {
     background: 'none',
