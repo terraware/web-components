@@ -4,6 +4,7 @@ import React, { ReactNode } from 'react';
 import './styles.scss';
 import Icon from '../Icon/Icon';
 import { useDeviceInfo } from '../../utils';
+import { Theme } from '@mui/material';
 
 export interface Props {
   children: ReactNode;
@@ -11,9 +12,9 @@ export interface Props {
   backgroundTransparent?: boolean;
 }
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme: Theme) => ({
   icon: {
-    fill: '#708284',
+    fill: theme.palette.TwClrIcnSecondary,
     width: '16px',
     height: '16px',
     margin: '15px 0',
