@@ -161,6 +161,7 @@
       height: $tw-fnt-frm-fld-text-value-line-height;
       fill: $tw-clr-icn-secondary;
       margin-right: $tw-spc-base-x-small;
+      flex-shrink: 0;
     }
 
     &--error {

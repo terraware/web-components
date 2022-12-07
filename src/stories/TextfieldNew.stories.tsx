@@ -29,7 +29,7 @@ const Template: Story<TextFieldProps> = (args) => {
   };
 
   return (
-    <Box sx={{marginTop: '30px'}}>
+    <Box sx={{marginTop: '30px'}} width='500px'>
       <TextField {...args} value={value} onChange={handleChange} />
     </Box>
   );
