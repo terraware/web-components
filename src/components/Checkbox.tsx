@@ -21,6 +21,9 @@ export const CheckboxStyle = (theme: Theme) => ({
   '&:focus > .MuiSvgIcon-root': {
     border: `2px solid ${theme.palette.TwClrBgSelected}`,
   },
+  '&.Mui-disabled': {
+    opacity: 0.7,
+  },
 });
 
 export interface Props {
@@ -48,6 +51,7 @@ export default function Checkbox(props: Props): JSX.Element {
       disabled={props.disabled}
       control={(
         <MUICheckbox
+          disabled={props.disabled}
           disableRipple={true}
           id={'check-' + props.id}
           checked={props.value ?? false}
