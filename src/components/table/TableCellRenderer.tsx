@@ -60,7 +60,7 @@ export function CellDateRenderer({
 
   return (
     <TableCell id={id} align='left' className={`${classes.date} ${classes.default} ${className}`}>
-      <Typography component='p' variant='body1'>
+      <Typography component='p' variant='body1' fontSize='14px'>
         {cellDateFormatter(value)}
       </Typography>
     </TableCell>
@@ -80,7 +80,7 @@ export function CellTextRenderer({
 
   return (
     <TableCell id={id} align='left' title={typeof value === 'string' ? value : ''} className={`${classes.default} ${className}`}>
-      <Typography component='p' variant='body1' noWrap={true} classes={{ root: classes.textRoot }}>
+      <Typography component='p' variant='body1' noWrap={true} classes={{ root: classes.textRoot }} fontSize='14px'>
         {value}
       </Typography>
     </TableCell>
@@ -100,7 +100,7 @@ export function CellBooleanRenderer({
 
   return (
     <TableCell id={id} align='left' className={`${classes.default} ${className}`}>
-      <Typography component='p' variant='body1'>
+      <Typography component='p' variant='body1' fontSize='14px'>
         {value === 'true' ? 'YES' : 'NO'}
       </Typography>
     </TableCell>
@@ -120,7 +120,7 @@ export function CellNotesRenderer({
 
   return (
     <TableCell id={id} align='left' className={`${classes.default} ${className}`}>
-      <Typography id={id} component='p' variant='body1'>
+      <Typography id={id} component='p' variant='body1' fontSize='14px'>
         {value && value.length > 0 ? <Notes /> : ''}
       </Typography>
     </TableCell>
@@ -151,7 +151,7 @@ export function CellEditRenderer({
         }}
       >
         <Box display='flex'>
-          <Typography component='p' variant='body1'>
+          <Typography component='p' variant='body1' fontSize='14px'>
             Edit
           </Typography>
           <Edit fontSize='small' className={classes.editIcon} />
