@@ -22,7 +22,7 @@ export const CheckboxStyle = (theme: Theme) => ({
     border: `2px solid ${theme.palette.TwClrBgSelected}`,
   },
   '&.Mui-disabled': {
-    opacity: 0.7,
+    opacity: 0.5,
   },
 });
 
