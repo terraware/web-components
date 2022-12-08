@@ -32,4 +32,16 @@
   input {
     padding: calc(#{$tw-spc-base-xx-small} * 2.5) calc(#{$tw-spc-base-xx-small} * 3);
   }
+
+  & .MuiInputBase-input {
+    height: '21px';
+  };
+  & .MuiOutlinedInput-root {
+    &:hover fieldset {
+      border-color: $tw-clr-brdr-hover;
+    }
+    .Mui-focused fieldset {
+      border-color: $tw-clr-brdr-hover;
+    }
+  }
 }

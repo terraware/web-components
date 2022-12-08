@@ -1,7 +1,8 @@
 import moment from 'moment-timezone';
 import 'moment/min/locales';
 import React, { useState, KeyboardEventHandler } from 'react';
-import { TextField } from '@mui/material';
+import { TextField, Theme } from '@mui/material';
+import { makeStyles } from '@mui/styles';
 import { LocalizationProvider, DesktopDatePicker } from '@mui/x-date-pickers';
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 import Icon from '../Icon/Icon';
@@ -33,12 +34,7 @@ export default function DatePicker(props: Props): JSX.Element {
 
   const renderInput = (params: object) => (
     <>
-      <TextField
-        {...params}
-        id={props.id}
-        autoFocus={props.autoFocus}
-        onKeyPress={props.onKeyPress}
-      />
+      <TextField {...params} id={props.id} autoFocus={props.autoFocus} onKeyPress={props.onKeyPress} />
       {props.errorText && (
         <div className='textfield-error-text-container'>
           <Icon name='error' className='textfield-error-text--icon' />
