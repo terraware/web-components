@@ -23,9 +23,9 @@ const Template: Story<CheckboxProps> = (args) => {
   };
 
   const classes = useStyles();
-  const className = classes[args.useClassName];
+  const className = classes.narrowWidth;
 
-  return <Checkbox className={className} {...args} onChange={toggleChange} value={value} />;
+  return <Checkbox {...args} onChange={toggleChange} value={value} className={className}/>;
 };
 
 export const Default = Template.bind({});
@@ -43,5 +43,4 @@ TopAlignLongLabel.args = {
   name: 'Alignment Test',
   label: 'The Quick Brown Fox Jumped Over The Silly Lazy Goat',
   disabled: false,
-  useClassName: 'narrowWidth',
 };

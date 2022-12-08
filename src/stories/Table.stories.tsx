@@ -31,7 +31,7 @@ function Renderer(props: RendererProps<any>): JSX.Element {
 const Template: Story<TableProps<{ name: string; lastname: string }>> = (
   args
 ) => {
-  const [selectedRows, setSelectedRows] = useState([]);
+  const [selectedRows, setSelectedRows] = useState<any>([]);
   const styles = useStyles();
   args.columns[1].className = styles.italic;
 
