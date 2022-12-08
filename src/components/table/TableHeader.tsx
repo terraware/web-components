@@ -52,6 +52,7 @@ export default function EnhancedTableHead(props: Props): JSX.Element {
         {numSelected !== undefined && rowCount !== undefined && rowCount > 0 && onSelectAllClick && (
           <TableCell padding='checkbox' className={classes.headerCell}>
             <Checkbox
+              disableRipple={true}
               sx={CheckboxStyle(theme)}
               color='primary'
               indeterminate={numSelected > 0 && numSelected < rowCount}

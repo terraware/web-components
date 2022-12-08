@@ -267,6 +267,7 @@ export default function EnhancedTable<T>({
                           {showCheckbox && (
                             <TableCell padding='checkbox' className={classes.cellDefault}>
                               <Checkbox
+                                disableRipple={true}
                                 sx={CheckboxStyle(theme)}
                                 color='primary'
                                 checked={isItemSelected}
