@@ -1,4 +1,4 @@
-import { Box, Checkbox, Pagination, Table, TableBody, TableCell, TableContainer, TableRow, Theme, TooltipProps, Typography } from '@mui/material';
+import { Box, Checkbox, Pagination, Table, TableBody, TableCell, TableContainer, TableRow, Theme, TooltipProps, Typography, useTheme } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import EnhancedTableToolbar from './EnhancedTableToolbar';
 import { descendingComparator, getComparator, SortOrder, stableSort } from './sort';
@@ -10,6 +10,7 @@ import { DndContext, KeyboardSensor, MouseSensor, TouchSensor, useSensor, useSen
 import { sortableKeyboardCoordinates } from '@dnd-kit/sortable';
 import { useDeviceInfo } from '../../utils';
 import { IconName } from '../Icon/icons';
+import { CheckboxStyle } from '../Checkbox';
 
 const tableStyles = makeStyles((theme: Theme) => ({
   hover: {
@@ -107,6 +108,7 @@ export default function EnhancedTable<T>({
   hideHeader,
 }: Props<T>): JSX.Element {
   const classes = tableStyles();
+  const theme = useTheme();
   const [order, setOrder] = React.useState<SortOrder>(_order);
   const [orderBy, setOrderBy] = React.useState(_orderBy);
   const [maxItemsPerPage] = useState(100);
@@ -265,6 +267,8 @@ export default function EnhancedTable<T>({
                           {showCheckbox && (
                             <TableCell padding='checkbox' className={classes.cellDefault}>
                               <Checkbox
+                                disableRipple={true}
+                                sx={CheckboxStyle(theme)}
                                 color='primary'
                                 checked={isItemSelected}
                                 onClick={(e) => (!isClickable || !isClickable(row as T) ? handleClick(e, row as T) : null)}

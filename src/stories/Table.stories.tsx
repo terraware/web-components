@@ -1,5 +1,5 @@
 import { Story } from '@storybook/react';
-import React from 'react';
+import React, { useState } from 'react';
 import Table, { Props as TableProps } from '../components/table/index';
 import CellRenderer from '..//components/table/TableCellRenderer';
 import { RendererProps } from '../components/table/types';
@@ -31,13 +31,15 @@ function Renderer(props: RendererProps<any>): JSX.Element {
 const Template: Story<TableProps<{ name: string; lastname: string }>> = (
   args
 ) => {
+  const [selectedRows, setSelectedRows] = useState<any>([]);
   const styles = useStyles();
   args.columns[1].className = styles.italic;
 
-  return <Table {...args} Renderer={Renderer} />;
+  return <Table {...args} Renderer={Renderer} selectedRows={selectedRows} setSelectedRows={setSelectedRows} />;
 };
 
 export const Default = Template.bind({});
+export const Selectable = Template.bind({});
 
 Default.args = {
   orderBy: 'name',
@@ -55,4 +57,10 @@ Default.args = {
       return { name: `Jane${j}`, middlename: 'John', lastname: 'Doe' };
     }
   }),
+};
+
+Selectable.args = {
+  ...Default.args,
+  showCheckbox: true,
+  controlledOnSelect: true,
 };

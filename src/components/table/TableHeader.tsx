@@ -1,4 +1,4 @@
-import { Checkbox, TableCell, TableHead, TableRow, Theme } from '@mui/material';
+import { Checkbox, TableCell, TableHead, TableRow, Theme, useTheme } from '@mui/material';
 import React from 'react';
 import { SortOrder } from './sort';
 import { TableColumnType } from './types';
@@ -6,6 +6,7 @@ import { SortableContext } from '@dnd-kit/sortable';
 import TableHeaderItem from './TableHeaderItem';
 import { HeadCell } from '.';
 import { makeStyles } from '@mui/styles';
+import { CheckboxStyle } from '../Checkbox';
 
 const useStyles = makeStyles((theme: Theme) => ({
   headerCell: {
@@ -28,6 +29,7 @@ interface Props {
 
 export default function EnhancedTableHead(props: Props): JSX.Element {
   const classes = useStyles();
+  const theme = useTheme();
   const { order, orderBy, onRequestSort, numSelected, rowCount, onSelectAllClick } = props;
   const [headCells, setHeadCells] = React.useState<HeadCell[]>(columnsToHeadCells(props.columns));
   React.useEffect(() => {
@@ -50,6 +52,8 @@ export default function EnhancedTableHead(props: Props): JSX.Element {
         {numSelected !== undefined && rowCount !== undefined && rowCount > 0 && onSelectAllClick && (
           <TableCell padding='checkbox' className={classes.headerCell}>
             <Checkbox
+              disableRipple={true}
+              sx={CheckboxStyle(theme)}
               color='primary'
               indeterminate={numSelected > 0 && numSelected < rowCount}
               checked={rowCount > 0 && numSelected === rowCount}
