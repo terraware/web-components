@@ -67,7 +67,7 @@ export default function Checkbox(props: Props): JSX.Element {
         fontSize: '16px',
         fontWeight: 500,
         lineHeight: '24px',
-        margin: theme.spacing(1, 0, 0, 1),
+        margin: theme.spacing(1, 0, 0, 0),
       }}
     />
   );
