@@ -1,11 +1,31 @@
 import moment from 'moment-timezone';
 import 'moment/min/locales';
 import React, { useState, KeyboardEventHandler } from 'react';
-import { TextField } from '@mui/material';
+import { TextField, Theme } from '@mui/material';
+import { makeStyles } from '@mui/styles';
 import { LocalizationProvider, DesktopDatePicker } from '@mui/x-date-pickers';
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 import Icon from '../Icon/Icon';
 import './styles.scss';
+
+const useStyles = makeStyles((theme: Theme) => ({
+  datePickerInput: {
+    '& .MuiInputBase-input': {
+      height: '18px',
+    },
+    '& .MuiIconButton-root': {
+      color: theme.palette.TwClrIcnSecondary,
+    },
+    '& .MuiOutlinedInput-root': {
+      '&:hover fieldset': {
+        borderColor: theme.palette.TwClrBrdrHover,
+      },
+      '&.Mui-focused fieldset': {
+        borderColor: theme.palette.TwClrBrdrHover,
+      },
+    },
+  },
+}));
 
 export interface Props {
   id: string;
@@ -26,6 +46,7 @@ export interface Props {
 
 export default function DatePicker(props: Props): JSX.Element {
   const [temporalValue, setTemporalValue] = useState(props.value || null);
+  const classes = useStyles();
   React.useEffect(() => {
     moment.locale([window.navigator.language, 'en']);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -33,12 +54,7 @@ export default function DatePicker(props: Props): JSX.Element {
 
   const renderInput = (params: object) => (
     <>
-      <TextField
-        {...params}
-        id={props.id}
-        autoFocus={props.autoFocus}
-        onKeyPress={props.onKeyPress}
-      />
+      <TextField {...params} id={props.id} autoFocus={props.autoFocus} onKeyPress={props.onKeyPress} className={classes.datePickerInput} />
       {props.errorText && (
         <div className='textfield-error-text-container'>
           <Icon name='error' className='textfield-error-text--icon' />
