@@ -82,6 +82,8 @@
     button {
       background: none;
       border: none;
+      color: $tw-clr-txt;
+      font-family: 'Inter';
       padding-right: $tw-spc-base-small;
       padding-left: 20px;
     }
@@ -151,7 +153,4 @@
     margin-bottom: 32px;
   }
 
-  button {
-    font-family: 'Inter';
-  }
 }
