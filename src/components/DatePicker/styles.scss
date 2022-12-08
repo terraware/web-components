@@ -65,9 +65,26 @@
     position: unset;
   }
 
+  .MuiInputBase-input {
+    height: 18px;
+  }
+
+  .MuiIconButton-root {
+    color: $tw-clr-icn-secondary;
+  }
+
   input {
     padding: calc(#{$tw-spc-base-xx-small} * 2.5) calc(#{$tw-spc-base-xx-small} * 3);
     background-color: $tw-clr-base-white;
     border-radius: $tw-sz-base-x-small 0 0 $tw-sz-base-x-small;
+  }
+
+  .MuiOutlinedInput-root {
+    &:hover fieldset {
+      border-color: $tw-clr-brdr-hover;
+    }
+    &.Mui-focused fieldset {
+      border-color: $tw-clr-brdr-hover;
+    }
   }
 }
