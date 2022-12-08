@@ -125,7 +125,11 @@ export default function TextTruncated(props: Props): JSX.Element {
             tooltip: classes.tooltip,
           }}
           open={showAllOpen}
-          title={<Typography sx={{ ...showAllStyle, fontSize: '14px' }}>{stringList.join(', ')}</Typography>}
+          title={
+            <Typography sx={showAllStyle} fontSize='14px'>
+              {stringList.join(', ')}
+            </Typography>
+          }
         >
           <Link
             component='button'
