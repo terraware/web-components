@@ -44,4 +44,11 @@
       border-color: $tw-clr-brdr-hover;
     }
   }
+
+  &--icon-right {
+    width: $tw-fnt-frm-fld-text-value-line-height;
+    height: $tw-fnt-frm-fld-text-value-line-height;
+    fill: $tw-clr-icn;
+    margin-left: $tw-spc-base-x-small;
+  }
 }
