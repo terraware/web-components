@@ -1,14 +1,8 @@
 import { Box, Autocomplete as MUIAutocomplete, TextField, Theme } from '@mui/material';
 import React, { ChangeEvent } from 'react';
-import { makeStyles } from '@mui/styles';
 import Icon from '../Icon/Icon';
+import '../Select/styles.scss';
 import './styles.scss';
-
-const useStyles = makeStyles((theme: Theme) => ({
-  paper: {
-    marginTop: theme.spacing(1),
-  },
-}));
 
 export type Option = {
   value: any;
@@ -35,8 +29,6 @@ export type DropdownItem = {
 };
 
 export default function Autocomplete({ id, label, values, onChange, selected, freeSolo, disabled, className, hideClearIcon }: Props): JSX.Element {
-  const classes = useStyles();
-
   const onChangeHandler = (event: ChangeEvent<any>, value: string | null) => {
     if (event) {
       if (value) {
@@ -79,7 +71,8 @@ export default function Autocomplete({ id, label, values, onChange, selected, fr
       renderInput={renderInput}
       popupIcon={<Icon name='chevronDown' className='auto-complete--icon-right' size='medium'/>}
       classes={{
-        paper: classes.paper,
+        paper: 'auto-complete select',
+        listbox: 'options-container',
       }}
       sx={{
         '& .MuiAutocomplete-popupIndicator:hover': {

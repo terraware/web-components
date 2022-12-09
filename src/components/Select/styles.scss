@@ -276,7 +276,7 @@
         color: $tw-clr-txt;
       }
 
-      &--selected {
+      &--selected, &--selected:hover {
         background-color: $tw-clr-bg-selected;
         color: $tw-clr-txt-on-selected;
       }
