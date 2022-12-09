@@ -3,6 +3,7 @@ import { Story } from '@storybook/react';
 import { Theme } from '@mui/material';
 import React from 'react';
 import Autocomplete, {
+  ValueType,
   Props as AutocompleteProps,
 } from '../components/Autocomplete/Autocomplete';
 import { makeStyles } from '@mui/styles';
@@ -21,8 +22,8 @@ export default {
 
 const Template: Story<AutocompleteProps> = (args) => {
   const classes = useStyles();
-  const [selected, setSelected] = React.useState('');
-  const handleChange = (id: string, value: string) => {
+  const [selected, setSelected] = React.useState<ValueType>('');
+  const handleChange = (id: string, value: ValueType) => {
     action('onChange')(value);
     setSelected(value);
   };
@@ -32,7 +33,7 @@ const Template: Story<AutocompleteProps> = (args) => {
 
 export const Default = Template.bind({});
 
-export const V1 = Template.bind({});
+export const Complex = Template.bind({});
 
 Default.args = {
   id: '1',
@@ -42,11 +43,23 @@ Default.args = {
   selected: '',
 };
 
-V1.args = {
-  id: '1',
-  label: 'Test',
-  values: ['Test 1', 'Test 2', 'Hello'],
+Complex.args = {
+  id: '2',
+  label: 'Pick a value',
+  values: [{
+    label: 'hello',
+    value: 1,
+  }, {
+    label: 'world',
+    value: 2,
+  }, {
+    label: 'yoyo',
+    value: 3,
+  }, {
+    label: 'ma',
+    value: 4,
+  }],
   onChange: () => true,
-  selected: '',
-  isV1: true,
+  selected: undefined,
+  hideClearIcon: true,
 };

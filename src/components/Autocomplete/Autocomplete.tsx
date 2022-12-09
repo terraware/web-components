@@ -1,17 +1,26 @@
-import { Autocomplete as MUIAutocomplete, TextField } from '@mui/material';
+import { Box, Autocomplete as MUIAutocomplete, TextField, Theme } from '@mui/material';
 import React, { ChangeEvent } from 'react';
+import Icon from '../Icon/Icon';
+import '../Select/styles.scss';
 import './styles.scss';
+
+export type Option = {
+  value: any;
+  label: string;
+};
+
+export type ValueType = string | Option;
 
 export interface Props {
   id: string;
   label: string;
-  values: string[];
-  onChange: (id: string, value: string) => void;
-  selected: string | undefined;
+  values: ValueType[];
+  onChange: (id: string, value: ValueType) => void;
+  selected: ValueType | undefined;
   freeSolo: boolean;
   disabled?: boolean;
   className?: string;
-  isV1?: boolean; // deprecated
+  hideClearIcon?: boolean;
 }
 
 export type DropdownItem = {
@@ -19,7 +28,7 @@ export type DropdownItem = {
   value: string;
 };
 
-export default function Autocomplete({ id, label, values, onChange, selected, freeSolo, disabled, className, isV1 }: Props): JSX.Element {
+export default function Autocomplete({ id, label, values, onChange, selected, freeSolo, disabled, className, hideClearIcon }: Props): JSX.Element {
   const onChangeHandler = (event: ChangeEvent<any>, value: string | null) => {
     if (event) {
       if (value) {
@@ -32,27 +41,52 @@ export default function Autocomplete({ id, label, values, onChange, selected, fr
 
   const renderInput = (params: object) => (
     <div className={`auto-complete ${className}`}>
-      {label && isV1 !== true && (
+      {label && (
         <label htmlFor={id} className='textfield-label'>
           {label}
         </label>
       )}
-      <TextField label={isV1 ? label : undefined} {...params} variant='outlined' size='small' placeholder={label} />
+      <TextField {...params} variant='outlined' size='small' placeholder={label} />
     </div>
   );
 
+  const optionalArgs: any = {};
+
+  if (hideClearIcon) {
+    optionalArgs.clearIcon = null;
+  }
+
   return (
     <MUIAutocomplete
+      disableRipple={true}
       disabled={disabled}
       id={id}
       options={values}
-      getOptionLabel={(option) => (option ? option : '')}
+      getOptionLabel={(option: any) => (option ? (option.label || option) : '')}
       onChange={onChangeHandler}
       onInputChange={onChangeHandler}
-      inputValue={selected}
+      inputValue={(selected as Option)?.label || selected}
       freeSolo={freeSolo}
       forcePopupIcon={true}
       renderInput={renderInput}
+      popupIcon={<Icon name='chevronDown' className='auto-complete--icon-right' size='medium'/>}
+      classes={{
+        paper: 'auto-complete select',
+        listbox: 'options-container',
+      }}
+      sx={{
+        '& .MuiAutocomplete-popupIndicator:hover': {
+          background: 'transparent',
+        },
+        '& .MuiAutocomplete-popupIndicator': {
+          background: 'transparent',
+          transform: 'none',
+        },
+        '& .MuiTouchRipple-root': {
+          display: 'none',
+        },
+      }}
+      {...optionalArgs}
     />
   );
 }

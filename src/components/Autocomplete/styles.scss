@@ -44,4 +44,46 @@
       border-color: $tw-clr-brdr-hover;
     }
   }
+
+  &--icon-right {
+    width: $tw-fnt-frm-fld-text-value-line-height;
+    height: $tw-fnt-frm-fld-text-value-line-height;
+    fill: $tw-clr-icn;
+    margin-left: $tw-spc-base-x-small;
+  }
+
+  &.select {
+    .options-container {
+      top: 0;
+      margin-top: $tw-spc-base-x-small;
+
+      .MuiAutocomplete-option {
+        font-family: $tw-fnt-frm-fld-select-value-font-family;
+        font-size: $tw-fnt-frm-fld-select-value-font-size;
+        font-weight: $tw-fnt-frm-fld-select-value-font-weight;
+        line-height: $tw-fnt-frm-fld-select-value-line-height;
+        padding: $tw-spc-base-x-small $tw-spc-base-small;
+        cursor: pointer;
+
+        &:hover {
+          background-color: $tw-clr-bg-selected-ghost-hover;
+          color: $tw-clr-txt;
+        }
+
+        &:active {
+          background-color: $tw-clr-bg-selected-ghost-active;
+          color: $tw-clr-txt;
+        }
+
+        &[aria-selected="true"], &[aria-selected="true"]:hover {
+          background-color: $tw-clr-bg-selected;
+          color: $tw-clr-txt-on-selected;
+        }
+
+        &:disabled {
+          opacity: $tw-opcty-semantic-off;
+        }
+      }
+    }
+  }
 }
