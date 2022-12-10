@@ -74,7 +74,6 @@ export default function Autocomplete({
 
   return (
     <MUIAutocomplete
-      disableRipple={true}
       disabled={disabled}
       id={id}
       options={values}
