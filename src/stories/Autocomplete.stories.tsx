@@ -41,6 +41,7 @@ Default.args = {
   values: ['Test 1', 'Test 2', 'Hello'],
   onChange: () => true,
   selected: '',
+  freeSolo: true,
 };
 
 Complex.args = {
