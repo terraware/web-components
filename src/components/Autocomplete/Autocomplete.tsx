@@ -21,6 +21,7 @@ export interface Props {
   disabled?: boolean;
   className?: string;
   hideClearIcon?: boolean;
+  isEqual?: (option: ValueType, value: ValueType) => void;
 }
 
 export type DropdownItem = {
@@ -28,7 +29,18 @@ export type DropdownItem = {
   value: string;
 };
 
-export default function Autocomplete({ id, label, values, onChange, selected, freeSolo, disabled, className, hideClearIcon }: Props): JSX.Element {
+export default function Autocomplete({
+  id,
+  label,
+  values,
+  onChange,
+  selected,
+  freeSolo,
+  disabled,
+  className,
+  hideClearIcon,
+  isEqual,
+}: Props): JSX.Element {
   const onChangeHandler = (event: ChangeEvent<any>, value: string | null) => {
     if (event) {
       if (value) {
@@ -56,15 +68,18 @@ export default function Autocomplete({ id, label, values, onChange, selected, fr
     optionalArgs.clearIcon = null;
   }
 
+  if (isEqual) {
+    optionalArgs.isOptionEqualToValue = isEqual;
+  }
+
   return (
     <MUIAutocomplete
-      disableRipple={true}
       disabled={disabled}
       id={id}
       options={values}
       getOptionLabel={(option: any) => (option ? (option.label || option) : '')}
       onChange={onChangeHandler}
-      onInputChange={onChangeHandler}
+      onInputChange={(event: any, value: any) => freeSolo && onChangeHandler(event, value)}
       inputValue={(selected as Option)?.label || selected}
       freeSolo={freeSolo}
       forcePopupIcon={true}
