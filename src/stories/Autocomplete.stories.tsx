@@ -46,7 +46,8 @@ Default.args = {
 
 Complex.args = {
   id: '2',
-  label: 'Pick a value',
+  label: 'Complex Objects',
+  placeholder: 'Pick a value',
   values: [{
     label: 'hello',
     value: 1,

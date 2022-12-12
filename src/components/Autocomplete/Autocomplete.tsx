@@ -22,6 +22,7 @@ export interface Props {
   className?: string;
   hideClearIcon?: boolean;
   isEqual?: (option: ValueType, value: ValueType) => void;
+  placeholder?: string;
 }
 
 export type DropdownItem = {
@@ -40,6 +41,7 @@ export default function Autocomplete({
   className,
   hideClearIcon,
   isEqual,
+  placeholder,
 }: Props): JSX.Element {
   const onChangeHandler = (event: ChangeEvent<any>, value: string | null) => {
     if (event) {
@@ -58,7 +60,7 @@ export default function Autocomplete({
           {label}
         </label>
       )}
-      <TextField {...params} variant='outlined' size='small' placeholder={label} />
+      <TextField {...params} variant='outlined' size='small' placeholder={placeholder} />
     </div>
   );
 
