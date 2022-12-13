@@ -459,7 +459,7 @@ const TerrawareTheme2: ThemeDictionary = {
     "TwClrBgTertiaryActive": "#B2AB93",
     "TwClrBgTertiaryHover": "linear-gradient(rgb(178 171 147 / 50%), rgb(178 171 147 / 50%)), linear-gradient(#CBC6B7, #CBC6B7)",
     "TwClrBrdr": "#333025",
-    "TwClrBrdrActive": "linear-gradient(rgb(70 88 170 / 50%), rgb(70 88 170 / 50%)), linear-gradient(#6172BE, #6172BE)",
+    "TwClrBrdrActive": "mix(#4658AA, #6172BE, 50%)",
     "TwClrBrdrFocus": "#4658AA",
     "TwClrBrdrHover": "#6172BE",
     "TwClrBrdrSecondary": "#7F775B",
