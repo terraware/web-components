@@ -36,6 +36,7 @@ import theme from './theme';
 
 export type { IconName } from './components/Icon/icons/';
 export type { Size } from './components/Size';
+export type { DropdownItem } from './components/Dropdown';
 export type { EnhancedTableDetailsRow, RendererProps, TableColumnType, TableRowType, SortOrder };
 
 export {
