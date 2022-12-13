@@ -42,6 +42,7 @@ Default.args = {
   onChange: () => true,
   selected: '',
   freeSolo: true,
+  errorText: '',
 };
 
 Complex.args = {
@@ -64,4 +65,5 @@ Complex.args = {
   onChange: () => true,
   selected: undefined,
   hideClearIcon: true,
+  errorText: '',
 };
