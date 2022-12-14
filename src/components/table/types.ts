@@ -27,3 +27,18 @@ export interface DetailsRendererProps {
   index: number;
   row: EnhancedTableDetailsRow;
 }
+
+export interface Option {
+  label: string | null;
+  value: string | null;
+  disabled: boolean;
+}
+
+type DatabaseColumnFilterType = 'multiple_selection' | 'single_selection' | 'search' | 'date_range' | 'number_range' | 'count_weight' | 'hidden';
+
+export interface DatabaseColumn extends Omit<TableColumnType, 'key'> {
+  key: string;
+  additionalKeys?: string[];
+  filter?: { type: DatabaseColumnFilterType; options?: Option[] };
+  operation?: 'or' | 'and' | 'field' | 'not';
+}
