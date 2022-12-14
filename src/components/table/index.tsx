@@ -1,10 +1,10 @@
 import { Box, Checkbox, Pagination, Table, TableBody, TableCell, TableContainer, TableRow, Theme, TooltipProps, Typography, useTheme } from '@mui/material';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import EnhancedTableToolbar from './EnhancedTableToolbar';
 import { descendingComparator, getComparator, SortOrder, stableSort } from './sort';
 import TableCellRenderer from './TableCellRenderer';
 import TableHeader from './TableHeader';
-import { DetailsRendererProps, RendererProps, TableColumnType } from './types';
+import { DatabaseColumn, DetailsRendererProps, RendererProps, TableColumnType } from './types';
 import { makeStyles } from '@mui/styles';
 import { DndContext, KeyboardSensor, MouseSensor, TouchSensor, useSensor, useSensors } from '@dnd-kit/core';
 import { sortableKeyboardCoordinates } from '@dnd-kit/sortable';
@@ -32,8 +32,8 @@ const tableStyles = makeStyles((theme: Theme) => ({
   },
   cellDefault: {
     '&.MuiTableCell-root': {
-      borderBottom: `1px solid ${theme.palette.TwClrBrdrSecondary}`
-    }
+      borderBottom: `1px solid ${theme.palette.TwClrBrdrSecondary}`,
+    },
   },
 }));
 
@@ -59,7 +59,7 @@ export interface Props<T> {
   sortComparator?: (a: T, b: T, orderBy: keyof T) => number;
   sortHandler?: (order: SortOrder, orderBy: string) => void;
   isInactive?: (row: T) => boolean;
-  onReorderEnd?: ({ oldIndex, newIndex }: any) => void;
+  onReorderEnd?: (newOrder: string[]) => void;
   isClickable?: (row: T) => boolean;
   emptyTableMessage?: string;
   showCheckbox?: boolean;
@@ -114,6 +114,32 @@ export default function EnhancedTable<T>({
   const [maxItemsPerPage] = useState(100);
   const [itemsToSkip, setItemsToSkip] = useState(0);
   const { isMobile } = useDeviceInfo();
+  const [displayColumnKeyNames, setDisplayColumnKeyNames] = useState<string[]>();
+  const [displayColumnsIndexed, setDisplayColumnsIndexed] = useState<Record<string, DatabaseColumn>>();
+  const [displayColumnDetails, setDisplayColumnDetails] = useState<DatabaseColumn[]>();
+
+  useEffect(() => {
+    const columnsKeyNames = columns.map((col) => col.key);
+    const columnsIndexed = columns.reduce((acum, value) => {
+      acum[value.key] = value;
+
+      return acum;
+    }, {} as Record<string, DatabaseColumn>);
+
+    setDisplayColumnKeyNames(columnsKeyNames);
+    setDisplayColumnsIndexed(columnsIndexed);
+  }, [columns]);
+
+  useEffect(() => {
+    if (displayColumnKeyNames && displayColumnsIndexed) {
+      const columnsDetails = displayColumnKeyNames.map((key) => {
+        const detail = { ...displayColumnsIndexed[key] };
+        return detail;
+      });
+
+      setDisplayColumnDetails(columnsDetails);
+    }
+  }, [displayColumnKeyNames, displayColumnsIndexed]);
 
   useEffect(() => {
     if (setSelectedRows && rows.length >= 0) {
@@ -189,10 +215,12 @@ export default function EnhancedTable<T>({
     }));
   }
 
-  const [headCells, setHeadCells] = React.useState<HeadCell[]>(columnsToHeadCells(columns));
+  const [headCells, setHeadCells] = React.useState<HeadCell[]>();
   React.useEffect(() => {
-    setHeadCells(columnsToHeadCells(columns));
-  }, [columns]);
+    if (displayColumnDetails) {
+      setHeadCells(columnsToHeadCells(displayColumnDetails));
+    }
+  }, [displayColumnDetails]);
 
   const sensors = useSensors(
     useSensor(MouseSensor),
@@ -202,13 +230,32 @@ export default function EnhancedTable<T>({
     })
   );
 
-  function handleDragEnd(event: { active: any; over: any }) {
-    const { active, over } = event;
-    if (active && over && active.id !== over.id && onReorderEnd) {
-      const oldIndex = headCells.findIndex((item) => item.id === active.id);
-      const newIndex = headCells.findIndex((item) => item.id === over.id);
+  const onReorderEndHandler = useCallback(
+    ({ oldIndex, newIndex }) => {
+      if (displayColumnKeyNames) {
+        if (newIndex !== 0 && oldIndex !== 0) {
+          const newOrder = [...displayColumnKeyNames];
+          const moved = newOrder.splice(oldIndex, 1);
+          newOrder.splice(newIndex, 0, moved[0]);
+          setDisplayColumnKeyNames(newOrder);
+          if (onReorderEnd) {
+            onReorderEnd(newOrder);
+          }
+        }
+      }
+    },
+    [displayColumnKeyNames, setDisplayColumnKeyNames]
+  );
 
-      onReorderEnd({ oldIndex, newIndex });
+  function handleDragEnd(event: { active: any; over: any }) {
+    if (headCells) {
+      const { active, over } = event;
+      if (active && over && active.id !== over.id && onReorderEndHandler) {
+        const oldIndex = headCells.findIndex((item) => item.id === active.id);
+        const newIndex = headCells.findIndex((item) => item.id === over.id);
+
+        onReorderEndHandler({ oldIndex, newIndex });
+      }
     }
   }
 
@@ -223,8 +270,8 @@ export default function EnhancedTable<T>({
                 order={order}
                 orderBy={orderBy}
                 onRequestSort={handleRequestSort}
-                columns={columns}
-                onReorderEnd={onReorderEnd}
+                columns={displayColumnDetails ?? []}
+                onReorderEnd={onReorderEndHandler}
                 numSelected={showCheckbox ? selectedRows?.length : undefined}
                 onSelectAllClick={showCheckbox ? handleSelectAllClick : undefined}
                 rowCount={showCheckbox ? rows?.length : undefined}
@@ -275,17 +322,18 @@ export default function EnhancedTable<T>({
                               />
                             </TableCell>
                           )}
-                          {columns.map((c) => (
-                            <Renderer
-                              index={index + 1}
-                              key={c.key}
-                              row={row as T}
-                              column={c}
-                              value={row[c.key]}
-                              onRowClick={onSelect && controlledOnSelect ? (newValue?: string) => onSelect(row as T, c.key, newValue) : onClick}
-                              reloadData={reloadData}
-                            />
-                          ))}
+                          {displayColumnDetails &&
+                            displayColumnDetails.map((c) => (
+                              <Renderer
+                                index={index + 1}
+                                key={c.key}
+                                row={row as T}
+                                column={c}
+                                value={row[c.key]}
+                                onRowClick={onSelect && controlledOnSelect ? (newValue?: string) => onSelect(row as T, c.key, newValue) : onClick}
+                                reloadData={reloadData}
+                              />
+                            ))}
                         </TableRow>
                         {DetailsRenderer && <DetailsRenderer index={index} row={row} />}
                       </React.Fragment>

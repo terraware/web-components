@@ -28,9 +28,7 @@ function Renderer(props: RendererProps<any>): JSX.Element {
   return <CellRenderer {...props} />;
 }
 
-const Template: Story<TableProps<{ name: string; lastname: string }>> = (
-  args
-) => {
+const Template: Story<TableProps<{ name: string; lastname: string }>> = (args) => {
   const [selectedRows, setSelectedRows] = useState<any>([]);
   const styles = useStyles();
   args.columns[1].className = styles.italic;
@@ -47,16 +45,19 @@ Default.args = {
     { key: 'name', name: 'Name', type: 'string' },
     { key: 'middlename', name: 'Middlename', type: 'string', tooltipTitle: 'Middle name is optional' },
     { key: 'lastname', name: 'Lastname', type: 'string' },
+    { key: 'occupation', name: 'Occupation', type: 'string' },
   ],
-  rows: Array(50).fill({name: '', middlename: '', lastname: ''}).map((i, j) => {
-    if (j % 2 === 0) {
-      return { name: `Constanza_${j}`, middlename: '', lastname: 'Uanini' };
-    } else if (j % 3 === 0) {
-      return { name: `Carlos_${j}`, middlename: '--', lastname: 'Thurber' };
-    } else {
-      return { name: `Jane${j}`, middlename: 'John', lastname: 'Doe' };
-    }
-  }),
+  rows: Array(50)
+    .fill({ name: '', middlename: '', lastname: '', occupation: '' })
+    .map((i, j) => {
+      if (j % 2 === 0) {
+        return { name: `Constanza_${j}`, middlename: '', lastname: 'Uanini', occupation: 'Artist' };
+      } else if (j % 3 === 0) {
+        return { name: `Carlos_${j}`, middlename: '--', lastname: 'Thurber', occupation: 'Freelancer' };
+      } else {
+        return { name: `Jane${j}`, middlename: 'John', lastname: 'Doe', occupation: 'Business analyst' };
+      }
+    }),
 };
 
 Selectable.args = {
