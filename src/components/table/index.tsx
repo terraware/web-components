@@ -134,6 +134,7 @@ export default function EnhancedTable<T>({
     if (displayColumnKeyNames && displayColumnsIndexed) {
       const columnsDetails = displayColumnKeyNames.map((key) => {
         const detail = { ...displayColumnsIndexed[key] };
+
         return detail;
       });
 
