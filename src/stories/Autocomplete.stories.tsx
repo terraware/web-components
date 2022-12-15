@@ -2,10 +2,7 @@ import { action } from '@storybook/addon-actions';
 import { Story } from '@storybook/react';
 import { Theme } from '@mui/material';
 import React from 'react';
-import Autocomplete, {
-  ValueType,
-  Props as AutocompleteProps,
-} from '../components/Autocomplete/Autocomplete';
+import Autocomplete, { ValueType, Props as AutocompleteProps } from '../components/Autocomplete/Autocomplete';
 import { makeStyles } from '@mui/styles';
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -49,21 +46,27 @@ Complex.args = {
   id: '2',
   label: 'Complex Objects',
   placeholder: 'Pick a value',
-  values: [{
-    label: 'hello',
-    value: 1,
-  }, {
-    label: 'world',
-    value: 2,
-  }, {
-    label: 'yoyo',
-    value: 3,
-  }, {
-    label: 'ma',
-    value: 4,
-  }],
+  values: [
+    {
+      label: 'hello',
+      value: 1,
+    },
+    {
+      label: 'world',
+      value: 2,
+    },
+    {
+      label: 'yoyo',
+      value: 3,
+    },
+    {
+      label: 'ma',
+      value: 4,
+    },
+  ],
   onChange: () => true,
   selected: undefined,
   hideClearIcon: true,
   errorText: '',
+  isEqual: (option: any, value) => option.label === value,
 };

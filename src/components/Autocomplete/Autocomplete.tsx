@@ -66,9 +66,7 @@ export default function Autocomplete({
       {errorText && (
         <div className='textfield-label-container'>
           <Icon name='error' className='textfield-error-text--icon' />
-          <label className='textfield-error-text'>
-            {errorText}
-          </label>
+          <label className='textfield-error-text'>{errorText}</label>
         </div>
       )}
     </div>
@@ -89,14 +87,14 @@ export default function Autocomplete({
       disabled={disabled}
       id={id}
       options={values}
-      getOptionLabel={(option: any) => (option ? (option.label || option) : '')}
+      getOptionLabel={(option: any) => (option ? option.label || option : '')}
       onChange={onChangeHandler}
       onInputChange={(event: any, value: any) => freeSolo && onChangeHandler(event, value)}
-      inputValue={(selected as Option)?.label || selected}
+      value={(selected as Option)?.label || selected}
       freeSolo={freeSolo}
       forcePopupIcon={true}
       renderInput={renderInput}
-      popupIcon={<Icon name='chevronDown' className='auto-complete--icon-right' size='medium'/>}
+      popupIcon={<Icon name='chevronDown' className='auto-complete--icon-right' size='medium' />}
       classes={{
         paper: 'auto-complete select',
         listbox: 'options-container',
