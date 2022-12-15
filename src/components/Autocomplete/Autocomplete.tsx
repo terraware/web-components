@@ -87,7 +87,13 @@ export default function Autocomplete({
       disabled={disabled}
       id={id}
       options={values}
-      getOptionLabel={(option: any) => (option ? option.label || option : '')}
+      getOptionLabel={(option: any) => {
+        if (typeof option === 'object') {
+          return option.label ?? '';
+        }
+
+        return option ?? '';
+      }}
       onChange={onChangeHandler}
       onInputChange={(event: any, value: any) => freeSolo && onChangeHandler(event, value)}
       value={selected}
