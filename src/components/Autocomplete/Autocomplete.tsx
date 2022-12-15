@@ -90,7 +90,7 @@ export default function Autocomplete({
       getOptionLabel={(option: any) => (option ? option.label || option : '')}
       onChange={onChangeHandler}
       onInputChange={(event: any, value: any) => freeSolo && onChangeHandler(event, value)}
-      value={(selected as Option)?.label || selected}
+      value={selected}
       freeSolo={freeSolo}
       forcePopupIcon={true}
       renderInput={renderInput}

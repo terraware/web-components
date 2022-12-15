@@ -68,5 +68,5 @@ Complex.args = {
   selected: undefined,
   hideClearIcon: true,
   errorText: '',
-  isEqual: (option: any, value) => option.label === value,
+  isEqual: (option: any, value: any) => option.value === value.value,
 };
