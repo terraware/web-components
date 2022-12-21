@@ -34,14 +34,13 @@ export default function NavItem(props: NavItemProps): JSX.Element {
   React.useEffect(() => {
     if (children && hasChildrenSelected()) {
       setOpen(true);
-    } else {
-      setOpen(false);
     }
   }, [children, hasChildrenSelected, selected]);
 
   const [open, setOpen] = React.useState(hasChildrenSelected());
 
   const onClickHandler = () => {
+    setOpen(!open);
     if (onClick) {
       onClick(!open);
     }

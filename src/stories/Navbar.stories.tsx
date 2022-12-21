@@ -16,10 +16,6 @@ export default {
 const Template: Story<NavbarProps> = (args) => {
   const [selectedItem, setSelectedItem] = React.useState('accessions');
 
-  const onClickHandler = () => {
-    setSelectedItem('home');
-  };
-
   // tslint:disable-next-line:no-empty
   const showNavbar = (show: any) => {};
 
@@ -28,14 +24,14 @@ const Template: Story<NavbarProps> = (args) => {
       <NavItem label='Home' icon='home' selected={selectedItem === 'home'} onClick={() => setSelectedItem('home')} />
       <NavItem label='Species' icon='species' selected={selectedItem === 'species'} onClick={() => setSelectedItem('species')} />
       <NavSection />
-      <NavItem label='Seeds' icon='seeds' onClick={() => setSelectedItem('seeds-dashboard')}>
+      <NavItem label='Seeds' icon='seeds'>
         <SubNavbar>
           <NavItem label='Dashboard' selected={selectedItem === 'seeds-dashboard'} onClick={() => setSelectedItem('seeds-dashboard')} />
           <NavItem label='Accessions' selected={selectedItem === 'accessions'} onClick={() => setSelectedItem('accessions')} />
           <NavItem label='Monitoring' selected={selectedItem === 'monitoring'} onClick={() => setSelectedItem('monitoring')} />
         </SubNavbar>
       </NavItem>
-      <NavItem label='Seedlings' icon='iconSeedling' onClick={() => setSelectedItem('inventory')}>
+      <NavItem label='Seedlings' icon='iconSeedling'>
         <SubNavbar>
           <NavItem label='Inventory' selected={selectedItem === 'inventory'} onClick={() => setSelectedItem('inventory')} />
         </SubNavbar>
@@ -43,7 +39,7 @@ const Template: Story<NavbarProps> = (args) => {
       <NavSection title='Settings' />
       <NavItem label='Organization' icon='organizationNav' selected={selectedItem === 'organization'} onClick={() => setSelectedItem('organization')} />
       <NavItem label='People' icon='peopleNav' selected={selectedItem === 'people'} onClick={() => setSelectedItem('people')} />
-      <NavItem label='Locations' icon='iconLocations' onClick={() => setSelectedItem('seedbanks')}>
+      <NavItem label='Locations' icon='iconLocations'>
         <SubNavbar>
           <NavItem label='Seed Banks' selected={selectedItem === 'seedbanks'} onClick={() => setSelectedItem('seedbanks')} />
           <NavItem label='Nurseries' selected={selectedItem === 'nurseries'} onClick={() => setSelectedItem('nurseries')} />
