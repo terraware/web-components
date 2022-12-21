@@ -51,6 +51,7 @@
     mix-blend-mode: multiply;
 
     .nav-item-content {
+      border-radius: 16px;
       padding: 12px 16px;
       display: flex;
       width: 100%;
@@ -66,17 +67,14 @@
       &:hover {
         cursor: pointer;
       }
-    }
 
-    &:hover {
-      background-color: $tw-clr-bg-secondary;
-      // .nav-item {
-      //   background-color: $tw-clr-bg-secondary;
-      // }
-    }
+      &:hover {
+        background-color: $tw-clr-bg-secondary;
+      }
 
-    &:active {
-      background-color: $tw-clr-bg-secondary-hover;
+      &:active {
+        background-color: $tw-clr-bg-secondary-hover;
+      }
     }
 
     button {
