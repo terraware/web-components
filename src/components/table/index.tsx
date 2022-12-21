@@ -79,6 +79,7 @@ export type TopBarButton = {
   buttonType: 'productive' | 'passive' | 'destructive' | undefined;
   onButtonClick: () => void;
   icon?: IconName;
+  disabled?: boolean;
 };
 
 export default function EnhancedTable<T>({

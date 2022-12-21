@@ -33,7 +33,29 @@ const Template: Story<TableProps<{ name: string; lastname: string }>> = (args) =
   const styles = useStyles();
   args.columns[1].className = styles.italic;
 
-  return <Table {...args} Renderer={Renderer} selectedRows={selectedRows} setSelectedRows={setSelectedRows} />;
+  return (
+    <Table
+      {...args}
+      Renderer={Renderer}
+      selectedRows={selectedRows}
+      setSelectedRows={setSelectedRows}
+      topBarButtons={
+        [
+          {
+            buttonType: 'productive',
+            buttonText: 'Click',
+            onButtonClick: () => window.alert('click')
+          },
+          {
+            buttonType: 'passive',
+            buttonText: 'Disabled',
+            onButtonClick: () => window.alert('you should not see this'),
+            disabled: true,
+          },
+        ]
+      }
+    />
+  );
 };
 
 export const Default = Template.bind({});
@@ -58,6 +80,7 @@ Default.args = {
         return { name: `Jane${j}`, middlename: 'John', lastname: 'Doe', occupation: 'Business analyst' };
       }
     }),
+  showTopBar: false,
 };
 
 Selectable.args = {

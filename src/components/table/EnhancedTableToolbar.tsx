@@ -40,6 +40,7 @@ export default function EnhancedTableToolbar(props: EnhancedTableToolbarProps): 
             type={tbButton.buttonType}
             onClick={tbButton.onButtonClick}
             icon={tbButton.icon}
+            disabled={tbButton.disabled}
           />
         );
       })}
