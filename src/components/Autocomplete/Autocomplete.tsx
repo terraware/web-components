@@ -62,7 +62,7 @@ export default function Autocomplete({
           {label}
         </label>
       )}
-      <TextField {...params} variant='outlined' size='small' placeholder={placeholder} />
+      <TextField {...params} variant='outlined' size='small' placeholder={placeholder} className={errorText ? 'auto-complete--error' : ''} />
       {errorText && (
         <div className='textfield-label-container'>
           <Icon name='error' className='textfield-error-text--icon' />
