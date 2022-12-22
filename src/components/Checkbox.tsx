@@ -22,7 +22,7 @@ export const CheckboxStyle = (theme: Theme) => ({
     opacity: 0.5,
   },
   '&:hover > .unchecked': {
-    border: '2px solid #6172BE',
+    border: `2px solid ${theme.palette.TwClrBrdrHover}`,
   },
   '& > .checkbox': {
     width: '24px',
@@ -44,10 +44,7 @@ export const CheckboxStyle = (theme: Theme) => ({
     }
   },
   '& > .unchecked': {
-    border: '2px solid #7F775B',
-    '&:hover': {
-      border: '2px solid #6172BE',
-    }
+    border: `2px solid ${theme.palette.TwClrBrdrSecondary}`,
   },
 });
 
