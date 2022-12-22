@@ -6,7 +6,7 @@ import { SortableContext } from '@dnd-kit/sortable';
 import TableHeaderItem from './TableHeaderItem';
 import { HeadCell } from '.';
 import { makeStyles } from '@mui/styles';
-import { CheckboxStyle } from '../Checkbox';
+import { CheckboxIcons, CheckboxStyle } from '../Checkbox';
 
 const useStyles = makeStyles((theme: Theme) => ({
   headerCell: {
@@ -58,6 +58,7 @@ export default function EnhancedTableHead(props: Props): JSX.Element {
               indeterminate={numSelected > 0 && numSelected < rowCount}
               checked={rowCount > 0 && numSelected === rowCount}
               onChange={onSelectAllClick}
+              {...CheckboxIcons}
             />
           </TableCell>
         )}

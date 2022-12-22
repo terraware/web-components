@@ -1,27 +1,53 @@
-import { Checkbox as MUICheckbox, FormControlLabel, Theme, useTheme } from '@mui/material';
 import React, { SyntheticEvent } from 'react';
+import { Checkbox as MUICheckbox, FormControlLabel, Theme, useTheme } from '@mui/material';
+import Icon from './Icon/Icon';
+
+export const CheckboxIcons = {
+  checkedIcon: (
+    <span className='checkbox selected'>
+      <Icon name='checkmark' />
+    </span>
+  ),
+  indeterminateIcon: (
+    <span className='checkbox selected'>
+      <Icon name='iconMinus' />
+    </span>
+  ),
+  icon: (<span className='checkbox unchecked' />)
+};
 
 export const CheckboxStyle = (theme: Theme) => ({
   padding: theme.spacing(0, 1, 0, 0),
-  '& .MuiSvgIcon-root': {
-    fill: theme.palette.TwClrBrdrSecondary,
-  },
-  '&:hover > .MuiSvgIcon-root': {
-    fill: theme.palette.TwClrBrdrHover,
-  },
-  '&.Mui-checked > .MuiSvgIcon-root': {
-    fill: theme.palette.TwClrBgSelected,
-    color: theme.palette.TwClrBgSelected,
-  },
-  '&.MuiCheckbox-indeterminate > .MuiSvgIcon-root': {
-    fill: theme.palette.TwClrBgSelected,
-    color: theme.palette.TwClrBgSelected,
-  },
-  '&:focus > .MuiSvgIcon-root': {
-    border: `2px solid ${theme.palette.TwClrBgSelected}`,
-  },
   '&.Mui-disabled': {
     opacity: 0.5,
+  },
+  '&:hover > .unchecked': {
+    border: '2px solid #6172BE',
+  },
+  '& > .checkbox': {
+    width: '24px',
+    height: '24px',
+    borderRadius: '4px',
+    boxSizing: 'border-box',
+    '& > svg': {
+      display: 'flex',
+      margin: '2px auto auto',
+    }
+  },
+  '& > .selected': {
+    border: '2px solid transparent',
+    backgroundColor: theme.palette.TwClrBgSelected,
+    '& > svg' : {
+      fill: 'white',
+      stroke: 'white',
+      strokeWidth: '4px',
+    }
+  },
+  '& > .unchecked': {
+    border: '2px solid #7F775B',
+    '&:hover': {
+      border: '2px solid #6172BE',
+    }
   },
 });
 
@@ -56,6 +82,7 @@ export default function Checkbox(props: Props): JSX.Element {
           checked={props.value ?? false}
           size='medium'
           sx={CheckboxStyle(theme)}
+          {...CheckboxIcons}
         />
       )}
       className={props.className}
@@ -67,6 +94,10 @@ export default function Checkbox(props: Props): JSX.Element {
         fontWeight: 500,
         lineHeight: '24px',
         margin: theme.spacing(1, 0, 0, 0),
+        '&.Mui-disabled .MuiFormControlLabel-label': {
+          color: theme.palette.TwClrTxt,
+          opacity: 0.5,
+        },
       }}
     />
   );

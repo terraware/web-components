@@ -10,7 +10,7 @@ import { DndContext, KeyboardSensor, MouseSensor, TouchSensor, useSensor, useSen
 import { sortableKeyboardCoordinates } from '@dnd-kit/sortable';
 import { useDeviceInfo } from '../../utils';
 import { IconName } from '../Icon/icons';
-import { CheckboxStyle } from '../Checkbox';
+import { CheckboxIcons, CheckboxStyle } from '../Checkbox';
 
 const tableStyles = makeStyles((theme: Theme) => ({
   hover: {
@@ -321,6 +321,7 @@ export default function EnhancedTable<T>({
                                 color='primary'
                                 checked={isItemSelected}
                                 onClick={(e) => (!isClickable || !isClickable(row as T) ? handleClick(e, row as T) : null)}
+                                {...CheckboxIcons}
                               />
                             </TableCell>
                           )}
