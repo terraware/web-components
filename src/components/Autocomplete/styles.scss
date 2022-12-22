@@ -29,6 +29,17 @@
     padding: 0;
   }
 
+  .Mui-disabled {
+    border-color: rgba($tw-clr-brdr-secondary, $tw-opcty-base-050);
+    font-weight: 500;
+
+    ::placeholder {
+      color: $tw-clr-txt;
+      opacity: 1;
+    }
+    
+  }
+
   input {
     padding: calc(#{$tw-spc-base-xx-small} * 2.5) calc(#{$tw-spc-base-xx-small} * 3);
   }
@@ -109,5 +120,29 @@
       height: $tw-fnt-frm-fld-error-text-line-height;
       margin-right: $tw-spc-base-x-small;
     }
+  }
+
+  &--error {     
+    .MuiOutlinedInput-root {
+      border: $tw-sz-frm-fld-text-input-stroke solid $tw-clr-brdr-danger;
+      &:hover fieldset {
+        border: $tw-sz-frm-fld-text-input-stroke solid $tw-clr-brdr-danger-hover;
+      }
+      &.Mui-focused fieldset.MuiOutlinedInput-notchedOutline {
+        border: $tw-sz-frm-fld-text-input-stroke solid $tw-clr-brdr-danger-active 
+      }
+    }
+      background-color: $tw-clr-bg-danger-tertiary;
+      border-radius: $tw-spc-base-x-small;
+      &:active {
+        outline: $tw-sz-frm-fld-text-input-stroke-active solid $tw-clr-brdr-danger-active;
+      }
+  
+      &:focus-within,
+      &:focus-visible {
+        outline: $tw-sz-frm-fld-text-input-stroke-active solid $tw-clr-brdr-danger-active;
+        outline-offset: -$tw-sz-frm-fld-text-input-stroke;
+      }
+    
   }
 }
