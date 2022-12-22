@@ -30,8 +30,9 @@
   }
 
   .Mui-disabled {
-    border-color: rgba($tw-clr-brdr-secondary, $tw-opcty-base-050);
+    border-color: $tw-clr-brdr-secondary;
     font-weight: 500;
+    opacity: 0.5;
 
     ::placeholder {
       color: $tw-clr-txt;
