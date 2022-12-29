@@ -5,7 +5,4 @@ updates:
     schedule:
       interval: "weekly"
       day: "sunday"
-    ignore:
-      - dependency-name: "example-name"
-        # For Lodash, ignore all updates
     open-pull-requests-limit: 15
