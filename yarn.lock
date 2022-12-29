@@ -1763,10 +1763,10 @@
   resolved "https://registry.npmjs.org/@csstools/normalize.css/-/normalize.css-10.1.0.tgz"
   integrity sha512-ij4wRiunFfaJxjB0BdrYHIH8FxBJpOwNPhhAcunlmPdXudL1WQV1qoP9un6JsEBAgQH+7UXyyjh0g7jTxXK6tg==
 
-"@date-io/core@^2.10.11", "@date-io/core@^2.15.0":
-  version "2.15.0"
-  resolved "https://registry.npmjs.org/@date-io/core/-/core-2.15.0.tgz"
-  integrity sha512-3CRvQUEK7aF87NUOwcTtmJ2Rc1kN0D4jFQUfRoanuAnE4o5HzHx4E2YenjaKjSPWeZYiWG6ZhDomx5hp1AaCJA==
+"@date-io/core@^2.15.0", "@date-io/core@^2.16.0":
+  version "2.16.0"
+  resolved "https://registry.yarnpkg.com/@date-io/core/-/core-2.16.0.tgz#7871bfc1d9bca9aa35ad444a239505589d0f22f6"
+  integrity sha512-DYmSzkr+jToahwWrsiRA2/pzMEtz9Bq1euJwoOuYwuwIYXnZFtHajY2E6a1VNVDc9jP8YUXK1BvnZH9mmT19Zg==
 
 "@date-io/date-fns@^2.14.0", "@date-io/date-fns@^2.15.0":
   version "2.15.0"
@@ -1789,19 +1789,12 @@
   dependencies:
     "@date-io/core" "^2.15.0"
 
-"@date-io/moment@^2.10.11":
-  version "2.10.11"
-  resolved "https://registry.npmjs.org/@date-io/moment/-/moment-2.10.11.tgz"
-  integrity sha512-xym/Ew0C7WSmH3w1KcEwoWoUnQ9UjjDZo1++SwlGdGIU0lPEv1QmMx59shWWL49GAz7KOsCEF2Gu9uDt8cEcVw==
+"@date-io/moment@^2.15.0", "@date-io/moment@^2.16.1":
+  version "2.16.1"
+  resolved "https://registry.yarnpkg.com/@date-io/moment/-/moment-2.16.1.tgz#ec6e0daa486871e0e6412036c6f806842a0eeed4"
+  integrity sha512-JkxldQxUqZBfZtsaCcCMkm/dmytdyq5pS1RxshCQ4fHhsvP5A7gSqPD22QbVXMcJydi3d3v1Y8BQdUKEuGACZQ==
   dependencies:
-    "@date-io/core" "^2.10.11"
-
-"@date-io/moment@^2.15.0":
-  version "2.15.0"
-  resolved "https://registry.npmjs.org/@date-io/moment/-/moment-2.15.0.tgz"
-  integrity sha512-AcYBjl3EnEGsByaM5ir644CKbhgJsgc1iWFa9EXfdb4fQexxOC8oCdPAurK2ZDTwg62odyyKa/05YE7ElYh5ag==
-  dependencies:
-    "@date-io/core" "^2.15.0"
+    "@date-io/core" "^2.16.0"
 
 "@dnd-kit/accessibility@^3.0.0":
   version "3.0.1"
