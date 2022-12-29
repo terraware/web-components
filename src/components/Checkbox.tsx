@@ -38,8 +38,8 @@ export const CheckboxStyle = (theme: Theme) => ({
     border: '2px solid transparent',
     backgroundColor: theme.palette.TwClrBgSelected,
     '& > svg' : {
-      fill: 'white',
-      stroke: 'white',
+      fill: theme.palette.TwClrBaseWhite,
+      stroke: theme.palette.TwClrBaseWhite,
       strokeWidth: '4px',
     }
   },
