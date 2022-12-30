@@ -66,7 +66,7 @@ export default function Autocomplete({
       {errorText && (
         <div className='textfield-label-container'>
           <Icon name='error' className='textfield-error-text--icon' />
-          <label className='textfield-error-text'>{errorText}</label>
+          <label htmlFor={id} className='textfield-error-text'>{errorText}</label>
         </div>
       )}
     </div>
