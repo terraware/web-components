@@ -34,6 +34,9 @@ jobs:
       - name: linter
         run: yarn lint
 
+      - name: unit tests
+        run: yarn test
+
       - name: build
         run: yarn build-dist
 
