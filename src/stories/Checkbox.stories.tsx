@@ -17,8 +17,8 @@ const useStyles = makeStyles(() => ({
 
 const Template: Story<CheckboxProps> = (args) => {
   const [value, setValue] = React.useState(true);
-  const toggleChange = (id: string, _value: boolean) => {
-    action('onChange')(_value);
+  const toggleChange = (propertyName: string, _value: boolean) => {
+    action('onChange')(propertyName, _value);
     setValue(_value);
   };
 
@@ -33,6 +33,7 @@ export const TopAlignLongLabel = Template.bind({});
 
 Default.args = {
   id: '1',
+  propertyName: 'default',
   name: 'Test',
   label: 'Test',
   disabled: false,
@@ -40,6 +41,7 @@ Default.args = {
 
 TopAlignLongLabel.args = {
   id: '2',
+  propertyName: 'longlabel',
   name: 'Alignment Test',
   label: 'The Quick Brown Fox Jumped Over The Silly Lazy Goat',
   disabled: false,

@@ -13,9 +13,10 @@ export type ValueType = string | Option;
 
 export interface Props {
   id: string;
+  propertyName: string;
   label: string;
   values: ValueType[];
-  onChange: (id: string, value: ValueType) => void;
+  onChange: (propertyName: string, value: ValueType) => void;
   selected: ValueType | undefined;
   freeSolo: boolean;
   disabled?: boolean;
@@ -33,6 +34,7 @@ export type DropdownItem = {
 
 export default function Autocomplete({
   id,
+  propertyName,
   label,
   values,
   onChange,
@@ -48,9 +50,9 @@ export default function Autocomplete({
   const onChangeHandler = (event: ChangeEvent<any>, value: string | null) => {
     if (event) {
       if (value) {
-        onChange(id, value);
+        onChange(propertyName, value);
       } else {
-        onChange(id, '');
+        onChange(propertyName, '');
       }
     }
   };

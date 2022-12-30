@@ -20,8 +20,8 @@ export default {
 const Template: Story<AutocompleteProps> = (args) => {
   const classes = useStyles();
   const [selected, setSelected] = React.useState<ValueType>('');
-  const handleChange = (id: string, value: ValueType) => {
-    action('onChange')(value);
+  const handleChange = (propertyName: string, value: ValueType) => {
+    action('onChange')(propertyName, value);
     setSelected(value);
   };
 
@@ -34,6 +34,7 @@ export const Complex = Template.bind({});
 
 Default.args = {
   id: '1',
+  propertyName: 'simple',
   label: 'Test',
   values: ['Test 1', 'Test 2', 'Hello'],
   onChange: () => true,
@@ -44,6 +45,7 @@ Default.args = {
 
 Complex.args = {
   id: '2',
+  propertyName: 'complex',
   label: 'Complex Objects',
   placeholder: 'Pick a value',
   values: [

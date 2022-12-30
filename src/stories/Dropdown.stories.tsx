@@ -10,8 +10,8 @@ export default {
 
 const DropdownV1Template: Story<DropdownV1Props> = (args) => {
   const [selected, setSelected] = React.useState('');
-  const handleChange = (id: string, value: string) => {
-    action('onChange')(value);
+  const handleChange = (propertyName: string, value: string) => {
+    action('onChange')(propertyName, value);
     setSelected(value);
   };
 
@@ -22,6 +22,7 @@ export const LegacyDropdown = DropdownV1Template.bind({});
 
 LegacyDropdown.args = {
   id: '1',
+  propertyName: 'legacy',
   label: 'Legacy Dropdown',
   values: [
     { label: 'One', value: '1' },

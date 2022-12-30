@@ -9,7 +9,7 @@ import IconTooltip from '../IconTooltip';
 
 type TextfieldType = 'text' | 'textarea' | 'number';
 
-type Handler = (id: string, value: unknown) => void;
+type Handler = (propertyName: string, value: unknown) => void;
 
 export interface Props {
   autoFocus?: boolean;
@@ -19,6 +19,7 @@ export interface Props {
   iconLeft?: IconName;
   iconRight?: IconName;
   id: string;
+  propertyName: string;
   className?: string;
   helperText?: string;
   placeholder?: string;
@@ -45,6 +46,7 @@ export default function TextField(props: Props): JSX.Element {
     iconLeft,
     iconRight,
     id,
+    propertyName,
     className,
     helperText,
     placeholder,
@@ -74,7 +76,7 @@ export default function TextField(props: Props): JSX.Element {
       return;
     }
     if (onChange) {
-      onChange(id, textValue);
+      onChange(propertyName, textValue);
     }
   };
 

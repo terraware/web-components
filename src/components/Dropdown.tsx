@@ -5,9 +5,10 @@ import React from 'react';
 
 export interface Props {
   id: string;
+  propertyName: string;
   label: string;
   values?: DropdownItem[];
-  onChange: (id: string, value: string) => void;
+  onChange: (propertyName: string, value: string) => void;
   selected: string | undefined;
   disabled?: boolean;
 }
@@ -23,16 +24,16 @@ export type DropdownItem = {
   value: string;
 };
 
-export function DropdownV1({ id, label, values, onChange, selected, disabled }: Props): JSX.Element {
-  const onChangeH = (event: SelectChangeEvent<string>, _child: React.ReactNode) => {
-    onChange(id, event.target.value as string);
+export function DropdownV1({ id, propertyName, label, values, onChange, selected, disabled }: Props): JSX.Element {
+  const onChangeHandler = (event: SelectChangeEvent<string>, _child: React.ReactNode) => {
+    onChange(propertyName, event.target.value as string);
   };
   const classes = useStyles();
 
   return (
     <FormControl variant='outlined' className={classes.formControl} size='small' disabled={disabled}>
       <InputLabel id={`${id}-outlined-label`}>{label}</InputLabel>
-      <Select labelId={`${id}-outlined-label`} id={id} label={label} onChange={onChangeH} value={selected}>
+      <Select labelId={`${id}-outlined-label`} id={id} label={label} onChange={onChangeHandler} value={selected}>
         {values?.map(({ label: inLabel, value }) => (
           <MenuItem id={value} key={value} value={value}>
             {inLabel}

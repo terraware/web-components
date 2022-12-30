@@ -32,6 +32,7 @@ const Template: StoryBook<DatePickerProps> = (args) => {
         {...args}
         value={value}
         onChange={(i, v) => {
+          action('onChange')(i, v);
           setValue(v);
         }}
         onError={onError}
@@ -44,6 +45,7 @@ export const Default = Template.bind({});
 
 Default.args = {
   id: '1',
+  propertyName: 'date',
   label: 'Datepicker',
   minDate: undefined,
   maxDate: Date.now(),

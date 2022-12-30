@@ -2,6 +2,7 @@ import { Story } from '@storybook/react';
 import React from 'react';
 import { Box } from '@mui/material';
 import TextField, { Props as TextFieldProps } from '../components/Textfield/Textfield';
+import { action } from '@storybook/addon-actions';
 
 export default {
   title: 'TextField New',
@@ -24,7 +25,8 @@ export default {
 
 const Template: Story<TextFieldProps> = (args) => {
   const [value, setValue] = React.useState('');
-  const handleChange = (id: string, v: unknown) => {
+  const handleChange = (propertyName: string, v: unknown) => {
+    action('onChange')(propertyName, v);
     setValue(v as string);
   };
 
@@ -37,7 +39,8 @@ const Template: Story<TextFieldProps> = (args) => {
 
 const NumberTemplate: Story<TextFieldProps> = (args) => {
   const [value, setValue] = React.useState(0);
-  const handleChange = (id: string, v: unknown) => {
+  const handleChange = (propertyName: string, v: unknown) => {
+    action('onChange')(propertyName, v);
     setValue(v as number);
   };
 
@@ -57,6 +60,8 @@ export const TextArea = Template.bind({});
 export const NumberField = NumberTemplate.bind({});
 
 Default.args = {
+  id: '1',
+  propertyName: 'default',
   label: 'Field Label',
   disabled: false,
   helperText: 'Help text.',
@@ -70,6 +75,8 @@ Default.args = {
 };
 
 WithTooltip.args = {
+  id: '2',
+  propertyName: 'tooltip',
   label: 'Field Label',
   disabled: false,
   helperText: 'Help text.',
@@ -84,6 +91,8 @@ WithTooltip.args = {
 };
 
 TextArea.args = {
+  id: '3',
+  propertyName: 'textarea',
   label: 'Field Label',
   disabled: false,
   helperText: 'Help text.',
@@ -97,6 +106,8 @@ TextArea.args = {
 };
 
 NumberField.args = {
+  id: '4',
+  propertyName: 'number',
   label: 'Number Label',
   disabled: false,
   helperText: 'Help text.',
