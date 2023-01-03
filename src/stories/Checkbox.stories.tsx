@@ -17,7 +17,7 @@ const useStyles = makeStyles(() => ({
 
 const Template: Story<CheckboxProps> = (args) => {
   const [value, setValue] = React.useState(true);
-  const toggleChange = (id: string, _value: boolean) => {
+  const toggleChange = (_value: boolean) => {
     action('onChange')(_value);
     setValue(_value);
   };
@@ -25,7 +25,7 @@ const Template: Story<CheckboxProps> = (args) => {
   const classes = useStyles();
   const className = classes.narrowWidth;
 
-  return <Checkbox {...args} onChange={toggleChange} value={value} className={className}/>;
+  return <Checkbox {...args} onChange={toggleChange} value={value} className={className} />;
 };
 
 export const Default = Template.bind({});
