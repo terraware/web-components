@@ -16,7 +16,7 @@ const Template: Story<SelectProps> = (args) => {
     setValue(str);
   };
 
-  return <Select {...args} onChange={handleChange} />;
+  return <Select {...args} onChange={handleChange} selectedValue={value} />;
 };
 
 export const Default = Template.bind({});
@@ -73,6 +73,7 @@ const TemplateSelectT: Story<SelectTProps<Value>> = (args) => {
       renderOption={renderOption}
       toT={toT}
       displayLabel={displayLabel}
+      selectedValue={value}
     />
   );
 };
