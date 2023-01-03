@@ -4,7 +4,6 @@ interface SVGRProps {
   title?: string;
   titleId?: string;
 }
-
 const SvgSpecies2 = ({ title, titleId, ...props }: SVGProps<SVGSVGElement> & SVGRProps) => (
   <svg viewBox='0 0 200 128' fill='none' xmlns='http://www.w3.org/2000/svg' aria-labelledby={titleId} {...props}>
     {title ? <title id={titleId}>{title}</title> : null}
@@ -101,5 +100,4 @@ const SvgSpecies2 = ({ title, titleId, ...props }: SVGProps<SVGSVGElement> & SVG
     </defs>
   </svg>
 );
-
 export default SvgSpecies2;
