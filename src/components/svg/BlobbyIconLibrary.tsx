@@ -4,7 +4,6 @@ interface SVGRProps {
   title?: string;
   titleId?: string;
 }
-
 const SvgBlobbyIconLibrary = ({ title, titleId, ...props }: SVGProps<SVGSVGElement> & SVGRProps) => (
   <svg viewBox='0 0 200 128' fill='none' xmlns='http://www.w3.org/2000/svg' aria-labelledby={titleId} {...props}>
     {title ? <title id={titleId}>{title}</title> : null}
@@ -102,5 +101,4 @@ const SvgBlobbyIconLibrary = ({ title, titleId, ...props }: SVGProps<SVGSVGEleme
     </defs>
   </svg>
 );
-
 export default SvgBlobbyIconLibrary;
