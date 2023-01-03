@@ -15,7 +15,7 @@ export interface Props {
   id: string;
   label: string;
   values: ValueType[];
-  onChange: (id: string, value: ValueType) => void;
+  onChange: (value: ValueType) => void;
   selected: ValueType | undefined;
   freeSolo: boolean;
   disabled?: boolean;
@@ -48,9 +48,9 @@ export default function Autocomplete({
   const onChangeHandler = (event: ChangeEvent<any>, value: string | null) => {
     if (event) {
       if (value) {
-        onChange(id, value);
+        onChange(value);
       } else {
-        onChange(id, '');
+        onChange('');
       }
     }
   };
@@ -66,7 +66,9 @@ export default function Autocomplete({
       {errorText && (
         <div className='textfield-label-container'>
           <Icon name='error' className='textfield-error-text--icon' />
-          <label htmlFor={id} className='textfield-error-text'>{errorText}</label>
+          <label htmlFor={id} className='textfield-error-text'>
+            {errorText}
+          </label>
         </div>
       )}
     </div>

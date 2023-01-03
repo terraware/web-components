@@ -30,7 +30,7 @@ export interface Props {
   name: string;
   label: React.ReactNode;
   value?: boolean | null;
-  onChange: (id: string, value: boolean) => void;
+  onChange: (value: boolean) => void;
   disabled?: boolean;
   className?: string;
 }
@@ -39,7 +39,7 @@ export default function Checkbox(props: Props): JSX.Element {
   const theme = useTheme();
 
   const onChange = (event: SyntheticEvent<Element, Event>, checked: boolean) => {
-    props.onChange(props.id, checked);
+    props.onChange(checked);
   };
 
   return (
@@ -48,7 +48,7 @@ export default function Checkbox(props: Props): JSX.Element {
       onChange={onChange}
       label={props.label}
       disabled={props.disabled}
-      control={(
+      control={
         <MUICheckbox
           disabled={props.disabled}
           disableRipple={true}
@@ -57,7 +57,7 @@ export default function Checkbox(props: Props): JSX.Element {
           size='medium'
           sx={CheckboxStyle(theme)}
         />
-      )}
+      }
       className={props.className}
       sx={{
         alignItems: 'flex-start',

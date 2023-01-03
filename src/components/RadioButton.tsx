@@ -6,12 +6,12 @@ export interface Props {
   name: string;
   label: React.ReactNode;
   value?: boolean | null;
-  onChange: (id: string, value: boolean) => void;
+  onChange: (value: boolean) => void;
 }
 
 export default function RadioButton(props: Props): JSX.Element {
   const onChange = (event: SyntheticEvent<Element, Event>, checked: boolean) => {
-    props.onChange(props.id, checked);
+    props.onChange(checked);
   };
 
   return (
