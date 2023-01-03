@@ -4,7 +4,6 @@ interface SVGRProps {
   title?: string;
   titleId?: string;
 }
-
 const SvgSpinner = ({ title, titleId, ...props }: SVGProps<SVGSVGElement> & SVGRProps) => (
   <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48' xmlSpace='preserve' aria-labelledby={titleId} {...props}>
     {title ? <title id={titleId}>{title}</title> : null}
@@ -19,5 +18,4 @@ const SvgSpinner = ({ title, titleId, ...props }: SVGProps<SVGSVGElement> & SVGR
     <path opacity={0.25} d='M14.7 41.5c-.3 0-.5-.1-.7-.2-.7-.4-1-1.3-.5-2L16 35c.4-.7 1.3-1 2-.5.7.4 1 1.3.5 2L16 40.8c-.2.5-.7.7-1.3.7z' />
   </svg>
 );
-
 export default SvgSpinner;
