@@ -20,7 +20,7 @@ export default {
 const Template: Story<AutocompleteProps> = (args) => {
   const classes = useStyles();
   const [selected, setSelected] = React.useState<ValueType>('');
-  const handleChange = (id: string, value: ValueType) => {
+  const handleChange = (value: ValueType) => {
     action('onChange')(value);
     setSelected(value);
   };

@@ -7,7 +7,7 @@ export interface Props {
   id: string;
   label: string;
   values?: DropdownItem[];
-  onChange: (id: string, value: string) => void;
+  onChange: (value: string) => void;
   selected: string | undefined;
   disabled?: boolean;
 }
@@ -25,7 +25,7 @@ export type DropdownItem = {
 
 export function DropdownV1({ id, label, values, onChange, selected, disabled }: Props): JSX.Element {
   const onChangeH = (event: SelectChangeEvent<string>, _child: React.ReactNode) => {
-    onChange(id, event.target.value as string);
+    onChange(event.target.value as string);
   };
   const classes = useStyles();
 

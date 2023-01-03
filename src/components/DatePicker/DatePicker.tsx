@@ -13,7 +13,7 @@ export interface Props {
   autoFocus?: boolean;
   label: React.ReactNode;
   value?: string | null;
-  onChange: (id: string, value?: string | null) => void;
+  onChange: (value?: string | null) => void;
   'aria-label': string;
   onKeyPress?: KeyboardEventHandler;
   minDate?: any;
@@ -65,7 +65,7 @@ export default function DatePicker(props: Props): JSX.Element {
           value={temporalValue}
           onChange={(newValue: any) => {
             setTemporalValue(newValue);
-            props.onChange(props.id, newValue?.isValid() ? newValue?.toDate() : null);
+            props.onChange(newValue?.isValid() ? newValue?.toDate() : null);
           }}
           renderInput={renderInput}
           disabled={props.disabled}
