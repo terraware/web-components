@@ -1,5 +1,7 @@
 {
-  "include": ["src/**/*.tsx", "src/**/*.ts"],
+  "include": [
+    "src"
+  ],
   "compilerOptions": {
     "target": "es5",
     "lib": [
@@ -18,14 +20,10 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "react-jsx",
-    // Generate d.ts files
     "allowJs": true,
     "declaration": true,
-    "emitDeclarationOnly": true,
     "outDir": "dist",
-    "declarationMap": true
-  },
-  "include": [
-    "src"
-  ]
+    "declarationMap": true,
+    "noEmit": true
+  }
 }
