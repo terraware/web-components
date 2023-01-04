@@ -58,9 +58,11 @@ export default TerrawareTheme2;`;
         const { name, value } = token;
         let tokenValue = value.value || value;
 
-        tokenValue = tokenValue.replace(/rgba\((#[0-9|a-f|A-F]+),\s*(\d*\.?\d*)\)/g, (match, hex, opacity) => {
-          return hexRgb(hex, {alpha: parseFloat(opacity), format: 'css'});
-        });
+        if (typeof tokenValue.replace === 'function') {
+          tokenValue = tokenValue.replace(/rgba\((#[0-9|a-f|A-F]+),\s*(\d*\.?\d*)\)/g, (match, hex, opacity) => {
+            return hexRgb(hex, {alpha: parseFloat(opacity), format: 'css'});
+          });
+        }
 
         if (typeof(value) === 'string' && value.match(/^\d+$/)) {
           tokenValue = parseInt(value, 10);
