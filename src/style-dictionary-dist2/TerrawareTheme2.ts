@@ -2,6 +2,21 @@ import { PaletteOptions } from '@mui/material/styles/createPalette';
 
 declare module '@mui/material/styles/createPalette' {
   export interface Palette {
+    TwClrBaseBlack?: React.CSSProperties['color'];
+    TwClrBaseGray025?: React.CSSProperties['color'];
+    TwClrBaseGray050?: React.CSSProperties['color'];
+    TwClrBaseGray075?: React.CSSProperties['color'];
+    TwClrBaseGray100?: React.CSSProperties['color'];
+    TwClrBaseGray200?: React.CSSProperties['color'];
+    TwClrBaseGray300?: React.CSSProperties['color'];
+    TwClrBaseGray400?: React.CSSProperties['color'];
+    TwClrBaseGray500?: React.CSSProperties['color'];
+    TwClrBaseGray600?: React.CSSProperties['color'];
+    TwClrBaseGray700?: React.CSSProperties['color'];
+    TwClrBaseGray800?: React.CSSProperties['color'];
+    TwClrBaseGray900?: React.CSSProperties['color'];
+    TwClrBaseTransparent?: React.CSSProperties['color'];
+    TwClrBaseWhite?: React.CSSProperties['color'];
     TwClrBaseBlue050?: React.CSSProperties['color'];
     TwClrBaseBlue100?: React.CSSProperties['color'];
     TwClrBaseBlue200?: React.CSSProperties['color'];
@@ -74,21 +89,6 @@ declare module '@mui/material/styles/createPalette' {
     TwClrBaseYellow600?: React.CSSProperties['color'];
     TwClrBaseYellow700?: React.CSSProperties['color'];
     TwClrBaseYellow800?: React.CSSProperties['color'];
-    TwClrBaseBlack?: React.CSSProperties['color'];
-    TwClrBaseGray025?: React.CSSProperties['color'];
-    TwClrBaseGray050?: React.CSSProperties['color'];
-    TwClrBaseGray075?: React.CSSProperties['color'];
-    TwClrBaseGray100?: React.CSSProperties['color'];
-    TwClrBaseGray200?: React.CSSProperties['color'];
-    TwClrBaseGray300?: React.CSSProperties['color'];
-    TwClrBaseGray400?: React.CSSProperties['color'];
-    TwClrBaseGray500?: React.CSSProperties['color'];
-    TwClrBaseGray600?: React.CSSProperties['color'];
-    TwClrBaseGray700?: React.CSSProperties['color'];
-    TwClrBaseGray800?: React.CSSProperties['color'];
-    TwClrBaseGray900?: React.CSSProperties['color'];
-    TwClrBaseTransparent?: React.CSSProperties['color'];
-    TwClrBaseWhite?: React.CSSProperties['color'];
     TwClrBg?: React.CSSProperties['color'];
     TwClrBgActive?: React.CSSProperties['color'];
     TwClrBgGhost?: React.CSSProperties['color'];
@@ -177,6 +177,21 @@ declare module '@mui/material/styles/createPalette' {
   }
 
   export interface PaletteOptions {
+    TwClrBaseBlack?: React.CSSProperties['color'];
+    TwClrBaseGray025?: React.CSSProperties['color'];
+    TwClrBaseGray050?: React.CSSProperties['color'];
+    TwClrBaseGray075?: React.CSSProperties['color'];
+    TwClrBaseGray100?: React.CSSProperties['color'];
+    TwClrBaseGray200?: React.CSSProperties['color'];
+    TwClrBaseGray300?: React.CSSProperties['color'];
+    TwClrBaseGray400?: React.CSSProperties['color'];
+    TwClrBaseGray500?: React.CSSProperties['color'];
+    TwClrBaseGray600?: React.CSSProperties['color'];
+    TwClrBaseGray700?: React.CSSProperties['color'];
+    TwClrBaseGray800?: React.CSSProperties['color'];
+    TwClrBaseGray900?: React.CSSProperties['color'];
+    TwClrBaseTransparent?: React.CSSProperties['color'];
+    TwClrBaseWhite?: React.CSSProperties['color'];
     TwClrBaseBlue050?: React.CSSProperties['color'];
     TwClrBaseBlue100?: React.CSSProperties['color'];
     TwClrBaseBlue200?: React.CSSProperties['color'];
@@ -249,21 +264,6 @@ declare module '@mui/material/styles/createPalette' {
     TwClrBaseYellow600?: React.CSSProperties['color'];
     TwClrBaseYellow700?: React.CSSProperties['color'];
     TwClrBaseYellow800?: React.CSSProperties['color'];
-    TwClrBaseBlack?: React.CSSProperties['color'];
-    TwClrBaseGray025?: React.CSSProperties['color'];
-    TwClrBaseGray050?: React.CSSProperties['color'];
-    TwClrBaseGray075?: React.CSSProperties['color'];
-    TwClrBaseGray100?: React.CSSProperties['color'];
-    TwClrBaseGray200?: React.CSSProperties['color'];
-    TwClrBaseGray300?: React.CSSProperties['color'];
-    TwClrBaseGray400?: React.CSSProperties['color'];
-    TwClrBaseGray500?: React.CSSProperties['color'];
-    TwClrBaseGray600?: React.CSSProperties['color'];
-    TwClrBaseGray700?: React.CSSProperties['color'];
-    TwClrBaseGray800?: React.CSSProperties['color'];
-    TwClrBaseGray900?: React.CSSProperties['color'];
-    TwClrBaseTransparent?: React.CSSProperties['color'];
-    TwClrBaseWhite?: React.CSSProperties['color'];
     TwClrBg?: React.CSSProperties['color'];
     TwClrBgActive?: React.CSSProperties['color'];
     TwClrBgGhost?: React.CSSProperties['color'];
@@ -358,6 +358,21 @@ type ThemeDictionary = {
 
 const TerrawareTheme2: ThemeDictionary = {
   "palette": {
+    "TwClrBaseBlack": "#000000",
+    "TwClrBaseGray025": "#F9F8F7",
+    "TwClrBaseGray050": "#F1F0EC",
+    "TwClrBaseGray075": "#EBEAE4",
+    "TwClrBaseGray100": "#E3E1D9",
+    "TwClrBaseGray200": "#CBC6B7",
+    "TwClrBaseGray300": "#B2AB93",
+    "TwClrBaseGray400": "#9A9172",
+    "TwClrBaseGray500": "#7F775B",
+    "TwClrBaseGray600": "#645E48",
+    "TwClrBaseGray700": "#4B4736",
+    "TwClrBaseGray800": "#333025",
+    "TwClrBaseGray900": "#1D1B15",
+    "TwClrBaseTransparent": "#FFFFFF00",
+    "TwClrBaseWhite": "#FFFFFF",
     "TwClrBaseBlue050": "#EFF1F8",
     "TwClrBaseBlue100": "#DDE1F1",
     "TwClrBaseBlue200": "#BDC4E4",
@@ -430,21 +445,6 @@ const TerrawareTheme2: ThemeDictionary = {
     "TwClrBaseYellow600": "#6A5E1D",
     "TwClrBaseYellow700": "#504716",
     "TwClrBaseYellow800": "#36300F",
-    "TwClrBaseBlack": "#000000",
-    "TwClrBaseGray025": "#F9F8F7",
-    "TwClrBaseGray050": "#F1F0EC",
-    "TwClrBaseGray075": "#EBEAE4",
-    "TwClrBaseGray100": "#E3E1D9",
-    "TwClrBaseGray200": "#CBC6B7",
-    "TwClrBaseGray300": "#B2AB93",
-    "TwClrBaseGray400": "#9A9172",
-    "TwClrBaseGray500": "#7F775B",
-    "TwClrBaseGray600": "#645E48",
-    "TwClrBaseGray700": "#4B4736",
-    "TwClrBaseGray800": "#333025",
-    "TwClrBaseGray900": "#1D1B15",
-    "TwClrBaseTransparent": "#FFFFFF00",
-    "TwClrBaseWhite": "#FFFFFF",
     "TwClrBg": "#FFFFFF",
     "TwClrBgActive": "#F1F0EC",
     "TwClrBgGhost": "rgb(255 255 255 / 0%)",

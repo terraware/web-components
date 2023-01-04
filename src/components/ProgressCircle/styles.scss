@@ -1,15 +1,17 @@
-@import '../../style-dictionary-dist/progressCircle_variables.scss';
 @import '../../style-dictionary-dist2/terraware.scss';
 
 .circle-container {
   position: relative;
   display: inline-flex;
+
+  & .MuiCircularProgress-root {
+    color: $tw-clr-bg-brand;
+  }
 }
 
 .circle-fill {
   position: absolute;
   left: 0;
-  color: $tw-clr-bg-brand;
 }
 
 .circle-track {
