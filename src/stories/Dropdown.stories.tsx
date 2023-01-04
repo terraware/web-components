@@ -10,7 +10,7 @@ export default {
 
 const DropdownV1Template: Story<DropdownV1Props> = (args) => {
   const [selected, setSelected] = React.useState('');
-  const handleChange = (id: string, value: string) => {
+  const handleChange = (value: string) => {
     action('onChange')(value);
     setSelected(value);
   };

@@ -24,12 +24,12 @@ export default {
 
 const Template: Story<TextFieldProps> = (args) => {
   const [value, setValue] = React.useState('');
-  const handleChange = (id: string, v: unknown) => {
+  const handleChange = (v: unknown) => {
     setValue(v as string);
   };
 
   return (
-    <Box sx={{marginTop: '30px'}} width='500px'>
+    <Box sx={{ marginTop: '30px' }} width='500px'>
       <TextField {...args} value={value} onChange={handleChange} />
     </Box>
   );
@@ -37,12 +37,12 @@ const Template: Story<TextFieldProps> = (args) => {
 
 const NumberTemplate: Story<TextFieldProps> = (args) => {
   const [value, setValue] = React.useState(0);
-  const handleChange = (id: string, v: unknown) => {
+  const handleChange = (v: unknown) => {
     setValue(v as number);
   };
 
   return (
-    <Box sx={{marginTop: '30px'}}>
+    <Box sx={{ marginTop: '30px' }}>
       <TextField {...args} value={value} onChange={handleChange} type='number' />
     </Box>
   );
