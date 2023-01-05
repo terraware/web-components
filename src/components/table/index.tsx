@@ -2,7 +2,7 @@ import { Box, Checkbox, Pagination, Table, TableBody, TableCell, TableContainer,
 import React, { useCallback, useEffect, useState } from 'react';
 import EnhancedTableToolbar from './EnhancedTableToolbar';
 import { descendingComparator, getComparator, SortOrder, stableSort } from './sort';
-import TableCellRenderer from './TableCellRenderer';
+import TableCellRenderer, { TableRowType } from './TableCellRenderer';
 import TableHeader from './TableHeader';
 import { DatabaseColumn, DetailsRendererProps, RendererProps, TableColumnType } from './types';
 import { makeStyles } from '@mui/styles';
@@ -82,7 +82,7 @@ export type TopBarButton = {
   disabled?: boolean;
 };
 
-export default function EnhancedTable<T>({
+export default function EnhancedTable<T extends TableRowType>({
   id,
   columns,
   rows,

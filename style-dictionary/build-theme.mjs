@@ -1,5 +1,8 @@
+import hexRgb from 'hex-rgb';
+import sd from 'style-dictionary';
+
 function build(source, destination) {
-  const StyleDictionary = require('style-dictionary').extend({
+  const StyleDictionary = sd.extend({
     source,
     platforms: {
       js: {
@@ -31,9 +34,9 @@ const TERRAWARE_PALETTE = `type ThemeDictionary = {
   [key: string]: any;
 };
 
-const TerrawareTheme: ThemeDictionary = <TERRAWARE_PALETTE>
+const TerrawareTheme2: ThemeDictionary = <TERRAWARE_PALETTE>
 
-export default TerrawareTheme;`;
+export default TerrawareTheme2;`;
 
   const paletteDefinition = (paletteTokenNames) => {
     const terrawarePaletteDefinition =  paletteTokenNames.map(tokenName => `    ${tokenName}?: React.CSSProperties['color'];`)
@@ -53,15 +56,20 @@ export default TerrawareTheme;`;
       };
       dictionary.allTokens.map(token => {
         const { name, value } = token;
-        const tokenName = name.replace(/^Tw/, '');
         let tokenValue = value.value || value;
+
+        if (typeof tokenValue.replace === 'function') {
+          tokenValue = tokenValue.replace(/rgba\((#[0-9|a-f|A-F]+),\s*(\d*\.?\d*)\)/g, (match, hex, opacity) => {
+            return hexRgb(hex, {alpha: parseFloat(opacity), format: 'css'});
+          });
+        }
 
         if (typeof(value) === 'string' && value.match(/^\d+$/)) {
           tokenValue = parseInt(value, 10);
         }
 
-        if (tokenName.toLowerCase().startsWith('clr')) {
-          theme.palette[tokenName] = tokenValue;
+        if (name.toLowerCase().startsWith('twclr')) {
+          theme.palette[name] = tokenValue;
         }
       });
       return paletteDefinition(Object.keys(theme.palette)) +
