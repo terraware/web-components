@@ -22,8 +22,8 @@
     "jsx": "react-jsx",
     "allowJs": true,
     "declaration": true,
+    "emitDeclarationOnly": true,
     "outDir": "dist",
-    "declarationMap": true,
-    "noEmit": true
+    "declarationMap": true
   }
 }
