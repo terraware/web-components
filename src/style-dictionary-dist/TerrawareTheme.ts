@@ -356,7 +356,7 @@ type ThemeDictionary = {
   [key: string]: any;
 };
 
-const TerrawareTheme2: ThemeDictionary = {
+const TerrawareTheme: ThemeDictionary = {
   "palette": {
     "TwClrBaseBlack": "#000000",
     "TwClrBaseGray025": "#F9F8F7",
@@ -533,4 +533,4 @@ const TerrawareTheme2: ThemeDictionary = {
   }
 }
 
-export default TerrawareTheme2;
+export default TerrawareTheme;

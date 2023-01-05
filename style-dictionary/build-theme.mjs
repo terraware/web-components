@@ -34,9 +34,9 @@ const TERRAWARE_PALETTE = `type ThemeDictionary = {
   [key: string]: any;
 };
 
-const TerrawareTheme2: ThemeDictionary = <TERRAWARE_PALETTE>
+const TerrawareTheme: ThemeDictionary = <TERRAWARE_PALETTE>
 
-export default TerrawareTheme2;`;
+export default TerrawareTheme;`;
 
   const paletteDefinition = (paletteTokenNames) => {
     const terrawarePaletteDefinition =  paletteTokenNames.map(tokenName => `    ${tokenName}?: React.CSSProperties['color'];`)

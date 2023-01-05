@@ -42,7 +42,7 @@
     "eject": "react-scripts eject",
     "storybook": "start-storybook",
     "build-storybook": "build-storybook -s public",
-    "build-dictionary": "./style-dictionary/generate.sh && style-dictionary/generate.sh",
+    "build-dictionary": "./style-dictionary/generate.sh",
     "transpile": "rm -rf dist && NODE_ENV=production babel src/ --extensions '.tsx,.ts' --out-dir dist --copy-files --no-copy-ignored && cp package.json dist/",
     "generate-assets": "yarn svgr --icon --title-prop --no-dimensions --typescript -d src/components/svg assets",
     "generate-types": "yarn -p typescript tsc",
