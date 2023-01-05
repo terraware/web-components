@@ -8,7 +8,7 @@ import { makeStyles } from '@mui/styles';
 const useStyles = makeStyles((theme: Theme) => ({
   container: {
     width: '300px',
-    backgroundColor: theme.palette.ClrBaseWhite,
+    backgroundColor: theme.palette.TwClrBaseWhite,
   },
 }));
 

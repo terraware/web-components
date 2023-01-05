@@ -1,6 +1,6 @@
 {
   "name": "@terraware/web-components",
-  "version": "2.0.59",
+  "version": "2.0.60",
   "author": "Terraformation Inc.",
   "license": "Apache-2.0",
   "repository": {
@@ -42,7 +42,7 @@
     "eject": "react-scripts eject",
     "storybook": "start-storybook",
     "build-storybook": "build-storybook -s public",
-    "build-dictionary": "./style-dictionary/generate.sh && ./style-dictionary2/generate.sh",
+    "build-dictionary": "./style-dictionary/generate.sh",
     "transpile": "rm -rf dist && NODE_ENV=production babel src/ --extensions '.tsx,.ts' --out-dir dist --copy-files --no-copy-ignored && cp package.json dist/",
     "generate-assets": "yarn svgr --icon --title-prop --no-dimensions --typescript -d src/components/svg assets",
     "generate-types": "yarn -p typescript tsc",
@@ -107,7 +107,7 @@
     "tslint-eslint-rules": "^5.4.0",
     "tslint-react": "^5.0.0",
     "tslint-react-hooks": "^2.2.2",
-    "typescript": "^4.3.2"
+    "typescript": "^4.9.4"
   },
   "resolutions": {
     "babel-loader": "8.1.0",

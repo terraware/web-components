@@ -3,7 +3,6 @@ import { Box, useTheme } from '@mui/material';
 import React from 'react';
 import Select from '../components/Select/Select';
 import TerrawareTheme from '../style-dictionary-dist/TerrawareTheme';
-import TerrawareTheme2 from '../style-dictionary-dist2/TerrawareTheme2';
 
 export default {
   title: 'Theme',
@@ -11,11 +10,10 @@ export default {
 };
 
 const COLORS = Object.keys(TerrawareTheme.palette);
-const COLORS2 = Object.keys(TerrawareTheme2.palette);
 
 const Template: Story<{}> = () => {
   const theme = useTheme();
-  const [colorValue, setColorValue] = React.useState(theme.palette.ClrIconFillProductive);
+  const [colorValue, setColorValue] = React.useState(theme.palette.TwClrIcnBrand);
   const [colorStr, setColorStr] = React.useState('');
   const [bgColorValue, setBgColorValue] = React.useState(theme.palette.TwClrBgBrandTertiary);
   const [bgColorStr, setBgColorStr] = React.useState('');
@@ -28,7 +26,7 @@ const Template: Story<{}> = () => {
 
   const handleChangeBgColor = (str: string) => {
     setBgColorStr(str);
-    setBgColorValue(palette[str] || palette[COLORS2[0]] as string);
+    setBgColorValue(palette[str] as string);
   };
 
   return (
@@ -50,7 +48,7 @@ const Template: Story<{}> = () => {
       </Box>
       <Select
         selectedValue={colorStr}
-        label='Color (from TerrawareTheme)'
+        label='Color'
         onChange={handleChangeColor}
         options={COLORS}
         fullWidth={true}
@@ -58,9 +56,9 @@ const Template: Story<{}> = () => {
       <Box sx={{marginBottom: '25px'}} />
       <Select
         selectedValue={bgColorStr}
-        label='BgColor (from TerrawareTheme2)'
+        label='BgColor'
         onChange={handleChangeBgColor}
-        options={COLORS2}
+        options={COLORS}
         fullWidth={true}
       />
     </Box>
