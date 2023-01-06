@@ -23,8 +23,7 @@
     "declaration": true,
     "emitDeclarationOnly": true,
     "outDir": "dist",
-    "declarationMap": true,
-    "noEmit": false
+    "declarationMap": true
   },
   "include": [
     "src"

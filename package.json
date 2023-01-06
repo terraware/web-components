@@ -45,7 +45,7 @@
     "build-dictionary": "./style-dictionary/generate.sh",
     "transpile": "rm -rf dist && NODE_ENV=production babel src/ --extensions '.tsx,.ts' --out-dir dist --copy-files --no-copy-ignored && cp package.json dist/",
     "generate-assets": "yarn svgr --icon --title-prop --no-dimensions --typescript -d src/components/svg assets",
-    "generate-types": "yarn -p typescript tsc",
+    "generate-types": "tsc --project ./tsconfig.json",
     "build-dist": "yarn transpile && yarn generate-types",
     "lint": "tslint --project tsconfig.json",
     "license-report": "license-report --only=prod --department.value=terraware --relatedTo.value=web-components --output=html > license-report.html",
