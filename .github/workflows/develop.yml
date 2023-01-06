@@ -35,10 +35,7 @@ jobs:
         run: yarn lint
 
       - name: unit tests
-        run: |
-          cp tsconfig.json tsconfig.json.bak
-          yarn test
-          cp tsconfig.json.bak tsconfig.json
+        run: yarn test
 
       - name: build
         run: yarn build-dist
