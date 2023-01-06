@@ -38,7 +38,7 @@
   "scripts": {
     "start": "start-storybook",
     "build": "build-storybook -c .storybook -o public",
-    "test": "react-scripts test",
+    "test": "cp tsconfig.json tsconfig.json.bak && react-scripts test && mv tsconfig.json.bak tsconfig.json",
     "eject": "react-scripts eject",
     "storybook": "start-storybook",
     "build-storybook": "build-storybook -s public",
