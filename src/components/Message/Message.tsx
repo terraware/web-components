@@ -8,7 +8,7 @@ export interface Props {
   type: 'page' | 'toast';
   priority: 'info' | 'critical' | 'warning' | 'success';
   title?: string | string[];
-  body: string | string[];
+  body: string | JSX.Element | (string | JSX.Element)[];
   actionText?: string;
   actionHandler?: () => void;
   pageButtons?: JSX.Element[];
