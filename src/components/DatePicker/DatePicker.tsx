@@ -2,7 +2,6 @@ import moment from 'moment-timezone';
 import 'moment/min/locales';
 import React, { useState, KeyboardEventHandler } from 'react';
 import { TextField, Theme } from '@mui/material';
-import { makeStyles } from '@mui/styles';
 import { LocalizationProvider, DesktopDatePicker } from '@mui/x-date-pickers';
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 import Icon from '../Icon/Icon';
@@ -18,6 +17,8 @@ export interface Props {
   onKeyPress?: KeyboardEventHandler;
   minDate?: any;
   maxDate?: any;
+  defaultTimeZone?: string;
+  locale?: string;
   errorText?: string;
   helperText?: string;
   disabled?: boolean;
@@ -27,10 +28,10 @@ export interface Props {
 
 export default function DatePicker(props: Props): JSX.Element {
   const [temporalValue, setTemporalValue] = useState(props.value || null);
+  const locale = props.locale ?? 'en';
   React.useEffect(() => {
-    moment.locale([window.navigator.language, 'en']);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [window.navigator.language]);
+    moment.locale([locale]);
+  }, [locale]);
 
   const renderInput = (params: object) => (
     <>
@@ -46,12 +47,12 @@ export default function DatePicker(props: Props): JSX.Element {
     </>
   );
 
-  // set default timezone to UTC
-  moment.tz.setDefault('UTC');
+  // set timezone, defaulting to 'UTC'
+  moment.tz.setDefault(props.defaultTimeZone ?? 'UTC');
 
   return (
     <div className={`date-picker ${props.className} ${props.errorText ? 'date-picker--error' : ''}`}>
-      <LocalizationProvider dateAdapter={AdapterMoment} dateLibInstance={moment}>
+      <LocalizationProvider dateAdapter={AdapterMoment} dateLibInstance={moment} adapterLocale={locale}>
         {props.label && (
           <label htmlFor={props.id} className='textfield-label'>
             {props.label}
