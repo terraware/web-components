@@ -44,7 +44,7 @@ Default.args = {
   minDate: undefined,
   maxDate: Date.now(),
   defaultTimeZone: undefined,
-  locale: 'en',
+  locale: undefined,
   errorText: '',
   helperText: '',
   autoFocus: false,

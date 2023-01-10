@@ -29,9 +29,9 @@ export interface Props {
 
 export default function DatePicker(props: Props): JSX.Element {
   const [temporalValue, setTemporalValue] = useState(props.value || null);
-  const locale = props.locale ?? 'en';
+  const locale = props.locale ?? window.navigator.language ?? 'en';
   React.useEffect(() => {
-    moment.locale([window.navigator.language, locale]);
+    moment.locale([locale]);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [window.navigator.language, locale]);
 
@@ -49,9 +49,8 @@ export default function DatePicker(props: Props): JSX.Element {
     </>
   );
 
-  // set timezone, defaulting to browser
-  const browserTimeZone = Intl.DateTimeFormat(locale).resolvedOptions().timeZone;
-  moment.tz.setDefault(props.defaultTimeZone ?? browserTimeZone);
+  // set timezone, defaulting to 'UTC'
+  moment.tz.setDefault(props.defaultTimeZone ?? 'UTC');
 
   return (
     <div className={`date-picker ${props.className} ${props.errorText ? 'date-picker--error' : ''}`}>
