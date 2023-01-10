@@ -2,7 +2,6 @@ import moment from 'moment-timezone';
 import 'moment/min/locales';
 import React, { useState, KeyboardEventHandler } from 'react';
 import { TextField, Theme } from '@mui/material';
-import { makeStyles } from '@mui/styles';
 import { LocalizationProvider, DesktopDatePicker } from '@mui/x-date-pickers';
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 import Icon from '../Icon/Icon';
@@ -29,11 +28,10 @@ export interface Props {
 
 export default function DatePicker(props: Props): JSX.Element {
   const [temporalValue, setTemporalValue] = useState(props.value || null);
-  const locale = props.locale ?? window.navigator.language ?? 'en';
+  const locale = props.locale ?? 'en';
   React.useEffect(() => {
     moment.locale([locale]);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [window.navigator.language, locale]);
+  }, [locale]);
 
   const renderInput = (params: object) => (
     <>
