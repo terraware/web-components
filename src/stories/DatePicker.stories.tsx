@@ -43,6 +43,8 @@ Default.args = {
   label: 'Datepicker',
   minDate: undefined,
   maxDate: Date.now(),
+  defaultTimeZone: undefined,
+  locale: 'en',
   errorText: '',
   helperText: '',
   autoFocus: false,
