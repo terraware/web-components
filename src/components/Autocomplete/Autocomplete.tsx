@@ -1,6 +1,7 @@
-import { Autocomplete as MUIAutocomplete, TextField } from '@mui/material';
+import { Autocomplete as MUIAutocomplete, TextField, TooltipProps } from '@mui/material';
 import React, { ChangeEvent } from 'react';
 import Icon from '../Icon/Icon';
+import IconTooltip from '../IconTooltip';
 import '../Select/styles.scss';
 import './styles.scss';
 
@@ -24,6 +25,7 @@ export interface Props {
   isEqual?: (option: ValueType, value: ValueType) => void;
   placeholder?: string;
   errorText?: string;
+  tooltipTitle?: TooltipProps['title'];
 }
 
 export type DropdownItem = {
@@ -44,6 +46,7 @@ export default function Autocomplete({
   isEqual,
   placeholder,
   errorText,
+  tooltipTitle,
 }: Props): JSX.Element {
   const onChangeHandler = (event: ChangeEvent<any>, value: string | null) => {
     if (event) {
@@ -60,6 +63,7 @@ export default function Autocomplete({
       {label && (
         <label htmlFor={id} className='textfield-label'>
           {label}
+          {tooltipTitle && <IconTooltip placement='top' title={tooltipTitle} />}
         </label>
       )}
       <TextField {...params} variant='outlined' size='small' placeholder={placeholder} className={errorText ? 'auto-complete--error' : ''} />

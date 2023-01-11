@@ -1,6 +1,6 @@
 import { action } from '@storybook/addon-actions';
 import { Story } from '@storybook/react';
-import { Theme } from '@mui/material';
+import { Box, Theme } from '@mui/material';
 import React from 'react';
 import Autocomplete, { ValueType, Props as AutocompleteProps } from '../components/Autocomplete/Autocomplete';
 import { makeStyles } from '@mui/styles';
@@ -25,7 +25,11 @@ const Template: Story<AutocompleteProps> = (args) => {
     setSelected(value);
   };
 
-  return <Autocomplete {...args} selected={selected} onChange={handleChange} className={classes.container} />;
+  return (
+    <Box sx={{ marginTop: '30px' }}>
+      <Autocomplete {...args} selected={selected} onChange={handleChange} className={classes.container} />
+    </Box>
+  );
 };
 
 export const Default = Template.bind({});
@@ -69,4 +73,5 @@ Complex.args = {
   hideClearIcon: true,
   errorText: '',
   isEqual: (option: any, value: any) => option.value === value.value,
+  tooltipTitle: 'Hello world!',
 };
