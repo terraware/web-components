@@ -65,7 +65,6 @@ import Search from '../../svg/Search';
 import SeedBank from '../../svg/BlobbyIconSeedBank';
 import SeedBankNav from '../../svg/IconSeedBank';
 import Seeds from '../../svg/Seeds';
-import Site from '../../svg/Site';
 import Sparkles from '../../svg/Sparkles';
 import Species from '../../svg/Species';
 import Species2 from '../../svg/Species2';

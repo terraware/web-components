@@ -22,7 +22,6 @@ import ProgressCircle from './components/ProgressCircle/ProgressCircle';
 import RadioButton from './components/RadioButton';
 import Select from './components/Select/Select';
 import SelectT from './components/Select/SelectT';
-import { Size } from './components/Size';
 import SummaryBox from './components/SummaryBox';
 import Textfield from './components/Textfield/Textfield';
 import TextTruncated from './components/TextTruncated';

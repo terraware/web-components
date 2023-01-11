@@ -1,4 +1,4 @@
-import { Box, Autocomplete as MUIAutocomplete, TextField, Theme } from '@mui/material';
+import { Autocomplete as MUIAutocomplete, TextField } from '@mui/material';
 import React, { ChangeEvent } from 'react';
 import Icon from '../Icon/Icon';
 import '../Select/styles.scss';
