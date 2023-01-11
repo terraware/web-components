@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import React from 'react';
-import { Tooltip, TooltipProps } from '@mui/material';
+import { TooltipProps } from '@mui/material';
 import Icon from '../Icon/Icon';
 import { IconName } from '../Icon/icons';
 import './styles.scss';

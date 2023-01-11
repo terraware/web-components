@@ -1,7 +1,6 @@
-import React, { ReactNode } from 'react';
+import React from 'react';
 import './styles.scss';
 import Icon from '../Icon/Icon';
-import { IconButton } from '@mui/material';
 import { useDeviceInfo } from '../../utils';
 
 export interface Props {

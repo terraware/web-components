@@ -1,7 +1,7 @@
 import moment from 'moment-timezone';
 import 'moment/min/locales';
 import React, { useState, KeyboardEventHandler } from 'react';
-import { TextField, Theme } from '@mui/material';
+import { TextField } from '@mui/material';
 import { LocalizationProvider, DesktopDatePicker } from '@mui/x-date-pickers';
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 import Icon from '../Icon/Icon';

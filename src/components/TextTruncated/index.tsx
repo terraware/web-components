@@ -99,7 +99,7 @@ export default function TextTruncated(props: Props): JSX.Element {
     }
 
     return result / fullText.length;
-  }, [stringList, textStyle, canvasContext]);
+  }, [stringList, textStyle, canvasContext, theme.typography.fontFamily, theme.typography.fontSize]);
 
   let maxExcludingSuffix = stringList.join(', ').length;
   if (pixelsPerChar > 0) {

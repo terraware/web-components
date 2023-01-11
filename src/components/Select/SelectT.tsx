@@ -94,7 +94,7 @@ export default function SelectT<T>(props: SelectTProps<T>): JSX.Element {
     if (newIndex !== selectedIndex) {
       setSelectedIndex(newIndex);
     }
-  }, [options, selectedValue, selectedIndex]);
+  }, [options, selectedValue, selectedIndex, isEqual]);
 
   useEffect(() => {
     window.addEventListener('click', handleClick);

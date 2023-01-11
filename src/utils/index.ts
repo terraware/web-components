@@ -1,4 +1,4 @@
-import getDateDisplayValue, { getTodaysDateFormatted, isInTheFuture } from './date';
+import getDateDisplayValue, { getTodaysDateFormatted, isInTheFuture } from './date.v1';
 import isWhitespaces from './text';
 import preventDefaultEvent from './preventDefaultEvent';
 import useDeviceInfo from './useDeviceInfo';

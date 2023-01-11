@@ -1,4 +1,4 @@
-import { Box, Autocomplete as MUIAutocomplete, TextField, Theme, TooltipProps } from '@mui/material';
+import { Autocomplete as MUIAutocomplete, TextField, TooltipProps } from '@mui/material';
 import React, { ChangeEvent } from 'react';
 import Icon from '../Icon/Icon';
 import IconTooltip from '../IconTooltip';

@@ -246,7 +246,7 @@ export default function EnhancedTable<T extends TableRowType>({
         }
       }
     },
-    [displayColumnKeyNames, setDisplayColumnKeyNames]
+    [displayColumnKeyNames, setDisplayColumnKeyNames, onReorderEnd]
   );
 
   function handleDragEnd(event: { active: any; over: any }) {
