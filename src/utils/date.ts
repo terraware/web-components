@@ -71,7 +71,7 @@ const getDateDisplayValue = (date: any, timeZoneId?: string) => {
  * Exported function that returns todays date in a specific (optional) time zone.
  */
 export const getTodaysDateFormatted = (timeZoneId?: string) => {
-  return getDisplayValue(DateTime.now().setZone(timeZoneId || 'Etc/UTC'));
+  return getDisplayValue(DateTime.now().setZone(tz(timeZoneId));
 };
 
 /**
