@@ -87,13 +87,13 @@
 
     &--children-selected , &--children-selected:hover {
       > .nav-item-content {
-        background-color: $tw-clr-bg-ghost-active; // $tw-clr-bg-ghost-selected; enable once available
+        background-color: $tw-clr-bg-ghost-active;
       }
     }
 
     &--selected, &--selected:hover {
       .nav-item-content {
-        background-color: $tw-clr-bg-ghost-active; // $tw-clr-bg-ghost-selected; enable once available
+        background-color: $tw-clr-bg-ghost-active;
         position: relative;
       }
     }
