@@ -6,7 +6,7 @@ on:
 
 jobs:
   version-label-comment:
-    name: 'Add Comment'
+    name: 'Add Comments'
     runs-on: ubuntu-latest
     permissions:
       pull-requests: write
@@ -17,7 +17,7 @@ jobs:
             To increment version on merge, please add one of `patch` (default), `minor`, or `major` label to this PR.
 
   add-default-labels:
-    name: 'Add default labels'
+    name: 'Add Labels'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
