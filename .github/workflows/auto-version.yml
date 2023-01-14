@@ -29,20 +29,15 @@ jobs:
 
       - name: Apply version bump (major)
         if: contains(github.event.pull_request.labels.*.name, 'major')
-        run: npm version major
+        run: npm version major -m "%s - ${{ github.event.pull_request.title }}"
 
       - name: Apply version bump (minor)
         if: contains(github.event.pull_request.labels.*.name, 'minor')
-        run: npm version minor
+        run: npm version minor -m "%s - ${{ github.event.pull_request.title }}"
 
       - name: Apply version bump (patch)
         if: contains(github.event.pull_request.labels.*.name, 'patch')
-        run: npm version patch
-
-      - name: Commit changes
-        run: |
-          git add -A
-          git commit -m "version bump"
+        run: npm version patch -m "%s - ${{ github.event.pull_request.title }}"
 
       - name: Git push version bump
         run: git push origin main --follow-tags --force
