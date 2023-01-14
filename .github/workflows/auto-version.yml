@@ -1,0 +1,43 @@
+name: Auto Version Based on Label
+
+on:
+  pull_request:
+    branches: [main]
+    types: [closed]
+
+jobs:
+  version-bump:
+    name: 'PR Merged'
+    runs-on: ubuntu-latest
+    if: github.event.pull_request.merged == true
+    steps:
+      - name: Checkout main branch
+        uses: actions/checkout@v3
+        with:
+          ref: main
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16.x'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Git config
+        run: |
+          git config --global user.email "${{ github.event.inputs.email }}"
+          git config --global user.name "${{ github.actor }}"
+
+      - name: Apply version bump (major)
+        if: contains(github.event.pull_request.labels.*.name, 'major')
+        run: npm version major -m "%s - ${{ github.event.pull_request.title }}"
+
+      - name: Apply version bump (minor)
+        if: contains(github.event.pull_request.labels.*.name, 'minor')
+        run: npm version minor -m "%s - ${{ github.event.pull_request.title }}"
+
+      - name: Apply version bump (patch)
+        if: contains(github.event.pull_request.labels.*.name, 'patch')
+        run: npm version patch -m "%s - ${{ github.event.pull_request.title }}"
+
+      - name: Git push version bump
+        run: git push origin main --follow-tags --force
