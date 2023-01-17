@@ -37,20 +37,14 @@ const Template: Story<NavbarProps> = (args) => {
           <NavItem label='Withdrawal Log' selected={selectedItem === 'withdrawallog'} onClick={() => setSelectedItem('withdrawallog')} />
         </SubNavbar>
       </NavItem>
+      <NavSection title='Settings' />
+      <NavItem label='Organization' icon='organizationNav' selected={selectedItem === 'organization'} onClick={() => setSelectedItem('organization')} />
+      <NavItem label='People' icon='peopleNav' selected={selectedItem === 'people'} onClick={() => setSelectedItem('people')} />
       <NavItem label='Locations' icon='seedbankNav'>
         <SubNavbar>
           <NavItem label='Seed Bank' selected={selectedItem === 'seedbank'} onClick={() => setSelectedItem('seedbank')} />
           <NavItem label='Nurseries' selected={selectedItem === 'nurseries'} onClick={() => setSelectedItem('nurseries')} />
           <NavItem label='Planting Sites' selected={selectedItem === 'plantingsites'} onClick={() => setSelectedItem('plantingsites')} />
-        </SubNavbar>
-      </NavItem>
-      <NavSection title='Settings' />
-      <NavItem label='Organization' icon='organizationNav' selected={selectedItem === 'organization'} onClick={() => setSelectedItem('organization')} />
-      <NavItem label='People' icon='peopleNav' selected={selectedItem === 'people'} onClick={() => setSelectedItem('people')} />
-      <NavItem label='Locations' icon='iconLocations'>
-        <SubNavbar>
-          <NavItem label='Seed Banks' selected={selectedItem === 'seedbanks'} onClick={() => setSelectedItem('seedbanks')} />
-          <NavItem label='Nurseries' selected={selectedItem === 'nurseries'} onClick={() => setSelectedItem('nurseries')} />
         </SubNavbar>
       </NavItem>
     </Navbar>
