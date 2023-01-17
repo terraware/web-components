@@ -3,6 +3,7 @@ name: Open PR
 on:
   pull_request:
     branches: [main]
+    types: [opened]
 
 jobs:
   version-label-comment:
