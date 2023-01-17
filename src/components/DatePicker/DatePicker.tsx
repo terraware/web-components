@@ -72,7 +72,7 @@ export default function DatePicker(props: Props): JSX.Element {
           value={temporalValue}
           onChange={(newValue: any) => {
             setTemporalValue(newValue);
-            props.onChange(newValue?.isValid() ? newValue?.format('YYYY-MM-DD') : null);
+            props.onChange(newValue?.isValid() ? newValue?.toDate() : null);
           }}
           renderInput={renderInput}
           disabled={props.disabled}
