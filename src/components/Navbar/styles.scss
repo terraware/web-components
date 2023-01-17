@@ -51,7 +51,6 @@
 
     .nav-item-content {
       border-radius: 16px;
-      cursor: pointer;
       padding: 12px 16px;
       display: flex;
       width: 100%;
@@ -63,6 +62,34 @@
         font-size: 14px;
         font-weight: 500;
       }
+
+      &:hover {
+        cursor: pointer;
+      }
+    }
+
+    &--has-children {
+      > .nav-item-content:hover {
+        background-color: $tw-clr-bg-ghost-hover;
+      }
+      > .nav-item-content:active {
+        background-color: $tw-clr-bg-ghost-active;
+      }
+      &.nav-item--children-selected > .nav-item-content:hover {
+        background-color: transparent;
+      }
+      &.nav-item--children-selected > .nav-item-content:ative {
+        background-color: transparent;
+      }
+    }
+
+    &:not(.nav-item--has-children) {
+      &:hover {
+        background-color: $tw-clr-bg-ghost-hover;
+      }
+      &.nav-item--selected, &.nav-item--selected:hover {
+        background-color: $tw-clr-bg-ghost-active;
+      }
     }
 
     button {
@@ -72,25 +99,6 @@
       font-family: 'Inter';
       padding-right: $tw-spc-base-small;
       padding-left: 20px;
-    }
-
-    &:hover {
-      background-color: $tw-clr-bg-ghost-hover;
-    }
-
-    &:active {
-      background-color: $tw-clr-bg-ghost-active;
-    }
-
-    &--has-children {
-      &:hover, &:active {
-        background-color: transparent;
-      }
-    }
-
-    &--selected, &--selected:hover {
-      background-color: $tw-clr-bg-ghost-active;
-      position: relative;
     }
 
     &--icon {

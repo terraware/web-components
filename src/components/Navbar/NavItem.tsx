@@ -53,7 +53,7 @@ export default function NavItem(props: NavItemProps): JSX.Element {
         ${selected ? 'nav-item--selected' : ''}
         ${hasChildrenSelected() ? 'nav-item--children-selected' : ''}
         ${isFooter ? 'nav-item--footer' : ''}
-        ${children ? 'nav-item--has-children' : ''}
+        ${children ? 'nav-item--has-children' : '' }
       `}
     >
       <button className='nav-item-content' onClick={onClickHandler} id={id}>
