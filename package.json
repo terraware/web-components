@@ -33,7 +33,7 @@
     "react-responsive": "^9.0.2",
     "react-sortable-hoc": "^2.0.0",
     "sass": "^1.35.1",
-    "tinycolor2": "^1.4.2",
+    "tinycolor2": "^1.5.2",
     "web-vitals": "^3.0.0"
   },
   "scripts": {
