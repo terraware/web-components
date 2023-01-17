@@ -32,7 +32,7 @@ export default function NavItem(props: NavItemProps): JSX.Element {
   }, [children]);
 
   React.useEffect(() => {
-    if (children && hasChildrenSelected()) {
+    if (hasChildrenSelected()) {
       setOpen(true);
     }
   }, [children, hasChildrenSelected, selected]);
@@ -40,7 +40,7 @@ export default function NavItem(props: NavItemProps): JSX.Element {
   const [open, setOpen] = React.useState(hasChildrenSelected());
 
   const onClickHandler = () => {
-    setOpen(!open);
+    setOpen(!open || hasChildrenSelected());
     if (onClick) {
       onClick(!open);
     }
@@ -53,6 +53,7 @@ export default function NavItem(props: NavItemProps): JSX.Element {
         ${selected ? 'nav-item--selected' : ''}
         ${hasChildrenSelected() ? 'nav-item--children-selected' : ''}
         ${isFooter ? 'nav-item--footer' : ''}
+        ${children ? 'nav-item--has-children' : '' }
       `}
     >
       <button className='nav-item-content' onClick={onClickHandler} id={id}>

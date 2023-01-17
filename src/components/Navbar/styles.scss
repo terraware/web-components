@@ -66,13 +66,29 @@
       &:hover {
         cursor: pointer;
       }
+    }
 
-      &:hover {
-        background-color: $tw-clr-bg-secondary;
+    &--has-children {
+      > .nav-item-content:hover {
+        background-color: $tw-clr-bg-ghost-hover;
       }
+      > .nav-item-content:active {
+        background-color: $tw-clr-bg-ghost-active;
+      }
+      &.nav-item--children-selected > .nav-item-content:hover {
+        background-color: transparent;
+      }
+      &.nav-item--children-selected > .nav-item-content:ative {
+        background-color: transparent;
+      }
+    }
 
-      &:active {
-        background-color: $tw-clr-bg-secondary-hover;
+    &:not(.nav-item--has-children) {
+      &:hover {
+        background-color: $tw-clr-bg-ghost-hover;
+      }
+      &.nav-item--selected, &.nav-item--selected:hover {
+        background-color: $tw-clr-bg-ghost-active;
       }
     }
 
@@ -83,38 +99,6 @@
       font-family: 'Inter';
       padding-right: $tw-spc-base-small;
       padding-left: 20px;
-    }
-
-    &--children-selected {
-      background-color: transparent;
-
-      &:hover {
-        background-color: transparent;
-
-        & > .nav-item-content {
-          background-color: transparent;
-          cursor: default;
-          pointer-events: none;
-        }
-      }
-
-      .nav-item {
-        background-color: $tw-clr-bg-ghost;
-
-        &:hover {
-          background-color: $tw-clr-bg-ghost-hover;
-        }
-
-        &--selected {
-          background-color: $tw-clr-bg-ghost-active;
-          position: relative;
-        }
-      }
-    }
-
-    &--selected {
-      background-color: $tw-clr-bg-ghost-hover;
-      position: relative;
     }
 
     &--icon {
