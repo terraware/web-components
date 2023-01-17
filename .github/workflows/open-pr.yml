@@ -1,0 +1,35 @@
+name: Open PR
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  version-label-comment:
+    name: 'Add Comments'
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+    steps:
+      - uses: mshick/add-pr-comment@v2
+        with:
+          message: |
+            To increment version on merge, please add one of `patch` (default), `minor`, or `major` label to this PR.
+
+  add-default-labels:
+    name: 'Add Labels'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/github-script@v6
+        # skip auto patch labeling for dependabot or renovate PRs
+        if: ${{ github.actor != 'dependabot[bot]' && github.actor != 'renovate[bot]' }}
+        with:
+          script: |
+            github.rest.issues.addLabels({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              labels: ["patch"]
+            })
