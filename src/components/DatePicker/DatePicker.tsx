@@ -33,6 +33,12 @@ export default function DatePicker(props: Props): JSX.Element {
     moment.locale([locale]);
   }, [locale]);
 
+  React.useEffect(() => {
+    if (props.value && props.value !== temporalValue) {
+      setTemporalValue(props.value);
+    }
+  }, [props.value]);
+
   const renderInput = (params: object) => (
     <>
       <TextField {...params} id={props.id} autoFocus={props.autoFocus} onKeyPress={props.onKeyPress} />
