@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 export type TableRowType = Record<string, any>;
 
 export default function CellRenderer(props: RendererProps<TableRowType>): JSX.Element {
-  const { column, value, onRowClick, index, className } = props;
+  const { column, value, onRowClick, index, className, booleanFalseText, booleanTrueText, editText } = props;
   const id = `row${index}-${column.key}`;
 
   if (column.type === 'date' && typeof value === 'string' && value) {
@@ -33,9 +33,9 @@ export default function CellRenderer(props: RendererProps<TableRowType>): JSX.El
   } else if (column.type === 'notes' && value && typeof value === 'string') {
     return <CellNotesRenderer id={id} value={value} className={className} />;
   } else if (column.type === 'boolean') {
-    return <CellBooleanRenderer id={id} value={value} className={className} />;
+    return <CellBooleanRenderer id={id} value={value} className={className} booleanFalseText={booleanFalseText} booleanTrueText={booleanTrueText} />;
   } else if (column.type === 'edit') {
-    return <CellEditRenderer id={id} onRowClick={onRowClick} className={className} />;
+    return <CellEditRenderer id={id} onRowClick={onRowClick} className={className} editText={editText} />;
   }
 
   return <CellTextRenderer id={id} value={value} className={className} />;
@@ -91,17 +91,21 @@ export function CellBooleanRenderer({
   id,
   value,
   className,
+  booleanFalseText,
+  booleanTrueText,
 }: {
   id: string;
   value?: string | number | any[] | ReactNode;
   className?: string;
+  booleanFalseText: string;
+  booleanTrueText: string;
 }): JSX.Element {
   const classes = useStyles();
 
   return (
     <TableCell id={id} align='left' className={`${classes.default} ${className}`}>
       <Typography component='p' variant='body1' fontSize='14px'>
-        {value === 'true' ? 'YES' : 'NO'}
+        {value === 'true' ? booleanTrueText : booleanFalseText}
       </Typography>
     </TableCell>
   );
@@ -131,10 +135,12 @@ export function CellEditRenderer({
   id,
   onRowClick,
   className,
+  editText,
 }: {
   id: string;
   onRowClick?: () => void;
   className?: string;
+  editText: string;
 }): JSX.Element {
   const classes = useStyles();
 
@@ -152,7 +158,7 @@ export function CellEditRenderer({
       >
         <Box display='flex'>
           <Typography component='p' variant='body1' fontSize='14px'>
-            Edit
+            {editText}
           </Typography>
           <Edit fontSize='small' className={classes.editIcon} />
         </Box>

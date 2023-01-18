@@ -17,6 +17,9 @@ export interface RendererProps<T> {
   onRowClick?: (newValue?: string) => void;
   reloadData?: () => void;
   className?: string;
+  booleanFalseText: string;
+  booleanTrueText: string;
+  editText: string;
 }
 
 export type EnhancedTableDetailsRow = {

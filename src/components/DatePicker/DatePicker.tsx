@@ -56,6 +56,9 @@ export default function DatePicker(props: Props): JSX.Element {
   // set timezone, defaulting to 'UTC'
   moment.tz.setDefault(props.defaultTimeZone ?? 'UTC');
 
+  // TODO: Localize the yyyy-mm-dd placeholder string that is shown to users when the input is
+  //       empty. It appears to be generated programmatically deep in the guts of the MUI DatePicker
+  //       code, and it most likely uses the browser's locale.
   return (
     <div className={`date-picker ${props.className} ${props.errorText ? 'date-picker--error' : ''}`}>
       <LocalizationProvider dateAdapter={AdapterMoment} dateLibInstance={moment} adapterLocale={locale}>

@@ -68,6 +68,7 @@ Default.args = {
     { key: 'middlename', name: 'Middlename', type: 'string', tooltipTitle: 'Middle name is optional' },
     { key: 'lastname', name: 'Lastname', type: 'string' },
     { key: 'occupation', name: 'Occupation', type: 'string' },
+    { key: 'available', name: 'Available', type: 'boolean' },
   ],
   rows: Array(50)
     .fill({ name: '', middlename: '', lastname: '', occupation: '' })
@@ -75,12 +76,29 @@ Default.args = {
       if (j % 2 === 0) {
         return { name: `Constanza_${j}`, middlename: '', lastname: 'Uanini', occupation: 'Artist' };
       } else if (j % 3 === 0) {
-        return { name: `Carlos_${j}`, middlename: '--', lastname: 'Thurber', occupation: 'Freelancer' };
+        return {
+          name: `Carlos_${j}`,
+          middlename: '--',
+          lastname: 'Thurber',
+          occupation: 'Freelancer',
+          available: 'false',
+        };
       } else {
-        return { name: `Jane${j}`, middlename: 'John', lastname: 'Doe', occupation: 'Business analyst' };
+        return {
+          name: `Jane${j}`,
+          middlename: 'John',
+          lastname: 'Doe',
+          occupation: 'Business analyst',
+          available: 'true',
+        };
       }
     }),
   showTopBar: false,
+  booleanFalseText: 'No',
+  booleanTrueText: 'Yes',
+  editText: 'Edit',
+  renderNumSelectedText: (num) => `${num} selected`,
+  renderPaginationText: (from, to, total) => `${from} to ${to} of ${total}`,
 };
 
 Selectable.args = {

@@ -68,14 +68,15 @@ function computeFromStringList(strings: string[], maxLength: number): TextDispla
 export interface Props {
   stringList: string[];
   maxLengthPx: number;
-  moreSeparator?: string;
-  moreText?: string;
+  moreSeparator: string;
+  moreText: string;
+  listSeparator: string;
   textStyle?: Record<string, any>;
   showAllStyle?: Record<string, any>;
 }
 
 export default function TextTruncated(props: Props): JSX.Element {
-  const { stringList, maxLengthPx, moreSeparator = '... ', moreText = 'more', textStyle, showAllStyle } = props;
+  const { stringList, listSeparator, maxLengthPx, moreSeparator, moreText, textStyle, showAllStyle } = props;
   const [showAllOpen, setShowAllOpen] = useState(false);
   const classes = useStyles();
   const [canvasContext, setCanvasContext] = useState<CanvasRenderingContext2D>();
@@ -88,7 +89,7 @@ export default function TextTruncated(props: Props): JSX.Element {
 
   const pixelsPerChar = useMemo(() => {
     // compute the pixels per character, averaged over the comma-separated joined stringList
-    const fullText = stringList.join(', ');
+    const fullText = stringList.join(listSeparator);
     let result = 0;
     if (canvasContext) {
       const fontSize = (textStyle && textStyle.fontSize) || theme.typography.fontSize;
@@ -101,7 +102,7 @@ export default function TextTruncated(props: Props): JSX.Element {
     return result / fullText.length;
   }, [stringList, textStyle, canvasContext, theme.typography.fontFamily, theme.typography.fontSize]);
 
-  let maxExcludingSuffix = stringList.join(', ').length;
+  let maxExcludingSuffix = stringList.join(listSeparator).length;
   if (pixelsPerChar > 0) {
     const maxChars = maxLengthPx / pixelsPerChar;
     maxExcludingSuffix = maxChars - moreSeparator.length - moreText.length - 1 - Math.ceil(Math.log10(stringList.length));

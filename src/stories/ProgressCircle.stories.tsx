@@ -10,3 +10,7 @@ export default {
 const Template: Story<ProgressCircleProps> = (args) => <ProgressCircle {...args} />;
 
 export const Default = Template.bind({});
+
+Default.args = {
+  renderPercentText: (pct) => `${pct}%`,
+};
