@@ -79,6 +79,7 @@ const defaultTheme = {
           WebkitAppearance: 'none',
           width: '4px',
           height: '7px',
+          backgroundColor: '#B2AB9340',
         },
         '*::-webkit-scrollbar-thumb': {
           borderRadius: '4px',
