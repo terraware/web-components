@@ -77,7 +77,7 @@ const defaultTheme = {
       styleOverrides: {
         '*::-webkit-scrollbar': {
           WebkitAppearance: 'none',
-          width: '7px',
+          width: '4px',
           height: '7px',
         },
         '*::-webkit-scrollbar-thumb': {
