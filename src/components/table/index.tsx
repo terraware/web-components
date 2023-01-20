@@ -44,7 +44,15 @@ export interface HeadCell {
   tooltipTitle?: TooltipProps['title'];
 }
 
-export interface Props<T> {
+export interface LocalizationProps {
+  renderNumSelectedText?: (numSelected: number) => string;
+  renderPaginationText?: (from: number, to: number, total: number) => string;
+  booleanFalseText: string;
+  booleanTrueText: string;
+  editText: string;
+}
+
+export interface Props<T> extends LocalizationProps {
   id?: string;
   orderBy: string;
   order?: SortOrder;
@@ -67,7 +75,6 @@ export interface Props<T> {
   topBarButtons?: TopBarButton[];
   selectedRows?: T[];
   setSelectedRows?: React.Dispatch<React.SetStateAction<T[]>>;
-  showPagination?: boolean;
   controlledOnSelect?: boolean;
   reloadData?: () => void;
   stickyHeader?: boolean;
@@ -102,11 +109,15 @@ export default function EnhancedTable<T extends TableRowType>({
   topBarButtons,
   selectedRows,
   setSelectedRows,
-  showPagination = true,
   controlledOnSelect,
   reloadData,
   stickyHeader = true,
   hideHeader,
+  booleanFalseText,
+  booleanTrueText,
+  editText,
+  renderNumSelectedText,
+  renderPaginationText,
 }: Props<T>): JSX.Element {
   const classes = tableStyles();
   const theme = useTheme();
@@ -263,7 +274,13 @@ export default function EnhancedTable<T extends TableRowType>({
 
   return (
     <>
-      {showTopBar && <EnhancedTableToolbar numSelected={selectedRows ? selectedRows.length : 0} topBarButtons={topBarButtons} />}
+      {showTopBar && (
+        <EnhancedTableToolbar
+          numSelected={selectedRows ? selectedRows.length : 0}
+          renderNumSelectedText={renderNumSelectedText}
+          topBarButtons={topBarButtons}
+        />
+      )}
       <TableContainer id={id} sx={{ overflowX: 'visible' }}>
         <DndContext sensors={sensors} onDragEnd={handleDragEnd}>
           <Table stickyHeader={stickyHeader} aria-labelledby='tableTitle' size='medium' aria-label='enhanced table' className={classes.table}>
@@ -334,6 +351,9 @@ export default function EnhancedTable<T extends TableRowType>({
                                 value={row[c.key]}
                                 onRowClick={onSelect && controlledOnSelect ? (newValue?: string) => onSelect(row as T, c.key, newValue) : onClick}
                                 reloadData={reloadData}
+                                booleanFalseText={booleanFalseText}
+                                booleanTrueText={booleanTrueText}
+                                editText={editText}
                               />
                             ))}
                         </TableRow>
@@ -345,7 +365,7 @@ export default function EnhancedTable<T extends TableRowType>({
           </Table>
         </DndContext>
       </TableContainer>
-      {showPagination && (
+      {renderPaginationText && (
         <Box display='flex' alignItems='center' justifyContent='flex-end' paddingTop='24px'>
           {/*
             Calculate pagination numbers to show.
@@ -354,16 +374,16 @@ export default function EnhancedTable<T extends TableRowType>({
           {rows.length ? (
             itemsToSkip + maxItemsPerPage < rows.length ? (
               <Typography paddingRight='24px' fontSize='14px'>
-                {itemsToSkip + 1} to {itemsToSkip + maxItemsPerPage} of {rows.length}
+                {renderPaginationText(itemsToSkip + 1, itemsToSkip + maxItemsPerPage, rows.length)}
               </Typography>
             ) : (
               <Typography paddingRight='24px' fontSize='14px'>
-                {itemsToSkip + 1} to {rows.length} of {rows.length}
+                {renderPaginationText(itemsToSkip + 1, rows.length, rows.length)}
               </Typography>
             )
           ) : (
             <Typography paddingRight='24px' fontSize='14px'>
-              0 of 0
+              {renderPaginationText(0, 0, 0)}
             </Typography>
           )}
           <Pagination

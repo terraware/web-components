@@ -18,17 +18,18 @@ const styles = makeStyles((theme: Theme) => ({
 
 interface EnhancedTableToolbarProps {
   numSelected: number;
+  renderNumSelectedText?: (numSelected: number) => string;
   topBarButtons?: TopBarButton[];
 }
 
 export default function EnhancedTableToolbar(props: EnhancedTableToolbarProps): JSX.Element | null {
-  const { numSelected, topBarButtons } = props;
+  const { numSelected, renderNumSelectedText, topBarButtons } = props;
   const classes = styles();
 
-  return numSelected > 0 ? (
+  return renderNumSelectedText && numSelected > 0 ? (
     <Toolbar className={classes.toolbar}>
       <Typography color='inherit' variant='subtitle1' component='div' className={classes.flexText}>
-        {numSelected} selected
+        {renderNumSelectedText(numSelected)}
       </Typography>
       {topBarButtons?.map((tbButton) => {
         return (
