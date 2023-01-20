@@ -18,6 +18,8 @@ import NavFooter from './components/Navbar/NavFooter';
 import NavItem from './components/Navbar/NavItem';
 import NavSection from './components/Navbar/NavSection';
 import Note from './components/Note';
+import Pill from './components/Pill';
+import PillList from './components/PillList';
 import ProgressCircle from './components/ProgressCircle/ProgressCircle';
 import RadioButton from './components/RadioButton';
 import Select from './components/Select/Select';
@@ -33,6 +35,7 @@ import * as Svg from './components/svg';
 import Message from './components/Message/Message';
 import theme from './theme';
 
+export type { PillListItem } from './components/PillList';
 export type { IconName } from './components/Icon/icons/';
 export type { Size } from './components/Size';
 export type { DropdownItem } from './components/Dropdown';
@@ -61,6 +64,8 @@ export {
   NavSection,
   Navbar,
   Note,
+  Pill,
+  PillList,
   ProgressCircle,
   RadioButton,
   Select,

@@ -1,0 +1,48 @@
+@import '../../style-dictionary-dist/terraware.scss';
+
+@font-face {
+  font-family: 'Inter';
+  src: local('Inter'), url(../../fonts/Inter.ttf) format('truetype');
+}
+
+.pill {
+  font-family: $tw-fnt-base-font-family;
+  background: $tw-clr-bg-tertiary;
+  padding: $tw-spc-base-xx-small $tw-spc-base-xx-small $tw-spc-base-xx-small 12px;
+  display: flex;
+  border-radius: 13px;
+  align-items: center;
+  margin-right: $tw-spc-base-x-small;
+  margin-bottom: $tw-spc-base-x-small;
+
+  .label {
+    font-size: 12px;
+    color: $tw-clr-txt;
+    font-weight: 400;
+    margin: 0;
+  }
+
+  .value {
+    padding-left: $tw-spc-base-xx-small;
+    font-size: 12px;
+    color: $tw-clr-txt;
+    font-weight: 600;
+    margin: 0;
+  }
+
+  .icon {
+    fill: $tw-clr-icn;
+    width: 12px;
+    height: 12px;
+    margin: 0 $tw-spc-base-xx-small;
+  }
+
+  .iconContainer {
+    padding: 0;
+  }
+
+  .spacer {
+    width: $tw-spc-base-x-small;
+    height: 12px;
+  }
+}
