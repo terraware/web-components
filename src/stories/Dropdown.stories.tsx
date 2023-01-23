@@ -5,8 +5,6 @@ import Dropdown, {
   Props as DropdownV1Props,
   DropdownV1,
   DropdownProps,
-  DropdownAutocompleteProps,
-  DropdownAutocomplete,
 } from '../components/Dropdown';
 
 export default {
@@ -60,7 +58,7 @@ Default.args = {
   tooltipTitle: 'A handy tooltip',
 };
 
-const DropdownAutocompleteTemplate: Story<DropdownAutocompleteProps> = (args) => {
+const DropdownAutocompleteTemplate: Story<DropdownProps> = (args) => {
   const [selectedValue, setSelectedValue] = useState(args.selectedValue);
 
   const handleChange = (value: string) => {
@@ -68,12 +66,20 @@ const DropdownAutocompleteTemplate: Story<DropdownAutocompleteProps> = (args) =>
     setSelectedValue(value);
   };
 
-  return <DropdownAutocomplete {...args} onChange={handleChange} selectedValue={selectedValue} />;
+  return (
+    <Dropdown
+      {...args}
+      onChange={handleChange}
+      selectedValue={selectedValue}
+      autocomplete={true}
+    />
+  );
 };
 
 export const Autocomplete = DropdownAutocompleteTemplate.bind({});
 
 Autocomplete.args = {
+  hideClearIcon: true,
   id: '2',
   label: 'DropdownAutocomplete',
   placeholder: 'Select',

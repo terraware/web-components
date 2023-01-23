@@ -3,7 +3,7 @@ import { DropdownItem } from './types';
 import SelectT from './Select/SelectT';
 import Autocomplete, { ValueType } from './Autocomplete/Autocomplete';
 import { makeStyles } from '@mui/styles';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 export interface Props {
   id: string;
@@ -41,24 +41,33 @@ export function DropdownV1({ id, label, values, onChange, selected, disabled }: 
 }
 
 export interface DropdownProps {
+  id: string;
+  label: string;
   onChange: (newValue: string) => void;
-  label?: string;
+  options: DropdownItem[];
+  selectedValue: any;
+
   disabled?: boolean;
-  id?: string;
   className?: string;
-  helperText?: string | string[];
   placeholder?: string;
-  errorText?: string | string[];
+  errorText?: string;
+  tooltipTitle?: TooltipProps['title'];
+
+  // select props
+  helperText?: string | string[];
   warningText?: string | string[];
-  selectedValue?: string;
   readonly?: boolean;
-  options?: DropdownItem[];
   fullWidth?: boolean;
   hideArrow?: boolean;
   onBlur?: () => void;
   onFocus?: () => void;
   fixedMenu?: boolean;
-  tooltipTitle?: TooltipProps['title'];
+
+  // auto complete props
+  freeSolo: boolean;
+  hideClearIcon?: boolean;
+
+  autocomplete?: boolean;
 }
 
 /**
@@ -74,52 +83,36 @@ export interface DropdownProps {
  * />
  */
 export default function Dropdown(props: DropdownProps): JSX.Element {
-  const { selectedValue, onChange, ...remainingProps } = props;
-  const selectedItem = props.options?.find((option) => option.value === selectedValue);
+  const { selectedValue, onChange, options, autocomplete, ...remainingProps } = props;
+  const [selectedItem, setSelectedItem] = useState<DropdownItem | undefined>();
+
+  useEffect(() => {
+    const item = options.find((option) => option.value === selectedValue);
+    setSelectedItem(item);
+  }, [options, selectedValue]);
+
+  if (autocomplete) {
+    return (
+      <Autocomplete
+        {...remainingProps}
+        values={options}
+        selected={selectedItem}
+        isEqual={(A: ValueType, B: ValueType) => (A as DropdownItem).value === (B as DropdownItem).value}
+        onChange={(option: ValueType) => onChange((option as DropdownItem).value)}
+      />
+    );
+  }
 
   return (
     <SelectT<DropdownItem>
       {...remainingProps}
+      options={options}
       selectedValue={selectedItem}
       isEqual={(A: DropdownItem, B: DropdownItem) => A.value === B.value}
       renderOption={(option: DropdownItem) => option.label}
       toT={(str: string) => ({ label: str, value: str } as DropdownItem)}
       displayLabel={(option: DropdownItem) => option?.label || ''}
       onChange={(option: DropdownItem) => onChange(option.value)}
-    />
-  );
-}
-
-export interface DropdownAutocompleteProps {
-  id: string;
-  label: string;
-  options: DropdownItem[];
-  onChange: (newValue: string) => void;
-  selectedValue: any;
-  freeSolo: boolean;
-  disabled?: boolean;
-  readOnly?: boolean;
-  className?: string;
-  hideClearIcon?: boolean;
-  placeholder?: string;
-  errorText?: string;
-  tooltipTitle?: TooltipProps['title'];
-}
-
-/**
- * A simple dropdown wrapper for Autocomplete that handles { label: string, value: string } values.
- */
-export function DropdownAutocomplete(props: DropdownAutocompleteProps): JSX.Element {
-  const { selectedValue, onChange, options, ...remainingProps } = props;
-  const selectedItem = options?.find((option) => option.value === selectedValue);
-
-  return (
-    <Autocomplete
-      {...remainingProps}
-      values={options}
-      selected={selectedItem}
-      isEqual={(A: ValueType, B: ValueType) => (A as DropdownItem).value === (B as DropdownItem).value}
-      onChange={(option: ValueType) => onChange((option as DropdownItem).value)}
     />
   );
 }
