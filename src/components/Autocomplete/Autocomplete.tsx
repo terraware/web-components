@@ -16,7 +16,6 @@ export interface Props {
   selected: ValueType | undefined;
   freeSolo: boolean;
   disabled?: boolean;
-  readOnly?: boolean;
   className?: string;
   hideClearIcon?: boolean;
   isEqual?: (option: ValueType, value: ValueType) => void;
@@ -33,7 +32,6 @@ export default function Autocomplete({
   selected,
   freeSolo,
   disabled,
-  readOnly,
   className,
   hideClearIcon,
   isEqual,
@@ -84,7 +82,6 @@ export default function Autocomplete({
   return (
     <MUIAutocomplete
       disabled={disabled}
-      readOnly={readOnly}
       id={id}
       options={values}
       getOptionLabel={(option: any) => {
