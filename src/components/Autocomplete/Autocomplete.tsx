@@ -2,13 +2,9 @@ import { Autocomplete as MUIAutocomplete, TextField, TooltipProps } from '@mui/m
 import React, { ChangeEvent } from 'react';
 import Icon from '../Icon/Icon';
 import IconTooltip from '../IconTooltip';
+import { DropdownItem as Option } from '../types';
 import '../Select/styles.scss';
 import './styles.scss';
-
-export type Option = {
-  value: any;
-  label: string;
-};
 
 export type ValueType = string | Option;
 
@@ -27,11 +23,6 @@ export interface Props {
   errorText?: string;
   tooltipTitle?: TooltipProps['title'];
 }
-
-export type DropdownItem = {
-  label: string;
-  value: string;
-};
 
 export default function Autocomplete({
   id,
