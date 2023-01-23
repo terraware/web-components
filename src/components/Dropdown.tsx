@@ -95,7 +95,7 @@ export interface DropdownAutocompleteProps {
   label: string;
   options: DropdownItem[];
   onChange: (newValue: string) => void;
-  selectedValue: string;
+  selectedValue: any;
   freeSolo: boolean;
   disabled?: boolean;
   readOnly?: boolean;
