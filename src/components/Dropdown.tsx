@@ -1,5 +1,7 @@
 import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, TooltipProps } from '@mui/material';
+import { DropdownItem } from './types';
 import SelectT from './Select/SelectT';
+import Autocomplete, { ValueType } from './Autocomplete/Autocomplete';
 import { makeStyles } from '@mui/styles';
 import React from 'react';
 
@@ -17,11 +19,6 @@ const useStyles = makeStyles(() => ({
     width: '100%',
   },
 }));
-
-export type DropdownItem = {
-  label: string;
-  value: string;
-};
 
 export function DropdownV1({ id, label, values, onChange, selected, disabled }: Props): JSX.Element {
   const onChangeH = (event: SelectChangeEvent<string>, _child: React.ReactNode) => {
@@ -89,7 +86,40 @@ export default function Dropdown(props: DropdownProps): JSX.Element {
       toT={(str: string) => ({ label: str, value: str } as DropdownItem)}
       displayLabel={(option: DropdownItem) => option?.label || ''}
       onChange={(option: DropdownItem) => onChange(option.value)}
-      tooltipTitle={props.tooltipTitle}
+    />
+  );
+}
+
+export interface DropdownAutocompleteProps {
+  id: string;
+  label: string;
+  options: DropdownItem[];
+  onChange: (newValue: string) => void;
+  selectedValue: string;
+  freeSolo: boolean;
+  disabled?: boolean;
+  readOnly?: boolean;
+  className?: string;
+  hideClearIcon?: boolean;
+  placeholder?: string;
+  errorText?: string;
+  tooltipTitle?: TooltipProps['title'];
+}
+
+/**
+ * A simple dropdown wrapper for Autocomplete that handles { label: string, value: string } values.
+ */
+export function DropdownAutocomplete(props: DropdownAutocompleteProps): JSX.Element {
+  const { selectedValue, onChange, options, ...remainingProps } = props;
+  const selectedItem = options?.find((option) => option.value === selectedValue);
+
+  return (
+    <Autocomplete
+      {...remainingProps}
+      values={options}
+      selected={selectedItem}
+      isEqual={(A: ValueType, B: ValueType) => (A as DropdownItem).value === (B as DropdownItem).value}
+      onChange={(option: ValueType) => onChange((option as DropdownItem).value)}
     />
   );
 }

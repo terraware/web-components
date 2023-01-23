@@ -8,7 +8,7 @@ import Checkbox from './components/Checkbox';
 import DatePicker from './components/DatePicker/DatePicker';
 import DialogBox from './components/DialogBox/DialogBox';
 import Divisor from './components/Divisor';
-import Dropdown, { DropdownV1 } from './components/Dropdown';
+import Dropdown, { DropdownV1, DropdownAutocomplete } from './components/Dropdown';
 import ErrorBox from './components/ErrorBox/ErrorBox';
 import Icon from './components/Icon/Icon';
 import IconTooltip from './components/IconTooltip';
@@ -38,7 +38,7 @@ import theme from './theme';
 export type { PillListItem } from './components/PillList';
 export type { IconName } from './components/Icon/icons/';
 export type { Size } from './components/Size';
-export type { DropdownItem } from './components/Dropdown';
+export type { DropdownItem } from './components/types';
 export type { EnhancedTableDetailsRow, RendererProps, TableColumnType, TableRowType, SortOrder };
 
 export {
@@ -52,6 +52,7 @@ export {
   DialogBox,
   Divisor,
   Dropdown,
+  DropdownAutocomplete,
   DropdownV1,
   ErrorBox,
   getComparator,
