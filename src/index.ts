@@ -13,6 +13,7 @@ import ErrorBox from './components/ErrorBox/ErrorBox';
 import Icon from './components/Icon/Icon';
 import IconTooltip from './components/IconTooltip';
 import icons from './components/Icon/icons';
+import MultiSelect from './components/MultiSelect';
 import Navbar from './components/Navbar/Navbar';
 import NavFooter from './components/Navbar/NavFooter';
 import NavItem from './components/Navbar/NavItem';
@@ -59,6 +60,7 @@ export {
   Icon,
   IconTooltip,
   Message,
+  MultiSelect,
   NavFooter,
   NavItem,
   NavSection,

@@ -61,12 +61,12 @@
     border-radius: $tw-sz-base-x-small;
     border-width: $tw-sz-frm-fld-text-input-stroke;
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: space-between;
 
     &__icon-button {
-      width: fit-content;
-      height: fit-content;
+      width: $tw-fnt-frm-fld-text-value-line-height;
+      height: $tw-fnt-frm-fld-text-value-line-height;
       padding: 0;
     }
 
