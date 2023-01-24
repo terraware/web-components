@@ -39,7 +39,7 @@ export const Complex = Template.bind({});
 Default.args = {
   id: '1',
   label: 'Test',
-  values: ['Test 1', 'Test 2', 'Hello'],
+  options: ['Test 1', 'Test 2', 'Hello'],
   onChange: () => true,
   selected: '',
   freeSolo: true,
@@ -50,7 +50,7 @@ Complex.args = {
   id: '2',
   label: 'Complex Objects',
   placeholder: 'Pick a value',
-  values: [
+  options: [
     {
       label: 'hello',
       value: 1,

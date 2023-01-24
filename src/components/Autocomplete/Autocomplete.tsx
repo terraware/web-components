@@ -9,12 +9,12 @@ import './styles.scss';
 export type ValueType = string | Option;
 
 export interface Props {
-  id: string;
-  label: string;
-  values: ValueType[];
   onChange: (value: ValueType) => void;
-  selected: ValueType | undefined;
-  freeSolo: boolean;
+  options: ValueType[];
+  id?: string;
+  label?: string;
+  selected?: ValueType | undefined;
+  freeSolo?: boolean;
   disabled?: boolean;
   className?: string;
   hideClearIcon?: boolean;
@@ -27,7 +27,7 @@ export interface Props {
 export default function Autocomplete({
   id,
   label,
-  values,
+  options,
   onChange,
   selected,
   freeSolo,
@@ -83,7 +83,7 @@ export default function Autocomplete({
     <MUIAutocomplete
       disabled={disabled}
       id={id}
-      options={values}
+      options={options}
       getOptionLabel={(option: any) => {
         if (typeof option === 'object') {
           return option.label ?? '';

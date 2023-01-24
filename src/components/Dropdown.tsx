@@ -3,7 +3,7 @@ import { DropdownItem } from './types';
 import SelectT from './Select/SelectT';
 import Autocomplete, { ValueType } from './Autocomplete/Autocomplete';
 import { makeStyles } from '@mui/styles';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
 export interface Props {
   id: string;
@@ -41,12 +41,11 @@ export function DropdownV1({ id, label, values, onChange, selected, disabled }: 
 }
 
 export interface DropdownProps {
-  id: string;
-  label: string;
   onChange: (newValue: string) => void;
-  options: DropdownItem[];
-  selectedValue: any;
-
+  id?: string;
+  label?: string;
+  options?: DropdownItem[];
+  selectedValue?: any;
   disabled?: boolean;
   className?: string;
   placeholder?: string;
@@ -64,7 +63,7 @@ export interface DropdownProps {
   fixedMenu?: boolean;
 
   // auto complete props
-  freeSolo: boolean;
+  freeSolo?: boolean;
   hideClearIcon?: boolean;
 
   autocomplete?: boolean;
@@ -84,18 +83,14 @@ export interface DropdownProps {
  */
 export default function Dropdown(props: DropdownProps): JSX.Element {
   const { selectedValue, onChange, options, autocomplete, ...remainingProps } = props;
-  const [selectedItem, setSelectedItem] = useState<DropdownItem | undefined>();
 
-  useEffect(() => {
-    const item = options.find((option) => option.value === selectedValue);
-    setSelectedItem(item);
-  }, [options, selectedValue]);
+  const selectedItem = options?.find((option) => option.value === selectedValue);
 
   if (autocomplete) {
     return (
       <Autocomplete
         {...remainingProps}
-        values={options}
+        options={options ?? []}
         selected={selectedItem}
         isEqual={(A: ValueType, B: ValueType) => (A as DropdownItem).value === (B as DropdownItem).value}
         onChange={(option: ValueType) => onChange((option as DropdownItem).value)}
