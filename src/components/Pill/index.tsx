@@ -5,19 +5,30 @@ import './styles.scss';
 
 type PillProps<IdType> = {
   id: IdType;
-  label: string;
+  label?: string;
   value: string;
+  onClick?: (id: IdType) => void;
   onRemove?: (id: IdType) => void;
   className?: string;
 };
 
-export default function Pill<IdType>({ id, label, value, onRemove, className }: PillProps<IdType>): JSX.Element {
+export default function Pill<IdType>(props: PillProps<IdType>): JSX.Element {
+  const {id, label, value, onClick, onRemove, className } = props;
+
   return (
-    <div className={`pill ${className ?? ''}`}>
-      <p className='label'>{label}:</p>
+    <div className={`pill ${className ?? ''}`} onClick={(ev) => {
+      ev.stopPropagation();
+      if (onClick) {
+        onClick(id);
+      }
+    }}>
+      {label && (<p className='label'>{label}:</p>)}
       <p className='value'>{value}</p>
       {onRemove ? (
-        <IconButton onClick={() => onRemove(id)} className='iconContainer'>
+        <IconButton onClick={(ev) => {
+          ev.stopPropagation();
+          onRemove(id);
+        }} className='iconContainer' aria-label='remove'>
           <Icon name='close' className='icon' />
         </IconButton>
       ) : (

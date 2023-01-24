@@ -1,0 +1,124 @@
+@import '../../style-dictionary-dist/terraware.scss';
+
+@font-face {
+  font-family: 'Inter';
+  src: local('Inter'), url(../../fonts/Inter.ttf) format('truetype');
+}
+
+.multi-select {
+  display: flex;
+  flex-direction: column;
+
+  .multi-select__container {
+    position: relative;
+    width: 228px;
+    cursor: pointer;
+
+    &--fullWidth {
+      position: relative;
+      width: 100%;
+      cursor: pointer;
+    }
+  }
+
+  .multi-select__label {
+    font-family: $tw-fnt-frm-fld-label-font-family;
+    font-size: $tw-fnt-frm-fld-label-font-size;
+    font-weight: $tw-fnt-frm-fld-label-font-weight;
+    line-height: $tw-fnt-frm-fld-label-line-height;
+    color: $tw-clr-txt-secondary;
+    margin-bottom: $tw-spc-base-xx-small;
+    display: block;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .multi-select__help-text {
+    font-family: $tw-fnt-frm-fld-help-text-font-family;
+    font-size: $tw-fnt-frm-fld-help-text-font-size;
+    font-weight: $tw-fnt-frm-fld-help-text-font-weight;
+    line-height: $tw-fnt-frm-fld-help-text-line-height;
+    color: $tw-clr-txt-secondary;
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    margin-top: $tw-spc-base-xx-small;
+  }
+
+  .multi-select__placeholder-text {
+    font-family: $tw-fnt-frm-fld-text-value-font-family;
+    font-size: $tw-fnt-frm-fld-text-value-font-size;
+    font-weight: $tw-fnt-frm-fld-text-value-font-weight;
+    line-height: $tw-fnt-frm-fld-text-value-line-height;
+    color: $tw-clr-txt;
+    margin: 0;
+  }
+
+  .multi-select__values {
+    background-color: $tw-clr-bg;
+    border: $tw-sz-frm-fld-text-input-stroke solid $tw-clr-brdr-secondary;
+    padding: #{$tw-spc-base-x-small - $tw-sz-frm-fld-text-input-stroke};
+    border-radius: $tw-sz-base-x-small;
+    border-width: $tw-sz-frm-fld-text-input-stroke;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    &__icon-button {
+      width: fit-content;
+      height: fit-content;
+      padding: 0;
+    }
+
+    &__icon-right {
+      width: $tw-fnt-frm-fld-text-value-line-height;
+      height: $tw-fnt-frm-fld-text-value-line-height;
+      fill: $tw-clr-icn;
+      flex-shrink: 0;
+    }
+  }
+
+  .multi-select__options-container {
+    position: relative;
+    height: 0;
+    width: 100%;
+
+    .multi-select__options {
+      z-index: 3;
+      width: calc(100% - 2px);
+      position: absolute;
+      top: 0px;
+      list-style-type: none;
+      padding: $tw-spc-base-x-small 0;
+      background: $tw-clr-bg;
+      border: 1px solid $tw-clr-brdr-secondary;
+      margin: $tw-spc-base-xx-small 0 0;
+      border-radius: $tw-sz-base-x-small;
+      max-height: 140px;
+      overflow-y: auto;
+
+      .select-value {
+        font-family: $tw-fnt-frm-fld-select-value-font-family;
+        font-size: $tw-fnt-frm-fld-select-value-font-size;
+        font-weight: $tw-fnt-frm-fld-select-value-font-weight;
+        line-height: $tw-fnt-frm-fld-select-value-line-height;
+        padding: $tw-spc-base-x-small $tw-spc-base-small;
+        cursor: pointer;
+
+        &:hover {
+          background-color: $tw-clr-bg-selected-ghost-hover;
+          color: $tw-clr-txt;
+        }
+
+        &:active {
+          background-color: $tw-clr-bg-selected-ghost-active;
+          color: $tw-clr-txt;
+        }
+
+        &--disabled {
+          opacity: $tw-opcty-semantic-off;
+        }
+      }
+    }
+  }
+}

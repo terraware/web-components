@@ -1,0 +1,12 @@
+@import '../../style-dictionary-dist/terraware.scss';
+
+@font-face {
+  font-family: 'Inter';
+  src: local('Inter'), url(../../fonts/Inter.ttf) format('truetype');
+}
+
+.pill-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $tw-spc-base-x-small;
+}
