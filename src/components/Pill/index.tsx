@@ -5,19 +5,22 @@ import './styles.scss';
 
 type PillProps<IdType> = {
   id: IdType;
-  label: string;
+  label?: string;
   value: string;
+  onPillClick?: React.MouseEventHandler<HTMLDivElement>;
   onRemove?: (id: IdType) => void;
   className?: string;
 };
 
-export default function Pill<IdType>({ id, label, value, onRemove, className }: PillProps<IdType>): JSX.Element {
+export default function Pill<IdType>(props: PillProps<IdType>): JSX.Element {
+  const {id, label, value, onPillClick, onRemove, className } = props;
+
   return (
-    <div className={`pill ${className ?? ''}`}>
-      <p className='label'>{label}:</p>
+    <div className={`pill ${className ?? ''}`} onClick={onPillClick}>
+      {label && (<p className='label'>{label}:</p>)}
       <p className='value'>{value}</p>
       {onRemove ? (
-        <IconButton onClick={() => onRemove(id)} className='iconContainer'>
+        <IconButton onClick={() => onRemove(id)} className='iconContainer' aria-label='remove'>
           <Icon name='close' className='icon' />
         </IconButton>
       ) : (
