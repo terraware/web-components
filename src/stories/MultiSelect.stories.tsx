@@ -19,8 +19,10 @@ const Template: Story<MultiSelectProps<number>> = (args) => {
   const handleRemove = (id: number) => {
     const newOptions = [...selectedOptions];
     const index = newOptions.findIndex((value) => id === value);
-    newOptions.splice(index, 1);
-    setSelectedOptions(newOptions);
+    if (index >= 0) {
+      newOptions.splice(index, 1);
+      setSelectedOptions(newOptions);
+    }
   };
 
   return <MultiSelect {...args} selectedOptions={selectedOptions} onAdd={handleAdd} onRemove={handleRemove} />;
