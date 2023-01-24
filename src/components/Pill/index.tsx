@@ -23,7 +23,7 @@ export default function Pill<IdType>(props: PillProps<IdType>): JSX.Element {
       }
     }}>
       {label && (<p className='label'>{label}:</p>)}
-      <p className='value'>{value}</p>
+      <p className={`value${label ? '' : ' value--no-label'}`}>{value}</p>
       {onRemove ? (
         <IconButton onClick={(ev) => {
           ev.stopPropagation();

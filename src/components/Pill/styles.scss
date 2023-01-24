@@ -26,6 +26,10 @@
     color: $tw-clr-txt;
     font-weight: 600;
     margin: 0;
+
+    &--no-label {
+      padding-left: 0;
+    }
   }
 
   .icon {

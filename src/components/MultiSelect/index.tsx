@@ -85,9 +85,9 @@ export default function MultiSelect<K, V>(props: MultiSelectProps<K, V>): JSX.El
               />)
             : (<p className='multi-select__placeholder-text' >{placeHolder}</p>)
           }
-          <IconButton className={'multi-select__values__icon-button'} aria-label='show-options'>
-              <Icon name={openedOptions ? 'chevronUp' : 'chevronDown'} className='multi-select__values__icon-right' />
-          </IconButton>
+          <div className={'multi-select__values__icon-button'} aria-label='show-options'>
+            <Icon name={openedOptions ? 'chevronUp' : 'chevronDown'} className='multi-select__values__icon-right' />
+          </div>
         </div>
         {options && unselectedOptions.length > 0 && openedOptions && (
           <div className='multi-select__options-container'>
