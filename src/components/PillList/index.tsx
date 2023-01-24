@@ -6,20 +6,20 @@ export type PillListItem<IdType> = {
   id: IdType;
   label?: string;
   value: string;
-  onPillClick?: React.MouseEventHandler<HTMLDivElement>;
+  onClick?: (id: IdType) => void;
   onRemove?: (id: IdType) => void;
   className?: string;
 };
 
 export type PillListProps<IdType> = {
   data: PillListItem<IdType>[];
-  onPillClick?: React.MouseEventHandler<HTMLDivElement>;
+  onClick?: (id: IdType) => void;
   onRemove?: (id: IdType) => void;
   className?: string;
 };
 
 export default function PillList<IdType>(props: PillListProps<IdType>): JSX.Element {
-  const { data, onPillClick, onRemove, className } = props;
+  const { data, onClick, onRemove, className } = props;
 
   return (
     <div className='pill-list'>
@@ -29,7 +29,7 @@ export default function PillList<IdType>(props: PillListProps<IdType>): JSX.Elem
           id={item.id}
           label={item.label}
           value={item.value}
-          onPillClick={item.onPillClick || onPillClick}
+          onClick={item.onClick || onClick}
           onRemove={item.onRemove || onRemove}
           className={item.className || className}
         />

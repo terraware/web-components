@@ -12,6 +12,7 @@ test('show options when placeholder is clicked', () => {
         [2, 'bar'],
         [3, 'baz'],
       ])}
+      valueRenderer={(v: string) => v}
       selectedOptions={[]}
       placeHolder='Select...'
     />
@@ -46,6 +47,7 @@ test('clicking an option calls the onAdd handler', () => {
         [2, 'bar'],
         [3, 'baz'],
       ])}
+      valueRenderer={(v: string) => v}
       selectedOptions={[]}
       placeHolder='Select...'
     />
@@ -72,6 +74,7 @@ test('clicking the pill remove button calls the onRemove handler', () => {
       options={new Map([
         [1, 'foo'],
       ])}
+      valueRenderer={(v: string) => v}
       selectedOptions={[1]}
     />
   );

@@ -7,20 +7,28 @@ type PillProps<IdType> = {
   id: IdType;
   label?: string;
   value: string;
-  onPillClick?: React.MouseEventHandler<HTMLDivElement>;
+  onClick?: (id: IdType) => void;
   onRemove?: (id: IdType) => void;
   className?: string;
 };
 
 export default function Pill<IdType>(props: PillProps<IdType>): JSX.Element {
-  const {id, label, value, onPillClick, onRemove, className } = props;
+  const {id, label, value, onClick, onRemove, className } = props;
 
   return (
-    <div className={`pill ${className ?? ''}`} onClick={onPillClick}>
+    <div className={`pill ${className ?? ''}`} onClick={(ev) => {
+      ev.stopPropagation();
+      if (onClick) {
+        onClick(id);
+      }
+    }}>
       {label && (<p className='label'>{label}:</p>)}
       <p className='value'>{value}</p>
       {onRemove ? (
-        <IconButton onClick={() => onRemove(id)} className='iconContainer' aria-label='remove'>
+        <IconButton onClick={(ev) => {
+          ev.stopPropagation();
+          onRemove(id);
+        }} className='iconContainer' aria-label='remove'>
           <Icon name='close' className='icon' />
         </IconButton>
       ) : (

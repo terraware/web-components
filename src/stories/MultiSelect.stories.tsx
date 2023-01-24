@@ -7,7 +7,7 @@ export default {
   component: MultiSelect,
 };
 
-const Template: Story<MultiSelectProps<number>> = (args) => {
+const Template: Story<MultiSelectProps<number, string>> = (args) => {
   const [selectedOptions, setSelectedOptions] = useState<number[]>([]);
 
   const handleAdd = (id: number) => {
@@ -25,22 +25,33 @@ const Template: Story<MultiSelectProps<number>> = (args) => {
     }
   };
 
-  return <MultiSelect {...args} selectedOptions={selectedOptions} onAdd={handleAdd} onRemove={handleRemove} />;
+  const onPillClick = (id: number) => {
+    window.alert(`You clicked the ${defaultOptions.get(id)} pill!`);
+  };
+
+  const renderString = (v: string) => v;
+
+  return <MultiSelect
+    {...args}
+    selectedOptions={selectedOptions}
+    onAdd={handleAdd}
+    onRemove={handleRemove}
+    onPillClick={onPillClick}
+    valueRenderer={renderString}
+  />;
 };
 
 export const Default = Template.bind({});
 
 const defaultOptions = new Map<number, string>([
-  [1, 'eggs'], [2, 'potatoes'], [3, 'spam'], [4, 'bacon'], [5, 'beans'], [6, 'spam'], [7, 'spam'], [8, 'spam']
+  [1, 'eggs'], [2, 'potatoes'], [3, 'spam'], [4, 'bacon'], [5, 'beans'], [6, 'spam also'], [7, 'more spam']
 ]);
 
 Default.args = {
   label: 'Breakfast order:',
   tooltipTitle: 'Please make your selection below...',
   helperText: 'Maybe some nice spam?',
+  missingValuePlaceholder: '???',
   placeHolder: 'Select...',
   options: defaultOptions,
-  selectedOptions: [1, 2, 4, 5],
-  onAdd: (id: number) => window.alert(`You added item ${id}`),
-  onRemove: (id: number) => window.alert(`You removed item ${id}`),
 };
