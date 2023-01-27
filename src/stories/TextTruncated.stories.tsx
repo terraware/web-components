@@ -22,4 +22,17 @@ Default.args = {
   textStyle: {fontSize: 14},
   moreSeparator: '...',
   moreText: 'more',
+  placeHolder: undefined,
+};
+
+export const WithPlaceholder = Template.bind({});
+
+WithPlaceholder.args = {
+  stringList: ['thing1', 'thing2'],
+  maxLengthPx: 200,
+  showAllStyle: {fontSize: 14},
+  textStyle: {fontSize: 14},
+  moreSeparator: '...',
+  moreText: 'more',
+  placeHolder: (<span style={{color: 'red'}}>Nothing Here!</span>),
 };
