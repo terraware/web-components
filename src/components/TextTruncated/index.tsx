@@ -38,7 +38,10 @@ interface TextDisplay {
  * @param strings list of strings to process
  * @param maxLength max displayable length
  */
-function computeFromStringList(strings: string[], maxLength: number): TextDisplay {
+function computeFromStringList(strings: string[], maxLength: number, listSeparator: string): TextDisplay {
+  if (strings.length === 0) {
+    return { text: '', numberMore: 0 };
+  }
   if (strings[0].length > maxLength) {
     // case in which the first string is too long to fit by itself
     return {
@@ -51,7 +54,7 @@ function computeFromStringList(strings: string[], maxLength: number): TextDispla
   let stringsRemaining = strings.length - 1;
   let result = strings[0];
   for (let i = 1; i < strings.length; i++) {
-    const tempResult = [result, strings[i]].join(', ');
+    const tempResult = [result, strings[i]].join(listSeparator);
     if (tempResult.length > maxLength) {
       break;
     }
@@ -73,10 +76,20 @@ export interface Props {
   listSeparator: string;
   textStyle?: Record<string, any>;
   showAllStyle?: Record<string, any>;
+  placeHolder?: React.ReactElement;
 }
 
 export default function TextTruncated(props: Props): JSX.Element {
-  const { stringList, listSeparator, maxLengthPx, moreSeparator, moreText, textStyle, showAllStyle } = props;
+  const {
+    stringList,
+    listSeparator,
+    maxLengthPx,
+    moreSeparator,
+    moreText,
+    textStyle,
+    showAllStyle,
+    placeHolder
+  } = props;
   const [showAllOpen, setShowAllOpen] = useState(false);
   const classes = useStyles();
   const [canvasContext, setCanvasContext] = useState<CanvasRenderingContext2D>();
@@ -107,14 +120,14 @@ export default function TextTruncated(props: Props): JSX.Element {
     const maxChars = maxLengthPx / pixelsPerChar;
     maxExcludingSuffix = maxChars - moreSeparator.length - moreText.length - 1 - Math.ceil(Math.log10(stringList.length));
   }
-  const textToDisplay = computeFromStringList(stringList, maxExcludingSuffix);
+  const textToDisplay = computeFromStringList(stringList, maxExcludingSuffix, listSeparator);
 
-  const onClickHanlder = (e: React.MouseEvent) => {
+  const onClickHandler = (e: React.MouseEvent) => {
     e.stopPropagation();
     setShowAllOpen(!showAllOpen);
   };
 
-  return (
+  return (stringList.length > 0) ? (
     <Typography sx={textStyle}>
       {textToDisplay.text}
       {textToDisplay.numberMore !== 0 ? moreSeparator : ''}
@@ -128,13 +141,13 @@ export default function TextTruncated(props: Props): JSX.Element {
           open={showAllOpen}
           title={
             <Typography sx={showAllStyle} fontSize='14px'>
-              {stringList.join(', ')}
+              {stringList.join(listSeparator)}
             </Typography>
           }
         >
           <Link
             component='button'
-            onClick={onClickHanlder}
+            onClick={onClickHandler}
             onBlur={() => setShowAllOpen(false)}
             sx={{ color: theme.palette.TwClrTxtBrand, textDecorationColor: `${theme.palette.TwClrTxtBrand}80` }}
           >
@@ -143,5 +156,5 @@ export default function TextTruncated(props: Props): JSX.Element {
         </Tooltip>
       ) : null}
     </Typography>
-  );
+  ) : (placeHolder || (<div/>));
 }
