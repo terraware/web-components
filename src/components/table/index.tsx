@@ -67,6 +67,7 @@ export interface Props<T> extends LocalizationProps {
   sortComparator?: (a: T, b: T, orderBy: keyof T) => number;
   sortHandler?: (order: SortOrder, orderBy: string) => void;
   isInactive?: (row: T) => boolean;
+  isPresorted?: boolean;
   onReorderEnd?: (newOrder: string[]) => void;
   isClickable?: (row: T) => boolean;
   emptyTableMessage?: string;
@@ -101,6 +102,7 @@ export default function EnhancedTable<T extends TableRowType>({
   sortComparator = descendingComparator,
   sortHandler,
   isInactive,
+  isPresorted,
   onReorderEnd,
   isClickable,
   emptyTableMessage,
@@ -166,6 +168,16 @@ export default function EnhancedTable<T extends TableRowType>({
       });
     }
   }, [rows, setSelectedRows]);
+
+  useEffect(() => {
+    // this is not most elegant but we want to do this if table was sorted by some column in a presorted table
+    // but we don't know when the data changes, hence this useEffect on the data size
+    if (isPresorted) {
+      // we want to set page back to 1 if the data changes on presorted lists,
+      // this is because the data was reset due to some sort behavior refetching new data
+      handleChangePage({}, 1);
+    }
+  }, [rows]);
 
   const handleRequestSort = (event: React.MouseEvent<unknown>, property: string) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -305,7 +317,7 @@ export default function EnhancedTable<T extends TableRowType>({
                 </TableRow>
               )}
               {rows &&
-                stableSort(rows, getComparator(order, orderBy, sortComparator))
+                (isPresorted ? rows : stableSort(rows, getComparator(order, orderBy, sortComparator)))
                   .slice(itemsToSkip, itemsToSkip + maxItemsPerPage)
                   .map((row, index) => {
                     const onClick = onSelect && !controlledOnSelect ? () => onSelect(row as T) : undefined;
