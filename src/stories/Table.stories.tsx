@@ -71,7 +71,7 @@ Default.args = {
     { key: 'occupation', name: 'Occupation', type: 'string' },
     { key: 'available', name: 'Available', type: 'boolean' },
   ],
-  rows: Array(50)
+  rows: Array(150)
     .fill({ name: '', middlename: '', lastname: '', occupation: '' })
     .map((i, j) => {
       if (j % 2 === 0) {
