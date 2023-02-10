@@ -1,26 +1,24 @@
-import React from 'react'
-import {ThemeProvider} from '@mui/material';
-import {StylesProvider} from '@mui/styles';
-
+import React from 'react';
+import { ThemeProvider, StyledEngineProvider } from '@mui/material';
 
 export const parameters = {
-  actions: { argTypesRegex: "^on[A-Z].*" },
+  actions: { argTypesRegex: '^on[A-Z].*' },
   controls: {
     matchers: {
       color: /(background|color)$/i,
       date: /Date$/,
     },
   },
-}
+};
 
-import { theme } from '../src/'
+import { theme } from '../src/';
 
 export const decorators = [
   (Story) => (
-    <StylesProvider injectFirst>
-      <ThemeProvider theme={theme}>
+    <ThemeProvider theme={theme}>
+      <StyledEngineProvider injectFirst>
         <Story />
-      </ThemeProvider>
-    </StylesProvider >
+      </StyledEngineProvider>
+    </ThemeProvider>
   ),
-]
+];
