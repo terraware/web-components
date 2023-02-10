@@ -172,12 +172,12 @@ export default function EnhancedTable<T extends TableRowType>({
   useEffect(() => {
     // this is not most elegant but we want to do this if table was sorted by some column in a presorted table
     // but we don't know when the data changes, hence this useEffect on the data size
-    if (rows.length && isPresorted) {
+    if (isPresorted) {
       // we want to set page back to 1 if the data changes on presorted lists,
       // this is because the data was reset due to some sort behavior refetching new data
       handleChangePage({}, 1);
     }
-  }, [rows.length]);
+  }, [rows]);
 
   const handleRequestSort = (event: React.MouseEvent<unknown>, property: string) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -188,13 +188,6 @@ export default function EnhancedTable<T extends TableRowType>({
     if (sortHandler) {
       sortHandler(newOrder, property);
     }
-
-    // We want to set the page to 1 on sort order change for presorted tables but we won't have
-    // the data yet at this point, the sortHandler above will most likely trigger a refetch of data
-    // with correct sort criteria (and not leave the sorting to the table)
-    // if (isPresorted) {
-    //   handleChangePage({}, 1);
-    // }
   };
 
   const hasEditColumn = columns.filter((c) => c.type === 'edit').length > 0;
