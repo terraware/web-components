@@ -29,7 +29,7 @@
   }
 
   &--small {
-    height: $tw-sz-btn-small-height;
+    min-height: $tw-sz-btn-small-height;
     font-size: $tw-fnt-btn-label-small-font-size;
     font-weight: $tw-fnt-btn-label-small-font-weight;
     font-family: $tw-fnt-btn-label-small-font-family;
@@ -63,7 +63,7 @@
   }
 
   &--medium {
-    height: $tw-sz-btn-medium-height;
+    min-height: $tw-sz-btn-medium-height;
     font-size: $tw-fnt-btn-label-medium-font-size;
     font-weight: $tw-fnt-btn-label-medium-font-weight;
     font-family: $tw-fnt-btn-label-medium-font-family;
@@ -98,7 +98,7 @@
   }
 
   &--large {
-    height: $tw-sz-btn-large-height;
+    min-height: $tw-sz-btn-large-height;
     font-size: $tw-fnt-btn-label-large-font-size;
     font-weight: $tw-fnt-btn-label-large-font-weight;
     font-family: $tw-fnt-btn-label-large-font-family;
@@ -132,7 +132,7 @@
   }
 
   &--xlarge {
-    height: $tw-sz-btn-x-large-height;
+    min-height: $tw-sz-btn-x-large-height;
     font-size: $tw-fnt-btn-label-x-large-font-size;
     font-weight: $tw-fnt-btn-label-x-large-font-weight;
     font-family: $tw-fnt-btn-label-x-large-font-family;
