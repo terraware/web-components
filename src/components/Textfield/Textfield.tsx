@@ -83,6 +83,7 @@ export default function TextField(props: Props): JSX.Element {
   const onKeyDownHandler = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (disableDecimals && (e.key === '.' || e.key === ',')) {
       e?.preventDefault();
+
       return;
     }
     if (onKeyDown) {
