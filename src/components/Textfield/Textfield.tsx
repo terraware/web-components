@@ -33,6 +33,7 @@ export interface Props {
   tooltipTitle?: TooltipProps['title'];
   min?: number;
   max?: number;
+  disableDecimals?: boolean;
 }
 
 export default function TextField(props: Props): JSX.Element {
@@ -58,6 +59,7 @@ export default function TextField(props: Props): JSX.Element {
     tooltipTitle,
     min,
     max,
+    disableDecimals,
   } = props;
 
   const textfieldClass = classNames({
@@ -79,6 +81,10 @@ export default function TextField(props: Props): JSX.Element {
   };
 
   const onKeyDownHandler = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (disableDecimals && (e.key === '.' || e.key === ',')) {
+      e?.preventDefault();
+      return;
+    }
     if (onKeyDown) {
       onKeyDown(e.key);
     }
@@ -108,6 +114,10 @@ export default function TextField(props: Props): JSX.Element {
       typeProps.max = max;
     }
   }
+
+  const preventDecimals = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    return event.charCode >= 48 && event.charCode <= 57;
+  };
 
   return (
     <div className={`textfield ${className}`}>
