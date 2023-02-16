@@ -116,10 +116,6 @@ export default function TextField(props: Props): JSX.Element {
     }
   }
 
-  const preventDecimals = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    return event.charCode >= 48 && event.charCode <= 57;
-  };
-
   return (
     <div className={`textfield ${className}`}>
       <label htmlFor={id} className='textfield-label'>
