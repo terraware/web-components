@@ -33,6 +33,7 @@ export interface Props {
   tooltipTitle?: TooltipProps['title'];
   min?: number;
   max?: number;
+  disabledCharacters?: string[];
 }
 
 export default function TextField(props: Props): JSX.Element {
@@ -58,6 +59,7 @@ export default function TextField(props: Props): JSX.Element {
     tooltipTitle,
     min,
     max,
+    disabledCharacters,
   } = props;
 
   const textfieldClass = classNames({
@@ -79,6 +81,11 @@ export default function TextField(props: Props): JSX.Element {
   };
 
   const onKeyDownHandler = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (disabledCharacters && disabledCharacters.includes(e.key)) {
+      e?.preventDefault();
+
+      return;
+    }
     if (onKeyDown) {
       onKeyDown(e.key);
     }
