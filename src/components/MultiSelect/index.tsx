@@ -21,7 +21,6 @@ export type MultiSelectProps<K, V> = {
   valueRenderer: (value: V) => string;
   selectedOptions: K[];
   tooltipTitle?: TooltipProps['title'];
-  disabled?: boolean;
 };
 
 export default function MultiSelect<K, V>(props: MultiSelectProps<K, V>): JSX.Element {
@@ -41,13 +40,12 @@ export default function MultiSelect<K, V>(props: MultiSelectProps<K, V>): JSX.El
     valueRenderer,
     selectedOptions,
     tooltipTitle,
-    disabled,
   } = props;
 
   const [openedOptions, setOpenedOptions] = useState(false);
 
   const toggleOptions = () => {
-    setOpenedOptions((isOpen) => !isOpen && !disabled);
+    setOpenedOptions((isOpen) => !isOpen);
   };
 
   const closeOptions = () => {
@@ -77,7 +75,7 @@ export default function MultiSelect<K, V>(props: MultiSelectProps<K, V>): JSX.El
         onBlur={closeOptions}
         tabIndex={0}
       >
-        <div id={id} className={`multi-select__values${disabled ? '--disabled' : ''}`} onClick={toggleOptions}>
+        <div id={id} className='multi-select__values' onClick={toggleOptions}>
           {selectedOptions.length > 0
             ? (<PillList
                 data={valuesPillData}
@@ -88,10 +86,7 @@ export default function MultiSelect<K, V>(props: MultiSelectProps<K, V>): JSX.El
             : (<p className='multi-select__placeholder-text' >{placeHolder}</p>)
           }
           <div className={'multi-select__values__icon-button'} aria-label='show-options'>
-            <Icon
-              name={openedOptions ? 'chevronUp' : 'chevronDown'}
-              className={`multi-select__values__icon-right${disabled ? '--disabled' : ''}`}
-            />
+            <Icon name={openedOptions ? 'chevronUp' : 'chevronDown'} className='multi-select__values__icon-right' />
           </div>
         </div>
         {options && unselectedOptions.length > 0 && openedOptions && (

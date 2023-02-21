@@ -64,17 +64,6 @@
     align-items: flex-start;
     justify-content: space-between;
 
-    &--disabled {
-      background-color: $tw-clr-bg;
-      border: $tw-sz-frm-fld-text-input-stroke solid $tw-clr-brdr-tertiary;
-      padding: #{$tw-spc-base-x-small - $tw-sz-frm-fld-text-input-stroke};
-      border-radius: $tw-sz-base-x-small;
-      border-width: $tw-sz-frm-fld-text-input-stroke;
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-    }
-
     &__icon-button {
       width: $tw-fnt-frm-fld-text-value-line-height;
       height: $tw-fnt-frm-fld-text-value-line-height;
@@ -86,13 +75,6 @@
       height: $tw-fnt-frm-fld-text-value-line-height;
       fill: $tw-clr-icn;
       flex-shrink: 0;
-
-      &--disabled {
-        width: $tw-fnt-frm-fld-text-value-line-height;
-        height: $tw-fnt-frm-fld-text-value-line-height;
-        fill: $tw-clr-icn-secondary;
-        flex-shrink: 0;
-      }
     }
   }
 

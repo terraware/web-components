@@ -54,5 +54,4 @@ Default.args = {
   missingValuePlaceholder: '???',
   placeHolder: 'Select...',
   options: defaultOptions,
-  disabled: false,
 };
