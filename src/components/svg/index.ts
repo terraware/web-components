@@ -36,6 +36,7 @@ export { default as IconEdit } from './IconEdit';
 export { default as IconExport } from './IconExport';
 export { default as IconFile } from './IconFile';
 export { default as IconFutures } from './IconFutures';
+export { default as IconGraphReport } from './IconGraphReport';
 export { default as IconHeartMonitor } from './IconHeartMonitor';
 export { default as IconImport } from './IconImport';
 export { default as IconMail } from './IconMail';
