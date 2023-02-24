@@ -18,7 +18,7 @@ export interface Props {
   onClick: (event?: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
   label?: string;
   type?: 'productive' | 'passive' | 'destructive';
-  priority?: 'primary' | 'secondary';
+  priority?: 'primary' | 'secondary' | 'ghost';
   size?: Size;
   disabled?: boolean;
   icon?: IconName;

@@ -206,6 +206,24 @@
   }
 }
 
+.productive-ghost {
+  background-color: $tw-clr-bg-brand-ghost;
+  color: $tw-clr-txt-brand;
+
+  svg {
+    fill: $tw-clr-icn-on-brand;
+  }
+
+  &:hover {
+    background: $tw-clr-bg-brand-ghost-hover;
+  }
+
+  &:active {
+    background-color: $tw-clr-bg-brand-ghost-active;
+  }
+
+}
+
 .passive-primary {
   background-color: $tw-clr-bg-tertiary;
   color: $tw-clr-txt;
@@ -228,6 +246,21 @@
     fill: $tw-clr-icn;
   }
   border: $tw-sz-btn-stroke solid $tw-clr-brdr;
+  &:hover {
+    background-color: $tw-clr-bg-ghost-hover;
+  }
+
+  &:active {
+    background-color: $tw-clr-bg-ghost-active;
+  }
+}
+
+.passive-ghost {
+  background-color: $tw-clr-bg-ghost;
+  color: $tw-clr-txt;
+  svg {
+    fill: $tw-clr-icn;
+  }
   &:hover {
     background-color: $tw-clr-bg-ghost-hover;
   }
@@ -260,6 +293,21 @@
     fill: $tw-clr-icn-danger;
   }
   border: $tw-sz-btn-stroke solid $tw-clr-brdr-danger;
+  &:hover {
+    background-color: $tw-clr-bg-danger-ghost-hover;
+  }
+
+  &:active {
+    background-color: $tw-clr-bg-danger-ghost-active;
+  }
+}
+
+.destructive-ghost {
+  background-color: $tw-clr-bg-danger-ghost;
+  color: $tw-clr-txt-danger;
+  svg {
+    fill: $tw-clr-icn-danger;
+  }
   &:hover {
     background-color: $tw-clr-bg-danger-ghost-hover;
   }
