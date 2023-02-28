@@ -164,7 +164,10 @@ export default function SelectT<T>(props: SelectTProps<T>): JSX.Element {
       const arrayOfItems = Array.from(items);
       for (const item of arrayOfItems) {
         if (item.dataset.key === pressedLetter) {
-          item.scrollIntoView();
+          item.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start',
+          });
 
           return;
         }

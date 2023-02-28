@@ -34,8 +34,8 @@ export default function DatePicker(props: Props): JSX.Element {
   }, [locale]);
 
   React.useEffect(() => {
-    if (props.value && props.value !== temporalValue) {
-      setTemporalValue(props.value);
+    if (props.value !== temporalValue && props.value !== null) {
+      setTemporalValue(props.value || null);
     }
   }, [props.value]);
 

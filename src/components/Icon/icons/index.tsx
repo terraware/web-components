@@ -35,6 +35,7 @@ import IconColumns from '../../svg/IconColumns';
 import IconEdit from '../../svg/IconEdit';
 import IconExport from '../../svg/IconExport';
 import IconFile from '../../svg/IconFile';
+import IconGraphReport from '../../svg/IconGraphReport';
 import IconImport from '../../svg/IconImport';
 import IconLocations from '../../svg/IconLocations';
 import IconMenu from '../../svg/IconMenu';
@@ -111,6 +112,7 @@ export type IconName =
   | 'iconEdit'
   | 'iconExport'
   | 'iconFile'
+  | 'iconGraphReport'
   | 'iconImport'
   | 'iconLocations'
   | 'iconMenu'
@@ -192,6 +194,7 @@ const icons: Record<IconName, SVGComponent> = {
   iconEdit: IconEdit,
   iconExport: IconExport,
   iconFile: IconFile,
+  iconGraphReport: IconGraphReport,
   iconImport: IconImport,
   iconLocations: IconLocations,
   iconMenu: IconMenu,
