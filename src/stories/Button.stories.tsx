@@ -11,7 +11,7 @@ export default {
       control: { type: 'radio' },
     },
     priority: {
-      options: ['primary', 'secondary'],
+      options: ['primary', 'secondary', 'ghost'],
       control: { type: 'radio' },
     },
     size: {
