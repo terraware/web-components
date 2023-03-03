@@ -35,6 +35,7 @@ import { EnhancedTableDetailsRow, RendererProps, TableColumnType } from './compo
 import * as Svg from './components/svg';
 import Message from './components/Message/Message';
 import theme from './theme';
+import Tooltip from './components/Tooltip/Tooltip';
 
 export type { PillListItem } from './components/PillList';
 export type { IconName } from './components/Icon/icons/';
@@ -79,4 +80,5 @@ export {
   TextTruncated,
   Table,
   theme,
+  Tooltip,
 };
