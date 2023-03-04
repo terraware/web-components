@@ -27,8 +27,10 @@ export default function Tooltip({ placement = 'top-start', title, children }: To
     setOpen(false);
   };
 
-  const handleTooltipOpen = () => {
-    setOpen(true);
+  const handleTooltipOpen = (event: React.SyntheticEvent | Event) => {
+    if(event.type == 'click' || (event.type === 'mouseover' && !isMobile)){
+      setOpen(true);
+    }
   };
 
   return (
@@ -38,8 +40,9 @@ export default function Tooltip({ placement = 'top-start', title, children }: To
         arrow: classes.arrow,
         tooltip: classes.tooltip,
       }}
+      onOpen={handleTooltipOpen}
       onClose={handleTooltipClose}
-      open={isMobile ? open : undefined}
+      open={open}
       placement={placement}
       sx={{
         maxWidth: isMobile ? '342px' : '464px',
