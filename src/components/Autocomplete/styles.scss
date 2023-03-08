@@ -26,6 +26,20 @@
     border-radius: $tw-spc-base-x-small;
     position: unset;
     padding: 0;
+
+    &:hover {
+      border: $tw-sz-frm-fld-text-input-stroke solid $tw-clr-brdr-hover;
+    }
+    &:active {
+      border: $tw-sz-frm-fld-text-input-stroke solid $tw-clr-brdr-active;
+      outline: $tw-sz-frm-fld-text-input-stroke-active solid $tw-clr-brdr-active;
+    }
+    &:focus-within {
+      border: $tw-sz-frm-fld-text-input-stroke solid $tw-clr-brdr-active;
+      outline: $tw-sz-frm-fld-text-input-stroke-active solid $tw-clr-brdr-active;
+      outline-offset: -$tw-sz-frm-fld-text-input-stroke;
+    }
+
   }
 
   .Mui-disabled {
@@ -45,17 +59,13 @@
     padding: calc(#{$tw-spc-base-xx-small} * 2.5) calc(#{$tw-spc-base-xx-small} * 3);
   }
 
+  fieldset {
+    border: none;
+  }
+
   & .MuiInputBase-input {
     height: '21px';
   };
-  & .MuiOutlinedInput-root {
-    &:hover fieldset {
-      border-color: $tw-clr-brdr-hover;
-    }
-    .Mui-focused fieldset {
-      border-color: $tw-clr-brdr-hover;
-    }
-  }
 
   &--icon-right {
     width: $tw-fnt-frm-fld-text-value-line-height;

@@ -59,9 +59,22 @@
   }
 
   .MuiInputBase-root {
-    border: 1px solid $tw-clr-bg-info;
+    border: 1px solid $tw-clr-brdr-secondary;
     border-radius: $tw-sz-base-x-small;
     position: unset;
+    &:hover {
+      border: $tw-sz-frm-fld-text-input-stroke solid $tw-clr-brdr-hover;
+    }
+    &:active {
+      border: $tw-sz-frm-fld-text-input-stroke solid $tw-clr-brdr-active;
+      outline: $tw-sz-frm-fld-text-input-stroke-active solid $tw-clr-brdr-active;
+    }
+    
+    &:focus-within {
+      border: $tw-sz-frm-fld-text-input-stroke solid $tw-clr-brdr-active;
+      outline: $tw-sz-frm-fld-text-input-stroke-active solid $tw-clr-brdr-active;
+      outline-offset: -$tw-sz-frm-fld-text-input-stroke;
+    }
   }
 
   .MuiInputBase-input {
@@ -78,12 +91,8 @@
     border-radius: $tw-sz-base-x-small 0 0 $tw-sz-base-x-small;
   }
 
-  .MuiOutlinedInput-root {
-    &:hover fieldset {
-      border-color: $tw-clr-brdr-hover;
-    }
-    &.Mui-focused fieldset {
-      border-color: $tw-clr-brdr-hover;
-    }
+  fieldset {
+    border: none;
   }
+
 }
