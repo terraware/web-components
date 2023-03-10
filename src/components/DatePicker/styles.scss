@@ -79,9 +79,6 @@
   }
 
   .MuiOutlinedInput-root {
-    fieldset {
-      border-color: $tw-clr-brdr-secondary;
-    }
     &:hover fieldset {
       border-color: $tw-clr-brdr-hover;
     }
