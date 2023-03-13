@@ -29,7 +29,7 @@
   }
 
   &--small {
-    height: $tw-sz-btn-small-height;
+    min-height: $tw-sz-btn-small-height;
     font-size: $tw-fnt-btn-label-small-font-size;
     font-weight: $tw-fnt-btn-label-small-font-weight;
     font-family: $tw-fnt-btn-label-small-font-family;
@@ -63,7 +63,7 @@
   }
 
   &--medium {
-    height: $tw-sz-btn-medium-height;
+    min-height: $tw-sz-btn-medium-height;
     font-size: $tw-fnt-btn-label-medium-font-size;
     font-weight: $tw-fnt-btn-label-medium-font-weight;
     font-family: $tw-fnt-btn-label-medium-font-family;
@@ -98,7 +98,7 @@
   }
 
   &--large {
-    height: $tw-sz-btn-large-height;
+    min-height: $tw-sz-btn-large-height;
     font-size: $tw-fnt-btn-label-large-font-size;
     font-weight: $tw-fnt-btn-label-large-font-weight;
     font-family: $tw-fnt-btn-label-large-font-family;
@@ -132,7 +132,7 @@
   }
 
   &--xlarge {
-    height: $tw-sz-btn-x-large-height;
+    min-height: $tw-sz-btn-x-large-height;
     font-size: $tw-fnt-btn-label-x-large-font-size;
     font-weight: $tw-fnt-btn-label-x-large-font-weight;
     font-family: $tw-fnt-btn-label-x-large-font-family;
@@ -206,6 +206,24 @@
   }
 }
 
+.productive-ghost {
+  background-color: $tw-clr-bg-brand-ghost;
+  color: $tw-clr-txt-brand;
+
+  svg {
+    fill: $tw-clr-icn-on-brand;
+  }
+
+  &:hover {
+    background: $tw-clr-bg-brand-ghost-hover;
+  }
+
+  &:active {
+    background-color: $tw-clr-bg-brand-ghost-active;
+  }
+
+}
+
 .passive-primary {
   background-color: $tw-clr-bg-tertiary;
   color: $tw-clr-txt;
@@ -228,6 +246,21 @@
     fill: $tw-clr-icn;
   }
   border: $tw-sz-btn-stroke solid $tw-clr-brdr;
+  &:hover {
+    background-color: $tw-clr-bg-ghost-hover;
+  }
+
+  &:active {
+    background-color: $tw-clr-bg-ghost-active;
+  }
+}
+
+.passive-ghost {
+  background-color: $tw-clr-bg-ghost;
+  color: $tw-clr-txt;
+  svg {
+    fill: $tw-clr-icn;
+  }
   &:hover {
     background-color: $tw-clr-bg-ghost-hover;
   }
@@ -260,6 +293,21 @@
     fill: $tw-clr-icn-danger;
   }
   border: $tw-sz-btn-stroke solid $tw-clr-brdr-danger;
+  &:hover {
+    background-color: $tw-clr-bg-danger-ghost-hover;
+  }
+
+  &:active {
+    background-color: $tw-clr-bg-danger-ghost-active;
+  }
+}
+
+.destructive-ghost {
+  background-color: $tw-clr-bg-danger-ghost;
+  color: $tw-clr-txt-danger;
+  svg {
+    fill: $tw-clr-icn-danger;
+  }
   &:hover {
     background-color: $tw-clr-bg-danger-ghost-hover;
   }

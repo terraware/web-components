@@ -60,6 +60,7 @@ const Template: Story<TableProps<{ name: string; lastname: string }>> = (args) =
 
 export const Default = Template.bind({});
 export const Selectable = Template.bind({});
+export const Presorted = Template.bind({});
 
 Default.args = {
   orderBy: 'name',
@@ -70,7 +71,7 @@ Default.args = {
     { key: 'occupation', name: 'Occupation', type: 'string' },
     { key: 'available', name: 'Available', type: 'boolean' },
   ],
-  rows: Array(50)
+  rows: Array(150)
     .fill({ name: '', middlename: '', lastname: '', occupation: '' })
     .map((i, j) => {
       if (j % 2 === 0) {
@@ -105,4 +106,9 @@ Selectable.args = {
   ...Default.args,
   showCheckbox: true,
   controlledOnSelect: true,
+};
+
+Presorted.args = {
+  ...Default.args,
+  isPresorted: true,
 };
