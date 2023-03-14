@@ -3,14 +3,15 @@ import './styles.scss';
 
 export interface Props {
   title?: string;
+  separator?: boolean;
 }
 
 export default function NavSection(props: Props): JSX.Element {
-  const { title } = props;
+  const { title, separator = true } = props;
 
   return (
     <div className='nav-section'>
-      <div className='divider' />
+      {separator && <div className='divider' />}
       {title && <span className='nav-section--title'>{title}</span>}
     </div>
   );
