@@ -133,6 +133,7 @@ export default function TextField(props: Props): JSX.Element {
               placeholder={placeholder}
               onChange={textfieldOnChange}
               onKeyDown={onKeyDownHandler}
+              onWheel={(e) => e.currentTarget.blur()}
               {...typeProps}
             />
             {iconRight ? renderRightIcon() : null}
