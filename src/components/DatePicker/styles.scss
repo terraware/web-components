@@ -21,21 +21,6 @@
     max-width: 100%;
   }
 
-  &--error {
-    .MuiInputBase-root {
-      border: $tw-sz-frm-fld-text-input-stroke solid $tw-clr-brdr-danger;
-      background-color: $tw-clr-bg-danger-tertiary;
-
-      &:hover {
-        border: $tw-sz-frm-fld-text-input-stroke solid $tw-clr-brdr-danger;
-      }
-
-      &:active {
-        border: $tw-sz-frm-fld-text-input-stroke-active solid $tw-clr-brdr-danger;
-      }
-    }
-  }
-
   .textfield-error-text-container {
     display: flex;
     margin-top: $tw-spc-base-x-small;
@@ -84,6 +69,28 @@
     }
     &.Mui-focused fieldset {
       border-color: $tw-clr-brdr-hover;
+    }
+  }
+
+  &--error {
+    .MuiInputBase-root {
+      fieldset {
+        border: $tw-sz-frm-fld-text-input-stroke solid $tw-clr-brdr-danger;
+      }
+
+      background-color: $tw-clr-bg-danger-tertiary;
+
+      &:hover fieldset {
+        border: $tw-sz-frm-fld-text-input-stroke solid $tw-clr-brdr-danger;
+      }
+
+      &:active fieldset {
+        border: $tw-sz-frm-fld-text-input-stroke-active solid $tw-clr-brdr-danger;
+      }
+    }
+
+    input {
+      background-color: $tw-clr-bg-danger-tertiary;
     }
   }
 }
