@@ -17,6 +17,9 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   default: {
     '&.MuiTableCell-root': {
+      height: '52px',
+      paddingTop: '0px',
+      paddingBottom: '0px',
       borderBottom: `1px solid ${theme.palette.TwClrBrdrSecondary}`
     }
   },
