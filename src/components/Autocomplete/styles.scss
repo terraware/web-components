@@ -49,6 +49,11 @@
     height: '21px';
   };
   & .MuiOutlinedInput-root {
+    fieldset {
+      border-color: $tw-clr-brdr-secondary;
+    }
+    
+    
     &:hover fieldset {
       border-color: $tw-clr-brdr-hover;
     }
@@ -123,7 +128,10 @@
     }
   }
 
-  &--error {     
+  &--error {  
+    fieldset {
+      border: none;
+    }
     .MuiOutlinedInput-root {
       border: $tw-sz-frm-fld-text-input-stroke solid $tw-clr-brdr-danger;
       &:hover fieldset {
@@ -143,7 +151,6 @@
       &:focus-visible {
         outline: $tw-sz-frm-fld-text-input-stroke-active solid $tw-clr-brdr-danger-active;
         outline-offset: -$tw-sz-frm-fld-text-input-stroke;
-      }
-    
+      }    
   }
 }
