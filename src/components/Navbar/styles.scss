@@ -40,6 +40,11 @@
     }
   }
 
+  .nav-item-custom-content {
+    border: none;
+    background: none;
+  }
+
   .nav-item {
     font-family: $tw-fnt-nvgtn-side-nav-item-label-font-family;
     font-size: $tw-fnt-nvgtn-side-nav-item-label-font-size;
@@ -55,6 +60,11 @@
       display: flex;
       width: 100%;
       font-weight: $tw-fnt-nvgtn-side-nav-item-label-font-weight;
+
+      .nav-item--anchor {
+        text-decoration: none;
+        color: $tw-clr-txt;
+      }
 
       .nav-item--label {
         flex: 1 1 auto;
