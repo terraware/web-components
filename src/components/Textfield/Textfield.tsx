@@ -14,6 +14,7 @@ type Handler = (value: unknown) => void;
 export interface Props {
   autoFocus?: boolean;
   onChange?: Handler;
+  onBlur?: () => void;
   label: string;
   disabled?: boolean;
   iconLeft?: IconName;
@@ -41,6 +42,7 @@ export default function TextField(props: Props): JSX.Element {
     value,
     autoFocus,
     onChange,
+    onBlur,
     label,
     disabled,
     iconLeft,
@@ -132,6 +134,7 @@ export default function TextField(props: Props): JSX.Element {
               disabled={readonly || disabled}
               placeholder={placeholder}
               onChange={textfieldOnChange}
+              onBlur={onBlur}
               onKeyDown={onKeyDownHandler}
               onWheel={(e) => e.currentTarget.blur()}
               {...typeProps}
@@ -146,6 +149,7 @@ export default function TextField(props: Props): JSX.Element {
             disabled={readonly || disabled}
             placeholder={placeholder}
             onChange={textfieldOnChange}
+            onBlur={onBlur}
           />
         ))}
       {display && <p className='textfield-value--display'>{value}</p>}
