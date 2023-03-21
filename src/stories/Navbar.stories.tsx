@@ -4,6 +4,8 @@ import Navbar, { Props as NavbarProps } from '../components/Navbar/Navbar';
 import NavItem from '../components/Navbar/NavItem';
 import NavSection from '../components/Navbar/NavSection';
 import SubNavbar from '../components/Navbar/SubNavbar';
+import Button from '../components/Button/Button';
+import { makeStyles } from '@mui/styles';
 
 export default {
   title: 'Navbar',
@@ -13,7 +15,17 @@ export default {
   },
 };
 
+const useStyles = makeStyles(() => ({
+  button: {
+    '& .nav-item-content': {
+      border: 'none',
+      background: 'none',
+    }
+  },
+}));
+
 const Template: Story<NavbarProps> = (args) => {
+  const classes = useStyles();
   const [selectedItem, setSelectedItem] = React.useState('accessions');
 
   // tslint:disable-next-line:no-empty
@@ -47,6 +59,9 @@ const Template: Story<NavbarProps> = (args) => {
           <NavItem label='Planting Sites' selected={selectedItem === 'plantingsites'} onClick={() => setSelectedItem('plantingsites')} />
         </SubNavbar>
       </NavItem>
+      <NavSection />
+      <NavItem label='Contact Us' href={'mailto:hello@world.com'} />
+      <NavItem label={<Button label='Logout' type='productive' priority='primary' size='small' disabled={false} className={classes.button} onClick={()=> {return;}}/>}/>
     </Navbar>
   );
 };

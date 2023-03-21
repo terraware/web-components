@@ -5,18 +5,19 @@ import './styles.scss';
 import { SubNavbarProps } from './SubNavbar';
 
 export interface NavItemProps {
-  label: string;
+  label: string | React.ReactNode;
   icon?: IconName;
   children?: ReactElement<SubNavbarProps>;
   selected?: boolean;
-  isSubItem?: boolean;
   onClick?: (open: boolean | undefined) => void;
   id?: string;
   isFooter?: boolean;
+  href?: string; // menu is an anchor tag
 }
 
 export default function NavItem(props: NavItemProps): JSX.Element {
-  const { label, icon, children, selected, onClick, id, isFooter } = props;
+  const { label, icon, children: childrenProps, selected, onClick, id, isFooter, href } = props;
+  const children = href ? null : childrenProps;
 
   const hasChildrenSelected = useCallback(() => {
     if (children && children.props && children.props.children) {
@@ -46,19 +47,22 @@ export default function NavItem(props: NavItemProps): JSX.Element {
     }
   };
 
+  const customLabel = (typeof label !== 'string');
+
   return (
     <div
       className={`
-        nav-item
+        ${customLabel ? '' : 'nav-item'}
         ${selected ? 'nav-item--selected' : ''}
         ${hasChildrenSelected() ? 'nav-item--children-selected' : ''}
         ${isFooter ? 'nav-item--footer' : ''}
         ${children ? 'nav-item--has-children' : '' }
       `}
     >
-      <button className='nav-item-content' onClick={onClickHandler} id={id}>
+      <button className={customLabel ? 'nav-item-custom-content' : 'nav-item-content'} onClick={onClickHandler} id={id}>
         {icon && <Icon name={icon} className='nav-item--icon' />}
-        <span className='nav-item--label'>{label}</span>
+        {!href && <span className='nav-item--label'>{label}</span>}
+        {href && <a className='nav-item--label nav-item--anchor' href={href} rel='noopener noreferrer' target='_external'>{label}</a>}
         {children && <Icon name={open ? 'chevronUp' : 'chevronDown'} className='nav-item--arrow' />}
       </button>
       {children && open && children}
