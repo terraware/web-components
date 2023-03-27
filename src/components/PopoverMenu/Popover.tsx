@@ -19,6 +19,13 @@ export default function PopoverDropdown(props: PopoverProps): JSX.Element {
     setAnchorElement(null);
   };
 
+  const onClick = (item: DropdownItem) => {
+    if (item.onClick) {
+      item.onClick();
+    }
+    handleClick(item);
+  };
+
   const itemStyles = {
     color: theme.palette.TwClrTxt,
     '&.MuiMenuItem-root:hover': {
@@ -64,7 +71,7 @@ export default function PopoverDropdown(props: PopoverProps): JSX.Element {
             ...section.map((item, itemIndex) => {
               return (
                 <MenuItem
-                  onClick={() => handleClick(item)}
+                  onClick={() => onClick(item)}
                   key={`option-${itemIndex}`}
                   sx={itemStyles}
                   disableRipple={true}

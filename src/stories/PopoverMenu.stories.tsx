@@ -28,3 +28,13 @@ Default.args = {
   ],
   onClick: (item: DropdownItem) => window.alert(`you clicked ${item.value}`),
 };
+
+export const ItemizedOnClick = PopoverMenuTemplate.bind({});
+
+ItemizedOnClick.args = {
+  anchor: 'Test Itemized Onclick',
+  menuSections: [
+    [{ label: 'Menu Above', value: 'Menu Above', onClick: () => window.alert('You clicked menu above') }],
+    [{ label: 'Menu Below', value: 'Menu Below', onClick: () => window.alert('You clicked menu below') }],
+  ],
+};

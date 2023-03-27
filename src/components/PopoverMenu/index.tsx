@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 export type PopoverMenuProps = {
   anchor: React.ReactNode;
   menuSections: Section[];
-  onClick: (selected: DropdownItem) => void;
+  onClick?: (selected: DropdownItem) => void;
 };
 
 export default function PopoverMenu({ anchor, menuSections, onClick }: PopoverMenuProps): JSX.Element {
@@ -39,7 +39,9 @@ export default function PopoverMenu({ anchor, menuSections, onClick }: PopoverMe
   };
 
   const onItemClick = (selectedItem: DropdownItem) => {
-    onClick(selectedItem);
+    if (onClick) {
+      onClick(selectedItem);
+    }
     handleClose();
   };
 
