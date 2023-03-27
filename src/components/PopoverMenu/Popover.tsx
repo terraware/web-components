@@ -11,7 +11,7 @@ export type PopoverProps = {
   setAnchorElement: React.Dispatch<React.SetStateAction<HTMLElement | null>>;
 };
 
-export default function PopoverProps(props: PopoverProps): JSX.Element {
+export default function PopoverDropdown(props: PopoverProps): JSX.Element {
   const { sections, handleClick, anchorElement, setAnchorElement } = props;
   const theme = useTheme();
 
