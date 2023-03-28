@@ -31,10 +31,13 @@ import Help from '../../svg/Help';
 import Home from '../../svg/Home';
 import IconAdd from '../../svg/IconAdd';
 import IconArrowRight from '../../svg/IconArrowRight';
+import IconBusinessNetwork from '../../svg/IconBusinessNetwork';
+import IconCoinInHand from '../../svg/IconCoinInHand';
 import IconColumns from '../../svg/IconColumns';
 import IconEdit from '../../svg/IconEdit';
 import IconExport from '../../svg/IconExport';
 import IconFile from '../../svg/IconFile';
+import IconFolder from '../../svg/IconFolder';
 import IconGraphReport from '../../svg/IconGraphReport';
 import IconImport from '../../svg/IconImport';
 import IconLocations from '../../svg/IconLocations';
@@ -108,10 +111,13 @@ export type IconName =
   | 'home'
   | 'iconAdd'
   | 'iconArrowRight'
+  | 'iconBusinessNetwork'
+  | 'iconCoinInHand'
   | 'iconColumns'
   | 'iconEdit'
   | 'iconExport'
   | 'iconFile'
+  | 'iconFolder'
   | 'iconGraphReport'
   | 'iconImport'
   | 'iconLocations'
@@ -190,10 +196,13 @@ const icons: Record<IconName, SVGComponent> = {
   home: Home,
   iconAdd: IconAdd,
   iconArrowRight: IconArrowRight,
+  iconBusinessNetwork: IconBusinessNetwork,
+  iconCoinInHand: IconCoinInHand,
   iconColumns: IconColumns,
   iconEdit: IconEdit,
   iconExport: IconExport,
   iconFile: IconFile,
+  iconFolder: IconFolder,
   iconGraphReport: IconGraphReport,
   iconImport: IconImport,
   iconLocations: IconLocations,

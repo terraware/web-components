@@ -21,6 +21,8 @@ import NavSection from './components/Navbar/NavSection';
 import Note from './components/Note';
 import Pill from './components/Pill';
 import PillList from './components/PillList';
+import Popover from './components/PopoverMenu/Popover';
+import PopoverMenu from './components/PopoverMenu';
 import ProgressCircle from './components/ProgressCircle/ProgressCircle';
 import RadioButton from './components/RadioButton';
 import Select from './components/Select/Select';
@@ -69,6 +71,8 @@ export {
   Note,
   Pill,
   PillList,
+  Popover,
+  PopoverMenu,
   ProgressCircle,
   RadioButton,
   Select,
