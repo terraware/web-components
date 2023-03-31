@@ -11,7 +11,7 @@ import DialogBox from './components/DialogBox/DialogBox';
 import Divisor from './components/Divisor';
 import Dropdown, { DropdownV1 } from './components/Dropdown';
 import ErrorBox from './components/ErrorBox/ErrorBox';
-import FormBottomBar, { FormButton } from './components/FormBottomBar';
+import FormBottomBar from './components/FormBottomBar';
 import Icon from './components/Icon/Icon';
 import IconTooltip from './components/IconTooltip';
 import icons from './components/Icon/icons';
@@ -47,6 +47,7 @@ export type { IconName } from './components/Icon/icons/';
 export type { Size } from './components/Size';
 export type { DropdownItem } from './components/types';
 export type { EnhancedTableDetailsRow, RendererProps, TableColumnType, TableRowType, SortOrder };
+export type { FormButton } from './components/FormBottomBar';
 
 export {
   Autocomplete,
@@ -63,7 +64,6 @@ export {
   DropdownV1,
   ErrorBox,
   FormBottomBar,
-  FormButton,
   getComparator,
   icons,
   Icon,

@@ -4,7 +4,7 @@ import useDeviceInfo from '../../utils/useDeviceInfo';
 import FormBottomBar, { FormButton } from '../FormBottomBar';
 import BusySpinner from '../BusySpinner';
 
-export interface PageFormProps {
+export type PageFormProps = {
   children: ReactNode;
   cancelID: string;
   saveID: string;
@@ -16,7 +16,7 @@ export interface PageFormProps {
   className?: string;
   hideEdit?: boolean;
   additionalRightButtons?: FormButton[];
-}
+};
 
 export default function PageForm(props: PageFormProps): JSX.Element {
   const { children, className, hideEdit, onSave, ...bottomBarProps } = props;
