@@ -1,11 +1,11 @@
-import { ReactNode, useState } from 'react';
+import React, { useState } from 'react';
 import { Box, useTheme } from '@mui/material';
 import useDeviceInfo from '../../utils/useDeviceInfo';
 import FormBottomBar, { FormButton } from '../FormBottomBar';
 import BusySpinner from '../BusySpinner';
 
 export type PageFormProps = {
-  children: ReactNode;
+  children: React.ReactNode;
   cancelID: string;
   saveID: string;
   onCancel: () => void;

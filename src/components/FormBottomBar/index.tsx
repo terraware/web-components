@@ -1,5 +1,5 @@
-import { AppBar, Theme } from '@mui/material';
 import React from 'react';
+import { AppBar, Theme } from '@mui/material';
 import Button from '../Button/Button';
 import { makeStyles } from '@mui/styles';
 import useDeviceInfo from '../../utils/useDeviceInfo';
