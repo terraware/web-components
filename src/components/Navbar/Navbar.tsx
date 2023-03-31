@@ -15,9 +15,8 @@ export interface Props {
 const useStyles = makeStyles((theme: Theme) => ({
   icon: {
     fill: theme.palette.TwClrIcnSecondary,
-    width: '16px',
-    height: '16px',
-    margin: '15px 0',
+    marginRight: '16px',
+    marginBottom: '8px',
   },
   closeButton: {
     background: 'none',
@@ -26,6 +25,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   navBarTop: {
     display: 'flex',
+    justifyContent: 'end',
   },
 }));
 
@@ -39,7 +39,7 @@ export default function Navbar(props: Props): JSX.Element {
       {!isDesktop && (
         <div className={classes.navBarTop}>
           <button onClick={() => setShowNavBar(false)} className={classes.closeButton}>
-            <Icon name='close' className={classes.icon} />
+            <Icon name='close' size='medium' className={classes.icon} />
           </button>
         </div>
       )}
