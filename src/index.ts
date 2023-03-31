@@ -3,6 +3,7 @@
  */
 
 import Autocomplete from './components/Autocomplete/Autocomplete';
+import BusySpinner from './components/BusySpinner';
 import Button from './components/Button/Button';
 import Checkbox from './components/Checkbox';
 import DatePicker from './components/DatePicker/DatePicker';
@@ -10,6 +11,7 @@ import DialogBox from './components/DialogBox/DialogBox';
 import Divisor from './components/Divisor';
 import Dropdown, { DropdownV1 } from './components/Dropdown';
 import ErrorBox from './components/ErrorBox/ErrorBox';
+import FormBottomBar from './components/FormBottomBar';
 import Icon from './components/Icon/Icon';
 import IconTooltip from './components/IconTooltip';
 import icons from './components/Icon/icons';
@@ -19,6 +21,7 @@ import NavFooter from './components/Navbar/NavFooter';
 import NavItem from './components/Navbar/NavItem';
 import NavSection from './components/Navbar/NavSection';
 import Note from './components/Note';
+import PageForm from './components/PageForm';
 import Pill from './components/Pill';
 import PillList from './components/PillList';
 import Popover from './components/PopoverMenu/Popover';
@@ -44,9 +47,11 @@ export type { IconName } from './components/Icon/icons/';
 export type { Size } from './components/Size';
 export type { DropdownItem } from './components/types';
 export type { EnhancedTableDetailsRow, RendererProps, TableColumnType, TableRowType, SortOrder };
+export type { FormButton } from './components/FormBottomBar';
 
 export {
   Autocomplete,
+  BusySpinner,
   Button,
   CellRenderer,
   CellDateRenderer,
@@ -58,6 +63,7 @@ export {
   Dropdown,
   DropdownV1,
   ErrorBox,
+  FormBottomBar,
   getComparator,
   icons,
   Icon,
@@ -69,6 +75,7 @@ export {
   NavSection,
   Navbar,
   Note,
+  PageForm,
   Pill,
   PillList,
   Popover,
