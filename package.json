@@ -40,6 +40,7 @@
     "start": "start-storybook",
     "build": "build-storybook -c .storybook -o public",
     "test": "cp tsconfig.json tsconfig.json.bak && react-scripts test && mv tsconfig.json.bak tsconfig.json",
+    "test-coverage": "cp tsconfig.json tsconfig.json.bak && react-scripts test . --coverage --coverageDirectory='docs/coverage' && mv tsconfig.json.bak tsconfig.json",
     "eject": "react-scripts eject",
     "storybook": "start-storybook",
     "build-storybook": "build-storybook -s public",
@@ -49,7 +50,7 @@
     "generate-types": "yarn -p typescript tsc",
     "build-dist": "yarn transpile && yarn generate-types",
     "lint": "tslint --project tsconfig.json",
-    "license-report": "license-report --only=prod --department.value=terraware --relatedTo.value=web-components --output=html > license-report.html",
+    "license-report": "license-report --only=prod --department.value=terraware --relatedTo.value=web-components --output=html > docs/license-report.html",
     "license-report-dist": "license-report --only=prod --department.value=terraware --relatedTo.value=web-components --output=html > dist/license-report.html",
     "check-updates": "yarn build-dictionary && yarn storybook"
   },
