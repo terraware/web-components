@@ -1,0 +1,119 @@
+
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Code coverage report for src/components/svg/Site.tsx</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../../prettify.css" />
+    <link rel="stylesheet" href="../../../base.css" />
+    <link rel="shortcut icon" type="image/x-icon" href="../../../favicon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+    
+<body>
+<div class='wrapper'>
+    <div class='pad1'>
+        <h1><a href="../../../index.html">All files</a> / <a href="index.html">src/components/svg</a> Site.tsx</h1>
+        <div class='clearfix'>
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">0% </span>
+                <span class="quiet">Statements</span>
+                <span class='fraction'>0/2</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">0% </span>
+                <span class="quiet">Branches</span>
+                <span class='fraction'>0/2</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">0% </span>
+                <span class="quiet">Functions</span>
+                <span class='fraction'>0/1</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">0% </span>
+                <span class="quiet">Lines</span>
+                <span class='fraction'>0/2</span>
+            </div>
+        
+            
+        </div>
+        <p class="quiet">
+            Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
+        </p>
+    </div>
+    <div class='status-line low'></div>
+    <pre><table class="coverage">
+<tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
+<a name='L2'></a><a href='#L2'>2</a>
+<a name='L3'></a><a href='#L3'>3</a>
+<a name='L4'></a><a href='#L4'>4</a>
+<a name='L5'></a><a href='#L5'>5</a>
+<a name='L6'></a><a href='#L6'>6</a>
+<a name='L7'></a><a href='#L7'>7</a>
+<a name='L8'></a><a href='#L8'>8</a>
+<a name='L9'></a><a href='#L9'>9</a>
+<a name='L10'></a><a href='#L10'>10</a>
+<a name='L11'></a><a href='#L11'>11</a>
+<a name='L12'></a><a href='#L12'>12</a>
+<a name='L13'></a><a href='#L13'>13</a>
+<a name='L14'></a><a href='#L14'>14</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import * as React from 'react';
+import { SVGProps } from 'react';
+interface SVGRProps {
+  title?: string;
+  titleId?: string;
+}
+const SvgSite = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >({</span> title, titleId, ...props }: SVGProps&lt;SVGSVGElement&gt; &amp; SVGRProps) =&gt; (</span>
+<span class="cstat-no" title="statement not covered" >  &lt;svg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg' aria-labelledby={titleId} {...props}&gt;</span>
+    {title ? &lt;title id={titleId}&gt;{title}&lt;/title&gt; : null}
+    &lt;path d='M9.271 4a.75.75 0 0 0-.462.144l-5.5 4A.75.75 0 0 0 3 8.75v10.5a.75.75 0 0 0 1.191.606l5.059-3.678 5.059 3.678a.75.75 0 0 0 .882 0l5.5-4A.75.75 0 0 0 21 15.25V4.75a.75.75 0 0 0-1.191-.606L14.75 7.822 9.691 4.144A.75.75 0 0 0 9.271 4ZM9.25 5.678l5.059 3.678a.75.75 0 0 0 .882 0L19.5 6.223v8.645l-4.75 3.454-5.059-3.678a.75.75 0 0 0-.882 0L4.5 17.776V9.132l4.75-3.454Zm-.507 3.311a.75.75 0 0 0-.523.23l-.47.47-.47-.47a.75.75 0 1 0-1.06 1.061l.47.47-.47.47a.75.75 0 1 0 1.06 1.06l.47-.47.47.47a.751.751 0 0 0 1.23-.817.75.75 0 0 0-.17-.243l-.47-.47.47-.47a.75.75 0 0 0-.537-1.29Zm9.007.511a.75.75 0 1 0 0 1.5.75.75 0 0 0 0-1.5Zm-6.5.75a.75.75 0 1 0 0 1.5.75.75 0 0 0 0-1.5Zm2 1.25a.75.75 0 1 0 0 1.5.75.75 0 0 0 0-1.5Zm3 0a.75.75 0 1 0 0 1.5.75.75 0 0 0 0-1.5Zm-1.5 2a.75.75 0 1 0 0 1.5.75.75 0 0 0 0-1.5Z' /&gt;
+  &lt;/svg&gt;
+);
+export default SvgSite;
+&nbsp;</pre></td></tr></table></pre>
+
+                <div class='push'></div><!-- for sticky footer -->
+            </div><!-- /wrapper -->
+            <div class='footer quiet pad2 space-top1 center small'>
+                Code coverage generated by
+                <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
+                at Mon Apr 10 2023 23:35:18 GMT+0000 (Coordinated Universal Time)
+            </div>
+        </div>
+        <script src="../../../prettify.js"></script>
+        <script>
+            window.onload = function () {
+                prettyPrint();
+            };
+        </script>
+        <script src="../../../sorter.js"></script>
+        <script src="../../../block-navigation.js"></script>
+    </body>
+</html>
+    

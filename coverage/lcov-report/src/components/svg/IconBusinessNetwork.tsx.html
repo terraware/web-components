@@ -1,0 +1,128 @@
+
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Code coverage report for src/components/svg/IconBusinessNetwork.tsx</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../../prettify.css" />
+    <link rel="stylesheet" href="../../../base.css" />
+    <link rel="shortcut icon" type="image/x-icon" href="../../../favicon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+    
+<body>
+<div class='wrapper'>
+    <div class='pad1'>
+        <h1><a href="../../../index.html">All files</a> / <a href="index.html">src/components/svg</a> IconBusinessNetwork.tsx</h1>
+        <div class='clearfix'>
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">50% </span>
+                <span class="quiet">Statements</span>
+                <span class='fraction'>1/2</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">0% </span>
+                <span class="quiet">Branches</span>
+                <span class='fraction'>0/2</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">0% </span>
+                <span class="quiet">Functions</span>
+                <span class='fraction'>0/1</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">50% </span>
+                <span class="quiet">Lines</span>
+                <span class='fraction'>1/2</span>
+            </div>
+        
+            
+        </div>
+        <p class="quiet">
+            Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
+        </p>
+    </div>
+    <div class='status-line medium'></div>
+    <pre><table class="coverage">
+<tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
+<a name='L2'></a><a href='#L2'>2</a>
+<a name='L3'></a><a href='#L3'>3</a>
+<a name='L4'></a><a href='#L4'>4</a>
+<a name='L5'></a><a href='#L5'>5</a>
+<a name='L6'></a><a href='#L6'>6</a>
+<a name='L7'></a><a href='#L7'>7</a>
+<a name='L8'></a><a href='#L8'>8</a>
+<a name='L9'></a><a href='#L9'>9</a>
+<a name='L10'></a><a href='#L10'>10</a>
+<a name='L11'></a><a href='#L11'>11</a>
+<a name='L12'></a><a href='#L12'>12</a>
+<a name='L13'></a><a href='#L13'>13</a>
+<a name='L14'></a><a href='#L14'>14</a>
+<a name='L15'></a><a href='#L15'>15</a>
+<a name='L16'></a><a href='#L16'>16</a>
+<a name='L17'></a><a href='#L17'>17</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import * as React from 'react';
+import { SVGProps } from 'react';
+interface SVGRProps {
+  title?: string;
+  titleId?: string;
+}
+const SvgIconBusinessNetwork = <span class="fstat-no" title="function not covered" >({</span> title, titleId, ...props }: SVGProps&lt;SVGSVGElement&gt; &amp; SVGRProps) =&gt; (
+<span class="cstat-no" title="statement not covered" >  &lt;svg viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg' aria-labelledby={titleId} {...props}&gt;</span>
+    {title ? &lt;title id={titleId}&gt;{title}&lt;/title&gt; : null}
+    &lt;path
+      d='M12 1a1.75 1.75 0 0 0-1.742 1.888L4.744 6.062a1.75 1.75 0 0 0-2.087.071A1.75 1.75 0 0 0 3 9.081v5.84a1.75 1.75 0 0 0 .75 3.329c.356 0 .703-.109.995-.311l5.51 3.172A1.752 1.752 0 0 0 12 23a1.75 1.75 0 0 0 1.742-1.888l5.514-3.173a1.75 1.75 0 0 0 2.087-.073A1.75 1.75 0 0 0 21 14.92v-5.84a1.75 1.75 0 0 0-.75-3.329 1.75 1.75 0 0 0-.995.312l-5.51-3.173A1.752 1.752 0 0 0 12 1Zm-.994 3.188a1.75 1.75 0 0 0 1.99.001l5.51 3.172a1.75 1.75 0 0 0 .994 1.72v5.84a1.75 1.75 0 0 0-.992 1.717l-5.514 3.174A1.75 1.75 0 0 0 12 19.5a1.75 1.75 0 0 0-.996.311l-5.51-3.172a1.75 1.75 0 0 0-.994-1.72v-5.84a1.75 1.75 0 0 0 .992-1.717l5.514-3.175ZM12 6.5c-.77 0-1.444.316-1.873.799A2.547 2.547 0 0 0 9.5 9c0 .604.198 1.218.627 1.701.429.483 1.102.799 1.873.799.77 0 1.444-.316 1.873-.799.43-.483.627-1.097.627-1.701 0-.604-.198-1.218-.627-1.701-.43-.483-1.102-.799-1.873-.799ZM12 8c.396 0 .598.121.752.295.154.173.248.434.248.705 0 .27-.094.532-.248.705-.154.174-.356.295-.752.295s-.598-.121-.752-.295A1.08 1.08 0 0 1 11 9c0-.27.094-.532.248-.705C11.402 8.12 11.604 8 12 8Zm-2.25 4.5c-.958 0-1.75.793-1.75 1.75V15c0 .86.618 1.505 1.347 1.898.728.392 1.646.602 2.653.602 1.007 0 1.925-.21 2.653-.602C15.382 16.505 16 15.86 16 15v-.75c0-.957-.793-1.75-1.75-1.75h-4.5Zm0 1.5h4.5c.148 0 .25.102.25.25V15c0 .107-.11.336-.558.577-.448.241-1.154.423-1.942.423s-1.495-.182-1.942-.423c-.448-.241-.558-.47-.558-.577v-.75c0-.148.102-.25.25-.25Z'
+      fill='#333025'
+    /&gt;
+  &lt;/svg&gt;
+);
+export default SvgIconBusinessNetwork;
+&nbsp;</pre></td></tr></table></pre>
+
+                <div class='push'></div><!-- for sticky footer -->
+            </div><!-- /wrapper -->
+            <div class='footer quiet pad2 space-top1 center small'>
+                Code coverage generated by
+                <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
+                at Mon Apr 10 2023 23:35:18 GMT+0000 (Coordinated Universal Time)
+            </div>
+        </div>
+        <script src="../../../prettify.js"></script>
+        <script>
+            window.onload = function () {
+                prettyPrint();
+            };
+        </script>
+        <script src="../../../sorter.js"></script>
+        <script src="../../../block-navigation.js"></script>
+    </body>
+</html>
+    

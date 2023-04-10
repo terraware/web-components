@@ -1,0 +1,389 @@
+
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Code coverage report for src/components/svg/BlobbyIconPeople.tsx</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../../prettify.css" />
+    <link rel="stylesheet" href="../../../base.css" />
+    <link rel="shortcut icon" type="image/x-icon" href="../../../favicon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+    
+<body>
+<div class='wrapper'>
+    <div class='pad1'>
+        <h1><a href="../../../index.html">All files</a> / <a href="index.html">src/components/svg</a> BlobbyIconPeople.tsx</h1>
+        <div class='clearfix'>
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">50% </span>
+                <span class="quiet">Statements</span>
+                <span class='fraction'>1/2</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">0% </span>
+                <span class="quiet">Branches</span>
+                <span class='fraction'>0/2</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">0% </span>
+                <span class="quiet">Functions</span>
+                <span class='fraction'>0/1</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">50% </span>
+                <span class="quiet">Lines</span>
+                <span class='fraction'>1/2</span>
+            </div>
+        
+            
+        </div>
+        <p class="quiet">
+            Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
+        </p>
+    </div>
+    <div class='status-line medium'></div>
+    <pre><table class="coverage">
+<tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
+<a name='L2'></a><a href='#L2'>2</a>
+<a name='L3'></a><a href='#L3'>3</a>
+<a name='L4'></a><a href='#L4'>4</a>
+<a name='L5'></a><a href='#L5'>5</a>
+<a name='L6'></a><a href='#L6'>6</a>
+<a name='L7'></a><a href='#L7'>7</a>
+<a name='L8'></a><a href='#L8'>8</a>
+<a name='L9'></a><a href='#L9'>9</a>
+<a name='L10'></a><a href='#L10'>10</a>
+<a name='L11'></a><a href='#L11'>11</a>
+<a name='L12'></a><a href='#L12'>12</a>
+<a name='L13'></a><a href='#L13'>13</a>
+<a name='L14'></a><a href='#L14'>14</a>
+<a name='L15'></a><a href='#L15'>15</a>
+<a name='L16'></a><a href='#L16'>16</a>
+<a name='L17'></a><a href='#L17'>17</a>
+<a name='L18'></a><a href='#L18'>18</a>
+<a name='L19'></a><a href='#L19'>19</a>
+<a name='L20'></a><a href='#L20'>20</a>
+<a name='L21'></a><a href='#L21'>21</a>
+<a name='L22'></a><a href='#L22'>22</a>
+<a name='L23'></a><a href='#L23'>23</a>
+<a name='L24'></a><a href='#L24'>24</a>
+<a name='L25'></a><a href='#L25'>25</a>
+<a name='L26'></a><a href='#L26'>26</a>
+<a name='L27'></a><a href='#L27'>27</a>
+<a name='L28'></a><a href='#L28'>28</a>
+<a name='L29'></a><a href='#L29'>29</a>
+<a name='L30'></a><a href='#L30'>30</a>
+<a name='L31'></a><a href='#L31'>31</a>
+<a name='L32'></a><a href='#L32'>32</a>
+<a name='L33'></a><a href='#L33'>33</a>
+<a name='L34'></a><a href='#L34'>34</a>
+<a name='L35'></a><a href='#L35'>35</a>
+<a name='L36'></a><a href='#L36'>36</a>
+<a name='L37'></a><a href='#L37'>37</a>
+<a name='L38'></a><a href='#L38'>38</a>
+<a name='L39'></a><a href='#L39'>39</a>
+<a name='L40'></a><a href='#L40'>40</a>
+<a name='L41'></a><a href='#L41'>41</a>
+<a name='L42'></a><a href='#L42'>42</a>
+<a name='L43'></a><a href='#L43'>43</a>
+<a name='L44'></a><a href='#L44'>44</a>
+<a name='L45'></a><a href='#L45'>45</a>
+<a name='L46'></a><a href='#L46'>46</a>
+<a name='L47'></a><a href='#L47'>47</a>
+<a name='L48'></a><a href='#L48'>48</a>
+<a name='L49'></a><a href='#L49'>49</a>
+<a name='L50'></a><a href='#L50'>50</a>
+<a name='L51'></a><a href='#L51'>51</a>
+<a name='L52'></a><a href='#L52'>52</a>
+<a name='L53'></a><a href='#L53'>53</a>
+<a name='L54'></a><a href='#L54'>54</a>
+<a name='L55'></a><a href='#L55'>55</a>
+<a name='L56'></a><a href='#L56'>56</a>
+<a name='L57'></a><a href='#L57'>57</a>
+<a name='L58'></a><a href='#L58'>58</a>
+<a name='L59'></a><a href='#L59'>59</a>
+<a name='L60'></a><a href='#L60'>60</a>
+<a name='L61'></a><a href='#L61'>61</a>
+<a name='L62'></a><a href='#L62'>62</a>
+<a name='L63'></a><a href='#L63'>63</a>
+<a name='L64'></a><a href='#L64'>64</a>
+<a name='L65'></a><a href='#L65'>65</a>
+<a name='L66'></a><a href='#L66'>66</a>
+<a name='L67'></a><a href='#L67'>67</a>
+<a name='L68'></a><a href='#L68'>68</a>
+<a name='L69'></a><a href='#L69'>69</a>
+<a name='L70'></a><a href='#L70'>70</a>
+<a name='L71'></a><a href='#L71'>71</a>
+<a name='L72'></a><a href='#L72'>72</a>
+<a name='L73'></a><a href='#L73'>73</a>
+<a name='L74'></a><a href='#L74'>74</a>
+<a name='L75'></a><a href='#L75'>75</a>
+<a name='L76'></a><a href='#L76'>76</a>
+<a name='L77'></a><a href='#L77'>77</a>
+<a name='L78'></a><a href='#L78'>78</a>
+<a name='L79'></a><a href='#L79'>79</a>
+<a name='L80'></a><a href='#L80'>80</a>
+<a name='L81'></a><a href='#L81'>81</a>
+<a name='L82'></a><a href='#L82'>82</a>
+<a name='L83'></a><a href='#L83'>83</a>
+<a name='L84'></a><a href='#L84'>84</a>
+<a name='L85'></a><a href='#L85'>85</a>
+<a name='L86'></a><a href='#L86'>86</a>
+<a name='L87'></a><a href='#L87'>87</a>
+<a name='L88'></a><a href='#L88'>88</a>
+<a name='L89'></a><a href='#L89'>89</a>
+<a name='L90'></a><a href='#L90'>90</a>
+<a name='L91'></a><a href='#L91'>91</a>
+<a name='L92'></a><a href='#L92'>92</a>
+<a name='L93'></a><a href='#L93'>93</a>
+<a name='L94'></a><a href='#L94'>94</a>
+<a name='L95'></a><a href='#L95'>95</a>
+<a name='L96'></a><a href='#L96'>96</a>
+<a name='L97'></a><a href='#L97'>97</a>
+<a name='L98'></a><a href='#L98'>98</a>
+<a name='L99'></a><a href='#L99'>99</a>
+<a name='L100'></a><a href='#L100'>100</a>
+<a name='L101'></a><a href='#L101'>101</a>
+<a name='L102'></a><a href='#L102'>102</a>
+<a name='L103'></a><a href='#L103'>103</a>
+<a name='L104'></a><a href='#L104'>104</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import * as React from 'react';
+import { SVGProps } from 'react';
+interface SVGRProps {
+  title?: string;
+  titleId?: string;
+}
+const SvgBlobbyIconPeople = <span class="fstat-no" title="function not covered" >({</span> title, titleId, ...props }: SVGProps&lt;SVGSVGElement&gt; &amp; SVGRProps) =&gt; (
+<span class="cstat-no" title="statement not covered" >  &lt;svg viewBox='0 0 200 128' fill='none' xmlns='http://www.w3.org/2000/svg' aria-labelledby={titleId} {...props}&gt;</span>
+    {title ? &lt;title id={titleId}&gt;{title}&lt;/title&gt; : null}
+    &lt;path
+      fillRule='evenodd'
+      clipRule='evenodd'
+      d='M113.962 6.222c26.535 2.074 38.447 30.862 44.693 56.735 4.621 19.146-2.901 38.537-18.932 49.978-15.595 11.131-35.55 10.486-51.986.639C63.731 99.19 34.311 80.943 40.953 53.757c7.619-31.19 41-50.037 73.009-47.535Z'
+      fill='#F0F4FF'
+    /&gt;
+    &lt;path
+      fillRule='evenodd'
+      clipRule='evenodd'
+      d='M113.962 6.222c26.535 2.074 38.447 30.862 44.693 56.735 4.621 19.146-2.901 38.537-18.932 49.978-15.595 11.131-35.55 10.486-51.986.639C63.731 99.19 34.311 80.943 40.953 53.757c7.619-31.19 41-50.037 73.009-47.535Z'
+      fill='url(#blobby-icon-people_svg__a)'
+      fillOpacity={0.2}
+    /&gt;
+    &lt;mask
+      id='blobby-icon-people_svg__c'
+      style={{
+        maskType: 'alpha',
+      }}
+      maskUnits='userSpaceOnUse'
+      x={40}
+      y={6}
+      width={120}
+      height={116}
+    &gt;
+      &lt;path
+        fillRule='evenodd'
+        clipRule='evenodd'
+        d='M113.962 6.222c26.535 2.074 38.447 30.862 44.693 56.735 4.621 19.146-2.901 38.537-18.932 49.978-15.595 11.131-35.55 10.486-51.986.639C63.731 99.19 34.311 80.943 40.953 53.757c7.619-31.19 41-50.037 73.009-47.535Z'
+        fill='#F0F4FF'
+      /&gt;
+      &lt;path
+        fillRule='evenodd'
+        clipRule='evenodd'
+        d='M113.962 6.222c26.535 2.074 38.447 30.862 44.693 56.735 4.621 19.146-2.901 38.537-18.932 49.978-15.595 11.131-35.55 10.486-51.986.639C63.731 99.19 34.311 80.943 40.953 53.757c7.619-31.19 41-50.037 73.009-47.535Z'
+        fill='url(#blobby-icon-people_svg__b)'
+        fillOpacity={0.2}
+      /&gt;
+    &lt;/mask&gt;
+    &lt;g mask='url(#blobby-icon-people_svg__c)'&gt;
+      &lt;path
+        opacity={0.25}
+        d='M98.5 39.416c-7.455 0-13.541 6.087-13.541 13.542 0 3.684 1.486 7.033 3.888 9.48C91.307 64.941 143.468 120 143.468 120l20.48-18.5s-53.392-55.575-55.795-58.021a13.501 13.501 0 0 0-9.653-4.063Zm-16.279 32.5c-2.952 0-5.388 2.436-5.388 5.388v2.06c0 2.51.817 4.728 2.167 6.597 1.276 1.767 42.47 44.841 42.47 44.841s14.36 5.3 19.549 5.3 10.381-1.039 14.481-3.3c3.495-1.929 7.711-3.426 8.448-7.302l-1.259-1.585-42.52-46.61c0-1.24-.43-2.39-1.148-3.305a5.397 5.397 0 0 0-4.242-2.084H82.221Z'
+        fill='url(#blobby-icon-people_svg__d)'
+      /&gt;
+    &lt;/g&gt;
+    &lt;path
+      d='M145.999 96.449h-.019c-2.75 0-4.982-3.33-5-7.449-.018 4.11-2.239 7.434-4.98 7.449 2.741.015 4.962 3.34 4.98 7.449.018-4.119 2.25-7.449 5-7.449h.019Z'
+      fill='url(#blobby-icon-people_svg__e)'
+    /&gt;
+    &lt;path
+      d='M86.999 21.449h-.02c-2.75 0-4.98-3.33-4.999-7.449-.018 4.11-2.239 7.434-4.98 7.449 2.741.015 4.962 3.34 4.98 7.449.018-4.119 2.25-7.449 5-7.449h.019Z'
+      fill='url(#blobby-icon-people_svg__f)'
+    /&gt;
+    &lt;path
+      d='M62.999 72.449h-.02c-2.75 0-4.98-3.33-4.999-7.449-.018 4.11-2.239 7.434-4.98 7.449 2.741.015 4.962 3.34 4.98 7.449.018-4.119 2.25-7.449 5-7.449h.019Z'
+      fill='url(#blobby-icon-people_svg__g)'
+    /&gt;
+    &lt;path
+      d='M98.5 39.417c-7.455 0-13.541 6.087-13.541 13.542 0 7.454 6.086 13.541 13.541 13.541s13.542-6.087 13.542-13.541c0-7.455-6.087-13.542-13.542-13.542Zm-16.279 32.5c-2.952 0-5.388 2.436-5.388 5.388v2.06c0 4.88 3.087 8.656 7.187 10.918 4.1 2.262 9.291 3.3 14.48 3.3s10.381-1.038 14.481-3.3c3.495-1.929 6.126-5.01 6.863-8.887h.325v-4.091c0-2.952-2.438-5.388-5.39-5.388H82.221Z'
+      fill='#F0F4FF'
+    /&gt;
+    &lt;path
+      d='M98.5 39.416c-7.455 0-13.542 6.087-13.542 13.542S91.045 66.5 98.5 66.5s13.542-6.087 13.542-13.542-6.087-13.541-13.542-13.541Zm0 4.063c5.259 0 9.479 4.22 9.479 9.48 0 5.258-4.22 9.478-9.48 9.478-5.258 0-9.478-4.22-9.478-9.479 0-5.26 4.22-9.479 9.479-9.479ZM82.22 71.917c-2.951 0-5.387 2.435-5.387 5.387v2.06c0 4.881 3.087 8.657 7.186 10.918 4.1 2.262 9.292 3.301 14.48 3.301 5.19 0 10.382-1.039 14.482-3.3 3.495-1.93 6.126-5.01 6.863-8.887h.325v-4.092c0-2.952-2.438-5.388-5.39-5.388H82.221Zm0 4.062h32.559c.756 0 1.328.57 1.328 1.325v.03h-.003v2.03c0 3.245-1.822 5.563-5.086 7.364-3.264 1.8-7.889 2.793-12.518 2.793-4.629 0-9.254-.993-12.518-2.793-3.264-1.801-5.086-4.12-5.086-7.364v-2.06c0-.756.569-1.325 1.325-1.325Z'
+      fill='#2C8658'
+    /&gt;
+    &lt;defs&gt;
+      &lt;linearGradient id='blobby-icon-people_svg__a' x1={128.7} y1={101.934} x2={83.492} y2={1.371} gradientUnits='userSpaceOnUse'&gt;
+        &lt;stop stopColor='#007DF2' /&gt;
+        &lt;stop offset={1} stopColor='#53EA9F' /&gt;
+      &lt;/linearGradient&gt;
+      &lt;linearGradient id='blobby-icon-people_svg__b' x1={128.7} y1={101.934} x2={83.492} y2={1.371} gradientUnits='userSpaceOnUse'&gt;
+        &lt;stop stopColor='#007DF2' /&gt;
+        &lt;stop offset={1} stopColor='#53EA9F' /&gt;
+      &lt;/linearGradient&gt;
+      &lt;linearGradient id='blobby-icon-people_svg__d' x1={76.402} y1={39.613} x2={142.934} y2={98.193} gradientUnits='userSpaceOnUse'&gt;
+        &lt;stop stopColor='#308F5F' /&gt;
+        &lt;stop offset={1} stopColor='#007DF2' /&gt;
+      &lt;/linearGradient&gt;
+      &lt;linearGradient id='blobby-icon-people_svg__e' x1={136} y1={89} x2={146} y2={104} gradientUnits='userSpaceOnUse'&gt;
+        &lt;stop stopColor='#308F5F' /&gt;
+        &lt;stop offset={1} stopColor='#007DF2' /&gt;
+      &lt;/linearGradient&gt;
+      &lt;linearGradient id='blobby-icon-people_svg__f' x1={77} y1={14} x2={87} y2={29} gradientUnits='userSpaceOnUse'&gt;
+        &lt;stop stopColor='#308F5F' /&gt;
+        &lt;stop offset={1} stopColor='#007DF2' /&gt;
+      &lt;/linearGradient&gt;
+      &lt;linearGradient id='blobby-icon-people_svg__g' x1={53} y1={65} x2={63} y2={80} gradientUnits='userSpaceOnUse'&gt;
+        &lt;stop stopColor='#308F5F' /&gt;
+        &lt;stop offset={1} stopColor='#007DF2' /&gt;
+      &lt;/linearGradient&gt;
+    &lt;/defs&gt;
+  &lt;/svg&gt;
+);
+export default SvgBlobbyIconPeople;
+&nbsp;</pre></td></tr></table></pre>
+
+                <div class='push'></div><!-- for sticky footer -->
+            </div><!-- /wrapper -->
+            <div class='footer quiet pad2 space-top1 center small'>
+                Code coverage generated by
+                <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
+                at Mon Apr 10 2023 23:35:18 GMT+0000 (Coordinated Universal Time)
+            </div>
+        </div>
+        <script src="../../../prettify.js"></script>
+        <script>
+            window.onload = function () {
+                prettyPrint();
+            };
+        </script>
+        <script src="../../../sorter.js"></script>
+        <script src="../../../block-navigation.js"></script>
+    </body>
+</html>
+    
