@@ -35,6 +35,7 @@ export interface Props {
   min?: number;
   max?: number;
   disabledCharacters?: string[];
+  preserveNewlines?: boolean;
 }
 
 export default function TextField(props: Props): JSX.Element {
@@ -62,6 +63,7 @@ export default function TextField(props: Props): JSX.Element {
     min,
     max,
     disabledCharacters,
+    preserveNewlines,
   } = props;
 
   const textfieldClass = classNames({
@@ -152,7 +154,7 @@ export default function TextField(props: Props): JSX.Element {
             onBlur={onBlur}
           />
         ))}
-      {display && <p className='textfield-value--display'>{value}</p>}
+      {display && <p className={`textfield-value--display${preserveNewlines ? ' preserve-newlines' : ''}`}>{value}</p>}
       {errorText && (
         <div className='textfield-label-container'>
           <Icon name='error' className='textfield-error-text--icon' />

@@ -67,6 +67,7 @@ Default.args = {
   display: false,
   type: 'text',
   autoFocus: false,
+  preserveNewlines: false,
 };
 
 WithTooltip.args = {
@@ -81,6 +82,7 @@ WithTooltip.args = {
   type: 'text',
   tooltipTitle: 'Hello world!',
   autoFocus: false,
+  preserveNewlines: false,
 };
 
 TextArea.args = {
@@ -94,6 +96,7 @@ TextArea.args = {
   display: false,
   type: 'textarea',
   autoFocus: false,
+  preserveNewlines: false,
 };
 
 NumberField.args = {
@@ -108,4 +111,5 @@ NumberField.args = {
   min: 5,
   max: 25,
   autoFocus: false,
+  preserveNewlines: false,
 };
