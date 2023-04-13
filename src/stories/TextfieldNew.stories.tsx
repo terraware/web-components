@@ -96,7 +96,7 @@ TextArea.args = {
   display: false,
   type: 'textarea',
   autoFocus: false,
-  preserveNewlines: false,
+  preserveNewlines: true,
 };
 
 NumberField.args = {
