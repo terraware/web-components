@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1681183660613" clover="3.2.0">
-  <project timestamp="1681183660613" name="All files">
-    <metrics statements="1048" coveredstatements="157" conditionals="857" coveredconditionals="71" methods="395" coveredmethods="28" elements="2300" coveredelements="256" complexity="0" loc="1048" ncloc="1048" packages="30" files="159" classes="159"/>
+<coverage generated="1681416801897" clover="3.2.0">
+  <project timestamp="1681416801897" name="All files">
+    <metrics statements="1048" coveredstatements="157" conditionals="859" coveredconditionals="71" methods="395" coveredmethods="28" elements="2302" coveredelements="256" complexity="0" loc="1048" ncloc="1048" packages="30" files="159" classes="159"/>
     <package name="src">
       <metrics statements="1" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
       <file name="index.ts" path="/home/runner/work/web-components/web-components/src/index.ts">
@@ -500,35 +500,35 @@
       </file>
     </package>
     <package name="src.components.Textfield">
-      <metrics statements="26" coveredstatements="0" conditionals="50" coveredconditionals="0" methods="5" coveredmethods="0"/>
+      <metrics statements="26" coveredstatements="0" conditionals="52" coveredconditionals="0" methods="5" coveredmethods="0"/>
       <file name="Textfield.tsx" path="/home/runner/work/web-components/web-components/src/components/Textfield/Textfield.tsx">
-        <metrics statements="26" coveredstatements="0" conditionals="50" coveredconditionals="0" methods="5" coveredmethods="0"/>
-        <line num="65" count="0" type="stmt"/>
+        <metrics statements="26" coveredstatements="0" conditionals="52" coveredconditionals="0" methods="5" coveredmethods="0"/>
         <line num="67" count="0" type="stmt"/>
-        <line num="75" count="0" type="stmt"/>
-        <line num="76" count="0" type="stmt"/>
-        <line num="77" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="69" count="0" type="stmt"/>
+        <line num="77" count="0" type="stmt"/>
         <line num="78" count="0" type="stmt"/>
-        <line num="80" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="81" count="0" type="stmt"/>
-        <line num="85" count="0" type="stmt"/>
-        <line num="86" count="0" type="cond" truecount="0" falsecount="4"/>
+        <line num="79" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="80" count="0" type="stmt"/>
+        <line num="82" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="83" count="0" type="stmt"/>
         <line num="87" count="0" type="stmt"/>
+        <line num="88" count="0" type="cond" truecount="0" falsecount="4"/>
         <line num="89" count="0" type="stmt"/>
-        <line num="91" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="92" count="0" type="stmt"/>
-        <line num="96" count="0" type="stmt"/>
-        <line num="97" count="0" type="cond" truecount="0" falsecount="4"/>
+        <line num="91" count="0" type="stmt"/>
+        <line num="93" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="94" count="0" type="stmt"/>
         <line num="98" count="0" type="stmt"/>
-        <line num="101" count="0" type="stmt"/>
-        <line num="108" count="0" type="stmt"/>
-        <line num="112" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="113" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="114" count="0" type="stmt"/>
-        <line num="116" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="117" count="0" type="stmt"/>
-        <line num="121" count="0" type="stmt"/>
-        <line num="139" count="0" type="stmt"/>
+        <line num="99" count="0" type="cond" truecount="0" falsecount="4"/>
+        <line num="100" count="0" type="stmt"/>
+        <line num="103" count="0" type="stmt"/>
+        <line num="110" count="0" type="stmt"/>
+        <line num="114" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="115" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="116" count="0" type="stmt"/>
+        <line num="118" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="119" count="0" type="stmt"/>
+        <line num="123" count="0" type="stmt"/>
+        <line num="141" count="0" type="stmt"/>
       </file>
     </package>
     <package name="src.components.Tooltip">
@@ -1498,9 +1498,9 @@
         <line num="55" count="0" type="stmt"/>
         <line num="57" count="0" type="stmt"/>
         <line num="59" count="0" type="stmt"/>
-        <line num="72" count="0" type="stmt"/>
-        <line num="86" count="0" type="stmt"/>
-        <line num="99" count="0" type="stmt"/>
+        <line num="73" count="0" type="stmt"/>
+        <line num="88" count="0" type="stmt"/>
+        <line num="102" count="0" type="stmt"/>
       </file>
       <file name="Theme.stories.tsx" path="/home/runner/work/web-components/web-components/src/stories/Theme.stories.tsx">
         <metrics statements="16" coveredstatements="0" conditionals="2" coveredconditionals="0" methods="3" coveredmethods="0"/>
