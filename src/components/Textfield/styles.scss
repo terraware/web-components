@@ -111,6 +111,10 @@
       line-height: $tw-fnt-frm-fld-text-value-line-height;
       padding: $tw-spc-base-x-small 0;
       margin: 0;
+
+      &.preserve-newlines {
+        white-space: pre-line;
+      }
     }
 
     &--disabled {
