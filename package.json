@@ -118,7 +118,6 @@
   },
   "resolutions": {
     "babel-loader": "8.1.0",
-    "@storybook/react/**/loader-utils": "^2.0.4",
-    "react-refresh": "0.14.0"
+    "@storybook/react/**/loader-utils": "^2.0.4"
   }
 }
