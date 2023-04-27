@@ -44,6 +44,7 @@ export { default as IconHeartMonitor } from './IconHeartMonitor';
 export { default as IconImport } from './IconImport';
 export { default as IconMail } from './IconMail';
 export { default as IconManager } from './IconManager';
+export { default as IconMarker } from './IconMarker';
 export { default as IconMenuHorizontal } from './IconMenuHorizontal';
 export { default as IconMenu } from './IconMenu';
 export { default as IconMyLocation } from './IconMyLocation';
