@@ -78,6 +78,7 @@ import Touchscreen from '../../svg/Touchscreen';
 import UploadCloud from '../../svg/UploadCloud';
 import Warning from '../../svg/Warning';
 import Wifi from '../../svg/IconWifi';
+import IconMarker from '../../svg/IconMarker';
 
 export type IconName =
   | 'blobbyGrayIconImage'
@@ -121,6 +122,7 @@ export type IconName =
   | 'iconGraphReport'
   | 'iconImport'
   | 'iconLocations'
+  | 'iconMarker'
   | 'iconMenu'
   | 'iconMenuHorizontal'
   | 'iconMyLocation'
@@ -206,6 +208,7 @@ const icons: Record<IconName, SVGComponent> = {
   iconGraphReport: IconGraphReport,
   iconImport: IconImport,
   iconLocations: IconLocations,
+  iconMarker: IconMarker,
   iconMenu: IconMenu,
   iconMenuHorizontal: IconMenuHorizontal,
   iconNursery: IconNursery,
