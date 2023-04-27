@@ -39,21 +39,19 @@ const Template: Story<TableProps<{ name: string; lastname: string }>> = (args) =
       Renderer={Renderer}
       selectedRows={selectedRows}
       setSelectedRows={setSelectedRows}
-      topBarButtons={
-        [
-          {
-            buttonType: 'productive',
-            buttonText: 'Click',
-            onButtonClick: () => window.alert('click')
-          },
-          {
-            buttonType: 'passive',
-            buttonText: 'Disabled',
-            onButtonClick: () => window.alert('you should not see this'),
-            disabled: true,
-          },
-        ]
-      }
+      topBarButtons={[
+        {
+          buttonType: 'productive',
+          buttonText: 'Click',
+          onButtonClick: () => window.alert('click'),
+        },
+        {
+          buttonType: 'passive',
+          buttonText: 'Disabled',
+          onButtonClick: () => window.alert('you should not see this'),
+          disabled: true,
+        },
+      ]}
     />
   );
 };
@@ -70,12 +68,14 @@ Default.args = {
     { key: 'lastname', name: 'Lastname', type: 'string' },
     { key: 'occupation', name: 'Occupation', type: 'string' },
     { key: 'available', name: 'Available', type: 'boolean' },
+    { key: 'date', name: 'Date', type: 'string' },
+    { key: 'pets', name: 'Pets', type: 'string' },
   ],
   rows: Array(150)
     .fill({ name: '', middlename: '', lastname: '', occupation: '' })
     .map((i, j) => {
       if (j % 2 === 0) {
-        return { name: `Constanza_${j}`, middlename: '', lastname: 'Uanini', occupation: 'Artist' };
+        return { name: `Constanza_${j}`, middlename: '', lastname: 'Uanini', occupation: 'Artist', date: '2023-02-03', pets: 5 };
       } else if (j % 3 === 0) {
         return {
           name: `Carlos_${j}`,
@@ -83,6 +83,8 @@ Default.args = {
           lastname: 'Thurber',
           occupation: 'Freelancer',
           available: 'false',
+          date: '2023-04-12',
+          pets: 10,
         };
       } else {
         return {
@@ -91,6 +93,8 @@ Default.args = {
           lastname: 'Doe',
           occupation: 'Business analyst',
           available: 'true',
+          date: '2023-04-27',
+          pets: 12,
         };
       }
     }),

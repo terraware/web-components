@@ -20,8 +20,9 @@ export function descendingComparator<T>(a: T, b: T, orderBy: keyof T): number {
 }
 
 function descendingNumComparator<T>(a: T, b: T, orderBy: keyof T): number | null {
-  const aNumValue = parseFloat((a[orderBy] ?? '0.0') as string);
-  const bNumValue = parseFloat((b[orderBy] ?? '0.0') as string);
+  const aNumValue = Number((a[orderBy] ?? '0.0') as string);
+  const bNumValue = Number((b[orderBy] ?? '0.0') as string);
+
   if (!isNaN(aNumValue) && !isNaN(bNumValue)) {
     return bNumValue - aNumValue;
   }
