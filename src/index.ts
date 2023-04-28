@@ -49,7 +49,7 @@ export type { Size } from './components/Size';
 export type { DropdownItem } from './components/types';
 export type { EnhancedTableDetailsRow, RendererProps, TableColumnType, TableRowType, SortOrder };
 export type { FormButton } from './components/FormBottomBar';
-export type { PhotoChooserErrorType } from './components/PhotoChooser';
+export type { PhotoChooserErrorType, PhotoChooserProps } from './components/PhotoChooser';
 
 export {
   Autocomplete,
