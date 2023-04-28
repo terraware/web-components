@@ -2,12 +2,12 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Box, Typography, useTheme } from '@mui/material';
 import { Theme } from '@mui/material';
 import { makeStyles } from '@mui/styles';
-import { useDeviceInfo } from '../utils';
-import ErrorBox from './ErrorBox/ErrorBox';
-import Button from './Button/Button';
-import Icon from './Icon/Icon';
+import { useDeviceInfo } from '../../utils';
+import ErrorBox from '../ErrorBox/ErrorBox';
+import Button from '../Button/Button';
+import Icon from '../Icon/Icon';
 
-export type ErrorType = {
+export type PhotoChooserErrorType = {
   title: string;
   text: string;
 };
@@ -47,7 +47,7 @@ export type PhotoChooserProps = {
   description?: string | string[];
   onPhotosChanged: (photos: File[]) => void;
   multipleSelection?: boolean;
-  error?: ErrorType;
+  error?: PhotoChooserErrorType;
   selectedFile?: any;
   uploadText?: string;
   uploadDescription?: string;
