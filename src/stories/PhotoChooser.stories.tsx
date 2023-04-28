@@ -31,4 +31,5 @@ Multiple.args = {
   photoSelectedText: 'Photo selected',
   chooseFileText: 'Choose file',
   replaceFileText: 'Replace file',
+  error: { title: 'Select photos please', text: 'Error selecting' },
 };
