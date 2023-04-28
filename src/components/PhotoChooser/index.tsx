@@ -30,8 +30,11 @@ const useStyles = makeStyles((theme: Theme) => ({
     marginTop: theme.spacing(3),
   },
   error: {
-    width: '100%',
+    width: 'auto',
     marginBottom: theme.spacing(2),
+    '&.mobile': {
+      width: 'auto',
+    },
   },
   thumbnail: {
     margin: 'auto auto',
@@ -55,6 +58,7 @@ export type PhotoChooserProps = {
   photoSelectedText?: string;
   chooseFileText?: string;
   replaceFileText?: string;
+  maxPhotos?: number;
 };
 
 export default function PhotoChooser(props: PhotoChooserProps): JSX.Element {
@@ -71,6 +75,7 @@ export default function PhotoChooser(props: PhotoChooserProps): JSX.Element {
     photoSelectedText,
     chooseFileText,
     replaceFileText,
+    maxPhotos,
   } = props;
   const { isMobile } = useDeviceInfo();
   const classes = useStyles();
@@ -96,7 +101,7 @@ export default function PhotoChooser(props: PhotoChooserProps): JSX.Element {
     }
 
     if (newFiles.length) {
-      updateSelection([...files, ...newFiles]);
+      updateSelection([...files, ...newFiles].slice(0, maxPhotos));
     }
   };
 
@@ -149,10 +154,10 @@ export default function PhotoChooser(props: PhotoChooserProps): JSX.Element {
     <Box
       ref={divRef}
       tabIndex={0}
-      width='100%'
       sx={{
         backgroundColor: theme.palette.TwClrBg,
         borderRadius: theme.spacing(4),
+        padding: theme.spacing(3),
       }}
     >
       <Box>
@@ -218,6 +223,7 @@ export default function PhotoChooser(props: PhotoChooserProps): JSX.Element {
         />
         <Button
           onClick={onChooseFileHandler}
+          disabled={maxPhotos !== undefined ? files.length >= maxPhotos : false}
           label={!multipleSelection && (files.length === 1 || editing) ? replaceFileText : chooseFileText}
           priority='secondary'
           type='passive'
