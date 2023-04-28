@@ -48,9 +48,6 @@ jobs:
       - name: Build dictionary 
         run: yarn build-dictionary
 
-      - name: Bump package patch version
-        run: yarn bump patch
-
       - name: Config user
         run: |
           git config --global user.email ${{ github.event.inputs.email }}
