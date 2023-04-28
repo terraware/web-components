@@ -177,7 +177,11 @@
 <a name='L112'></a><a href='#L112'>112</a>
 <a name='L113'></a><a href='#L113'>113</a>
 <a name='L114'></a><a href='#L114'>114</a>
-<a name='L115'></a><a href='#L115'>115</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L115'></a><a href='#L115'>115</a>
+<a name='L116'></a><a href='#L116'>116</a>
+<a name='L117'></a><a href='#L117'>117</a>
+<a name='L118'></a><a href='#L118'>118</a>
+<a name='L119'></a><a href='#L119'>119</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -222,14 +226,12 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -253,18 +255,24 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -332,21 +340,19 @@ const Template: Story&lt;TableProps&lt;{ name: string; lastname: string }&gt;&gt
       Renderer={Renderer}
       selectedRows={selectedRows}
       setSelectedRows={setSelectedRows}
-      topBarButtons={
-        [
-          {
-            buttonType: 'productive',
-            buttonText: 'Click',
-            onButtonClick: <span class="fstat-no" title="function not covered" >()</span> =&gt; <span class="cstat-no" title="statement not covered" >window.alert('click')</span>
-          },
-          {
-            buttonType: 'passive',
-            buttonText: 'Disabled',
-            onButtonClick: <span class="fstat-no" title="function not covered" >()</span> =&gt; <span class="cstat-no" title="statement not covered" >window.alert('you should not see this'),</span>
-            disabled: true,
-          },
-        ]
-      }
+      topBarButtons={[
+        {
+          buttonType: 'productive',
+          buttonText: 'Click',
+          onButtonClick: <span class="fstat-no" title="function not covered" >()</span> =&gt; <span class="cstat-no" title="statement not covered" >window.alert('click'),</span>
+        },
+        {
+          buttonType: 'passive',
+          buttonText: 'Disabled',
+          onButtonClick: <span class="fstat-no" title="function not covered" >()</span> =&gt; <span class="cstat-no" title="statement not covered" >window.alert('you should not see this'),</span>
+          disabled: true,
+        },
+      ]}
     /&gt;
   );
 };
@@ -363,12 +369,14 @@ export const Presorted = <span class="cstat-no" title="statement not covered" >T
     { key: 'lastname', name: 'Lastname', type: 'string' },
     { key: 'occupation', name: 'Occupation', type: 'string' },
     { key: 'available', name: 'Available', type: 'boolean' },
+    { key: 'date', name: 'Date', type: 'string' },
+    { key: 'pets', name: 'Pets', type: 'string' },
   ],
   rows: Array(150)
     .fill({ name: '', middlename: '', lastname: '', occupation: '' })
     .map(<span class="fstat-no" title="function not covered" >(i</span>, j) =&gt; {
 <span class="cstat-no" title="statement not covered" >      if (j % 2 === 0) {</span>
-<span class="cstat-no" title="statement not covered" >        return { name: `Constanza_${j}`, middlename: '', lastname: 'Uanini', occupation: 'Artist' };</span>
+<span class="cstat-no" title="statement not covered" >        return { name: `Constanza_${j}`, middlename: '', lastname: 'Uanini', occupation: 'Artist', date: '2023-02-03', pets: 5 };</span>
       } else <span class="cstat-no" title="statement not covered" >if (j % 3 === 0) {</span>
 <span class="cstat-no" title="statement not covered" >        return {</span>
           name: `Carlos_${j}`,
@@ -376,6 +384,8 @@ export const Presorted = <span class="cstat-no" title="statement not covered" >T
           lastname: 'Thurber',
           occupation: 'Freelancer',
           available: 'false',
+          date: '2023-04-12',
+          pets: 10,
         };
       } else {
 <span class="cstat-no" title="statement not covered" >        return {</span>
@@ -384,6 +394,8 @@ export const Presorted = <span class="cstat-no" title="statement not covered" >T
           lastname: 'Doe',
           occupation: 'Business analyst',
           available: 'true',
+          date: '2023-04-27',
+          pets: 12,
         };
       }
     }),
@@ -412,7 +424,7 @@ export const Presorted = <span class="cstat-no" title="statement not covered" >T
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2023-04-27T15:03:47.183Z
+                at 2023-04-28T13:09:14.714Z
             </div>
         <script src="../../prettify.js"></script>
         <script>
