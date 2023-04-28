@@ -22,6 +22,7 @@ import NavItem from './components/Navbar/NavItem';
 import NavSection from './components/Navbar/NavSection';
 import Note from './components/Note';
 import PageForm from './components/PageForm';
+import PhotoChooser from './components/PhotoChooser';
 import Pill from './components/Pill';
 import PillList from './components/PillList';
 import Popover from './components/PopoverMenu/Popover';
@@ -78,6 +79,7 @@ export {
   PageForm,
   Pill,
   PillList,
+  PhotoChooser,
   Popover,
   PopoverMenu,
   ProgressCircle,
