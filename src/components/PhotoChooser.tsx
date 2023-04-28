@@ -42,7 +42,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-export type SelectPhotosProps = {
+export type PhotoChooserProps = {
   title?: string;
   description?: string | string[];
   onPhotosChanged: (photos: File[]) => void;
@@ -57,7 +57,7 @@ export type SelectPhotosProps = {
   replaceFileText?: string;
 };
 
-export default function SelectPhotos(props: SelectPhotosProps): JSX.Element {
+export default function PhotoChooser(props: PhotoChooserProps): JSX.Element {
   const {
     title,
     description,

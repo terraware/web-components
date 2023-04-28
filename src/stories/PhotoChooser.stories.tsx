@@ -1,14 +1,14 @@
 import { Story } from '@storybook/react';
 import React from 'react';
-import SelectPhotos, { SelectPhotosProps } from '../components/SelectPhotos';
+import PhotoChooser, { PhotoChooserProps } from '../components/PhotoChooser';
 
 export default {
-  title: 'SelectPhotos',
-  component: SelectPhotos,
+  title: 'PhotoChooser',
+  component: PhotoChooser,
 };
 
-const Template: Story<SelectPhotosProps> = (args) => {
-  return <SelectPhotos {...args} />;
+const Template: Story<PhotoChooserProps> = (args) => {
+  return <PhotoChooser {...args} />;
 };
 
 export const Default = Template.bind({});
