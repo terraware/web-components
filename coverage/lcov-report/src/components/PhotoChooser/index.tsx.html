@@ -32,7 +32,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/43</span>
+                <span class='fraction'>0/45</span>
             </div>
         
             
@@ -292,7 +292,13 @@
 <a name='L227'></a><a href='#L227'>227</a>
 <a name='L228'></a><a href='#L228'>228</a>
 <a name='L229'></a><a href='#L229'>229</a>
-<a name='L230'></a><a href='#L230'>230</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L230'></a><a href='#L230'>230</a>
+<a name='L231'></a><a href='#L231'>231</a>
+<a name='L232'></a><a href='#L232'>232</a>
+<a name='L233'></a><a href='#L233'>233</a>
+<a name='L234'></a><a href='#L234'>234</a>
+<a name='L235'></a><a href='#L235'>235</a>
+<a name='L236'></a><a href='#L236'>236</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -365,6 +371,11 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -396,20 +407,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -423,6 +420,20 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -474,6 +485,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -553,8 +565,11 @@ const useStyles = <span class="cstat-no" title="statement not covered" >makeStyl
     marginTop: theme.spacing(3),
   },
   error: {
-    width: '100%',
+    width: 'auto',
     marginBottom: theme.spacing(2),
+    '&amp;.mobile': {
+      width: 'auto',
+    },
   },
   thumbnail: {
     margin: 'auto auto',
@@ -578,6 +593,7 @@ export type PhotoChooserProps = {
   photoSelectedText?: string;
   chooseFileText?: string;
   replaceFileText?: string;
+  maxPhotos?: number;
 };
 &nbsp;
 export default function <span class="fstat-no" title="function not covered" >PhotoChooser(</span>props: PhotoChooserProps): JSX.Element {
@@ -594,6 +610,7 @@ export default function <span class="fstat-no" title="function not covered" >Pho
     photoSelectedText,
     chooseFileText,
     replaceFileText,
+    maxPhotos,
   } = <span class="cstat-no" title="statement not covered" >props;</span>
   const { isMobile } = <span class="cstat-no" title="statement not covered" >useDeviceInfo();</span>
   const classes = <span class="cstat-no" title="statement not covered" >useStyles();</span>
@@ -619,7 +636,7 @@ export default function <span class="fstat-no" title="function not covered" >Pho
     }
 &nbsp;
 <span class="cstat-no" title="statement not covered" >    if (newFiles.length) {</span>
-<span class="cstat-no" title="statement not covered" >      updateSelection([...files, ...newFiles]);</span>
+<span class="cstat-no" title="statement not covered" >      updateSelection([...files, ...newFiles].slice(0, maxPhotos));</span>
     }
   };
 &nbsp;
@@ -672,10 +689,10 @@ export default function <span class="fstat-no" title="function not covered" >Pho
     &lt;Box
       ref={divRef}
       tabIndex={0}
-      width='100%'
       sx={{
         backgroundColor: theme.palette.TwClrBg,
         borderRadius: theme.spacing(4),
+        padding: theme.spacing(3),
       }}
     &gt;
       &lt;Box&gt;
@@ -741,6 +758,7 @@ export default function <span class="fstat-no" title="function not covered" >Pho
         /&gt;
         &lt;Button
           onClick={onChooseFileHandler}
+          disabled={maxPhotos !== undefined ? files.length &gt;= maxPhotos : false}
           label={!multipleSelection &amp;&amp; (files.length === 1 || editing) ? replaceFileText : chooseFileText}
           priority='secondary'
           type='passive'
@@ -757,7 +775,7 @@ export default function <span class="fstat-no" title="function not covered" >Pho
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2023-04-28T18:01:56.149Z
+                at 2023-04-28T18:25:23.071Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>
