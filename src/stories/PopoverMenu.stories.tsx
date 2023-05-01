@@ -25,6 +25,7 @@ Default.args = {
   menuSections: [
     [{ label: 'Menu Above', value: 'Menu Above' }],
     [{ label: 'Menu Below', value: 'Menu Below' }],
+    [{ label: 'Dangerous Option', value: 'Danger', type: 'destructive' }],
   ],
   onClick: (item: DropdownItem) => window.alert(`you clicked ${item.value}`),
 };
@@ -36,5 +37,6 @@ ItemizedOnClick.args = {
   menuSections: [
     [{ label: 'Menu Above', value: 'Menu Above', onClick: () => window.alert('You clicked menu above') }],
     [{ label: 'Menu Below', value: 'Menu Below', onClick: () => window.alert('You clicked menu below') }],
+    [{ label: 'Dangerous Option', value: 'Danger', onClick: () => window.alert('Danger!!'), type: 'destructive' }],
   ],
 };
