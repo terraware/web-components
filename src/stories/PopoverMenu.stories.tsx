@@ -15,6 +15,7 @@ const PopoverMenuTemplate: Story<PopoverMenuProps> = (args) => {
     <Box display='flex' justifyContent='space-between'>
       <PopoverMenu {...args} />
       <PopoverMenu {...args} />
+      <PopoverMenu {...args} />
     </Box>
   );
 };
