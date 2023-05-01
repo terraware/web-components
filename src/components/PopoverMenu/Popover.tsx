@@ -27,9 +27,7 @@ export default function PopoverDropdown(props: PopoverProps): JSX.Element {
   };
 
   const itemStyles = (type?: 'passive' | 'destructive') => ({
-    '& .MuiMenuItem-root': {
-      color: type === 'destructive' ? theme.palette.TwClrTxtDanger : theme.palette.TwClrTxt,
-    },
+    color: type === 'destructive' ? theme.palette.TwClrTxtDanger : theme.palette.TwClrTxt,
     '& .MuiMenuItem-root:hover': {
       backgroundColor: theme.palette.TwClrBgSelectedGhostHover,
     },
