@@ -44,11 +44,11 @@ export default function PopoverDropdown(props: PopoverProps): JSX.Element {
       onClose={handleClose}
       anchorOrigin={{
         vertical: 'bottom',
-        horizontal: 'center',
+        horizontal: 'left',
       }}
       transformOrigin={{
         vertical: 'top',
-        horizontal: 'center',
+        horizontal: 'left',
       }}
       sx={{
         '& .MuiPaper-root': {

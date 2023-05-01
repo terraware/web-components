@@ -3,6 +3,7 @@ import { action } from '@storybook/addon-actions';
 import { Story } from '@storybook/react';
 import PopoverMenu, { PopoverMenuProps } from '../components/PopoverMenu';
 import { DropdownItem } from '../components/types';
+import { Box } from '@mui/material';
 
 export default {
   title: 'PopoverMenu',
@@ -10,7 +11,12 @@ export default {
 };
 
 const PopoverMenuTemplate: Story<PopoverMenuProps> = (args) => {
-  return <PopoverMenu {...args} />;
+  return (
+    <Box display='flex' justifyContent='space-between'>
+      <PopoverMenu {...args} />
+      <PopoverMenu {...args} />
+    </Box>
+  );
 };
 
 export const Default = PopoverMenuTemplate.bind({});
