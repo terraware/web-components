@@ -26,15 +26,17 @@ export default function PopoverDropdown(props: PopoverProps): JSX.Element {
     handleClick(item);
   };
 
-  const itemStyles = {
-    color: theme.palette.TwClrTxt,
-    '&.MuiMenuItem-root:hover': {
+  const itemStyles = (type?: 'passive' | 'destructive') => ({
+    '& .MuiMenuItem-root': {
+      color: type === 'destructive' ? theme.palette.TwClrTxtDanger : theme.palette.TwClrTxt,
+    },
+    '& .MuiMenuItem-root:hover': {
       backgroundColor: theme.palette.TwClrBgSelectedGhostHover,
     },
     '&.MuiMenuItem-root:active': {
       backgroundColor: theme.palette.TwClrBgSelectedGhostActive,
     },
-  };
+  });
 
   return (
     <Popover
@@ -73,7 +75,7 @@ export default function PopoverDropdown(props: PopoverProps): JSX.Element {
                 <MenuItem
                   onClick={() => onClick(item)}
                   key={`option-${itemIndex}`}
-                  sx={itemStyles}
+                  sx={itemStyles(item.type)}
                   disableRipple={true}
                 >
                   {item.label}
