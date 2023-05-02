@@ -57,6 +57,7 @@
   flex-direction: column;
   background: $tw-clr-base-white;
   max-height: calc(100vh - 128px); //64 from top and bottom
+  max-width: calc(100vw - 32px);
   margin-top: auto;
   margin-bottom: auto;
 
