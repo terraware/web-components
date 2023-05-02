@@ -43,12 +43,8 @@ export default function ViewPhotosDialog(props: ViewPhotosDialogProps): JSX.Elem
 
   const myCarousel = useRef<Carousel>(null);
   const responsive = {
-    desktop: {
-      breakpoint: { max: 4000, min: 400 },
-      items: 1
-    },
     mobile: {
-      breakpoint: { max: 400, min: 0 },
+      breakpoint: { max: 4000, min: 0 },
       items: 1,
     },
   };
