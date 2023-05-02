@@ -51,7 +51,7 @@ export type { DropdownItem } from './components/types';
 export type { EnhancedTableDetailsRow, RendererProps, TableColumnType, TableRowType, SortOrder };
 export type { FormButton } from './components/FormBottomBar';
 export type { PhotoChooserErrorType, PhotoChooserProps } from './components/PhotoChooser';
-export type { PhotoItem } from './components/ViewPhotosDialog'ß;
+export type { PhotoItem } from './components/ViewPhotosDialog';
 
 export {
   Autocomplete,
