@@ -118,7 +118,6 @@
     border-bottom: 1px solid $tw-clr-brdr-tertiary;
     padding: $tw-spc-base-medium;
     text-align: center;
-    overflow: scroll;
     &.scrolled {
       overflow: auto;
     }
