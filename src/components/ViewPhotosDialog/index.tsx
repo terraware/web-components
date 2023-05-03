@@ -66,10 +66,14 @@ export default function ViewPhotosDialog(props: ViewPhotosDialogProps): JSX.Elem
   };
 
   useEffect(() => {
+    setSelectedSlide(initialSelectedSlide);
+  }, [initialSelectedSlide, open]);
+
+  useEffect(() => {
     if (myCarousel.current) {
       myCarousel.current.goToSlide(selectedSlide);
     }
-  }, [selectedSlide, open]);
+  }, [selectedSlide]);
 
   return (
     <DialogBox
@@ -121,7 +125,7 @@ export default function ViewPhotosDialog(props: ViewPhotosDialogProps): JSX.Elem
             {`${selectedSlide+1}/${photos.length}`}
           </Typography>
         ) : undefined}
-        {photos[selectedSlide].decoration}
+        {photos[selectedSlide] && photos[selectedSlide].decoration}
       </Box>
     </DialogBox>
   );
