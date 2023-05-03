@@ -42,6 +42,7 @@ import * as Svg from './components/svg';
 import Message from './components/Message/Message';
 import theme from './theme';
 import Tooltip from './components/Tooltip/Tooltip';
+import ViewPhotosDialog from './components/ViewPhotosDialog';
 
 export type { PillListItem } from './components/PillList';
 export type { IconName } from './components/Icon/icons/';
@@ -50,6 +51,7 @@ export type { DropdownItem } from './components/types';
 export type { EnhancedTableDetailsRow, RendererProps, TableColumnType, TableRowType, SortOrder };
 export type { FormButton } from './components/FormBottomBar';
 export type { PhotoChooserErrorType, PhotoChooserProps } from './components/PhotoChooser';
+export type { PhotoItem } from './components/ViewPhotosDialog';
 
 export {
   Autocomplete,
@@ -95,4 +97,5 @@ export {
   Table,
   theme,
   Tooltip,
+  ViewPhotosDialog
 };
