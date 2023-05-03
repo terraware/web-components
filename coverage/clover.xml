@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1683120331401" clover="3.2.0">
-  <project timestamp="1683120331402" name="All files">
-    <metrics statements="1136" coveredstatements="158" conditionals="920" coveredconditionals="71" methods="428" coveredmethods="28" elements="2484" coveredelements="257" complexity="0" loc="1136" ncloc="1136" packages="32" files="164" classes="164"/>
+<coverage generated="1683147987314" clover="3.2.0">
+  <project timestamp="1683147987314" name="All files">
+    <metrics statements="1138" coveredstatements="158" conditionals="922" coveredconditionals="71" methods="429" coveredmethods="28" elements="2489" coveredelements="257" complexity="0" loc="1138" ncloc="1138" packages="32" files="164" classes="164"/>
     <package name="src">
       <metrics statements="1" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
       <file name="index.ts" path="/home/runner/work/web-components/web-components/src/index.ts">
@@ -603,9 +603,9 @@
       </file>
     </package>
     <package name="src.components.ViewPhotosDialog">
-      <metrics statements="22" coveredstatements="0" conditionals="12" coveredconditionals="0" methods="8" coveredmethods="0"/>
+      <metrics statements="24" coveredstatements="0" conditionals="14" coveredconditionals="0" methods="9" coveredmethods="0"/>
       <file name="index.tsx" path="/home/runner/work/web-components/web-components/src/components/ViewPhotosDialog/index.tsx">
-        <metrics statements="22" coveredstatements="0" conditionals="12" coveredconditionals="0" methods="8" coveredmethods="0"/>
+        <metrics statements="24" coveredstatements="0" conditionals="14" coveredconditionals="0" methods="9" coveredmethods="0"/>
         <line num="38" count="0" type="stmt"/>
         <line num="39" count="0" type="stmt"/>
         <line num="40" count="0" type="stmt"/>
@@ -622,12 +622,14 @@
         <line num="62" count="0" type="stmt"/>
         <line num="64" count="0" type="stmt"/>
         <line num="68" count="0" type="stmt"/>
-        <line num="69" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="70" count="0" type="stmt"/>
+        <line num="69" count="0" type="stmt"/>
+        <line num="72" count="0" type="stmt"/>
+        <line num="73" count="0" type="cond" truecount="0" falsecount="2"/>
         <line num="74" count="0" type="stmt"/>
-        <line num="84" count="0" type="stmt"/>
-        <line num="90" count="0" type="stmt"/>
-        <line num="112" count="0" type="stmt"/>
+        <line num="78" count="0" type="stmt"/>
+        <line num="88" count="0" type="stmt"/>
+        <line num="94" count="0" type="stmt"/>
+        <line num="116" count="0" type="stmt"/>
       </file>
     </package>
     <package name="src.components.svg">
