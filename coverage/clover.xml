@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1682978987767" clover="3.2.0">
-  <project timestamp="1682978987767" name="All files">
-    <metrics statements="1108" coveredstatements="158" conditionals="908" coveredconditionals="71" methods="418" coveredmethods="28" elements="2434" coveredelements="257" complexity="0" loc="1108" ncloc="1108" packages="31" files="162" classes="162"/>
+<coverage generated="1683120331401" clover="3.2.0">
+  <project timestamp="1683120331402" name="All files">
+    <metrics statements="1136" coveredstatements="158" conditionals="920" coveredconditionals="71" methods="428" coveredmethods="28" elements="2484" coveredelements="257" complexity="0" loc="1136" ncloc="1136" packages="32" files="164" classes="164"/>
     <package name="src">
       <metrics statements="1" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
       <file name="index.ts" path="/home/runner/work/web-components/web-components/src/index.ts">
@@ -600,6 +600,34 @@
         <line num="31" count="0" type="cond" truecount="0" falsecount="5"/>
         <line num="32" count="0" type="stmt"/>
         <line num="36" count="0" type="stmt"/>
+      </file>
+    </package>
+    <package name="src.components.ViewPhotosDialog">
+      <metrics statements="22" coveredstatements="0" conditionals="12" coveredconditionals="0" methods="8" coveredmethods="0"/>
+      <file name="index.tsx" path="/home/runner/work/web-components/web-components/src/components/ViewPhotosDialog/index.tsx">
+        <metrics statements="22" coveredstatements="0" conditionals="12" coveredconditionals="0" methods="8" coveredmethods="0"/>
+        <line num="38" count="0" type="stmt"/>
+        <line num="39" count="0" type="stmt"/>
+        <line num="40" count="0" type="stmt"/>
+        <line num="42" count="0" type="stmt"/>
+        <line num="44" count="0" type="stmt"/>
+        <line num="45" count="0" type="stmt"/>
+        <line num="52" count="0" type="stmt"/>
+        <line num="53" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="54" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="55" count="0" type="stmt"/>
+        <line num="57" count="0" type="stmt"/>
+        <line num="59" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="60" count="0" type="stmt"/>
+        <line num="62" count="0" type="stmt"/>
+        <line num="64" count="0" type="stmt"/>
+        <line num="68" count="0" type="stmt"/>
+        <line num="69" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="70" count="0" type="stmt"/>
+        <line num="74" count="0" type="stmt"/>
+        <line num="84" count="0" type="stmt"/>
+        <line num="90" count="0" type="stmt"/>
+        <line num="112" count="0" type="stmt"/>
       </file>
     </package>
     <package name="src.components.svg">
@@ -1213,7 +1241,7 @@
       </file>
     </package>
     <package name="src.stories">
-      <metrics statements="303" coveredstatements="0" conditionals="14" coveredconditionals="0" methods="111" coveredmethods="0"/>
+      <metrics statements="309" coveredstatements="0" conditionals="14" coveredconditionals="0" methods="113" coveredmethods="0"/>
       <file name="Autocomplete.stories.tsx" path="/home/runner/work/web-components/web-components/src/stories/Autocomplete.stories.tsx">
         <metrics statements="15" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="6" coveredmethods="0"/>
         <line num="8" count="0" type="stmt"/>
@@ -1600,6 +1628,15 @@
         <line num="25" count="0" type="stmt"/>
         <line num="35" count="0" type="stmt"/>
         <line num="37" count="0" type="stmt"/>
+      </file>
+      <file name="ViewPhotosDialog.stories.tsx" path="/home/runner/work/web-components/web-components/src/stories/ViewPhotosDialog.stories.tsx">
+        <metrics statements="6" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="0"/>
+        <line num="11" count="0" type="stmt"/>
+        <line num="12" count="0" type="stmt"/>
+        <line num="15" count="0" type="stmt"/>
+        <line num="16" count="0" type="stmt"/>
+        <line num="19" count="0" type="stmt"/>
+        <line num="20" count="0" type="stmt"/>
       </file>
     </package>
     <package name="src.style-dictionary-dist">

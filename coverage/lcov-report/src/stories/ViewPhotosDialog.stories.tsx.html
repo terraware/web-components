@@ -3,15 +3,15 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for src/components/PageForm/index.tsx</title>
+    <title>Code coverage report for src/stories/ViewPhotosDialog.stories.tsx</title>
     <meta charset="utf-8" />
-    <link rel="stylesheet" href="../../../prettify.css" />
-    <link rel="stylesheet" href="../../../base.css" />
-    <link rel="shortcut icon" type="image/x-icon" href="../../../favicon.png" />
+    <link rel="stylesheet" href="../../prettify.css" />
+    <link rel="stylesheet" href="../../base.css" />
+    <link rel="shortcut icon" type="image/x-icon" href="../../favicon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <style type='text/css'>
         .coverage-summary .sorter {
-            background-image: url(../../../sort-arrow-sprite.png);
+            background-image: url(../../sort-arrow-sprite.png);
         }
     </style>
 </head>
@@ -19,20 +19,20 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../../../index.html">All files</a> / <a href="index.html">src/components/PageForm</a> index.tsx</h1>
+        <h1><a href="../../index.html">All files</a> / <a href="index.html">src/stories</a> ViewPhotosDialog.stories.tsx</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/9</span>
+                <span class='fraction'>0/6</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/8</span>
+                <span class='fraction'>0/0</span>
             </div>
         
             
@@ -46,7 +46,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/9</span>
+                <span class='fraction'>0/6</span>
             </div>
         
             
@@ -102,21 +102,7 @@
 <a name='L37'></a><a href='#L37'>37</a>
 <a name='L38'></a><a href='#L38'>38</a>
 <a name='L39'></a><a href='#L39'>39</a>
-<a name='L40'></a><a href='#L40'>40</a>
-<a name='L41'></a><a href='#L41'>41</a>
-<a name='L42'></a><a href='#L42'>42</a>
-<a name='L43'></a><a href='#L43'>43</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L40'></a><a href='#L40'>40</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -128,15 +114,13 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -147,48 +131,55 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import React, { useState } from 'react';
-import { Box, useTheme } from '@mui/material';
-import useDeviceInfo from '../../utils/useDeviceInfo';
-import FormBottomBar, { FormButton } from '../FormBottomBar';
-import BusySpinner from '../BusySpinner';
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { StoryFn } from '@storybook/react';
+import React from 'react';
+import ViewPhotosDialog, {ViewPhotosDialogProps} from '../components/ViewPhotosDialog';
+import {Typography} from '@mui/material';
 &nbsp;
-export type PageFormProps = {
-  children: React.ReactNode;
-  cancelID: string;
-  saveID: string;
-  onCancel: () =&gt; void;
-  onSave: () =&gt; void;
-  cancelButtonText: string;
-  saveButtonText: string;
-  saveDisabled?: boolean;
-  className?: string;
-  hideEdit?: boolean;
-  additionalRightButtons?: FormButton[];
+export default {
+  title: 'View Photos Dialog',
+  component: ViewPhotosDialog,
 };
 &nbsp;
-export default function <span class="fstat-no" title="function not covered" >PageForm(</span>props: PageFormProps): JSX.Element {
-  const { children, className, hideEdit, onSave, ...bottomBarProps } = <span class="cstat-no" title="statement not covered" >props;</span>
-  const theme = <span class="cstat-no" title="statement not covered" >useTheme();</span>
-  const { isMobile } = <span class="cstat-no" title="statement not covered" >useDeviceInfo();</span>
-  const [processing, setProcessing] = <span class="cstat-no" title="statement not covered" >useState(false);</span>
+const Template: StoryFn&lt;ViewPhotosDialogProps&gt; = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >(a</span>rgs: ViewPhotosDialogProps) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >  return &lt;ViewPhotosDialog {...args} open={true} /&gt;;</span>
+};
 &nbsp;
-  const handleSave = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >as</span>ync () =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >    setProcessing(true);</span>
-<span class="cstat-no" title="statement not covered" >    await onSave(); </span>// &lt;-- we want all onSaves to be async
-<span class="cstat-no" title="statement not covered" >    setProcessing(false);</span>
-  };
+const captionForPhoto = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >(n</span>um: number): JSX.Element =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >  return &lt;Typography&gt;Caption for photo #{num}&lt;/Typography&gt;;</span>
+};
 &nbsp;
-<span class="cstat-no" title="statement not covered" >  return (</span>
-    &lt;&gt;
-      {processing &amp;&amp; &lt;BusySpinner withSkrim={true} /&gt;}
-      &lt;Box className={className} paddingBottom={hideEdit ? theme.spacing(4) : theme.spacing(isMobile ? 25 : 15)}&gt;
-        {children}
-      &lt;/Box&gt;
-      {!hideEdit &amp;&amp; &lt;FormBottomBar onSave={handleSave} {...bottomBarProps} /&gt;}
-    &lt;/&gt;
-  );
-}
+export const Default = <span class="cstat-no" title="statement not covered" >Template.bind({});</span>
+<span class="cstat-no" title="statement not covered" >Default.args = {</span>
+  open: true,
+  title: 'Photos',
+  nextButtonLabel: 'Next',
+  prevButtonLabel: 'Previous',
+  initialSelectedSlide: 0,
+  numbered: true,
+  dots: true,
+  photos: [
+    {url: 'https://assets-global.website-files.com/600f0cac30d70b8364793d7c/62a17149aa7b1acd29fa1695_22_TF_Website_Homepage_Banner_5000x2500px_04%20(1).jpg', decoration: captionForPhoto(1)},
+    {url: 'https://assets-global.website-files.com/600f0cac30d70b8364793d7c/63447bf401a1314055b50708_Terraformation-25%20(1)-p-1600.jpg', decoration: captionForPhoto(2)},
+    {url: 'https://assets-global.website-files.com/600f0cac30d70b8364793d7c/63447cc759b9f238760b40b1_DSC_3921-II-EDIT.jpg', decoration: captionForPhoto(3)},
+    {url: 'https://assets-global.website-files.com/600f0cac30d70b8364793d7c/627dec38eb6be07860a89787_harvest-image.jpeg', decoration: captionForPhoto(4)},
+    {url: 'https://assets-global.website-files.com/600f0cac30d70b8364793d7c/6369552d24c9fbbcebdf6b2b_planting%20trees_72pix.jpg'},
+    {url: 'https://assets-global.website-files.com/600f0cac30d70b8364793d7c/636974e3fde8918ba5951450_DSC_4362%20(1)-p-1080.jpg'},
+    {url: 'https://assets-global.website-files.com/600f0cac30d70b8364793d7c/63694a55176f1e0af5ae513f_IMG_15673757-p-1080.jpg'},
+    {url: 'https://assets-global.website-files.com/600f0cac30d70b8364793d7c/6347e3526ed75455de6a6a64_accel-02_hero-bg-p-1080.jpg'},
+    {url: 'https://assets-global.website-files.com/600f0cac30d70b8364793d7c/636e6fa9aa9e99e90d5e39b1_2022_TF_Website_Solutions_Mobile-Field-App6.5-Carousel%2001.jpg'},
+  ],
+};
 &nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
@@ -198,14 +189,14 @@ export default function <span class="fstat-no" title="function not covered" >Pag
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
                 at 2023-05-03T13:25:31.265Z
             </div>
-        <script src="../../../prettify.js"></script>
+        <script src="../../prettify.js"></script>
         <script>
             window.onload = function () {
                 prettyPrint();
             };
         </script>
-        <script src="../../../sorter.js"></script>
-        <script src="../../../block-navigation.js"></script>
+        <script src="../../sorter.js"></script>
+        <script src="../../block-navigation.js"></script>
     </body>
 </html>
     
