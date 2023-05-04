@@ -72,6 +72,7 @@ export default function ViewPhotosDialog(props: ViewPhotosDialogProps): JSX.Elem
   useEffect(() => {
     if (myCarousel.current) {
       myCarousel.current.goToSlide(selectedSlide);
+      handleChange();
     }
   }, [selectedSlide]);
 
