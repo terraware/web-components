@@ -81,6 +81,7 @@ export default function ViewPhotosDialog(props: ViewPhotosDialogProps): JSX.Elem
       open={open}
       title={title}
       size='large'
+      scrolled={true}
       middleButtons={[
         <Button
           label={prevButtonLabel}
