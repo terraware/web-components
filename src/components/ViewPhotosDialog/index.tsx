@@ -67,6 +67,7 @@ export default function ViewPhotosDialog(props: ViewPhotosDialogProps): JSX.Elem
 
   useEffect(() => {
     setSelectedSlide(initialSelectedSlide);
+    handleChange();
   }, [initialSelectedSlide, open]);
 
   useEffect(() => {
