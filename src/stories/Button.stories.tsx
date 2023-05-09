@@ -22,6 +22,10 @@ export default {
       options: ['plus', 'iconTrashCan', 'iconEdit', 'menuVertical', null],
       control: { type: 'radio' },
     },
+    rightIcon: {
+      options: ['plus', 'iconTrashCan', 'iconEdit', 'menuVertical', null],
+      control: { type: 'radio' },
+    },
   },
 };
 

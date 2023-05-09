@@ -22,6 +22,7 @@ export interface Props {
   size?: Size;
   disabled?: boolean;
   icon?: IconName;
+  rightIcon?: IconName;
   processing?: boolean;
   id?: string;
   className?: string;
@@ -36,6 +37,7 @@ export default function Button(props: Props): JSX.Element {
     size = 'small',
     disabled,
     icon,
+    rightIcon,
     processing,
     id,
     className,
@@ -48,6 +50,8 @@ export default function Button(props: Props): JSX.Element {
       onClick={onClick}
       className={`button ${type}-${priority} button--${size} ${type}-${priority}--${size} ${
         icon && !processing ? 'button-with-icon' : ''
+      } ${
+        rightIcon && !processing ? 'button-with-right-icon' : ''
       } ${classes.svgIconFill}
       ${!label ? 'button-no-label' : ''} ${className ?? ''}`}
       disabled={disabled}
@@ -55,6 +59,7 @@ export default function Button(props: Props): JSX.Element {
       {processing && <Icon name='spinner' size={size} className='icon-spinner' />}
       {!processing && icon && <Icon name={icon} size={size} />}
       {!processing && !!label && label}
+      {!processing && rightIcon && <Icon name={rightIcon} size={size} className='icon-right' />}
     </button>
   );
 }
