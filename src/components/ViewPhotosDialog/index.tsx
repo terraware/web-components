@@ -5,7 +5,7 @@ import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 import { Box, Typography } from '@mui/material';
 import './styles.scss';
-import BusySpinner from "../BusySpinner";
+import BusySpinner from '../BusySpinner';
 
 export type PhotoItem = {
   url: string;
