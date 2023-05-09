@@ -14,6 +14,7 @@ export { default as Bug } from './Bug';
 export { default as Calendar } from './Calendar';
 export { default as CaretDown } from './CaretDown';
 export { default as CaretLeft } from './CaretLeft';
+export { default as CaretRight } from './CaretRight';
 export { default as CaretUp } from './CaretUp';
 export { default as ChevronDown } from './ChevronDown';
 export { default as ChevronUp } from './ChevronUp';

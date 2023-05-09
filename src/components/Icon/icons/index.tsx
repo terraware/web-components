@@ -14,6 +14,7 @@ import Calendar from '../../svg/Calendar';
 import Cancel from '../../svg/IconCancel';
 import CaretDown from '../../svg/CaretDown';
 import CaretLeft from '../../svg/CaretLeft';
+import CaretRight from '../../svg/CaretRight';
 import CaretUp from '../../svg/CaretUp';
 import ChargingBattery from '../../svg/IconChargingBattery';
 import Checkmark from '../../svg/IconCheckmark';
@@ -95,6 +96,7 @@ export type IconName =
   | 'cancel'
   | 'caretDown'
   | 'caretLeft'
+  | 'caretRight'
   | 'caretUp'
   | 'chargingBattery'
   | 'checkmark'
@@ -181,6 +183,7 @@ const icons: Record<IconName, SVGComponent> = {
   cancel: Cancel,
   caretDown: CaretDown,
   caretLeft: CaretLeft,
+  caretRight: CaretRight,
   caretUp: CaretUp,
   chargingBattery: ChargingBattery,
   checkmark: Checkmark,

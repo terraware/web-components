@@ -4,9 +4,10 @@ import hexRgb from 'hex-rgb';
 
 export type BusySpinnerProps = {
   withSkrim?: boolean;
+  noBackground?: boolean;
 };
 
-export default function BusySpinner({ withSkrim }: BusySpinnerProps): JSX.Element {
+export default function BusySpinner({ withSkrim, noBackground }: BusySpinnerProps): JSX.Element {
   const theme = useTheme();
 
   return (
@@ -21,10 +22,11 @@ export default function BusySpinner({ withSkrim }: BusySpinnerProps): JSX.Elemen
           ? `${hexRgb(`${theme.palette.TwClrBaseGray025}`, { alpha: 0.6, format: 'css' })}`
           : 'none',
         zIndex: 2000,
-        backgroundImage:
-          'linear-gradient(180deg,' +
-          `${hexRgb(`${theme.palette.TwClrBaseGreen050}`, { alpha: 0, format: 'css' })} 0%,` +
-          `${hexRgb(`${theme.palette.TwClrBaseGreen050}`, { alpha: 0.24, format: 'css' })} 100%)`,
+        backgroundImage: noBackground
+          ? 'none'
+          : 'linear-gradient(180deg,' +
+            `${hexRgb(`${theme.palette.TwClrBaseGreen050}`, { alpha: 0, format: 'css' })} 0%,` +
+            `${hexRgb(`${theme.palette.TwClrBaseGreen050}`, { alpha: 0.24, format: 'css' })} 100%)`,
       }}
     >
       <Box
