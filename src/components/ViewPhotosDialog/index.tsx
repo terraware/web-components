@@ -5,6 +5,7 @@ import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 import { Box, Typography } from '@mui/material';
 import './styles.scss';
+import BusySpinner from "../BusySpinner";
 
 export type PhotoItem = {
   url: string;
@@ -38,6 +39,12 @@ export default function ViewPhotosDialog(props: ViewPhotosDialogProps): JSX.Elem
   } = props;
   const [isPreviousDisabled, setIsPreviousDisabled] = useState(false);
   const [isNextDisabled, setIsNextDisabled] = useState(false);
+
+  const [isLoading, setIsLoading] = useState<boolean[]>([]);
+
+  useEffect(() => {
+    setIsLoading(new Array(photos.length).fill(true));
+  }, [photos]);
 
   const [selectedSlide, setSelectedSlide] = useState(initialSelectedSlide);
 
@@ -76,6 +83,12 @@ export default function ViewPhotosDialog(props: ViewPhotosDialogProps): JSX.Elem
     }
   }, [selectedSlide]);
 
+  const finishLoading = (index: number) => {
+    const newIsLoading = [...isLoading];
+    newIsLoading[index] = false;
+    setIsLoading(newIsLoading);
+  };
+
   return (
     <DialogBox
       onClose={onClose}
@@ -90,12 +103,14 @@ export default function ViewPhotosDialog(props: ViewPhotosDialogProps): JSX.Elem
           onClick={() => setSelectedSlide((slide) => Math.max(0, slide - 1))}
           key='button-1'
           disabled={isPreviousDisabled}
+          icon='caretLeft'
         />,
         <Button
           label={nextButtonLabel}
           onClick={() => setSelectedSlide((slide) => Math.min(photos.length - 1, slide + 1))}
           key='button-2'
           disabled={isNextDisabled}
+          rightIcon='caretRight'
         />,
       ]}
     >
@@ -115,9 +130,15 @@ export default function ViewPhotosDialog(props: ViewPhotosDialogProps): JSX.Elem
           afterChange={handleChange}
         >
           {photos.map((p, i) => (
-            <div key={`photo-${i}-container`}>
+            <div key={`photo-${i}-container`} className='view-photos-dialog-container'>
+              {isLoading[i] ? <BusySpinner noBackground={true} /> : undefined}
               <a href={p.url} target='blank'>
-                <img className='view-photos-dialog-image' src={`${p.url}?maxHeight=500`} alt={p.alt} />
+                <img
+                  className='view-photos-dialog-image'
+                  src={`${p.url}?maxHeight=400`}
+                  alt={p.alt}
+                  onLoad={() => finishLoading(i)}
+                />
               </a>
             </div>
           ))}

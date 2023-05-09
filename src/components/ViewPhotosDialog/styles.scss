@@ -1,5 +1,10 @@
 @import '../../style-dictionary-dist/terraware.scss';
 
+.view-photos-dialog-container {
+  min-height: 200px;
+  background: $tw-clr-bg;
+}
+
 .view-photos-dialog-image {
   object-fit: contain;
   margin: auto;
