@@ -43,5 +43,6 @@ export interface DatabaseColumn extends Omit<TableColumnType, 'key'> {
   key: string;
   additionalKeys?: string[];
   filter?: { type: DatabaseColumnFilterType; options?: Option[] };
+  searchType?: 'Exact' | 'ExactOrFuzzy' | 'Fuzzy';
   operation?: 'or' | 'and' | 'field' | 'not';
 }
