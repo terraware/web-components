@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   navBarTop: {
     display: 'flex',
-    justifyContent: 'end',
+    justifyContent: 'start',
   },
 }));
 
