@@ -14,7 +14,7 @@ export default {
   },
 };
 
-const Template: Story<NavbarProps> = (args) => {
+const Template = (args: NavbarProps & { title?: boolean }) => {
   const [selectedItem, setSelectedItem] = React.useState('accessions');
 
   // tslint:disable-next-line:no-empty
@@ -22,6 +22,7 @@ const Template: Story<NavbarProps> = (args) => {
 
   return (
     <Navbar setShowNavBar={showNavbar} backgroundTransparent={args.backgroundTransparent}>
+      {args.title && <NavSection title='Account' separator={false} />}
       <NavItem label='Home' icon='home' selected={selectedItem === 'home'} onClick={() => setSelectedItem('home')} />
       <NavItem label='Species' icon='species' selected={selectedItem === 'species'} onClick={() => setSelectedItem('species')} />
       <NavSection />
@@ -55,4 +56,9 @@ const Template: Story<NavbarProps> = (args) => {
   );
 };
 
-export const Default = Template.bind({});
+const WithoutTitle: Story<NavbarProps> = (args) => (<Template {...args} />);
+const WithTitle: Story<NavbarProps> = (args) => (<Template {...args} title={true} />);
+
+export const Default = WithoutTitle.bind({});
+
+export const Title = WithTitle.bind({});

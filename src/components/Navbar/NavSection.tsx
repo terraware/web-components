@@ -12,7 +12,7 @@ export default function NavSection(props: Props): JSX.Element {
   return (
     <div className='nav-section'>
       {separator && <div className='divider' />}
-      {title && <span className='nav-section--title'>{title}</span>}
+      {title && <span className={`nav-section--title ${separator ? '' : 'no-separator'}`}>{title}</span>}
     </div>
   );
 }
