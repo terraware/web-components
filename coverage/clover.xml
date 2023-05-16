@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1683837260286" clover="3.2.0">
-  <project timestamp="1683837260286" name="All files">
-    <metrics statements="1149" coveredstatements="159" conditionals="935" coveredconditionals="75" methods="433" coveredmethods="28" elements="2517" coveredelements="262" complexity="0" loc="1149" ncloc="1149" packages="32" files="165" classes="165"/>
+<coverage generated="1684248981828" clover="3.2.0">
+  <project timestamp="1684248981828" name="All files">
+    <metrics statements="1152" coveredstatements="159" conditionals="939" coveredconditionals="75" methods="435" coveredmethods="28" elements="2526" coveredelements="262" complexity="0" loc="1152" ncloc="1152" packages="32" files="165" classes="165"/>
     <package name="src">
       <metrics statements="1" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
       <file name="index.ts" path="/home/runner/work/web-components/web-components/src/index.ts">
@@ -233,7 +233,7 @@
       </file>
     </package>
     <package name="src.components.Navbar">
-      <metrics statements="31" coveredstatements="0" conditionals="53" coveredconditionals="0" methods="11" coveredmethods="0"/>
+      <metrics statements="31" coveredstatements="0" conditionals="55" coveredconditionals="0" methods="11" coveredmethods="0"/>
       <file name="NavFooter.tsx" path="/home/runner/work/web-components/web-components/src/components/Navbar/NavFooter.tsx">
         <metrics statements="2" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
         <line num="9" count="0" type="stmt"/>
@@ -262,7 +262,7 @@
         <line num="52" count="0" type="stmt"/>
       </file>
       <file name="NavSection.tsx" path="/home/runner/work/web-components/web-components/src/components/Navbar/NavSection.tsx">
-        <metrics statements="2" coveredstatements="0" conditionals="5" coveredconditionals="0" methods="1" coveredmethods="0"/>
+        <metrics statements="2" coveredstatements="0" conditionals="7" coveredconditionals="0" methods="1" coveredmethods="0"/>
         <line num="10" count="0" type="cond" truecount="0" falsecount="1"/>
         <line num="12" count="0" type="stmt"/>
       </file>
@@ -1257,7 +1257,7 @@
       </file>
     </package>
     <package name="src.stories">
-      <metrics statements="309" coveredstatements="0" conditionals="14" coveredconditionals="0" methods="113" coveredmethods="0"/>
+      <metrics statements="312" coveredstatements="0" conditionals="16" coveredconditionals="0" methods="115" coveredmethods="0"/>
       <file name="Autocomplete.stories.tsx" path="/home/runner/work/web-components/web-components/src/stories/Autocomplete.stories.tsx">
         <metrics statements="15" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="6" coveredmethods="0"/>
         <line num="8" count="0" type="stmt"/>
@@ -1439,25 +1439,28 @@
         <line num="50" count="0" type="stmt"/>
       </file>
       <file name="Navbar.stories.tsx" path="/home/runner/work/web-components/web-components/src/stories/Navbar.stories.tsx">
-        <metrics statements="18" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="15" coveredmethods="0"/>
+        <metrics statements="21" coveredstatements="0" conditionals="2" coveredconditionals="0" methods="17" coveredmethods="0"/>
         <line num="17" count="0" type="stmt"/>
         <line num="18" count="0" type="stmt"/>
         <line num="21" count="0" type="stmt"/>
         <line num="23" count="0" type="stmt"/>
-        <line num="25" count="0" type="stmt"/>
         <line num="26" count="0" type="stmt"/>
-        <line num="30" count="0" type="stmt"/>
+        <line num="27" count="0" type="stmt"/>
         <line num="31" count="0" type="stmt"/>
         <line num="32" count="0" type="stmt"/>
-        <line num="37" count="0" type="stmt"/>
+        <line num="33" count="0" type="stmt"/>
         <line num="38" count="0" type="stmt"/>
-        <line num="42" count="0" type="stmt"/>
+        <line num="39" count="0" type="stmt"/>
         <line num="43" count="0" type="stmt"/>
-        <line num="46" count="0" type="stmt"/>
+        <line num="44" count="0" type="stmt"/>
         <line num="47" count="0" type="stmt"/>
         <line num="48" count="0" type="stmt"/>
-        <line num="53" count="0" type="stmt"/>
-        <line num="58" count="0" type="stmt"/>
+        <line num="49" count="0" type="stmt"/>
+        <line num="54" count="0" type="stmt"/>
+        <line num="59" count="0" type="stmt"/>
+        <line num="60" count="0" type="stmt"/>
+        <line num="62" count="0" type="stmt"/>
+        <line num="64" count="0" type="stmt"/>
       </file>
       <file name="Note.stories.tsx" path="/home/runner/work/web-components/web-components/src/stories/Note.stories.tsx">
         <metrics statements="3" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
