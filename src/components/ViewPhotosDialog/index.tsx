@@ -135,7 +135,7 @@ export default function ViewPhotosDialog(props: ViewPhotosDialogProps): JSX.Elem
               <a href={p.url} target='blank'>
                 <img
                   className='view-photos-dialog-image'
-                  src={`${p.url}?maxHeight=400`}
+                  src={p.url}
                   alt={p.alt}
                   onLoad={() => finishLoading(i)}
                 />
