@@ -43,6 +43,7 @@ export { default as IconFutures } from './IconFutures';
 export { default as IconGraphReport } from './IconGraphReport';
 export { default as IconHeartMonitor } from './IconHeartMonitor';
 export { default as IconImport } from './IconImport';
+export { default as IconLayers } from './IconLayers';
 export { default as IconMail } from './IconMail';
 export { default as IconManager } from './IconManager';
 export { default as IconMarker } from './IconMarker';

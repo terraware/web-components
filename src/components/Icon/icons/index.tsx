@@ -52,6 +52,7 @@ import IconSynced from '../../svg/IconSynced';
 import IconTrashCan from '../../svg/IconTrashCan';
 import Info from '../../svg/Info';
 import Key from '../../svg/Key';
+import Layers from '../../svg/IconLayers';
 import Leaf from '../../svg/Leaf';
 import Lock from '../../svg/Lock';
 import MenuVertical from '../../svg/MenuVertical';
@@ -135,6 +136,7 @@ export type IconName =
   | 'iconTrashCan'
   | 'info'
   | 'key'
+  | 'layers'
   | 'leaf'
   | 'lock'
   | 'mail'
@@ -222,6 +224,7 @@ const icons: Record<IconName, SVGComponent> = {
   iconTrashCan: IconTrashCan,
   info: Info,
   key: Key,
+  layers: Layers,
   leaf: Leaf,
   lock: Lock,
   mail: Mail,
