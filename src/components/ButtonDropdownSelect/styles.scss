@@ -1,0 +1,30 @@
+@import '../../style-dictionary-dist/terraware.scss';
+
+.button-dropdown-select__plain-button {
+  border: 1px solid $tw-clr-base-gray-300;
+  border-radius: $tw-spc-base-xx-small;
+  background-color: $tw-clr-bg;
+  height: $tw-sz-icon-medium;
+  min-width: $tw-sz-icon-medium;
+  display: flex;
+  align-items: center;
+  padding: 0 $tw-spc-base-xx-small;
+
+  .plain-button__icon {
+    padding: 0;
+  }
+
+  .plain-button__label {
+    margin-left: $tw-spc-base-xx-small;
+    font-size: $tw-fnt-base-font-size-body-04;
+  }
+}
+
+.button-dropdown-select__checkmark-selection {
+  margin-right: $tw-spc-base-x-small;
+}
+
+.button-dropdown-select__checkmark-spacer {
+  width: calc($tw-spc-base-x-small + $tw-sz-icon-small);
+  height: $tw-sz-icon-small;
+}
