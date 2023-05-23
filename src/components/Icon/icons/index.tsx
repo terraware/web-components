@@ -41,6 +41,7 @@ import IconFile from '../../svg/IconFile';
 import IconFolder from '../../svg/IconFolder';
 import IconGraphReport from '../../svg/IconGraphReport';
 import IconImport from '../../svg/IconImport';
+import IconLayers from '../../svg/IconLayers';
 import IconLocations from '../../svg/IconLocations';
 import IconMenu from '../../svg/IconMenu';
 import IconMenuHorizontal from '../../svg/IconMenuHorizontal';
@@ -52,7 +53,6 @@ import IconSynced from '../../svg/IconSynced';
 import IconTrashCan from '../../svg/IconTrashCan';
 import Info from '../../svg/Info';
 import Key from '../../svg/Key';
-import Layers from '../../svg/IconLayers';
 import Leaf from '../../svg/Leaf';
 import Lock from '../../svg/Lock';
 import MenuVertical from '../../svg/MenuVertical';
@@ -124,6 +124,7 @@ export type IconName =
   | 'iconFolder'
   | 'iconGraphReport'
   | 'iconImport'
+  | 'iconLayers'
   | 'iconLocations'
   | 'iconMarker'
   | 'iconMenu'
@@ -136,7 +137,6 @@ export type IconName =
   | 'iconTrashCan'
   | 'info'
   | 'key'
-  | 'layers'
   | 'leaf'
   | 'lock'
   | 'mail'
@@ -212,6 +212,7 @@ const icons: Record<IconName, SVGComponent> = {
   iconFolder: IconFolder,
   iconGraphReport: IconGraphReport,
   iconImport: IconImport,
+  iconLayers: IconLayers,
   iconLocations: IconLocations,
   iconMarker: IconMarker,
   iconMenu: IconMenu,
@@ -224,7 +225,6 @@ const icons: Record<IconName, SVGComponent> = {
   iconTrashCan: IconTrashCan,
   info: Info,
   key: Key,
-  layers: Layers,
   leaf: Leaf,
   lock: Lock,
   mail: Mail,
