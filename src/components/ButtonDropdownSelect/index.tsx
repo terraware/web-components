@@ -67,9 +67,10 @@ export default function ButtonDropdownSelect(props: ButtonDropdownSelectProps): 
       anchorOrigin={{vertical: 'bottom', horizontal: menuAlign ?? 'left'}}
       transformOrigin={{vertical: 'top', horizontal: menuAlign ?? 'left'}}
     >
-      <MenuList dense>
+      <MenuList dense={true}>
         {options.map((opt) => {
           const itemIndex = selection.findIndex((s) => s.label === opt.label);
+
           return <MenuItem
             key={opt.label}
             onClick={() => itemIndex >= 0 ? removeFromSelection(itemIndex) : addToSelection(opt)}
