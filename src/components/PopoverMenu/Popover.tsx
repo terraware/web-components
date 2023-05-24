@@ -9,10 +9,12 @@ export type PopoverProps = {
   handleClick: (item: DropdownItem) => void;
   anchorElement: HTMLElement | null;
   setAnchorElement: React.Dispatch<React.SetStateAction<HTMLElement | null>>;
+  itemRenderer?: (item: DropdownItem) => React.ReactNode;
+  menuAlign?: 'left' | 'center' | 'right';
 };
 
 export default function PopoverDropdown(props: PopoverProps): JSX.Element {
-  const { sections, handleClick, anchorElement, setAnchorElement } = props;
+  const { sections, handleClick, anchorElement, setAnchorElement, itemRenderer, menuAlign } = props;
   const theme = useTheme();
 
   const handleClose = () => {
@@ -44,11 +46,11 @@ export default function PopoverDropdown(props: PopoverProps): JSX.Element {
       onClose={handleClose}
       anchorOrigin={{
         vertical: 'bottom',
-        horizontal: 'left',
+        horizontal: menuAlign ?? 'left',
       }}
       transformOrigin={{
         vertical: 'top',
-        horizontal: 'left',
+        horizontal: menuAlign ?? 'left',
       }}
       sx={{
         '& .MuiPaper-root': {
@@ -76,7 +78,7 @@ export default function PopoverDropdown(props: PopoverProps): JSX.Element {
                   sx={itemStyles(item.type)}
                   disableRipple={true}
                 >
-                  {item.label}
+                  {itemRenderer ? itemRenderer(item) : item.label}
                 </MenuItem>
               );
             }),
