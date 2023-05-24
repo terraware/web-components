@@ -37,7 +37,7 @@ export default function DatePicker(props: Props): JSX.Element {
     if (props.value !== temporalValue && props.value !== null) {
       setTemporalValue(props.value || null);
     }
-  }, [props.value]);
+  }, [props.value, temporalValue]);
 
   const renderInput = (params: object) => (
     <>
@@ -71,7 +71,7 @@ export default function DatePicker(props: Props): JSX.Element {
           onError={props.onError}
           minDate={props.minDate ? moment(props.minDate) : undefined}
           maxDate={props.maxDate ? moment(props.maxDate) : undefined}
-          inputFormat='yyyy-MM-DD'
+          inputFormat='YYYY-MM-DD'
           value={temporalValue}
           onChange={(newValue: any) => {
             setTemporalValue(newValue);
