@@ -1,0 +1,10 @@
+@import 'src/style-dictionary-dist/terraware';
+
+.popover-multi-select__checkmark-selection {
+  margin-right: $tw-spc-base-x-small;
+}
+
+.popover-multi-select__checkmark-spacer {
+  width: calc($tw-spc-base-x-small + $tw-sz-icon-small);
+  height: $tw-sz-icon-small;
+}
