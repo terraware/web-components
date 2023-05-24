@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1684949175104" clover="3.2.0">
-  <project timestamp="1684949175104" name="All files">
-    <metrics statements="1154" coveredstatements="160" conditionals="941" coveredconditionals="75" methods="436" coveredmethods="28" elements="2531" coveredelements="263" complexity="0" loc="1154" ncloc="1154" packages="32" files="166" classes="166"/>
+<coverage generated="1684955101984" clover="3.2.0">
+  <project timestamp="1684955101984" name="All files">
+    <metrics statements="1183" coveredstatements="160" conditionals="953" coveredconditionals="75" methods="447" coveredmethods="28" elements="2583" coveredelements="263" complexity="0" loc="1183" ncloc="1183" packages="33" files="168" classes="168"/>
     <package name="src">
       <metrics statements="1" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
       <file name="index.ts" path="/home/runner/work/web-components/web-components/src/index.ts">
@@ -374,26 +374,26 @@
       </file>
     </package>
     <package name="src.components.PopoverMenu">
-      <metrics statements="29" coveredstatements="0" conditionals="8" coveredconditionals="0" methods="12" coveredmethods="0"/>
+      <metrics statements="29" coveredstatements="0" conditionals="14" coveredconditionals="0" methods="12" coveredmethods="0"/>
       <file name="Popover.tsx" path="/home/runner/work/web-components/web-components/src/components/PopoverMenu/Popover.tsx">
-        <metrics statements="17" coveredstatements="0" conditionals="6" coveredconditionals="0" methods="7" coveredmethods="0"/>
-        <line num="15" count="0" type="stmt"/>
-        <line num="16" count="0" type="stmt"/>
+        <metrics statements="17" coveredstatements="0" conditionals="12" coveredconditionals="0" methods="7" coveredmethods="0"/>
+        <line num="17" count="0" type="stmt"/>
         <line num="18" count="0" type="stmt"/>
-        <line num="19" count="0" type="stmt"/>
-        <line num="22" count="0" type="stmt"/>
-        <line num="23" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="20" count="0" type="stmt"/>
+        <line num="21" count="0" type="stmt"/>
         <line num="24" count="0" type="stmt"/>
+        <line num="25" count="0" type="cond" truecount="0" falsecount="2"/>
         <line num="26" count="0" type="stmt"/>
-        <line num="29" count="0" type="stmt"/>
-        <line num="39" count="0" type="stmt"/>
-        <line num="65" count="0" type="stmt"/>
-        <line num="66" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="28" count="0" type="stmt"/>
+        <line num="31" count="0" type="stmt"/>
+        <line num="41" count="0" type="stmt"/>
         <line num="67" count="0" type="stmt"/>
+        <line num="68" count="0" type="cond" truecount="0" falsecount="2"/>
         <line num="69" count="0" type="stmt"/>
-        <line num="72" count="0" type="stmt"/>
+        <line num="71" count="0" type="stmt"/>
         <line num="74" count="0" type="stmt"/>
-        <line num="85" count="0" type="stmt"/>
+        <line num="76" count="0" type="stmt"/>
+        <line num="87" count="0" type="stmt"/>
       </file>
       <file name="index.tsx" path="/home/runner/work/web-components/web-components/src/components/PopoverMenu/index.tsx">
         <metrics statements="12" coveredstatements="0" conditionals="2" coveredconditionals="0" methods="5" coveredmethods="0"/>
@@ -409,6 +409,33 @@
         <line num="43" count="0" type="stmt"/>
         <line num="45" count="0" type="stmt"/>
         <line num="48" count="0" type="stmt"/>
+      </file>
+    </package>
+    <package name="src.components.PopoverMultiSelect">
+      <metrics statements="21" coveredstatements="0" conditionals="4" coveredconditionals="0" methods="8" coveredmethods="0"/>
+      <file name="index.tsx" path="/home/runner/work/web-components/web-components/src/components/PopoverMultiSelect/index.tsx">
+        <metrics statements="21" coveredstatements="0" conditionals="4" coveredconditionals="0" methods="8" coveredmethods="0"/>
+        <line num="18" count="0" type="stmt"/>
+        <line num="19" count="0" type="stmt"/>
+        <line num="20" count="0" type="stmt"/>
+        <line num="21" count="0" type="stmt"/>
+        <line num="22" count="0" type="stmt"/>
+        <line num="23" count="0" type="stmt"/>
+        <line num="24" count="0" type="stmt"/>
+        <line num="26" count="0" type="stmt"/>
+        <line num="27" count="0" type="stmt"/>
+        <line num="28" count="0" type="stmt"/>
+        <line num="29" count="0" type="stmt"/>
+        <line num="30" count="0" type="stmt"/>
+        <line num="33" count="0" type="stmt"/>
+        <line num="34" count="0" type="stmt"/>
+        <line num="37" count="0" type="stmt"/>
+        <line num="40" count="0" type="stmt"/>
+        <line num="41" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="42" count="0" type="stmt"/>
+        <line num="44" count="0" type="stmt"/>
+        <line num="50" count="0" type="stmt"/>
+        <line num="52" count="0" type="stmt"/>
       </file>
     </package>
     <package name="src.components.ProgressCircle">
@@ -1262,7 +1289,7 @@
       </file>
     </package>
     <package name="src.stories">
-      <metrics statements="312" coveredstatements="0" conditionals="16" coveredconditionals="0" methods="115" coveredmethods="0"/>
+      <metrics statements="320" coveredstatements="0" conditionals="18" coveredconditionals="0" methods="118" coveredmethods="0"/>
       <file name="Autocomplete.stories.tsx" path="/home/runner/work/web-components/web-components/src/stories/Autocomplete.stories.tsx">
         <metrics statements="15" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="6" coveredmethods="0"/>
         <line num="8" count="0" type="stmt"/>
@@ -1518,6 +1545,17 @@
         <line num="45" count="0" type="stmt"/>
         <line num="46" count="0" type="stmt"/>
         <line num="47" count="0" type="stmt"/>
+      </file>
+      <file name="PopoverMultiSelect.stories.tsx" path="/home/runner/work/web-components/web-components/src/stories/PopoverMultiSelect.stories.tsx">
+        <metrics statements="8" coveredstatements="0" conditionals="2" coveredconditionals="0" methods="3" coveredmethods="0"/>
+        <line num="12" count="0" type="stmt"/>
+        <line num="13" count="0" type="stmt"/>
+        <line num="14" count="0" type="stmt"/>
+        <line num="15" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="18" count="0" type="stmt"/>
+        <line num="26" count="0" type="stmt"/>
+        <line num="28" count="0" type="stmt"/>
+        <line num="30" count="0" type="stmt"/>
       </file>
       <file name="ProgressCircle.stories.tsx" path="/home/runner/work/web-components/web-components/src/stories/ProgressCircle.stories.tsx">
         <metrics statements="4" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="0"/>
