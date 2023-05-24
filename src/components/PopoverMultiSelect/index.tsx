@@ -3,20 +3,19 @@ import { ListItemText } from '@mui/material';
 import { DropdownItem } from '../types';
 import Icon from '../Icon/Icon';
 import './styles.scss';
-import Popover from '../PopoverMenu/Popover';
+import Popover, { Section } from '../PopoverMenu/Popover';
 
-export type PopoverMenuMultiSelectProps = {
+export type PopoverMultiSelectProps = {
   anchorElement: HTMLElement | null;
   initialSelection: any[];
   menuAlign?: 'left' | 'center' | 'right';
   onChange: (selection: any[]) => void;
-  options: any[];
-  optionRenderer: (option: any) => string;
-  setAnchorElement: React.Dispatch<React.SetStateAction<HTMLElement | null>>;
+  sections: Section[];
+  setAnchorElement: (anchorEl: HTMLElement | null) => void;
 };
 
-export default function PopoverMenuMultiSelect(props: PopoverMenuMultiSelectProps): JSX.Element {
-  const { anchorElement, initialSelection, menuAlign, onChange, options, optionRenderer, setAnchorElement} = props;
+export default function PopoverMultiSelect(props: PopoverMultiSelectProps): JSX.Element {
+  const { anchorElement, initialSelection, menuAlign, onChange, sections, setAnchorElement} = props;
   const [selection, setSelection] = useState(initialSelection);
   const addToSelection = (value: DropdownItem) => {
     const newSelection = [...selection];
@@ -32,14 +31,11 @@ export default function PopoverMenuMultiSelect(props: PopoverMenuMultiSelectProp
   };
 
   const iconSpacer = () => {
-    return <div className='button-dropdown-select__checkmark-spacer'/>;
+    return <div className='popover-multi-select__checkmark-spacer'/>;
   };
 
   return <Popover
-    sections={[options.map((opt) => ({
-      label: optionRenderer(opt),
-      value: opt,
-    }))]}
+    sections={sections}
     handleClick={(item) => {
       const itemIndex = selection.findIndex((s) => s === item.value);
       if (itemIndex >= 0) {
@@ -51,11 +47,11 @@ export default function PopoverMenuMultiSelect(props: PopoverMenuMultiSelectProp
     anchorElement={anchorElement}
     setAnchorElement={setAnchorElement}
     itemRenderer={(item) => {
-      const itemFound = selection.find((s) => s === item.value);
+      const selected = selection.find((s) => s === item.value);
 
       return <>
-        {itemFound
-          ? <Icon name='checkmark' className='button-dropdown-select__checkmark-selection'/>
+        {selected
+          ? <Icon name='checkmark' className='popover-multi-select__checkmark-selection'/>
           : iconSpacer()
         }
         <ListItemText>{item.label}</ListItemText>

@@ -1,34 +1,33 @@
 import React, { useState } from 'react';
 import { Story } from '@storybook/react';
 import { Box } from '@mui/material';
-import PopoverMenuMultiSelect, { PopoverMenuMultiSelectProps } from '../components/PopoverMenuMultiSelect';
+import PopoverMultiSelect, { PopoverMultiSelectProps } from '../components/PopoverMultiSelect';
 import Button from '../components/Button/Button';
 
 export default {
-  title: 'PopoverMenuMultiSelect',
-  component: PopoverMenuMultiSelect,
+  title: 'PopoverMultiSelect',
+  component: PopoverMultiSelect,
 };
 
-const PopoverMenuMultiSelectTemplate: Story<Omit<PopoverMenuMultiSelectProps, 'anchorElement' | 'setAnchorElement'>> = (args) => {
+const PopoverMultiSelectTemplate: Story<Omit<PopoverMultiSelectProps, 'anchorElement' | 'setAnchorElement'>> = (args) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const handleClick = (event?: (React.MouseEvent<HTMLButtonElement, MouseEvent> | undefined)) => {
     setAnchorEl(event?.currentTarget ?? null);
   };
 
   return <>
-    <PopoverMenuMultiSelect anchorElement={anchorEl} setAnchorElement={setAnchorEl} {...args} />
+    <PopoverMultiSelect anchorElement={anchorEl} setAnchorElement={setAnchorEl} {...args} />
     <Box display='flex' justifyContent='center'>
       <Button onClick={handleClick} icon='iconLayers' label='Click Me for a Popover' />
     </Box>
   </>;
 };
 
-export const Default = PopoverMenuMultiSelectTemplate.bind({});
+export const Default = PopoverMultiSelectTemplate.bind({});
 
 Default.args = {
-  initialSelection: ['One'],
+  initialSelection: [1, 3],
   onChange: (selection: any[]) => alert(selection),
-  options: ['One', 'Two', 'Three'],
-  optionRenderer: (opt: any) => opt,
+  sections: [[{label: 'One', value: 1}, {label: 'Two', value: 2}], [{label: 'Three', value: 3}]],
   menuAlign: 'right',
 };

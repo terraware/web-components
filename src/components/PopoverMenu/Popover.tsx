@@ -8,7 +8,7 @@ export type PopoverProps = {
   sections: Section[];
   handleClick: (item: DropdownItem) => void;
   anchorElement: HTMLElement | null;
-  setAnchorElement: React.Dispatch<React.SetStateAction<HTMLElement | null>>;
+  setAnchorElement: (anchorEl: HTMLElement | null) => void;
   itemRenderer?: (item: DropdownItem) => React.ReactNode;
   menuAlign?: 'left' | 'center' | 'right';
 };
