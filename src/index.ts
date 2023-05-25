@@ -32,6 +32,7 @@ import ProgressCircle from './components/ProgressCircle/ProgressCircle';
 import RadioButton from './components/RadioButton';
 import Select from './components/Select/Select';
 import SelectT from './components/Select/SelectT';
+import Slider from './components/Slider';
 import SummaryBox from './components/SummaryBox';
 import Textfield from './components/Textfield/Textfield';
 import TextTruncated from './components/TextTruncated';
@@ -53,6 +54,7 @@ export type { EnhancedTableDetailsRow, RendererProps, TableColumnType, TableRowT
 export type { FormButton } from './components/FormBottomBar';
 export type { PhotoChooserErrorType, PhotoChooserProps } from './components/PhotoChooser';
 export type { PhotoItem } from './components/ViewPhotosDialog';
+export type { SliderMark } from './components/Slider';
 
 export {
   Autocomplete,
@@ -91,6 +93,7 @@ export {
   RadioButton,
   Select,
   SelectT,
+  Slider,
   stableSort,
   SummaryBox,
   Svg,
