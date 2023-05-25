@@ -2,7 +2,7 @@ import { Slider as MuiSlider, useTheme } from '@mui/material';
 import { useState } from 'react';
 
 export type SliderMark = {
-  label: string;
+  label?: string;
   value: number;
 };
 

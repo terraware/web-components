@@ -24,7 +24,6 @@ const marks = [
     value: 0,
   },
   {
-    label: '25%',
     value: 25,
   },
   {
@@ -32,7 +31,6 @@ const marks = [
     value: 50,
   },
   {
-    label: '75%',
     value: 75,
   },
   {
