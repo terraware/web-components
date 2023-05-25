@@ -37,7 +37,7 @@ export default function DatePicker(props: Props): JSX.Element {
     if (props.value !== temporalValue && props.value !== null) {
       setTemporalValue(props.value || null);
     }
-  }, [props.value, temporalValue]);
+  }, [props.value]);
 
   const renderInput = (params: object) => (
     <>
