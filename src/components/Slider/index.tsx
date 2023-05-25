@@ -1,5 +1,5 @@
 import { Slider as MuiSlider, useTheme } from '@mui/material';
-import { useState } from 'react';
+import React, { useState } from 'react';
 
 export type SliderMark = {
   label?: string;
@@ -43,8 +43,8 @@ export default function Slider(props: SliderProps): JSX.Element {
   };
 
   const [currentValue, setCurrentValue] = useState(defaultValue);
-  const handleChange = (event: Event, value: number | number[], activeThumb: number) => {
-    if (activeThumb === 0 && !Array.isArray(value)) {
+  const handleChange = (event: React.SyntheticEvent | Event, value: number | number[]) => {
+    if (!Array.isArray(value)) {
       if (value !== currentValue) {
         setCurrentValue(value);
         onChange(value);
@@ -58,7 +58,7 @@ export default function Slider(props: SliderProps): JSX.Element {
     marks={marks}
     min={min}
     max={max}
-    onChange={handleChange}
+    onChangeCommitted={handleChange}
     step={step ?? null}
     valueLabelDisplay={valueLabelDisplay}
     sx={sliderStyles}

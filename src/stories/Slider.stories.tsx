@@ -52,4 +52,5 @@ SnapToMark.args = {
   defaultValue: 50,
   marks,
   valueLabelDisplay: 'auto',
+  onChange: (value) => alert(`Power level at ${value}%`),
 };
