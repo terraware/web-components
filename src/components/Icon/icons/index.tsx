@@ -42,6 +42,7 @@ import IconFolder from '../../svg/IconFolder';
 import IconGraphReport from '../../svg/IconGraphReport';
 import IconImport from '../../svg/IconImport';
 import IconLayers from '../../svg/IconLayers';
+import IconList from '../../svg/IconList';
 import IconLocations from '../../svg/IconLocations';
 import IconMenu from '../../svg/IconMenu';
 import IconMenuHorizontal from '../../svg/IconMenuHorizontal';
@@ -51,6 +52,7 @@ import IconRestorationSite from '../../svg/IconRestorationSite';
 import IconSeedling from '../../svg/IconSeedling';
 import IconSynced from '../../svg/IconSynced';
 import IconTrashCan from '../../svg/IconTrashCan';
+import IconTreasureMap from '../../svg/IconTreasureMap';
 import Info from '../../svg/Info';
 import Key from '../../svg/Key';
 import Leaf from '../../svg/Leaf';
@@ -125,6 +127,7 @@ export type IconName =
   | 'iconGraphReport'
   | 'iconImport'
   | 'iconLayers'
+  | 'iconList'
   | 'iconLocations'
   | 'iconMarker'
   | 'iconMenu'
@@ -135,6 +138,7 @@ export type IconName =
   | 'iconSeedling'
   | 'iconSynced'
   | 'iconTrashCan'
+  | 'iconTreasureMap'
   | 'info'
   | 'key'
   | 'leaf'
@@ -213,6 +217,7 @@ const icons: Record<IconName, SVGComponent> = {
   iconGraphReport: IconGraphReport,
   iconImport: IconImport,
   iconLayers: IconLayers,
+  iconList: IconList,
   iconLocations: IconLocations,
   iconMarker: IconMarker,
   iconMenu: IconMenu,
@@ -223,6 +228,7 @@ const icons: Record<IconName, SVGComponent> = {
   iconSeedling: IconSeedling,
   iconSynced: IconSynced,
   iconTrashCan: IconTrashCan,
+  iconTreasureMap: IconTreasureMap,
   info: Info,
   key: Key,
   leaf: Leaf,
