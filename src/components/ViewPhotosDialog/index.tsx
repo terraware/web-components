@@ -39,16 +39,10 @@ export default function ViewPhotosDialog(props: ViewPhotosDialogProps): JSX.Elem
   } = props;
   const [isPreviousDisabled, setIsPreviousDisabled] = useState(false);
   const [isNextDisabled, setIsNextDisabled] = useState(false);
-
   const [isLoading, setIsLoading] = useState<boolean[]>([]);
-
-  useEffect(() => {
-    setIsLoading(new Array(photos.length).fill(true));
-  }, [photos]);
-
   const [selectedSlide, setSelectedSlide] = useState(initialSelectedSlide);
-
   const myCarousel = useRef<Carousel>(null);
+
   const responsive = {
     mobile: {
       breakpoint: { max: 4000, min: 0 },
@@ -73,9 +67,16 @@ export default function ViewPhotosDialog(props: ViewPhotosDialogProps): JSX.Elem
   };
 
   useEffect(() => {
+    setIsLoading(new Array(photos.length).fill(true));
+  }, [photos]);
+
+  useEffect(() => {
     setSelectedSlide(initialSelectedSlide);
+  }, [initialSelectedSlide]);
+
+  useEffect(() => {
     handleChange();
-  }, [initialSelectedSlide, open]);
+  }, [open]);
 
   useEffect(() => {
     if (myCarousel.current) {
