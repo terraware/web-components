@@ -43,13 +43,9 @@ export default function Slider(props: SliderProps): JSX.Element {
     },
   };
 
-  const [currentValue, setCurrentValue] = useState(defaultValue);
   const handleChange = (event: React.SyntheticEvent | Event, val: number | number[]) => {
     if (!Array.isArray(val)) {
-      if (val !== currentValue) {
-        setCurrentValue(val);
-        onChange(val);
-      }
+      onChange(val);
     }
   };
 
