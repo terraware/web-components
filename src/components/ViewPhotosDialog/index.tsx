@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import DialogBox from '../DialogBox/DialogBox';
 import Button from '../Button/Button';
 import Carousel from 'react-multi-carousel';
