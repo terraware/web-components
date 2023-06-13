@@ -50,7 +50,7 @@ export default function ViewPhotosDialog(props: ViewPhotosDialogProps): JSX.Elem
     },
   };
 
-  const handleChange = () => {
+  const handleChange = useCallback(() => {
     if (myCarousel.current) {
       if (myCarousel.current.state.currentSlide + 1 >= photos.length) {
         setIsNextDisabled(true);
@@ -62,13 +62,12 @@ export default function ViewPhotosDialog(props: ViewPhotosDialogProps): JSX.Elem
       } else {
         setIsPreviousDisabled(false);
       }
-      setSelectedSlide(myCarousel.current.state.currentSlide);
     }
-  };
+  }, [photos.length]);
 
   useEffect(() => {
     setIsLoading(new Array(photos.length).fill(true));
-  }, [photos]);
+  }, [photos.length]);
 
   useEffect(() => {
     setSelectedSlide(initialSelectedSlide);
@@ -76,7 +75,7 @@ export default function ViewPhotosDialog(props: ViewPhotosDialogProps): JSX.Elem
 
   useEffect(() => {
     handleChange();
-  }, [open]);
+  }, [open, handleChange]);
 
   useEffect(() => {
     if (myCarousel.current) {
