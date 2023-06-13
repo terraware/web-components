@@ -8,6 +8,7 @@ export type SliderMark = {
 
 export type SliderProps = {
   defaultValue?: number;
+  value?: number;
   marks?: SliderMark[];
   min?: number;
   max?: number;
@@ -17,7 +18,7 @@ export type SliderProps = {
 };
 
 export default function Slider(props: SliderProps): JSX.Element {
-  const { defaultValue, marks, min, max, onChange, step, valueLabelDisplay } = props;
+  const { defaultValue, value, marks, min, max, onChange, step, valueLabelDisplay } = props;
   const theme = useTheme();
 
   const sliderStyles = {
@@ -42,19 +43,16 @@ export default function Slider(props: SliderProps): JSX.Element {
     },
   };
 
-  const [currentValue, setCurrentValue] = useState(defaultValue);
-  const handleChange = (event: React.SyntheticEvent | Event, value: number | number[]) => {
-    if (!Array.isArray(value)) {
-      if (value !== currentValue) {
-        setCurrentValue(value);
-        onChange(value);
-      }
+  const handleChange = (event: React.SyntheticEvent | Event, val: number | number[]) => {
+    if (!Array.isArray(val)) {
+      onChange(val);
     }
   };
 
   return <MuiSlider
-    aria-label='Small steps'
+    aria-label='Slider'
     defaultValue={defaultValue}
+    value={value}
     marks={marks}
     min={min}
     max={max}
