@@ -50,7 +50,7 @@ export default function ViewPhotosDialog(props: ViewPhotosDialogProps): JSX.Elem
     },
   };
 
-  const handleChange = useCallback(() => {
+  const handleChange = useCallback((args?: any) => {
     if (myCarousel.current) {
       if (myCarousel.current.state.currentSlide + 1 >= photos.length) {
         setIsNextDisabled(true);
@@ -62,8 +62,19 @@ export default function ViewPhotosDialog(props: ViewPhotosDialogProps): JSX.Elem
       } else {
         setIsPreviousDisabled(false);
       }
+      if (args !== undefined) {
+        // if we came from the carousel component's call of handleChange, do the right thing
+        // don't set this slide if we came from useEffect on open
+        setSelectedSlide(myCarousel.current.state.currentSlide);
+      } else {
+        // we need to reinitialize to last state
+        if (selectedSlide === initialSelectedSlide) {
+          // explicitly go to slide, the useEffect won't be triggered
+          myCarousel.current.goToSlide(selectedSlide);
+        }
+      }
     }
-  }, [photos.length]);
+  }, [photos.length, selectedSlide, initialSelectedSlide, selectedSlide]);
 
   useEffect(() => {
     setIsLoading(new Array(photos.length).fill(true));
