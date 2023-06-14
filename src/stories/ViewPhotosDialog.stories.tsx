@@ -1,6 +1,8 @@
+import { useState } from 'react';
 import { StoryFn } from '@storybook/react';
 import React from 'react';
 import ViewPhotosDialog, {ViewPhotosDialogProps} from '../components/ViewPhotosDialog';
+import Button from '../components/Button/Button';
 import {Typography} from '@mui/material';
 
 export default {
@@ -9,7 +11,21 @@ export default {
 };
 
 const Template: StoryFn<ViewPhotosDialogProps> = (args: ViewPhotosDialogProps) => {
-  return <ViewPhotosDialog {...args} open={true} />;
+  const [modalOpen, setModalOpen] = useState<boolean>(false);
+
+  return (
+    <>
+      <ViewPhotosDialog
+        {...args}
+        open={modalOpen}
+        onClose={() => setModalOpen(false)}
+      />
+      <Button
+        label='View Photos'
+        onClick={() => setModalOpen(true)}
+      />
+    </>
+  );
 };
 
 const captionForPhoto = (num: number): JSX.Element => {

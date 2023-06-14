@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import DialogBox from '../DialogBox/DialogBox';
 import Button from '../Button/Button';
 import Carousel from 'react-multi-carousel';
@@ -39,16 +39,10 @@ export default function ViewPhotosDialog(props: ViewPhotosDialogProps): JSX.Elem
   } = props;
   const [isPreviousDisabled, setIsPreviousDisabled] = useState(false);
   const [isNextDisabled, setIsNextDisabled] = useState(false);
-
   const [isLoading, setIsLoading] = useState<boolean[]>([]);
-
-  useEffect(() => {
-    setIsLoading(new Array(photos.length).fill(true));
-  }, [photos]);
-
   const [selectedSlide, setSelectedSlide] = useState(initialSelectedSlide);
-
   const myCarousel = useRef<Carousel>(null);
+
   const responsive = {
     mobile: {
       breakpoint: { max: 4000, min: 0 },
@@ -56,7 +50,7 @@ export default function ViewPhotosDialog(props: ViewPhotosDialogProps): JSX.Elem
     },
   };
 
-  const handleChange = () => {
+  const handleChange = useCallback((args?: any) => {
     if (myCarousel.current) {
       if (myCarousel.current.state.currentSlide + 1 >= photos.length) {
         setIsNextDisabled(true);
@@ -68,14 +62,31 @@ export default function ViewPhotosDialog(props: ViewPhotosDialogProps): JSX.Elem
       } else {
         setIsPreviousDisabled(false);
       }
-      setSelectedSlide(myCarousel.current.state.currentSlide);
+      if (args !== undefined) {
+        // if we came from the carousel component's call of handleChange, do the right thing
+        // don't set this slide if we came from useEffect on open
+        setSelectedSlide(myCarousel.current.state.currentSlide);
+      } else {
+        // we need to reinitialize to last state
+        if (selectedSlide === initialSelectedSlide) {
+          // explicitly go to slide, the useEffect won't be triggered
+          myCarousel.current.goToSlide(selectedSlide);
+        }
+      }
     }
-  };
+  }, [photos.length, selectedSlide, initialSelectedSlide, selectedSlide]);
+
+  useEffect(() => {
+    setIsLoading(new Array(photos.length).fill(true));
+  }, [photos.length]);
 
   useEffect(() => {
     setSelectedSlide(initialSelectedSlide);
+  }, [initialSelectedSlide]);
+
+  useEffect(() => {
     handleChange();
-  }, [initialSelectedSlide, open]);
+  }, [open, handleChange]);
 
   useEffect(() => {
     if (myCarousel.current) {
