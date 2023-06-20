@@ -8,6 +8,16 @@ import { makeStyles } from '@mui/styles';
 import { SortOrder } from './sort';
 import IconTooltip from '../IconTooltip';
 
+const useStyles = makeStyles((theme: Theme) => ({
+  dragIcon: {
+    marginLeft: -20,
+    color: theme.palette.common.white,
+    '&:hover': {
+      color: theme.palette.neutral[600],
+    },
+  },
+}));
+
 interface HeadCell {
   disablePadding: boolean;
   id: string;
@@ -26,6 +36,7 @@ type Props = {
 
 export default function TableHeaderItem(props: Props): JSX.Element {
   const { headCell, order, orderBy, onRequestSort, i } = props;
+  const classes = useStyles();
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
     id: headCell.id,
   });
@@ -37,16 +48,6 @@ export default function TableHeaderItem(props: Props): JSX.Element {
   const createSortHandler = (property: string) => (event: React.MouseEvent<unknown>) => {
     onRequestSort(event, property);
   };
-
-  const dragIconStyles = makeStyles((theme: Theme) => ({
-    root: {
-      marginLeft: -20,
-      color: theme.palette.common.white,
-      '&:hover': {
-        color: theme.palette.neutral[600],
-      },
-    },
-  }));
 
   return (
     <TableCell
@@ -61,7 +62,7 @@ export default function TableHeaderItem(props: Props): JSX.Element {
     >
       {headCell.label && (
         <TableSortLabel active={orderBy === headCell.id} direction={orderBy === headCell.id ? order : 'asc'} onClick={createSortHandler(headCell.id)}>
-          {i > 0 && <DragHandle classes={dragIconStyles()} {...attributes} {...listeners} />}
+          {i > 0 && <DragHandle className={classes.dragIcon} {...attributes} {...listeners} />}
           {headCell.label}
           {headCell.tooltipTitle && <IconTooltip title={headCell.tooltipTitle} />}
         </TableSortLabel>
