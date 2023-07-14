@@ -37,6 +37,7 @@ import SummaryBox from './components/SummaryBox';
 import Textfield from './components/Textfield/Textfield';
 import TextTruncated from './components/TextTruncated';
 import Table from './components/table';
+import Tabs from './components/Tabs';
 import { descendingComparator, getComparator, SortOrder, stableSort } from './components/table/sort';
 import CellRenderer, { CellDateRenderer, TableRowType } from './components/table/TableCellRenderer';
 import { EnhancedTableDetailsRow, RendererProps, TableColumnType } from './components/table/types';
@@ -55,6 +56,7 @@ export type { FormButton } from './components/FormBottomBar';
 export type { PhotoChooserErrorType, PhotoChooserProps } from './components/PhotoChooser';
 export type { PhotoItem } from './components/ViewPhotosDialog';
 export type { SliderMark } from './components/Slider';
+export type { Tab, TabsProps } from './components/Tabs';
 
 export {
   Autocomplete,
@@ -97,9 +99,10 @@ export {
   stableSort,
   SummaryBox,
   Svg,
+  Table,
+  Tabs,
   Textfield,
   TextTruncated,
-  Table,
   theme,
   Tooltip,
   ViewPhotosDialog
