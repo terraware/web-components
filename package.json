@@ -13,6 +13,9 @@
   "homepage": "https://github.com/terraware/web-components#readme",
   "private": false,
   "main": "dist/index.js",
+  "engines": {
+    "node": ">=18",
+  },
   "dependencies": {
     "@date-io/date-fns": "^2.14.0",
     "@date-io/moment": "^2.16.1",
