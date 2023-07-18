@@ -8,7 +8,9 @@ export default {
 };
 
 const Template: Story<TabsProps> = (args) => {
-  return <Tabs {...args} />;
+  const { tabs } = args;
+
+  return <Tabs tabs={tabs} />;
 };
 
 const OverrideTemplate: Story<TabsProps> = (args) => {
