@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { TabContext, TabList, TabPanel } from '@mui/lab';
 import { Box, Tab, useTheme } from '@mui/material';
 import { useDeviceInfo } from '../../utils';
@@ -11,10 +11,12 @@ export type Tab = {
 
 export type TabsProps = {
   tabs: Tab[];
+  onTabChange?: (tab: string) => void;
+  activeTab?: string;
 };
 
-const Tabs = ({ tabs }: TabsProps): JSX.Element => {
-  const [selectedTab, setSelectedTab] = useState<string>(tabs[0].label ?? '');
+const Tabs = ({ tabs, onTabChange, activeTab }: TabsProps): JSX.Element => {
+  const [selectedTab, setSelectedTab] = useState<string>(activeTab ?? tabs[0]?.label ?? '');
   const theme = useTheme();
   const { isMobile } = useDeviceInfo();
 
@@ -39,6 +41,20 @@ const Tabs = ({ tabs }: TabsProps): JSX.Element => {
     padding: 0,
   };
 
+  const setTab = (tab: string) => {
+    if (onTabChange) {
+      onTabChange(tab);
+    } else {
+      setSelectedTab(tab);
+    }
+  };
+
+  useEffect(() => {
+    if (activeTab !== undefined) {
+      setSelectedTab(activeTab);
+    }
+  }, [activeTab]);
+
   return (
     <Box sx={{ width: '100%' }}>
       <TabContext value={selectedTab}>
@@ -46,7 +62,7 @@ const Tabs = ({ tabs }: TabsProps): JSX.Element => {
           <TabList
             variant='scrollable'
             sx={{ minHeight: theme.spacing(4.5) }}
-            onChange={(unused, value: string) => setSelectedTab(value)}
+            onChange={(unused, value: string) => setTab(value)}
             TabIndicatorProps={{
               style: {
                 background: theme.palette.TwClrBgBrand,
