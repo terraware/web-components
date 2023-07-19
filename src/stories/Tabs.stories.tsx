@@ -14,7 +14,7 @@ const Template: Story<TabsProps> = (args) => {
 };
 
 const OverrideTemplate: Story<TabsProps> = (args) => {
-  const [activeTab, setActiveTab] = useState<string>('Tab1');
+  const [activeTab, setActiveTab] = useState<string>('tab1');
 
   const onTabChange = (tab: string) => {
     if (tab !== 'tab3') {
