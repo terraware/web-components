@@ -98,7 +98,7 @@ export function CellBooleanRenderer({
   booleanTrueText,
 }: {
   id: string;
-  value?: string | number | any[] | ReactNode;
+  value?: boolean | string | number | any[] | ReactNode;
   className?: string;
   booleanFalseText: string;
   booleanTrueText: string;
