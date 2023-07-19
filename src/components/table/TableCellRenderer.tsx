@@ -98,7 +98,7 @@ export function CellBooleanRenderer({
   booleanTrueText,
 }: {
   id: string;
-  value?: string | number | any[] | ReactNode;
+  value?: boolean | string | number | any[] | ReactNode;
   className?: string;
   booleanFalseText: string;
   booleanTrueText: string;
@@ -108,7 +108,7 @@ export function CellBooleanRenderer({
   return (
     <TableCell id={id} align='left' className={`${classes.default} ${className}`}>
       <Typography component='p' variant='body1' fontSize='14px'>
-        {value === 'true' ? booleanTrueText : booleanFalseText}
+        {value?.toString() === 'true' ? booleanTrueText : booleanFalseText}
       </Typography>
     </TableCell>
   );
