@@ -92,7 +92,7 @@ Default.args = {
           middlename: 'John',
           lastname: 'Doe',
           occupation: 'Business analyst',
-          available: 'true',
+          available: true,
           date: '2023-04-27',
           pets: 12,
         };
