@@ -14,10 +14,10 @@ const Template: Story<TabsProps> = (args) => {
 };
 
 const OverrideTemplate: Story<TabsProps> = (args) => {
-  const [activeTab, setActiveTab] = useState<string>('Tab1');
+  const [activeTab, setActiveTab] = useState<string>('tab1');
 
   const onTabChange = (tab: string) => {
-    if (tab !== 'Tab3') {
+    if (tab !== 'tab3') {
       setActiveTab(tab);
     }
   };
@@ -29,8 +29,8 @@ export const Default = Template.bind({});
 
 Default.args = {
   tabs: [
-    { label: 'Tab1', children: 'tab1 contents', disabled: false },
-    { label: 'Tab2', children: 'tab2 contents', disabled: false },
+    { id: 'tab1', label: 'Tab1', children: 'tab1 contents', disabled: false },
+    { id: 'tab2', label: 'Tab2', children: 'tab2 contents', disabled: false },
   ],
 };
 
@@ -38,8 +38,8 @@ export const OverrideActiveTab = OverrideTemplate.bind({});
 
 OverrideActiveTab.args = {
   tabs: [
-    { label: 'Tab1', children: 'tab1 contents', disabled: false },
-    { label: 'Tab2', children: 'tab2 contents', disabled: false },
-    { label: 'Tab3', children: 'tab3 contents', disabled: false },
+    { id: 'tab1', label: 'Tab1', children: 'tab1 contents', disabled: false },
+    { id: 'tab2', label: 'Tab2', children: 'tab2 contents', disabled: false },
+    { id: 'tab3', label: 'Tab3', children: 'tab3 contents', disabled: false },
   ],
 };

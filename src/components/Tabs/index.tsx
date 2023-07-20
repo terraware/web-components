@@ -4,6 +4,7 @@ import { Box, Tab, useTheme } from '@mui/material';
 import { useDeviceInfo } from '../../utils';
 
 export type Tab = {
+  id: string;
   label: string;
   children: React.ReactNode;
   disabled?: boolean;
@@ -16,7 +17,7 @@ export type TabsProps = {
 };
 
 const Tabs = ({ tabs, onTabChange, activeTab }: TabsProps): JSX.Element => {
-  const [selectedTab, setSelectedTab] = useState<string>(activeTab ?? tabs[0]?.label ?? '');
+  const [selectedTab, setSelectedTab] = useState<string>(activeTab ?? tabs[0]?.id ?? '');
   const theme = useTheme();
   const { isMobile } = useDeviceInfo();
 
@@ -72,12 +73,12 @@ const Tabs = ({ tabs, onTabChange, activeTab }: TabsProps): JSX.Element => {
             }}
           >
             {tabs.map((tab, index) => (
-              <Tab label={tab.label} value={tab.label} sx={tabStyles} key={index} disabled={tab.disabled} />
+              <Tab label={tab.label} value={tab.id} sx={tabStyles} key={index} disabled={tab.disabled} />
             ))}
           </TabList>
         </Box>
         {tabs.map((tab, index) => (
-          <TabPanel value={tab.label} key={index} sx={tabPanelStyles}>
+          <TabPanel value={tab.id} key={index} sx={tabPanelStyles}>
             {tab.children}
           </TabPanel>
         ))}
