@@ -39,6 +39,7 @@ export { default as IconEdit } from './IconEdit';
 export { default as IconExport } from './IconExport';
 export { default as IconFile } from './IconFile';
 export { default as IconFolder } from './IconFolder';
+export { default as IconFullScreen } from './IconFullScreen';
 export { default as IconFutures } from './IconFutures';
 export { default as IconGraphReport } from './IconGraphReport';
 export { default as IconHeartMonitor } from './IconHeartMonitor';
