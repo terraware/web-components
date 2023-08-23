@@ -1,4 +1,4 @@
-export function descendingComparator<T>(a: T, b: T, orderBy: keyof T): number {
+export function descendingComparator<T>(a: T, b: T, orderBy: keyof T, order?: SortOrder): number {
   // first attempt to parse into a numeric value and compare
   const numCompare = descendingNumComparator(a, b, orderBy);
   if (numCompare !== null) {
@@ -9,11 +9,20 @@ export function descendingComparator<T>(a: T, b: T, orderBy: keyof T): number {
   const bValue = b[orderBy] ?? '';
   const aValue = a[orderBy] ?? '';
 
-  if (bValue < aValue) {
+  // blank values at the end always (any order)
+  if (aValue === '' || aValue === null) {
+    return 1;
+  }
+
+  if (bValue === '' || bValue === null) {
     return -1;
   }
+
+  if (bValue < aValue) {
+    return order === 'desc' ? -1 : 1;
+  }
   if (bValue > aValue) {
-    return 1;
+    return order === 'desc' ? 1 : -1;
   }
 
   return 0;
@@ -35,9 +44,9 @@ export type SortOrder = 'asc' | 'desc';
 export function getComparator<Key extends keyof any>(
   order: SortOrder,
   orderBy: Key,
-  sorting: (a: any, b: any, orderBy: any) => number
+  sorting: (a: any, b: any, orderBy: any, order?: SortOrder) => number
 ): (a: { [key in Key]?: string | number | [] }, b: { [key in Key]?: string | number | [] }) => number {
-  return order === 'desc' ? (a, b) => sorting(a, b, orderBy) : (a, b) => -sorting(a, b, orderBy);
+  return (a, b) => sorting(a, b, orderBy, order);
 }
 
 export function stableSort<T>(array: T[], comparator: (a: T, b: T) => number): T[] {

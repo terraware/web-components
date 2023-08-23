@@ -64,7 +64,7 @@ export interface Props<T> extends LocalizationProps {
   // an optional "newValue" parameter from that call
   onSelect?: (value: T, fromColumn?: string, newValue?: string) => void;
   DetailsRenderer?: (props: DetailsRendererProps) => JSX.Element;
-  sortComparator?: (a: T, b: T, orderBy: keyof T) => number;
+  sortComparator?: (a: T, b: T, orderBy: keyof T, order?: SortOrder) => number;
   sortHandler?: (order: SortOrder, orderBy: string) => void;
   isInactive?: (row: T) => boolean;
   isPresorted?: boolean;
