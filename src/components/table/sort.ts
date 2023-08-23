@@ -1,4 +1,4 @@
-export function descendingComparator<T>(a: T, b: T, orderBy: keyof T, order?: SortOrder): number {
+export function descendingComparator<T>(a: T, b: T, orderBy: keyof T, order: SortOrder): number {
   // first attempt to parse into a numeric value and compare
   const numCompare = descendingNumComparator(a, b, orderBy);
   if (numCompare !== null) {
@@ -44,7 +44,7 @@ export type SortOrder = 'asc' | 'desc';
 export function getComparator<Key extends keyof any>(
   order: SortOrder,
   orderBy: Key,
-  sorting: (a: any, b: any, orderBy: any, order?: SortOrder) => number
+  sorting: (a: any, b: any, orderBy: any, order: SortOrder) => number
 ): (a: { [key in Key]?: string | number | [] }, b: { [key in Key]?: string | number | [] }) => number {
   return (a, b) => sorting(a, b, orderBy, order);
 }
