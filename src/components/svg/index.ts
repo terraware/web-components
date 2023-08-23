@@ -54,6 +54,7 @@ export { default as IconMenu } from './IconMenu';
 export { default as IconMyLocation } from './IconMyLocation';
 export { default as IconNursery } from './IconNursery';
 export { default as IconOrg } from './IconOrg';
+export { default as IconParchment } from './IconParchment';
 export { default as IconRestorationSite } from './IconRestorationSite';
 export { default as IconSeedBank } from './IconSeedBank';
 export { default as IconSeedling } from './IconSeedling';
