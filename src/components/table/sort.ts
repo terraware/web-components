@@ -10,11 +10,15 @@ export function descendingComparator<T>(a: T, b: T, orderBy: keyof T, order: Sor
   const aValue = a[orderBy] ?? '';
 
   // blank values at the end always (any order)
-  if (aValue === '' || aValue === null) {
+  if (isEmptyValue(aValue.toString()) && isEmptyValue(bValue.toString())) {
+    return 0;
+  }
+
+  if (isEmptyValue(aValue.toString())) {
     return 1;
   }
 
-  if (bValue === '' || bValue === null) {
+  if (isEmptyValue(bValue.toString())) {
     return -1;
   }
 
@@ -26,6 +30,14 @@ export function descendingComparator<T>(a: T, b: T, orderBy: keyof T, order: Sor
   }
 
   return 0;
+}
+
+function isEmptyValue(value?: string): boolean {
+  if (value === '' || value === null || value?.toString().trim() === '' || value === undefined) {
+    return true;
+  } else {
+    return false;
+  }
 }
 
 function descendingNumComparator<T>(a: T, b: T, orderBy: keyof T): number | null {
