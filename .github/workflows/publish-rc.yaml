@@ -2,8 +2,9 @@ on:
   issue_comment:
     types: [created]
   # TODO remove before merging in
-  pull_request:
-    branches: [ng/publish-rc-on-comment]
+  push:
+    branches:
+      - ng/publish-rc-on-comment
 
 jobs:
   publish-rc:
