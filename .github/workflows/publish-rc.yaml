@@ -43,6 +43,11 @@ jobs:
       - name: Unit tests
         run: yarn test
 
+      - name: Git config
+        run: |
+          git config --global user.email "${{ secrets.GH_DEPLOY_EMAIL }}"
+          git config --global user.name "${{ secrets.GH_DEPLOY_USER }}"
+
       - name: Apply version bump (rc)
         run: npm version prerelease --preid=rc -m "Publishing RC - %s"
 
@@ -54,11 +59,6 @@ jobs:
 
       - name: License report
         run: yarn license-report-dist
-
-      - name: Git config
-        run: |
-          git config --global user.email "${{ secrets.GH_DEPLOY_EMAIL }}"
-          git config --global user.name "${{ secrets.GH_DEPLOY_USER }}"
 
       - name: Compare artifact package version
         run: .github/scripts/compare-artifact-package-versions.sh
