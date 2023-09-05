@@ -54,7 +54,11 @@ jobs:
              pwd
              cat `pwd`/package.json
 
+      - name: compare artifact package version
+        run: .github/scripts/compare-artifact-package-versions.sh
+
       - name: publish npm package
+        if: env.UPDATE_NPM_PACKAGE == 'true'
         run: cd dist && npm publish --scope @terraware
         env:
             NODE_AUTH_TOKEN: ${{ secrets.NPM_REGISTRY_AUTH_TOKEN }}
