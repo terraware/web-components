@@ -29,3 +29,6 @@ dist/*
 .npmrc
 
 package-lock.json
+
+# IntelliJ
+.idea
