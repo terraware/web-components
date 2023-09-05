@@ -1,17 +1,13 @@
 on:
   issue_comment:
-    types: [created]
-  # TODO remove before merging in
-  push:
-    branches:
-      - ng/publish-rc-on-comment
+    types:
+      - created
 
 jobs:
   publish-rc:
     # This job only runs for pull request comments
     name: Publish RC PR comment
-    # TODO uncomment before merging in
-#    if: ${{ github.event.issue.pull_request }} && contains(github.event.comment.body, 'publish rc')
+    if: ${{ github.event.issue.pull_request }} && contains(github.event.comment.body, 'publish rc')
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
