@@ -40,6 +40,11 @@ Execute the following commands:
 yarn start
 ```
 
+## Testing changes out in repos that use `web-components`
+
+You can add a comment to your open pull request with the text "publish rc". 
+This will publish an RC build to NPM for use in your repo that consumes `web-components` with a tag like `v2.3.58-rc.0`.
+
 ## Available Scripts
 
 In the project directory, you can run:
