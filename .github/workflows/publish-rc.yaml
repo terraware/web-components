@@ -10,13 +10,10 @@ jobs:
   publish-rc:
     # This job only runs for pull request comments
     name: Publish RC PR comment
-    # TODO remove before merging in
-#    if: ${{ github.event.issue.pull_request }}
+    # TODO uncomment before merging in
+#    if: ${{ github.event.issue.pull_request }} && contains(github.event.comment.body, 'publish rc')
     runs-on: ubuntu-latest
     steps:
-      - name: Debug echo
-        run: echo "${{ github.event.comment.body }}"
-
       - uses: actions/checkout@v3
 
       - name: Extract branch name
@@ -24,8 +21,10 @@ jobs:
         run: echo "branch=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> $GITHUB_OUTPUT
         id: extract_branch
 
+      # Since this is an explicit publish, we just set the registry provider explicitly
       - name: Set Environment
-        run: .github/scripts/set-environment.sh
+        shell: bash
+        run: echo "ARTIFACT_REGISTRY_PROVIDER=npm" >> $GITHUB_ENV
 
       - name: Setup Node
         uses: actions/setup-node@v3
@@ -67,7 +66,7 @@ jobs:
           git config --global user.name "${{ secrets.GH_DEPLOY_USER }}"
 
       - name: Apply version bump (rc)
-        run: npm version prerelease --preid=rc -m "%s - ${{ github.event.pull_request.title }}"
+        run: npm version prerelease --preid=rc -m "Publishing RC - %s"
 
       - name: Git push version bump
         run: git push origin ${{ steps.extract_branch.outputs.branch }} --follow-tags --force
