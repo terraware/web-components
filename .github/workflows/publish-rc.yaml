@@ -4,9 +4,12 @@ jobs:
   publish-rc:
     # This job only runs for pull request comments
     name: Publish RC PR comment
-    if: ${{ github.event.issue.pull_request }} && contains(github.event.comment.body, 'publish rc')
+    if: ${{ github.event.issue.pull_request }}
     runs-on: ubuntu-latest
     steps:
+      - name: Debug echo
+        run: echo "${{ github.event.comment.body }}"
+
       - uses: actions/checkout@v3
 
       - name: Extract branch name
