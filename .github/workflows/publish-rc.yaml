@@ -1,0 +1,77 @@
+on:
+  issue_comment:
+    types:
+      - created
+
+jobs:
+  publish-rc:
+    # This job only runs for pull request comments
+    name: Publish RC PR comment
+    if: ${{ github.event.issue.pull_request }} && contains(github.event.comment.body, 'publish rc')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Extract branch name
+        shell: bash
+        run: echo "branch=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> $GITHUB_OUTPUT
+        id: extract_branch
+
+      # Since this is an explicit publish, we just set the registry provider explicitly
+      - name: Set Environment
+        shell: bash
+        run: echo "ARTIFACT_REGISTRY_PROVIDER=npm" >> $GITHUB_ENV
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16.x'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Install Dependencies
+        run: |
+          yarn install --network-timeout 100000
+          git checkout -- package.json
+
+      - name: Linter
+        run: yarn lint
+
+      - name: Unit tests
+        run: yarn test
+
+      - name: Git config
+        run: |
+          git config --global user.email "${{ secrets.GH_DEPLOY_EMAIL }}"
+          git config --global user.name "${{ secrets.GH_DEPLOY_USER }}"
+
+      - name: Apply version bump (rc)
+        run: npm version prerelease --preid=rc -m "Publishing RC - %s"
+
+      - name: Git push version bump
+        run: git push origin ${{ steps.extract_branch.outputs.branch }} --follow-tags --force
+
+      - name: Build
+        run: yarn build-dist
+
+      - name: License report
+        run: yarn license-report-dist
+
+      - name: Compare artifact package version
+        run: .github/scripts/compare-artifact-package-versions.sh
+
+      - name: Prune package.json
+        run: |
+          cd dist
+          npm pkg delete scripts
+          npm pkg delete devDependencies
+          npm pkg delete eslintConfig
+          npm pkg delete resolutions
+          npm pkg delete browserslist
+          pwd
+          cat `pwd`/package.json
+
+      - name: Publish npm package
+        if: env.UPDATE_NPM_PACKAGE == 'true'
+        run: cd dist && npm publish --scope @terraware
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_REGISTRY_AUTH_TOKEN }}
