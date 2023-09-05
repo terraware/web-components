@@ -1,10 +1,16 @@
-on: issue_comment
+on:
+  issue_comment:
+    types: [created]
+  # TODO remove before merging in
+  pull_request:
+    branches: [ng/publish-rc-on-comment]
 
 jobs:
   publish-rc:
     # This job only runs for pull request comments
     name: Publish RC PR comment
-    if: ${{ github.event.issue.pull_request }}
+    # TODO remove before merging in
+#    if: ${{ github.event.issue.pull_request }}
     runs-on: ubuntu-latest
     steps:
       - name: Debug echo
