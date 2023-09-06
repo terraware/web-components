@@ -41,12 +41,14 @@ import IconFile from '../../svg/IconFile';
 import IconFolder from '../../svg/IconFolder';
 import IconFullScreen from '../../svg/IconFullScreen';
 import IconGraphReport from '../../svg/IconGraphReport';
+import IconHistory from '../../svg/IconHistory';
 import IconImport from '../../svg/IconImport';
 import IconLayers from '../../svg/IconLayers';
 import IconList from '../../svg/IconList';
 import IconLocations from '../../svg/IconLocations';
 import IconMenu from '../../svg/IconMenu';
 import IconMenuHorizontal from '../../svg/IconMenuHorizontal';
+import IconModule from '../../svg/IconModule';
 import IconMyLocation from '../../svg/IconMyLocation';
 import IconNursery from '../../svg/IconNursery';
 import IconParchment from '../../svg/IconParchment';
@@ -128,6 +130,7 @@ export type IconName =
   | 'iconFolder'
   | 'iconFullScreen'
   | 'iconGraphReport'
+  | 'iconHistory'
   | 'iconImport'
   | 'iconLayers'
   | 'iconList'
@@ -135,6 +138,7 @@ export type IconName =
   | 'iconMarker'
   | 'iconMenu'
   | 'iconMenuHorizontal'
+  | 'iconModule'
   | 'iconMyLocation'
   | 'iconNursery'
   | 'iconParchment'
@@ -220,6 +224,7 @@ const icons: Record<IconName, SVGComponent> = {
   iconFolder: IconFolder,
   iconFullScreen: IconFullScreen,
   iconGraphReport: IconGraphReport,
+  iconHistory: IconHistory,
   iconImport: IconImport,
   iconLayers: IconLayers,
   iconList: IconList,
@@ -227,6 +232,7 @@ const icons: Record<IconName, SVGComponent> = {
   iconMarker: IconMarker,
   iconMenu: IconMenu,
   iconMenuHorizontal: IconMenuHorizontal,
+  iconModule: IconModule,
   iconMyLocation: IconMyLocation,
   iconNursery: IconNursery,
   iconParchment: IconParchment,
