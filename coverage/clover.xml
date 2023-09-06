@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1693950758878" clover="3.2.0">
-  <project timestamp="1693950758878" name="All files">
-    <metrics statements="1257" coveredstatements="172" conditionals="998" coveredconditionals="87" methods="469" coveredmethods="31" elements="2724" coveredelements="290" complexity="0" loc="1257" ncloc="1257" packages="35" files="176" classes="176"/>
+<coverage generated="1694007089776" clover="3.2.0">
+  <project timestamp="1694007089776" name="All files">
+    <metrics statements="1261" coveredstatements="174" conditionals="1002" coveredconditionals="87" methods="471" coveredmethods="31" elements="2734" coveredelements="292" complexity="0" loc="1261" ncloc="1261" packages="35" files="178" classes="178"/>
     <package name="src">
       <metrics statements="1" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
       <file name="index.ts" path="/home/runner/work/web-components/web-components/src/index.ts">
@@ -185,7 +185,7 @@
       <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
       <file name="index.tsx" path="/home/runner/work/web-components/web-components/src/components/Icon/icons/index.tsx">
         <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
-        <line num="181" count="2" type="stmt"/>
+        <line num="185" count="2" type="stmt"/>
       </file>
     </package>
     <package name="src.components.IconTooltip">
@@ -713,7 +713,7 @@
       </file>
     </package>
     <package name="src.components.svg">
-      <metrics statements="172" coveredstatements="87" conditionals="172" coveredconditionals="3" methods="86" coveredmethods="3"/>
+      <metrics statements="176" coveredstatements="89" conditionals="176" coveredconditionals="3" methods="88" coveredmethods="3"/>
       <file name="BlobbyGrayIconImage.tsx" path="/home/runner/work/web-components/web-components/src/components/svg/BlobbyGrayIconImage.tsx">
         <metrics statements="2" coveredstatements="1" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
         <line num="7" count="2" type="stmt"/>
@@ -939,6 +939,11 @@
         <line num="7" count="2" type="stmt"/>
         <line num="8" count="0" type="stmt"/>
       </file>
+      <file name="IconHistory.tsx" path="/home/runner/work/web-components/web-components/src/components/svg/IconHistory.tsx">
+        <metrics statements="2" coveredstatements="1" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
+        <line num="7" count="2" type="stmt"/>
+        <line num="8" count="0" type="stmt"/>
+      </file>
       <file name="IconImport.tsx" path="/home/runner/work/web-components/web-components/src/components/svg/IconImport.tsx">
         <metrics statements="2" coveredstatements="1" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
         <line num="7" count="2" type="stmt"/>
@@ -980,6 +985,11 @@
         <line num="8" count="0" type="stmt"/>
       </file>
       <file name="IconMenuHorizontal.tsx" path="/home/runner/work/web-components/web-components/src/components/svg/IconMenuHorizontal.tsx">
+        <metrics statements="2" coveredstatements="1" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
+        <line num="7" count="2" type="stmt"/>
+        <line num="8" count="0" type="stmt"/>
+      </file>
+      <file name="IconModule.tsx" path="/home/runner/work/web-components/web-components/src/components/svg/IconModule.tsx">
         <metrics statements="2" coveredstatements="1" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
         <line num="7" count="2" type="stmt"/>
         <line num="8" count="0" type="stmt"/>
