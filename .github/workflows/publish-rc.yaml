@@ -12,7 +12,8 @@ jobs:
     if: ${{ github.event.issue.pull_request }} && contains(github.event.comment.body, 'publish rc')
     runs-on: ubuntu-latest
     steps:
-      - id: 'get-branch'
+      - name: Get Branch
+        id: 'get-branch'
         run: echo ::set-output name=branch::$(gh pr view $PR_NUMBER --repo $REPO --json headRefName --jq '.headRefName')
         env:
           REPO: ${{ github.repository }}
