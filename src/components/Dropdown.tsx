@@ -67,6 +67,7 @@ export interface DropdownProps {
   hideClearIcon?: boolean;
 
   autocomplete?: boolean;
+  required?: boolean;
 }
 
 /**
