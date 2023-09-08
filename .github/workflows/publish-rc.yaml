@@ -1,3 +1,5 @@
+name: Publish RC
+
 on:
   issue_comment:
     types:
@@ -10,12 +12,18 @@ jobs:
     if: ${{ github.event.issue.pull_request }} && contains(github.event.comment.body, 'publish rc')
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - name: Get Branch
+        id: 'get-branch'
+        run: echo ::set-output name=branch::$(gh pr view $PR_NUMBER --repo $REPO --json headRefName --jq '.headRefName')
+        env:
+          REPO: ${{ github.repository }}
+          PR_NUMBER: ${{ github.event.issue.number }}
+          GITHUB_TOKEN: ${{ secrets.GH_DEPLOY_REPO_TOKEN }}
 
-      - name: Extract branch name
-        shell: bash
-        run: echo "branch=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> $GITHUB_OUTPUT
-        id: extract_branch
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ steps.get-branch.outputs.branch }}
 
       # Since this is an explicit publish, we just set the registry provider explicitly
       - name: Set Environment
@@ -48,7 +56,7 @@ jobs:
         run: npm version prerelease --preid=rc -m "Publishing RC - %s"
 
       - name: Git push version bump
-        run: git push origin ${{ steps.extract_branch.outputs.branch }} --follow-tags --force
+        run: git push origin ${{ steps.get-branch.outputs.branch }} --follow-tags --force
 
       - name: Build
         run: yarn build-dist
