@@ -21,7 +21,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GH_DEPLOY_REPO_TOKEN }}
 
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           ref: ${{ steps.get-branch.outputs.branch }}
 
