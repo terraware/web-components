@@ -6,6 +6,7 @@ export { default as BlobbyIconLeaf } from './BlobbyIconLeaf';
 export { default as BlobbyIconLibrary } from './BlobbyIconLibrary';
 export { default as BlobbyIconNursery } from './BlobbyIconNursery';
 export { default as BlobbyIconOrganization } from './BlobbyIconOrganization';
+export { default as BlobbyIconParchment } from './BlobbyIconParchment';
 export { default as BlobbyIconPeople } from './BlobbyIconPeople';
 export { default as BlobbyIconSeedBank } from './BlobbyIconSeedBank';
 export { default as BlobbyIconSite } from './BlobbyIconSite';
