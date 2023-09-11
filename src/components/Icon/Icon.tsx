@@ -11,7 +11,7 @@ type StyleProps = {
 const useStyles = makeStyles(() => ({
   icon: {
     '& path': {
-      fill: (props: StyleProps) => props.fillColor ? props.fillColor : 'initial',
+      fill: (props: StyleProps) => props.fillColor,
     }
   },
 }));
@@ -27,5 +27,5 @@ export default function Icon({ size = 'small', name, className, fillColor }: Pro
   const classes = useStyles({ fillColor });
   const SVGComponent = icons[name];
 
-  return <SVGComponent className={`tw-icon tw-icon--${size} ${className ?? className} ${classes.icon}`} />;
+  return <SVGComponent className={`tw-icon tw-icon--${size} ${className ?? ''} ${fillColor ? classes.icon : ''}`} />;
 }
