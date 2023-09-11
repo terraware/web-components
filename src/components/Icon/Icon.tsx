@@ -10,7 +10,7 @@ type StyleProps = {
 
 const useStyles = makeStyles(() => ({
   icon: {
-    '& path': (props: StyleProps) => (props.fillColor ? { fill: 'inherit' } : {}),
+    '& path': (props: StyleProps) => (props.fillColor ? { fill: props.fillColor } : {}),
   },
 }));
 
