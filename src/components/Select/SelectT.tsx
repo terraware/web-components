@@ -31,6 +31,7 @@ export interface SelectTProps<T> {
   displayLabel: (option: any) => string;
   tooltipTitle?: TooltipProps['title'];
   editable?: boolean;
+  required?: boolean;
 }
 
 export default function SelectT<T>(props: SelectTProps<T>): JSX.Element {
@@ -58,6 +59,7 @@ export default function SelectT<T>(props: SelectTProps<T>): JSX.Element {
     displayLabel,
     tooltipTitle,
     editable,
+    required,
   } = props;
 
   const selectClass = classNames({
@@ -196,7 +198,7 @@ export default function SelectT<T>(props: SelectTProps<T>): JSX.Element {
     <div className={`select ${className}`}>
       {label && (
         <label htmlFor={id} className='textfield-label'>
-          {label} {tooltipTitle && <IconTooltip title={tooltipTitle} />}
+          {label} {required ? '*' : ''} {tooltipTitle && <IconTooltip title={tooltipTitle} />}
         </label>
       )}
       <div className={`textfield-container ${fullWidth ? 'textfield-container--fullWidth' : ''}`}>
@@ -209,6 +211,7 @@ export default function SelectT<T>(props: SelectTProps<T>): JSX.Element {
             onKeyDown={onKeyDownHandler}
             onBlur={onBlur}
             onFocus={onFocus}
+            required={required}
           />
           {!hideArrow && <Icon name={'chevronDown'} className='textfield-value--icon-right' />}
         </div>

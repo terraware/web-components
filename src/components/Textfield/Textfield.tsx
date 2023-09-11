@@ -36,6 +36,7 @@ export interface Props {
   max?: number;
   disabledCharacters?: string[];
   preserveNewlines?: boolean;
+  required?: boolean;
 }
 
 export default function TextField(props: Props): JSX.Element {
@@ -64,6 +65,7 @@ export default function TextField(props: Props): JSX.Element {
     max,
     disabledCharacters,
     preserveNewlines,
+    required
   } = props;
 
   const textfieldClass = classNames({
@@ -123,7 +125,7 @@ export default function TextField(props: Props): JSX.Element {
   return (
     <div className={`textfield ${className}`}>
       <label htmlFor={id} className='textfield-label'>
-        {label}
+        {required ? `${label} *` : label}
         {tooltipTitle && <IconTooltip placement='top' title={tooltipTitle} />}
       </label>
       {!display &&
@@ -139,6 +141,7 @@ export default function TextField(props: Props): JSX.Element {
               onBlur={onBlur}
               onKeyDown={onKeyDownHandler}
               onWheel={(e) => e.currentTarget.blur()}
+              required={required}
               {...typeProps}
             />
             {iconRight ? renderRightIcon() : null}
@@ -152,6 +155,7 @@ export default function TextField(props: Props): JSX.Element {
             placeholder={placeholder}
             onChange={textfieldOnChange}
             onBlur={onBlur}
+            required={required}
           />
         ))}
       {display && <p className={`textfield-value--display${preserveNewlines ? ' preserve-newlines' : ''}`}>{value}</p>}
