@@ -1,14 +1,22 @@
 import React from 'react';
 
 import BlobbyGrayIconImage from '../../svg/BlobbyGrayIconImage';
+import BlobbyGrayIconImport from '../../svg/BlobbyGrayIconImport';
 import BlobbyGrayIconUploadToTheCloud from '../../svg/BlobbyGrayIconUploadToTheCloud';
+import BlobbyIconCloudChecked from '../../svg/BlobbyIconCloudChecked';
+import BlobbyIconExportOrUploadPhoto from '../../svg/BlobbyIconExportOrUploadPhoto';
+import BlobbyIconFolder from '../../svg/BlobbyIconFolder';
+import BlobbyIconGraphReport from '../../svg/BlobbyIconGraphReport';
 import BlobbyIconHappy from '../../svg/BlobbyIconHappy';
 import BlobbyIconLeaf from '../../svg/BlobbyIconLeaf';
 import BlobbyIconLibrary from '../../svg/BlobbyIconLibrary';
 import BlobbyIconNursery from '../../svg/BlobbyIconNursery';
 import BlobbyIconParchment from '../../svg/BlobbyIconParchment';
 import BlobbyIconSeedBank from '../../svg/BlobbyIconSeedBank';
+import BlobbyIconSeedling from '../../svg/BlobbyIconSeedling';
+import BlobbyIconSeeds from '../../svg/BlobbyIconSeeds';
 import BlobbyIconSite from '../../svg/BlobbyIconSite';
+import BlobbyIconSparkles from '../../svg/BlobbyIconSparkles';
 import BlobbyIconWrench from '../../svg/BlobbyIconWrench';
 import Bug from '../../svg/Bug';
 import Calendar from '../../svg/Calendar';
@@ -91,14 +99,22 @@ import IconMarker from '../../svg/IconMarker';
 
 export type IconName =
   | 'blobbyGrayIconImage'
+  | 'blobbyGrayIconImport'
   | 'blobbyGrayIconUploadToTheCloud'
-  | 'blobbyIconSeedBank'
+  | 'blobbyIconCloudChecked'
+  | 'blobbyIconExportOrUploadPhoto'
+  | 'blobbyIconFolder'
+  | 'blobbyIconGraphReport'
   | 'blobbyIconHappy'
   | 'blobbyIconLeaf'
   | 'blobbyIconLibrary'
   | 'blobbyIconNursery'
   | 'blobbyIconParchment'
+  | 'blobbyIconSeedBank'
+  | 'blobbyIconSeedling'
+  | 'blobbyIconSeeds'
   | 'blobbyIconSite'
+  | 'blobbyIconSparkles'
   | 'blobbyIconWrench'
   | 'bug'
   | 'calendar'
@@ -186,14 +202,22 @@ type SVGComponent = React.FunctionComponent<
 >;
 const icons: Record<IconName, SVGComponent> = {
   blobbyGrayIconImage: BlobbyGrayIconImage,
+  blobbyGrayIconImport: BlobbyGrayIconImport,
   blobbyGrayIconUploadToTheCloud: BlobbyGrayIconUploadToTheCloud,
-  blobbyIconSeedBank: BlobbyIconSeedBank,
+  blobbyIconCloudChecked: BlobbyIconCloudChecked,
+  blobbyIconExportOrUploadPhoto: BlobbyIconExportOrUploadPhoto,
+  blobbyIconFolder: BlobbyIconFolder,
+  blobbyIconGraphReport: BlobbyIconGraphReport,
   blobbyIconHappy: BlobbyIconHappy,
   blobbyIconLeaf: BlobbyIconLeaf,
   blobbyIconLibrary: BlobbyIconLibrary,
   blobbyIconNursery: BlobbyIconNursery,
   blobbyIconParchment: BlobbyIconParchment,
+  blobbyIconSeedBank: BlobbyIconSeedBank,
+  blobbyIconSeedling: BlobbyIconSeedling,
+  blobbyIconSeeds: BlobbyIconSeeds,
   blobbyIconSite: BlobbyIconSite,
+  blobbyIconSparkles: BlobbyIconSparkles,
   blobbyIconWrench: BlobbyIconWrench,
   bug: Bug,
   calendar: Calendar,
