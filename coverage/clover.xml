@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1694474599683" clover="3.2.0">
-  <project timestamp="1694474599683" name="All files">
-    <metrics statements="1263" coveredstatements="175" conditionals="1012" coveredconditionals="86" methods="472" coveredmethods="31" elements="2747" coveredelements="292" complexity="0" loc="1263" ncloc="1263" packages="35" files="179" classes="179"/>
+<coverage generated="1694523578547" clover="3.2.0">
+  <project timestamp="1694523578547" name="All files">
+    <metrics statements="1279" coveredstatements="183" conditionals="1028" coveredconditionals="86" methods="480" coveredmethods="31" elements="2787" coveredelements="300" complexity="0" loc="1279" ncloc="1279" packages="35" files="187" classes="187"/>
     <package name="src">
       <metrics statements="1" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
       <file name="index.ts" path="/home/runner/work/web-components/web-components/src/index.ts">
@@ -185,7 +185,7 @@
       <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
       <file name="index.tsx" path="/home/runner/work/web-components/web-components/src/components/Icon/icons/index.tsx">
         <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
-        <line num="187" count="2" type="stmt"/>
+        <line num="203" count="2" type="stmt"/>
       </file>
     </package>
     <package name="src.components.IconTooltip">
@@ -713,13 +713,38 @@
       </file>
     </package>
     <package name="src.components.svg">
-      <metrics statements="178" coveredstatements="90" conditionals="178" coveredconditionals="3" methods="89" coveredmethods="3"/>
+      <metrics statements="194" coveredstatements="98" conditionals="194" coveredconditionals="3" methods="97" coveredmethods="3"/>
       <file name="BlobbyGrayIconImage.tsx" path="/home/runner/work/web-components/web-components/src/components/svg/BlobbyGrayIconImage.tsx">
         <metrics statements="2" coveredstatements="1" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
         <line num="7" count="2" type="stmt"/>
         <line num="8" count="0" type="stmt"/>
       </file>
+      <file name="BlobbyGrayIconImport.tsx" path="/home/runner/work/web-components/web-components/src/components/svg/BlobbyGrayIconImport.tsx">
+        <metrics statements="2" coveredstatements="1" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
+        <line num="7" count="2" type="stmt"/>
+        <line num="8" count="0" type="stmt"/>
+      </file>
       <file name="BlobbyGrayIconUploadToTheCloud.tsx" path="/home/runner/work/web-components/web-components/src/components/svg/BlobbyGrayIconUploadToTheCloud.tsx">
+        <metrics statements="2" coveredstatements="1" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
+        <line num="7" count="2" type="stmt"/>
+        <line num="8" count="0" type="stmt"/>
+      </file>
+      <file name="BlobbyIconCloudChecked.tsx" path="/home/runner/work/web-components/web-components/src/components/svg/BlobbyIconCloudChecked.tsx">
+        <metrics statements="2" coveredstatements="1" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
+        <line num="7" count="2" type="stmt"/>
+        <line num="8" count="0" type="stmt"/>
+      </file>
+      <file name="BlobbyIconExportOrUploadPhoto.tsx" path="/home/runner/work/web-components/web-components/src/components/svg/BlobbyIconExportOrUploadPhoto.tsx">
+        <metrics statements="2" coveredstatements="1" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
+        <line num="7" count="2" type="stmt"/>
+        <line num="8" count="0" type="stmt"/>
+      </file>
+      <file name="BlobbyIconFolder.tsx" path="/home/runner/work/web-components/web-components/src/components/svg/BlobbyIconFolder.tsx">
+        <metrics statements="2" coveredstatements="1" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
+        <line num="7" count="2" type="stmt"/>
+        <line num="8" count="0" type="stmt"/>
+      </file>
+      <file name="BlobbyIconGraphReport.tsx" path="/home/runner/work/web-components/web-components/src/components/svg/BlobbyIconGraphReport.tsx">
         <metrics statements="2" coveredstatements="1" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
         <line num="7" count="2" type="stmt"/>
         <line num="8" count="0" type="stmt"/>
@@ -769,7 +794,22 @@
         <line num="7" count="2" type="stmt"/>
         <line num="8" count="0" type="stmt"/>
       </file>
+      <file name="BlobbyIconSeedling.tsx" path="/home/runner/work/web-components/web-components/src/components/svg/BlobbyIconSeedling.tsx">
+        <metrics statements="2" coveredstatements="1" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
+        <line num="7" count="2" type="stmt"/>
+        <line num="8" count="0" type="stmt"/>
+      </file>
+      <file name="BlobbyIconSeeds.tsx" path="/home/runner/work/web-components/web-components/src/components/svg/BlobbyIconSeeds.tsx">
+        <metrics statements="2" coveredstatements="1" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
+        <line num="7" count="2" type="stmt"/>
+        <line num="8" count="0" type="stmt"/>
+      </file>
       <file name="BlobbyIconSite.tsx" path="/home/runner/work/web-components/web-components/src/components/svg/BlobbyIconSite.tsx">
+        <metrics statements="2" coveredstatements="1" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
+        <line num="7" count="2" type="stmt"/>
+        <line num="8" count="0" type="stmt"/>
+      </file>
+      <file name="BlobbyIconSparkles.tsx" path="/home/runner/work/web-components/web-components/src/components/svg/BlobbyIconSparkles.tsx">
         <metrics statements="2" coveredstatements="1" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
         <line num="7" count="2" type="stmt"/>
         <line num="8" count="0" type="stmt"/>

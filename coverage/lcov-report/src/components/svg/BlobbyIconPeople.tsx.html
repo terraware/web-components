@@ -166,7 +166,12 @@
 <a name='L101'></a><a href='#L101'>101</a>
 <a name='L102'></a><a href='#L102'>102</a>
 <a name='L103'></a><a href='#L103'>103</a>
-<a name='L104'></a><a href='#L104'>104</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L104'></a><a href='#L104'>104</a>
+<a name='L105'></a><a href='#L105'>105</a>
+<a name='L106'></a><a href='#L106'>106</a>
+<a name='L107'></a><a href='#L107'>107</a>
+<a name='L108'></a><a href='#L108'>108</a>
+<a name='L109'></a><a href='#L109'>109</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -174,6 +179,11 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -278,96 +288,101 @@ interface SVGRProps {
 const SvgBlobbyIconPeople = <span class="fstat-no" title="function not covered" >({</span> title, titleId, ...props }: SVGProps&lt;SVGSVGElement&gt; &amp; SVGRProps) =&gt; (
 <span class="cstat-no" title="statement not covered" >  &lt;svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 200 128' aria-labelledby={titleId} {...props}&gt;</span>
     {title ? &lt;title id={titleId}&gt;{title}&lt;/title&gt; : null}
-    &lt;path
-      fill='#F0F4FF'
-      fillRule='evenodd'
-      d='M113.962 6.222c26.535 2.074 38.447 30.862 44.693 56.735 4.621 19.146-2.901 38.537-18.932 49.978-15.595 11.131-35.55 10.486-51.986.639C63.731 99.19 34.311 80.943 40.953 53.757c7.619-31.19 41-50.037 73.009-47.535Z'
-      clipRule='evenodd'
-    /&gt;
-    &lt;path
-      fill='url(#blobby-icon-people_svg__a)'
-      fillOpacity={0.2}
-      fillRule='evenodd'
-      d='M113.962 6.222c26.535 2.074 38.447 30.862 44.693 56.735 4.621 19.146-2.901 38.537-18.932 49.978-15.595 11.131-35.55 10.486-51.986.639C63.731 99.19 34.311 80.943 40.953 53.757c7.619-31.19 41-50.037 73.009-47.535Z'
-      clipRule='evenodd'
-    /&gt;
-    &lt;mask
-      id='blobby-icon-people_svg__c'
-      width={120}
-      height={116}
-      x={40}
-      y={6}
-      maskUnits='userSpaceOnUse'
-      style={{
-        maskType: 'alpha',
-      }}
-    &gt;
+    &lt;g clipPath='url(#blobby-icon-people_svg__a)'&gt;
       &lt;path
-        fill='#F0F4FF'
+        fill='#E2F6EC'
         fillRule='evenodd'
-        d='M113.962 6.222c26.535 2.074 38.447 30.862 44.693 56.735 4.621 19.146-2.901 38.537-18.932 49.978-15.595 11.131-35.55 10.486-51.986.639C63.731 99.19 34.311 80.943 40.953 53.757c7.619-31.19 41-50.037 73.009-47.535Z'
+        d='M96.667 4.039c26.67-1.026 50.485 18.385 57.399 44.164 6.047 22.546-11.922 41.533-30.693 55.408-19.462 14.387-44.342 28.69-64.028 14.611-19.947-14.266-15.548-42.761-7.93-66.071 7.563-23.136 20.93-47.177 45.252-48.112Z'
         clipRule='evenodd'
       /&gt;
       &lt;path
         fill='url(#blobby-icon-people_svg__b)'
         fillOpacity={0.2}
         fillRule='evenodd'
-        d='M113.962 6.222c26.535 2.074 38.447 30.862 44.693 56.735 4.621 19.146-2.901 38.537-18.932 49.978-15.595 11.131-35.55 10.486-51.986.639C63.731 99.19 34.311 80.943 40.953 53.757c7.619-31.19 41-50.037 73.009-47.535Z'
+        d='M96.667 4.039c26.67-1.026 50.485 18.385 57.399 44.164 6.047 22.546-11.922 41.533-30.693 55.408-19.462 14.387-44.342 28.69-64.028 14.611-19.947-14.266-15.548-42.761-7.93-66.071 7.563-23.136 20.93-47.177 45.252-48.112Z'
         clipRule='evenodd'
       /&gt;
-    &lt;/mask&gt;
-    &lt;g mask='url(#blobby-icon-people_svg__c)'&gt;
+      &lt;path
+        fill='url(#blobby-icon-people_svg__c)'
+        d='M144.999 66.449h-.019c-2.75 0-4.982-3.33-5-7.449-.018 4.11-2.239 7.434-4.98 7.449 2.741.015 4.962 3.34 4.98 7.449.018-4.119 2.25-7.449 5-7.449h.019Z'
+      /&gt;
       &lt;path
         fill='url(#blobby-icon-people_svg__d)'
-        d='M98.5 39.416c-7.455 0-13.541 6.087-13.541 13.542 0 3.684 1.486 7.033 3.888 9.48C91.307 64.941 143.468 120 143.468 120l20.48-18.5s-53.392-55.575-55.795-58.021a13.501 13.501 0 0 0-9.653-4.063Zm-16.279 32.5c-2.952 0-5.388 2.436-5.388 5.388v2.06c0 2.51.817 4.728 2.167 6.597 1.276 1.767 42.47 44.841 42.47 44.841s14.36 5.3 19.549 5.3 10.381-1.039 14.481-3.3c3.495-1.929 7.711-3.426 8.448-7.302l-1.259-1.585-42.52-46.61c0-1.24-.43-2.39-1.148-3.305a5.397 5.397 0 0 0-4.242-2.084H82.221Z'
-        opacity={0.25}
+        d='M70.999 23.449h-.02c-2.75 0-4.98-3.33-4.999-7.449-.018 4.11-2.239 7.434-4.98 7.449 2.741.015 4.962 3.34 4.98 7.449.018-4.119 2.25-7.449 5-7.449h.019Z'
+      /&gt;
+      &lt;path
+        fill='url(#blobby-icon-people_svg__e)'
+        d='M64.999 103.449h-.02c-2.75 0-4.98-3.33-4.999-7.449-.018 4.109-2.239 7.434-4.98 7.449 2.741.015 4.962 3.34 4.98 7.449.018-4.119 2.25-7.449 5-7.449h.019Z'
+      /&gt;
+      &lt;mask
+        id='blobby-icon-people_svg__g'
+        width={200}
+        height={128}
+        x={0}
+        y={0}
+        maskUnits='userSpaceOnUse'
+        style={{
+          maskType: 'alpha',
+        }}
+      &gt;
+        &lt;path
+          fill='#E2F6EC'
+          fillRule='evenodd'
+          d='M96.667 4.039c26.67-1.026 50.485 18.385 57.399 44.164 6.047 22.546-11.922 41.533-30.693 55.408-19.462 14.387-44.342 28.69-64.028 14.611-19.947-14.266-15.548-42.761-7.93-66.071 7.563-23.136 20.93-47.177 45.252-48.112Z'
+          clipRule='evenodd'
+        /&gt;
+        &lt;path
+          fill='url(#blobby-icon-people_svg__f)'
+          fillOpacity={0.2}
+          fillRule='evenodd'
+          d='M96.667 4.039c26.67-1.026 50.485 18.385 57.399 44.164 6.047 22.546-11.922 41.533-30.693 55.408-19.462 14.387-44.342 28.69-64.028 14.611-19.947-14.266-15.548-42.761-7.93-66.071 7.563-23.136 20.93-47.177 45.252-48.112Z'
+          clipRule='evenodd'
+        /&gt;
+      &lt;/mask&gt;
+      &lt;g mask='url(#blobby-icon-people_svg__g)'&gt;
+        &lt;path
+          fill='url(#blobby-icon-people_svg__h)'
+          d='m110.5 42.5 41.175 41.175L112.5 115 82.783 85.282l23.968-9.03-15.968-15.97L110.5 42.5Z'
+          opacity={0.25}
+        /&gt;
+      &lt;/g&gt;
+      &lt;path
+        fill='#EAF3DC'
+        d='M100 37.333c-7.34 0-13.333 5.994-13.333 13.334S92.66 64 100 64s13.333-5.993 13.333-13.333S107.34 37.333 100 37.333Zm-16.029 32c-2.906 0-5.304 2.399-5.304 5.305v2.029c0 4.805 3.039 8.523 7.075 10.75 4.037 2.227 9.149 3.25 14.258 3.25s10.221-1.023 14.258-3.25c3.442-1.9 6.032-4.933 6.758-8.75h.32v-4.029c0-2.906-2.401-5.305-5.307-5.305H83.971Z'
+      /&gt;
+      &lt;path
+        fill='#2C8658'
+        d='M100 37.333c-7.34 0-13.333 5.994-13.333 13.334S92.66 64 100 64s13.333-5.993 13.333-13.333S107.34 37.333 100 37.333Zm0 4a9.303 9.303 0 0 1 9.333 9.334A9.303 9.303 0 0 1 100 60a9.303 9.303 0 0 1-9.333-9.333A9.303 9.303 0 0 1 100 41.333Zm-16.029 28c-2.906 0-5.304 2.399-5.304 5.305v2.029c0 4.805 3.039 8.523 7.075 10.75 4.037 2.227 9.149 3.25 14.258 3.25s10.221-1.023 14.258-3.25c3.442-1.9 6.032-4.933 6.758-8.75h.32v-4.029c0-2.906-2.401-5.305-5.307-5.305H83.971Zm0 4h32.058c.744 0 1.307.56 1.307 1.305v.029h-.003v2c0 3.194-1.794 5.477-5.007 7.25-3.214 1.773-7.768 2.75-12.326 2.75-4.557 0-9.112-.977-12.325-2.75-3.214-1.773-5.008-4.056-5.008-7.25v-2.029c0-.744.56-1.305 1.304-1.305Z'
       /&gt;
     &lt;/g&gt;
-    &lt;path
-      fill='url(#blobby-icon-people_svg__e)'
-      d='M145.999 96.449h-.019c-2.75 0-4.982-3.33-5-7.449-.018 4.11-2.239 7.434-4.98 7.449 2.741.015 4.962 3.34 4.98 7.449.018-4.119 2.25-7.449 5-7.449h.019Z'
-    /&gt;
-    &lt;path
-      fill='url(#blobby-icon-people_svg__f)'
-      d='M86.999 21.449h-.02c-2.75 0-4.98-3.33-4.999-7.449-.018 4.11-2.239 7.434-4.98 7.449 2.741.015 4.962 3.34 4.98 7.449.018-4.119 2.25-7.449 5-7.449h.019Z'
-    /&gt;
-    &lt;path
-      fill='url(#blobby-icon-people_svg__g)'
-      d='M62.999 72.449h-.02c-2.75 0-4.98-3.33-4.999-7.449-.018 4.11-2.239 7.434-4.98 7.449 2.741.015 4.962 3.34 4.98 7.449.018-4.119 2.25-7.449 5-7.449h.019Z'
-    /&gt;
-    &lt;path
-      fill='#F0F4FF'
-      d='M98.5 39.417c-7.455 0-13.541 6.087-13.541 13.542 0 7.454 6.086 13.541 13.541 13.541s13.542-6.087 13.542-13.541c0-7.455-6.087-13.542-13.542-13.542Zm-16.279 32.5c-2.952 0-5.388 2.436-5.388 5.388v2.06c0 4.88 3.087 8.656 7.187 10.918 4.1 2.262 9.291 3.3 14.48 3.3s10.381-1.038 14.481-3.3c3.495-1.929 6.126-5.01 6.863-8.887h.325v-4.091c0-2.952-2.438-5.388-5.39-5.388H82.221Z'
-    /&gt;
-    &lt;path
-      fill='#2C8658'
-      d='M98.5 39.416c-7.455 0-13.542 6.087-13.542 13.542S91.045 66.5 98.5 66.5s13.542-6.087 13.542-13.542-6.087-13.541-13.542-13.541Zm0 4.063c5.259 0 9.479 4.22 9.479 9.48 0 5.258-4.22 9.478-9.48 9.478-5.258 0-9.478-4.22-9.478-9.479 0-5.26 4.22-9.479 9.479-9.479ZM82.22 71.917c-2.951 0-5.387 2.435-5.387 5.387v2.06c0 4.881 3.087 8.657 7.186 10.918 4.1 2.262 9.292 3.301 14.48 3.301 5.19 0 10.382-1.039 14.482-3.3 3.495-1.93 6.126-5.01 6.863-8.887h.325v-4.092c0-2.952-2.438-5.388-5.39-5.388H82.221Zm0 4.062h32.559c.756 0 1.328.57 1.328 1.325v.03h-.003v2.03c0 3.245-1.822 5.563-5.086 7.364-3.264 1.8-7.889 2.793-12.518 2.793-4.629 0-9.254-.993-12.518-2.793-3.264-1.801-5.086-4.12-5.086-7.364v-2.06c0-.756.569-1.325 1.325-1.325Z'
-    /&gt;
     &lt;defs&gt;
-      &lt;linearGradient id='blobby-icon-people_svg__a' x1={128.7} x2={83.492} y1={101.934} y2={1.371} gradientUnits='userSpaceOnUse'&gt;
-        &lt;stop stopColor='#007DF2' /&gt;
-        &lt;stop offset={1} stopColor='#53EA9F' /&gt;
+      &lt;linearGradient id='blobby-icon-people_svg__b' x1={126.5} x2={50} y1={104} y2={27.5} gradientUnits='userSpaceOnUse'&gt;
+        &lt;stop stopColor='#F1F0EC' /&gt;
+        &lt;stop offset={1} stopColor='#84D6AC' /&gt;
       &lt;/linearGradient&gt;
-      &lt;linearGradient id='blobby-icon-people_svg__b' x1={128.7} x2={83.492} y1={101.934} y2={1.371} gradientUnits='userSpaceOnUse'&gt;
-        &lt;stop stopColor='#007DF2' /&gt;
-        &lt;stop offset={1} stopColor='#53EA9F' /&gt;
+      &lt;linearGradient id='blobby-icon-people_svg__c' x1={135} x2={145} y1={59} y2={74} gradientUnits='userSpaceOnUse'&gt;
+        &lt;stop stopColor='#2C8658' /&gt;
+        &lt;stop offset={1} stopColor='#ACD278' /&gt;
       &lt;/linearGradient&gt;
-      &lt;linearGradient id='blobby-icon-people_svg__d' x1={76.402} x2={142.934} y1={39.613} y2={98.193} gradientUnits='userSpaceOnUse'&gt;
-        &lt;stop stopColor='#308F5F' /&gt;
-        &lt;stop offset={1} stopColor='#007DF2' /&gt;
+      &lt;linearGradient id='blobby-icon-people_svg__d' x1={61} x2={71} y1={16} y2={31} gradientUnits='userSpaceOnUse'&gt;
+        &lt;stop stopColor='#2C8658' /&gt;
+        &lt;stop offset={1} stopColor='#ACD278' /&gt;
       &lt;/linearGradient&gt;
-      &lt;linearGradient id='blobby-icon-people_svg__e' x1={136} x2={146} y1={89} y2={104} gradientUnits='userSpaceOnUse'&gt;
-        &lt;stop stopColor='#308F5F' /&gt;
-        &lt;stop offset={1} stopColor='#007DF2' /&gt;
+      &lt;linearGradient id='blobby-icon-people_svg__e' x1={55} x2={65} y1={96} y2={111} gradientUnits='userSpaceOnUse'&gt;
+        &lt;stop stopColor='#2C8658' /&gt;
+        &lt;stop offset={1} stopColor='#ACD278' /&gt;
       &lt;/linearGradient&gt;
-      &lt;linearGradient id='blobby-icon-people_svg__f' x1={77} x2={87} y1={14} y2={29} gradientUnits='userSpaceOnUse'&gt;
-        &lt;stop stopColor='#308F5F' /&gt;
-        &lt;stop offset={1} stopColor='#007DF2' /&gt;
+      &lt;linearGradient id='blobby-icon-people_svg__f' x1={126.5} x2={50} y1={104} y2={27.5} gradientUnits='userSpaceOnUse'&gt;
+        &lt;stop stopColor='#F1F0EC' /&gt;
+        &lt;stop offset={1} stopColor='#84D6AC' /&gt;
       &lt;/linearGradient&gt;
-      &lt;linearGradient id='blobby-icon-people_svg__g' x1={53} x2={63} y1={65} y2={80} gradientUnits='userSpaceOnUse'&gt;
-        &lt;stop stopColor='#308F5F' /&gt;
-        &lt;stop offset={1} stopColor='#007DF2' /&gt;
+      &lt;linearGradient id='blobby-icon-people_svg__h' x1={90.5} x2={136.049} y1={60.121} y2={97.834} gradientUnits='userSpaceOnUse'&gt;
+        &lt;stop stopColor='#2C8658' /&gt;
+        &lt;stop offset={1} stopColor='#ACD278' /&gt;
       &lt;/linearGradient&gt;
+      &lt;clipPath id='blobby-icon-people_svg__a'&gt;
+        &lt;path fill='#fff' d='M0 0h200v128H0z' /&gt;
+      &lt;/clipPath&gt;
     &lt;/defs&gt;
   &lt;/svg&gt;
 );
@@ -379,7 +394,7 @@ export default SvgBlobbyIconPeople;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2023-09-11T23:23:19.554Z
+                at 2023-09-12T12:59:38.379Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>
