@@ -1,4 +1,4 @@
-export type DropdownItem<T = any> = {
+export type DropdownItem<T = string> = {
   label: string;
   value: T;
   onClick?: () => void;

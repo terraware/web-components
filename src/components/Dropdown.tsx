@@ -40,7 +40,7 @@ export function DropdownV1({ id, label, values, onChange, selected, disabled }: 
   );
 }
 
-export interface DropdownProps<T> {
+export interface DropdownProps<T = string> {
   onChange: (newValue: T) => void;
   id?: string;
   label?: string;
@@ -71,7 +71,7 @@ export interface DropdownProps<T> {
 }
 
 /**
- * This is a simple dropdwn that takes in a tuple { label, value }
+ * This is a simple dropdown that takes in a tuple { label, value }
  * for list of options.
  * The label is used for display, the value is passed back in onChange, and used to set selectedValue.
  *
@@ -81,8 +81,22 @@ export interface DropdownProps<T> {
  *   onChange={(value: string) => setSomeValue(value)}
  *   selectedValue={'value1'}
  * />
+ *
+ * You can also explicitly define the options[].value type by passing a type into the Dropdown:
+ *
+ * // This could also be `number` for example. It defaults to `string`
+ * type SpecificValues = 'value1' | 'value2';
+ * const options: DropdownItem<SpecificValues> = [{...}, {...}];
+ *
+ * <Dropdown<SpecificValues>
+ *     options={options}
+ *     ...
+ *     // onChange will use the generic type
+ *     onChange={(value: SpecificValues} => setSomeValue(value)}
+ *     ...
+ * />
  */
-export default function Dropdown<T = any>(props: DropdownProps<T>): JSX.Element {
+export default function Dropdown<T = string>(props: DropdownProps<T>): JSX.Element {
   const { selectedValue, onChange, options, autocomplete, ...remainingProps } = props;
 
   const selectedItem = options?.find((option) => option.value === selectedValue);
