@@ -1,6 +1,6 @@
-export type DropdownItem = {
+export type DropdownItem<T = any> = {
   label: string;
-  value: any;
+  value: T;
   onClick?: () => void;
   type?: 'passive' | 'destructive';
 };
