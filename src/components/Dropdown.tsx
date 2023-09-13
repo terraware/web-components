@@ -40,11 +40,11 @@ export function DropdownV1({ id, label, values, onChange, selected, disabled }: 
   );
 }
 
-export interface DropdownProps {
-  onChange: (newValue: string) => void;
+export interface DropdownProps<T> {
+  onChange: (newValue: T) => void;
   id?: string;
   label?: string;
-  options?: DropdownItem[];
+  options?: DropdownItem<T>[];
   selectedValue?: any;
   disabled?: boolean;
   className?: string;
@@ -82,7 +82,7 @@ export interface DropdownProps {
  *   selectedValue={'value1'}
  * />
  */
-export default function Dropdown(props: DropdownProps): JSX.Element {
+export default function Dropdown<T = any>(props: DropdownProps<T>): JSX.Element {
   const { selectedValue, onChange, options, autocomplete, ...remainingProps } = props;
 
   const selectedItem = options?.find((option) => option.value === selectedValue);
