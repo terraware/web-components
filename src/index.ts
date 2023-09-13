@@ -105,5 +105,5 @@ export {
   TextTruncated,
   theme,
   Tooltip,
-  ViewPhotosDialog
+  ViewPhotosDialog,
 };
