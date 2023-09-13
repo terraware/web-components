@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1694523578547" clover="3.2.0">
-  <project timestamp="1694523578547" name="All files">
-    <metrics statements="1279" coveredstatements="183" conditionals="1028" coveredconditionals="86" methods="480" coveredmethods="31" elements="2787" coveredelements="300" complexity="0" loc="1279" ncloc="1279" packages="35" files="187" classes="187"/>
+<coverage generated="1694632413323" clover="3.2.0">
+  <project timestamp="1694632413323" name="All files">
+    <metrics statements="1300" coveredstatements="183" conditionals="1036" coveredconditionals="86" methods="488" coveredmethods="31" elements="2824" coveredelements="300" complexity="0" loc="1300" ncloc="1300" packages="35" files="188" classes="188"/>
     <package name="src">
       <metrics statements="1" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
       <file name="index.ts" path="/home/runner/work/web-components/web-components/src/index.ts">
@@ -1418,7 +1418,7 @@
       </file>
     </package>
     <package name="src.stories">
-      <metrics statements="344" coveredstatements="0" conditionals="20" coveredconditionals="0" methods="125" coveredmethods="0"/>
+      <metrics statements="365" coveredstatements="0" conditionals="28" coveredconditionals="0" methods="133" coveredmethods="0"/>
       <file name="Autocomplete.stories.tsx" path="/home/runner/work/web-components/web-components/src/stories/Autocomplete.stories.tsx">
         <metrics statements="15" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="6" coveredmethods="0"/>
         <line num="8" count="0" type="stmt"/>
@@ -1564,6 +1564,30 @@
         <line num="15" count="0" type="stmt"/>
         <line num="21" count="0" type="stmt"/>
         <line num="22" count="0" type="stmt"/>
+      </file>
+      <file name="IntersectionObserver.stories.tsx" path="/home/runner/work/web-components/web-components/src/stories/IntersectionObserver.stories.tsx">
+        <metrics statements="21" coveredstatements="0" conditionals="8" coveredconditionals="0" methods="8" coveredmethods="0"/>
+        <line num="16" count="0" type="stmt"/>
+        <line num="17" count="0" type="stmt"/>
+        <line num="18" count="0" type="stmt"/>
+        <line num="19" count="0" type="stmt"/>
+        <line num="21" count="0" type="stmt"/>
+        <line num="28" count="0" type="stmt"/>
+        <line num="29" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="30" count="0" type="stmt"/>
+        <line num="34" count="0" type="stmt"/>
+        <line num="35" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="36" count="0" type="stmt"/>
+        <line num="40" count="0" type="stmt"/>
+        <line num="56" count="0" type="stmt"/>
+        <line num="58" count="0" type="stmt"/>
+        <line num="60" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="61" count="0" type="stmt"/>
+        <line num="63" count="0" type="stmt"/>
+        <line num="66" count="0" type="stmt"/>
+        <line num="72" count="0" type="stmt"/>
+        <line num="91" count="0" type="stmt"/>
+        <line num="93" count="0" type="stmt"/>
       </file>
       <file name="Message.stories.tsx" path="/home/runner/work/web-components/web-components/src/stories/Message.stories.tsx">
         <metrics statements="9" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="4" coveredmethods="0"/>
