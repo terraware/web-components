@@ -287,11 +287,11 @@
 
 .passive-secondary {
   background-color: $tw-clr-bg-ghost;
-  color: $tw-clr-txt;
+  color: $tw-clr-brdr-secondary;
   svg {
-    fill: $tw-clr-icn;
+    fill: $tw-clr-brdr-secondary;
   }
-  border: $tw-sz-btn-stroke solid $tw-clr-brdr;
+  border: $tw-sz-btn-stroke solid $tw-clr-brdr-secondary;
   &:hover {
     background-color: $tw-clr-bg-ghost-hover;
   }
