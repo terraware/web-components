@@ -1,5 +1,5 @@
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { Box, Checkbox, Pagination, Table, TableBody, TableCell, TableContainer, TableRow, Theme, TooltipProps, Typography, useTheme } from '@mui/material';
-import React, { useCallback, useEffect, useState } from 'react';
 import EnhancedTableToolbar from './EnhancedTableToolbar';
 import { descendingComparator, getComparator, SortOrder, stableSort } from './sort';
 import TableCellRenderer, { TableRowType } from './TableCellRenderer';
@@ -11,6 +11,7 @@ import { sortableKeyboardCoordinates } from '@dnd-kit/sortable';
 import { useDeviceInfo } from '../../utils';
 import { IconName } from '../Icon/icons';
 import { CheckboxStyle } from '../Checkbox';
+import IconTooltip from '../IconTooltip';
 
 const tableStyles = makeStyles((theme: Theme) => ({
   hover: {
@@ -80,6 +81,8 @@ export interface Props<T> extends LocalizationProps {
   reloadData?: () => void;
   stickyHeader?: boolean;
   hideHeader?: boolean;
+  isSelectable?: (row: T) => boolean;
+  checkboxTooltip?: (row: T) => TooltipProps['title'];
 }
 
 export type TopBarButton = {
@@ -120,6 +123,8 @@ export default function EnhancedTable<T extends TableRowType>({
   editText,
   renderNumSelectedText,
   renderPaginationText,
+  isSelectable,
+  checkboxTooltip,
 }: Props<T>): JSX.Element {
   const classes = tableStyles();
   const theme = useTheme();
@@ -131,6 +136,14 @@ export default function EnhancedTable<T extends TableRowType>({
   const [displayColumnKeyNames, setDisplayColumnKeyNames] = useState<string[]>();
   const [displayColumnsIndexed, setDisplayColumnsIndexed] = useState<Record<string, DatabaseColumn>>();
   const [displayColumnDetails, setDisplayColumnDetails] = useState<DatabaseColumn[]>();
+
+  const selectableRows = useMemo(() => {
+    if (isSelectable) {
+      return rows.filter((row) => isSelectable(row));
+    } else {
+      return rows;
+    }
+  }, [isSelectable, rows]);
 
   useEffect(() => {
     const columnsKeyNames = columns.map((col) => col.key);
@@ -157,17 +170,17 @@ export default function EnhancedTable<T extends TableRowType>({
   }, [displayColumnKeyNames, displayColumnsIndexed]);
 
   useEffect(() => {
-    if (setSelectedRows && rows.length >= 0) {
+    if (setSelectedRows && selectableRows.length >= 0) {
       setSelectedRows((currentlySelectedRows: T[]) => {
         const emptyArray: T[] = [];
-        if (rows.length || currentlySelectedRows.length > rows.length) {
+        if (selectableRows.length || currentlySelectedRows.length > selectableRows.length) {
           return emptyArray;
         }
 
         return currentlySelectedRows;
       });
     }
-  }, [rows, setSelectedRows]);
+  }, [selectableRows, setSelectedRows]);
 
   useEffect(() => {
     // this is not most elegant but we want to do this if table was sorted by some column in a presorted table
@@ -199,7 +212,7 @@ export default function EnhancedTable<T extends TableRowType>({
   const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (setSelectedRows) {
       if (event.target.checked) {
-        setSelectedRows(rows);
+        setSelectedRows(selectableRows);
 
         return;
       } else {
@@ -209,7 +222,7 @@ export default function EnhancedTable<T extends TableRowType>({
   };
 
   const handleClick = (event: React.MouseEvent<unknown>, row: T) => {
-    if (setSelectedRows && selectedRows) {
+    if (setSelectedRows && selectedRows && (!isSelectable || isSelectable(row))) {
       const selectedIndex = selectedRows.indexOf(row);
       let newSelected: T[] = [];
 
@@ -305,7 +318,7 @@ export default function EnhancedTable<T extends TableRowType>({
                 onReorderEnd={onReorderEndHandler}
                 numSelected={showCheckbox ? selectedRows?.length : undefined}
                 onSelectAllClick={showCheckbox ? handleSelectAllClick : undefined}
-                rowCount={showCheckbox ? rows?.length : undefined}
+                rowCount={showCheckbox ? selectableRows.length : undefined}
               />
             )}
             <TableBody>
@@ -322,6 +335,7 @@ export default function EnhancedTable<T extends TableRowType>({
                   .map((row, index) => {
                     const onClick = onSelect && !controlledOnSelect ? () => onSelect(row as T) : undefined;
                     const isItemSelected = isSelected(row as T);
+                    const tooltipTitle = checkboxTooltip ? checkboxTooltip(row as T) : undefined;
 
                     return (
                       <React.Fragment key={index}>
@@ -344,13 +358,22 @@ export default function EnhancedTable<T extends TableRowType>({
                         >
                           {showCheckbox && (
                             <TableCell padding='checkbox' className={classes.cellDefault}>
-                              <Checkbox
-                                disableRipple={true}
-                                sx={CheckboxStyle(theme)}
-                                color='primary'
-                                checked={isItemSelected}
-                                onClick={(e) => (!isClickable || !isClickable(row as T) ? handleClick(e, row as T) : null)}
-                              />
+                              <Box display='flex' alignItems='center'>
+                                <Checkbox
+                                  disableRipple={true}
+                                  sx={CheckboxStyle(theme, tooltipTitle ? 0 : 1)}
+                                  disabled={isSelectable && !isSelectable(row as T)}
+                                  color='primary'
+                                  checked={isItemSelected}
+                                  onClick={(e) => {
+                                    const rowSelectable = !isSelectable || isSelectable(row as T);
+                                    if (rowSelectable && (!isClickable || !isClickable(row as T))) {
+                                      handleClick(e, row as T);
+                                    }
+                                  }}
+                                />
+                                {tooltipTitle && <IconTooltip title={tooltipTitle} />}
+                              </Box>
                             </TableCell>
                           )}
                           {displayColumnDetails &&

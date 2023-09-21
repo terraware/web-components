@@ -58,6 +58,7 @@ const Template: Story<TableProps<{ name: string; lastname: string }>> = (args) =
 
 export const Default = Template.bind({});
 export const Selectable = Template.bind({});
+export const IsSelectable = Template.bind({});
 export const Presorted = Template.bind({});
 
 Default.args = {
@@ -110,6 +111,14 @@ Selectable.args = {
   ...Default.args,
   showCheckbox: true,
   controlledOnSelect: true,
+};
+
+IsSelectable.args = {
+  ...Default.args,
+  showCheckbox: true,
+  controlledOnSelect: true,
+  isSelectable: (row) => !!row.name.match('15') ? false : true,
+  checkboxTooltip: (row) => !!row.name.match('15') ? 'This checkbox is not selectable' : undefined,
 };
 
 Presorted.args = {

@@ -1,8 +1,8 @@
 import { Checkbox as MUICheckbox, FormControlLabel, Theme, useTheme } from '@mui/material';
 import React, { SyntheticEvent } from 'react';
 
-export const CheckboxStyle = (theme: Theme) => ({
-  padding: theme.spacing(0, 1, 0, 0),
+export const CheckboxStyle = (theme: Theme, paddingRight = 1) => ({
+  padding: theme.spacing(0, paddingRight, 0, 0),
   '& .MuiSvgIcon-root': {
     fill: theme.palette.TwClrBrdrSecondary,
   },
