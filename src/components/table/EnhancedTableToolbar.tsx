@@ -1,8 +1,9 @@
+import React from 'react';
 import { Theme, Toolbar, Typography } from '@mui/material';
 import { TopBarButton } from '.';
 import Button from '../Button/Button';
 import { makeStyles } from '@mui/styles';
-import React from 'react';
+import Tooltip from '../Tooltip/Tooltip';
 
 const styles = makeStyles((theme: Theme) => ({
   toolbar: {
@@ -26,25 +27,31 @@ export default function EnhancedTableToolbar(props: EnhancedTableToolbarProps): 
   const { numSelected, renderNumSelectedText, topBarButtons } = props;
   const classes = styles();
 
+  const getButton = (tbButton: TopBarButton) => (
+    <Button
+      className={classes.buttonSpacing}
+      key={tbButton.buttonText}
+      label={tbButton.buttonText}
+      priority='secondary'
+      type={tbButton.buttonType}
+      onClick={tbButton.onButtonClick}
+      icon={tbButton.icon}
+      disabled={tbButton.disabled}
+     />
+  );
+
   return renderNumSelectedText && numSelected > 0 ? (
     <Toolbar className={classes.toolbar}>
       <Typography color='inherit' variant='subtitle1' component='div' className={classes.flexText}>
         {renderNumSelectedText(numSelected)}
       </Typography>
-      {topBarButtons?.map((tbButton) => {
-        return (
-          <Button
-            className={classes.buttonSpacing}
-            key={tbButton.buttonText}
-            label={tbButton.buttonText}
-            priority='secondary'
-            type={tbButton.buttonType}
-            onClick={tbButton.onButtonClick}
-            icon={tbButton.icon}
-            disabled={tbButton.disabled}
-          />
-        );
-      })}
+      {topBarButtons?.map((tbButton) => (
+        tbButton.tooltipTitle ? (
+          <Tooltip title={tbButton.tooltipTitle}>
+            {getButton(tbButton)}
+          </Tooltip>
+        ) : getButton(tbButton)
+      ))}
     </Toolbar>
   ) : null;
 }

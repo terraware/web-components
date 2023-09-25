@@ -88,6 +88,7 @@ export type TopBarButton = {
   onButtonClick: () => void;
   icon?: IconName;
   disabled?: boolean;
+  tooltipTitle?: TooltipProps['title'];
 };
 
 export default function EnhancedTable<T extends TableRowType>({
