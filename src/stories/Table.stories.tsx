@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import Table, { Props as TableProps } from '../components/table/index';
 import CellRenderer from '..//components/table/TableCellRenderer';
 import { RendererProps } from '../components/table/types';
-
+import { Box } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 
 const useStyles = makeStyles(() => ({
@@ -29,36 +29,47 @@ function Renderer(props: RendererProps<any>): JSX.Element {
 }
 
 const Template: Story<TableProps<{ name: string; lastname: string }>> = (args) => {
+  const classes = useStyles();
   const [selectedRows, setSelectedRows] = useState<any>([]);
   const styles = useStyles();
   args.columns[1].className = styles.italic;
 
   return (
-    <Table
-      {...args}
-      Renderer={Renderer}
-      selectedRows={selectedRows}
-      setSelectedRows={setSelectedRows}
-      topBarButtons={[
-        {
-          buttonType: 'productive',
-          buttonText: 'Click',
-          onButtonClick: () => window.alert('click'),
-        },
-        {
-          buttonType: 'passive',
-          buttonText: 'Disabled',
-          onButtonClick: () => window.alert('you should not see this'),
-          disabled: true,
-        },
-      ]}
-    />
+    <Box paddingTop={args.showTopBar ? '50px' : 0} display='flex' flexGrow={1} flexDirection='column'>
+      <Table
+        {...args}
+        Renderer={Renderer}
+        selectedRows={selectedRows}
+        setSelectedRows={setSelectedRows}
+        topBarButtons={[
+          {
+            buttonType: 'productive',
+            buttonText: 'Click',
+            onButtonClick: () => window.alert('click'),
+          },
+          {
+            buttonType: 'passive',
+            buttonText: 'Disabled',
+            onButtonClick: () => window.alert('you should not see this'),
+            disabled: true,
+          },
+          {
+            buttonType: 'passive',
+            buttonText: 'Tooltip',
+            onButtonClick: () => window.alert('you should not see this either'),
+            disabled: true,
+            tooltipTitle: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+          },
+        ]}
+      />
+    </Box>
   );
 };
 
 export const Default = Template.bind({});
 export const Selectable = Template.bind({});
 export const Presorted = Template.bind({});
+export const ShowTopBar = Template.bind({});
 
 Default.args = {
   orderBy: 'name',
@@ -115,4 +126,11 @@ Selectable.args = {
 Presorted.args = {
   ...Default.args,
   isPresorted: true,
+};
+
+ShowTopBar.args = {
+  ...Default.args,
+  showCheckbox: true,
+  controlledOnSelect: true,
+  showTopBar: true,
 };

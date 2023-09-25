@@ -1,8 +1,9 @@
+import React from 'react';
 import { Theme, Toolbar, Typography } from '@mui/material';
 import { TopBarButton } from '.';
 import Button from '../Button/Button';
 import { makeStyles } from '@mui/styles';
-import React from 'react';
+import Tooltip from '../Tooltip/Tooltip';
 
 const styles = makeStyles((theme: Theme) => ({
   toolbar: {
@@ -31,8 +32,8 @@ export default function EnhancedTableToolbar(props: EnhancedTableToolbarProps): 
       <Typography color='inherit' variant='subtitle1' component='div' className={classes.flexText}>
         {renderNumSelectedText(numSelected)}
       </Typography>
-      {topBarButtons?.map((tbButton) => {
-        return (
+      {topBarButtons?.map((tbButton, index) => (
+        <Tooltip title={tbButton.tooltipTitle} key={index}>
           <Button
             className={classes.buttonSpacing}
             key={tbButton.buttonText}
@@ -43,8 +44,8 @@ export default function EnhancedTableToolbar(props: EnhancedTableToolbarProps): 
             icon={tbButton.icon}
             disabled={tbButton.disabled}
           />
-        );
-      })}
+        </Tooltip>
+      ))}
     </Toolbar>
   ) : null;
 }

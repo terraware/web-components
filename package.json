@@ -1,6 +1,6 @@
 {
   "name": "@terraware/web-components",
-  "version": "2.3.65",
+  "version": "2.3.66-rc.1",
   "author": "Terraformation Inc.",
   "license": "Apache-2.0",
   "repository": {
@@ -47,6 +47,7 @@
     "test-coverage": "cp tsconfig.json tsconfig.json.bak && react-scripts test . --coverage --coverageDirectory='docs/coverage' && mv tsconfig.json.bak tsconfig.json",
     "eject": "react-scripts eject",
     "storybook": "storybook dev",
+    "storybook-legacy": "NODE_OPTIONS=--openssl-legacy-provider storybook dev",
     "build-storybook": "storybook build -s public",
     "build-dictionary": "./style-dictionary/generate.sh",
     "transpile": "rm -rf dist && NODE_ENV=production babel src/ --extensions '.tsx,.ts' --out-dir dist --copy-files --no-copy-ignored && cp package.json dist/",
