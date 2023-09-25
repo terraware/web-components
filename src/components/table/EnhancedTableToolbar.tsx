@@ -32,8 +32,8 @@ export default function EnhancedTableToolbar(props: EnhancedTableToolbarProps): 
       <Typography color='inherit' variant='subtitle1' component='div' className={classes.flexText}>
         {renderNumSelectedText(numSelected)}
       </Typography>
-      {topBarButtons?.map((tbButton) => (
-        <Tooltip title={tbButton.tooltipTitle}>
+      {topBarButtons?.map((tbButton, index) => (
+        <Tooltip title={tbButton.tooltipTitle} key={index}>
           <Button
             className={classes.buttonSpacing}
             key={tbButton.buttonText}
