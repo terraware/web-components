@@ -15,8 +15,13 @@ const Template: Story<TextTruncatedProps> = (args) => {
 
 export const Default = Template.bind({});
 
+let stringlist = ['elephant', 'foo', 'bar', 'baz', 'spam', 'bacon', 'eggs'];
+for (let i = 0; i < 5; i++) {
+  stringlist = [...stringlist, ...stringlist];
+}
+
 Default.args = {
-  stringList: ['elephant', 'foo', 'bar', 'baz', 'spam', 'bacon', 'eggs'],
+  stringList: stringlist,
   maxLengthPx: 200,
   showAllStyle: {fontSize: 14},
   textStyle: {fontSize: 14},
