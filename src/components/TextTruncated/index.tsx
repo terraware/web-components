@@ -9,6 +9,10 @@ const useStyles = makeStyles((theme: Theme) => ({
       border: `1px solid ${theme.palette.TwClrBrdrTertiary}`,
     },
   },
+  popper: {
+    maxHeight: '200px',
+    overflow: 'auto',
+  },
   tooltip: {
     backgroundColor: `${theme.palette.TwClrBg} !important`,
     color: `${theme.palette.TwClrTxt} !important`,
@@ -136,6 +140,7 @@ export default function TextTruncated(props: Props): JSX.Element {
           arrow={true}
           classes={{
             arrow: classes.arrow,
+            popper: classes.popper,
             tooltip: classes.tooltip,
           }}
           open={showAllOpen}

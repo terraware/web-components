@@ -13,16 +13,32 @@ const Template: Story<TextTruncatedProps> = (args) => {
   return <TextTruncated {...args} />;
 };
 
+const stringList = ['elephant', 'foo', 'bar', 'baz', 'spam', 'bacon', 'eggs'];
+
+let largeList = stringList;
+
+for (let i = 0; i < 5; i++) {
+  largeList = [...largeList, ...largeList];
+}
+
+
 export const Default = Template.bind({});
 
 Default.args = {
-  stringList: ['elephant', 'foo', 'bar', 'baz', 'spam', 'bacon', 'eggs'],
+  stringList,
   maxLengthPx: 200,
   showAllStyle: {fontSize: 14},
   textStyle: {fontSize: 14},
   moreSeparator: '...',
   moreText: 'more',
   placeHolder: undefined,
+};
+
+export const LargeList = Template.bind({});
+
+LargeList.args = {
+  ...Default.args,
+  stringList: largeList,
 };
 
 export const WithPlaceholder = Template.bind({});
