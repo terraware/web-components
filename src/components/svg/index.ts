@@ -69,6 +69,7 @@ export { default as IconParchment } from './IconParchment';
 export { default as IconRestorationSite } from './IconRestorationSite';
 export { default as IconSeedBank } from './IconSeedBank';
 export { default as IconSeedling } from './IconSeedling';
+export { default as IconSubtract } from './IconSubtract';
 export { default as IconSynced } from './IconSynced';
 export { default as IconTrashCan } from './IconTrashCan';
 export { default as IconTreasureMap } from './IconTreasureMap';
