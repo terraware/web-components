@@ -22,6 +22,7 @@ export type MultiSelectProps<K, V> = {
   selectedOptions: K[];
   tooltipTitle?: TooltipProps['title'];
   disabled?: boolean;
+  onBlur?: () => void;
 };
 
 export default function MultiSelect<K, V>(props: MultiSelectProps<K, V>): JSX.Element {
@@ -50,8 +51,11 @@ export default function MultiSelect<K, V>(props: MultiSelectProps<K, V>): JSX.El
     setOpenedOptions((isOpen) => !isOpen && !disabled);
   };
 
-  const closeOptions = () => {
+  const onBlurHandler = () => {
     setOpenedOptions(false);
+    if (props.onBlur) {
+      props.onBlur();
+    }
   };
 
   const unselectedOptions = Array.from<K>(options.keys()).filter((key: K) => !selectedOptions.includes(key));
@@ -74,7 +78,7 @@ export default function MultiSelect<K, V>(props: MultiSelectProps<K, V>): JSX.El
           {label} {tooltipTitle && <IconTooltip title={tooltipTitle} />}
         </label>
       )}
-      <div className={`multi-select__container ${fullWidth ? 'multi-select__container--fullWidth' : ''}`} onBlur={closeOptions} tabIndex={0}>
+      <div className={`multi-select__container ${fullWidth ? 'multi-select__container--fullWidth' : ''}`} onBlur={onBlurHandler} tabIndex={0}>
         <div id={id} className={`multi-select__values${disabled ? '--disabled' : ''}`} onClick={toggleOptions}>
           {selectedOptions.length > 0 ? (
             <PillList data={valuesPillData} onRemove={onRemove} onClick={onPillClick} className={pillListClassName} />
