@@ -23,16 +23,16 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">94.12% </span>
+                <span class="strong">84.21% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>16/17</span>
+                <span class='fraction'>16/19</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">56.67% </span>
+                <span class="strong">53.13% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>17/30</span>
+                <span class='fraction'>17/32</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">93.33% </span>
+                <span class="strong">82.35% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>14/15</span>
+                <span class='fraction'>14/17</span>
             </div>
         
             
@@ -178,12 +178,8 @@
 <a name='L113'></a><a href='#L113'>113</a>
 <a name='L114'></a><a href='#L114'>114</a>
 <a name='L115'></a><a href='#L115'>115</a>
-<a name='L116'></a><a href='#L116'>116</a>
-<a name='L117'></a><a href='#L117'>117</a>
-<a name='L118'></a><a href='#L118'>118</a>
-<a name='L119'></a><a href='#L119'>119</a>
-<a name='L120'></a><a href='#L120'>120</a>
-<a name='L121'></a><a href='#L121'>121</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L116'></a><a href='#L116'>116</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -237,14 +233,19 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">13x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -272,17 +273,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">6x</span>
@@ -303,12 +293,12 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import React, {useState} from 'react';
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import React, { useState } from 'react';
 import './styles.scss';
 import IconTooltip from '../IconTooltip';
-import {IconButton, TooltipProps} from '@mui/material';
+import { IconButton, TooltipProps } from '@mui/material';
 import Icon from '../Icon/Icon';
-import PillList, {PillListItem} from '../PillList';
+import PillList, { PillListItem } from '../PillList';
 &nbsp;
 export type MultiSelectProps&lt;K, V&gt; = {
   className?: string;
@@ -327,6 +317,7 @@ export type MultiSelectProps&lt;K, V&gt; = {
   selectedOptions: K[];
   tooltipTitle?: TooltipProps['title'];
   disabled?: boolean;
+  onBlur?: () =&gt; void;
 };
 &nbsp;
 export default function MultiSelect&lt;K, V&gt;(props: MultiSelectProps&lt;K, V&gt;): JSX.Element {
@@ -355,20 +346,25 @@ export default function MultiSelect&lt;K, V&gt;(props: MultiSelectProps&lt;K, V&
     setOpenedOptions((isOpen) =&gt; !isOpen &amp;&amp; !disabled);
   };
 &nbsp;
-  const closeOptions = <span class="fstat-no" title="function not covered" >()</span> =&gt; {
+  const onBlurHandler = <span class="fstat-no" title="function not covered" >()</span> =&gt; {
 <span class="cstat-no" title="statement not covered" >    setOpenedOptions(false);</span>
+<span class="cstat-no" title="statement not covered" >    if (props.onBlur) {</span>
+<span class="cstat-no" title="statement not covered" >      props.onBlur();</span>
+    }
   };
 &nbsp;
   const unselectedOptions = Array.from&lt;K&gt;(options.keys()).filter((key: K) =&gt; !selectedOptions.includes(key));
 &nbsp;
-  const valuesPillData = selectedOptions.map((item) =&gt; {
-    const value = options.get(item);
+  const valuesPillData = selectedOptions
+    .map((item) =&gt; {
+      const value = options.get(item);
 &nbsp;
-    return {
-      id: item,
-      value: value ? valueRenderer(value) : (<span class="branch-1 cbranch-no" title="branch not covered" >missingValuePlaceholder || '')</span>,
-    };
-  }).filter((data) =&gt; data.value) as PillListItem&lt;K&gt;[];
+      return {
+        id: item,
+        value: value ? valueRenderer(value) : <span class="branch-1 cbranch-no" title="branch not covered" >missingValuePlaceholder || '',</span>
+      };
+    })
+    .filter((data) =&gt; data.value) as PillListItem&lt;K&gt;[];
 &nbsp;
   return (
     &lt;div className={`multi-select ${className}`}&gt;
@@ -377,26 +373,15 @@ export default function MultiSelect&lt;K, V&gt;(props: MultiSelectProps&lt;K, V&
           {label} {tooltipTitle &amp;&amp; &lt;IconTooltip title={tooltipTitle} /&gt;}
         &lt;/label&gt;
       )}
-      &lt;div
-        className={`multi-select__container ${fullWidth ? <span class="branch-0 cbranch-no" title="branch not covered" >'multi-select__container--fullWidth' </span>: ''}`}
-        onBlur={closeOptions}
-        tabIndex={0}
-      &gt;
+      &lt;div className={`multi-select__container ${fullWidth ? <span class="branch-0 cbranch-no" title="branch not covered" >'multi-select__container--fullWidth' </span>: ''}`} onBlur={onBlurHandler} tabIndex={0}&gt;
         &lt;div id={id} className={`multi-select__values${disabled ? <span class="branch-0 cbranch-no" title="branch not covered" >'--disabled' </span>: ''}`} onClick={toggleOptions}&gt;
-          {selectedOptions.length &gt; 0
-            ? (&lt;PillList
-                data={valuesPillData}
-                onRemove={onRemove}
-                onClick={onPillClick}
-                className={pillListClassName}
-              /&gt;)
-            : (&lt;p className='multi-select__placeholder-text' &gt;{placeHolder}&lt;/p&gt;)
-          }
+          {selectedOptions.length &gt; 0 ? (
+            &lt;PillList data={valuesPillData} onRemove={onRemove} onClick={onPillClick} className={pillListClassName} /&gt;
+          ) : (
+            &lt;p className='multi-select__placeholder-text'&gt;{placeHolder}&lt;/p&gt;
+          )}
           &lt;div className={'multi-select__values__icon-button'} aria-label='show-options'&gt;
-            &lt;Icon
-              name={openedOptions ? 'chevronUp' : 'chevronDown'}
-              className={`multi-select__values__icon-right${disabled ? <span class="branch-0 cbranch-no" title="branch not covered" >'--disabled' </span>: ''}`}
-            /&gt;
+            &lt;Icon name={openedOptions ? 'chevronUp' : 'chevronDown'} className={`multi-select__values__icon-right${disabled ? <span class="branch-0 cbranch-no" title="branch not covered" >'--disabled' </span>: ''}`} /&gt;
           &lt;/div&gt;
         &lt;/div&gt;
         {options &amp;&amp; unselectedOptions.length &gt; 0 &amp;&amp; openedOptions &amp;&amp; (
@@ -406,9 +391,9 @@ export default function MultiSelect&lt;K, V&gt;(props: MultiSelectProps&lt;K, V&
                 const optionValue = options.get(optionKey);
 &nbsp;
                 return (
-                  &lt;li key={index} className='select-value' onClick={() =&gt; onAdd(optionKey)}&gt;{
-                    optionValue ? valueRenderer(optionValue) : (<span class="branch-1 cbranch-no" title="branch not covered" >missingValuePlaceholder || '')</span>
-                  }&lt;/li&gt;
+                  &lt;li key={index} className='select-value' onClick={() =&gt; onAdd(optionKey)}&gt;
+                    {optionValue ? valueRenderer(optionValue) : <span class="branch-1 cbranch-no" title="branch not covered" >missingValuePlaceholder || ''}</span>
+                  &lt;/li&gt;
                 );
               })}
             &lt;/ul&gt;
@@ -430,7 +415,7 @@ export default function MultiSelect&lt;K, V&gt;(props: MultiSelectProps&lt;K, V&
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2023-12-13T17:10:04.329Z
+                at 2023-12-18T22:35:51.688Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>
