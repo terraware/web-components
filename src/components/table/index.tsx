@@ -45,7 +45,7 @@ export interface HeadCell {
 }
 
 export interface LocalizationProps {
-  renderNumSelectedText?: (numSelected: number) => string;
+  renderNumSelectedText?: (numSelected: number) => string | JSX.Element;
   renderPaginationText?: (from: number, to: number, total: number) => string;
   booleanFalseText: string;
   booleanTrueText: string;

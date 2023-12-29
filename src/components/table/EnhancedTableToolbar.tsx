@@ -19,7 +19,7 @@ const styles = makeStyles((theme: Theme) => ({
 
 interface EnhancedTableToolbarProps {
   numSelected: number;
-  renderNumSelectedText?: (numSelected: number) => string;
+  renderNumSelectedText?: (numSelected: number) => string | JSX.Element;
   topBarButtons?: (TopBarButton | JSX.Element)[];
 }
 
