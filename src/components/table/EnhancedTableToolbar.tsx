@@ -16,6 +16,10 @@ const styles = makeStyles((theme: Theme) => ({
   buttonSpacing: {
     marginLeft: theme.spacing(1),
   },
+  selectLink: {
+    color: theme.palette.TwClrTxtBrand,
+    cursor: 'pointer',
+  },
 }));
 
 interface EnhancedTableToolbarProps {
@@ -44,8 +48,16 @@ export default function EnhancedTableToolbar(props: EnhancedTableToolbarProps): 
     return (
       <>
         {renderEnhancedNumSelectedText ? renderEnhancedNumSelectedText() : renderNumSelectedText(numSelected)}{' '}
-        {!isAllSelected && handleSelectAll && renderSelectAllText && <Link onClick={handleSelectAll}>{renderSelectAllText()}</Link>}
-        {isAllSelected && handleSelectNone && renderSelectNoneText && <Link onClick={handleSelectNone}>{renderSelectNoneText()}</Link>}
+        {!isAllSelected && handleSelectAll && renderSelectAllText && (
+          <Link className={classes.selectLink} onClick={handleSelectAll}>
+            {renderSelectAllText()}
+          </Link>
+        )}
+        {isAllSelected && handleSelectNone && renderSelectNoneText && (
+          <Link className={classes.selectLink} onClick={handleSelectNone}>
+            {renderSelectNoneText()}
+          </Link>
+        )}
       </>
     );
   }, [renderNumSelectedText, topBarSelectionConfig, numSelected]);
