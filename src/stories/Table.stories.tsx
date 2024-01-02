@@ -1,6 +1,6 @@
 import { Story } from '@storybook/react';
 import React, { useState } from 'react';
-import Table, { Props as TableProps } from '../components/table/index';
+import Table, { EnhancedTopBarSelectionProps, Props as TableProps } from '../components/table/index';
 import CellRenderer from '..//components/table/TableCellRenderer';
 import { RendererProps } from '../components/table/types';
 import { Box } from '@mui/material';
@@ -70,6 +70,7 @@ export const Default = Template.bind({});
 export const Selectable = Template.bind({});
 export const Presorted = Template.bind({});
 export const ShowTopBar = Template.bind({});
+export const ShowTopBarV2 = Template.bind({});
 
 Default.args = {
   orderBy: 'name',
@@ -133,4 +134,24 @@ ShowTopBar.args = {
   showCheckbox: true,
   controlledOnSelect: true,
   showTopBar: true,
+};
+
+const enhancedTopBarSelectionConfig: EnhancedTopBarSelectionProps = {
+  renderEnhancedNumSelectedText(selectedCount: number, pageCount: number): string {
+    return `${selectedCount} selected across ${pageCount} pages`;
+  },
+  renderSelectAllText(rowsCount: number): string {
+    return `Select ${rowsCount} all rows`;
+  },
+  renderSelectNoneText(): string {
+    return 'Clear selection';
+  },
+};
+
+ShowTopBarV2.args = {
+  ...Default.args,
+  showCheckbox: true,
+  controlledOnSelect: true,
+  showTopBar: true,
+  enhancedTopBarSelectionConfig,
 };

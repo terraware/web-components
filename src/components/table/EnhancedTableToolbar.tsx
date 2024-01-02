@@ -1,9 +1,10 @@
-import React from 'react';
-import { Theme, Toolbar, Typography } from '@mui/material';
+import React, { useMemo } from 'react';
+import { Link, Theme, Toolbar, Typography } from '@mui/material';
+import { makeStyles } from '@mui/styles';
 import { isTopBarButton, TopBarButton } from '.';
 import Button from '../Button/Button';
-import { makeStyles } from '@mui/styles';
 import Tooltip from '../Tooltip/Tooltip';
+import { EnhancedTopBarSelectionConfig } from './EnhancedTableToolbarV2';
 
 const styles = makeStyles((theme: Theme) => ({
   toolbar: {
@@ -18,19 +19,41 @@ const styles = makeStyles((theme: Theme) => ({
 }));
 
 interface EnhancedTableToolbarProps {
+  isAllSelected?: boolean;
   numSelected: number;
-  renderNumSelectedText?: (numSelected: number) => string | JSX.Element;
+  renderNumSelectedText?: (numSelected: number) => string;
   topBarButtons?: (TopBarButton | JSX.Element)[];
+  topBarSelectionConfig?: EnhancedTopBarSelectionConfig;
 }
 
 export default function EnhancedTableToolbar(props: EnhancedTableToolbarProps): JSX.Element | null {
-  const { numSelected, renderNumSelectedText, topBarButtons } = props;
+  const { isAllSelected, numSelected, renderNumSelectedText, topBarButtons, topBarSelectionConfig } = props;
   const classes = styles();
+
+  const topBarSelection = useMemo(() => {
+    if (!renderNumSelectedText) {
+      return null;
+    }
+
+    if (!topBarSelectionConfig) {
+      return renderNumSelectedText(numSelected);
+    }
+
+    const { handleSelectAll, handleSelectNone, renderSelectAllText, renderSelectNoneText, renderEnhancedNumSelectedText } = topBarSelectionConfig;
+
+    return (
+      <>
+        {renderEnhancedNumSelectedText ? renderEnhancedNumSelectedText() : renderNumSelectedText(numSelected)}{' '}
+        {!isAllSelected && handleSelectAll && renderSelectAllText && <Link onClick={handleSelectAll}>{renderSelectAllText()}</Link>}
+        {isAllSelected && handleSelectNone && renderSelectNoneText && <Link onClick={handleSelectNone}>{renderSelectNoneText()}</Link>}
+      </>
+    );
+  }, [renderNumSelectedText, topBarSelectionConfig, numSelected]);
 
   return renderNumSelectedText && numSelected > 0 ? (
     <Toolbar className={classes.toolbar}>
       <Typography color='inherit' variant='subtitle1' component='div' className={classes.flexText}>
-        {renderNumSelectedText(numSelected)}
+        {topBarSelection}
       </Typography>
       {topBarButtons?.map((tbButton: TopBarButton | JSX.Element, index) =>
         isTopBarButton(tbButton) ? (
