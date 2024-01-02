@@ -141,7 +141,7 @@ const enhancedTopBarSelectionConfig: EnhancedTopBarSelectionProps = {
     return `${selectedCount} selected across ${pageCount} pages`;
   },
   renderSelectAllText(rowsCount: number): string {
-    return `Select ${rowsCount} all rows`;
+    return `Select all ${rowsCount} rows`;
   },
   renderSelectNoneText(): string {
     return 'Clear selection';
