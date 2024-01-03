@@ -25,7 +25,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/31</span>
+                <span class='fraction'>0/37</span>
             </div>
         
             
@@ -39,14 +39,14 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/9</span>
+                <span class='fraction'>0/12</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/30</span>
+                <span class='fraction'>0/36</span>
             </div>
         
             
@@ -199,7 +199,28 @@
 <a name='L134'></a><a href='#L134'>134</a>
 <a name='L135'></a><a href='#L135'>135</a>
 <a name='L136'></a><a href='#L136'>136</a>
-<a name='L137'></a><a href='#L137'>137</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L137'></a><a href='#L137'>137</a>
+<a name='L138'></a><a href='#L138'>138</a>
+<a name='L139'></a><a href='#L139'>139</a>
+<a name='L140'></a><a href='#L140'>140</a>
+<a name='L141'></a><a href='#L141'>141</a>
+<a name='L142'></a><a href='#L142'>142</a>
+<a name='L143'></a><a href='#L143'>143</a>
+<a name='L144'></a><a href='#L144'>144</a>
+<a name='L145'></a><a href='#L145'>145</a>
+<a name='L146'></a><a href='#L146'>146</a>
+<a name='L147'></a><a href='#L147'>147</a>
+<a name='L148'></a><a href='#L148'>148</a>
+<a name='L149'></a><a href='#L149'>149</a>
+<a name='L150'></a><a href='#L150'>150</a>
+<a name='L151'></a><a href='#L151'>151</a>
+<a name='L152'></a><a href='#L152'>152</a>
+<a name='L153'></a><a href='#L153'>153</a>
+<a name='L154'></a><a href='#L154'>154</a>
+<a name='L155'></a><a href='#L155'>155</a>
+<a name='L156'></a><a href='#L156'>156</a>
+<a name='L157'></a><a href='#L157'>157</a>
+<a name='L158'></a><a href='#L158'>158</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -271,6 +292,7 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -330,6 +352,26 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -337,7 +379,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { Story } from '@storybook/react';
 import React, { useState } from 'react';
-import Table, { Props as TableProps } from '../components/table/index';
+import Table, { EnhancedTopBarSelectionProps, Props as TableProps } from '../components/table/index';
 import CellRenderer from '..//components/table/TableCellRenderer';
 import { RendererProps } from '../components/table/types';
 import { Box } from '@mui/material';
@@ -407,6 +449,7 @@ export const Default = <span class="cstat-no" title="statement not covered" >Tem
 export const Selectable = <span class="cstat-no" title="statement not covered" >Template.bind({});</span>
 export const Presorted = <span class="cstat-no" title="statement not covered" >Template.bind({});</span>
 export const ShowTopBar = <span class="cstat-no" title="statement not covered" >Template.bind({});</span>
+export const ShowTopBarV2 = <span class="cstat-no" title="statement not covered" >Template.bind({});</span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >Default.args = {</span>
   orderBy: 'name',
@@ -471,6 +514,26 @@ export const ShowTopBar = <span class="cstat-no" title="statement not covered" >
   controlledOnSelect: true,
   showTopBar: true,
 };
+&nbsp;
+const enhancedTopBarSelectionConfig: EnhancedTopBarSelectionProps = <span class="cstat-no" title="statement not covered" >{</span>
+<span class="fstat-no" title="function not covered" >  re</span>nderEnhancedNumSelectedText(selectedCount: number, pageCount: number): string {
+<span class="cstat-no" title="statement not covered" >    return `${selectedCount} selected across ${pageCount} pages`;</span>
+  },
+<span class="fstat-no" title="function not covered" >  re</span>nderSelectAllText(rowsCount: number): string {
+<span class="cstat-no" title="statement not covered" >    return `Select all ${rowsCount} rows`;</span>
+  },
+<span class="fstat-no" title="function not covered" >  re</span>nderSelectNoneText(): string {
+<span class="cstat-no" title="statement not covered" >    return 'Clear selection';</span>
+  },
+};
+&nbsp;
+<span class="cstat-no" title="statement not covered" >ShowTopBarV2.args = {</span>
+  ...Default.args,
+  showCheckbox: true,
+  controlledOnSelect: true,
+  showTopBar: true,
+  enhancedTopBarSelectionConfig,
+};
 &nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
@@ -478,7 +541,7 @@ export const ShowTopBar = <span class="cstat-no" title="statement not covered" >
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-01-03T19:05:03.823Z
+                at 2024-01-03T19:39:26.909Z
             </div>
         <script src="../../prettify.js"></script>
         <script>
