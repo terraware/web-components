@@ -45,7 +45,7 @@ export interface HeadCell {
 }
 
 export interface LocalizationProps {
-  renderNumSelectedText?: (numSelected: number) => string;
+  renderNumSelectedText?: (numSelected: number) => string | JSX.Element;
   renderPaginationText?: (from: number, to: number, total: number) => string;
   booleanFalseText: string;
   booleanTrueText: string;
@@ -73,7 +73,7 @@ export interface Props<T> extends LocalizationProps {
   emptyTableMessage?: string;
   showCheckbox?: boolean;
   showTopBar?: boolean;
-  topBarButtons?: TopBarButton[];
+  topBarButtons?: (TopBarButton | JSX.Element)[];
   selectedRows?: T[];
   setSelectedRows?: React.Dispatch<React.SetStateAction<T[]>>;
   controlledOnSelect?: boolean;
@@ -89,6 +89,12 @@ export type TopBarButton = {
   icon?: IconName;
   disabled?: boolean;
   tooltipTitle?: TooltipProps['title'];
+};
+
+export const isTopBarButton = (input: unknown): input is TopBarButton => {
+  const castInput = input as TopBarButton;
+
+  return !!(castInput.buttonType && castInput.onButtonClick);
 };
 
 export default function EnhancedTable<T extends TableRowType>({
