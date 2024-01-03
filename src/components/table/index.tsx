@@ -1,6 +1,6 @@
 import { Box, Checkbox, Pagination, Table, TableBody, TableCell, TableContainer, TableRow, Theme, TooltipProps, Typography, useTheme } from '@mui/material';
-import React, { useCallback, useEffect, useState } from 'react';
-import EnhancedTableToolbar from './EnhancedTableToolbar';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import EnhancedTableToolbarV2 from './EnhancedTableToolbarV2';
 import { descendingComparator, getComparator, SortOrder, stableSort } from './sort';
 import TableCellRenderer, { TableRowType } from './TableCellRenderer';
 import TableHeader from './TableHeader';
@@ -45,12 +45,19 @@ export interface HeadCell {
 }
 
 export interface LocalizationProps {
-  renderNumSelectedText?: (numSelected: number) => string | JSX.Element;
+  renderNumSelectedText?: (numSelected: number) => string;
   renderPaginationText?: (from: number, to: number, total: number) => string;
   booleanFalseText: string;
   booleanTrueText: string;
   editText: string;
 }
+
+// Only the text related props need to be passed in by the implementer, and extra data is passed to the caller
+export type EnhancedTopBarSelectionProps = {
+  renderEnhancedNumSelectedText?: (selectedCount: number, pagesCount: number) => string;
+  renderSelectAllText?: (rowsCount: number) => string;
+  renderSelectNoneText?: () => string;
+};
 
 export interface Props<T> extends LocalizationProps {
   id?: string;
@@ -80,6 +87,8 @@ export interface Props<T> extends LocalizationProps {
   reloadData?: () => void;
   stickyHeader?: boolean;
   hideHeader?: boolean;
+  // Adds "select all rows across all pages" and "clear selection" to the table top bar
+  enhancedTopBarSelectionConfig?: EnhancedTopBarSelectionProps;
 }
 
 export type TopBarButton = {
@@ -127,6 +136,7 @@ export default function EnhancedTable<T extends TableRowType>({
   editText,
   renderNumSelectedText,
   renderPaginationText,
+  enhancedTopBarSelectionConfig,
 }: Props<T>): JSX.Element {
   const classes = tableStyles();
   const theme = useTheme();
@@ -291,15 +301,29 @@ export default function EnhancedTable<T extends TableRowType>({
     }
   }
 
+  const pagesCount = Math.ceil(rows.length / maxItemsPerPage);
+
   return (
     <>
       {showTopBar && (
-        <EnhancedTableToolbar
-          numSelected={selectedRows ? selectedRows.length : 0}
+        <EnhancedTableToolbarV2
+          selectedRowsCount={selectedRows?.length || 0}
+          pagesCount={pagesCount}
           renderNumSelectedText={renderNumSelectedText}
+          rowsCount={rows.length}
           topBarButtons={topBarButtons}
+          topBarSelectionConfig={
+            enhancedTopBarSelectionConfig
+              ? {
+                  ...enhancedTopBarSelectionConfig,
+                  handleSelectAll: () => setSelectedRows && setSelectedRows(rows),
+                  handleSelectNone: () => setSelectedRows && setSelectedRows([]),
+                }
+              : undefined
+          }
         />
       )}
+
       <TableContainer id={id} sx={{ overflowX: 'visible' }}>
         <DndContext sensors={sensors} onDragEnd={handleDragEnd}>
           <Table stickyHeader={stickyHeader} aria-labelledby='tableTitle' size='medium' aria-label='enhanced table' className={classes.table}>
@@ -406,7 +430,7 @@ export default function EnhancedTable<T extends TableRowType>({
             </Typography>
           )}
           <Pagination
-            count={Math.ceil(rows.length / maxItemsPerPage)}
+            count={pagesCount}
             page={itemsToSkip / maxItemsPerPage + 1}
             shape='rounded'
             onChange={handleChangePage}
