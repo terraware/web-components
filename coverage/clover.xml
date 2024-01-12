@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1704310767016" clover="3.2.0">
-  <project timestamp="1704310767017" name="All files">
-    <metrics statements="1348" coveredstatements="186" conditionals="1082" coveredconditionals="86" methods="503" coveredmethods="31" elements="2933" coveredelements="303" complexity="0" loc="1348" ncloc="1348" packages="35" files="192" classes="192"/>
+<coverage generated="1705092115054" clover="3.2.0">
+  <project timestamp="1705092115055" name="All files">
+    <metrics statements="1348" coveredstatements="186" conditionals="1084" coveredconditionals="86" methods="503" coveredmethods="31" elements="2935" coveredelements="303" complexity="0" loc="1348" ncloc="1348" packages="35" files="192" classes="192"/>
     <package name="src">
       <metrics statements="1" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
       <file name="index.ts" path="/home/runner/work/web-components/web-components/src/index.ts">
@@ -204,14 +204,14 @@
       </file>
     </package>
     <package name="src.components.Message">
-      <metrics statements="5" coveredstatements="0" conditionals="21" coveredconditionals="0" methods="2" coveredmethods="0"/>
+      <metrics statements="5" coveredstatements="0" conditionals="23" coveredconditionals="0" methods="2" coveredmethods="0"/>
       <file name="Message.tsx" path="/home/runner/work/web-components/web-components/src/components/Message/Message.tsx">
-        <metrics statements="5" coveredstatements="0" conditionals="21" coveredconditionals="0" methods="2" coveredmethods="0"/>
+        <metrics statements="5" coveredstatements="0" conditionals="23" coveredconditionals="0" methods="2" coveredmethods="0"/>
         <line num="19" count="0" type="stmt"/>
         <line num="20" count="0" type="stmt"/>
         <line num="22" count="0" type="stmt"/>
-        <line num="42" count="0" type="stmt"/>
-        <line num="48" count="0" type="stmt"/>
+        <line num="44" count="0" type="stmt"/>
+        <line num="50" count="0" type="stmt"/>
       </file>
     </package>
     <package name="src.components.MultiSelect">
