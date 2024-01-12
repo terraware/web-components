@@ -7,6 +7,7 @@ export interface TableColumnType {
   type: 'string' | 'number' | 'date' | 'notes' | 'edit' | 'boolean';
   className?: string;
   tooltipTitle?: TooltipProps['title'];
+  sticky?: 'left' | 'right' | 'both';
 }
 
 export interface RendererProps<T> {
@@ -20,6 +21,7 @@ export interface RendererProps<T> {
   booleanFalseText: string;
   booleanTrueText: string;
   editText: string;
+  sticky?: 'left' | 'right' | 'both';
 }
 
 export type EnhancedTableDetailsRow = {

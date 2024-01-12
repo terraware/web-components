@@ -7,12 +7,26 @@ import TableHeaderItem from './TableHeaderItem';
 import { HeadCell } from '.';
 import { makeStyles } from '@mui/styles';
 import { CheckboxStyle } from '../Checkbox';
+import { titleCase } from '../../utils/text';
 
 const useStyles = makeStyles((theme: Theme) => ({
   headerCell: {
     '&.MuiTableCell-root': {
       borderBottom: `2px solid ${theme.palette.TwClrBrdrSecondary}`
     }
+  },
+  stickyLeft: {
+    position: 'sticky',
+    left: 0,
+    background: theme.palette.TwClrBg,
+    zIndex: 1000,
+    boxShadow: '5px 0px 5px grey',
+  },
+  stickyRight: {
+    position: 'sticky',
+    right: 0,
+    background: theme.palette.TwClrBg,
+    boxShadow: '-5px 0px 5px grey',
   },
 }));
 
@@ -40,8 +54,8 @@ export default function EnhancedTableHead(props: Props): JSX.Element {
     return columns.map((c) => ({
       id: c.key,
       disablePadding: false,
-      label: typeof c.name === 'string' ? c.name.toUpperCase() : c.name,
-      className: `${classes.headerCell} ${c.className}`,
+      label: (typeof c.name === 'string' && c.name.length > 0) ? titleCase(c.name) : c.name,
+      className: `${classes.headerCell} ${c.className} ${((c.sticky === 'left' || c.sticky === 'both' ) ? classes.stickyLeft : '')} ${((c.sticky === 'right' || c.sticky === 'both' ) ? classes.stickyRight : '')}`,
       tooltipTitle: c.tooltipTitle,
     }));
   }

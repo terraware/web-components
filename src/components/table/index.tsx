@@ -324,7 +324,7 @@ export default function EnhancedTable<T extends TableRowType>({
         />
       )}
 
-      <TableContainer id={id} sx={{ overflowX: 'visible' }}>
+      <TableContainer id={id}>
         <DndContext sensors={sensors} onDragEnd={handleDragEnd}>
           <Table stickyHeader={stickyHeader} aria-labelledby='tableTitle' size='medium' aria-label='enhanced table' className={classes.table}>
             {!hideHeader && (
@@ -397,6 +397,7 @@ export default function EnhancedTable<T extends TableRowType>({
                                 booleanFalseText={booleanFalseText}
                                 booleanTrueText={booleanTrueText}
                                 editText={editText}
+                                sticky={c.sticky}
                               />
                             ))}
                         </TableRow>
