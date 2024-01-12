@@ -1,3 +1,5 @@
+import { PaletteOptions } from '@mui/material/styles/createPalette';
+
 declare module '@mui/material/styles/createPalette' {
   export interface Palette {
     TwClrBaseBlack?: React.CSSProperties['color'];
@@ -158,12 +160,16 @@ declare module '@mui/material/styles/createPalette' {
     TwClrTxtSelected?: React.CSSProperties['color'];
     TwClrBgSuccess?: React.CSSProperties['color'];
     TwClrBgSuccessTertiary?: React.CSSProperties['color'];
+    TwClrBgSuccessActive?: React.CSSProperties['color'];
+    TwClrBgSuccessHover?: React.CSSProperties['color'];
     TwClrBrdrSuccess?: React.CSSProperties['color'];
     TwClrIcnOnSuccess?: React.CSSProperties['color'];
     TwClrIcnSuccess?: React.CSSProperties['color'];
     TwClrTxtOnSuccess?: React.CSSProperties['color'];
     TwClrTxtSuccess?: React.CSSProperties['color'];
     TwClrBgWarning?: React.CSSProperties['color'];
+    TwClrBgWarningActive?: React.CSSProperties['color'];
+    TwClrBgWarningHover?: React.CSSProperties['color'];
     TwClrBgWarningTertiary?: React.CSSProperties['color'];
     TwClrBrdrWarning?: React.CSSProperties['color'];
     TwClrBrdrWarningActive?: React.CSSProperties['color'];
@@ -333,12 +339,16 @@ declare module '@mui/material/styles/createPalette' {
     TwClrTxtSelected?: React.CSSProperties['color'];
     TwClrBgSuccess?: React.CSSProperties['color'];
     TwClrBgSuccessTertiary?: React.CSSProperties['color'];
+    TwClrBgSuccessActive?: React.CSSProperties['color'];
+    TwClrBgSuccessHover?: React.CSSProperties['color'];
     TwClrBrdrSuccess?: React.CSSProperties['color'];
     TwClrIcnOnSuccess?: React.CSSProperties['color'];
     TwClrIcnSuccess?: React.CSSProperties['color'];
     TwClrTxtOnSuccess?: React.CSSProperties['color'];
     TwClrTxtSuccess?: React.CSSProperties['color'];
     TwClrBgWarning?: React.CSSProperties['color'];
+    TwClrBgWarningActive?: React.CSSProperties['color'];
+    TwClrBgWarningHover?: React.CSSProperties['color'];
     TwClrBgWarningTertiary?: React.CSSProperties['color'];
     TwClrBrdrWarning?: React.CSSProperties['color'];
     TwClrBrdrWarningActive?: React.CSSProperties['color'];
@@ -514,12 +524,16 @@ const TerrawareTheme: ThemeDictionary = {
     "TwClrTxtSelected": "#6172BE",
     "TwClrBgSuccess": "#5D822B",
     "TwClrBgSuccessTertiary": "#EAF3DC",
+    "TwClrBgSuccessActive": "#496622",
+    "TwClrBgSuccessHover": "linear-gradient(rgb(73 102 34 / 50%), rgb(73 102 34 / 50%)), linear-gradient(#5D822B, #5D822B)",
     "TwClrBrdrSuccess": "#5D822B",
     "TwClrIcnOnSuccess": "#FFFFFF",
     "TwClrIcnSuccess": "#5D822B",
     "TwClrTxtOnSuccess": "#FFFFFF",
     "TwClrTxtSuccess": "#5D822B",
     "TwClrBgWarning": "#A36A2D",
+    "TwClrBgWarningActive": "#815424",
+    "TwClrBgWarningHover": "linear-gradient(rgb(129 84 36 / 50%), rgb(129 84 36 / 50%)), linear-gradient(#A36A2D, #A36A2D)",
     "TwClrBgWarningTertiary": "#F8EFE5",
     "TwClrBrdrWarning": "#A36A2D",
     "TwClrBrdrWarningActive": "#815424",
