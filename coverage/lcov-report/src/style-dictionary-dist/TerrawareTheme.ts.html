@@ -597,7 +597,30 @@
 <a name='L532'></a><a href='#L532'>532</a>
 <a name='L533'></a><a href='#L533'>533</a>
 <a name='L534'></a><a href='#L534'>534</a>
-<a name='L535'></a><a href='#L535'>535</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L535'></a><a href='#L535'>535</a>
+<a name='L536'></a><a href='#L536'>536</a>
+<a name='L537'></a><a href='#L537'>537</a>
+<a name='L538'></a><a href='#L538'>538</a>
+<a name='L539'></a><a href='#L539'>539</a>
+<a name='L540'></a><a href='#L540'>540</a>
+<a name='L541'></a><a href='#L541'>541</a>
+<a name='L542'></a><a href='#L542'>542</a>
+<a name='L543'></a><a href='#L543'>543</a>
+<a name='L544'></a><a href='#L544'>544</a>
+<a name='L545'></a><a href='#L545'>545</a>
+<a name='L546'></a><a href='#L546'>546</a>
+<a name='L547'></a><a href='#L547'>547</a>
+<a name='L548'></a><a href='#L548'>548</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -1131,7 +1154,12 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">declare module '@mui/material/styles/createPalette' {
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { PaletteOptions } from '@mui/material/styles/createPalette';
+&nbsp;
+declare module '@mui/material/styles/createPalette' {
   export interface Palette {
     TwClrBaseBlack?: React.CSSProperties['color'];
     TwClrBaseGray025?: React.CSSProperties['color'];
@@ -1291,12 +1319,16 @@
     TwClrTxtSelected?: React.CSSProperties['color'];
     TwClrBgSuccess?: React.CSSProperties['color'];
     TwClrBgSuccessTertiary?: React.CSSProperties['color'];
+    TwClrBgSuccessActive?: React.CSSProperties['color'];
+    TwClrBgSuccessHover?: React.CSSProperties['color'];
     TwClrBrdrSuccess?: React.CSSProperties['color'];
     TwClrIcnOnSuccess?: React.CSSProperties['color'];
     TwClrIcnSuccess?: React.CSSProperties['color'];
     TwClrTxtOnSuccess?: React.CSSProperties['color'];
     TwClrTxtSuccess?: React.CSSProperties['color'];
     TwClrBgWarning?: React.CSSProperties['color'];
+    TwClrBgWarningActive?: React.CSSProperties['color'];
+    TwClrBgWarningHover?: React.CSSProperties['color'];
     TwClrBgWarningTertiary?: React.CSSProperties['color'];
     TwClrBrdrWarning?: React.CSSProperties['color'];
     TwClrBrdrWarningActive?: React.CSSProperties['color'];
@@ -1466,12 +1498,16 @@
     TwClrTxtSelected?: React.CSSProperties['color'];
     TwClrBgSuccess?: React.CSSProperties['color'];
     TwClrBgSuccessTertiary?: React.CSSProperties['color'];
+    TwClrBgSuccessActive?: React.CSSProperties['color'];
+    TwClrBgSuccessHover?: React.CSSProperties['color'];
     TwClrBrdrSuccess?: React.CSSProperties['color'];
     TwClrIcnOnSuccess?: React.CSSProperties['color'];
     TwClrIcnSuccess?: React.CSSProperties['color'];
     TwClrTxtOnSuccess?: React.CSSProperties['color'];
     TwClrTxtSuccess?: React.CSSProperties['color'];
     TwClrBgWarning?: React.CSSProperties['color'];
+    TwClrBgWarningActive?: React.CSSProperties['color'];
+    TwClrBgWarningHover?: React.CSSProperties['color'];
     TwClrBgWarningTertiary?: React.CSSProperties['color'];
     TwClrBrdrWarning?: React.CSSProperties['color'];
     TwClrBrdrWarningActive?: React.CSSProperties['color'];
@@ -1647,12 +1683,16 @@ const TerrawareTheme: ThemeDictionary = <span class="cstat-no" title="statement 
     "TwClrTxtSelected": "#6172BE",
     "TwClrBgSuccess": "#5D822B",
     "TwClrBgSuccessTertiary": "#EAF3DC",
+    "TwClrBgSuccessActive": "#496622",
+    "TwClrBgSuccessHover": "linear-gradient(rgb(73 102 34 / 50%), rgb(73 102 34 / 50%)), linear-gradient(#5D822B, #5D822B)",
     "TwClrBrdrSuccess": "#5D822B",
     "TwClrIcnOnSuccess": "#FFFFFF",
     "TwClrIcnSuccess": "#5D822B",
     "TwClrTxtOnSuccess": "#FFFFFF",
     "TwClrTxtSuccess": "#5D822B",
     "TwClrBgWarning": "#A36A2D",
+    "TwClrBgWarningActive": "#815424",
+    "TwClrBgWarningHover": "linear-gradient(rgb(129 84 36 / 50%), rgb(129 84 36 / 50%)), linear-gradient(#A36A2D, #A36A2D)",
     "TwClrBgWarningTertiary": "#F8EFE5",
     "TwClrBrdrWarning": "#A36A2D",
     "TwClrBrdrWarningActive": "#815424",
@@ -1664,15 +1704,14 @@ const TerrawareTheme: ThemeDictionary = <span class="cstat-no" title="statement 
   }
 }
 &nbsp;
-export default TerrawareTheme;
-&nbsp;</pre></td></tr></table></pre>
+export default TerrawareTheme;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
             </div><!-- /wrapper -->
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-01-12T20:41:54.943Z
+                at 2024-01-12T21:39:57.234Z
             </div>
         <script src="../../prettify.js"></script>
         <script>
