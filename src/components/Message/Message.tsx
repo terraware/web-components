@@ -35,7 +35,9 @@ export default function Message(props: Props): JSX.Element | null {
                 <h4>{title}</h4>
               </div>
             )}
-            <p>{body}</p>
+
+            {typeof body === 'string' ? <p>body</p> : body}
+
             {type === 'page' && pageButtons && pageButtons.length > 0 ? (
               <div className='tw-message--actions-container'>
                 {pageButtons?.map((pageButton, index) => {
