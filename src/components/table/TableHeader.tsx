@@ -55,7 +55,6 @@ export default function EnhancedTableHead(props: Props): JSX.Element {
       id: c.key,
       disablePadding: false,
       label: typeof c.name === 'string' ? titleCase(c.name) : c.name,
-      className: `${classes.headerCell} ${c.className}`,
       className: `${classes.headerCell} ${c.className} ${((c.sticky === 'left' || c.sticky === 'both' ) ? classes.stickyLeft : '')} ${((c.sticky === 'right' || c.sticky === 'both' ) ? classes.stickyRight : '')}`,
       tooltipTitle: c.tooltipTitle,
     }));
