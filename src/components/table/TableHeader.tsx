@@ -15,6 +15,19 @@ const useStyles = makeStyles((theme: Theme) => ({
       borderBottom: `2px solid ${theme.palette.TwClrBrdrSecondary}`
     }
   },
+  stickyLeft: {
+    position: "sticky",
+    left: 0,
+    background: theme.palette.TwClrBg,
+    zIndex: 1000,
+    boxShadow: "5px 0px 5px grey",
+  },
+  stickyRight: {
+    position: "sticky",
+    right: 0,
+    background: theme.palette.TwClrBg,
+    boxShadow: "-5px 0px 5px grey",
+  },
 }));
 
 interface Props {
@@ -43,6 +56,7 @@ export default function EnhancedTableHead(props: Props): JSX.Element {
       disablePadding: false,
       label: typeof c.name === 'string' ? titleCase(c.name) : c.name,
       className: `${classes.headerCell} ${c.className}`,
+      className: `${classes.headerCell} ${c.className} ${((c.sticky === 'left' || c.sticky === 'both' ) ? classes.stickyLeft : '')} ${((c.sticky === 'right' || c.sticky === 'both' ) ? classes.stickyRight : '')}`,
       tooltipTitle: c.tooltipTitle,
     }));
   }

@@ -75,12 +75,11 @@ export const ShowTopBarV2 = Template.bind({});
 Default.args = {
   orderBy: 'name',
   columns: [
-    { key: 'name', name: 'Name', type: 'string' },
+    { key: 'name', name: 'Name', type: 'string', sticky: 'left' },
     { key: 'middlename', name: 'Middlename', type: 'string', tooltipTitle: 'Middle name is optional' },
     { key: 'lastname', name: 'Lastname', type: 'string' },
     { key: 'occupation', name: 'Occupation', type: 'string' },
     { key: 'available', name: 'Available', type: 'boolean' },
-    { key: 'date', name: 'Date', type: 'string' },
     { key: 'pets', name: 'Pets', type: 'string' },
   ],
   rows: Array(150)

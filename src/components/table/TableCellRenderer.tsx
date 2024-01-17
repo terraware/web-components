@@ -23,25 +23,41 @@ const useStyles = makeStyles((theme: Theme) => ({
       borderBottom: `1px solid ${theme.palette.TwClrBrdrSecondary}`
     }
   },
+  stickyRight: {
+    position: "sticky",
+    right: 0,
+    background: theme.palette.TwClrBg,
+    boxShadow: "-5px 0px 5px grey",
+  },
+  stickyLeft: {
+    position: "sticky",
+    zIndex: 1000,
+    left: 0,
+    background: theme.palette.TwClrBg,
+    boxShadow: "5px 0px 5px grey",
+  }
 }));
 
 export type TableRowType = Record<string, any>;
 
 export default function CellRenderer(props: RendererProps<TableRowType>): JSX.Element {
-  const { column, value, onRowClick, index, className, booleanFalseText, booleanTrueText, editText } = props;
+  const { column, value, onRowClick, index, className, booleanFalseText, booleanTrueText, editText, sticky } = props;
   const id = `row${index}-${column.key}`;
+  const styles = useStyles();
+
+  const classes = className + ' ' + ((sticky === 'left' || sticky === 'both') ? (styles.stickyLeft) : '') + ((sticky === 'right' || sticky === 'both') ? (styles.stickyRight) : '');
 
   if (column.type === 'date' && typeof value === 'string' && value) {
-    return <CellDateRenderer id={id} value={value} className={className} />;
+    return <CellDateRenderer id={id} value={value} className={className}/>;
   } else if (column.type === 'notes' && value && typeof value === 'string') {
-    return <CellNotesRenderer id={id} value={value} className={className} />;
+    return <CellNotesRenderer id={id} value={value} className={classes}/>;
   } else if (column.type === 'boolean') {
-    return <CellBooleanRenderer id={id} value={value} className={className} booleanFalseText={booleanFalseText} booleanTrueText={booleanTrueText} />;
+    return <CellBooleanRenderer id={id} value={value} className={classes} booleanFalseText={booleanFalseText} booleanTrueText={booleanTrueText}/>;
   } else if (column.type === 'edit') {
-    return <CellEditRenderer id={id} onRowClick={onRowClick} className={className} editText={editText} />;
+    return <CellEditRenderer id={id} onRowClick={onRowClick} className={classes} editText={editText}/>;
   }
 
-  return <CellTextRenderer id={id} value={value} className={className} />;
+  return <CellTextRenderer id={id} value={value} className={classes} />;
 }
 
 export const cellDateFormatter = (value?: string): string | undefined => {
@@ -53,7 +69,7 @@ export const cellDateFormatter = (value?: string): string | undefined => {
 export function CellDateRenderer({
   id,
   value,
-  className,
+  className
 }: {
   id: string;
   value: string,
@@ -62,7 +78,7 @@ export function CellDateRenderer({
   const classes = useStyles();
 
   return (
-    <TableCell id={id} align='left' className={`${classes.date} ${classes.default} ${className}`}>
+    <TableCell id={id} align='left' className={`${classes.date} ${classes.default} ${className}}`}>
       <Typography component='p' variant='body1' fontSize='14px'>
         {cellDateFormatter(value)}
       </Typography>
