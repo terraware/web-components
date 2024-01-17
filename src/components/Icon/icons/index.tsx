@@ -64,6 +64,7 @@ import IconParchment from '../../svg/IconParchment';
 import IconRedo from '../../svg/IconRedo';
 import IconRestorationSite from '../../svg/IconRestorationSite';
 import IconSeedling from '../../svg/IconSeedling';
+import IconSlice from '../../svg/IconSlice';
 import IconSubtract from '../../svg/IconSubtract';
 import IconSynced from '../../svg/IconSynced';
 import IconTrashCan from '../../svg/IconTrashCan';
@@ -166,6 +167,7 @@ export type IconName =
   | 'iconRedo'
   | 'iconRestorationSite'
   | 'iconSeedling'
+  | 'iconSlice'
   | 'iconSubtract'
   | 'iconSynced'
   | 'iconTrashCan'
@@ -272,6 +274,7 @@ const icons: Record<IconName, SVGComponent> = {
   iconRedo: IconRedo,
   iconRestorationSite: IconRestorationSite,
   iconSeedling: IconSeedling,
+  iconSlice: IconSlice,
   iconSubtract: IconSubtract,
   iconSynced: IconSynced,
   iconTrashCan: IconTrashCan,
