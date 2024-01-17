@@ -36,7 +36,7 @@ export default function Message(props: Props): JSX.Element | null {
               </div>
             )}
 
-            {typeof body === 'string' ? <p>body</p> : body}
+            {typeof body === 'string' ? <p>{body}</p> : body}
 
             {type === 'page' && pageButtons && pageButtons.length > 0 ? (
               <div className='tw-message--actions-container'>
