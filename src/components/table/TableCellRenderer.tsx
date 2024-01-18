@@ -24,17 +24,17 @@ const useStyles = makeStyles((theme: Theme) => ({
     }
   },
   stickyRight: {
-    position: "sticky",
+    position: 'sticky',
     right: 0,
     background: theme.palette.TwClrBg,
-    boxShadow: "-5px 0px 5px grey",
+    boxShadow: '-5px 0px 5px grey',
   },
   stickyLeft: {
-    position: "sticky",
+    position: 'sticky',
     zIndex: 1000,
     left: 0,
     background: theme.palette.TwClrBg,
-    boxShadow: "5px 0px 5px grey",
+    boxShadow: '5px 0px 5px grey',
   }
 }));
 
