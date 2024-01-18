@@ -21,7 +21,6 @@ export interface RendererProps<T> {
   booleanFalseText: string;
   booleanTrueText: string;
   editText: string;
-  sticky?: 'left' | 'right' | 'both';
 }
 
 export type EnhancedTableDetailsRow = {

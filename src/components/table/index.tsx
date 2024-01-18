@@ -397,7 +397,6 @@ export default function EnhancedTable<T extends TableRowType>({
                                 booleanFalseText={booleanFalseText}
                                 booleanTrueText={booleanTrueText}
                                 editText={editText}
-                                sticky={c.sticky}
                               />
                             ))}
                         </TableRow>

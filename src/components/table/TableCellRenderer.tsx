@@ -41,14 +41,14 @@ const useStyles = makeStyles((theme: Theme) => ({
 export type TableRowType = Record<string, any>;
 
 export default function CellRenderer(props: RendererProps<TableRowType>): JSX.Element {
-  const { column, value, onRowClick, index, className, booleanFalseText, booleanTrueText, editText, sticky } = props;
+  const { column, value, onRowClick, index, className, booleanFalseText, booleanTrueText, editText } = props;
   const id = `row${index}-${column.key}`;
   const styles = useStyles();
 
-  const classes = className + ' ' + ((sticky === 'left' || sticky === 'both') ? (styles.stickyLeft) : '') + ((sticky === 'right' || sticky === 'both') ? (styles.stickyRight) : '');
+  const classes = className + ' ' + ((column.sticky === 'left' || column.sticky === 'both') ? (styles.stickyLeft) : '') + ((column.sticky === 'right' || column.sticky === 'both') ? (styles.stickyRight) : '');
 
   if (column.type === 'date' && typeof value === 'string' && value) {
-    return <CellDateRenderer id={id} value={value} className={className}/>;
+    return <CellDateRenderer id={id} value={value} className={classes}/>;
   } else if (column.type === 'notes' && value && typeof value === 'string') {
     return <CellNotesRenderer id={id} value={value} className={classes}/>;
   } else if (column.type === 'boolean') {
