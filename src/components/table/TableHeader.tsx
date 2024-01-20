@@ -7,6 +7,7 @@ import TableHeaderItem from './TableHeaderItem';
 import { HeadCell } from '.';
 import { makeStyles } from '@mui/styles';
 import { CheckboxStyle } from '../Checkbox';
+import { titleCase } from '../../utils/text';
 
 const useStyles = makeStyles((theme: Theme) => ({
   headerCell: {
@@ -40,8 +41,8 @@ export default function EnhancedTableHead(props: Props): JSX.Element {
     return columns.map((c) => ({
       id: c.key,
       disablePadding: false,
-      label: typeof c.name === 'string' ? c.name.toUpperCase() : c.name,
       className: `${classes.headerCell} ${c.className}`,
+      label: (typeof c.name === 'string' && c.name.length > 0) ? titleCase(c.name) : c.name,
       tooltipTitle: c.tooltipTitle,
     }));
   }
