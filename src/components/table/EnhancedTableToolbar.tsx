@@ -8,7 +8,8 @@ import { EnhancedTopBarSelectionConfig } from './EnhancedTableToolbarV2';
 
 const styles = makeStyles((theme: Theme) => ({
   toolbar: {
-    background: '#EDF0F1',
+    background: theme.palette.TwClrBgSecondary,
+    borderRadius: theme.spacing(0.5),
   },
   flexText: {
     flex: '1 1 auto',
