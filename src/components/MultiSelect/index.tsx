@@ -1,28 +1,29 @@
 import React, { useState } from 'react';
 import './styles.scss';
 import IconTooltip from '../IconTooltip';
-import { IconButton, TooltipProps } from '@mui/material';
+import { TooltipProps } from '@mui/material';
 import Icon from '../Icon/Icon';
 import PillList, { PillListItem } from '../PillList';
 
 export type MultiSelectProps<K, V> = {
   className?: string;
+  disabled?: boolean;
   fullWidth?: boolean;
   helperText?: string;
   id?: string;
   label?: string;
   missingValuePlaceholder?: string;
   onAdd: (item: K) => void;
-  onRemove: (item: K) => void;
+  onBlur?: () => void;
   onPillClick?: (item: K) => void;
+  onRemove: (item: K) => void;
   options: Map<K, V>;
   pillListClassName?: string;
   placeHolder?: string;
-  valueRenderer: (value: V) => string;
   selectedOptions: K[];
+  showOptions?: boolean;
   tooltipTitle?: TooltipProps['title'];
-  disabled?: boolean;
-  onBlur?: () => void;
+  valueRenderer: (value: V) => string;
 };
 
 export default function MultiSelect<K, V>(props: MultiSelectProps<K, V>): JSX.Element {
@@ -43,9 +44,10 @@ export default function MultiSelect<K, V>(props: MultiSelectProps<K, V>): JSX.El
     selectedOptions,
     tooltipTitle,
     disabled,
+    showOptions,
   } = props;
 
-  const [openedOptions, setOpenedOptions] = useState(false);
+  const [openedOptions, setOpenedOptions] = useState(showOptions || false);
 
   const toggleOptions = () => {
     setOpenedOptions((isOpen) => !isOpen && !disabled);
