@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './styles.scss';
 import IconTooltip from '../IconTooltip';
 import { TooltipProps } from '@mui/material';
@@ -18,11 +18,10 @@ export type MultiSelectProps<K, V> = {
   onPillClick?: (item: K) => void;
   onRemove: (item: K) => void;
   options: Map<K, V>;
-  optionsVisible?: boolean | undefined;
+  optionsVisible?: boolean;
   pillListClassName?: string;
   placeHolder?: string;
   selectedOptions: K[];
-  setOptionsVisible?: ((value: boolean) => void) | undefined;
   tooltipTitle?: TooltipProps['title'];
   valueRenderer: (value: V) => string;
 };
@@ -44,24 +43,25 @@ export default function MultiSelect<K, V>(props: MultiSelectProps<K, V>): JSX.El
     pillListClassName,
     placeHolder,
     selectedOptions,
-    setOptionsVisible,
     tooltipTitle,
     valueRenderer,
   } = props;
 
-  const [openedOptions, setOpenedOptions] = useState(optionsVisible || false);
+  const [openedOptions, setOpenedOptions] = useState(false);
 
   const toggleOptions = () => {
-    const nextOptionsVisible = !openedOptions && !disabled;
-    if (setOptionsVisible) {
-      setOptionsVisible(nextOptionsVisible);
-    } else {
-      setOpenedOptions(nextOptionsVisible);
-    }
+    setOpenedOptions((isOpen) => !isOpen && !disabled);
   };
+
+  useEffect(() => {
+    if (optionsVisible !== undefined) {
+      setOpenedOptions(optionsVisible);
+    }
+  }, [optionsVisible]);
 
   const onBlurHandler = () => {
     setOpenedOptions(false);
+
     if (props.onBlur) {
       props.onBlur();
     }
