@@ -18,10 +18,11 @@ export type MultiSelectProps<K, V> = {
   onPillClick?: (item: K) => void;
   onRemove: (item: K) => void;
   options: Map<K, V>;
+  optionsVisible?: boolean | undefined;
   pillListClassName?: string;
   placeHolder?: string;
   selectedOptions: K[];
-  showOptions?: boolean;
+  setOptionsVisible?: ((value: boolean) => void) | undefined;
   tooltipTitle?: TooltipProps['title'];
   valueRenderer: (value: V) => string;
 };
@@ -29,6 +30,7 @@ export type MultiSelectProps<K, V> = {
 export default function MultiSelect<K, V>(props: MultiSelectProps<K, V>): JSX.Element {
   const {
     className,
+    disabled,
     fullWidth,
     helperText,
     id,
@@ -38,19 +40,24 @@ export default function MultiSelect<K, V>(props: MultiSelectProps<K, V>): JSX.El
     onRemove,
     onPillClick,
     options,
+    optionsVisible,
     pillListClassName,
     placeHolder,
-    valueRenderer,
     selectedOptions,
+    setOptionsVisible,
     tooltipTitle,
-    disabled,
-    showOptions,
+    valueRenderer,
   } = props;
 
-  const [openedOptions, setOpenedOptions] = useState(showOptions || false);
+  const [openedOptions, setOpenedOptions] = useState(optionsVisible || false);
 
   const toggleOptions = () => {
-    setOpenedOptions((isOpen) => !isOpen && !disabled);
+    const nextOptionsVisible = !openedOptions && !disabled;
+    if (setOptionsVisible) {
+      setOptionsVisible(nextOptionsVisible);
+    } else {
+      setOpenedOptions(nextOptionsVisible);
+    }
   };
 
   const onBlurHandler = () => {
