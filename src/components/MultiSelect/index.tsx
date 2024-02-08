@@ -1,33 +1,35 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './styles.scss';
 import IconTooltip from '../IconTooltip';
-import { IconButton, TooltipProps } from '@mui/material';
+import { TooltipProps } from '@mui/material';
 import Icon from '../Icon/Icon';
 import PillList, { PillListItem } from '../PillList';
 
 export type MultiSelectProps<K, V> = {
   className?: string;
+  disabled?: boolean;
   fullWidth?: boolean;
   helperText?: string;
   id?: string;
   label?: string;
   missingValuePlaceholder?: string;
   onAdd: (item: K) => void;
-  onRemove: (item: K) => void;
+  onBlur?: () => void;
   onPillClick?: (item: K) => void;
+  onRemove: (item: K) => void;
   options: Map<K, V>;
+  optionsVisible?: boolean;
   pillListClassName?: string;
   placeHolder?: string;
-  valueRenderer: (value: V) => string;
   selectedOptions: K[];
   tooltipTitle?: TooltipProps['title'];
-  disabled?: boolean;
-  onBlur?: () => void;
+  valueRenderer: (value: V) => string;
 };
 
 export default function MultiSelect<K, V>(props: MultiSelectProps<K, V>): JSX.Element {
   const {
     className,
+    disabled,
     fullWidth,
     helperText,
     id,
@@ -37,12 +39,12 @@ export default function MultiSelect<K, V>(props: MultiSelectProps<K, V>): JSX.El
     onRemove,
     onPillClick,
     options,
+    optionsVisible,
     pillListClassName,
     placeHolder,
-    valueRenderer,
     selectedOptions,
     tooltipTitle,
-    disabled,
+    valueRenderer,
   } = props;
 
   const [openedOptions, setOpenedOptions] = useState(false);
@@ -51,8 +53,15 @@ export default function MultiSelect<K, V>(props: MultiSelectProps<K, V>): JSX.El
     setOpenedOptions((isOpen) => !isOpen && !disabled);
   };
 
+  useEffect(() => {
+    if (optionsVisible !== undefined) {
+      setOpenedOptions(optionsVisible);
+    }
+  }, [optionsVisible]);
+
   const onBlurHandler = () => {
     setOpenedOptions(false);
+
     if (props.onBlur) {
       props.onBlur();
     }
