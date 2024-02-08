@@ -131,7 +131,7 @@ const WithParentOptionsVisibilityControlTemplate: Story<MultiSelectProps<number,
 
       <Popover
         className={classes.popoverContainer}
-        id='pre-exposed-filter-popover'
+        id='filter-popover'
         open={Boolean(anchorEl)}
         onClose={hideOptionsOrClose}
         anchorEl={anchorEl}
