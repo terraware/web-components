@@ -15,6 +15,7 @@ export type MultiSelectProps<K, V> = {
   missingValuePlaceholder?: string;
   onAdd: (item: K) => void;
   onBlur?: () => void;
+  onFocus?: () => void;
   onPillClick?: (item: K) => void;
   onRemove: (item: K) => void;
   options: Map<K, V>;
@@ -51,6 +52,10 @@ export default function MultiSelect<K, V>(props: MultiSelectProps<K, V>): JSX.El
 
   const toggleOptions = () => {
     setOpenedOptions((isOpen) => !isOpen && !disabled);
+
+    if (props.onFocus) {
+      props.onFocus();
+    }
   };
 
   useEffect(() => {
