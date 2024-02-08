@@ -146,6 +146,14 @@ const WithParentOptionsVisibilityControlTemplate: Story<MultiSelectProps<number,
         onClose={hideOptionsOrClose}
         anchorEl={anchorEl}
         onClickCapture={(event) => {
+          // If the captured event is not for the backdrop, do nothing
+          const eventIsBackdropClick = Array.from((event.target as HTMLElement).classList.values()).some((targetClass: string) =>
+            targetClass.toLowerCase().includes('backdrop')
+          );
+          if (!eventIsBackdropClick) {
+            return;
+          }
+
           // Since two events are fired when the options are opened, the MultiSelect onBlur and
           // the Popover onClick (of the backdrop, which prompts the onClose event), we need to stop event propagation
           // if the options are visible. Otherwise, we setShouldClose(true) so that when the onClose handler fires
