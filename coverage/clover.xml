@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1707429915833" clover="3.2.0">
-  <project timestamp="1707429915833" name="All files">
-    <metrics statements="1415" coveredstatements="191" conditionals="1116" coveredconditionals="88" methods="524" coveredmethods="32" elements="3055" coveredelements="311" complexity="0" loc="1415" ncloc="1415" packages="35" files="193" classes="193"/>
+<coverage generated="1708715936919" clover="3.2.0">
+  <project timestamp="1708715936919" name="All files">
+    <metrics statements="1418" coveredstatements="196" conditionals="1118" coveredconditionals="90" methods="524" coveredmethods="34" elements="3060" coveredelements="320" complexity="0" loc="1418" ncloc="1418" packages="35" files="193" classes="193"/>
     <package name="src">
       <metrics statements="1" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
       <file name="index.ts" path="/home/runner/work/web-components/web-components/src/index.ts">
@@ -2019,7 +2019,7 @@
       </file>
     </package>
     <package name="src.utils">
-      <metrics statements="62" coveredstatements="35" conditionals="25" coveredconditionals="11" methods="19" coveredmethods="8"/>
+      <metrics statements="65" coveredstatements="40" conditionals="27" coveredconditionals="13" methods="19" coveredmethods="10"/>
       <file name="date.ts" path="/home/runner/work/web-components/web-components/src/utils/date.ts">
         <metrics statements="31" coveredstatements="28" conditionals="14" coveredconditionals="11" methods="8" coveredmethods="8"/>
         <line num="6" count="27" type="cond" truecount="2" falsecount="0"/>
@@ -2071,11 +2071,14 @@
         <line num="3" count="1" type="stmt"/>
       </file>
       <file name="text.ts" path="/home/runner/work/web-components/web-components/src/utils/text.ts">
-        <metrics statements="4" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="3" coveredmethods="0"/>
-        <line num="1" count="1" type="stmt"/>
-        <line num="3" count="1" type="stmt"/>
-        <line num="4" count="0" type="stmt"/>
-        <line num="5" count="0" type="stmt"/>
+        <metrics statements="7" coveredstatements="7" conditionals="2" coveredconditionals="2" methods="3" coveredmethods="2"/>
+        <line num="1" count="2" type="stmt"/>
+        <line num="3" count="2" type="stmt"/>
+        <line num="4" count="8" type="stmt"/>
+        <line num="5" count="12" type="cond" truecount="2" falsecount="0"/>
+        <line num="6" count="10" type="stmt"/>
+        <line num="8" count="10" type="stmt"/>
+        <line num="10" count="2" type="stmt"/>
       </file>
       <file name="useDeviceInfo.ts" path="/home/runner/work/web-components/web-components/src/utils/useDeviceInfo.ts">
         <metrics statements="20" coveredstatements="1" conditionals="11" coveredconditionals="0" methods="4" coveredmethods="0"/>
