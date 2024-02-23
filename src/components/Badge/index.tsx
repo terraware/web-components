@@ -5,12 +5,14 @@ export interface BadgeProps {
   backgroundColor?: string;
   borderColor?: string;
   label: string;
+  labelColor?: string;
 }
 
 const Badge = (props: BadgeProps): JSX.Element => {
   const theme = useTheme();
   const backgroundColor = props.backgroundColor || theme.palette.TwClrBgSecondary;
   const borderColor = props.borderColor || theme.palette.TwClrBrdrSecondary;
+  const labelColor = props.labelColor || borderColor;
 
   return (
     <Box
@@ -22,7 +24,7 @@ const Badge = (props: BadgeProps): JSX.Element => {
         width: 'fit-content',
       }}
     >
-      <Typography color={borderColor} fontSize='14px' fontWeight={500}>
+      <Typography color={labelColor} fontSize='14px' fontWeight={500}>
         {props.label}
       </Typography>
     </Box>

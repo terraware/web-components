@@ -14,6 +14,7 @@ export const Default = Template.bind({});
 
 Default.args = {
   label: 'Badge',
+  labelColor: undefined,
   backgroundColor: '#F8EFE5',
   borderColor: '#A36A2D',
 };
