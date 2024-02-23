@@ -3,6 +3,7 @@
  */
 
 import Autocomplete from './components/Autocomplete/Autocomplete';
+import Badge from './components/Badge';
 import BusySpinner from './components/BusySpinner';
 import Button from './components/Button/Button';
 import Checkbox from './components/Checkbox';
@@ -61,6 +62,7 @@ export type { Tab, TabsProps } from './components/Tabs';
 
 export {
   Autocomplete,
+  Badge,
   BusySpinner,
   Button,
   CellRenderer,
