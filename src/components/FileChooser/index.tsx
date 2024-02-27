@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { Box, Typography, useTheme } from '@mui/material';
+import { Box, Link, Typography, useTheme } from '@mui/material';
 import { Theme } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import { useDeviceInfo } from '../../utils';
@@ -162,7 +161,7 @@ export default function FileChooser(props: FileChooserProps): JSX.Element {
         className={classes.button}
       />
       {template && (
-        <Link to={template.url} target='_blank' className={classes.link}>{template.text}</Link>
+        <Link href={template.url} target='_blank' className={classes.link}>{template.text}</Link>
       )}
     </Box>
   );

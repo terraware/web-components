@@ -1,6 +1,5 @@
 import React from 'react';
 import { ThemeProvider, StyledEngineProvider } from '@mui/material';
-import { MemoryRouter } from 'react-router';
 
 export const parameters = {
   actions: { argTypesRegex: '^on[A-Z].*' },
@@ -18,9 +17,7 @@ export const decorators = [
   (Story) => (
     <ThemeProvider theme={theme}>
       <StyledEngineProvider injectFirst>
-        <MemoryRouter  initialEntries={['/']}>
-          <Story />
-        </MemoryRouter>
+        <Story />
       </StyledEngineProvider>
     </ThemeProvider>
   ),
