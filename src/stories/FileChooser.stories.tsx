@@ -23,7 +23,7 @@ Default.args = {
     text: 'Download a template here.',
     url: 'https://docs.google.com/document/d/1NkNoho843CE-6NM8rmmHfdAT7HJS6vWhfzezcvkj3yM/edit?usp=sharing',
   },
-  uploadDescription: 'Browser or drag and drop files.',
+  uploadDescription: 'Browser or drag and drop a file.',
   uploadText: 'Upload File(s)',
 };
 
