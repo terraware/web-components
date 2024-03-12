@@ -12,7 +12,7 @@ const useStyles = makeStyles(() => ({
   icon: {
     '& path': {
       fill: (props: StyleProps) => props.fillColor,
-    }
+    },
   },
 }));
 

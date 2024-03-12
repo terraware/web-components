@@ -59,7 +59,11 @@ const SvgBlobbyIconOrganization = ({ title, titleId, ...props }: SVGProps<SVGSVG
         />
       </mask>
       <g mask='url(#blobby-icon-organization_svg__g)'>
-        <path fill='url(#blobby-icon-organization_svg__h)' d='m153.619 78.772-40.718-40.718-38.909 40.087 37.877 37.877 41.75-37.246Z' opacity={0.25} />
+        <path
+          fill='url(#blobby-icon-organization_svg__h)'
+          d='m153.619 78.772-40.718-40.718-38.909 40.087 37.877 37.877 41.75-37.246Z'
+          opacity={0.25}
+        />
       </g>
       <path
         fill='#EAF3DC'
@@ -71,27 +75,69 @@ const SvgBlobbyIconOrganization = ({ title, titleId, ...props }: SVGProps<SVGSVG
       />
     </g>
     <defs>
-      <linearGradient id='blobby-icon-organization_svg__b' x1={126.5} x2={50} y1={104} y2={27.5} gradientUnits='userSpaceOnUse'>
+      <linearGradient
+        id='blobby-icon-organization_svg__b'
+        x1={126.5}
+        x2={50}
+        y1={104}
+        y2={27.5}
+        gradientUnits='userSpaceOnUse'
+      >
         <stop stopColor='#F1F0EC' />
         <stop offset={1} stopColor='#84D6AC' />
       </linearGradient>
-      <linearGradient id='blobby-icon-organization_svg__c' x1={99} x2={109} y1={99} y2={114} gradientUnits='userSpaceOnUse'>
+      <linearGradient
+        id='blobby-icon-organization_svg__c'
+        x1={99}
+        x2={109}
+        y1={99}
+        y2={114}
+        gradientUnits='userSpaceOnUse'
+      >
         <stop stopColor='#2C8658' />
         <stop offset={1} stopColor='#ACD278' />
       </linearGradient>
-      <linearGradient id='blobby-icon-organization_svg__d' x1={133} x2={143} y1={12} y2={27} gradientUnits='userSpaceOnUse'>
+      <linearGradient
+        id='blobby-icon-organization_svg__d'
+        x1={133}
+        x2={143}
+        y1={12}
+        y2={27}
+        gradientUnits='userSpaceOnUse'
+      >
         <stop stopColor='#2C8658' />
         <stop offset={1} stopColor='#ACD278' />
       </linearGradient>
-      <linearGradient id='blobby-icon-organization_svg__e' x1={57} x2={67} y1={35} y2={50} gradientUnits='userSpaceOnUse'>
+      <linearGradient
+        id='blobby-icon-organization_svg__e'
+        x1={57}
+        x2={67}
+        y1={35}
+        y2={50}
+        gradientUnits='userSpaceOnUse'
+      >
         <stop stopColor='#2C8658' />
         <stop offset={1} stopColor='#ACD278' />
       </linearGradient>
-      <linearGradient id='blobby-icon-organization_svg__f' x1={126.5} x2={50} y1={104} y2={27.5} gradientUnits='userSpaceOnUse'>
+      <linearGradient
+        id='blobby-icon-organization_svg__f'
+        x1={126.5}
+        x2={50}
+        y1={104}
+        y2={27.5}
+        gradientUnits='userSpaceOnUse'
+      >
         <stop stopColor='#F1F0EC' />
         <stop offset={1} stopColor='#84D6AC' />
       </linearGradient>
-      <linearGradient id='blobby-icon-organization_svg__h' x1={90.5} x2={133.322} y1={58.575} y2={99.564} gradientUnits='userSpaceOnUse'>
+      <linearGradient
+        id='blobby-icon-organization_svg__h'
+        x1={90.5}
+        x2={133.322}
+        y1={58.575}
+        y2={99.564}
+        gradientUnits='userSpaceOnUse'
+      >
         <stop stopColor='#2C8658' />
         <stop offset={1} stopColor='#ACD278' />
       </linearGradient>

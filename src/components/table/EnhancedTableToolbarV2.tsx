@@ -42,7 +42,8 @@ const EnhancedTableToolbarV2 = ({
 
     return {
       ...topBarSelectionConfig,
-      renderEnhancedNumSelectedText: () => (renderEnhancedNumSelectedText && renderEnhancedNumSelectedText(selectedRowsCount || 0, pagesCount)) || '',
+      renderEnhancedNumSelectedText: () =>
+        (renderEnhancedNumSelectedText && renderEnhancedNumSelectedText(selectedRowsCount || 0, pagesCount)) || '',
       renderSelectAllText: () => (renderSelectAllText && renderSelectAllText(rowsCount)) || '',
     };
   }, [topBarSelectionConfig, selectedRowsCount, rowsCount, pagesCount]);
@@ -59,7 +60,13 @@ const EnhancedTableToolbarV2 = ({
     );
   }
 
-  return <EnhancedTableToolbar numSelected={selectedRowsCount} renderNumSelectedText={renderNumSelectedText} topBarButtons={topBarButtons} />;
+  return (
+    <EnhancedTableToolbar
+      numSelected={selectedRowsCount}
+      renderNumSelectedText={renderNumSelectedText}
+      topBarButtons={topBarButtons}
+    />
+  );
 };
 
 export default EnhancedTableToolbarV2;

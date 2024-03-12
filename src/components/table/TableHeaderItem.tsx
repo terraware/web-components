@@ -61,7 +61,11 @@ export default function TableHeaderItem(props: Props): JSX.Element {
       className={headCell.className || ''}
     >
       {headCell.label && (
-        <TableSortLabel active={orderBy === headCell.id} direction={orderBy === headCell.id ? order : 'asc'} onClick={createSortHandler(headCell.id)}>
+        <TableSortLabel
+          active={orderBy === headCell.id}
+          direction={orderBy === headCell.id ? order : 'asc'}
+          onClick={createSortHandler(headCell.id)}
+        >
           {i > 0 && <DragHandle className={classes.dragIcon} {...attributes} {...listeners} />}
           {headCell.label}
           {headCell.tooltipTitle && <IconTooltip title={headCell.tooltipTitle} />}

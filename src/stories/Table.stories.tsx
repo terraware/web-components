@@ -42,7 +42,14 @@ const Template: Story<Omit<TableProps<{ name: string; lastname: string }>, 'rows
       .fill({ name: '', middlename: '', lastname: '', occupation: '' })
       .map((i, j) => {
         if (j % 2 === 0) {
-          return { name: `Constanza_${j}`, middlename: '', lastname: 'Uanini', occupation: 'Artist', date: '2023-02-03', pets: 5 };
+          return {
+            name: `Constanza_${j}`,
+            middlename: '',
+            lastname: 'Uanini',
+            occupation: 'Artist',
+            date: '2023-02-03',
+            pets: 5,
+          };
         } else if (j % 3 === 0) {
           return {
             name: `Carlos_${j}`,
@@ -94,7 +101,8 @@ const Template: Story<Omit<TableProps<{ name: string; lastname: string }>, 'rows
             buttonText: 'Tooltip',
             onButtonClick: () => window.alert('you should not see this either'),
             disabled: true,
-            tooltipTitle: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+            tooltipTitle:
+              'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
           },
         ]}
       />

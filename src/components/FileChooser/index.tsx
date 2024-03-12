@@ -161,7 +161,9 @@ export default function FileChooser(props: FileChooserProps): JSX.Element {
         className={classes.button}
       />
       {template && (
-        <Link href={template.url} target='_blank' className={classes.link}>{template.text}</Link>
+        <Link href={template.url} target='_blank' className={classes.link}>
+          {template.text}
+        </Link>
       )}
     </Box>
   );

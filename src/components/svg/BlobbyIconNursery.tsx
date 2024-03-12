@@ -59,7 +59,11 @@ const SvgBlobbyIconNursery = ({ title, titleId, ...props }: SVGProps<SVGSVGEleme
         />
       </mask>
       <g mask='url(#blobby-icon-nursery_svg__g)'>
-        <path fill='url(#blobby-icon-nursery_svg__h)' d='m148.557 80.437-26.786-26.786-44.81 34.274 27.537 27.537 44.059-35.025Z' opacity={0.25} />
+        <path
+          fill='url(#blobby-icon-nursery_svg__h)'
+          d='m148.557 80.437-26.786-26.786-44.81 34.274 27.537 27.537 44.059-35.025Z'
+          opacity={0.25}
+        />
       </g>
       <path
         fill='#EAF3DC'
@@ -73,27 +77,69 @@ const SvgBlobbyIconNursery = ({ title, titleId, ...props }: SVGProps<SVGSVGEleme
       />
     </g>
     <defs>
-      <linearGradient id='blobby-icon-nursery_svg__b' x1={125.5} x2={50} y1={101.5} y2={26} gradientUnits='userSpaceOnUse'>
+      <linearGradient
+        id='blobby-icon-nursery_svg__b'
+        x1={125.5}
+        x2={50}
+        y1={101.5}
+        y2={26}
+        gradientUnits='userSpaceOnUse'
+      >
         <stop stopColor='#F1F0EC' />
         <stop offset={1} stopColor='#84D6AC' />
       </linearGradient>
-      <linearGradient id='blobby-icon-nursery_svg__c' x1={69.999} x2={59.999} y1={88.898} y2={73.898} gradientUnits='userSpaceOnUse'>
+      <linearGradient
+        id='blobby-icon-nursery_svg__c'
+        x1={69.999}
+        x2={59.999}
+        y1={88.898}
+        y2={73.898}
+        gradientUnits='userSpaceOnUse'
+      >
         <stop stopColor='#2C8658' />
         <stop offset={1} stopColor='#ACD278' />
       </linearGradient>
-      <linearGradient id='blobby-icon-nursery_svg__d' x1={133.999} x2={123.999} y1={110.898} y2={95.898} gradientUnits='userSpaceOnUse'>
+      <linearGradient
+        id='blobby-icon-nursery_svg__d'
+        x1={133.999}
+        x2={123.999}
+        y1={110.898}
+        y2={95.898}
+        gradientUnits='userSpaceOnUse'
+      >
         <stop stopColor='#2C8658' />
         <stop offset={1} stopColor='#ACD278' />
       </linearGradient>
-      <linearGradient id='blobby-icon-nursery_svg__e' x1={139.999} x2={129.999} y1={30.898} y2={15.898} gradientUnits='userSpaceOnUse'>
+      <linearGradient
+        id='blobby-icon-nursery_svg__e'
+        x1={139.999}
+        x2={129.999}
+        y1={30.898}
+        y2={15.898}
+        gradientUnits='userSpaceOnUse'
+      >
         <stop stopColor='#2C8658' />
         <stop offset={1} stopColor='#ACD278' />
       </linearGradient>
-      <linearGradient id='blobby-icon-nursery_svg__f' x1={125.5} x2={50} y1={101.5} y2={26} gradientUnits='userSpaceOnUse'>
+      <linearGradient
+        id='blobby-icon-nursery_svg__f'
+        x1={125.5}
+        x2={50}
+        y1={101.5}
+        y2={26}
+        gradientUnits='userSpaceOnUse'
+      >
         <stop stopColor='#F1F0EC' />
         <stop offset={1} stopColor='#84D6AC' />
       </linearGradient>
-      <linearGradient id='blobby-icon-nursery_svg__h' x1={96.5} x2={122.689} y1={71.951} y2={104.226} gradientUnits='userSpaceOnUse'>
+      <linearGradient
+        id='blobby-icon-nursery_svg__h'
+        x1={96.5}
+        x2={122.689}
+        y1={71.951}
+        y2={104.226}
+        gradientUnits='userSpaceOnUse'
+      >
         <stop stopColor='#2C8658' />
         <stop offset={1} stopColor='#ACD278' />
       </linearGradient>

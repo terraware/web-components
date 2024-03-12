@@ -59,7 +59,11 @@ const SvgEdit = ({ title, titleId, ...props }: SVGProps<SVGSVGElement> & SVGRPro
         />
       </mask>
       <g mask='url(#edit_svg__g)'>
-        <path fill='url(#edit_svg__h)' d='m170.095 88.904-47.246-47.247-47.587 47.1 45.069 45.07 49.764-44.923Z' opacity={0.25} />
+        <path
+          fill='url(#edit_svg__h)'
+          d='m170.095 88.904-47.246-47.247-47.587 47.1 45.069 45.07 49.764-44.923Z'
+          opacity={0.25}
+        />
       </g>
       <path
         fill='#EAF3DC'

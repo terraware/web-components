@@ -75,7 +75,14 @@ const SvgBlobbyIconSeeds = ({ title, titleId, ...props }: SVGProps<SVGSVGElement
       />
     </g>
     <defs>
-      <linearGradient id='blobby-icon-seeds_svg__b' x1={139.5} x2={52.354} y1={110} y2={24.156} gradientUnits='userSpaceOnUse'>
+      <linearGradient
+        id='blobby-icon-seeds_svg__b'
+        x1={139.5}
+        x2={52.354}
+        y1={110}
+        y2={24.156}
+        gradientUnits='userSpaceOnUse'
+      >
         <stop stopColor='#F1F0EC' />
         <stop offset={1} stopColor='#84D6AC' />
       </linearGradient>
@@ -91,11 +98,25 @@ const SvgBlobbyIconSeeds = ({ title, titleId, ...props }: SVGProps<SVGSVGElement
         <stop stopColor='#2C8658' />
         <stop offset={1} stopColor='#ACD278' />
       </linearGradient>
-      <linearGradient id='blobby-icon-seeds_svg__f' x1={139.5} x2={52.354} y1={110} y2={24.156} gradientUnits='userSpaceOnUse'>
+      <linearGradient
+        id='blobby-icon-seeds_svg__f'
+        x1={139.5}
+        x2={52.354}
+        y1={110}
+        y2={24.156}
+        gradientUnits='userSpaceOnUse'
+      >
         <stop stopColor='#F1F0EC' />
         <stop offset={1} stopColor='#84D6AC' />
       </linearGradient>
-      <linearGradient id='blobby-icon-seeds_svg__h' x1={82.375} x2={138.217} y1={53} y2={117.435} gradientUnits='userSpaceOnUse'>
+      <linearGradient
+        id='blobby-icon-seeds_svg__h'
+        x1={82.375}
+        x2={138.217}
+        y1={53}
+        y2={117.435}
+        gradientUnits='userSpaceOnUse'
+      >
         <stop stopColor='#2C8658' />
         <stop offset={1} stopColor='#ACD278' />
       </linearGradient>

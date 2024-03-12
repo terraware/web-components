@@ -49,16 +49,18 @@ export default function Slider(props: SliderProps): JSX.Element {
     }
   };
 
-  return <MuiSlider
-    aria-label='Slider'
-    defaultValue={defaultValue}
-    value={value}
-    marks={marks}
-    min={min}
-    max={max}
-    onChangeCommitted={handleChange}
-    step={step ?? null}
-    valueLabelDisplay={valueLabelDisplay}
-    sx={sliderStyles}
-  />;
+  return (
+    <MuiSlider
+      aria-label='Slider'
+      defaultValue={defaultValue}
+      value={value}
+      marks={marks}
+      min={min}
+      max={max}
+      onChangeCommitted={handleChange}
+      step={step ?? null}
+      valueLabelDisplay={valueLabelDisplay}
+      sx={sliderStyles}
+    />
+  );
 }

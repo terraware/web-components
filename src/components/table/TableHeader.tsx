@@ -12,8 +12,8 @@ import { titleCase } from '../../utils/text';
 const useStyles = makeStyles((theme: Theme) => ({
   headerCell: {
     '&.MuiTableCell-root': {
-      borderBottom: `2px solid ${theme.palette.TwClrBrdrSecondary}`
-    }
+      borderBottom: `2px solid ${theme.palette.TwClrBrdrSecondary}`,
+    },
   },
 }));
 
@@ -42,7 +42,7 @@ export default function EnhancedTableHead(props: Props): JSX.Element {
       id: c.key,
       disablePadding: false,
       className: `${classes.headerCell} ${c.className}`,
-      label: (typeof c.name === 'string' && c.name.length > 0) ? titleCase(c.name) : c.name,
+      label: typeof c.name === 'string' && c.name.length > 0 ? titleCase(c.name) : c.name,
       tooltipTitle: c.tooltipTitle,
     }));
   }
@@ -64,7 +64,16 @@ export default function EnhancedTableHead(props: Props): JSX.Element {
         )}
         <SortableContext items={headCells}>
           {headCells.map((headCell, i) => {
-            return <TableHeaderItem headCell={headCell} order={order} orderBy={orderBy} onRequestSort={onRequestSort} i={i} key={i} />;
+            return (
+              <TableHeaderItem
+                headCell={headCell}
+                order={order}
+                orderBy={orderBy}
+                onRequestSort={onRequestSort}
+                i={i}
+                key={i}
+              />
+            );
           })}
         </SortableContext>
       </TableRow>

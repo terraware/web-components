@@ -134,7 +134,12 @@ export default function PhotoChooser(props: PhotoChooserProps): JSX.Element {
                 marginTop={theme.spacing(1)}
                 border={`1px solid ${theme.palette.TwClrBrdrTertiary}`}
               >
-                <Button icon='iconTrashCan' onClick={() => removeFileAtIndex(index)} size='small' className={classes.removePhoto} />
+                <Button
+                  icon='iconTrashCan'
+                  onClick={() => removeFileAtIndex(index)}
+                  size='small'
+                  className={classes.removePhoto}
+                />
                 <img height='120px' src={fileData} alt={files[index]?.name} className={classes.thumbnail} />
               </Box>
             ))}

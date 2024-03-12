@@ -50,9 +50,7 @@ export default function Button(props: Props): JSX.Element {
       onClick={onClick}
       className={`button ${type}-${priority} button--${size} ${type}-${priority}--${size} ${
         icon && !processing ? 'button-with-icon' : ''
-      } ${
-        rightIcon && !processing ? 'button-with-right-icon' : ''
-      } ${classes.svgIconFill}
+      } ${rightIcon && !processing ? 'button-with-right-icon' : ''} ${classes.svgIconFill}
       ${!label ? 'button-no-label' : ''} ${className ?? ''}`}
       disabled={disabled}
     >

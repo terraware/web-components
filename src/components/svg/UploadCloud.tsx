@@ -59,7 +59,11 @@ const SvgUploadCloud = ({ title, titleId, ...props }: SVGProps<SVGSVGElement> & 
         />
       </mask>
       <g mask='url(#upload-cloud_svg__g)'>
-        <path fill='url(#upload-cloud_svg__h)' d='M155.247 93.985 110.72 49.458 74.964 78.966l45.07 45.069 35.213-30.05Z' opacity={0.25} />
+        <path
+          fill='url(#upload-cloud_svg__h)'
+          d='M155.247 93.985 110.72 49.458 74.964 78.966l45.07 45.069 35.213-30.05Z'
+          opacity={0.25}
+        />
       </g>
       <path
         fill='#EAF3DC'
@@ -91,7 +95,14 @@ const SvgUploadCloud = ({ title, titleId, ...props }: SVGProps<SVGSVGElement> & 
         <stop stopColor='#F1F0EC' />
         <stop offset={1} stopColor='#84D6AC' />
       </linearGradient>
-      <linearGradient id='upload-cloud_svg__h' x1={89.408} x2={133.953} y1={67} y2={114.369} gradientUnits='userSpaceOnUse'>
+      <linearGradient
+        id='upload-cloud_svg__h'
+        x1={89.408}
+        x2={133.953}
+        y1={67}
+        y2={114.369}
+        gradientUnits='userSpaceOnUse'
+      >
         <stop stopColor='#2C8658' />
         <stop offset={1} stopColor='#ACD278' />
       </linearGradient>

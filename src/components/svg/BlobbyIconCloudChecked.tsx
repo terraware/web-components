@@ -59,7 +59,11 @@ const SvgBlobbyIconCloudChecked = ({ title, titleId, ...props }: SVGProps<SVGSVG
         />
       </mask>
       <g mask='url(#blobby-icon-cloud-checked_svg__g)'>
-        <path fill='url(#blobby-icon-cloud-checked_svg__h)' d='M162.5 95.795 113.205 46.5 71.431 78.93l49.837 49.838L162.5 95.795Z' opacity={0.25} />
+        <path
+          fill='url(#blobby-icon-cloud-checked_svg__h)'
+          d='M162.5 95.795 113.205 46.5 71.431 78.93l49.837 49.838L162.5 95.795Z'
+          opacity={0.25}
+        />
       </g>
       <path
         fill='#EAF3DC'
@@ -71,27 +75,69 @@ const SvgBlobbyIconCloudChecked = ({ title, titleId, ...props }: SVGProps<SVGSVG
       />
     </g>
     <defs>
-      <linearGradient id='blobby-icon-cloud-checked_svg__b' x1={145.5} x2={54.2} y1={111.5} y2={21.651} gradientUnits='userSpaceOnUse'>
+      <linearGradient
+        id='blobby-icon-cloud-checked_svg__b'
+        x1={145.5}
+        x2={54.2}
+        y1={111.5}
+        y2={21.651}
+        gradientUnits='userSpaceOnUse'
+      >
         <stop stopColor='#F1F0EC' />
         <stop offset={1} stopColor='#84D6AC' />
       </linearGradient>
-      <linearGradient id='blobby-icon-cloud-checked_svg__c' x1={135} x2={145} y1={59} y2={74} gradientUnits='userSpaceOnUse'>
+      <linearGradient
+        id='blobby-icon-cloud-checked_svg__c'
+        x1={135}
+        x2={145}
+        y1={59}
+        y2={74}
+        gradientUnits='userSpaceOnUse'
+      >
         <stop stopColor='#2C8658' />
         <stop offset={1} stopColor='#ACD278' />
       </linearGradient>
-      <linearGradient id='blobby-icon-cloud-checked_svg__d' x1={61} x2={71} y1={16} y2={31} gradientUnits='userSpaceOnUse'>
+      <linearGradient
+        id='blobby-icon-cloud-checked_svg__d'
+        x1={61}
+        x2={71}
+        y1={16}
+        y2={31}
+        gradientUnits='userSpaceOnUse'
+      >
         <stop stopColor='#2C8658' />
         <stop offset={1} stopColor='#ACD278' />
       </linearGradient>
-      <linearGradient id='blobby-icon-cloud-checked_svg__e' x1={55} x2={65} y1={96} y2={111} gradientUnits='userSpaceOnUse'>
+      <linearGradient
+        id='blobby-icon-cloud-checked_svg__e'
+        x1={55}
+        x2={65}
+        y1={96}
+        y2={111}
+        gradientUnits='userSpaceOnUse'
+      >
         <stop stopColor='#2C8658' />
         <stop offset={1} stopColor='#ACD278' />
       </linearGradient>
-      <linearGradient id='blobby-icon-cloud-checked_svg__f' x1={145.5} x2={54.2} y1={111.5} y2={21.651} gradientUnits='userSpaceOnUse'>
+      <linearGradient
+        id='blobby-icon-cloud-checked_svg__f'
+        x1={145.5}
+        x2={54.2}
+        y1={111.5}
+        y2={21.651}
+        gradientUnits='userSpaceOnUse'
+      >
         <stop stopColor='#F1F0EC' />
         <stop offset={1} stopColor='#84D6AC' />
       </linearGradient>
-      <linearGradient id='blobby-icon-cloud-checked_svg__h' x1={88.4} x2={136.803} y1={65} y2={119.434} gradientUnits='userSpaceOnUse'>
+      <linearGradient
+        id='blobby-icon-cloud-checked_svg__h'
+        x1={88.4}
+        x2={136.803}
+        y1={65}
+        y2={119.434}
+        gradientUnits='userSpaceOnUse'
+      >
         <stop stopColor='#2C8658' />
         <stop offset={1} stopColor='#ACD278' />
       </linearGradient>

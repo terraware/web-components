@@ -40,9 +40,10 @@ const Template: StoryFn<InViewDemoProps> = (args): JSX.Element => {
   return (
     <>
       <Typography variant={'body1'} sx={{ marginBottom: '100px' }}>
-        This story aims to show the NPM package `react-intersection-observer` in action, and shows how you might implement it in our React frontend. Use the
-        `InView` component to easily show or hide the contents based on whether or not the children are in the browser's viewport. This is especially helpful
-        when rendering very tall pages with expensive component hierarchies.
+        This story aims to show the NPM package `react-intersection-observer` in action, and shows how you might
+        implement it in our React frontend. Use the `InView` component to easily show or hide the contents based on
+        whether or not the children are in the browser's viewport. This is especially helpful when rendering very tall
+        pages with expensive component hierarchies.
       </Typography>
       <Snackbar open={true}>
         <div>
@@ -55,7 +56,9 @@ const Template: StoryFn<InViewDemoProps> = (args): JSX.Element => {
         {carousels.map((value, index) => (
           <InView key={index}>
             {({ inView, ref, entry }) => {
-              const photos = [...new Array(imagesPerCarousel)].map((_value, _index) => `https://source.unsplash.com/random/800x600/?forest,jungle,${_index}`);
+              const photos = [...new Array(imagesPerCarousel)].map(
+                (_value, _index) => `https://source.unsplash.com/random/800x600/?forest,jungle,${_index}`
+              );
 
               if (inView) {
                 setCarouselVisible(index);

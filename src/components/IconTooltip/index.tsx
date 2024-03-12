@@ -32,7 +32,11 @@ export type IconTooltipProps = {
   title: TooltipProps['title'];
 };
 
-export default function IconTooltip({ iconName = 'info', placement = 'top-start', title }: IconTooltipProps): JSX.Element {
+export default function IconTooltip({
+  iconName = 'info',
+  placement = 'top-start',
+  title,
+}: IconTooltipProps): JSX.Element {
   const [open, setOpen] = React.useState(false);
   const { isMobile } = useDeviceInfo();
   const classes = useStyles();

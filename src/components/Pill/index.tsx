@@ -13,22 +13,29 @@ type PillProps<IdType> = {
 };
 
 export default function Pill<IdType>(props: PillProps<IdType>): JSX.Element {
-  const {id, label, value, onClick, onRemove, className } = props;
+  const { id, label, value, onClick, onRemove, className } = props;
 
   return (
-    <div className={`pill ${className ?? ''}`} onClick={(ev) => {
-      ev.stopPropagation();
-      if (onClick) {
-        onClick(id);
-      }
-    }}>
-      {label && (<p className='label'>{label}:</p>)}
+    <div
+      className={`pill ${className ?? ''}`}
+      onClick={(ev) => {
+        ev.stopPropagation();
+        if (onClick) {
+          onClick(id);
+        }
+      }}
+    >
+      {label && <p className='label'>{label}:</p>}
       <p className={`value${label ? '' : ' value--no-label'}`}>{value}</p>
       {onRemove ? (
-        <IconButton onClick={(ev) => {
-          ev.stopPropagation();
-          onRemove(id);
-        }} className='iconContainer' aria-label='remove'>
+        <IconButton
+          onClick={(ev) => {
+            ev.stopPropagation();
+            onRemove(id);
+          }}
+          className='iconContainer'
+          aria-label='remove'
+        >
           <Icon name='close' className='icon' />
         </IconButton>
       ) : (
