@@ -72,7 +72,13 @@ export default function PopoverDropdown(props: PopoverProps): JSX.Element {
             ...elements,
             ...section.map((item, itemIndex) => {
               return (
-                <MenuItem onClick={() => onClick(item)} key={`option-${itemIndex}`} sx={itemStyles(item.type)} disableRipple={true} disabled={item.disabled}>
+                <MenuItem
+                  onClick={() => onClick(item)}
+                  key={`option-${itemIndex}`}
+                  sx={itemStyles(item.type)}
+                  disableRipple={true}
+                  disabled={item.disabled}
+                >
                   {itemRenderer ? itemRenderer(item) : item.label}
                 </MenuItem>
               );
