@@ -111,7 +111,12 @@ export default function SelectT<T>(props: SelectTProps<T>): JSX.Element {
   const handleClick = (event: any) => {
     // Don't respond to user clicks inside the input box because those are
     // already handled by toggleOptions()
-    if (dropdownRef.current && !dropdownRef.current.contains(event.target) && inputRef.current && !inputRef.current.contains(event.target)) {
+    if (
+      dropdownRef.current &&
+      !dropdownRef.current.contains(event.target) &&
+      inputRef.current &&
+      !inputRef.current.contains(event.target)
+    ) {
       setOpenedOptions(false);
     }
   };
@@ -130,7 +135,9 @@ export default function SelectT<T>(props: SelectTProps<T>): JSX.Element {
         const dropdownBottom = dropdownRef.current.clientHeight + bbox.top + bbox.height;
         const windowHeightThreshold = window.innerHeight - bbox.height;
         if (dropdownBottom > windowHeightThreshold) {
-          dropdownRef.current.style.maxHeight = `${dropdownRef.current.clientHeight - (dropdownBottom - windowHeightThreshold)}px`;
+          dropdownRef.current.style.maxHeight = `${
+            dropdownRef.current.clientHeight - (dropdownBottom - windowHeightThreshold)
+          }px`;
         }
       }
     }

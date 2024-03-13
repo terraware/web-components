@@ -35,7 +35,14 @@ const Template: Story<MultiSelectProps<number, string>> = (args) => {
   const renderString = (v: string) => v;
 
   return (
-    <MultiSelect {...args} selectedOptions={selectedOptions} onAdd={handleAdd} onRemove={handleRemove} onPillClick={onPillClick} valueRenderer={renderString} />
+    <MultiSelect
+      {...args}
+      selectedOptions={selectedOptions}
+      onAdd={handleAdd}
+      onRemove={handleRemove}
+      onPillClick={onPillClick}
+      valueRenderer={renderString}
+    />
   );
 };
 
@@ -133,8 +140,8 @@ const WithParentOptionsVisibilityControlTemplate: Story<MultiSelectProps<number,
   return (
     <>
       <Typography sx={{ marginBottom: '20px' }}>
-        The purpose of this story is to show that clicking away from the card will hide the options first (if they are open), and a second click away will hide
-        the multi select
+        The purpose of this story is to show that clicking away from the card will hide the options first (if they are
+        open), and a second click away will hide the multi select
       </Typography>
 
       <Button onClick={toggleMultiSelectVisible} label={Boolean(anchorEl) ? 'Hide MultiSelect' : 'Show MultiSelect'} />
@@ -147,8 +154,8 @@ const WithParentOptionsVisibilityControlTemplate: Story<MultiSelectProps<number,
         anchorEl={anchorEl}
         onClickCapture={(event) => {
           // If the captured event is not for the backdrop, do nothing
-          const eventIsBackdropClick = Array.from((event.target as HTMLElement).classList.values()).some((targetClass: string) =>
-            targetClass.toLowerCase().includes('backdrop')
+          const eventIsBackdropClick = Array.from((event.target as HTMLElement).classList.values()).some(
+            (targetClass: string) => targetClass.toLowerCase().includes('backdrop')
           );
           if (!eventIsBackdropClick) {
             return;

@@ -5,7 +5,6 @@
   src: local('Inter'), url(../../fonts/Inter.ttf) format('truetype');
 }
 
-
 .tw-message {
   &.tw-message--page {
     width: 100%;
@@ -118,7 +117,7 @@
     width: $tw-sz-base-medium;
     height: $tw-sz-base-medium;
   }
-  
+
   .icon-container {
     background: none;
     border: 0;
@@ -133,7 +132,7 @@
     &.tw-message--page {
       border: 1px solid $tw-clr-brdr-info;
       .main-content--icon {
-        fill:$tw-clr-icn-info;
+        fill: $tw-clr-icn-info;
       }
     }
     .tw-message--left-side {
@@ -141,7 +140,7 @@
     }
     .left-side--icon {
       fill: $tw-clr-icn-on-info;
-    }  
+    }
   }
 
   &--critical {
@@ -161,7 +160,7 @@
     .left-side--icon {
       fill: $tw-clr-icn-on-danger;
     }
- }
+  }
 
   &--warning {
     border: 1px solid $tw-clr-brdr-warning;

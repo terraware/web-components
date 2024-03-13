@@ -65,7 +65,7 @@ export default function TextField(props: Props): JSX.Element {
     max,
     disabledCharacters,
     preserveNewlines,
-    required
+    required,
   } = props;
 
   const textfieldClass = classNames({

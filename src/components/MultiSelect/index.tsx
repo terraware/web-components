@@ -92,7 +92,11 @@ export default function MultiSelect<K, V>(props: MultiSelectProps<K, V>): JSX.El
           {label} {tooltipTitle && <IconTooltip title={tooltipTitle} />}
         </label>
       )}
-      <div className={`multi-select__container ${fullWidth ? 'multi-select__container--fullWidth' : ''}`} onBlur={onBlurHandler} tabIndex={0}>
+      <div
+        className={`multi-select__container ${fullWidth ? 'multi-select__container--fullWidth' : ''}`}
+        onBlur={onBlurHandler}
+        tabIndex={0}
+      >
         <div id={id} className={`multi-select__values${disabled ? '--disabled' : ''}`} onClick={toggleOptions}>
           {selectedOptions.length > 0 ? (
             <PillList data={valuesPillData} onRemove={onRemove} onClick={onPillClick} className={pillListClassName} />
@@ -100,7 +104,10 @@ export default function MultiSelect<K, V>(props: MultiSelectProps<K, V>): JSX.El
             <p className='multi-select__placeholder-text'>{placeHolder}</p>
           )}
           <div className={'multi-select__values__icon-button'} aria-label='show-options'>
-            <Icon name={openedOptions ? 'chevronUp' : 'chevronDown'} className={`multi-select__values__icon-right${disabled ? '--disabled' : ''}`} />
+            <Icon
+              name={openedOptions ? 'chevronUp' : 'chevronDown'}
+              className={`multi-select__values__icon-right${disabled ? '--disabled' : ''}`}
+            />
           </div>
         </div>
         {options && unselectedOptions.length > 0 && openedOptions && (

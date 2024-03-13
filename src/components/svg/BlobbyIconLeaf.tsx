@@ -59,7 +59,11 @@ const SvgBlobbyIconLeaf = ({ title, titleId, ...props }: SVGProps<SVGSVGElement>
         />
       </mask>
       <g mask='url(#blobby-icon-leaf_svg__g)'>
-        <path fill='url(#blobby-icon-leaf_svg__h)' d='m162.332 85.1-47.037-47.036L93.5 81.5l-15.606 8.552 40.23 40.23L162.332 85.1Z' opacity={0.25} />
+        <path
+          fill='url(#blobby-icon-leaf_svg__h)'
+          d='m162.332 85.1-47.037-47.036L93.5 81.5l-15.606 8.552 40.23 40.23L162.332 85.1Z'
+          opacity={0.25}
+        />
       </g>
       <path
         fill='#EAF3DC'
@@ -71,7 +75,14 @@ const SvgBlobbyIconLeaf = ({ title, titleId, ...props }: SVGProps<SVGSVGElement>
       />
     </g>
     <defs>
-      <linearGradient id='blobby-icon-leaf_svg__b' x1={139.5} x2={52.354} y1={110} y2={24.156} gradientUnits='userSpaceOnUse'>
+      <linearGradient
+        id='blobby-icon-leaf_svg__b'
+        x1={139.5}
+        x2={52.354}
+        y1={110}
+        y2={24.156}
+        gradientUnits='userSpaceOnUse'
+      >
         <stop stopColor='#F1F0EC' />
         <stop offset={1} stopColor='#84D6AC' />
       </linearGradient>
@@ -87,11 +98,25 @@ const SvgBlobbyIconLeaf = ({ title, titleId, ...props }: SVGProps<SVGSVGElement>
         <stop stopColor='#2C8658' />
         <stop offset={1} stopColor='#ACD278' />
       </linearGradient>
-      <linearGradient id='blobby-icon-leaf_svg__f' x1={139.5} x2={52.354} y1={110} y2={24.156} gradientUnits='userSpaceOnUse'>
+      <linearGradient
+        id='blobby-icon-leaf_svg__f'
+        x1={139.5}
+        x2={52.354}
+        y1={110}
+        y2={24.156}
+        gradientUnits='userSpaceOnUse'
+      >
         <stop stopColor='#F1F0EC' />
         <stop offset={1} stopColor='#84D6AC' />
       </linearGradient>
-      <linearGradient id='blobby-icon-leaf_svg__h' x1={93.085} x2={148.602} y1={59.755} y2={102.372} gradientUnits='userSpaceOnUse'>
+      <linearGradient
+        id='blobby-icon-leaf_svg__h'
+        x1={93.085}
+        x2={148.602}
+        y1={59.755}
+        y2={102.372}
+        gradientUnits='userSpaceOnUse'
+      >
         <stop stopColor='#2C8658' />
         <stop offset={1} stopColor='#ACD278' />
       </linearGradient>

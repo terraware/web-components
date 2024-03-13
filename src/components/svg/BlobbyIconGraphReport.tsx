@@ -59,7 +59,11 @@ const SvgBlobbyIconGraphReport = ({ title, titleId, ...props }: SVGProps<SVGSVGE
         />
       </mask>
       <g mask='url(#blobby-icon-graph-report_svg__g)'>
-        <path fill='url(#blobby-icon-graph-report_svg__h)' d='m158 92.5-38-38-39.61 34.371 38.543 38.542L158 92.5Z' opacity={0.25} />
+        <path
+          fill='url(#blobby-icon-graph-report_svg__h)'
+          d='m158 92.5-38-38-39.61 34.371 38.543 38.542L158 92.5Z'
+          opacity={0.25}
+        />
       </g>
       <path
         fill='#EAF3DC'
@@ -71,27 +75,69 @@ const SvgBlobbyIconGraphReport = ({ title, titleId, ...props }: SVGProps<SVGSVGE
       />
     </g>
     <defs>
-      <linearGradient id='blobby-icon-graph-report_svg__b' x1={126.5} x2={50} y1={104} y2={27.5} gradientUnits='userSpaceOnUse'>
+      <linearGradient
+        id='blobby-icon-graph-report_svg__b'
+        x1={126.5}
+        x2={50}
+        y1={104}
+        y2={27.5}
+        gradientUnits='userSpaceOnUse'
+      >
         <stop stopColor='#F1F0EC' />
         <stop offset={1} stopColor='#84D6AC' />
       </linearGradient>
-      <linearGradient id='blobby-icon-graph-report_svg__c' x1={99} x2={109} y1={99} y2={114} gradientUnits='userSpaceOnUse'>
+      <linearGradient
+        id='blobby-icon-graph-report_svg__c'
+        x1={99}
+        x2={109}
+        y1={99}
+        y2={114}
+        gradientUnits='userSpaceOnUse'
+      >
         <stop stopColor='#2C8658' />
         <stop offset={1} stopColor='#ACD278' />
       </linearGradient>
-      <linearGradient id='blobby-icon-graph-report_svg__d' x1={133} x2={143} y1={12} y2={27} gradientUnits='userSpaceOnUse'>
+      <linearGradient
+        id='blobby-icon-graph-report_svg__d'
+        x1={133}
+        x2={143}
+        y1={12}
+        y2={27}
+        gradientUnits='userSpaceOnUse'
+      >
         <stop stopColor='#2C8658' />
         <stop offset={1} stopColor='#ACD278' />
       </linearGradient>
-      <linearGradient id='blobby-icon-graph-report_svg__e' x1={57} x2={67} y1={35} y2={50} gradientUnits='userSpaceOnUse'>
+      <linearGradient
+        id='blobby-icon-graph-report_svg__e'
+        x1={57}
+        x2={67}
+        y1={35}
+        y2={50}
+        gradientUnits='userSpaceOnUse'
+      >
         <stop stopColor='#2C8658' />
         <stop offset={1} stopColor='#ACD278' />
       </linearGradient>
-      <linearGradient id='blobby-icon-graph-report_svg__f' x1={126.5} x2={50} y1={104} y2={27.5} gradientUnits='userSpaceOnUse'>
+      <linearGradient
+        id='blobby-icon-graph-report_svg__f'
+        x1={126.5}
+        x2={50}
+        y1={104}
+        y2={27.5}
+        gradientUnits='userSpaceOnUse'
+      >
         <stop stopColor='#F1F0EC' />
         <stop offset={1} stopColor='#84D6AC' />
       </linearGradient>
-      <linearGradient id='blobby-icon-graph-report_svg__h' x1={93.831} x2={135.329} y1={72.5} y2={116.904} gradientUnits='userSpaceOnUse'>
+      <linearGradient
+        id='blobby-icon-graph-report_svg__h'
+        x1={93.831}
+        x2={135.329}
+        y1={72.5}
+        y2={116.904}
+        gradientUnits='userSpaceOnUse'
+      >
         <stop stopColor='#2C8658' />
         <stop offset={1} stopColor='#ACD278' />
       </linearGradient>

@@ -17,7 +17,9 @@ Default.args = {
   children: 'Hello World',
   cancelID: 'cancel-id',
   saveID: 'save-id',
-  onCancel: () => { return; },
+  onCancel: () => {
+    return;
+  },
   onSave: async () => {
     return new Promise((resolve, reject) => {
       setTimeout(() => resolve(), 2000);
@@ -40,6 +42,6 @@ WithAdditionalButtons.args = {
       onClick: () => window.alert('you clicked right'),
       buttonPriority: 'primary',
       buttonType: 'passive',
-    }
+    },
   ],
 };

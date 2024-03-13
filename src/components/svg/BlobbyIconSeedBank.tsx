@@ -59,7 +59,11 @@ const SvgBlobbyIconSeedBank = ({ title, titleId, ...props }: SVGProps<SVGSVGElem
         />
       </mask>
       <g mask='url(#blobby-icon-seed-bank_svg__g)'>
-        <path fill='url(#blobby-icon-seed-bank_svg__h)' d='m152.2 77.2-28.7-28.7-41.86 37.641L107.5 112l44.7-34.8Z' opacity={0.25} />
+        <path
+          fill='url(#blobby-icon-seed-bank_svg__h)'
+          d='m152.2 77.2-28.7-28.7-41.86 37.641L107.5 112l44.7-34.8Z'
+          opacity={0.25}
+        />
       </g>
       <path
         fill='#EAF3DC'
@@ -71,7 +75,14 @@ const SvgBlobbyIconSeedBank = ({ title, titleId, ...props }: SVGProps<SVGSVGElem
       />
     </g>
     <defs>
-      <linearGradient id='blobby-icon-seed-bank_svg__b' x1={125.5} x2={50} y1={101.5} y2={26} gradientUnits='userSpaceOnUse'>
+      <linearGradient
+        id='blobby-icon-seed-bank_svg__b'
+        x1={125.5}
+        x2={50}
+        y1={101.5}
+        y2={26}
+        gradientUnits='userSpaceOnUse'
+      >
         <stop stopColor='#F1F0EC' />
         <stop offset={1} stopColor='#84D6AC' />
       </linearGradient>
@@ -79,7 +90,14 @@ const SvgBlobbyIconSeedBank = ({ title, titleId, ...props }: SVGProps<SVGSVGElem
         <stop stopColor='#2C8658' />
         <stop offset={1} stopColor='#ACD278' />
       </linearGradient>
-      <linearGradient id='blobby-icon-seed-bank_svg__d' x1={143} x2={153} y1={56} y2={71} gradientUnits='userSpaceOnUse'>
+      <linearGradient
+        id='blobby-icon-seed-bank_svg__d'
+        x1={143}
+        x2={153}
+        y1={56}
+        y2={71}
+        gradientUnits='userSpaceOnUse'
+      >
         <stop stopColor='#2C8658' />
         <stop offset={1} stopColor='#ACD278' />
       </linearGradient>
@@ -87,11 +105,25 @@ const SvgBlobbyIconSeedBank = ({ title, titleId, ...props }: SVGProps<SVGSVGElem
         <stop stopColor='#2C8658' />
         <stop offset={1} stopColor='#ACD278' />
       </linearGradient>
-      <linearGradient id='blobby-icon-seed-bank_svg__f' x1={125.5} x2={50} y1={101.5} y2={26} gradientUnits='userSpaceOnUse'>
+      <linearGradient
+        id='blobby-icon-seed-bank_svg__f'
+        x1={125.5}
+        x2={50}
+        y1={101.5}
+        y2={26}
+        gradientUnits='userSpaceOnUse'
+      >
         <stop stopColor='#F1F0EC' />
         <stop offset={1} stopColor='#84D6AC' />
       </linearGradient>
-      <linearGradient id='blobby-icon-seed-bank_svg__h' x1={100} x2={128.018} y1={67.84} y2={99.59} gradientUnits='userSpaceOnUse'>
+      <linearGradient
+        id='blobby-icon-seed-bank_svg__h'
+        x1={100}
+        x2={128.018}
+        y1={67.84}
+        y2={99.59}
+        gradientUnits='userSpaceOnUse'
+      >
         <stop stopColor='#2C8658' />
         <stop offset={1} stopColor='#ACD278' />
       </linearGradient>

@@ -52,9 +52,13 @@ const TemplateSelectT: Story<SelectTProps<Value>> = (args) => {
   const renderOption = (option: Value) => {
     return (
       <div>
-        <Typography component='p' sx={{fontWeight: 'bold', fontSize: '12px', display: 'inline-block'}}>{option.name}</Typography>
+        <Typography component='p' sx={{ fontWeight: 'bold', fontSize: '12px', display: 'inline-block' }}>
+          {option.name}
+        </Typography>
         &nbsp;
-        <Typography component='p' sx={{fontStyle: 'italic', fontSize: '10px', display: 'inline-block'}}>({option.age})</Typography>
+        <Typography component='p' sx={{ fontStyle: 'italic', fontSize: '10px', display: 'inline-block' }}>
+          ({option.age})
+        </Typography>
       </div>
     );
   };
@@ -88,19 +92,23 @@ ComplexSelect.args = {
   errorText: '',
   warningText: '',
   readonly: false,
-  options: [{
-    name: 'Dora',
-    age: 5
-  }, {
-    name: 'Eeyore',
-    age: 8
-  }, {
-    name: 'Yoda',
-    age: 500
-  }],
+  options: [
+    {
+      name: 'Dora',
+      age: 5,
+    },
+    {
+      name: 'Eeyore',
+      age: 8,
+    },
+    {
+      name: 'Yoda',
+      age: 500,
+    },
+  ],
   selectedValue: {
     name: 'Eeyore',
-    age: 8
+    age: 8,
   },
   tooltipTitle: 'Hello world!',
 };

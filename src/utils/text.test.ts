@@ -21,4 +21,3 @@ test('titleCase for multiple words', () => {
   const reverseCapString = titleCase('cOMMON nAME');
   expect(reverseCapString === 'Common Name').toBe(true);
 });
-

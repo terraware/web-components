@@ -1,24 +1,24 @@
 import getDateDisplayValue, { getTodaysDateFormatted, isInTheFuture } from './date';
 
 test('isInTheFuture should handle date string and specified time zones', () => {
-   expect(isInTheFuture('2023-01-10', 'Asia/Bangkok')).toBe(false);
-   expect(isInTheFuture('2023-01-10', 'America/Los_Angeles')).toBe(false);
-   expect(isInTheFuture('3023-01-10', 'America/Los_Angeles')).toBe(true);
+  expect(isInTheFuture('2023-01-10', 'Asia/Bangkok')).toBe(false);
+  expect(isInTheFuture('2023-01-10', 'America/Los_Angeles')).toBe(false);
+  expect(isInTheFuture('3023-01-10', 'America/Los_Angeles')).toBe(true);
 });
 
 test('isInTheFuture should handle date string and default time zone', () => {
-   expect(isInTheFuture('2023-01-10')).toBe(false);
-   expect(isInTheFuture('3023-01-10')).toBe(true);
+  expect(isInTheFuture('2023-01-10')).toBe(false);
+  expect(isInTheFuture('3023-01-10')).toBe(true);
 });
 
 test('isInTheFuture should handle millis and specified time zones', () => {
-    expect(isInTheFuture(Date.now(), 'Asia/Bangkok')).toBe(false);
-    expect(isInTheFuture(new Date('3023-01-10').getTime(), 'Asia/Bangkok')).toBe(true);
+  expect(isInTheFuture(Date.now(), 'Asia/Bangkok')).toBe(false);
+  expect(isInTheFuture(new Date('3023-01-10').getTime(), 'Asia/Bangkok')).toBe(true);
 });
 
 test('isInTheFuture should handle millis and default time zone', () => {
-    expect(isInTheFuture(Date.now())).toBe(false);
-    expect(isInTheFuture(new Date('3023-01-10').getTime())).toBe(true);
+  expect(isInTheFuture(Date.now())).toBe(false);
+  expect(isInTheFuture(new Date('3023-01-10').getTime())).toBe(true);
 });
 
 test('should show todays date formatted for a time zone', () => {

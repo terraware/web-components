@@ -20,8 +20,8 @@ const useStyles = makeStyles((theme: Theme) => ({
       height: '52px',
       paddingTop: '0px',
       paddingBottom: '0px',
-      borderBottom: `1px solid ${theme.palette.TwClrBrdrSecondary}`
-    }
+      borderBottom: `1px solid ${theme.palette.TwClrBrdrSecondary}`,
+    },
   },
 }));
 
@@ -36,7 +36,15 @@ export default function CellRenderer(props: RendererProps<TableRowType>): JSX.El
   } else if (column.type === 'notes' && value && typeof value === 'string') {
     return <CellNotesRenderer id={id} value={value} className={className} />;
   } else if (column.type === 'boolean') {
-    return <CellBooleanRenderer id={id} value={value} className={className} booleanFalseText={booleanFalseText} booleanTrueText={booleanTrueText} />;
+    return (
+      <CellBooleanRenderer
+        id={id}
+        value={value}
+        className={className}
+        booleanFalseText={booleanFalseText}
+        booleanTrueText={booleanTrueText}
+      />
+    );
   } else if (column.type === 'edit') {
     return <CellEditRenderer id={id} onRowClick={onRowClick} className={className} editText={editText} />;
   }
@@ -56,7 +64,7 @@ export function CellDateRenderer({
   className,
 }: {
   id: string;
-  value: string,
+  value: string;
   className?: string;
 }): JSX.Element {
   const classes = useStyles();
@@ -82,7 +90,12 @@ export function CellTextRenderer({
   const classes = useStyles();
 
   return (
-    <TableCell id={id} align='left' title={typeof value === 'string' ? value : ''} className={`${classes.default} ${className}`}>
+    <TableCell
+      id={id}
+      align='left'
+      title={typeof value === 'string' ? value : ''}
+      className={`${classes.default} ${className}`}
+    >
       <Typography component='p' variant='body1' noWrap={true} classes={{ root: classes.textRoot }} fontSize='14px'>
         {value}
       </Typography>
@@ -120,7 +133,7 @@ export function CellNotesRenderer({
   className,
 }: {
   id: string;
-  value?: string
+  value?: string;
   className?: string;
 }): JSX.Element {
   const classes = useStyles();
