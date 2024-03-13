@@ -118,7 +118,22 @@
 <a name='L53'></a><a href='#L53'>53</a>
 <a name='L54'></a><a href='#L54'>54</a>
 <a name='L55'></a><a href='#L55'>55</a>
-<a name='L56'></a><a href='#L56'>56</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L56'></a><a href='#L56'>56</a>
+<a name='L57'></a><a href='#L57'>57</a>
+<a name='L58'></a><a href='#L58'>58</a>
+<a name='L59'></a><a href='#L59'>59</a>
+<a name='L60'></a><a href='#L60'>60</a>
+<a name='L61'></a><a href='#L61'>61</a>
+<a name='L62'></a><a href='#L62'>62</a>
+<a name='L63'></a><a href='#L63'>63</a>
+<a name='L64'></a><a href='#L64'>64</a>
+<a name='L65'></a><a href='#L65'>65</a>
+<a name='L66'></a><a href='#L66'>66</a>
+<a name='L67'></a><a href='#L67'>67</a>
+<a name='L68'></a><a href='#L68'>68</a>
+<a name='L69'></a><a href='#L69'>69</a>
+<a name='L70'></a><a href='#L70'>70</a>
+<a name='L71'></a><a href='#L71'>71</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -135,15 +150,8 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -154,6 +162,28 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -176,9 +206,9 @@
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { useState } from 'react';
 import { StoryFn } from '@storybook/react';
 import React from 'react';
-import ViewPhotosDialog, {ViewPhotosDialogProps} from '../components/ViewPhotosDialog';
+import ViewPhotosDialog, { ViewPhotosDialogProps } from '../components/ViewPhotosDialog';
 import Button from '../components/Button/Button';
-import {Typography} from '@mui/material';
+import { Typography } from '@mui/material';
 &nbsp;
 export default {
   title: 'View Photos Dialog',
@@ -190,15 +220,8 @@ const Template: StoryFn&lt;ViewPhotosDialogProps&gt; = <span class="cstat-no" ti
 &nbsp;
 <span class="cstat-no" title="statement not covered" >  return (</span>
     &lt;&gt;
-      &lt;ViewPhotosDialog
-        {...args}
-        open={modalOpen}
-        onClose={<span class="fstat-no" title="function not covered" >()</span> =&gt; <span class="cstat-no" title="statement not covered" >setModalOpen(false)}</span>
-      /&gt;
-      &lt;Button
-        label='View Photos'
-        onClick={<span class="fstat-no" title="function not covered" >()</span> =&gt; <span class="cstat-no" title="statement not covered" >setModalOpen(true)}</span>
-      /&gt;
+      &lt;ViewPhotosDialog {...args} open={modalOpen} onClose={<span class="fstat-no" title="function not covered" >()</span> =&gt; <span class="cstat-no" title="statement not covered" >setModalOpen(false)}</span> /&gt;
+      &lt;Button label='View Photos' onClick={<span class="fstat-no" title="function not covered" >()</span> =&gt; <span class="cstat-no" title="statement not covered" >setModalOpen(true)}</span> /&gt;
     &lt;/&gt;
   );
 };
@@ -217,15 +240,37 @@ export const Default = <span class="cstat-no" title="statement not covered" >Tem
   numbered: true,
   dots: true,
   photos: [
-    {url: 'https://assets-global.website-files.com/600f0cac30d70b8364793d7c/62a17149aa7b1acd29fa1695_22_TF_Website_Homepage_Banner_5000x2500px_04%20(1).jpg', decoration: captionForPhoto(1)},
-    {url: 'https://assets-global.website-files.com/600f0cac30d70b8364793d7c/63447bf401a1314055b50708_Terraformation-25%20(1)-p-1600.jpg', decoration: captionForPhoto(2)},
-    {url: 'https://assets-global.website-files.com/600f0cac30d70b8364793d7c/63447cc759b9f238760b40b1_DSC_3921-II-EDIT.jpg', decoration: captionForPhoto(3)},
-    {url: 'https://assets-global.website-files.com/600f0cac30d70b8364793d7c/627dec38eb6be07860a89787_harvest-image.jpeg', decoration: captionForPhoto(4)},
-    {url: 'https://assets-global.website-files.com/600f0cac30d70b8364793d7c/6369552d24c9fbbcebdf6b2b_planting%20trees_72pix.jpg'},
-    {url: 'https://assets-global.website-files.com/600f0cac30d70b8364793d7c/636974e3fde8918ba5951450_DSC_4362%20(1)-p-1080.jpg'},
-    {url: 'https://assets-global.website-files.com/600f0cac30d70b8364793d7c/63694a55176f1e0af5ae513f_IMG_15673757-p-1080.jpg'},
-    {url: 'https://assets-global.website-files.com/600f0cac30d70b8364793d7c/6347e3526ed75455de6a6a64_accel-02_hero-bg-p-1080.jpg'},
-    {url: 'https://assets-global.website-files.com/600f0cac30d70b8364793d7c/636e6fa9aa9e99e90d5e39b1_2022_TF_Website_Solutions_Mobile-Field-App6.5-Carousel%2001.jpg'},
+    {
+      url: 'https://assets-global.website-files.com/600f0cac30d70b8364793d7c/62a17149aa7b1acd29fa1695_22_TF_Website_Homepage_Banner_5000x2500px_04%20(1).jpg',
+      decoration: captionForPhoto(1),
+    },
+    {
+      url: 'https://assets-global.website-files.com/600f0cac30d70b8364793d7c/63447bf401a1314055b50708_Terraformation-25%20(1)-p-1600.jpg',
+      decoration: captionForPhoto(2),
+    },
+    {
+      url: 'https://assets-global.website-files.com/600f0cac30d70b8364793d7c/63447cc759b9f238760b40b1_DSC_3921-II-EDIT.jpg',
+      decoration: captionForPhoto(3),
+    },
+    {
+      url: 'https://assets-global.website-files.com/600f0cac30d70b8364793d7c/627dec38eb6be07860a89787_harvest-image.jpeg',
+      decoration: captionForPhoto(4),
+    },
+    {
+      url: 'https://assets-global.website-files.com/600f0cac30d70b8364793d7c/6369552d24c9fbbcebdf6b2b_planting%20trees_72pix.jpg',
+    },
+    {
+      url: 'https://assets-global.website-files.com/600f0cac30d70b8364793d7c/636974e3fde8918ba5951450_DSC_4362%20(1)-p-1080.jpg',
+    },
+    {
+      url: 'https://assets-global.website-files.com/600f0cac30d70b8364793d7c/63694a55176f1e0af5ae513f_IMG_15673757-p-1080.jpg',
+    },
+    {
+      url: 'https://assets-global.website-files.com/600f0cac30d70b8364793d7c/6347e3526ed75455de6a6a64_accel-02_hero-bg-p-1080.jpg',
+    },
+    {
+      url: 'https://assets-global.website-files.com/600f0cac30d70b8364793d7c/636e6fa9aa9e99e90d5e39b1_2022_TF_Website_Solutions_Mobile-Field-App6.5-Carousel%2001.jpg',
+    },
   ],
 };
 &nbsp;</pre></td></tr></table></pre>
@@ -235,7 +280,7 @@ export const Default = <span class="cstat-no" title="statement not covered" >Tem
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-03-12T17:40:00.834Z
+                at 2024-03-13T16:09:43.366Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

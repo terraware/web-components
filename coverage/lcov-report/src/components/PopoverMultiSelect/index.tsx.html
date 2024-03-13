@@ -125,7 +125,8 @@
 <a name='L60'></a><a href='#L60'>60</a>
 <a name='L61'></a><a href='#L61'>61</a>
 <a name='L62'></a><a href='#L62'>62</a>
-<a name='L63'></a><a href='#L63'>63</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L63'></a><a href='#L63'>63</a>
+<a name='L64'></a><a href='#L64'>64</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -162,6 +163,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -204,7 +206,7 @@ export type PopoverMultiSelectProps = {
 };
 &nbsp;
 export default function <span class="fstat-no" title="function not covered" >PopoverMultiSelect(</span>props: PopoverMultiSelectProps): JSX.Element {
-  const { anchorElement, initialSelection, menuAlign, onChange, sections, setAnchorElement} = <span class="cstat-no" title="statement not covered" >props;</span>
+  const { anchorElement, initialSelection, menuAlign, onChange, sections, setAnchorElement } = <span class="cstat-no" title="statement not covered" >props;</span>
   const [selection, setSelection] = <span class="cstat-no" title="statement not covered" >useState(initialSelection);</span>
   const addToSelection = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >(v</span>alue: DropdownItem) =&gt; {</span>
     const newSelection = <span class="cstat-no" title="statement not covered" >[...selection];</span>
@@ -220,34 +222,35 @@ export default function <span class="fstat-no" title="function not covered" >Pop
   };
 &nbsp;
   const iconSpacer = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >()</span> =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >    return &lt;div className='popover-multi-select__checkmark-spacer'/&gt;;</span>
+<span class="cstat-no" title="statement not covered" >    return &lt;div className='popover-multi-select__checkmark-spacer' /&gt;;</span>
   };
 &nbsp;
-<span class="cstat-no" title="statement not covered" >  return &lt;Popover</span>
-    sections={sections}
-    handleClick={<span class="fstat-no" title="function not covered" >(i</span>tem) =&gt; {
-      const itemIndex = <span class="cstat-no" title="statement not covered" >selection.findIndex(<span class="fstat-no" title="function not covered" >(s</span>) =&gt; <span class="cstat-no" title="statement not covered" >s === item.value)</span>;</span>
-<span class="cstat-no" title="statement not covered" >      if (itemIndex &gt;= 0) {</span>
-<span class="cstat-no" title="statement not covered" >        removeFromSelection(itemIndex);</span>
-      } else {
-<span class="cstat-no" title="statement not covered" >        addToSelection(item.value);</span>
-      }
-    }}
-    anchorElement={anchorElement}
-    setAnchorElement={setAnchorElement}
-    itemRenderer={<span class="fstat-no" title="function not covered" >(i</span>tem) =&gt; {
-      const selected = <span class="cstat-no" title="statement not covered" >selection.find(<span class="fstat-no" title="function not covered" >(s</span>) =&gt; <span class="cstat-no" title="statement not covered" >s === item.value)</span>;</span>
-&nbsp;
-<span class="cstat-no" title="statement not covered" >      return &lt;&gt;</span>
-        {selected
-          ? &lt;Icon name='checkmark' className='popover-multi-select__checkmark-selection'/&gt;
-          : iconSpacer()
+<span class="cstat-no" title="statement not covered" >  return (</span>
+    &lt;Popover
+      sections={sections}
+      handleClick={<span class="fstat-no" title="function not covered" >(i</span>tem) =&gt; {
+        const itemIndex = <span class="cstat-no" title="statement not covered" >selection.findIndex(<span class="fstat-no" title="function not covered" >(s</span>) =&gt; <span class="cstat-no" title="statement not covered" >s === item.value)</span>;</span>
+<span class="cstat-no" title="statement not covered" >        if (itemIndex &gt;= 0) {</span>
+<span class="cstat-no" title="statement not covered" >          removeFromSelection(itemIndex);</span>
+        } else {
+<span class="cstat-no" title="statement not covered" >          addToSelection(item.value);</span>
         }
-        &lt;ListItemText&gt;{item.label}&lt;/ListItemText&gt;
-      &lt;/&gt;;
-    }}
-    menuAlign={menuAlign}
-  /&gt;;
+      }}
+      anchorElement={anchorElement}
+      setAnchorElement={setAnchorElement}
+      itemRenderer={<span class="fstat-no" title="function not covered" >(i</span>tem) =&gt; {
+        const selected = <span class="cstat-no" title="statement not covered" >selection.find(<span class="fstat-no" title="function not covered" >(s</span>) =&gt; <span class="cstat-no" title="statement not covered" >s === item.value)</span>;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        return (</span>
+          &lt;&gt;
+            {selected ? &lt;Icon name='checkmark' className='popover-multi-select__checkmark-selection' /&gt; : iconSpacer()}
+            &lt;ListItemText&gt;{item.label}&lt;/ListItemText&gt;
+          &lt;/&gt;
+        );
+      }}
+      menuAlign={menuAlign}
+    /&gt;
+  );
 }
 &nbsp;</pre></td></tr></table></pre>
 
@@ -256,7 +259,7 @@ export default function <span class="fstat-no" title="function not covered" >Pop
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-03-12T17:40:00.834Z
+                at 2024-03-13T16:09:43.366Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>

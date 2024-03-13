@@ -216,29 +216,7 @@
 <a name='L151'></a><a href='#L151'>151</a>
 <a name='L152'></a><a href='#L152'>152</a>
 <a name='L153'></a><a href='#L153'>153</a>
-<a name='L154'></a><a href='#L154'>154</a>
-<a name='L155'></a><a href='#L155'>155</a>
-<a name='L156'></a><a href='#L156'>156</a>
-<a name='L157'></a><a href='#L157'>157</a>
-<a name='L158'></a><a href='#L158'>158</a>
-<a name='L159'></a><a href='#L159'>159</a>
-<a name='L160'></a><a href='#L160'>160</a>
-<a name='L161'></a><a href='#L161'>161</a>
-<a name='L162'></a><a href='#L162'>162</a>
-<a name='L163'></a><a href='#L163'>163</a>
-<a name='L164'></a><a href='#L164'>164</a>
-<a name='L165'></a><a href='#L165'>165</a>
-<a name='L166'></a><a href='#L166'>166</a>
-<a name='L167'></a><a href='#L167'>167</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L154'></a><a href='#L154'>154</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -282,6 +260,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -302,6 +281,8 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -375,14 +356,7 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -423,17 +397,8 @@ export interface ViewPhotosDialogProps {
 }
 &nbsp;
 export default function <span class="fstat-no" title="function not covered" >ViewPhotosDialog(</span>props: ViewPhotosDialogProps): JSX.Element {
-  const {
-    onClose,
-    open,
-    photos,
-    initialSelectedSlide,
-    nextButtonLabel,
-    prevButtonLabel,
-    title,
-    numbered,
-    dots,
-  } = <span class="cstat-no" title="statement not covered" >props;</span>
+  const { onClose, open, photos, initialSelectedSlide, nextButtonLabel, prevButtonLabel, title, numbered, dots } =
+<span class="cstat-no" title="statement not covered" >    props;</span>
   const [isPreviousDisabled, setIsPreviousDisabled] = <span class="cstat-no" title="statement not covered" >useState(false);</span>
   const [isNextDisabled, setIsNextDisabled] = <span class="cstat-no" title="statement not covered" >useState(false);</span>
   const [isLoading, setIsLoading] = <span class="cstat-no" title="statement not covered" >useState&lt;boolean[]&gt;([]);</span>
@@ -447,31 +412,34 @@ export default function <span class="fstat-no" title="function not covered" >Vie
     },
   };
 &nbsp;
-  const handleChange = <span class="cstat-no" title="statement not covered" >useCallback(<span class="fstat-no" title="function not covered" >(a</span>rgs?: any) =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >    if (myCarousel.current) {</span>
-<span class="cstat-no" title="statement not covered" >      if (myCarousel.current.state.currentSlide + 1 &gt;= photos.length) {</span>
-<span class="cstat-no" title="statement not covered" >        setIsNextDisabled(true);</span>
-      } else {
-<span class="cstat-no" title="statement not covered" >        setIsNextDisabled(false);</span>
-      }
-<span class="cstat-no" title="statement not covered" >      if (myCarousel.current.state.currentSlide - 1 &lt; 0) {</span>
-<span class="cstat-no" title="statement not covered" >        setIsPreviousDisabled(true);</span>
-      } else {
-<span class="cstat-no" title="statement not covered" >        setIsPreviousDisabled(false);</span>
-      }
-<span class="cstat-no" title="statement not covered" >      if (args !== undefined) {</span>
-        // if we came from the carousel component's call of handleChange, do the right thing
-        // don't set this slide if we came from useEffect on open
-<span class="cstat-no" title="statement not covered" >        setSelectedSlide(myCarousel.current.state.currentSlide);</span>
-      } else {
-        // we need to reinitialize to last state
-<span class="cstat-no" title="statement not covered" >        if (selectedSlide === initialSelectedSlide) {</span>
-          // explicitly go to slide, the useEffect won't be triggered
-<span class="cstat-no" title="statement not covered" >          myCarousel.current.goToSlide(selectedSlide);</span>
+  const handleChange = <span class="cstat-no" title="statement not covered" >useCallback(</span>
+<span class="fstat-no" title="function not covered" >    (a</span>rgs?: any) =&gt; {
+<span class="cstat-no" title="statement not covered" >      if (myCarousel.current) {</span>
+<span class="cstat-no" title="statement not covered" >        if (myCarousel.current.state.currentSlide + 1 &gt;= photos.length) {</span>
+<span class="cstat-no" title="statement not covered" >          setIsNextDisabled(true);</span>
+        } else {
+<span class="cstat-no" title="statement not covered" >          setIsNextDisabled(false);</span>
+        }
+<span class="cstat-no" title="statement not covered" >        if (myCarousel.current.state.currentSlide - 1 &lt; 0) {</span>
+<span class="cstat-no" title="statement not covered" >          setIsPreviousDisabled(true);</span>
+        } else {
+<span class="cstat-no" title="statement not covered" >          setIsPreviousDisabled(false);</span>
+        }
+<span class="cstat-no" title="statement not covered" >        if (args !== undefined) {</span>
+          // if we came from the carousel component's call of handleChange, do the right thing
+          // don't set this slide if we came from useEffect on open
+<span class="cstat-no" title="statement not covered" >          setSelectedSlide(myCarousel.current.state.currentSlide);</span>
+        } else {
+          // we need to reinitialize to last state
+<span class="cstat-no" title="statement not covered" >          if (selectedSlide === initialSelectedSlide) {</span>
+            // explicitly go to slide, the useEffect won't be triggered
+<span class="cstat-no" title="statement not covered" >            myCarousel.current.goToSlide(selectedSlide);</span>
+          }
         }
       }
-    }
-  }, [photos.length, selectedSlide, initialSelectedSlide, selectedSlide]);
+    },
+    [photos.length, selectedSlide, initialSelectedSlide, selectedSlide]
+  );
 &nbsp;
 <span class="cstat-no" title="statement not covered" >  useEffect(<span class="fstat-no" title="function not covered" >()</span> =&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    setIsLoading(new Array(photos.length).fill(true));</span>
@@ -541,20 +509,13 @@ export default function <span class="fstat-no" title="function not covered" >Vie
 <span class="cstat-no" title="statement not covered" >            &lt;div key={`photo-${i}-container`} className='view-photos-dialog-container'&gt;</span>
               {isLoading[i] ? &lt;BusySpinner noBackground={true} /&gt; : undefined}
               &lt;a href={p.url} target='blank'&gt;
-                &lt;img
-                  className='view-photos-dialog-image'
-                  src={p.url}
-                  alt={p.alt}
-                  onLoad={<span class="fstat-no" title="function not covered" >()</span> =&gt; <span class="cstat-no" title="statement not covered" >finishLoading(i)}</span>
-                /&gt;
+                &lt;img className='view-photos-dialog-image' src={p.url} alt={p.alt} onLoad={<span class="fstat-no" title="function not covered" >()</span> =&gt; <span class="cstat-no" title="statement not covered" >finishLoading(i)}</span> /&gt;
               &lt;/a&gt;
             &lt;/div&gt;
           ))}
         &lt;/Carousel&gt;
         {numbered ? (
-          &lt;Typography className='photo-numbering'&gt;
-            {`${selectedSlide+1}/${photos.length}`}
-          &lt;/Typography&gt;
+          &lt;Typography className='photo-numbering'&gt;{`${selectedSlide + 1}/${photos.length}`}&lt;/Typography&gt;
         ) : undefined}
         {photos[selectedSlide] &amp;&amp; photos[selectedSlide].decoration}
       &lt;/Box&gt;
@@ -568,7 +529,7 @@ export default function <span class="fstat-no" title="function not covered" >Vie
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-03-12T17:40:00.834Z
+                at 2024-03-13T16:09:43.366Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>
