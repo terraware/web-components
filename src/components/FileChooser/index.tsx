@@ -151,6 +151,7 @@ export default function FileChooser(props: FileChooserProps): JSX.Element {
         onChange={onFileChosen}
         accept={acceptFileType}
         multiple={multipleSelection || false}
+        value={''}
       />
       <Button
         onClick={onChooseFileHandler}
