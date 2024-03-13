@@ -119,6 +119,10 @@ export default function FileChooser(props: FileChooserProps): JSX.Element {
     if (event.currentTarget.files) {
       addFiles(event.currentTarget.files);
     }
+    if (event.currentTarget.value) {
+      // reset the input value to allow the same file(s) to be selected again
+      event.currentTarget.value = '';
+    }
   };
 
   return (
