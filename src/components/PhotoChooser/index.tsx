@@ -77,12 +77,7 @@ export default function PhotoChooser(props: PhotoChooserProps): JSX.Element {
   const removeFileAtIndex = (index: number) => {
     const filesList = [...files];
     filesList.splice(index, 1);
-    updateSelection(filesList);
-  };
-
-  const updateSelection = (selected: File[]) => {
-    setFiles(selected);
-    onPhotosChanged(selected);
+    setFiles(filesList);
   };
 
   const onChoosingFiles = () => {
@@ -93,6 +88,7 @@ export default function PhotoChooser(props: PhotoChooserProps): JSX.Element {
     const filesDataList = files.map((file) => URL.createObjectURL(file));
 
     setFilesData(filesDataList);
+    onPhotosChanged(files);
 
     return () => {
       // we need to clean this up to avoid a memory leak
