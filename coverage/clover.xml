@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1710347501316" clover="3.2.0">
-  <project timestamp="1710347501316" name="All files">
-    <metrics statements="1451" coveredstatements="197" conditionals="1142" coveredconditionals="90" methods="535" coveredmethods="34" elements="3128" coveredelements="321" complexity="0" loc="1451" ncloc="1451" packages="38" files="200" classes="200"/>
+<coverage generated="1710459004866" clover="3.2.0">
+  <project timestamp="1710459004866" name="All files">
+    <metrics statements="1449" coveredstatements="197" conditionals="1146" coveredconditionals="90" methods="534" coveredmethods="34" elements="3129" coveredelements="321" complexity="0" loc="1449" ncloc="1449" packages="38" files="200" classes="200"/>
     <package name="src">
       <metrics statements="1" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
       <file name="index.ts" path="/home/runner/work/web-components/web-components/src/index.ts">
@@ -356,9 +356,9 @@
       </file>
     </package>
     <package name="src.components.PhotoChooser">
-      <metrics statements="26" coveredstatements="0" conditionals="13" coveredconditionals="0" methods="12" coveredmethods="0"/>
+      <metrics statements="24" coveredstatements="0" conditionals="13" coveredconditionals="0" methods="11" coveredmethods="0"/>
       <file name="index.tsx" path="/home/runner/work/web-components/web-components/src/components/PhotoChooser/index.tsx">
-        <metrics statements="26" coveredstatements="0" conditionals="13" coveredconditionals="0" methods="12" coveredmethods="0"/>
+        <metrics statements="24" coveredstatements="0" conditionals="13" coveredconditionals="0" methods="11" coveredmethods="0"/>
         <line num="15" count="0" type="stmt"/>
         <line num="69" count="0" type="stmt"/>
         <line num="70" count="0" type="stmt"/>
@@ -373,18 +373,16 @@
         <line num="80" count="0" type="stmt"/>
         <line num="83" count="0" type="stmt"/>
         <line num="84" count="0" type="stmt"/>
-        <line num="85" count="0" type="stmt"/>
+        <line num="87" count="0" type="stmt"/>
         <line num="88" count="0" type="stmt"/>
-        <line num="89" count="0" type="stmt"/>
-        <line num="92" count="0" type="stmt"/>
+        <line num="90" count="0" type="stmt"/>
+        <line num="91" count="0" type="stmt"/>
         <line num="93" count="0" type="stmt"/>
         <line num="95" count="0" type="stmt"/>
-        <line num="97" count="0" type="stmt"/>
         <line num="99" count="0" type="stmt"/>
-        <line num="103" count="0" type="stmt"/>
-        <line num="121" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="128" count="0" type="stmt"/>
-        <line num="139" count="0" type="stmt"/>
+        <line num="117" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="124" count="0" type="stmt"/>
+        <line num="135" count="0" type="stmt"/>
       </file>
     </package>
     <package name="src.components.Pill">
@@ -1511,7 +1509,7 @@
       </file>
     </package>
     <package name="src.stories">
-      <metrics statements="453" coveredstatements="0" conditionals="54" coveredconditionals="0" methods="159" coveredmethods="0"/>
+      <metrics statements="453" coveredstatements="0" conditionals="58" coveredconditionals="0" methods="159" coveredmethods="0"/>
       <file name="Autocomplete.stories.tsx" path="/home/runner/work/web-components/web-components/src/stories/Autocomplete.stories.tsx">
         <metrics statements="15" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="6" coveredmethods="0"/>
         <line num="8" count="0" type="stmt"/>
@@ -1826,15 +1824,15 @@
         <line num="42" count="0" type="stmt"/>
       </file>
       <file name="PhotoChooser.stories.tsx" path="/home/runner/work/web-components/web-components/src/stories/PhotoChooser.stories.tsx">
-        <metrics statements="8" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="3" coveredmethods="0"/>
+        <metrics statements="8" coveredstatements="0" conditionals="4" coveredconditionals="0" methods="3" coveredmethods="0"/>
         <line num="10" count="0" type="stmt"/>
         <line num="11" count="0" type="stmt"/>
         <line num="14" count="0" type="stmt"/>
         <line num="15" count="0" type="stmt"/>
-        <line num="16" count="0" type="stmt"/>
+        <line num="16" count="0" type="cond" truecount="0" falsecount="2"/>
         <line num="25" count="0" type="stmt"/>
         <line num="26" count="0" type="stmt"/>
-        <line num="27" count="0" type="stmt"/>
+        <line num="27" count="0" type="cond" truecount="0" falsecount="2"/>
       </file>
       <file name="PillList.stories.tsx" path="/home/runner/work/web-components/web-components/src/stories/PillList.stories.tsx">
         <metrics statements="6" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="3" coveredmethods="0"/>
