@@ -38,7 +38,8 @@ export type FileTemplate = {
 };
 
 export type FileChooserProps = {
-  acceptFileType: string;
+  /** Optional comma-separated list of MIME types to accept in the chooser. */
+  acceptFileType?: string;
   chooseFileText?: string;
   files?: File[];
   fileSelectedText?: string;
