@@ -35,7 +35,7 @@ const TruncatedTextArea = ({ preserveNewlines, truncateConfig, value }: Truncate
     width: '100%',
   };
 
-  if (!showAll) {
+  if (needsTruncating && !showAll) {
     textStyle.maxHeight = `${maxHeight}px`;
   }
 
@@ -54,7 +54,7 @@ const TruncatedTextArea = ({ preserveNewlines, truncateConfig, value }: Truncate
           <Link
             component='button'
             onClick={toggleShowAll}
-            onBlur={toggleShowAll}
+            onBlur={() => setShowAll(false)}
             sx={{ color: theme.palette.TwClrTxtBrand, textDecorationColor: `${theme.palette.TwClrTxtBrand}80` }}
           >
             <Typography sx={{ ...showTextStyle, marginTop: '-3px' }}>
