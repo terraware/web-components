@@ -1,15 +1,24 @@
 import classNames from 'classnames';
-import React from 'react';
+import React, { useMemo } from 'react';
 import { TooltipProps } from '@mui/material';
 import Icon from '../Icon/Icon';
 import { IconName } from '../Icon/icons';
 import './styles.scss';
 import { isWhitespaces } from '../../utils';
 import IconTooltip from '../IconTooltip';
+import TruncatedTextArea from './TruncatedTextArea';
 
 type TextfieldType = 'text' | 'textarea' | 'number';
 
 type Handler = (value: unknown) => void;
+
+export interface TruncateConfig {
+  maxHeight: number;
+  showMoreText: string;
+  showLessText: string;
+  showTextStyle?: Record<string, any>;
+  valueTextStyle?: Record<string, any>;
+}
 
 export interface Props {
   autoFocus?: boolean;
@@ -37,6 +46,7 @@ export interface Props {
   disabledCharacters?: string[];
   preserveNewlines?: boolean;
   required?: boolean;
+  truncateConfig?: TruncateConfig;
 }
 
 export default function TextField(props: Props): JSX.Element {
@@ -66,6 +76,7 @@ export default function TextField(props: Props): JSX.Element {
     disabledCharacters,
     preserveNewlines,
     required,
+    truncateConfig,
   } = props;
 
   const textfieldClass = classNames({
@@ -122,6 +133,18 @@ export default function TextField(props: Props): JSX.Element {
     }
   }
 
+  const displayComponent = useMemo(() => {
+    if (!display) {
+      return null;
+    }
+
+    if (type === 'textarea' && truncateConfig) {
+      return <TruncatedTextArea preserveNewlines={preserveNewlines} truncateConfig={truncateConfig} value={value} />;
+    }
+
+    return <p className={`textfield-value--display${preserveNewlines ? ' preserve-newlines' : ''}`}>{value}</p>;
+  }, [display, preserveNewlines, truncateConfig, type, value]);
+
   return (
     <div className={`textfield ${className}`}>
       <label htmlFor={id} className='textfield-label'>
@@ -158,7 +181,7 @@ export default function TextField(props: Props): JSX.Element {
             required={required}
           />
         ))}
-      {display && <p className={`textfield-value--display${preserveNewlines ? ' preserve-newlines' : ''}`}>{value}</p>}
+      {displayComponent}
       {errorText && (
         <div className='textfield-label-container'>
           <Icon name='error' className='textfield-error-text--icon' />
