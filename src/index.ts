@@ -7,6 +7,7 @@ import Badge from './components/Badge';
 import BusySpinner from './components/BusySpinner';
 import Button from './components/Button/Button';
 import Checkbox from './components/Checkbox';
+import Confirm from './components/Confirm';
 import DatePicker from './components/DatePicker/DatePicker';
 import DialogBox from './components/DialogBox/DialogBox';
 import Divisor from './components/Divisor';
@@ -61,6 +62,7 @@ export type { FileChooserProps } from './components/FileChooser';
 export type { PhotoItem } from './components/ViewPhotosDialog';
 export type { SliderMark } from './components/Slider';
 export type { Tab, TabsProps } from './components/Tabs';
+export type { ConfirmProps } from './components/Confirm';
 
 export {
   Autocomplete,
@@ -70,6 +72,7 @@ export {
   CellRenderer,
   CellDateRenderer,
   Checkbox,
+  Confirm,
   DatePicker,
   descendingComparator,
   DialogBox,

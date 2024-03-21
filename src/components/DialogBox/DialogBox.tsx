@@ -4,9 +4,11 @@ import Icon from '../Icon/Icon';
 import { IconButton } from '@mui/material';
 import { useDeviceInfo } from '../../utils';
 
+export type DialogBoxSize = 'small' | 'medium' | 'large' | 'x-large';
+
 export interface Props {
   title: string;
-  size: 'small' | 'medium' | 'large' | 'x-large';
+  size: DialogBoxSize;
   message?: string | string[];
   children?: ReactNode;
   leftButton?: ReactNode;
