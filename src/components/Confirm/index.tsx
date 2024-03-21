@@ -105,7 +105,7 @@ export default function Confirm({
             ...(textStyle || {})
           }}
         >{str}</Typography>
-      )
+      );
     };
     if (typeof message === 'string') {
       return text(message);
