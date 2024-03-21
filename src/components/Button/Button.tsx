@@ -14,11 +14,14 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
+export type ButtonPriority = 'primary' | 'secondary' | 'ghost';
+export type ButtonType = 'productive' | 'passive' | 'destructive';
+
 export interface Props {
   onClick: (event?: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
   label?: string;
-  type?: 'productive' | 'passive' | 'destructive';
-  priority?: 'primary' | 'secondary' | 'ghost';
+  type?: ButtonType;
+  priority?: ButtonPriority;
   size?: Size;
   disabled?: boolean;
   icon?: IconName;
