@@ -22,61 +22,65 @@ export interface TruncateConfig {
 
 export interface Props {
   autoFocus?: boolean;
-  onChange?: Handler;
-  onBlur?: () => void;
-  label: string;
+  className?: string;
   disabled?: boolean;
+  disabledCharacters?: string[];
+  display?: boolean;
+  errorText?: string;
+  helperText?: string;
   iconLeft?: IconName;
   iconRight?: IconName;
   id: string;
-  className?: string;
-  helperText?: string;
-  placeholder?: string;
-  errorText?: string;
-  warningText?: string;
-  value?: string | number;
-  readonly?: boolean;
-  display?: boolean;
-  type: TextfieldType;
-  onKeyDown?: (key: string) => void;
-  onClickRightIcon?: () => void;
-  tooltipTitle?: TooltipProps['title'];
+  label: string;
   min?: number;
   max?: number;
-  disabledCharacters?: string[];
+  onBlur?: () => void;
+  onChange?: Handler;
+  onClickRightIcon?: () => void;
+  onKeyDown?: (key: string) => void;
+  placeholder?: string;
   preserveNewlines?: boolean;
+  readonly?: boolean;
   required?: boolean;
+  // Since useStyles is deprecated, we can start passing in element specific styles in here
+  // For now only the `textarea` has styles passed into it
+  styles?: Record<string, Record<string, unknown>>;
+  tooltipTitle?: TooltipProps['title'];
   truncateConfig?: TruncateConfig;
+  type: TextfieldType;
+  warningText?: string;
+  value?: string | number;
 }
 
 export default function TextField(props: Props): JSX.Element {
   const {
-    value,
     autoFocus,
-    onChange,
-    onBlur,
     label,
+    className,
     disabled,
+    disabledCharacters,
+    display,
+    errorText,
+    helperText,
     iconLeft,
     iconRight,
     id,
-    className,
-    helperText,
-    placeholder,
-    errorText,
-    warningText,
-    readonly,
-    display,
-    type,
-    onKeyDown,
-    onClickRightIcon,
-    tooltipTitle,
     min,
     max,
-    disabledCharacters,
+    onBlur,
+    onChange,
+    onClickRightIcon,
+    onKeyDown,
+    placeholder,
     preserveNewlines,
+    readonly,
     required,
+    styles,
+    tooltipTitle,
     truncateConfig,
+    type,
+    value,
+    warningText,
   } = props;
 
   const textfieldClass = classNames({
@@ -179,6 +183,7 @@ export default function TextField(props: Props): JSX.Element {
             onChange={textfieldOnChange}
             onBlur={onBlur}
             required={required}
+            style={(styles || {}).textArea}
           />
         ))}
       {displayComponent}
