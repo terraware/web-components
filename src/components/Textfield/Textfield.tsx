@@ -183,7 +183,7 @@ export default function TextField(props: Props): JSX.Element {
             onChange={textfieldOnChange}
             onBlur={onBlur}
             required={required}
-            style={(styles || {}).textArea}
+            style={(styles || {}).textarea}
           />
         ))}
       {displayComponent}
