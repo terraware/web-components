@@ -126,7 +126,7 @@ export default function SelectT<T>(props: SelectTProps<T>): JSX.Element {
   };
 
   useEffect(() => {
-    if (openedOptions) {
+    if (openedOptions && options?.length) {
       scrollToSelectedElement();
       if (fixedMenu && inputRef.current && dropdownRef.current) {
         dropdownRef.current.style.width = `${inputRef.current.offsetWidth}px`;
@@ -141,7 +141,7 @@ export default function SelectT<T>(props: SelectTProps<T>): JSX.Element {
         }
       }
     }
-  }, [fixedMenu, openedOptions]);
+  }, [fixedMenu, openedOptions, options?.length]);
 
   const toggleOptions = () => {
     setOpenedOptions((isOpen) => !isOpen);

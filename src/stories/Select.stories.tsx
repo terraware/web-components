@@ -19,18 +19,47 @@ const Template: Story<SelectProps> = (args) => {
   return <Select {...args} onChange={handleChange} selectedValue={value} />;
 };
 
+const EditableTemplate: Story<SelectProps> = (args) => {
+  // tslint:disable-next-line:no-unused-vars
+  const [value, setValue] = React.useState('');
+  const [options, setOptions] = React.useState(args.options);
+  const handleChange = (str: string) => {
+    setValue(str);
+    setOptions((args.options ?? []).filter((opt) => !!opt.match(str)));
+  };
+
+  return <Select {...args} onChange={handleChange} selectedValue={value} options={options} />;
+};
+
 export const Default = Template.bind({});
 
 Default.args = {
-  label: 'Field Label',
   disabled: false,
-  helperText: 'Help text.',
-  placeholder: 'Placeholder...',
   errorText: '',
-  warningText: '',
-  readonly: false,
+  fixedMenu: true,
+  helperText: 'Help text.',
+  label: 'Field Label',
   options: ['test 1', 'test 2', 'test 3'],
+  placeholder: 'Placeholder...',
+  readonly: false,
   selectedValue: 'test 2',
+  warningText: '',
+};
+
+export const Editable = EditableTemplate.bind({});
+
+Editable.args = {
+  disabled: false,
+  editable: true,
+  errorText: '',
+  fixedMenu: true,
+  helperText: 'Help text.',
+  label: 'Field Label',
+  options: ['test 1', 'test 2', 'test 3'],
+  placeholder: 'Placeholder...',
+  readonly: false,
+  selectedValue: 'test 2',
+  warningText: '',
 };
 
 type Value = {
