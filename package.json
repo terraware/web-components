@@ -109,7 +109,7 @@
     "@types/luxon": "^3.2.0",
     "fs": "^0.0.1-security",
     "hex-rgb": "^5.0.0",
-    "license-report": "^6.3.0",
+    "license-report": "^6.5.0",
     "react-scripts": "^5.0.1",
     "storybook": "^7.0.7",
     "style-dictionary": "^3.9.1",
