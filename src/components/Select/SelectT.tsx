@@ -1,6 +1,6 @@
 import { TooltipProps } from '@mui/material';
 import classNames from 'classnames';
-import React, { ChangeEvent, KeyboardEvent, useEffect, useRef, useState } from 'react';
+import React, { ChangeEvent, KeyboardEvent, useEffect, useMemo, useRef, useState } from 'react';
 
 import './styles.scss';
 import Icon from '../Icon/Icon';
@@ -125,8 +125,10 @@ export default function SelectT<T>(props: SelectTProps<T>): JSX.Element {
     setOpenedOptions(false);
   };
 
+  const hasOptions = useMemo<boolean>(() => options !== undefined &&  options.length > 0, [options]);
+
   useEffect(() => {
-    if (openedOptions && options?.length) {
+    if (openedOptions && hasOptions) {
       scrollToSelectedElement();
       if (fixedMenu && inputRef.current && dropdownRef.current) {
         dropdownRef.current.style.width = `${inputRef.current.offsetWidth}px`;
@@ -141,7 +143,7 @@ export default function SelectT<T>(props: SelectTProps<T>): JSX.Element {
         }
       }
     }
-  }, [fixedMenu, openedOptions, options?.length]);
+  }, [fixedMenu, openedOptions, hasOptions]);
 
   const toggleOptions = () => {
     setOpenedOptions((isOpen) => !isOpen);
