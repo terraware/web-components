@@ -9,7 +9,7 @@ const SvgBlobbyIconSeedBank = ({ title, titleId, ...props }: SVGProps<SVGSVGElem
     {title ? <title id={titleId}>{title}</title> : null}
     <g clipPath='url(#blobby-icon-seed-bank_svg__a)'>
       <path
-        fill='#F0F4FF'
+        fill='#E2F6EC'
         fillRule='evenodd'
         d='M96.821 12.057c24.878-.65 53.949 4 61.596 27.683 7.623 23.607-13.691 43.746-33.873 58.171-19.515 13.948-44.257 25.396-64.012 11.791-20.912-14.4-24.98-43.182-16.134-66.982 7.796-20.98 30.05-30.078 52.423-30.663Z'
         clipRule='evenodd'
@@ -23,15 +23,15 @@ const SvgBlobbyIconSeedBank = ({ title, titleId, ...props }: SVGProps<SVGSVGElem
       />
       <path
         fill='url(#blobby-icon-seed-bank_svg__c)'
-        d='M56.999 35.449h-.02c-2.75 0-4.98-3.33-4.999-7.449-.018 4.11-2.239 7.434-4.98 7.449 2.741.015 4.962 3.34 4.98 7.449.018-4.119 2.25-7.449 5-7.449h.019Z'
+        d='M56.999 34.449h-.02c-2.75 0-4.98-3.33-4.999-7.449-.018 4.11-2.239 7.434-4.98 7.449 2.741.015 4.962 3.34 4.98 7.449.018-4.119 2.25-7.449 5-7.449h.019Z'
       />
       <path
         fill='url(#blobby-icon-seed-bank_svg__d)'
-        d='M152.999 64.449h-.019c-2.75 0-4.982-3.33-5-7.449-.018 4.11-2.239 7.434-4.98 7.449 2.741.015 4.962 3.34 4.98 7.449.018-4.119 2.25-7.449 5-7.449h.019Z'
+        d='M152.999 63.449h-.019c-2.75 0-4.982-3.33-5-7.449-.018 4.11-2.239 7.434-4.98 7.449 2.741.015 4.962 3.34 4.98 7.449.018-4.119 2.25-7.449 5-7.449h.019Z'
       />
       <path
         fill='url(#blobby-icon-seed-bank_svg__e)'
-        d='M84.999 93.449h-.02c-2.75 0-4.98-3.33-4.999-7.449-.018 4.11-2.239 7.434-4.98 7.449 2.741.015 4.962 3.34 4.98 7.449.018-4.119 2.25-7.449 5-7.449h.019Z'
+        d='M84.999 92.449h-.02c-2.75 0-4.98-3.33-4.999-7.449-.018 4.11-2.239 7.434-4.98 7.449 2.741.015 4.962 3.34 4.98 7.449.018-4.119 2.25-7.449 5-7.449h.019Z'
       />
       <mask
         id='blobby-icon-seed-bank_svg__g'
@@ -45,7 +45,7 @@ const SvgBlobbyIconSeedBank = ({ title, titleId, ...props }: SVGProps<SVGSVGElem
         }}
       >
         <path
-          fill='#F0F4FF'
+          fill='#E2F6EC'
           fillRule='evenodd'
           d='M96.821 12.057c24.878-.65 53.949 4 61.596 27.683 7.623 23.607-13.691 43.746-33.873 58.171-19.515 13.948-44.257 25.396-64.012 11.791-20.912-14.4-24.98-43.182-16.134-66.982 7.796-20.98 30.05-30.078 52.423-30.663Z'
           clipRule='evenodd'
@@ -59,10 +59,14 @@ const SvgBlobbyIconSeedBank = ({ title, titleId, ...props }: SVGProps<SVGSVGElem
         />
       </mask>
       <g mask='url(#blobby-icon-seed-bank_svg__g)'>
-        <path fill='url(#blobby-icon-seed-bank_svg__h)' d='m152.2 77.2-28.7-28.7-41.86 37.641L107.5 112l44.7-34.8Z' opacity={0.25} />
+        <path
+          fill='url(#blobby-icon-seed-bank_svg__h)'
+          d='m152.2 77.2-28.7-28.7-41.86 37.641L107.5 112l44.7-34.8Z'
+          opacity={0.25}
+        />
       </g>
       <path
-        fill='#F0F4FF'
+        fill='#EAF3DC'
         d='M77.943 46.995c2.902-4.551 7.16-7.662 12.057-7.662 3.665 0 6.563.982 8.758 2.776 2.004 1.64 3.382 3.828 4.664 6.3 2.777-1.722 5.726-2.906 8.596-3.357 3.55-.557 6.976-.008 9.8 1.98 4.013 2.824 5.648 7.833 5.362 13.205-.287 5.372-2.42 11.293-6.219 16.69-3.81 5.41-8.742 9.37-13.768 11.401-4.446 1.796-9.106 2.079-12.901.167-.088.047-.18.088-.274.122a11.703 11.703 0 0 1-4.018.716c-4.898 0-9.155-3.11-12.057-7.661-2.903-4.551-4.61-10.643-4.61-17.339 0-6.696 1.707-12.787 4.61-17.338Z'
       />
       <path
@@ -71,29 +75,57 @@ const SvgBlobbyIconSeedBank = ({ title, titleId, ...props }: SVGProps<SVGSVGElem
       />
     </g>
     <defs>
-      <linearGradient id='blobby-icon-seed-bank_svg__b' x1={125.5} x2={49.5} y1={101.5} y2={23.5} gradientUnits='userSpaceOnUse'>
-        <stop stopColor='#007DF2' />
-        <stop offset={1} stopColor='#53EA9F' />
+      <linearGradient
+        id='blobby-icon-seed-bank_svg__b'
+        x1={125.5}
+        x2={50}
+        y1={101.5}
+        y2={26}
+        gradientUnits='userSpaceOnUse'
+      >
+        <stop stopColor='#F1F0EC' />
+        <stop offset={1} stopColor='#84D6AC' />
       </linearGradient>
-      <linearGradient id='blobby-icon-seed-bank_svg__c' x1={47} x2={57} y1={28} y2={43} gradientUnits='userSpaceOnUse'>
-        <stop stopColor='#308F5F' />
-        <stop offset={1} stopColor='#007DF2' />
+      <linearGradient id='blobby-icon-seed-bank_svg__c' x1={47} x2={57} y1={27} y2={42} gradientUnits='userSpaceOnUse'>
+        <stop stopColor='#2C8658' />
+        <stop offset={1} stopColor='#ACD278' />
       </linearGradient>
-      <linearGradient id='blobby-icon-seed-bank_svg__d' x1={143} x2={153} y1={57} y2={72} gradientUnits='userSpaceOnUse'>
-        <stop stopColor='#308F5F' />
-        <stop offset={1} stopColor='#007DF2' />
+      <linearGradient
+        id='blobby-icon-seed-bank_svg__d'
+        x1={143}
+        x2={153}
+        y1={56}
+        y2={71}
+        gradientUnits='userSpaceOnUse'
+      >
+        <stop stopColor='#2C8658' />
+        <stop offset={1} stopColor='#ACD278' />
       </linearGradient>
-      <linearGradient id='blobby-icon-seed-bank_svg__e' x1={75} x2={85} y1={86} y2={101} gradientUnits='userSpaceOnUse'>
-        <stop stopColor='#308F5F' />
-        <stop offset={1} stopColor='#007DF2' />
+      <linearGradient id='blobby-icon-seed-bank_svg__e' x1={75} x2={85} y1={85} y2={100} gradientUnits='userSpaceOnUse'>
+        <stop stopColor='#2C8658' />
+        <stop offset={1} stopColor='#ACD278' />
       </linearGradient>
-      <linearGradient id='blobby-icon-seed-bank_svg__f' x1={125.5} x2={49.5} y1={101.5} y2={23.5} gradientUnits='userSpaceOnUse'>
-        <stop stopColor='#007DF2' />
-        <stop offset={1} stopColor='#53EA9F' />
+      <linearGradient
+        id='blobby-icon-seed-bank_svg__f'
+        x1={125.5}
+        x2={50}
+        y1={101.5}
+        y2={26}
+        gradientUnits='userSpaceOnUse'
+      >
+        <stop stopColor='#F1F0EC' />
+        <stop offset={1} stopColor='#84D6AC' />
       </linearGradient>
-      <linearGradient id='blobby-icon-seed-bank_svg__h' x1={94.831} x2={121.533} y1={73.5} y2={102.073} gradientUnits='userSpaceOnUse'>
-        <stop stopColor='#308F5F' />
-        <stop offset={1} stopColor='#007DF2' />
+      <linearGradient
+        id='blobby-icon-seed-bank_svg__h'
+        x1={100}
+        x2={128.018}
+        y1={67.84}
+        y2={99.59}
+        gradientUnits='userSpaceOnUse'
+      >
+        <stop stopColor='#2C8658' />
+        <stop offset={1} stopColor='#ACD278' />
       </linearGradient>
       <clipPath id='blobby-icon-seed-bank_svg__a'>
         <path fill='#fff' d='M0 0h200v128H0z' />

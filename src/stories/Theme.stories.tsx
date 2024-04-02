@@ -21,7 +21,7 @@ const Template: Story<{}> = () => {
 
   const handleChangeColor = (str: string) => {
     setColorStr(str);
-    setColorValue(palette[str] || palette[COLORS[0]] as string);
+    setColorValue(palette[str] || (palette[COLORS[0]] as string));
   };
 
   const handleChangeBgColor = (str: string) => {
@@ -46,14 +46,8 @@ const Template: Story<{}> = () => {
       >
         The quick brown fox jumped over the silly lazy goat!
       </Box>
-      <Select
-        selectedValue={colorStr}
-        label='Color'
-        onChange={handleChangeColor}
-        options={COLORS}
-        fullWidth={true}
-      />
-      <Box sx={{marginBottom: '25px'}} />
+      <Select selectedValue={colorStr} label='Color' onChange={handleChangeColor} options={COLORS} fullWidth={true} />
+      <Box sx={{ marginBottom: '25px' }} />
       <Select
         selectedValue={bgColorStr}
         label='BgColor'

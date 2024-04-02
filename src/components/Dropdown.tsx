@@ -67,6 +67,7 @@ export interface DropdownProps {
   hideClearIcon?: boolean;
 
   autocomplete?: boolean;
+  required?: boolean;
 }
 
 /**
@@ -91,7 +92,7 @@ export default function Dropdown(props: DropdownProps): JSX.Element {
       <Autocomplete
         {...remainingProps}
         options={options ?? []}
-        selected={selectedItem}
+        selected={selectedItem || ''}
         isEqual={(A: ValueType, B: ValueType) => (A as DropdownItem).value === (B as DropdownItem).value}
         onChange={(option: ValueType) => onChange((option as DropdownItem).value)}
       />

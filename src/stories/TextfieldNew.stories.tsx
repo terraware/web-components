@@ -54,6 +54,8 @@ export const WithTooltip = Template.bind({});
 
 export const TextArea = Template.bind({});
 
+export const TextAreaWithTruncate = Template.bind({});
+
 export const NumberField = NumberTemplate.bind({});
 
 Default.args = {
@@ -97,6 +99,29 @@ TextArea.args = {
   type: 'textarea',
   autoFocus: false,
   preserveNewlines: true,
+};
+
+TextAreaWithTruncate.args = {
+  label: 'Field Label',
+  disabled: false,
+  helperText: 'Help text.',
+  placeholder: 'Placeholder...',
+  errorText: '',
+  warningText: '',
+  readonly: false,
+  display: false,
+  type: 'textarea',
+  autoFocus: false,
+  preserveNewlines: true,
+  truncateConfig: {
+    valueTextStyle: {
+      fontSize: '12px',
+      lineHeight: '16px'
+    },
+    maxHeight: 48,
+    showLessText: 'Show less',
+    showMoreText: 'Show more',
+  },
 };
 
 NumberField.args = {

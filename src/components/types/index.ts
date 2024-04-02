@@ -3,4 +3,5 @@ export type DropdownItem = {
   value: any;
   onClick?: () => void;
   type?: 'passive' | 'destructive';
+  disabled?: boolean;
 };
