@@ -101,7 +101,8 @@
       &:hover {
         background-color: $tw-clr-bg-ghost-hover;
       }
-      &.nav-item--selected, &.nav-item--selected:hover {
+      &.nav-item--selected,
+      &.nav-item--selected:hover {
         background-color: $tw-clr-bg-ghost-active;
       }
     }
@@ -147,5 +148,4 @@
     margin-top: auto;
     margin-bottom: 32px;
   }
-
 }

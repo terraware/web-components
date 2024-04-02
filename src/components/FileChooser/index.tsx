@@ -38,7 +38,8 @@ export type FileTemplate = {
 };
 
 export type FileChooserProps = {
-  acceptFileType: string;
+  /** Optional comma-separated list of MIME types to accept in the chooser. */
+  acceptFileType?: string;
   chooseFileText?: string;
   files?: File[];
   fileSelectedText?: string;
@@ -151,6 +152,7 @@ export default function FileChooser(props: FileChooserProps): JSX.Element {
         onChange={onFileChosen}
         accept={acceptFileType}
         multiple={multipleSelection || false}
+        value={''}
       />
       <Button
         onClick={onChooseFileHandler}
@@ -161,7 +163,9 @@ export default function FileChooser(props: FileChooserProps): JSX.Element {
         className={classes.button}
       />
       {template && (
-        <Link href={template.url} target='_blank' className={classes.link}>{template.text}</Link>
+        <Link href={template.url} target='_blank' className={classes.link}>
+          {template.text}
+        </Link>
       )}
     </Box>
   );

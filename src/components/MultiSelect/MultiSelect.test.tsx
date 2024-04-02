@@ -7,11 +7,13 @@ test('show options when placeholder is clicked', () => {
     <MultiSelect
       onAdd={() => undefined}
       onRemove={() => undefined}
-      options={new Map([
-        [1, 'foo'],
-        [2, 'bar'],
-        [3, 'baz'],
-      ])}
+      options={
+        new Map([
+          [1, 'foo'],
+          [2, 'bar'],
+          [3, 'baz'],
+        ])
+      }
       valueRenderer={(v: string) => v}
       selectedOptions={[]}
       placeHolder='Select...'
@@ -42,11 +44,13 @@ test('clicking an option calls the onAdd handler', () => {
     <MultiSelect
       onAdd={handleAdd}
       onRemove={() => undefined}
-      options={new Map([
-        [1, 'foo'],
-        [2, 'bar'],
-        [3, 'baz'],
-      ])}
+      options={
+        new Map([
+          [1, 'foo'],
+          [2, 'bar'],
+          [3, 'baz'],
+        ])
+      }
       valueRenderer={(v: string) => v}
       selectedOptions={[]}
       placeHolder='Select...'
@@ -71,9 +75,7 @@ test('clicking the pill remove button calls the onRemove handler', () => {
     <MultiSelect
       onAdd={() => undefined}
       onRemove={handleRemove}
-      options={new Map([
-        [1, 'foo'],
-      ])}
+      options={new Map([[1, 'foo']])}
       valueRenderer={(v: string) => v}
       selectedOptions={[1]}
     />

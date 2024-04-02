@@ -1,11 +1,7 @@
 import React, { useState } from 'react';
 import { action } from '@storybook/addon-actions';
 import { Story } from '@storybook/react';
-import Dropdown, {
-  Props as DropdownV1Props,
-  DropdownV1,
-  DropdownProps,
-} from '../components/Dropdown';
+import Dropdown, { Props as DropdownV1Props, DropdownV1, DropdownProps } from '../components/Dropdown';
 
 export default {
   title: 'Dropdown',
@@ -66,14 +62,7 @@ const DropdownAutocompleteTemplate: Story<DropdownProps> = (args) => {
     setSelectedValue(value);
   };
 
-  return (
-    <Dropdown
-      {...args}
-      onChange={handleChange}
-      selectedValue={selectedValue}
-      autocomplete={true}
-    />
-  );
+  return <Dropdown {...args} onChange={handleChange} selectedValue={selectedValue} autocomplete={true} />;
 };
 
 export const Autocomplete = DropdownAutocompleteTemplate.bind({});

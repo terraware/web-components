@@ -1,6 +1,6 @@
 import { TooltipProps } from '@mui/material';
 import classNames from 'classnames';
-import React, { ChangeEvent, KeyboardEvent, useEffect, useRef, useState } from 'react';
+import React, { ChangeEvent, KeyboardEvent, useEffect, useMemo, useRef, useState } from 'react';
 
 import './styles.scss';
 import Icon from '../Icon/Icon';
@@ -111,7 +111,12 @@ export default function SelectT<T>(props: SelectTProps<T>): JSX.Element {
   const handleClick = (event: any) => {
     // Don't respond to user clicks inside the input box because those are
     // already handled by toggleOptions()
-    if (dropdownRef.current && !dropdownRef.current.contains(event.target) && inputRef.current && !inputRef.current.contains(event.target)) {
+    if (
+      dropdownRef.current &&
+      !dropdownRef.current.contains(event.target) &&
+      inputRef.current &&
+      !inputRef.current.contains(event.target)
+    ) {
       setOpenedOptions(false);
     }
   };
@@ -120,8 +125,10 @@ export default function SelectT<T>(props: SelectTProps<T>): JSX.Element {
     setOpenedOptions(false);
   };
 
+  const hasOptions = useMemo<boolean>(() => options !== undefined &&  options.length > 0, [options]);
+
   useEffect(() => {
-    if (openedOptions) {
+    if (openedOptions && hasOptions) {
       scrollToSelectedElement();
       if (fixedMenu && inputRef.current && dropdownRef.current) {
         dropdownRef.current.style.width = `${inputRef.current.offsetWidth}px`;
@@ -130,11 +137,13 @@ export default function SelectT<T>(props: SelectTProps<T>): JSX.Element {
         const dropdownBottom = dropdownRef.current.clientHeight + bbox.top + bbox.height;
         const windowHeightThreshold = window.innerHeight - bbox.height;
         if (dropdownBottom > windowHeightThreshold) {
-          dropdownRef.current.style.maxHeight = `${dropdownRef.current.clientHeight - (dropdownBottom - windowHeightThreshold)}px`;
+          dropdownRef.current.style.maxHeight = `${
+            dropdownRef.current.clientHeight - (dropdownBottom - windowHeightThreshold)
+          }px`;
         }
       }
     }
-  }, [fixedMenu, openedOptions]);
+  }, [fixedMenu, openedOptions, hasOptions]);
 
   const toggleOptions = () => {
     setOpenedOptions((isOpen) => !isOpen);

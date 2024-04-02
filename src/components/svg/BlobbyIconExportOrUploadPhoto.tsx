@@ -75,27 +75,69 @@ const SvgBlobbyIconExportOrUploadPhoto = ({ title, titleId, ...props }: SVGProps
       />
     </g>
     <defs>
-      <linearGradient id='blobby-icon-export-or-upload-photo_svg__b' x1={133} x2={49.23} y1={114} y2={31.784} gradientUnits='userSpaceOnUse'>
+      <linearGradient
+        id='blobby-icon-export-or-upload-photo_svg__b'
+        x1={133}
+        x2={49.23}
+        y1={114}
+        y2={31.784}
+        gradientUnits='userSpaceOnUse'
+      >
         <stop stopColor='#F1F0EC' />
         <stop offset={1} stopColor='#84D6AC' />
       </linearGradient>
-      <linearGradient id='blobby-icon-export-or-upload-photo_svg__c' x1={135} x2={145} y1={59} y2={74} gradientUnits='userSpaceOnUse'>
+      <linearGradient
+        id='blobby-icon-export-or-upload-photo_svg__c'
+        x1={135}
+        x2={145}
+        y1={59}
+        y2={74}
+        gradientUnits='userSpaceOnUse'
+      >
         <stop stopColor='#2C8658' />
         <stop offset={1} stopColor='#ACD278' />
       </linearGradient>
-      <linearGradient id='blobby-icon-export-or-upload-photo_svg__d' x1={61} x2={71} y1={16} y2={31} gradientUnits='userSpaceOnUse'>
+      <linearGradient
+        id='blobby-icon-export-or-upload-photo_svg__d'
+        x1={61}
+        x2={71}
+        y1={16}
+        y2={31}
+        gradientUnits='userSpaceOnUse'
+      >
         <stop stopColor='#2C8658' />
         <stop offset={1} stopColor='#ACD278' />
       </linearGradient>
-      <linearGradient id='blobby-icon-export-or-upload-photo_svg__e' x1={55} x2={65} y1={96} y2={111} gradientUnits='userSpaceOnUse'>
+      <linearGradient
+        id='blobby-icon-export-or-upload-photo_svg__e'
+        x1={55}
+        x2={65}
+        y1={96}
+        y2={111}
+        gradientUnits='userSpaceOnUse'
+      >
         <stop stopColor='#2C8658' />
         <stop offset={1} stopColor='#ACD278' />
       </linearGradient>
-      <linearGradient id='blobby-icon-export-or-upload-photo_svg__f' x1={133} x2={49.23} y1={114} y2={31.784} gradientUnits='userSpaceOnUse'>
+      <linearGradient
+        id='blobby-icon-export-or-upload-photo_svg__f'
+        x1={133}
+        x2={49.23}
+        y1={114}
+        y2={31.784}
+        gradientUnits='userSpaceOnUse'
+      >
         <stop stopColor='#F1F0EC' />
         <stop offset={1} stopColor='#84D6AC' />
       </linearGradient>
-      <linearGradient id='blobby-icon-export-or-upload-photo_svg__h' x1={83.5} x2={141.873} y1={59.042} y2={108.918} gradientUnits='userSpaceOnUse'>
+      <linearGradient
+        id='blobby-icon-export-or-upload-photo_svg__h'
+        x1={83.5}
+        x2={141.873}
+        y1={59.042}
+        y2={108.918}
+        gradientUnits='userSpaceOnUse'
+      >
         <stop stopColor='#2C8658' />
         <stop offset={1} stopColor='#ACD278' />
       </linearGradient>

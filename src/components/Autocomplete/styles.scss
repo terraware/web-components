@@ -38,7 +38,6 @@
       color: $tw-clr-txt;
       opacity: 1;
     }
-    
   }
 
   input {
@@ -47,13 +46,12 @@
 
   & .MuiInputBase-input {
     height: '21px';
-  };
+  }
   & .MuiOutlinedInput-root {
     fieldset {
       border-color: $tw-clr-brdr-secondary;
     }
-    
-    
+
     &:hover fieldset {
       border-color: $tw-clr-brdr-hover;
     }
@@ -92,7 +90,8 @@
           color: $tw-clr-txt;
         }
 
-        &[aria-selected="true"], &[aria-selected="true"]:hover {
+        &[aria-selected='true'],
+        &[aria-selected='true']:hover {
           background-color: $tw-clr-bg-selected;
           color: $tw-clr-txt-on-selected;
         }
@@ -128,7 +127,7 @@
     }
   }
 
-  &--error {  
+  &--error {
     fieldset {
       border: none;
     }
@@ -138,19 +137,19 @@
         border: $tw-sz-frm-fld-text-input-stroke solid $tw-clr-brdr-danger-hover;
       }
       &.Mui-focused fieldset.MuiOutlinedInput-notchedOutline {
-        border: $tw-sz-frm-fld-text-input-stroke solid $tw-clr-brdr-danger-active 
+        border: $tw-sz-frm-fld-text-input-stroke solid $tw-clr-brdr-danger-active;
       }
     }
-      background-color: $tw-clr-bg-danger-tertiary;
-      border-radius: $tw-spc-base-x-small;
-      &:active {
-        outline: $tw-sz-frm-fld-text-input-stroke-active solid $tw-clr-brdr-danger-active;
-      }
-  
-      &:focus-within,
-      &:focus-visible {
-        outline: $tw-sz-frm-fld-text-input-stroke-active solid $tw-clr-brdr-danger-active;
-        outline-offset: -$tw-sz-frm-fld-text-input-stroke;
-      }    
+    background-color: $tw-clr-bg-danger-tertiary;
+    border-radius: $tw-spc-base-x-small;
+    &:active {
+      outline: $tw-sz-frm-fld-text-input-stroke-active solid $tw-clr-brdr-danger-active;
+    }
+
+    &:focus-within,
+    &:focus-visible {
+      outline: $tw-sz-frm-fld-text-input-stroke-active solid $tw-clr-brdr-danger-active;
+      outline-offset: -$tw-sz-frm-fld-text-input-stroke;
+    }
   }
 }

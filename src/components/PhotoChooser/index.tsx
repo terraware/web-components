@@ -77,12 +77,7 @@ export default function PhotoChooser(props: PhotoChooserProps): JSX.Element {
   const removeFileAtIndex = (index: number) => {
     const filesList = [...files];
     filesList.splice(index, 1);
-    updateSelection(filesList);
-  };
-
-  const updateSelection = (selected: File[]) => {
-    setFiles(selected);
-    onPhotosChanged(selected);
+    setFiles(filesList);
   };
 
   const onChoosingFiles = () => {
@@ -93,6 +88,7 @@ export default function PhotoChooser(props: PhotoChooserProps): JSX.Element {
     const filesDataList = files.map((file) => URL.createObjectURL(file));
 
     setFilesData(filesDataList);
+    onPhotosChanged(files);
 
     return () => {
       // we need to clean this up to avoid a memory leak
@@ -134,7 +130,12 @@ export default function PhotoChooser(props: PhotoChooserProps): JSX.Element {
                 marginTop={theme.spacing(1)}
                 border={`1px solid ${theme.palette.TwClrBrdrTertiary}`}
               >
-                <Button icon='iconTrashCan' onClick={() => removeFileAtIndex(index)} size='small' className={classes.removePhoto} />
+                <Button
+                  icon='iconTrashCan'
+                  onClick={() => removeFileAtIndex(index)}
+                  size='small'
+                  className={classes.removePhoto}
+                />
                 <img height='120px' src={fileData} alt={files[index]?.name} className={classes.thumbnail} />
               </Box>
             ))}

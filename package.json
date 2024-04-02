@@ -1,6 +1,6 @@
 {
   "name": "@terraware/web-components",
-  "version": "2.9.3",
+  "version": "2.12.2",
   "author": "Terraformation Inc.",
   "license": "Apache-2.0",
   "repository": {
@@ -121,7 +121,8 @@
     "typescript": "^5.0.0"
   },
   "resolutions": {
-    "babel-loader": "8.1.0",
-    "@storybook/react/**/loader-utils": "^2.0.4"
+    "@babel/traverse": "7.24.1",
+    "@storybook/react/**/loader-utils": "^2.0.4",
+    "babel-loader": "8.1.0"
   }
 }

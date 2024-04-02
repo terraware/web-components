@@ -59,7 +59,11 @@ const SvgBlobbyIconHeartMonitor = ({ title, titleId, ...props }: SVGProps<SVGSVG
         />
       </mask>
       <g mask='url(#blobby-icon-heart-monitor_svg__g)'>
-        <path fill='url(#blobby-icon-heart-monitor_svg__h)' d='M159.7 77.7 125 43 75.64 85.641 107.5 117.5l52.2-39.8Z' opacity={0.25} />
+        <path
+          fill='url(#blobby-icon-heart-monitor_svg__h)'
+          d='M159.7 77.7 125 43 75.64 85.641 107.5 117.5l52.2-39.8Z'
+          opacity={0.25}
+        />
       </g>
       <path
         fill='#EAF3DC'
@@ -71,27 +75,69 @@ const SvgBlobbyIconHeartMonitor = ({ title, titleId, ...props }: SVGProps<SVGSVG
       />
     </g>
     <defs>
-      <linearGradient id='blobby-icon-heart-monitor_svg__b' x1={126.5} x2={50} y1={104} y2={27.5} gradientUnits='userSpaceOnUse'>
+      <linearGradient
+        id='blobby-icon-heart-monitor_svg__b'
+        x1={126.5}
+        x2={50}
+        y1={104}
+        y2={27.5}
+        gradientUnits='userSpaceOnUse'
+      >
         <stop stopColor='#F1F0EC' />
         <stop offset={1} stopColor='#84D6AC' />
       </linearGradient>
-      <linearGradient id='blobby-icon-heart-monitor_svg__c' x1={137} x2={147} y1={93} y2={108} gradientUnits='userSpaceOnUse'>
+      <linearGradient
+        id='blobby-icon-heart-monitor_svg__c'
+        x1={137}
+        x2={147}
+        y1={93}
+        y2={108}
+        gradientUnits='userSpaceOnUse'
+      >
         <stop stopColor='#2C8658' />
         <stop offset={1} stopColor='#ACD278' />
       </linearGradient>
-      <linearGradient id='blobby-icon-heart-monitor_svg__d' x1={78} x2={88} y1={18} y2={33} gradientUnits='userSpaceOnUse'>
+      <linearGradient
+        id='blobby-icon-heart-monitor_svg__d'
+        x1={78}
+        x2={88}
+        y1={18}
+        y2={33}
+        gradientUnits='userSpaceOnUse'
+      >
         <stop stopColor='#2C8658' />
         <stop offset={1} stopColor='#ACD278' />
       </linearGradient>
-      <linearGradient id='blobby-icon-heart-monitor_svg__e' x1={54} x2={64} y1={69} y2={84} gradientUnits='userSpaceOnUse'>
+      <linearGradient
+        id='blobby-icon-heart-monitor_svg__e'
+        x1={54}
+        x2={64}
+        y1={69}
+        y2={84}
+        gradientUnits='userSpaceOnUse'
+      >
         <stop stopColor='#2C8658' />
         <stop offset={1} stopColor='#ACD278' />
       </linearGradient>
-      <linearGradient id='blobby-icon-heart-monitor_svg__f' x1={126.5} x2={50} y1={104} y2={27.5} gradientUnits='userSpaceOnUse'>
+      <linearGradient
+        id='blobby-icon-heart-monitor_svg__f'
+        x1={126.5}
+        x2={50}
+        y1={104}
+        y2={27.5}
+        gradientUnits='userSpaceOnUse'
+      >
         <stop stopColor='#F1F0EC' />
         <stop offset={1} stopColor='#84D6AC' />
       </linearGradient>
-      <linearGradient id='blobby-icon-heart-monitor_svg__h' x1={96.5} x2={130.831} y1={64.048} y2={104.17} gradientUnits='userSpaceOnUse'>
+      <linearGradient
+        id='blobby-icon-heart-monitor_svg__h'
+        x1={96.5}
+        x2={130.831}
+        y1={64.048}
+        y2={104.17}
+        gradientUnits='userSpaceOnUse'
+      >
         <stop stopColor='#2C8658' />
         <stop offset={1} stopColor='#ACD278' />
       </linearGradient>

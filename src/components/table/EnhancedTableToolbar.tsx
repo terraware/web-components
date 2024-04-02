@@ -44,7 +44,13 @@ export default function EnhancedTableToolbar(props: EnhancedTableToolbarProps): 
       return renderNumSelectedText(numSelected);
     }
 
-    const { handleSelectAll, handleSelectNone, renderSelectAllText, renderSelectNoneText, renderEnhancedNumSelectedText } = topBarSelectionConfig;
+    const {
+      handleSelectAll,
+      handleSelectNone,
+      renderSelectAllText,
+      renderSelectNoneText,
+      renderEnhancedNumSelectedText,
+    } = topBarSelectionConfig;
 
     return (
       <>
