@@ -28,7 +28,7 @@ export default function Tooltip({ placement = 'top-start', title, children }: To
   };
 
   const handleTooltipOpen = (event: React.SyntheticEvent | Event) => {
-    if(event.type === 'click' || (event.type === 'mouseover' && !isMobile)){
+    if (event.type === 'click' || (event.type === 'mouseover' && !isMobile)) {
       setOpen(true);
     }
   };
@@ -49,9 +49,7 @@ export default function Tooltip({ placement = 'top-start', title, children }: To
       }}
       title={title}
     >
-      <span onClick={handleTooltipOpen}>
-        {children}
-      </span>
+      <span onClick={handleTooltipOpen}>{children}</span>
     </MUITooltip>
   );
 }

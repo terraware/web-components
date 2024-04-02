@@ -16,7 +16,11 @@
 
   &--skrim {
     background-color: rgba($tw-clr-base-gray-025, $tw-opcty-base-060);
-    background-image: linear-gradient(180deg, rgba($tw-clr-base-green-050, $tw-opcty-base-000), rgba($tw-clr-base-green-050, 0.24));
+    background-image: linear-gradient(
+      180deg,
+      rgba($tw-clr-base-green-050, $tw-opcty-base-000),
+      rgba($tw-clr-base-green-050, 0.24)
+    );
     height: 100%;
     display: flex;
     align-items: center;
@@ -108,8 +112,8 @@
     }
 
     .close-icon-spacer {
-      height: calc(#{$tw-sz-base-medium} + 2*#{$tw-spc-base-xx-small});
-      width: calc(#{$tw-sz-base-medium} + 2*#{$tw-spc-base-xx-small});
+      height: calc(#{$tw-sz-base-medium} + 2 *#{$tw-spc-base-xx-small});
+      width: calc(#{$tw-sz-base-medium} + 2 *#{$tw-spc-base-xx-small});
     }
   }
 

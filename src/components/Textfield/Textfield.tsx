@@ -1,69 +1,86 @@
 import classNames from 'classnames';
-import React from 'react';
+import React, { useMemo } from 'react';
 import { TooltipProps } from '@mui/material';
 import Icon from '../Icon/Icon';
 import { IconName } from '../Icon/icons';
 import './styles.scss';
 import { isWhitespaces } from '../../utils';
 import IconTooltip from '../IconTooltip';
+import TruncatedTextArea from './TruncatedTextArea';
 
 type TextfieldType = 'text' | 'textarea' | 'number';
 
 type Handler = (value: unknown) => void;
 
+export interface TruncateConfig {
+  maxHeight: number;
+  showMoreText: string;
+  showLessText: string;
+  showTextStyle?: Record<string, any>;
+  valueTextStyle?: Record<string, any>;
+}
+
 export interface Props {
   autoFocus?: boolean;
-  onChange?: Handler;
-  onBlur?: () => void;
-  label: string;
+  className?: string;
   disabled?: boolean;
+  disabledCharacters?: string[];
+  display?: boolean;
+  errorText?: string;
+  helperText?: string;
   iconLeft?: IconName;
   iconRight?: IconName;
   id: string;
-  className?: string;
-  helperText?: string;
-  placeholder?: string;
-  errorText?: string;
-  warningText?: string;
-  value?: string | number;
-  readonly?: boolean;
-  display?: boolean;
-  type: TextfieldType;
-  onKeyDown?: (key: string) => void;
-  onClickRightIcon?: () => void;
-  tooltipTitle?: TooltipProps['title'];
+  label: string;
   min?: number;
   max?: number;
-  disabledCharacters?: string[];
+  onBlur?: () => void;
+  onChange?: Handler;
+  onClickRightIcon?: () => void;
+  onKeyDown?: (key: string) => void;
+  placeholder?: string;
   preserveNewlines?: boolean;
+  readonly?: boolean;
+  required?: boolean;
+  // Since useStyles is deprecated, we can start passing in element specific styles in here
+  // For now only the `textarea` has styles passed into it
+  styles?: Record<string, Record<string, unknown>>;
+  tooltipTitle?: TooltipProps['title'];
+  truncateConfig?: TruncateConfig;
+  type: TextfieldType;
+  warningText?: string;
+  value?: string | number;
 }
 
 export default function TextField(props: Props): JSX.Element {
   const {
-    value,
     autoFocus,
-    onChange,
-    onBlur,
     label,
+    className,
     disabled,
+    disabledCharacters,
+    display,
+    errorText,
+    helperText,
     iconLeft,
     iconRight,
     id,
-    className,
-    helperText,
-    placeholder,
-    errorText,
-    warningText,
-    readonly,
-    display,
-    type,
-    onKeyDown,
-    onClickRightIcon,
-    tooltipTitle,
     min,
     max,
-    disabledCharacters,
+    onBlur,
+    onChange,
+    onClickRightIcon,
+    onKeyDown,
+    placeholder,
     preserveNewlines,
+    readonly,
+    required,
+    styles,
+    tooltipTitle,
+    truncateConfig,
+    type,
+    value,
+    warningText,
   } = props;
 
   const textfieldClass = classNames({
@@ -120,10 +137,22 @@ export default function TextField(props: Props): JSX.Element {
     }
   }
 
+  const displayComponent = useMemo(() => {
+    if (!display) {
+      return null;
+    }
+
+    if (type === 'textarea' && truncateConfig) {
+      return <TruncatedTextArea preserveNewlines={preserveNewlines} truncateConfig={truncateConfig} value={value} />;
+    }
+
+    return <p className={`textfield-value--display${preserveNewlines ? ' preserve-newlines' : ''}`}>{value}</p>;
+  }, [display, preserveNewlines, truncateConfig, type, value]);
+
   return (
     <div className={`textfield ${className}`}>
       <label htmlFor={id} className='textfield-label'>
-        {label}
+        {required ? `${label} *` : label}
         {tooltipTitle && <IconTooltip placement='top' title={tooltipTitle} />}
       </label>
       {!display &&
@@ -139,6 +168,7 @@ export default function TextField(props: Props): JSX.Element {
               onBlur={onBlur}
               onKeyDown={onKeyDownHandler}
               onWheel={(e) => e.currentTarget.blur()}
+              required={required}
               {...typeProps}
             />
             {iconRight ? renderRightIcon() : null}
@@ -152,9 +182,11 @@ export default function TextField(props: Props): JSX.Element {
             placeholder={placeholder}
             onChange={textfieldOnChange}
             onBlur={onBlur}
+            required={required}
+            style={(styles || {}).textarea}
           />
         ))}
-      {display && <p className={`textfield-value--display${preserveNewlines ? ' preserve-newlines' : ''}`}>{value}</p>}
+      {displayComponent}
       {errorText && (
         <div className='textfield-label-container'>
           <Icon name='error' className='textfield-error-text--icon' />
