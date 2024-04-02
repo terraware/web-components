@@ -16,6 +16,14 @@ For the moment, we're not asking for code contributions from the community. (Che
 
 You may see references to some private repositories in the documentation. We're working toward opening more of our code, but not everything is ready yet.
 
+## Requirements
+**Make sure you're using Node 16**
+
+With `nvm`
+```
+nvm use
+```
+
 ## Running the app in development mode
 
 ### Step 1: Install dependencies
@@ -31,6 +39,11 @@ Execute the following commands:
 ```shell
 yarn start
 ```
+
+## Testing changes out in repos that use `web-components`
+
+You can add a comment to your open pull request with the text "publish rc". 
+This will publish an RC build to NPM for use in your repo that consumes `web-components` with a tag like `v2.3.58-rc.0`.
 
 ## Available Scripts
 
@@ -82,3 +95,17 @@ yarn build-dictionary
 Copy svgs to `./assets`.
 Run `yarn generate-assets`, see new files under `./src/components/svg` as asset React components.
 Integrate new asset React component into `./src/components/Icon/icons/index.tsx` if needed as an icon;
+
+
+## Common issues
+**Wrong Node version**
+
+You might see an error like this when running Storybook
+```
+Error: error:0308010C:digital envelope routines::unsupported
+storybook/preview.js undefined
+```
+
+This means you are on a version of Node > 16. 
+Set your Node version to 16, re-install dependencies, and try `yarn start` again.
+See https://stackoverflow.com/a/69699772 for more info.

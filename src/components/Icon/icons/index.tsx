@@ -1,13 +1,22 @@
 import React from 'react';
 
 import BlobbyGrayIconImage from '../../svg/BlobbyGrayIconImage';
+import BlobbyGrayIconImport from '../../svg/BlobbyGrayIconImport';
 import BlobbyGrayIconUploadToTheCloud from '../../svg/BlobbyGrayIconUploadToTheCloud';
+import BlobbyIconCloudChecked from '../../svg/BlobbyIconCloudChecked';
+import BlobbyIconExportOrUploadPhoto from '../../svg/BlobbyIconExportOrUploadPhoto';
+import BlobbyIconFolder from '../../svg/BlobbyIconFolder';
+import BlobbyIconGraphReport from '../../svg/BlobbyIconGraphReport';
 import BlobbyIconHappy from '../../svg/BlobbyIconHappy';
 import BlobbyIconLeaf from '../../svg/BlobbyIconLeaf';
 import BlobbyIconLibrary from '../../svg/BlobbyIconLibrary';
 import BlobbyIconNursery from '../../svg/BlobbyIconNursery';
+import BlobbyIconParchment from '../../svg/BlobbyIconParchment';
 import BlobbyIconSeedBank from '../../svg/BlobbyIconSeedBank';
+import BlobbyIconSeedling from '../../svg/BlobbyIconSeedling';
+import BlobbyIconSeeds from '../../svg/BlobbyIconSeeds';
 import BlobbyIconSite from '../../svg/BlobbyIconSite';
+import BlobbyIconSparkles from '../../svg/BlobbyIconSparkles';
 import BlobbyIconWrench from '../../svg/BlobbyIconWrench';
 import Bug from '../../svg/Bug';
 import Calendar from '../../svg/Calendar';
@@ -41,19 +50,27 @@ import IconFile from '../../svg/IconFile';
 import IconFolder from '../../svg/IconFolder';
 import IconFullScreen from '../../svg/IconFullScreen';
 import IconGraphReport from '../../svg/IconGraphReport';
+import IconHistory from '../../svg/IconHistory';
 import IconImport from '../../svg/IconImport';
 import IconLayers from '../../svg/IconLayers';
 import IconList from '../../svg/IconList';
 import IconLocations from '../../svg/IconLocations';
 import IconMenu from '../../svg/IconMenu';
 import IconMenuHorizontal from '../../svg/IconMenuHorizontal';
+import IconModule from '../../svg/IconModule';
 import IconMyLocation from '../../svg/IconMyLocation';
 import IconNursery from '../../svg/IconNursery';
+import IconParchment from '../../svg/IconParchment';
+import IconRedo from '../../svg/IconRedo';
 import IconRestorationSite from '../../svg/IconRestorationSite';
 import IconSeedling from '../../svg/IconSeedling';
+import IconSlice from '../../svg/IconSlice';
+import IconSubmit from '../../svg/IconSubmit';
+import IconSubtract from '../../svg/IconSubtract';
 import IconSynced from '../../svg/IconSynced';
 import IconTrashCan from '../../svg/IconTrashCan';
 import IconTreasureMap from '../../svg/IconTreasureMap';
+import IconUndo from '../../svg/IconUndo';
 import Info from '../../svg/Info';
 import Key from '../../svg/Key';
 import Leaf from '../../svg/Leaf';
@@ -87,13 +104,22 @@ import IconMarker from '../../svg/IconMarker';
 
 export type IconName =
   | 'blobbyGrayIconImage'
+  | 'blobbyGrayIconImport'
   | 'blobbyGrayIconUploadToTheCloud'
-  | 'blobbyIconSeedBank'
+  | 'blobbyIconCloudChecked'
+  | 'blobbyIconExportOrUploadPhoto'
+  | 'blobbyIconFolder'
+  | 'blobbyIconGraphReport'
   | 'blobbyIconHappy'
   | 'blobbyIconLeaf'
   | 'blobbyIconLibrary'
   | 'blobbyIconNursery'
+  | 'blobbyIconParchment'
+  | 'blobbyIconSeedBank'
+  | 'blobbyIconSeedling'
+  | 'blobbyIconSeeds'
   | 'blobbyIconSite'
+  | 'blobbyIconSparkles'
   | 'blobbyIconWrench'
   | 'bug'
   | 'calendar'
@@ -127,6 +153,7 @@ export type IconName =
   | 'iconFolder'
   | 'iconFullScreen'
   | 'iconGraphReport'
+  | 'iconHistory'
   | 'iconImport'
   | 'iconLayers'
   | 'iconList'
@@ -134,13 +161,20 @@ export type IconName =
   | 'iconMarker'
   | 'iconMenu'
   | 'iconMenuHorizontal'
+  | 'iconModule'
   | 'iconMyLocation'
   | 'iconNursery'
+  | 'iconParchment'
+  | 'iconRedo'
   | 'iconRestorationSite'
   | 'iconSeedling'
+  | 'iconSlice'
+  | 'iconSubmit'
+  | 'iconSubtract'
   | 'iconSynced'
   | 'iconTrashCan'
   | 'iconTreasureMap'
+  | 'iconUndo'
   | 'info'
   | 'key'
   | 'leaf'
@@ -178,13 +212,22 @@ type SVGComponent = React.FunctionComponent<
 >;
 const icons: Record<IconName, SVGComponent> = {
   blobbyGrayIconImage: BlobbyGrayIconImage,
+  blobbyGrayIconImport: BlobbyGrayIconImport,
   blobbyGrayIconUploadToTheCloud: BlobbyGrayIconUploadToTheCloud,
-  blobbyIconSeedBank: BlobbyIconSeedBank,
+  blobbyIconCloudChecked: BlobbyIconCloudChecked,
+  blobbyIconExportOrUploadPhoto: BlobbyIconExportOrUploadPhoto,
+  blobbyIconFolder: BlobbyIconFolder,
+  blobbyIconGraphReport: BlobbyIconGraphReport,
   blobbyIconHappy: BlobbyIconHappy,
   blobbyIconLeaf: BlobbyIconLeaf,
   blobbyIconLibrary: BlobbyIconLibrary,
   blobbyIconNursery: BlobbyIconNursery,
+  blobbyIconParchment: BlobbyIconParchment,
+  blobbyIconSeedBank: BlobbyIconSeedBank,
+  blobbyIconSeedling: BlobbyIconSeedling,
+  blobbyIconSeeds: BlobbyIconSeeds,
   blobbyIconSite: BlobbyIconSite,
+  blobbyIconSparkles: BlobbyIconSparkles,
   blobbyIconWrench: BlobbyIconWrench,
   bug: Bug,
   calendar: Calendar,
@@ -218,6 +261,7 @@ const icons: Record<IconName, SVGComponent> = {
   iconFolder: IconFolder,
   iconFullScreen: IconFullScreen,
   iconGraphReport: IconGraphReport,
+  iconHistory: IconHistory,
   iconImport: IconImport,
   iconLayers: IconLayers,
   iconList: IconList,
@@ -225,13 +269,20 @@ const icons: Record<IconName, SVGComponent> = {
   iconMarker: IconMarker,
   iconMenu: IconMenu,
   iconMenuHorizontal: IconMenuHorizontal,
-  iconNursery: IconNursery,
+  iconModule: IconModule,
   iconMyLocation: IconMyLocation,
+  iconNursery: IconNursery,
+  iconParchment: IconParchment,
+  iconRedo: IconRedo,
   iconRestorationSite: IconRestorationSite,
   iconSeedling: IconSeedling,
+  iconSlice: IconSlice,
+  iconSubmit: IconSubmit,
+  iconSubtract: IconSubtract,
   iconSynced: IconSynced,
   iconTrashCan: IconTrashCan,
   iconTreasureMap: IconTreasureMap,
+  iconUndo: IconUndo,
   info: Info,
   key: Key,
   leaf: Leaf,

@@ -47,7 +47,7 @@ export default function NavItem(props: NavItemProps): JSX.Element {
     }
   };
 
-  const customLabel = (typeof label !== 'string');
+  const customLabel = typeof label !== 'string';
 
   return (
     <div
@@ -56,13 +56,17 @@ export default function NavItem(props: NavItemProps): JSX.Element {
         ${selected ? 'nav-item--selected' : ''}
         ${hasChildrenSelected() ? 'nav-item--children-selected' : ''}
         ${isFooter ? 'nav-item--footer' : ''}
-        ${children ? 'nav-item--has-children' : '' }
+        ${children ? 'nav-item--has-children' : ''}
       `}
     >
       <button className={customLabel ? 'nav-item-custom-content' : 'nav-item-content'} onClick={onClickHandler} id={id}>
         {icon && <Icon name={icon} className='nav-item--icon' />}
         {!href && <span className='nav-item--label'>{label}</span>}
-        {href && <a className='nav-item--label nav-item--anchor' href={href} rel='noopener noreferrer' target='_external'>{label}</a>}
+        {href && (
+          <a className='nav-item--label nav-item--anchor' href={href} rel='noopener noreferrer' target='_external'>
+            {label}
+          </a>
+        )}
         {children && <Icon name={open ? 'chevronUp' : 'chevronDown'} className='nav-item--arrow' />}
       </button>
       {children && open && children}

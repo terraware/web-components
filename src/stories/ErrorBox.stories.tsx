@@ -17,5 +17,5 @@ Default.args = {
   text: 'This is an error message',
   title: 'Error Title',
   buttonText: 'Help!',
-  onClick: () => window.alert('You clicked help.')
+  onClick: () => window.alert('You clicked help.'),
 };

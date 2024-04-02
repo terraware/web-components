@@ -1,32 +1,36 @@
-import React, {useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import './styles.scss';
 import IconTooltip from '../IconTooltip';
-import {IconButton, TooltipProps} from '@mui/material';
+import { TooltipProps } from '@mui/material';
 import Icon from '../Icon/Icon';
-import PillList, {PillListItem} from '../PillList';
+import PillList, { PillListItem } from '../PillList';
 
 export type MultiSelectProps<K, V> = {
   className?: string;
+  disabled?: boolean;
   fullWidth?: boolean;
   helperText?: string;
   id?: string;
   label?: string;
   missingValuePlaceholder?: string;
   onAdd: (item: K) => void;
-  onRemove: (item: K) => void;
+  onBlur?: () => void;
+  onFocus?: () => void;
   onPillClick?: (item: K) => void;
+  onRemove: (item: K) => void;
   options: Map<K, V>;
+  optionsVisible?: boolean;
   pillListClassName?: string;
   placeHolder?: string;
-  valueRenderer: (value: V) => string;
   selectedOptions: K[];
   tooltipTitle?: TooltipProps['title'];
-  disabled?: boolean;
+  valueRenderer: (value: V) => string;
 };
 
 export default function MultiSelect<K, V>(props: MultiSelectProps<K, V>): JSX.Element {
   const {
     className,
+    disabled,
     fullWidth,
     helperText,
     id,
@@ -36,34 +40,50 @@ export default function MultiSelect<K, V>(props: MultiSelectProps<K, V>): JSX.El
     onRemove,
     onPillClick,
     options,
+    optionsVisible,
     pillListClassName,
     placeHolder,
-    valueRenderer,
     selectedOptions,
     tooltipTitle,
-    disabled,
+    valueRenderer,
   } = props;
 
   const [openedOptions, setOpenedOptions] = useState(false);
 
   const toggleOptions = () => {
     setOpenedOptions((isOpen) => !isOpen && !disabled);
+
+    if (props.onFocus) {
+      props.onFocus();
+    }
   };
 
-  const closeOptions = () => {
+  useEffect(() => {
+    if (optionsVisible !== undefined) {
+      setOpenedOptions(optionsVisible);
+    }
+  }, [optionsVisible]);
+
+  const onBlurHandler = () => {
     setOpenedOptions(false);
+
+    if (props.onBlur) {
+      props.onBlur();
+    }
   };
 
   const unselectedOptions = Array.from<K>(options.keys()).filter((key: K) => !selectedOptions.includes(key));
 
-  const valuesPillData = selectedOptions.map((item) => {
-    const value = options.get(item);
+  const valuesPillData = selectedOptions
+    .map((item) => {
+      const value = options.get(item);
 
-    return {
-      id: item,
-      value: value ? valueRenderer(value) : (missingValuePlaceholder || ''),
-    };
-  }).filter((data) => data.value) as PillListItem<K>[];
+      return {
+        id: item,
+        value: value ? valueRenderer(value) : missingValuePlaceholder || '',
+      };
+    })
+    .filter((data) => data.value) as PillListItem<K>[];
 
   return (
     <div className={`multi-select ${className}`}>
@@ -74,19 +94,15 @@ export default function MultiSelect<K, V>(props: MultiSelectProps<K, V>): JSX.El
       )}
       <div
         className={`multi-select__container ${fullWidth ? 'multi-select__container--fullWidth' : ''}`}
-        onBlur={closeOptions}
+        onBlur={onBlurHandler}
         tabIndex={0}
       >
         <div id={id} className={`multi-select__values${disabled ? '--disabled' : ''}`} onClick={toggleOptions}>
-          {selectedOptions.length > 0
-            ? (<PillList
-                data={valuesPillData}
-                onRemove={onRemove}
-                onClick={onPillClick}
-                className={pillListClassName}
-              />)
-            : (<p className='multi-select__placeholder-text' >{placeHolder}</p>)
-          }
+          {selectedOptions.length > 0 ? (
+            <PillList data={valuesPillData} onRemove={onRemove} onClick={onPillClick} className={pillListClassName} />
+          ) : (
+            <p className='multi-select__placeholder-text'>{placeHolder}</p>
+          )}
           <div className={'multi-select__values__icon-button'} aria-label='show-options'>
             <Icon
               name={openedOptions ? 'chevronUp' : 'chevronDown'}
@@ -101,9 +117,9 @@ export default function MultiSelect<K, V>(props: MultiSelectProps<K, V>): JSX.El
                 const optionValue = options.get(optionKey);
 
                 return (
-                  <li key={index} className='select-value' onClick={() => onAdd(optionKey)}>{
-                    optionValue ? valueRenderer(optionValue) : (missingValuePlaceholder || '')
-                  }</li>
+                  <li key={index} className='select-value' onClick={() => onAdd(optionKey)}>
+                    {optionValue ? valueRenderer(optionValue) : missingValuePlaceholder || ''}
+                  </li>
                 );
               })}
             </ul>

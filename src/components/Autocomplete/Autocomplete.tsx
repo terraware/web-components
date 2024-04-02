@@ -22,6 +22,7 @@ export interface Props {
   placeholder?: string;
   errorText?: string;
   tooltipTitle?: TooltipProps['title'];
+  required?: boolean;
 }
 
 export default function Autocomplete({
@@ -38,6 +39,7 @@ export default function Autocomplete({
   placeholder,
   errorText,
   tooltipTitle,
+  required,
 }: Props): JSX.Element {
   const onChangeHandler = (event: ChangeEvent<any>, value: string | null) => {
     if (event) {
@@ -53,11 +55,17 @@ export default function Autocomplete({
     <div className={`auto-complete ${className}`}>
       {label && (
         <label htmlFor={id} className='textfield-label'>
-          {label}
+          {label} {required ? '*' : ''}
           {tooltipTitle && <IconTooltip placement='top' title={tooltipTitle} />}
         </label>
       )}
-      <TextField {...params} variant='outlined' size='small' placeholder={placeholder} className={errorText ? 'auto-complete--error' : ''} />
+      <TextField
+        {...params}
+        variant='outlined'
+        size='small'
+        placeholder={placeholder}
+        className={errorText ? 'auto-complete--error' : ''}
+      />
       {errorText && (
         <div className='textfield-label-container'>
           <Icon name='error' className='textfield-error-text--icon' />
@@ -97,6 +105,7 @@ export default function Autocomplete({
       freeSolo={freeSolo}
       forcePopupIcon={true}
       renderInput={renderInput}
+      aria-required={required}
       popupIcon={<Icon name='chevronDown' className='auto-complete--icon-right' size='medium' />}
       classes={{
         paper: 'auto-complete select',

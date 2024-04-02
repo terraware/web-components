@@ -179,7 +179,7 @@
         border: $tw-sz-frm-fld-text-input-stroke solid $tw-clr-brdr-danger-active;
         outline: $tw-sz-frm-fld-text-input-stroke-active solid $tw-clr-brdr-danger-active;
       }
-  
+
       &:focus-within {
         border: $tw-sz-frm-fld-text-input-stroke solid $tw-clr-brdr-danger-active;
         outline: $tw-sz-frm-fld-text-input-stroke-active solid $tw-clr-brdr-danger-active;
@@ -199,13 +199,12 @@
         border: $tw-sz-frm-fld-text-input-stroke solid $tw-clr-brdr-warning-active;
         outline: $tw-sz-frm-fld-text-input-stroke-active solid $tw-clr-brdr-warning-active;
       }
-  
+
       &:focus-within {
         border: $tw-sz-frm-fld-text-input-stroke solid $tw-clr-brdr-warning-active;
         outline: $tw-sz-frm-fld-text-input-stroke-active solid $tw-clr-brdr-warning-active;
         outline-offset: -$tw-sz-frm-fld-text-input-stroke;
       }
-
     }
 
     &--readonly {
