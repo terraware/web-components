@@ -1,5 +1,6 @@
 import { ReactNode } from 'react';
 import { TooltipProps } from '@mui/material';
+import { TextAlignment } from '.';
 
 export interface TableColumnType {
   key: string;
@@ -7,7 +8,7 @@ export interface TableColumnType {
   type: 'string' | 'number' | 'date' | 'notes' | 'edit' | 'boolean';
   className?: string;
   tooltipTitle?: TooltipProps['title'];
-  alignment?: 'right' | 'left';
+  alignment?: TextAlignment;
 }
 
 export interface RendererProps<T> {

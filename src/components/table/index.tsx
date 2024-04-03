@@ -50,12 +50,14 @@ const tableStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
+export type TextAlignment = 'right' | 'left';
+
 export interface HeadCell {
   disablePadding: boolean;
   id: string;
   label: string | JSX.Element;
   tooltipTitle?: TooltipProps['title'];
-  alignment?: 'right' | 'left';
+  alignment?: TextAlignment;
   className?: string;
 }
 

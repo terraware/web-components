@@ -60,7 +60,7 @@ export default function TableHeaderItem(props: Props): JSX.Element {
           onClick={createSortHandler(headCell.id)}
         >
           {i > 0 && <DragHandle className={classes.dragIcon} {...attributes} {...listeners} />}
-          <span style={{ textAlign: headCell.alignment || 'left' }}>{headCell.label}</span>
+          <span style={{ textAlign: headCell.alignment || 'left', width: '100%' }}>{headCell.label}</span>
           {headCell.tooltipTitle && <IconTooltip title={headCell.tooltipTitle} />}
         </TableSortLabel>
       )}

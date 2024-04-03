@@ -4,6 +4,7 @@ import React, { ReactNode } from 'react';
 import { RendererProps } from './types';
 import { makeStyles } from '@mui/styles';
 import { getDateDisplayValue, preventDefaultEvent } from '../../utils';
+import { TextAlignment } from '.';
 
 const useStyles = makeStyles((theme: Theme) => ({
   editIcon: {
@@ -77,7 +78,7 @@ export function CellDateRenderer({
   id: string;
   value: string;
   className?: string;
-  alignment?: 'right' | 'left';
+  alignment?: TextAlignment;
 }): JSX.Element {
   const classes = useStyles();
 
@@ -99,7 +100,7 @@ export function CellTextRenderer({
   id: string;
   value?: string | number | any[] | ReactNode;
   className?: string;
-  alignment?: 'right' | 'left';
+  alignment?: TextAlignment;
 }): JSX.Element {
   const classes = useStyles();
 
@@ -130,7 +131,7 @@ export function CellBooleanRenderer({
   className?: string;
   booleanFalseText: string;
   booleanTrueText: string;
-  alignment?: 'right' | 'left';
+  alignment?: TextAlignment;
 }): JSX.Element {
   const classes = useStyles();
 
@@ -152,7 +153,7 @@ export function CellNotesRenderer({
   id: string;
   value?: string;
   className?: string;
-  alignment?: 'right' | 'left';
+  alignment?: TextAlignment;
 }): JSX.Element {
   const classes = useStyles();
 
@@ -176,7 +177,7 @@ export function CellEditRenderer({
   onRowClick?: () => void;
   className?: string;
   editText: string;
-  alignment?: 'right' | 'left';
+  alignment?: TextAlignment;
 }): JSX.Element {
   const classes = useStyles();
 
