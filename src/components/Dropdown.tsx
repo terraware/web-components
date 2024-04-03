@@ -87,6 +87,15 @@ export default function Dropdown(props: DropdownProps): JSX.Element {
 
   const selectedItem = options?.find((option) => option.value === selectedValue);
 
+  const renderOption = (option: DropdownItem) : React.ReactNode => {
+    const styles = {
+      fontWeight: option.fontWeight || 'normal',
+      fontStyle: option.fontStyle || 'normal',
+    };
+
+    return <span style={styles}>{option.label}</span>;
+  };
+
   if (autocomplete) {
     return (
       <Autocomplete
@@ -105,7 +114,7 @@ export default function Dropdown(props: DropdownProps): JSX.Element {
       options={options}
       selectedValue={selectedItem}
       isEqual={(A: DropdownItem, B: DropdownItem) => A.value === B.value}
-      renderOption={(option: DropdownItem) => option.label}
+      renderOption={renderOption}
       toT={(str: string) => ({ label: str, value: str } as DropdownItem)}
       displayLabel={(option: DropdownItem) => option?.label || ''}
       onChange={(option: DropdownItem) => onChange(option.value)}

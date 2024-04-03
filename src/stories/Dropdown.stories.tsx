@@ -49,6 +49,9 @@ Default.args = {
   options: [
     { label: 'One', value: '1' },
     { label: 'Two', value: '2' },
+    { label: 'Three', value: '3', fontStyle: 'oblique' },
+    { label: 'Four', value: '4', fontWeight: 'bold' },
+    { label: 'Five', value: '5', fontStyle: 'italic', fontWeight: 'bold' },
   ],
   selectedValue: '2',
   tooltipTitle: 'A handy tooltip',
