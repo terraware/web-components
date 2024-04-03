@@ -122,7 +122,7 @@ Default.args = {
     { key: 'name', name: 'Name', type: 'string' },
     { key: 'middlename', name: 'Middlename', type: 'string', tooltipTitle: 'Middle name is optional' },
     { key: 'lastname', name: 'Lastname', type: 'string' },
-    { key: 'occupation', name: 'Occupation', type: 'string' },
+    { key: 'occupation', name: 'Occupation', type: 'string', alignment: 'right' },
     { key: 'available', name: 'Available', type: 'boolean' },
     { key: 'date', name: 'Date', type: 'string' },
     { key: 'pets', name: 'Pets', type: 'string' },

@@ -55,6 +55,8 @@ export interface HeadCell {
   id: string;
   label: string | JSX.Element;
   tooltipTitle?: TooltipProps['title'];
+  alignment?: 'right' | 'left';
+  className?: string;
 }
 
 export interface LocalizationProps {

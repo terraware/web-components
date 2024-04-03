@@ -7,6 +7,7 @@ export interface TableColumnType {
   type: 'string' | 'number' | 'date' | 'notes' | 'edit' | 'boolean';
   className?: string;
   tooltipTitle?: TooltipProps['title'];
+  alignment?: 'right' | 'left';
 }
 
 export interface RendererProps<T> {
