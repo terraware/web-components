@@ -21,6 +21,7 @@ const useStyles = makeStyles((theme: Theme) => ({
       paddingTop: '0px',
       paddingBottom: '0px',
       borderBottom: `1px solid ${theme.palette.TwClrBrdrSecondary}`,
+      fontVariantNumeric: 'tabular-nums',
     },
   },
 }));
