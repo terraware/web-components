@@ -2,11 +2,12 @@ import React from 'react';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import { DragHandle } from '@mui/icons-material';
-import { TableCell, TableSortLabel, Theme, TooltipProps } from '@mui/material';
+import { TableCell, TableSortLabel, Theme } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 
 import { SortOrder } from './sort';
 import IconTooltip from '../IconTooltip';
+import { HeadCell } from '.';
 
 const useStyles = makeStyles((theme: Theme) => ({
   dragIcon: {
@@ -17,14 +18,6 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
   },
 }));
-
-interface HeadCell {
-  disablePadding: boolean;
-  id: string;
-  label: string | JSX.Element;
-  className?: string;
-  tooltipTitle?: TooltipProps['title'];
-}
 
 type Props = {
   headCell: HeadCell;
@@ -54,7 +47,7 @@ export default function TableHeaderItem(props: Props): JSX.Element {
       ref={setNodeRef}
       id={`table-header-${headCell.id}`}
       key={headCell.id}
-      align='left'
+      align={'left'}
       padding={headCell.disablePadding ? 'none' : 'normal'}
       sortDirection={orderBy === headCell.id ? order : false}
       style={style}
@@ -67,7 +60,7 @@ export default function TableHeaderItem(props: Props): JSX.Element {
           onClick={createSortHandler(headCell.id)}
         >
           {i > 0 && <DragHandle className={classes.dragIcon} {...attributes} {...listeners} />}
-          {headCell.label}
+          <span style={{ textAlign: headCell.alignment || 'left', width: '100%' }}>{headCell.label}</span>
           {headCell.tooltipTitle && <IconTooltip title={headCell.tooltipTitle} />}
         </TableSortLabel>
       )}

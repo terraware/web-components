@@ -125,7 +125,7 @@ Default.args = {
     { key: 'occupation', name: 'Occupation', type: 'string' },
     { key: 'available', name: 'Available', type: 'boolean' },
     { key: 'date', name: 'Date', type: 'string' },
-    { key: 'pets', name: 'Pets', type: 'string' },
+    { key: 'pets', name: 'Pets', type: 'string', alignment: 'right' },
   ],
   rowCount: 150,
   showTopBar: false,

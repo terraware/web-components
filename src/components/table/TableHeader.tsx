@@ -44,6 +44,7 @@ export default function EnhancedTableHead(props: Props): JSX.Element {
       className: `${classes.headerCell} ${c.className}`,
       label: typeof c.name === 'string' && c.name.length > 0 ? titleCase(c.name) : c.name,
       tooltipTitle: c.tooltipTitle,
+      alignment: c.alignment,
     }));
   }
 
