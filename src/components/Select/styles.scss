@@ -253,8 +253,12 @@
     overflow-y: auto;
 
     &.fixed-menu {
-      position: fixed;
-      z-index: 11;
+      visibility: 'hidden';
+      &.positioned {
+        visibility: 'visible';
+        position: fixed;
+        z-index: 11;
+      }
     }
 
     .select-value {
