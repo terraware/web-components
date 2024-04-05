@@ -67,7 +67,7 @@ export default function TableHeaderItem(props: Props): JSX.Element {
           direction={orderBy === headCell.id ? order : 'asc'}
           onClick={createSortHandler(headCell.id)}
         >
-          {headCell.tooltipTitle && <IconTooltip title={headCell.tooltipTitle} disableRightMargin />}
+          {headCell.tooltipTitle && <IconTooltip title={headCell.tooltipTitle} disableRightMargin={true} />}
           {headCell.label}
         </TableSortLabel>
       )}
