@@ -11,7 +11,6 @@ import { HeadCell } from '.';
 
 const useStyles = makeStyles((theme: Theme) => ({
   dragIcon: {
-    marginLeft: -20,
     color: theme.palette.common.white,
     '&:hover': {
       color: theme.palette.neutral[600],
@@ -89,7 +88,7 @@ export default function TableHeaderItem(props: Props): JSX.Element {
           direction={orderBy === headCell.id ? order : 'asc'}
           onClick={createSortHandler(headCell.id)}
         >
-          {i > 0 && <DragHandle className={classes.dragIcon} {...attributes} {...listeners} />}
+          {i > 0 && <DragHandle className={classes.dragIcon} {...attributes} {...listeners} sx={{ marginLeft: -20 }} />}
           {headCell.label}
           {headCell.tooltipTitle && <IconTooltip title={headCell.tooltipTitle} />}
         </TableSortLabel>
