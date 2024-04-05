@@ -2,15 +2,20 @@ import React from 'react';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import { DragHandle } from '@mui/icons-material';
-import { TableCell, TableSortLabel, Theme } from '@mui/material';
+import { Box, TableCell, TableSortLabel, Theme } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 
 import { SortOrder } from './sort';
 import IconTooltip from '../IconTooltip';
 import { HeadCell } from '.';
 
+interface StyleProps {
+  rightAligned?: boolean;
+}
+
 const useStyles = makeStyles((theme: Theme) => ({
   dragIcon: {
+    marginLeft: (props: StyleProps) => (props.rightAligned ? '0px' : '-20px'),
     color: theme.palette.common.white,
     '&:hover': {
       color: theme.palette.neutral[600],
@@ -28,7 +33,7 @@ type Props = {
 
 export default function TableHeaderItem(props: Props): JSX.Element {
   const { headCell, order, orderBy, onRequestSort, i } = props;
-  const classes = useStyles();
+  const classes = useStyles({ rightAligned: headCell.alignment === 'right' });
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
     id: headCell.id,
   });
@@ -52,24 +57,27 @@ export default function TableHeaderItem(props: Props): JSX.Element {
       style={style}
       className={headCell.className || ''}
     >
-      {i > 0 && (
-        <DragHandle
-          className={classes.dragIcon}
-          {...attributes}
-          {...listeners}
-          sx={{ marginLeft: 0, verticalAlign: 'middle', display: 'inline-flex' }}
-        />
-      )}
-      {headCell.label && (
-        <TableSortLabel
-          active={orderBy === headCell.id}
-          direction={orderBy === headCell.id ? order : 'asc'}
-          onClick={createSortHandler(headCell.id)}
-        >
-          {headCell.tooltipTitle && <IconTooltip title={headCell.tooltipTitle} disableRightMargin={true} />}
-          {headCell.label}
-        </TableSortLabel>
-      )}
+      <Box display='flex' alignItems='center' flexDirection='row-reverse'>
+        {headCell.label && (
+          <TableSortLabel
+            sx={{ flexDirection: 'row-reverse' }}
+            active={orderBy === headCell.id}
+            direction={orderBy === headCell.id ? order : 'asc'}
+            onClick={createSortHandler(headCell.id)}
+          >
+            {headCell.tooltipTitle && <IconTooltip title={headCell.tooltipTitle} disableRightMargin={true} />}
+            {headCell.label}
+          </TableSortLabel>
+        )}
+        {i > 0 && (
+          <DragHandle
+            className={classes.dragIcon}
+            {...attributes}
+            {...listeners}
+            sx={{ verticalAlign: 'middle', display: 'inline-flex' }}
+          />
+        )}
+      </Box>
     </TableCell>
   ) : (
     <TableCell
@@ -88,7 +96,7 @@ export default function TableHeaderItem(props: Props): JSX.Element {
           direction={orderBy === headCell.id ? order : 'asc'}
           onClick={createSortHandler(headCell.id)}
         >
-          {i > 0 && <DragHandle className={classes.dragIcon} {...attributes} {...listeners} sx={{ marginLeft: -20 }} />}
+          {i > 0 && <DragHandle className={classes.dragIcon} {...attributes} {...listeners} />}
           {headCell.label}
           {headCell.tooltipTitle && <IconTooltip title={headCell.tooltipTitle} />}
         </TableSortLabel>

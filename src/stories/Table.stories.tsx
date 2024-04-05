@@ -69,6 +69,7 @@ const Template: Story<Omit<TableProps<{ name: string; lastname: string }>, 'rows
             available: true,
             date: '2023-04-27',
             pets: 12,
+            previousStudies: 'natural Sciences, social Sciences',
           };
         }
       });
@@ -124,6 +125,7 @@ Default.args = {
     { key: 'lastname', name: 'Lastname', type: 'string' },
     { key: 'occupation', name: 'Occupation', type: 'string' },
     { key: 'available', name: 'Available', type: 'boolean' },
+    { key: 'previousStudies', name: 'Previous Studies', type: 'string', alignment: 'right' },
     { key: 'date', name: 'Date', type: 'string', tooltipTitle: 'Right aligend with tooltip', alignment: 'right' },
     { key: 'pets', name: 'Pets', type: 'string', alignment: 'right' },
   ],
