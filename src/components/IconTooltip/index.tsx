@@ -6,6 +6,10 @@ import Icon from '../Icon/Icon';
 import { IconName } from '../Icon/icons';
 import { useDeviceInfo } from '../../utils';
 
+interface StyleProps {
+  disableRightMargin?: boolean;
+}
+
 const useStyles = makeStyles((theme: Theme) => ({
   arrow: {
     color: theme.palette.TwClrBaseGray800,
@@ -13,7 +17,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   icon: {
     fill: theme.palette.TwClrIcnSecondary,
     marginLeft: '4px',
-    marginRight: '4px',
+    marginRight: (props: StyleProps) => (props.disableRightMargin ? '0px' : '4px'),
     verticalAlign: 'text-top',
   },
   tooltip: {
@@ -30,16 +34,18 @@ export type IconTooltipProps = {
   iconName?: IconName;
   placement?: TooltipProps['placement'];
   title: TooltipProps['title'];
+  disableRightMargin?: boolean;
 };
 
 export default function IconTooltip({
   iconName = 'info',
   placement = 'top-start',
   title,
+  disableRightMargin,
 }: IconTooltipProps): JSX.Element {
   const [open, setOpen] = React.useState(false);
   const { isMobile } = useDeviceInfo();
-  const classes = useStyles();
+  const classes = useStyles({ disableRightMargin });
 
   const handleTooltipClose = () => {
     setOpen(false);

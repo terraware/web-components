@@ -42,7 +42,37 @@ export default function TableHeaderItem(props: Props): JSX.Element {
     onRequestSort(event, property);
   };
 
-  return (
+  return headCell.alignment === 'right' ? (
+    <TableCell
+      ref={setNodeRef}
+      id={`table-header-${headCell.id}`}
+      key={headCell.id}
+      align={'right'}
+      padding={headCell.disablePadding ? 'none' : 'normal'}
+      sortDirection={orderBy === headCell.id ? order : false}
+      style={style}
+      className={headCell.className || ''}
+    >
+      {i > 0 && (
+        <DragHandle
+          className={classes.dragIcon}
+          {...attributes}
+          {...listeners}
+          sx={{ marginLeft: 0, verticalAlign: 'middle', display: 'inline-flex' }}
+        />
+      )}
+      {headCell.label && (
+        <TableSortLabel
+          active={orderBy === headCell.id}
+          direction={orderBy === headCell.id ? order : 'asc'}
+          onClick={createSortHandler(headCell.id)}
+        >
+          {headCell.tooltipTitle && <IconTooltip title={headCell.tooltipTitle} disableRightMargin />}
+          {headCell.label}
+        </TableSortLabel>
+      )}
+    </TableCell>
+  ) : (
     <TableCell
       ref={setNodeRef}
       id={`table-header-${headCell.id}`}
@@ -60,7 +90,7 @@ export default function TableHeaderItem(props: Props): JSX.Element {
           onClick={createSortHandler(headCell.id)}
         >
           {i > 0 && <DragHandle className={classes.dragIcon} {...attributes} {...listeners} />}
-          <span style={{ textAlign: headCell.alignment || 'left', width: '100%' }}>{headCell.label}</span>
+          {headCell.label}
           {headCell.tooltipTitle && <IconTooltip title={headCell.tooltipTitle} />}
         </TableSortLabel>
       )}

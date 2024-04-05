@@ -124,7 +124,7 @@ Default.args = {
     { key: 'lastname', name: 'Lastname', type: 'string' },
     { key: 'occupation', name: 'Occupation', type: 'string' },
     { key: 'available', name: 'Available', type: 'boolean' },
-    { key: 'date', name: 'Date', type: 'string' },
+    { key: 'date', name: 'Date', type: 'string', tooltipTitle: 'Right aligend with tooltip', alignment: 'right' },
     { key: 'pets', name: 'Pets', type: 'string', alignment: 'right' },
   ],
   rowCount: 150,
