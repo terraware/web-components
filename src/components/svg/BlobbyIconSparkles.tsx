@@ -75,7 +75,14 @@ const SvgBlobbyIconSparkles = ({ title, titleId, ...props }: SVGProps<SVGSVGElem
       />
     </g>
     <defs>
-      <linearGradient id='blobby-icon-sparkles_svg__b' x1={133} x2={49.23} y1={114} y2={31.784} gradientUnits='userSpaceOnUse'>
+      <linearGradient
+        id='blobby-icon-sparkles_svg__b'
+        x1={133}
+        x2={49.23}
+        y1={114}
+        y2={31.784}
+        gradientUnits='userSpaceOnUse'
+      >
         <stop stopColor='#F1F0EC' />
         <stop offset={1} stopColor='#84D6AC' />
       </linearGradient>
@@ -91,11 +98,25 @@ const SvgBlobbyIconSparkles = ({ title, titleId, ...props }: SVGProps<SVGSVGElem
         <stop stopColor='#2C8658' />
         <stop offset={1} stopColor='#ACD278' />
       </linearGradient>
-      <linearGradient id='blobby-icon-sparkles_svg__f' x1={133} x2={49.23} y1={114} y2={31.784} gradientUnits='userSpaceOnUse'>
+      <linearGradient
+        id='blobby-icon-sparkles_svg__f'
+        x1={133}
+        x2={49.23}
+        y1={114}
+        y2={31.784}
+        gradientUnits='userSpaceOnUse'
+      >
         <stop stopColor='#F1F0EC' />
         <stop offset={1} stopColor='#84D6AC' />
       </linearGradient>
-      <linearGradient id='blobby-icon-sparkles_svg__h' x1={71.381} x2={144.581} y1={50.5} y2={109.984} gradientUnits='userSpaceOnUse'>
+      <linearGradient
+        id='blobby-icon-sparkles_svg__h'
+        x1={71.381}
+        x2={144.581}
+        y1={50.5}
+        y2={109.984}
+        gradientUnits='userSpaceOnUse'
+      >
         <stop stopColor='#2C8658' />
         <stop offset={1} stopColor='#ACD278' />
       </linearGradient>

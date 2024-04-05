@@ -10,7 +10,7 @@ export default {
 
 const Template: Story<MessageProps> = (args) => {
   return (
-    <div style={{padding: '100px', backgroundColor: '#f5f5f5'}}>
+    <div style={{ padding: '100px', backgroundColor: '#f5f5f5' }}>
       <Message {...args} />
     </div>
   );

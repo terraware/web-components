@@ -77,6 +77,7 @@ export default function PopoverDropdown(props: PopoverProps): JSX.Element {
                   key={`option-${itemIndex}`}
                   sx={itemStyles(item.type)}
                   disableRipple={true}
+                  disabled={item.disabled}
                 >
                   {itemRenderer ? itemRenderer(item) : item.label}
                 </MenuItem>

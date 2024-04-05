@@ -61,11 +61,16 @@ import IconModule from '../../svg/IconModule';
 import IconMyLocation from '../../svg/IconMyLocation';
 import IconNursery from '../../svg/IconNursery';
 import IconParchment from '../../svg/IconParchment';
+import IconRedo from '../../svg/IconRedo';
 import IconRestorationSite from '../../svg/IconRestorationSite';
 import IconSeedling from '../../svg/IconSeedling';
+import IconSlice from '../../svg/IconSlice';
+import IconSubmit from '../../svg/IconSubmit';
+import IconSubtract from '../../svg/IconSubtract';
 import IconSynced from '../../svg/IconSynced';
 import IconTrashCan from '../../svg/IconTrashCan';
 import IconTreasureMap from '../../svg/IconTreasureMap';
+import IconUndo from '../../svg/IconUndo';
 import Info from '../../svg/Info';
 import Key from '../../svg/Key';
 import Leaf from '../../svg/Leaf';
@@ -160,11 +165,16 @@ export type IconName =
   | 'iconMyLocation'
   | 'iconNursery'
   | 'iconParchment'
+  | 'iconRedo'
   | 'iconRestorationSite'
   | 'iconSeedling'
+  | 'iconSlice'
+  | 'iconSubmit'
+  | 'iconSubtract'
   | 'iconSynced'
   | 'iconTrashCan'
   | 'iconTreasureMap'
+  | 'iconUndo'
   | 'info'
   | 'key'
   | 'leaf'
@@ -263,11 +273,16 @@ const icons: Record<IconName, SVGComponent> = {
   iconMyLocation: IconMyLocation,
   iconNursery: IconNursery,
   iconParchment: IconParchment,
+  iconRedo: IconRedo,
   iconRestorationSite: IconRestorationSite,
   iconSeedling: IconSeedling,
+  iconSlice: IconSlice,
+  iconSubmit: IconSubmit,
+  iconSubtract: IconSubtract,
   iconSynced: IconSynced,
   iconTrashCan: IconTrashCan,
   iconTreasureMap: IconTreasureMap,
+  iconUndo: IconUndo,
   info: Info,
   key: Key,
   leaf: Leaf,

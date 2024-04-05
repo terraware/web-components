@@ -61,7 +61,7 @@
     }
     &.button-with-right-icon {
       padding-right: calc(
-              (#{$tw-sz-btn-small-height} / 2) - (((#{$tw-sz-btn-small-height} - #{$tw-fnt-btn-label-small-line-height}) / 2))
+        (#{$tw-sz-btn-small-height} / 2) - (((#{$tw-sz-btn-small-height} - #{$tw-fnt-btn-label-small-line-height}) / 2))
       );
     }
     &.button-no-label.button-with-icon {
@@ -91,7 +91,7 @@
 
       &.icon-spinner {
         margin-right: 0;
-      }    
+      }
     }
     .icon-right {
       height: $tw-fnt-btn-label-medium-line-height;
@@ -107,8 +107,8 @@
     }
     &.button-with-right-icon {
       padding-right: calc(
-              (#{$tw-sz-btn-medium-height} / 2) -
-              (((#{$tw-sz-btn-medium-height} - #{$tw-fnt-btn-label-medium-line-height}) / 2))
+        (#{$tw-sz-btn-medium-height} / 2) -
+          (((#{$tw-sz-btn-medium-height} - #{$tw-fnt-btn-label-medium-line-height}) / 2))
       );
     }
     &.button-no-label.button-with-icon {
@@ -153,7 +153,7 @@
     }
     &.button-with-right-icon {
       padding-right: calc(
-              (#{$tw-sz-btn-large-height} / 2) - (((#{$tw-sz-btn-large-height} - #{$tw-fnt-btn-label-large-line-height}) / 2))
+        (#{$tw-sz-btn-large-height} / 2) - (((#{$tw-sz-btn-large-height} - #{$tw-fnt-btn-label-large-line-height}) / 2))
       );
     }
     &.button-no-label.button-with-icon {
@@ -199,8 +199,8 @@
     }
     &.button-with-right-icon {
       padding-right: calc(
-              (#{$tw-sz-btn-x-large-height} / 2) -
-              (((#{$tw-sz-btn-x-large-height} - #{$tw-fnt-btn-label-x-large-line-height}) / 2))
+        (#{$tw-sz-btn-x-large-height} / 2) -
+          (((#{$tw-sz-btn-x-large-height} - #{$tw-fnt-btn-label-x-large-line-height}) / 2))
       );
     }
     &.button-no-label.button-with-icon {
@@ -232,7 +232,6 @@
   &:active {
     background-color: $tw-clr-bg-brand-active;
   }
-
 }
 
 .productive-secondary {
@@ -267,7 +266,6 @@
   &:active {
     background-color: $tw-clr-bg-brand-ghost-active;
   }
-
 }
 
 .passive-primary {
@@ -329,7 +327,6 @@
   &:active {
     background-color: $tw-clr-bg-danger-active;
   }
-
 }
 
 .destructive-secondary {
@@ -366,18 +363,19 @@
 .productive-secondary,
 .passive-secondary,
 .destructive-secondary {
-
   &--small {
     padding: calc(
         (#{$tw-sz-btn-small-height} - (2 * #{$tw-sz-btn-stroke}) - #{$tw-fnt-btn-label-small-line-height}) / 2
       )
       calc((#{$tw-sz-btn-small-height} - 2 * #{$tw-sz-btn-stroke}) / 2);
-    
+
     &.button-with-icon {
       padding-left: calc(
-        (#{$tw-sz-btn-small-height} / 2) - #{$tw-sz-btn-stroke} - ((((#{$tw-sz-btn-small-height} - #{$tw-fnt-btn-label-small-line-height}) / 2)))
+        (#{$tw-sz-btn-small-height} / 2) - #{$tw-sz-btn-stroke} - ((((
+                    #{$tw-sz-btn-small-height} - #{$tw-fnt-btn-label-small-line-height}
+                  ) / 2)))
       );
-    }  
+    }
     &.button-no-label.button-with-icon {
       padding-left: 4px;
       padding-right: 4px;
@@ -392,12 +390,14 @@
         (#{$tw-sz-btn-medium-height} - (2 * #{$tw-sz-btn-stroke}) - #{$tw-fnt-btn-label-medium-line-height}) / 2
       )
       calc((#{$tw-sz-btn-medium-height} - 2 * #{$tw-sz-btn-stroke}) / 2);
-    
+
     &.button-with-icon {
       padding-left: calc(
-        (#{$tw-sz-btn-medium-height} / 2) - #{$tw-sz-btn-stroke} - ((((#{$tw-sz-btn-medium-height} - #{$tw-fnt-btn-label-medium-line-height}) / 2)))
+        (#{$tw-sz-btn-medium-height} / 2) - #{$tw-sz-btn-stroke} - ((((
+                    #{$tw-sz-btn-medium-height} - #{$tw-fnt-btn-label-medium-line-height}
+                  ) / 2)))
       );
-    }  
+    }
     &.button-no-label.button-with-icon {
       padding-left: 6px;
       padding-right: 6px;
@@ -412,10 +412,12 @@
         (#{$tw-sz-btn-large-height} - (2 * #{$tw-sz-btn-stroke}) - #{$tw-fnt-btn-label-large-line-height}) / 2
       )
       calc((#{$tw-sz-btn-large-height} - 2 * #{$tw-sz-btn-stroke}) / 2);
-    
+
     &.button-with-icon {
       padding-left: calc(
-        (#{$tw-sz-btn-large-height} / 2) - #{$tw-sz-btn-stroke} - ((((#{$tw-sz-btn-large-height} - #{$tw-fnt-btn-label-large-line-height}) / 2)))
+        (#{$tw-sz-btn-large-height} / 2) - #{$tw-sz-btn-stroke} - ((((
+                    #{$tw-sz-btn-large-height} - #{$tw-fnt-btn-label-large-line-height}
+                  ) / 2)))
       );
     }
     &.button-no-label.button-with-icon {
@@ -432,10 +434,12 @@
         (#{$tw-sz-btn-x-large-height} - (2 * #{$tw-sz-btn-stroke}) - #{$tw-fnt-btn-label-x-large-line-height}) / 2
       )
       calc((#{$tw-sz-btn-x-large-height} - 2 * #{$tw-sz-btn-stroke}) / 2);
-    
+
     &.button-with-icon {
       padding-left: calc(
-        (#{$tw-sz-btn-x-large-height} / 2) - #{$tw-sz-btn-stroke} - ((((#{$tw-sz-btn-x-large-height} - #{$tw-fnt-btn-label-x-large-line-height}) / 2)))
+        (#{$tw-sz-btn-x-large-height} / 2) - #{$tw-sz-btn-stroke} - ((((
+                    #{$tw-sz-btn-x-large-height} - #{$tw-fnt-btn-label-x-large-line-height}
+                  ) / 2)))
       );
     }
     &.button-no-label.button-with-icon {

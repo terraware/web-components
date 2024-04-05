@@ -13,7 +13,7 @@ const Template: Story<PhotoChooserProps> = (args) => {
 
 export const Default = Template.bind({});
 Default.args = {
-  onPhotosChanged: () => window.alert('Photo selected!'),
+  onPhotosChanged: (data) => data.length && window.alert('Photo selected!'),
   multipleSelection: false,
   uploadText: 'Upload a photo',
   uploadDescription: 'Select any photo from your device',
@@ -24,7 +24,7 @@ Default.args = {
 
 export const Multiple = Template.bind({});
 Multiple.args = {
-  onPhotosChanged: () => window.alert('Photos changed (added or deleted)'),
+  onPhotosChanged: (data) => data.length && window.alert(`${data.length} photos changed (added or deleted)`),
   multipleSelection: true,
   uploadText: 'Upload a photo',
   uploadDescription: 'Select any photo from your device',

@@ -1,6 +1,19 @@
-import { Box, Checkbox, Pagination, Table, TableBody, TableCell, TableContainer, TableRow, Theme, TooltipProps, Typography, useTheme } from '@mui/material';
-import React, { useCallback, useEffect, useState } from 'react';
-import EnhancedTableToolbar from './EnhancedTableToolbar';
+import {
+  Box,
+  Checkbox,
+  Pagination,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableRow,
+  Theme,
+  TooltipProps,
+  Typography,
+  useTheme,
+} from '@mui/material';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import EnhancedTableToolbarV2 from './EnhancedTableToolbarV2';
 import { descendingComparator, getComparator, SortOrder, stableSort } from './sort';
 import TableCellRenderer, { TableRowType } from './TableCellRenderer';
 import TableHeader from './TableHeader';
@@ -37,11 +50,15 @@ const tableStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
+export type TextAlignment = 'right' | 'left';
+
 export interface HeadCell {
   disablePadding: boolean;
   id: string;
   label: string | JSX.Element;
   tooltipTitle?: TooltipProps['title'];
+  alignment?: TextAlignment;
+  className?: string;
 }
 
 export interface LocalizationProps {
@@ -51,6 +68,13 @@ export interface LocalizationProps {
   booleanTrueText: string;
   editText: string;
 }
+
+// Only the text related props need to be passed in by the implementer, and extra data is passed to the caller
+export type EnhancedTopBarSelectionProps = {
+  renderEnhancedNumSelectedText?: (selectedCount: number, pagesCount: number) => string;
+  renderSelectAllText?: (rowsCount: number) => string;
+  renderSelectNoneText?: () => string;
+};
 
 export interface Props<T> extends LocalizationProps {
   id?: string;
@@ -73,13 +97,15 @@ export interface Props<T> extends LocalizationProps {
   emptyTableMessage?: string;
   showCheckbox?: boolean;
   showTopBar?: boolean;
-  topBarButtons?: TopBarButton[];
+  topBarButtons?: (TopBarButton | JSX.Element)[];
   selectedRows?: T[];
   setSelectedRows?: React.Dispatch<React.SetStateAction<T[]>>;
   controlledOnSelect?: boolean;
   reloadData?: () => void;
   stickyHeader?: boolean;
   hideHeader?: boolean;
+  // Adds "select all rows across all pages" and "clear selection" to the table top bar
+  enhancedTopBarSelectionConfig?: EnhancedTopBarSelectionProps;
 }
 
 export type TopBarButton = {
@@ -89,6 +115,12 @@ export type TopBarButton = {
   icon?: IconName;
   disabled?: boolean;
   tooltipTitle?: TooltipProps['title'];
+};
+
+export const isTopBarButton = (input: unknown): input is TopBarButton => {
+  const castInput = input as TopBarButton;
+
+  return !!(castInput.buttonType && castInput.onButtonClick);
 };
 
 export default function EnhancedTable<T extends TableRowType>({
@@ -121,6 +153,7 @@ export default function EnhancedTable<T extends TableRowType>({
   editText,
   renderNumSelectedText,
   renderPaginationText,
+  enhancedTopBarSelectionConfig,
 }: Props<T>): JSX.Element {
   const classes = tableStyles();
   const theme = useTheme();
@@ -285,18 +318,38 @@ export default function EnhancedTable<T extends TableRowType>({
     }
   }
 
+  const pagesCount = Math.ceil(rows.length / maxItemsPerPage);
+
   return (
     <>
       {showTopBar && (
-        <EnhancedTableToolbar
-          numSelected={selectedRows ? selectedRows.length : 0}
+        <EnhancedTableToolbarV2
+          selectedRowsCount={selectedRows?.length || 0}
+          pagesCount={pagesCount}
           renderNumSelectedText={renderNumSelectedText}
+          rowsCount={rows.length}
           topBarButtons={topBarButtons}
+          topBarSelectionConfig={
+            enhancedTopBarSelectionConfig
+              ? {
+                  ...enhancedTopBarSelectionConfig,
+                  handleSelectAll: () => setSelectedRows && setSelectedRows(rows),
+                  handleSelectNone: () => setSelectedRows && setSelectedRows([]),
+                }
+              : undefined
+          }
         />
       )}
-      <TableContainer id={id} sx={{ overflowX: 'visible' }}>
+
+      <TableContainer id={id}>
         <DndContext sensors={sensors} onDragEnd={handleDragEnd}>
-          <Table stickyHeader={stickyHeader} aria-labelledby='tableTitle' size='medium' aria-label='enhanced table' className={classes.table}>
+          <Table
+            stickyHeader={stickyHeader}
+            aria-labelledby='tableTitle'
+            size='medium'
+            aria-label='enhanced table'
+            className={classes.table}
+          >
             {!hideHeader && (
               <TableHeader
                 order={order}
@@ -339,7 +392,9 @@ export default function EnhancedTable<T extends TableRowType>({
                               handleClick(e, row as T);
                             }
                           }}
-                          className={`${isInactive && isInactive(row as T) ? classes.inactiveRow : undefined} ${classes.tableRow}`}
+                          className={`${isInactive && isInactive(row as T) ? classes.inactiveRow : undefined} ${
+                            classes.tableRow
+                          }`}
                           selected={isItemSelected}
                           aria-checked={isItemSelected}
                         >
@@ -350,7 +405,9 @@ export default function EnhancedTable<T extends TableRowType>({
                                 sx={CheckboxStyle(theme)}
                                 color='primary'
                                 checked={isItemSelected}
-                                onClick={(e) => (!isClickable || !isClickable(row as T) ? handleClick(e, row as T) : null)}
+                                onClick={(e) =>
+                                  !isClickable || !isClickable(row as T) ? handleClick(e, row as T) : null
+                                }
                               />
                             </TableCell>
                           )}
@@ -362,7 +419,11 @@ export default function EnhancedTable<T extends TableRowType>({
                                 row={row as T}
                                 column={c}
                                 value={row[c.key]}
-                                onRowClick={onSelect && controlledOnSelect ? (newValue?: string) => onSelect(row as T, c.key, newValue) : onClick}
+                                onRowClick={
+                                  onSelect && controlledOnSelect
+                                    ? (newValue?: string) => onSelect(row as T, c.key, newValue)
+                                    : onClick
+                                }
                                 reloadData={reloadData}
                                 booleanFalseText={booleanFalseText}
                                 booleanTrueText={booleanTrueText}
@@ -400,7 +461,7 @@ export default function EnhancedTable<T extends TableRowType>({
             </Typography>
           )}
           <Pagination
-            count={Math.ceil(rows.length / maxItemsPerPage)}
+            count={pagesCount}
             page={itemsToSkip / maxItemsPerPage + 1}
             shape='rounded'
             onChange={handleChangePage}

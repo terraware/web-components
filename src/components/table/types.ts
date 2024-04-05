@@ -1,5 +1,6 @@
 import { ReactNode } from 'react';
 import { TooltipProps } from '@mui/material';
+import { TextAlignment } from '.';
 
 export interface TableColumnType {
   key: string;
@@ -7,6 +8,7 @@ export interface TableColumnType {
   type: 'string' | 'number' | 'date' | 'notes' | 'edit' | 'boolean';
   className?: string;
   tooltipTitle?: TooltipProps['title'];
+  alignment?: TextAlignment;
 }
 
 export interface RendererProps<T> {
@@ -37,7 +39,14 @@ export interface Option {
   disabled: boolean;
 }
 
-type DatabaseColumnFilterType = 'multiple_selection' | 'single_selection' | 'search' | 'date_range' | 'number_range' | 'count_weight' | 'hidden';
+type DatabaseColumnFilterType =
+  | 'multiple_selection'
+  | 'single_selection'
+  | 'search'
+  | 'date_range'
+  | 'number_range'
+  | 'count_weight'
+  | 'hidden';
 
 export interface DatabaseColumn extends Omit<TableColumnType, 'key'> {
   key: string;

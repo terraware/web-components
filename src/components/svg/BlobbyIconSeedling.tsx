@@ -75,11 +75,25 @@ const SvgBlobbyIconSeedling = ({ title, titleId, ...props }: SVGProps<SVGSVGElem
       />
     </g>
     <defs>
-      <linearGradient id='blobby-icon-seedling_svg__b' x1={134} x2={81.938} y1={98.5} y2={16.32} gradientUnits='userSpaceOnUse'>
+      <linearGradient
+        id='blobby-icon-seedling_svg__b'
+        x1={134}
+        x2={81.938}
+        y1={98.5}
+        y2={16.32}
+        gradientUnits='userSpaceOnUse'
+      >
         <stop stopColor='#F1F0EC' />
         <stop offset={1} stopColor='#84D6AC' />
       </linearGradient>
-      <linearGradient id='blobby-icon-seedling_svg__c' x1={137} x2={147} y1={93} y2={108} gradientUnits='userSpaceOnUse'>
+      <linearGradient
+        id='blobby-icon-seedling_svg__c'
+        x1={137}
+        x2={147}
+        y1={93}
+        y2={108}
+        gradientUnits='userSpaceOnUse'
+      >
         <stop stopColor='#2C8658' />
         <stop offset={1} stopColor='#ACD278' />
       </linearGradient>
@@ -91,11 +105,25 @@ const SvgBlobbyIconSeedling = ({ title, titleId, ...props }: SVGProps<SVGSVGElem
         <stop stopColor='#2C8658' />
         <stop offset={1} stopColor='#ACD278' />
       </linearGradient>
-      <linearGradient id='blobby-icon-seedling_svg__f' x1={134} x2={81.938} y1={98.5} y2={16.32} gradientUnits='userSpaceOnUse'>
+      <linearGradient
+        id='blobby-icon-seedling_svg__f'
+        x1={134}
+        x2={81.938}
+        y1={98.5}
+        y2={16.32}
+        gradientUnits='userSpaceOnUse'
+      >
         <stop stopColor='#F1F0EC' />
         <stop offset={1} stopColor='#84D6AC' />
       </linearGradient>
-      <linearGradient id='blobby-icon-seedling_svg__h' x1={81.801} x2={124.962} y1={49.5} y2={104.019} gradientUnits='userSpaceOnUse'>
+      <linearGradient
+        id='blobby-icon-seedling_svg__h'
+        x1={81.801}
+        x2={124.962}
+        y1={49.5}
+        y2={104.019}
+        gradientUnits='userSpaceOnUse'
+      >
         <stop stopColor='#2C8658' />
         <stop offset={1} stopColor='#ACD278' />
       </linearGradient>

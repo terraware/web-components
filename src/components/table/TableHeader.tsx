@@ -7,12 +7,13 @@ import TableHeaderItem from './TableHeaderItem';
 import { HeadCell } from '.';
 import { makeStyles } from '@mui/styles';
 import { CheckboxStyle } from '../Checkbox';
+import { titleCase } from '../../utils/text';
 
 const useStyles = makeStyles((theme: Theme) => ({
   headerCell: {
     '&.MuiTableCell-root': {
-      borderBottom: `2px solid ${theme.palette.TwClrBrdrSecondary}`
-    }
+      borderBottom: `2px solid ${theme.palette.TwClrBrdrSecondary}`,
+    },
   },
 }));
 
@@ -40,9 +41,10 @@ export default function EnhancedTableHead(props: Props): JSX.Element {
     return columns.map((c) => ({
       id: c.key,
       disablePadding: false,
-      label: typeof c.name === 'string' ? c.name.toUpperCase() : c.name,
       className: `${classes.headerCell} ${c.className}`,
+      label: typeof c.name === 'string' && c.name.length > 0 ? titleCase(c.name) : c.name,
       tooltipTitle: c.tooltipTitle,
+      alignment: c.alignment,
     }));
   }
 
@@ -63,7 +65,16 @@ export default function EnhancedTableHead(props: Props): JSX.Element {
         )}
         <SortableContext items={headCells}>
           {headCells.map((headCell, i) => {
-            return <TableHeaderItem headCell={headCell} order={order} orderBy={orderBy} onRequestSort={onRequestSort} i={i} key={i} />;
+            return (
+              <TableHeaderItem
+                headCell={headCell}
+                order={order}
+                orderBy={orderBy}
+                onRequestSort={onRequestSort}
+                i={i}
+                key={i}
+              />
+            );
           })}
         </SortableContext>
       </TableRow>

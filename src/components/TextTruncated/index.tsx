@@ -9,6 +9,10 @@ const useStyles = makeStyles((theme: Theme) => ({
       border: `1px solid ${theme.palette.TwClrBrdrTertiary}`,
     },
   },
+  popper: {
+    maxHeight: '200px',
+    overflow: 'auto',
+  },
   tooltip: {
     backgroundColor: `${theme.palette.TwClrBg} !important`,
     color: `${theme.palette.TwClrTxt} !important`,
@@ -80,16 +84,8 @@ export interface Props {
 }
 
 export default function TextTruncated(props: Props): JSX.Element {
-  const {
-    stringList,
-    listSeparator,
-    maxLengthPx,
-    moreSeparator,
-    moreText,
-    textStyle,
-    showAllStyle,
-    placeHolder
-  } = props;
+  const { stringList, listSeparator, maxLengthPx, moreSeparator, moreText, textStyle, showAllStyle, placeHolder } =
+    props;
   const [showAllOpen, setShowAllOpen] = useState(false);
   const classes = useStyles();
   const [canvasContext, setCanvasContext] = useState<CanvasRenderingContext2D>();
@@ -118,7 +114,8 @@ export default function TextTruncated(props: Props): JSX.Element {
   let maxExcludingSuffix = stringList.join(listSeparator).length;
   if (pixelsPerChar > 0) {
     const maxChars = maxLengthPx / pixelsPerChar;
-    maxExcludingSuffix = maxChars - moreSeparator.length - moreText.length - 1 - Math.ceil(Math.log10(stringList.length));
+    maxExcludingSuffix =
+      maxChars - moreSeparator.length - moreText.length - 1 - Math.ceil(Math.log10(stringList.length));
   }
   const textToDisplay = computeFromStringList(stringList, maxExcludingSuffix, listSeparator);
 
@@ -127,7 +124,7 @@ export default function TextTruncated(props: Props): JSX.Element {
     setShowAllOpen(!showAllOpen);
   };
 
-  return (stringList.length > 0) ? (
+  return stringList.length > 0 ? (
     <Typography sx={textStyle}>
       {textToDisplay.text}
       {textToDisplay.numberMore !== 0 ? moreSeparator : ''}
@@ -136,6 +133,7 @@ export default function TextTruncated(props: Props): JSX.Element {
           arrow={true}
           classes={{
             arrow: classes.arrow,
+            popper: classes.popper,
             tooltip: classes.tooltip,
           }}
           open={showAllOpen}
@@ -151,10 +149,14 @@ export default function TextTruncated(props: Props): JSX.Element {
             onBlur={() => setShowAllOpen(false)}
             sx={{ color: theme.palette.TwClrTxtBrand, textDecorationColor: `${theme.palette.TwClrTxtBrand}80` }}
           >
-            <Typography sx={{ ...textStyle, marginTop: '-3px' }}>{(textToDisplay.numberMore > 0 ? textToDisplay.numberMore + ' ' : '') + moreText}</Typography>
+            <Typography sx={{ ...textStyle, marginTop: '-3px' }}>
+              {(textToDisplay.numberMore > 0 ? textToDisplay.numberMore + ' ' : '') + moreText}
+            </Typography>
           </Link>
         </Tooltip>
       ) : null}
     </Typography>
-  ) : (placeHolder || (<div/>));
+  ) : (
+    placeHolder || <div />
+  );
 }

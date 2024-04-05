@@ -59,7 +59,11 @@ const SvgBlobbyIconParchment = ({ title, titleId, ...props }: SVGProps<SVGSVGEle
         />
       </mask>
       <g mask='url(#blobby-icon-parchment_svg__g)'>
-        <path fill='url(#blobby-icon-parchment_svg__h)' d='M157.851 72.897 125.974 41.02 73.907 86.058l32.419 32.419 51.525-45.58Z' opacity={0.25} />
+        <path
+          fill='url(#blobby-icon-parchment_svg__h)'
+          d='M157.851 72.897 125.974 41.02 73.907 86.058l32.419 32.419 51.525-45.58Z'
+          opacity={0.25}
+        />
       </g>
       <path
         fill='#EAF3DC'
@@ -71,11 +75,25 @@ const SvgBlobbyIconParchment = ({ title, titleId, ...props }: SVGProps<SVGSVGEle
       />
     </g>
     <defs>
-      <linearGradient id='blobby-icon-parchment_svg__b' x1={134} x2={81.938} y1={98.5} y2={16.32} gradientUnits='userSpaceOnUse'>
+      <linearGradient
+        id='blobby-icon-parchment_svg__b'
+        x1={134}
+        x2={81.938}
+        y1={98.5}
+        y2={16.32}
+        gradientUnits='userSpaceOnUse'
+      >
         <stop stopColor='#F1F0EC' />
         <stop offset={1} stopColor='#84D6AC' />
       </linearGradient>
-      <linearGradient id='blobby-icon-parchment_svg__c' x1={135} x2={145} y1={59} y2={74} gradientUnits='userSpaceOnUse'>
+      <linearGradient
+        id='blobby-icon-parchment_svg__c'
+        x1={135}
+        x2={145}
+        y1={59}
+        y2={74}
+        gradientUnits='userSpaceOnUse'
+      >
         <stop stopColor='#2C8658' />
         <stop offset={1} stopColor='#ACD278' />
       </linearGradient>
@@ -87,11 +105,25 @@ const SvgBlobbyIconParchment = ({ title, titleId, ...props }: SVGProps<SVGSVGEle
         <stop stopColor='#2C8658' />
         <stop offset={1} stopColor='#ACD278' />
       </linearGradient>
-      <linearGradient id='blobby-icon-parchment_svg__f' x1={134} x2={81.938} y1={98.5} y2={16.32} gradientUnits='userSpaceOnUse'>
+      <linearGradient
+        id='blobby-icon-parchment_svg__f'
+        x1={134}
+        x2={81.938}
+        y1={98.5}
+        y2={16.32}
+        gradientUnits='userSpaceOnUse'
+      >
         <stop stopColor='#F1F0EC' />
         <stop offset={1} stopColor='#84D6AC' />
       </linearGradient>
-      <linearGradient id='blobby-icon-parchment_svg__h' x1={96.816} x2={127.72} y1={63.953} y2={97.282} gradientUnits='userSpaceOnUse'>
+      <linearGradient
+        id='blobby-icon-parchment_svg__h'
+        x1={96.816}
+        x2={127.72}
+        y1={63.953}
+        y2={97.282}
+        gradientUnits='userSpaceOnUse'
+      >
         <stop stopColor='#2C8658' />
         <stop offset={1} stopColor='#ACD278' />
       </linearGradient>

@@ -16,7 +16,7 @@ const getDateFromString = (date: string | number, timeZoneId?: string) => {
 /**
  * Parse a date from milliseconds, with time zone implied.
  */
-const getDateFromMillis = (date: string | number , timeZoneId?: string) => {
+const getDateFromMillis = (date: string | number, timeZoneId?: string) => {
   const millis = new Date(date).getTime();
 
   return DateTime.fromMillis(millis, { zone: tz(timeZoneId) });
