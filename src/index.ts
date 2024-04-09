@@ -63,6 +63,8 @@ export type { PhotoItem } from './components/ViewPhotosDialog';
 export type { SliderMark } from './components/Slider';
 export type { Tab, TabsProps } from './components/Tabs';
 export type { ConfirmProps } from './components/Confirm';
+export type { DatePickerDateType, Props as DatePickerProps } from './components/DatePicker/DatePicker';
+export type { DateType } from './utils/date';
 
 export {
   Autocomplete,
