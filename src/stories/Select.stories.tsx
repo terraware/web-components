@@ -48,6 +48,15 @@ Default.args = {
 
 export const Editable = EditableTemplate.bind({});
 
+const editableValues = () => {
+  const values = [];
+  for (let i = 0; i < 300; i++) {
+    values.push(`test ${i+1}`);
+  }
+
+  return values;
+};
+
 Editable.args = {
   disabled: false,
   editable: true,
@@ -55,7 +64,7 @@ Editable.args = {
   fixedMenu: true,
   helperText: 'Help text.',
   label: 'Field Label',
-  options: ['test 1', 'test 2', 'test 3'],
+  options: editableValues(),
   placeholder: 'Placeholder...',
   readonly: false,
   selectedValue: 'test 2',
