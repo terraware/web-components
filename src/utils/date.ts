@@ -37,7 +37,7 @@ const getDisplayValue = (date: DateTime) => {
  * Utility that constructs a valid DateTime object from
  * any date value passed in ('2023-01-10' or millis or a utc string).
  */
-const getDate = (date: string | number, timeZoneId?: string) => {
+export const getDate = (date: string | number, timeZoneId?: string) => {
   const fromString = getDateFromString(date, timeZoneId);
   if (fromString.isValid) {
     return fromString;
