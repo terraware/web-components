@@ -295,12 +295,12 @@ export default function EnhancedTable<T extends TableRowType>({
   );
 
   const onReorderEndHandler = useCallback(
-    (indexes: IndexObject) => {
+    ({ oldIndex, newIndex }: IndexObject) => {
       if (displayColumnKeyNames) {
-        if (indexes.newIndex !== 0 && indexes.oldIndex !== 0) {
+        if (newIndex !== 0 && oldIndex !== 0) {
           const newOrder = [...displayColumnKeyNames];
-          const moved = newOrder.splice(indexes.oldIndex, 1);
-          newOrder.splice(indexes.newIndex, 0, moved[0]);
+          const moved = newOrder.splice(oldIndex, 1);
+          newOrder.splice(newIndex, 0, moved[0]);
           setDisplayColumnKeyNames(newOrder);
           if (onReorderEnd) {
             onReorderEnd(newOrder);
