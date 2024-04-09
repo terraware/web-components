@@ -76,6 +76,7 @@ export default function SelectT<T>(props: SelectTProps<T>): JSX.Element {
   });
 
   const [openedOptions, setOpenedOptions] = useState(false);
+  const [fixedMenuPositioned, setFixedMenuPositioned] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState<number>(-1);
   const inputRef = useRef<HTMLDivElement>(null);
   const dropdownRef = useRef<HTMLUListElement>(null);
@@ -141,7 +142,10 @@ export default function SelectT<T>(props: SelectTProps<T>): JSX.Element {
             dropdownRef.current.clientHeight - (dropdownBottom - windowHeightThreshold)
           }px`;
         }
+        setFixedMenuPositioned(true);
       }
+    } else if (fixedMenu) {
+      setFixedMenuPositioned(false);
     }
   }, [fixedMenu, openedOptions, hasOptions]);
 
@@ -227,7 +231,7 @@ export default function SelectT<T>(props: SelectTProps<T>): JSX.Element {
         {options && options.length > 0 && openedOptions && (
           <>
             {fixedMenu && <div className='scroll-block' />}
-            <ul className={'options-container' + (fixedMenu ? ' fixed-menu' : '')} ref={dropdownRef}>
+            <ul className={'options-container' + (fixedMenu ? ' fixed-menu' : '') + (fixedMenuPositioned ? ' positioned': '')} ref={dropdownRef}>
               {options.map((option, index) => {
                 return (
                   <li
