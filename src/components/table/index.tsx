@@ -117,6 +117,11 @@ export type TopBarButton = {
   tooltipTitle?: TooltipProps['title'];
 };
 
+type IndexObject = {
+  oldIndex: number;
+  newIndex: number;
+};
+
 export const isTopBarButton = (input: unknown): input is TopBarButton => {
   const castInput = input as TopBarButton;
 
@@ -290,12 +295,12 @@ export default function EnhancedTable<T extends TableRowType>({
   );
 
   const onReorderEndHandler = useCallback(
-    ({ oldIndex, newIndex }) => {
+    (indexes: IndexObject) => {
       if (displayColumnKeyNames) {
-        if (newIndex !== 0 && oldIndex !== 0) {
+        if (indexes.newIndex !== 0 && indexes.oldIndex !== 0) {
           const newOrder = [...displayColumnKeyNames];
-          const moved = newOrder.splice(oldIndex, 1);
-          newOrder.splice(newIndex, 0, moved[0]);
+          const moved = newOrder.splice(indexes.oldIndex, 1);
+          newOrder.splice(indexes.newIndex, 0, moved[0]);
           setDisplayColumnKeyNames(newOrder);
           if (onReorderEnd) {
             onReorderEnd(newOrder);
