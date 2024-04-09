@@ -1,43 +1,63 @@
-import moment from 'moment-timezone';
-import 'moment/min/locales';
 import React, { useState, KeyboardEventHandler } from 'react';
 import { TextField } from '@mui/material';
 import { LocalizationProvider, DesktopDatePicker } from '@mui/x-date-pickers';
-import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
+import { AdapterLuxon } from '@mui/x-date-pickers/AdapterLuxon';
+import { DateTime } from 'luxon';
 import Icon from '../Icon/Icon';
 import './styles.scss';
+import { getDate } from '../../utils/date';
+
+/**
+ * Accepted date types for input are:
+ * - luxon DateTime
+ * - string for any date string representation
+ * - number for timestamp
+ * - null for no value
+ */
+export type DateType = DateTime | string | number | null;
 
 export interface Props {
-  id: string;
-  autoFocus?: boolean;
-  label: React.ReactNode;
-  value?: string | null;
-  onChange: (value?: string | null) => void;
   'aria-label': string;
-  onKeyPress?: KeyboardEventHandler;
-  minDate?: any;
-  maxDate?: any;
+  autoFocus?: boolean;
+  className?: string;
   defaultTimeZone?: string;
-  locale?: string;
+  disabled?: boolean;
   errorText?: string;
   helperText?: string;
-  disabled?: boolean;
-  className?: string;
+  id: string;
+  label: React.ReactNode;
+  locale?: string;
+  maxDate?: DateType;
+  minDate?: DateType;
+  onChange: (value?: DateTime) => void;
   onError?: (reason: any, value: any) => void;
+  onKeyPress?: KeyboardEventHandler;
+  value?: DateType;
 }
 
+const initializeDate = (value?: DateType, defaultTimeZone?: string): DateTime | null => {
+  if (!value) {
+    return null;
+  }
+
+  if (typeof value === 'string' || typeof value === 'number') {
+    const date = getDate(value, defaultTimeZone);
+
+    return date?.isValid ? date! : null;
+  }
+
+  return value as DateTime;
+};
+
 export default function DatePicker(props: Props): JSX.Element {
-  const [temporalValue, setTemporalValue] = useState(props.value || null);
+  const [temporalValue, setTemporalValue] = useState(initializeDate(props.value, props.defaultTimeZone));
   const locale = props.locale ?? 'en';
-  React.useEffect(() => {
-    moment.locale([locale]);
-  }, [locale]);
 
   React.useEffect(() => {
     if (props.value !== temporalValue && props.value !== null) {
-      setTemporalValue(props.value || null);
+      setTemporalValue(initializeDate(props.value, props.defaultTimeZone));
     }
-  }, [props.value]);
+  }, [props.defaultTimeZone, props.value]);
 
   const renderInput = (params: object) => (
     <>
@@ -53,15 +73,12 @@ export default function DatePicker(props: Props): JSX.Element {
     </>
   );
 
-  // set timezone, defaulting to 'UTC'
-  moment.tz.setDefault(props.defaultTimeZone ?? 'UTC');
-
   // TODO: Localize the yyyy-mm-dd placeholder string that is shown to users when the input is
   //       empty. It appears to be generated programmatically deep in the guts of the MUI DatePicker
   //       code, and it most likely uses the browser's locale.
   return (
     <div className={`date-picker ${props.className} ${props.errorText ? 'date-picker--error' : ''}`}>
-      <LocalizationProvider dateAdapter={AdapterMoment} dateLibInstance={moment} adapterLocale={locale}>
+      <LocalizationProvider dateAdapter={AdapterLuxon} adapterLocale={locale}>
         {props.label && (
           <label htmlFor={props.id} className='textfield-label'>
             {props.label}
@@ -69,13 +86,13 @@ export default function DatePicker(props: Props): JSX.Element {
         )}
         <DesktopDatePicker
           onError={props.onError}
-          minDate={props.minDate ? moment(props.minDate) : undefined}
-          maxDate={props.maxDate ? moment(props.maxDate) : undefined}
-          inputFormat='YYYY-MM-DD'
+          minDate={initializeDate(props.minDate, props.defaultTimeZone) || undefined}
+          maxDate={initializeDate(props.maxDate, props.defaultTimeZone) || undefined}
+          inputFormat='yyyy-MM-dd'
           value={temporalValue}
-          onChange={(newValue: any) => {
+          onChange={(newValue: DateTime | null) => {
             setTemporalValue(newValue);
-            props.onChange(newValue?.isValid() ? newValue?.toDate() : null);
+            props.onChange(newValue && newValue.isValid ? newValue : undefined);
           }}
           renderInput={renderInput}
           disabled={props.disabled}
