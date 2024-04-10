@@ -53,7 +53,7 @@ export default function DatePicker(props: Props): JSX.Element {
   }, [props.defaultTimeZone, props.value]);
 
   /**
-   * Note: the inputProps override for placeholder is needed 
+   * Note: the inputProps override for placeholder is needed
    * with luxon since DatePicker's inputFormat as placeholder does not
    * work at least with MUI 5.x
    */
