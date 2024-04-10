@@ -2,7 +2,7 @@ import { Story as StoryBook } from '@storybook/react';
 import { Box, useTheme } from '@mui/material';
 import { action } from '@storybook/addon-actions';
 import React, { ReactElement, useState } from 'react';
-import DatePicker, { DateType, Props as DatePickerProps } from '../components/DatePicker/DatePicker';
+import DatePicker, { DatePickerDateType, Props as DatePickerProps } from '../components/DatePicker/DatePicker';
 import { DateTime } from 'luxon';
 
 export default {
@@ -20,7 +20,7 @@ const onError = (reason: any, value: any) => {
 };
 
 const Template: StoryBook<DatePickerProps> = (args) => {
-  const [value, setValue] = useState<DateType | undefined>(args.value);
+  const [value, setValue] = useState<DatePickerDateType | undefined>(args.value);
   const theme = useTheme();
 
   return (

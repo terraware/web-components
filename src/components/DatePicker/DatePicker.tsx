@@ -5,16 +5,9 @@ import { AdapterLuxon } from '@mui/x-date-pickers/AdapterLuxon';
 import { DateTime } from 'luxon';
 import Icon from '../Icon/Icon';
 import './styles.scss';
-import { getDate } from '../../utils/date';
+import { DateType, getDate } from '../../utils/date';
 
-/**
- * Accepted date types for input are:
- * - luxon DateTime
- * - string for any date string representation
- * - number for timestamp
- * - null for no value
- */
-export type DateType = DateTime | string | number | null;
+export type DatePickerDateType = Exclude<DateType, Date> | null;
 
 export interface Props {
   'aria-label': string;
@@ -27,15 +20,15 @@ export interface Props {
   id: string;
   label: React.ReactNode;
   locale?: string;
-  maxDate?: DateType;
-  minDate?: DateType;
-  onChange: (value?: DateTime) => void;
+  maxDate?: DatePickerDateType;
+  minDate?: DatePickerDateType;
+  onChange: (value?: DateTime | null) => void;
   onError?: (reason: any, value: any) => void;
   onKeyPress?: KeyboardEventHandler;
-  value?: DateType;
+  value?: DatePickerDateType;
 }
 
-const initializeDate = (value?: DateType, defaultTimeZone?: string): DateTime | null => {
+const initializeDate = (value?: DatePickerDateType, defaultTimeZone?: string): DateTime | null => {
   if (!value) {
     return null;
   }
@@ -61,7 +54,7 @@ export default function DatePicker(props: Props): JSX.Element {
 
   const renderInput = (params: object) => (
     <>
-      <TextField {...params} id={props.id} autoFocus={props.autoFocus} onKeyPress={props.onKeyPress} />
+      <TextField {...params} id={props.id} autoFocus={props.autoFocus} onKeyPress={props.onKeyPress} placeholder='yyyy-mm-dd' />
       {props.errorText && (
         <div className='textfield-error-text-container'>
           <Icon name='error' className='textfield-error-text--icon' />
@@ -92,7 +85,7 @@ export default function DatePicker(props: Props): JSX.Element {
           value={temporalValue}
           onChange={(newValue: DateTime | null) => {
             setTemporalValue(newValue);
-            props.onChange(newValue && newValue.isValid ? newValue : undefined);
+            props.onChange(newValue && newValue.isValid ? newValue : null);
           }}
           renderInput={renderInput}
           disabled={props.disabled}
