@@ -1,4 +1,14 @@
 import { DateTime } from 'luxon';
+import _ from 'lodash';
+
+/**
+ * Accepted date types for input are:
+ * - string for any date ISO string representation
+ * - number for timestamp
+ * - JS Date
+ * - luxon DateTime
+ */
+export type DateType = string | number | Date | DateTime;
 
 /**
  * Helper util that returns default time zone as a fallback.
@@ -6,17 +16,17 @@ import { DateTime } from 'luxon';
 const tz = (timeZoneId?: string) => timeZoneId || 'Etc/UTC';
 
 /**
- * Parse a date string with zone implied.
+ * Parse a date ISO string with zone implied.
  * eg. '2023-01-10 in 'America/Los_Angeles'
  */
-const getDateFromString = (date: string | number, timeZoneId?: string) => {
-  return DateTime.fromFormat(`${date} ${tz(timeZoneId)}`, 'yyyy-MM-dd z');
+const getDateFromISOString = (date: string, timeZoneId?: string) => {
+  return DateTime.fromISO(date, { zone: tz(timeZoneId) });
 };
 
 /**
  * Parse a date from milliseconds, with time zone implied.
  */
-const getDateFromMillis = (date: string | number, timeZoneId?: string) => {
+const getDateFromMillis = (date: number, timeZoneId?: string) => {
   const millis = new Date(date).getTime();
 
   return DateTime.fromMillis(millis, { zone: tz(timeZoneId) });
@@ -35,28 +45,36 @@ const getDisplayValue = (date: DateTime) => {
 
 /**
  * Utility that constructs a valid DateTime object from
- * any date value passed in ('2023-01-10' or millis or a utc string).
+ * any DateType value passed in (ISO string or epoch milliseconds or DateTime object).
+ * Note: the DateTime object input support is mostly for ease of use and will essentially be a pass-through.
  */
-export const getDate = (date: string | number, timeZoneId?: string) => {
-  const fromString = getDateFromString(date, timeZoneId);
-  if (fromString.isValid) {
-    return fromString;
+export const getDate = (date: DateType, timeZoneId?: string) => {
+  if (typeof date === 'string') {
+    const fromString = getDateFromISOString(date as string, timeZoneId);
+    if (fromString.isValid) {
+      return fromString;
+    }
   }
 
-  const millis = new Date(date).getTime();
-  const fromMillis = getDateFromMillis(date, timeZoneId);
-  if (fromMillis.isValid) {
-    return fromMillis;
+  if (typeof date === 'number') {
+    const fromMillis = getDateFromMillis(date as number, timeZoneId);
+    if (fromMillis.isValid) {
+      return fromMillis;
+    }
   }
 
-  return DateTime.fromJSDate(new Date(date), { zone: tz(timeZoneId) });
+  if (_.isDate(date)) {
+    return DateTime.fromJSDate(date as Date, { zone: tz(timeZoneId) });
+  }
+
+  return (date as DateTime).setZone(tz(timeZoneId));
 };
 
 /**
  * Default export function that provides a display value for a date
  * with optional implied time zone.
  */
-const getDateDisplayValue = (date: string | number, timeZoneId?: string) => {
+const getDateDisplayValue = (date: DateType, timeZoneId?: string) => {
   if (typeof date === 'string' && date.match(/^\d\d\d\d-\d\d-\d\d$/)) {
     // if already in display format, return as-is, do not apply time zone
     return date;
@@ -77,7 +95,7 @@ export const getTodaysDateFormatted = (timeZoneId?: string) => {
 /**
  * Checks if a date is in the future, time zone for date is optional.
  */
-export const isInTheFuture = (date: string | number, timeZoneId?: string) => {
+export const isInTheFuture = (date: DateType, timeZoneId?: string) => {
   const d = getDate(date, timeZoneId);
   if (d.isValid) {
     return d.toMillis() > Date.now();
