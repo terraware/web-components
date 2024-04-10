@@ -13,7 +13,7 @@ export type DateType = string | number | Date | DateTime;
 /**
  * Helper util that returns default time zone as a fallback.
  */
-const tz = (timeZoneId?: string) => timeZoneId || 'Etc/UTC';
+export const tz = (timeZoneId?: string) => timeZoneId || 'Etc/UTC';
 
 /**
  * Parse a date ISO string with zone implied.
@@ -37,7 +37,7 @@ const getDateFromMillis = (date: number, timeZoneId?: string) => {
  */
 const getDisplayValue = (date: DateTime) => {
   if (date.isValid) {
-    return date.toISO().split('T')[0];
+    return date.toFormat('yyyy-MM-dd');
   }
 
   return date.toString();

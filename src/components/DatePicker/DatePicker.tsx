@@ -2,10 +2,10 @@ import React, { useState, KeyboardEventHandler } from 'react';
 import { TextField, TextFieldProps } from '@mui/material';
 import { LocalizationProvider, DesktopDatePicker } from '@mui/x-date-pickers';
 import { AdapterLuxon } from '@mui/x-date-pickers/AdapterLuxon';
-import { DateTime } from 'luxon';
+import { DateTime, Settings } from 'luxon';
 import Icon from '../Icon/Icon';
 import './styles.scss';
-import { DateType, getDate } from '../../utils/date';
+import { DateType, getDate, tz } from '../../utils/date';
 
 /**
  * TODO: remove support for JS Date in DatePickerDateType once
@@ -44,29 +44,30 @@ export interface Props {
   value?: DatePickerDateType;
 }
 
-const initializeDate = (value?: DatePickerDateType, defaultTimeZone?: string): DateTime | null => {
+const initializeDate = (value?: DatePickerDateType): DateTime | null => {
   if (!value) {
     return null;
   }
 
-  const date = getDate(value, defaultTimeZone);
+  const date = getDate(value);
 
   return date?.isValid ? date! : null;
 };
 
 export default function DatePicker(props: Props): JSX.Element {
-  const [temporalValue, setTemporalValue] = useState(initializeDate(props.value, props.defaultTimeZone));
+  const [temporalValue, setTemporalValue] = useState(initializeDate(props.value));
   const locale = props.locale ?? 'en';
+  Settings.defaultZone = tz(props.defaultTimeZone);
 
   React.useEffect(() => {
     setTemporalValue((prev) => {
       if (props.value !== prev && props.value !== null) {
-        return initializeDate(props.value, props.defaultTimeZone);
+        return initializeDate(props.value);
       } else {
         return prev;
       }
     });
-  }, [props.defaultTimeZone, props.value]);
+  }, [props.value]);
 
   /**
    * Note: the inputProps override for placeholder is needed
@@ -110,8 +111,8 @@ export default function DatePicker(props: Props): JSX.Element {
         <DesktopDatePicker
           disabled={props.disabled}
           inputFormat='yyyy-MM-dd'
-          minDate={initializeDate(props.minDate, props.defaultTimeZone) || undefined}
-          maxDate={initializeDate(props.maxDate, props.defaultTimeZone) || undefined}
+          minDate={initializeDate(props.minDate) || undefined}
+          maxDate={initializeDate(props.maxDate) || undefined}
           onChange={(newValue: DateTime | null) => {
             setTemporalValue(newValue);
             // TODO: remove onChange and make onDateChange required
@@ -122,7 +123,7 @@ export default function DatePicker(props: Props): JSX.Element {
           }}
           onError={props.onError}
           renderInput={renderInput}
-          value={temporalValue ? temporalValue.toISO() : null}
+          value={temporalValue || null}
         />
       </LocalizationProvider>
     </div>
