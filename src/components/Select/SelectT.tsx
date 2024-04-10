@@ -83,7 +83,7 @@ export default function SelectT<T>(props: SelectTProps<T>): JSX.Element {
 
   const hasOptions = useMemo<boolean>(() => options !== undefined &&  options.length > 0, [options]);
 
-  const repositionMenu = useCallback(() => {
+  const repositionMenu = useCallback((checkHeight: boolean) => {
     if (openedOptions && hasOptions) {
       scrollToSelectedElement();
       if (fixedMenu && inputRef.current && dropdownRef.current) {
@@ -92,7 +92,7 @@ export default function SelectT<T>(props: SelectTProps<T>): JSX.Element {
         dropdownRef.current.style.top = `${bbox.top + bbox.height}px`;
         const dropdownBottom = dropdownRef.current.clientHeight + bbox.top + bbox.height;
         const windowHeightThreshold = window.innerHeight - bbox.height;
-        if (dropdownBottom > windowHeightThreshold) {
+        if (checkHeight && (dropdownBottom > windowHeightThreshold)) {
           dropdownRef.current.style.maxHeight = `${
             dropdownRef.current.clientHeight - (dropdownBottom - windowHeightThreshold)
           }px`;
@@ -105,7 +105,7 @@ export default function SelectT<T>(props: SelectTProps<T>): JSX.Element {
   }, [fixedMenu, openedOptions, hasOptions]);
 
   useEffect(() => {
-    repositionMenu();
+    repositionMenu(true);
   }, [repositionMenu]);
 
   useEffect(() => {
@@ -127,7 +127,7 @@ export default function SelectT<T>(props: SelectTProps<T>): JSX.Element {
   }, [options, selectedValue, selectedIndex, isEqual]);
 
   const handleScroll = useCallback(() => {
-    repositionMenu();
+    repositionMenu(false);
   }, [repositionMenu]);
 
   const handleClick = useCallback((event: any) => {
