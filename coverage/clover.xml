@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1712756129581" clover="3.2.0">
-  <project timestamp="1712756129581" name="All files">
-    <metrics statements="1538" coveredstatements="197" conditionals="1237" coveredconditionals="90" methods="561" coveredmethods="34" elements="3336" coveredelements="321" complexity="0" loc="1538" ncloc="1538" packages="39" files="203" classes="203"/>
+<coverage generated="1712778374416" clover="3.2.0">
+  <project timestamp="1712778374416" name="All files">
+    <metrics statements="1538" coveredstatements="197" conditionals="1239" coveredconditionals="90" methods="561" coveredmethods="34" elements="3338" coveredelements="321" complexity="0" loc="1538" ncloc="1538" packages="39" files="203" classes="203"/>
     <package name="src">
       <metrics statements="1" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
       <file name="index.ts" path="/home/runner/work/web-components/web-components/src/index.ts">
@@ -626,27 +626,27 @@
       </file>
     </package>
     <package name="src.components.Tabs">
-      <metrics statements="18" coveredstatements="0" conditionals="9" coveredconditionals="0" methods="6" coveredmethods="0"/>
+      <metrics statements="18" coveredstatements="0" conditionals="11" coveredconditionals="0" methods="6" coveredmethods="0"/>
       <file name="index.tsx" path="/home/runner/work/web-components/web-components/src/components/Tabs/index.tsx">
-        <metrics statements="18" coveredstatements="0" conditionals="9" coveredconditionals="0" methods="6" coveredmethods="0"/>
-        <line num="19" count="0" type="stmt"/>
-        <line num="20" count="0" type="cond" truecount="0" falsecount="3"/>
-        <line num="21" count="0" type="stmt"/>
+        <metrics statements="18" coveredstatements="0" conditionals="11" coveredconditionals="0" methods="6" coveredmethods="0"/>
         <line num="22" count="0" type="stmt"/>
+        <line num="23" count="0" type="cond" truecount="0" falsecount="3"/>
         <line num="24" count="0" type="stmt"/>
-        <line num="35" count="0" type="stmt"/>
-        <line num="41" count="0" type="stmt"/>
-        <line num="45" count="0" type="stmt"/>
-        <line num="46" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="47" count="0" type="stmt"/>
-        <line num="49" count="0" type="stmt"/>
-        <line num="53" count="0" type="stmt"/>
-        <line num="54" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="55" count="0" type="stmt"/>
-        <line num="59" count="0" type="stmt"/>
-        <line num="66" count="0" type="stmt"/>
-        <line num="76" count="0" type="stmt"/>
+        <line num="25" count="0" type="stmt"/>
+        <line num="27" count="0" type="stmt"/>
+        <line num="50" count="0" type="stmt"/>
+        <line num="56" count="0" type="stmt"/>
+        <line num="60" count="0" type="stmt"/>
+        <line num="61" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="62" count="0" type="stmt"/>
+        <line num="64" count="0" type="stmt"/>
+        <line num="68" count="0" type="stmt"/>
+        <line num="69" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="70" count="0" type="stmt"/>
+        <line num="74" count="0" type="stmt"/>
         <line num="81" count="0" type="stmt"/>
+        <line num="91" count="0" type="stmt"/>
+        <line num="103" count="0" type="stmt"/>
       </file>
     </package>
     <package name="src.components.TextTruncated">
