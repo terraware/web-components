@@ -78,17 +78,17 @@ export default function DatePicker(props: Props): JSX.Element {
           </label>
         )}
         <DesktopDatePicker
-          onError={props.onError}
+          disabled={props.disabled}
+          inputFormat='yyyy-MM-dd'
           minDate={initializeDate(props.minDate, props.defaultTimeZone) || undefined}
           maxDate={initializeDate(props.maxDate, props.defaultTimeZone) || undefined}
-          inputFormat='yyyy-MM-dd'
-          value={temporalValue}
           onChange={(newValue: DateTime | null) => {
             setTemporalValue(newValue);
             props.onChange(newValue && newValue.isValid ? newValue : null);
           }}
+          onError={props.onError}
           renderInput={renderInput}
-          disabled={props.disabled}
+          value={temporalValue}
         />
       </LocalizationProvider>
     </div>
