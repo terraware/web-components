@@ -1,5 +1,5 @@
 import React, { useState, KeyboardEventHandler } from 'react';
-import { TextField } from '@mui/material';
+import { TextField, TextFieldProps } from '@mui/material';
 import { LocalizationProvider, DesktopDatePicker } from '@mui/x-date-pickers';
 import { AdapterLuxon } from '@mui/x-date-pickers/AdapterLuxon';
 import { DateTime } from 'luxon';
@@ -52,9 +52,23 @@ export default function DatePicker(props: Props): JSX.Element {
     }
   }, [props.defaultTimeZone, props.value]);
 
-  const renderInput = (params: object) => (
+  /**
+   * Note: the inputProps override for placeholder is needed 
+   * with luxon since DatePicker's inputFormat as placeholder does not
+   * work at least with MUI 5.x
+   */
+  const renderInput = (params: TextFieldProps) => (
     <>
-      <TextField {...params} id={props.id} autoFocus={props.autoFocus} onKeyPress={props.onKeyPress} placeholder='yyyy-mm-dd' />
+      <TextField
+        {...params}
+        inputProps={{
+          ...params.inputProps,
+          placeholder: 'yyyy-mm-dd',
+        }}
+        id={props.id}
+        autoFocus={props.autoFocus}
+        onKeyPress={props.onKeyPress}
+      />
       {props.errorText && (
         <div className='textfield-error-text-container'>
           <Icon name='error' className='textfield-error-text--icon' />
