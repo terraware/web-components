@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1712704080523" clover="3.2.0">
-  <project timestamp="1712704080523" name="All files">
-    <metrics statements="1538" coveredstatements="197" conditionals="1235" coveredconditionals="90" methods="561" coveredmethods="34" elements="3334" coveredelements="321" complexity="0" loc="1538" ncloc="1538" packages="39" files="203" classes="203"/>
+<coverage generated="1712756129581" clover="3.2.0">
+  <project timestamp="1712756129581" name="All files">
+    <metrics statements="1538" coveredstatements="197" conditionals="1237" coveredconditionals="90" methods="561" coveredmethods="34" elements="3336" coveredelements="321" complexity="0" loc="1538" ncloc="1538" packages="39" files="203" classes="203"/>
     <package name="src">
       <metrics statements="1" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
       <file name="index.ts" path="/home/runner/work/web-components/web-components/src/index.ts">
@@ -506,7 +506,7 @@
       </file>
     </package>
     <package name="src.components.Select">
-      <metrics statements="90" coveredstatements="0" conditionals="79" coveredconditionals="0" methods="23" coveredmethods="0"/>
+      <metrics statements="90" coveredstatements="0" conditionals="81" coveredconditionals="0" methods="23" coveredmethods="0"/>
       <file name="Select.tsx" path="/home/runner/work/web-components/web-components/src/components/Select/Select.tsx">
         <metrics statements="4" coveredstatements="0" conditionals="2" coveredconditionals="0" methods="4" coveredmethods="0"/>
         <line num="30" count="0" type="stmt"/>
@@ -515,7 +515,7 @@
         <line num="38" count="0" type="cond" truecount="0" falsecount="2"/>
       </file>
       <file name="SelectT.tsx" path="/home/runner/work/web-components/web-components/src/components/Select/SelectT.tsx">
-        <metrics statements="86" coveredstatements="0" conditionals="77" coveredconditionals="0" methods="19" coveredmethods="0"/>
+        <metrics statements="86" coveredstatements="0" conditionals="79" coveredconditionals="0" methods="19" coveredmethods="0"/>
         <line num="63" count="0" type="stmt"/>
         <line num="65" count="0" type="stmt"/>
         <line num="73" count="0" type="stmt"/>
@@ -534,7 +534,7 @@
         <line num="92" count="0" type="stmt"/>
         <line num="93" count="0" type="stmt"/>
         <line num="94" count="0" type="stmt"/>
-        <line num="95" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="95" count="0" type="cond" truecount="0" falsecount="4"/>
         <line num="96" count="0" type="stmt"/>
         <line num="100" count="0" type="stmt"/>
         <line num="102" count="0" type="cond" truecount="0" falsecount="2"/>
