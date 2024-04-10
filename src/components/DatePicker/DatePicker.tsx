@@ -7,7 +7,13 @@ import Icon from '../Icon/Icon';
 import './styles.scss';
 import { DateType, getDate } from '../../utils/date';
 
-export type DatePickerDateType = Exclude<DateType, Date> | null;
+/**
+ * TODO: remove support for JS Date in DatePickerDateType once
+ * clients have moved to only using DateTime objects in input props
+ * and callback arguments.
+ * export type DatePickerDateType = Exclude<DateType, Date> | null;
+ */
+export type DatePickerDateType = DateType | null;
 
 export interface Props {
   'aria-label': string;
@@ -43,13 +49,9 @@ const initializeDate = (value?: DatePickerDateType, defaultTimeZone?: string): D
     return null;
   }
 
-  if (typeof value === 'string' || typeof value === 'number') {
-    const date = getDate(value, defaultTimeZone);
+  const date = getDate(value, defaultTimeZone);
 
-    return date?.isValid ? date! : null;
-  }
-
-  return value as DateTime;
+  return date?.isValid ? date! : null;
 };
 
 export default function DatePicker(props: Props): JSX.Element {
