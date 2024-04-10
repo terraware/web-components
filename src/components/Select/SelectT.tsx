@@ -1,6 +1,6 @@
 import { TooltipProps } from '@mui/material';
 import classNames from 'classnames';
-import React, { ChangeEvent, KeyboardEvent, useEffect, useMemo, useRef, useState } from 'react';
+import React, { ChangeEvent, KeyboardEvent, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import './styles.scss';
 import Icon from '../Icon/Icon';
@@ -81,6 +81,33 @@ export default function SelectT<T>(props: SelectTProps<T>): JSX.Element {
   const inputRef = useRef<HTMLDivElement>(null);
   const dropdownRef = useRef<HTMLUListElement>(null);
 
+  const hasOptions = useMemo<boolean>(() => options !== undefined &&  options.length > 0, [options]);
+
+  const repositionMenu = useCallback((checkHeight: boolean) => {
+    if (openedOptions && hasOptions) {
+      scrollToSelectedElement();
+      if (fixedMenu && inputRef.current && dropdownRef.current) {
+        dropdownRef.current.style.width = `${inputRef.current.offsetWidth}px`;
+        const bbox = inputRef.current.getBoundingClientRect();
+        dropdownRef.current.style.top = `${bbox.top + bbox.height}px`;
+        const dropdownBottom = dropdownRef.current.clientHeight + bbox.top + bbox.height;
+        const windowHeightThreshold = window.innerHeight - bbox.height;
+        if (checkHeight && (dropdownBottom > windowHeightThreshold)) {
+          dropdownRef.current.style.maxHeight = `${
+            dropdownRef.current.clientHeight - (dropdownBottom - windowHeightThreshold)
+          }px`;
+        }
+        setFixedMenuPositioned(true);
+      }
+    } else if (fixedMenu) {
+      setFixedMenuPositioned(false);
+    }
+  }, [fixedMenu, openedOptions, hasOptions]);
+
+  useEffect(() => {
+    repositionMenu(true);
+  }, [repositionMenu]);
+
   useEffect(() => {
     let newIndex = -1;
     if (options && selectedValue) {
@@ -99,17 +126,11 @@ export default function SelectT<T>(props: SelectTProps<T>): JSX.Element {
     }
   }, [options, selectedValue, selectedIndex, isEqual]);
 
-  useEffect(() => {
-    window.addEventListener('click', handleClick);
-    window.addEventListener('resize', handleResize);
+  const handleScroll = useCallback(() => {
+    repositionMenu(false);
+  }, [repositionMenu]);
 
-    return () => {
-      window.removeEventListener('click', handleClick);
-      window.removeEventListener('resize', handleResize);
-    };
-  }, []);
-
-  const handleClick = (event: any) => {
+  const handleClick = useCallback((event: any) => {
     // Don't respond to user clicks inside the input box because those are
     // already handled by toggleOptions()
     if (
@@ -120,34 +141,24 @@ export default function SelectT<T>(props: SelectTProps<T>): JSX.Element {
     ) {
       setOpenedOptions(false);
     }
-  };
+  }, []);
 
-  const handleResize = () => {
+  const handleResize = useCallback(() => {
     setOpenedOptions(false);
-  };
-
-  const hasOptions = useMemo<boolean>(() => options !== undefined &&  options.length > 0, [options]);
+  }, []);
 
   useEffect(() => {
-    if (openedOptions && hasOptions) {
-      scrollToSelectedElement();
-      if (fixedMenu && inputRef.current && dropdownRef.current) {
-        dropdownRef.current.style.width = `${inputRef.current.offsetWidth}px`;
-        const bbox = inputRef.current.getBoundingClientRect();
-        dropdownRef.current.style.top = `${bbox.top + bbox.height}px`;
-        const dropdownBottom = dropdownRef.current.clientHeight + bbox.top + bbox.height;
-        const windowHeightThreshold = window.innerHeight - bbox.height;
-        if (dropdownBottom > windowHeightThreshold) {
-          dropdownRef.current.style.maxHeight = `${
-            dropdownRef.current.clientHeight - (dropdownBottom - windowHeightThreshold)
-          }px`;
-        }
-        setFixedMenuPositioned(true);
-      }
-    } else if (fixedMenu) {
-      setFixedMenuPositioned(false);
-    }
-  }, [fixedMenu, openedOptions, hasOptions]);
+    window.addEventListener('click', handleClick);
+    window.addEventListener('resize', handleResize);
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('click', handleClick);
+      window.removeEventListener('resize', handleResize);
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [handleClick, handleResize, handleScroll]);
+
 
   const toggleOptions = () => {
     setOpenedOptions((isOpen) => !isOpen);
