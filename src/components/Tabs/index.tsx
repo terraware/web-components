@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { TabContext, TabList, TabPanel } from '@mui/lab';
-import { Box, Tab, useTheme } from '@mui/material';
+import { Box, Tab as MuiTab, useTheme } from '@mui/material';
 import { useDeviceInfo } from '../../utils';
+import Icon from '../Icon/Icon';
+import { IconName } from '../Icon/icons';
 
 export type Tab = {
+  icon?: IconName;
   id: string;
   label: string;
   children: React.ReactNode;
@@ -29,6 +32,18 @@ const Tabs = ({ tabs, onTabChange, activeTab }: TabsProps): JSX.Element => {
     '&.Mui-selected': {
       color: theme.palette.TwClrTxtBrand as string,
       fontWeight: 500,
+    },
+    '&.MuiTab-labelIcon': {
+      display: 'flex',
+      flexDirection: 'row',
+      alignItems: 'center',
+    },
+    '& .MuiTab-iconWrapper': {
+      marginBottom: 0,
+      marginRight: theme.spacing(1),
+    },
+    '&.Mui-selected .MuiTab-iconWrapper': {
+      fill: theme.palette.TwClrTxtBrand as string,
     },
   };
 
@@ -73,7 +88,14 @@ const Tabs = ({ tabs, onTabChange, activeTab }: TabsProps): JSX.Element => {
             }}
           >
             {tabs.map((tab, index) => (
-              <Tab label={tab.label} value={tab.id} sx={tabStyles} key={index} disabled={tab.disabled} />
+              <MuiTab
+                icon={tab.icon ? <Icon name={tab.icon} /> : undefined}
+                label={tab.label}
+                value={tab.id}
+                sx={tabStyles}
+                key={index}
+                disabled={tab.disabled}
+              />
             ))}
           </TabList>
         </Box>
