@@ -123,7 +123,7 @@ export default function DatePicker(props: Props): JSX.Element {
           }}
           onError={props.onError}
           renderInput={renderInput}
-          value={temporalValue || null}
+          value={temporalValue ? temporalValue.toISO() : null}
         />
       </LocalizationProvider>
     </div>
