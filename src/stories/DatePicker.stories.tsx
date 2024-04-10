@@ -30,6 +30,9 @@ const Template: StoryBook<DatePickerProps> = (args) => {
         value={value}
         onChange={(v) => {
           action('onChange')(v);
+        }}
+        onDateChange={(v) => {
+          action('onDateChange')(v);
           setValue(v);
         }}
         onError={onError}

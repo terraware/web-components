@@ -22,7 +22,17 @@ export interface Props {
   locale?: string;
   maxDate?: DatePickerDateType;
   minDate?: DatePickerDateType;
-  onChange: (value?: DateTime | null) => void;
+  /**
+   * @deprecated Use onDateChange and switch to
+   *  handling luxon DateTime arguments.
+   */
+  onChange: (value?: Date | null) => void;
+  /**
+   * TODO: remove deprecated onChange and
+   * make onDateChange required once all clients
+   * have migrated to using onDateChange.
+   */
+  onDateChange?: (value?: DateTime) => void;
   onError?: (reason: any, value: any) => void;
   onKeyPress?: KeyboardEventHandler;
   value?: DatePickerDateType;
@@ -98,7 +108,11 @@ export default function DatePicker(props: Props): JSX.Element {
           maxDate={initializeDate(props.maxDate, props.defaultTimeZone) || undefined}
           onChange={(newValue: DateTime | null) => {
             setTemporalValue(newValue);
-            props.onChange(newValue && newValue.isValid ? newValue : null);
+            // TODO: remove onChange and make onDateChange required
+            props.onChange(newValue && newValue.isValid ? newValue.toJSDate() : null);
+            if (props.onDateChange) {
+              props.onDateChange(newValue && newValue.isValid ? newValue : undefined);
+            }
           }}
           onError={props.onError}
           renderInput={renderInput}
