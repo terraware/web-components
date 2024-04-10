@@ -37,7 +37,7 @@ const getDateFromMillis = (date: number, timeZoneId?: string) => {
  */
 const getDisplayValue = (date: DateTime) => {
   if (date.isValid) {
-    return date.toFormat('yyyy-MM-dd');
+    return date.toISO().split('T')[0];
   }
 
   return date.toString();

@@ -14,7 +14,6 @@
   "private": false,
   "main": "dist/index.js",
   "dependencies": {
-    "@date-io/date-fns": "^3.0.0",
     "@date-io/luxon": "^3.0.0",
     "@dnd-kit/core": "^6.0.7",
     "@dnd-kit/sortable": "^7.0.2",
@@ -26,7 +25,6 @@
     "@mui/styles": "^5.15.3",
     "@mui/x-date-pickers": "^5.0.20",
     "classnames": "^2.3.2",
-    "date-fns": "^3.6.0",
     "luxon": "^3.3.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",

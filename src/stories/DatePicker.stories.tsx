@@ -74,7 +74,7 @@ export const YYMMDDInitializedDate = Template.bind({});
 
 YYMMDDInitializedDate.args = {
   autoFocus: false,
-  defaultTimeZone: undefined,
+  defaultTimeZone: 'Asia/Omsk',
   errorText: '',
   helperText: '',
   id: '1',
@@ -82,7 +82,7 @@ YYMMDDInitializedDate.args = {
   locale: undefined,
   maxDate: new Date(),
   minDate: undefined,
-  value: '2024-04-09',
+  value: '2024-04-10',
 };
 
 export const NumericValueInitializedDate = Template.bind({});

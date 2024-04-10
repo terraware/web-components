@@ -59,9 +59,13 @@ export default function DatePicker(props: Props): JSX.Element {
   const locale = props.locale ?? 'en';
 
   React.useEffect(() => {
-    if (props.value !== temporalValue && props.value !== null) {
-      setTemporalValue(initializeDate(props.value, props.defaultTimeZone));
-    }
+    setTemporalValue((prev) => {
+      if (props.value !== prev && props.value !== null) {
+        return initializeDate(props.value, props.defaultTimeZone);
+      } else {
+        return prev;
+      }
+    });
   }, [props.defaultTimeZone, props.value]);
 
   /**
@@ -118,7 +122,7 @@ export default function DatePicker(props: Props): JSX.Element {
           }}
           onError={props.onError}
           renderInput={renderInput}
-          value={temporalValue}
+          value={temporalValue ? temporalValue.toISO() : null}
         />
       </LocalizationProvider>
     </div>
