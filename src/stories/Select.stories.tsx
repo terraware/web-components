@@ -1,6 +1,6 @@
 import { Story } from '@storybook/react';
 import React from 'react';
-import { Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import Select, { SelectProps } from '../components/Select/Select';
 import SelectT, { SelectTProps } from '../components/Select/SelectT';
 
@@ -28,7 +28,16 @@ const EditableTemplate: Story<SelectProps> = (args) => {
     setOptions((args.options ?? []).filter((opt) => !!opt.match(str)));
   };
 
-  return <Select {...args} onChange={handleChange} selectedValue={value} options={options} />;
+  // the Box hierarchy below is mostly to enable scrolling and test fixedMenu with scrolled content
+  return (
+    <Box border='1px solid black' height='400px' width='500px' marginTop='50px' overflow='auto'>
+      <Box height='1000px'>
+        <Box width='200px' margin='0 auto'>
+          <Select {...args} onChange={handleChange} selectedValue={value} options={options} />
+        </Box>
+      </Box>
+    </Box>
+  );
 };
 
 export const Default = Template.bind({});
