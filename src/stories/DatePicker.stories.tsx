@@ -80,7 +80,7 @@ YYMMDDInitializedDate.args = {
   id: '1',
   label: 'Datepicker',
   locale: undefined,
-  maxDate: Date.now(),
+  maxDate: new Date(),
   minDate: undefined,
   value: '2024-04-09',
 };
