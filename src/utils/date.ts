@@ -63,8 +63,8 @@ export const getDate = (date: DateType, timeZoneId?: string) => {
     }
   }
 
-  if (_.isDate(date)) {
-    return DateTime.fromJSDate(date as Date, { zone: tz(timeZoneId) });
+  if (_.isDate(date) || typeof date === 'string' || typeof date === 'number') {
+    return DateTime.fromJSDate(new Date(date), { zone: tz(timeZoneId) });
   }
 
   return (date as DateTime).setZone(tz(timeZoneId));
