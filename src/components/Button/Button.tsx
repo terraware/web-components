@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { CSSProperties } from 'react';
 import Icon from '../Icon/Icon';
 import { IconName } from '../Icon/icons';
 import { Size } from '../Size';
@@ -29,6 +29,7 @@ export interface Props {
   processing?: boolean;
   id?: string;
   className?: string;
+  style?: CSSProperties;
 }
 
 export default function Button(props: Props): JSX.Element {
@@ -44,6 +45,7 @@ export default function Button(props: Props): JSX.Element {
     processing,
     id,
     className,
+    style,
   } = props;
   const classes = useStyles();
 
@@ -56,6 +58,7 @@ export default function Button(props: Props): JSX.Element {
       } ${rightIcon && !processing ? 'button-with-right-icon' : ''} ${classes.svgIconFill}
       ${!label ? 'button-no-label' : ''} ${className ?? ''}`}
       disabled={disabled}
+      style={style}
     >
       {processing && <Icon name='spinner' size={size} className='icon-spinner' />}
       {!processing && icon && <Icon name={icon} size={size} />}
