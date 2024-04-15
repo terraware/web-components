@@ -2,28 +2,29 @@ import { TooltipProps } from '@mui/material';
 import React from 'react';
 
 import './styles.scss';
-import SelectT from './SelectT';
+import SelectT, { SelectStyles } from './SelectT';
 
 export interface SelectProps {
-  onChange: (newValue: string) => void;
-  label?: string;
-  disabled?: boolean;
-  id?: string;
   className?: string;
-  helperText?: string | string[];
-  placeholder?: string;
+  disabled?: boolean;
   errorText?: string | string[];
-  warningText?: string | string[];
-  selectedValue?: string;
-  readonly?: boolean;
-  options?: string[];
-  fullWidth?: boolean;
-  hideArrow?: boolean;
-  onBlur?: () => void;
-  onFocus?: () => void;
-  fixedMenu?: boolean;
-  tooltipTitle?: TooltipProps['title'];
   editable?: boolean;
+  fixedMenu?: boolean;
+  fullWidth?: boolean;
+  helperText?: string | string[];
+  hideArrow?: boolean;
+  id?: string;
+  label?: string;
+  onBlur?: () => void;
+  onChange: (newValue: string) => void;
+  onFocus?: () => void;
+  options?: string[];
+  placeholder?: string;
+  readonly?: boolean;
+  selectedValue?: string;
+  selectStyles?: SelectStyles;
+  tooltipTitle?: TooltipProps['title'];
+  warningText?: string | string[];
 }
 
 export default function Select(props: SelectProps): JSX.Element {

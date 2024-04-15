@@ -60,7 +60,7 @@ export const Editable = EditableTemplate.bind({});
 const editableValues = () => {
   const values = [];
   for (let i = 0; i < 300; i++) {
-    values.push(`test ${i+1}`);
+    values.push(`test ${i + 1}`);
   }
 
   return values;
@@ -158,4 +158,28 @@ ComplexSelect.args = {
     age: 8,
   },
   tooltipTitle: 'Hello world!',
+};
+
+export const Styled = Template.bind({});
+
+Styled.args = {
+  disabled: false,
+  errorText: '',
+  fixedMenu: true,
+  helperText: '',
+  label: '',
+  options: ['test 1', 'test 2', 'test 3'],
+  placeholder: 'Placeholder...',
+  readonly: false,
+  selectedValue: 'test 2',
+  warningText: '',
+  selectStyles: {
+    container: {},
+    inputContainer: {
+      border: 0,
+    },
+    optionsContainer: {
+      border: 0,
+    },
+  },
 };

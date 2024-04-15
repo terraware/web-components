@@ -1,6 +1,6 @@
 import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, TooltipProps } from '@mui/material';
 import { DropdownItem } from './types';
-import SelectT from './Select/SelectT';
+import SelectT, { SelectStyles } from './Select/SelectT';
 import Autocomplete, { ValueType } from './Autocomplete/Autocomplete';
 import { makeStyles } from '@mui/styles';
 import React from 'react';
@@ -61,6 +61,7 @@ export interface DropdownProps {
   onBlur?: () => void;
   onFocus?: () => void;
   fixedMenu?: boolean;
+  selectStyles?: SelectStyles;
 
   // auto complete props
   freeSolo?: boolean;
@@ -87,7 +88,7 @@ export default function Dropdown(props: DropdownProps): JSX.Element {
 
   const selectedItem = options?.find((option) => option.value === selectedValue);
 
-  const renderOption = (option: DropdownItem) : React.ReactNode => {
+  const renderOption = (option: DropdownItem): React.ReactNode => {
     const styles = {
       fontWeight: option.fontWeight || 'normal',
       fontStyle: option.fontStyle || 'normal',
