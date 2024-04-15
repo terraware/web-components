@@ -174,6 +174,14 @@ Styled.args = {
   selectedValue: 'test 2',
   warningText: '',
   selectStyles: {
+    arrow: {
+      height: '32px',
+    },
+    input: {
+      fontSize: '24px',
+      fontWeight: '600',
+      lineHeight: '32px',
+    },
     inputContainer: {
       border: 0,
     },

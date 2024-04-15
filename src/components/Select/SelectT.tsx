@@ -9,6 +9,8 @@ import { isWhitespaces } from '../../utils';
 
 // Styles for overriding select dropdown
 export interface SelectStyles {
+  arrow?: Record<string, any>;
+  input?: Record<string, any>;
   inputContainer?: Record<string, any>;
   optionsContainer?: Record<string, any>;
 }
@@ -252,8 +254,11 @@ export default function SelectT<T>(props: SelectTProps<T>): JSX.Element {
             onBlur={onBlur}
             onFocus={onFocus}
             required={required}
+            style={(selectStyles || {}).input}
           />
-          {!hideArrow && <Icon name={'chevronDown'} className='textfield-value--icon-right' />}
+          {!hideArrow && (
+            <Icon name={'chevronDown'} className='textfield-value--icon-right' style={(selectStyles || {}).arrow} />
+          )}
         </div>
         {options && options.length > 0 && openedOptions && (
           <>

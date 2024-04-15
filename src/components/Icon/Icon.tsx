@@ -17,15 +17,21 @@ const useStyles = makeStyles(() => ({
 }));
 
 export interface Props {
-  name: IconName;
-  size?: Size;
   className?: string;
   fillColor?: string;
+  name: IconName;
+  size?: Size;
+  style?: Record<string, unknown>;
 }
 
-export default function Icon({ size = 'small', name, className, fillColor }: Props): JSX.Element {
+export default function Icon({ size = 'small', name, className, fillColor, style }: Props): JSX.Element {
   const classes = useStyles({ fillColor });
   const SVGComponent = icons[name];
 
-  return <SVGComponent className={`tw-icon tw-icon--${size} ${className ?? ''} ${fillColor ? classes.icon : ''}`} />;
+  return (
+    <SVGComponent
+      className={`tw-icon tw-icon--${size} ${className ?? ''} ${fillColor ? classes.icon : ''}`}
+      style={style}
+    />
+  );
 }
