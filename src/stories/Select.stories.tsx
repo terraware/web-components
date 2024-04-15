@@ -174,7 +174,6 @@ Styled.args = {
   selectedValue: 'test 2',
   warningText: '',
   selectStyles: {
-    container: {},
     inputContainer: {
       border: 0,
     },
