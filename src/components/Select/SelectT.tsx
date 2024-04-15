@@ -12,6 +12,7 @@ export interface SelectStyles {
   arrow?: Record<string, any>;
   input?: Record<string, any>;
   inputContainer?: Record<string, any>;
+  optionContainer?: Record<string, any>;
   optionsContainer?: Record<string, any>;
 }
 
@@ -278,6 +279,7 @@ export default function SelectT<T>(props: SelectTProps<T>): JSX.Element {
                     key={index}
                     onClick={() => (!readonly ? onOptionSelected(option, index) : undefined)}
                     className={`${itemClass} ${selectedIndex === index ? 'select-value--selected' : ''} `}
+                    style={(selectStyles || {}).optionContainer}
                   >
                     {renderOption(option)}
                   </li>
