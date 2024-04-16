@@ -17,10 +17,10 @@ const useStyles = makeStyles(() => ({
 }));
 
 export interface Props {
-  name: IconName;
-  size?: Size;
   className?: string;
   fillColor?: string;
+  name: IconName;
+  size?: Size;
   style?: CSSProperties;
 }
 

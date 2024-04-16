@@ -7,59 +7,70 @@ import Icon from '../Icon/Icon';
 import IconTooltip from '../IconTooltip';
 import { isWhitespaces } from '../../utils';
 
+// Styles for overriding select dropdown
+export interface SelectStyles {
+  arrow?: Record<string, any>;
+  input?: Record<string, any>;
+  inputContainer?: Record<string, any>;
+  optionContainer?: Record<string, any>;
+  optionsContainer?: Record<string, any>;
+}
+
 export interface SelectTProps<T> {
-  onChange: (newValue: T) => void;
-  label?: string;
-  disabled?: boolean;
-  id?: string;
   className?: string;
-  helperText?: string | string[];
-  placeholder?: string;
-  errorText?: string | string[];
-  warningText?: string | string[];
-  selectedValue?: T;
-  readonly?: boolean;
-  options?: T[];
-  fullWidth?: boolean;
-  hideArrow?: boolean;
-  onBlur?: () => void;
-  onFocus?: () => void;
-  fixedMenu?: boolean;
-  isEqual: (A: T, B: T) => boolean;
-  renderOption: (option: T) => React.ReactNode;
-  toT: (input: string) => T;
+  disabled?: boolean;
   displayLabel: (option: any) => string;
-  tooltipTitle?: TooltipProps['title'];
   editable?: boolean;
+  errorText?: string | string[];
+  fixedMenu?: boolean;
+  fullWidth?: boolean;
+  helperText?: string | string[];
+  hideArrow?: boolean;
+  id?: string;
+  isEqual: (A: T, B: T) => boolean;
+  label?: string;
+  onBlur?: () => void;
+  onChange: (newValue: T) => void;
+  onFocus?: () => void;
+  options?: T[];
+  placeholder?: string;
+  readonly?: boolean;
+  renderOption: (option: T) => React.ReactNode;
   required?: boolean;
+  selectedValue?: T;
+  selectStyles?: SelectStyles;
+  toT: (input: string) => T;
+  tooltipTitle?: TooltipProps['title'];
+  warningText?: string | string[];
 }
 
 export default function SelectT<T>(props: SelectTProps<T>): JSX.Element {
   const {
-    selectedValue,
-    onChange,
-    label,
-    disabled,
-    id,
     className,
-    helperText,
-    placeholder,
-    errorText,
-    warningText,
-    readonly,
-    options,
-    fullWidth,
-    hideArrow,
-    onBlur,
-    onFocus,
-    fixedMenu,
-    isEqual,
-    renderOption,
-    toT,
+    disabled,
     displayLabel,
-    tooltipTitle,
     editable,
+    errorText,
+    fixedMenu,
+    fullWidth,
+    helperText,
+    hideArrow,
+    id,
+    isEqual,
+    label,
+    onBlur,
+    onChange,
+    onFocus,
+    options,
+    placeholder,
+    readonly,
+    renderOption,
     required,
+    selectedValue,
+    selectStyles,
+    tooltipTitle,
+    toT,
+    warningText,
   } = props;
 
   const selectClass = classNames({
@@ -81,28 +92,31 @@ export default function SelectT<T>(props: SelectTProps<T>): JSX.Element {
   const inputRef = useRef<HTMLDivElement>(null);
   const dropdownRef = useRef<HTMLUListElement>(null);
 
-  const hasOptions = useMemo<boolean>(() => options !== undefined &&  options.length > 0, [options]);
+  const hasOptions = useMemo<boolean>(() => options !== undefined && options.length > 0, [options]);
 
-  const repositionMenu = useCallback((checkHeight: boolean) => {
-    if (openedOptions && hasOptions) {
-      scrollToSelectedElement();
-      if (fixedMenu && inputRef.current && dropdownRef.current) {
-        dropdownRef.current.style.width = `${inputRef.current.offsetWidth}px`;
-        const bbox = inputRef.current.getBoundingClientRect();
-        dropdownRef.current.style.top = `${bbox.top + bbox.height}px`;
-        const dropdownBottom = dropdownRef.current.clientHeight + bbox.top + bbox.height;
-        const windowHeightThreshold = window.innerHeight - bbox.height;
-        if (checkHeight && (dropdownBottom > windowHeightThreshold)) {
-          dropdownRef.current.style.maxHeight = `${
-            dropdownRef.current.clientHeight - (dropdownBottom - windowHeightThreshold)
-          }px`;
+  const repositionMenu = useCallback(
+    (checkHeight: boolean) => {
+      if (openedOptions && hasOptions) {
+        scrollToSelectedElement();
+        if (fixedMenu && inputRef.current && dropdownRef.current) {
+          dropdownRef.current.style.width = `${inputRef.current.offsetWidth}px`;
+          const bbox = inputRef.current.getBoundingClientRect();
+          dropdownRef.current.style.top = `${bbox.top + bbox.height}px`;
+          const dropdownBottom = dropdownRef.current.clientHeight + bbox.top + bbox.height;
+          const windowHeightThreshold = window.innerHeight - bbox.height;
+          if (checkHeight && dropdownBottom > windowHeightThreshold) {
+            dropdownRef.current.style.maxHeight = `${
+              dropdownRef.current.clientHeight - (dropdownBottom - windowHeightThreshold)
+            }px`;
+          }
+          setFixedMenuPositioned(true);
         }
-        setFixedMenuPositioned(true);
+      } else if (fixedMenu) {
+        setFixedMenuPositioned(false);
       }
-    } else if (fixedMenu) {
-      setFixedMenuPositioned(false);
-    }
-  }, [fixedMenu, openedOptions, hasOptions]);
+    },
+    [fixedMenu, openedOptions, hasOptions]
+  );
 
   useEffect(() => {
     repositionMenu(true);
@@ -158,7 +172,6 @@ export default function SelectT<T>(props: SelectTProps<T>): JSX.Element {
       window.removeEventListener('scroll', handleScroll);
     };
   }, [handleClick, handleResize, handleScroll]);
-
 
   const toggleOptions = () => {
     setOpenedOptions((isOpen) => !isOpen);
@@ -226,7 +239,13 @@ export default function SelectT<T>(props: SelectTProps<T>): JSX.Element {
         </label>
       )}
       <div className={`textfield-container ${fullWidth ? 'textfield-container--fullWidth' : ''}`}>
-        <div id={id} className={selectClass} onClick={toggleOptions} ref={inputRef}>
+        <div
+          id={id}
+          className={selectClass}
+          onClick={toggleOptions}
+          ref={inputRef}
+          style={(selectStyles || {}).inputContainer}
+        >
           <input
             value={displayLabel(selectedValue)}
             readOnly={!editable || readonly}
@@ -236,13 +255,22 @@ export default function SelectT<T>(props: SelectTProps<T>): JSX.Element {
             onBlur={onBlur}
             onFocus={onFocus}
             required={required}
+            style={(selectStyles || {}).input}
           />
-          {!hideArrow && <Icon name={'chevronDown'} className='textfield-value--icon-right' />}
+          {!hideArrow && (
+            <Icon name={'chevronDown'} className='textfield-value--icon-right' style={(selectStyles || {}).arrow} />
+          )}
         </div>
         {options && options.length > 0 && openedOptions && (
           <>
             {fixedMenu && <div className='scroll-block' />}
-            <ul className={'options-container' + (fixedMenu ? ' fixed-menu' : '') + (fixedMenuPositioned ? ' positioned': '')} ref={dropdownRef}>
+            <ul
+              className={
+                'options-container' + (fixedMenu ? ' fixed-menu' : '') + (fixedMenuPositioned ? ' positioned' : '')
+              }
+              ref={dropdownRef}
+              style={(selectStyles || {}).optionsContainer}
+            >
               {options.map((option, index) => {
                 return (
                   <li
@@ -251,6 +279,7 @@ export default function SelectT<T>(props: SelectTProps<T>): JSX.Element {
                     key={index}
                     onClick={() => (!readonly ? onOptionSelected(option, index) : undefined)}
                     className={`${itemClass} ${selectedIndex === index ? 'select-value--selected' : ''} `}
+                    style={(selectStyles || {}).optionContainer}
                   >
                     {renderOption(option)}
                   </li>
