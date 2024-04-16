@@ -44,30 +44,30 @@ export interface Props {
   value?: DatePickerDateType;
 }
 
-const initializeDate = (value?: DatePickerDateType): DateTime | null => {
+const initializeDate = (value?: DatePickerDateType, timeZoneId?: string): DateTime | null => {
   if (!value) {
     return null;
   }
 
-  const date = getDate(value);
+  const date = getDate(value, timeZoneId);
 
   return date?.isValid ? date! : null;
 };
 
 export default function DatePicker(props: Props): JSX.Element {
-  const [temporalValue, setTemporalValue] = useState(initializeDate(props.value));
+  const [temporalValue, setTemporalValue] = useState<DateTime | null>(initializeDate(props.value, props.defaultTimeZone));
   const locale = props.locale ?? 'en';
   Settings.defaultZone = tz(props.defaultTimeZone);
 
   React.useEffect(() => {
     setTemporalValue((prev) => {
-      if (props.value !== prev && props.value !== null) {
-        return initializeDate(props.value);
+      if (props.value !== prev) {
+        return initializeDate(props.value, props.defaultTimeZone);
       } else {
         return prev;
       }
     });
-  }, [props.value]);
+  }, [props.defaultTimeZone, props.value]);
 
   /**
    * Note: the inputProps override for placeholder is needed
@@ -111,8 +111,8 @@ export default function DatePicker(props: Props): JSX.Element {
         <DesktopDatePicker
           disabled={props.disabled}
           inputFormat='yyyy-MM-dd'
-          minDate={initializeDate(props.minDate) || undefined}
-          maxDate={initializeDate(props.maxDate) || undefined}
+          minDate={initializeDate(props.minDate, props.defaultTimeZone) || undefined}
+          maxDate={initializeDate(props.maxDate, props.defaultTimeZone) || undefined}
           onChange={(newValue: DateTime | null) => {
             setTemporalValue(newValue);
             // TODO: remove onChange and make onDateChange required
@@ -123,7 +123,7 @@ export default function DatePicker(props: Props): JSX.Element {
           }}
           onError={props.onError}
           renderInput={renderInput}
-          value={temporalValue ? temporalValue.toISO() : null}
+          value={temporalValue}
         />
       </LocalizationProvider>
     </div>
