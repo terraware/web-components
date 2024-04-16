@@ -32,7 +32,7 @@ export interface Props {
    * @deprecated Use onDateChange and switch to
    *  handling luxon DateTime arguments.
    */
-  onChange: (value?: Date | null) => void;
+  onChange?: (value?: Date | null) => void;
   /**
    * TODO: remove deprecated onChange and
    * make onDateChange required once all clients
@@ -116,7 +116,9 @@ export default function DatePicker(props: Props): JSX.Element {
           onChange={(newValue: DateTime | null) => {
             setTemporalValue(newValue);
             // TODO: remove onChange and make onDateChange required
-            props.onChange(newValue && newValue.isValid ? newValue.toJSDate() : null);
+            if (props.onChange) {
+              props.onChange(newValue && newValue.isValid ? newValue.toJSDate() : null);
+            }
             if (props.onDateChange) {
               props.onDateChange(newValue && newValue.isValid ? newValue : undefined);
             }
