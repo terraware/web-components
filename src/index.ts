@@ -7,6 +7,7 @@ import Badge from './components/Badge';
 import BusySpinner from './components/BusySpinner';
 import Button from './components/Button/Button';
 import Checkbox from './components/Checkbox';
+import Confirm from './components/Confirm';
 import DatePicker from './components/DatePicker/DatePicker';
 import DialogBox from './components/DialogBox/DialogBox';
 import Divisor from './components/Divisor';
@@ -24,6 +25,7 @@ import NavSection from './components/Navbar/NavSection';
 import Note from './components/Note';
 import PageForm from './components/PageForm';
 import PhotoChooser from './components/PhotoChooser';
+import FileChooser from './components/FileChooser';
 import Pill from './components/Pill';
 import PillList from './components/PillList';
 import Popover from './components/PopoverMenu/Popover';
@@ -56,9 +58,13 @@ export type { DropdownItem } from './components/types';
 export type { EnhancedTableDetailsRow, RendererProps, TableColumnType, TableRowType, SortOrder };
 export type { FormButton } from './components/FormBottomBar';
 export type { PhotoChooserErrorType, PhotoChooserProps } from './components/PhotoChooser';
+export type { FileChooserProps } from './components/FileChooser';
 export type { PhotoItem } from './components/ViewPhotosDialog';
 export type { SliderMark } from './components/Slider';
 export type { Tab, TabsProps } from './components/Tabs';
+export type { ConfirmProps } from './components/Confirm';
+export type { DatePickerDateType, Props as DatePickerProps } from './components/DatePicker/DatePicker';
+export type { DateType } from './utils/date';
 
 export {
   Autocomplete,
@@ -68,6 +74,7 @@ export {
   CellRenderer,
   CellDateRenderer,
   Checkbox,
+  Confirm,
   DatePicker,
   descendingComparator,
   DialogBox,
@@ -75,6 +82,7 @@ export {
   Dropdown,
   DropdownV1,
   ErrorBox,
+  FileChooser,
   FormBottomBar,
   getComparator,
   icons,

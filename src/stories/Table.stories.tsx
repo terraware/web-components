@@ -42,7 +42,14 @@ const Template: Story<Omit<TableProps<{ name: string; lastname: string }>, 'rows
       .fill({ name: '', middlename: '', lastname: '', occupation: '' })
       .map((i, j) => {
         if (j % 2 === 0) {
-          return { name: `Constanza_${j}`, middlename: '', lastname: 'Uanini', occupation: 'Artist', date: '2023-02-03', pets: 5 };
+          return {
+            name: `Constanza_${j}`,
+            middlename: '',
+            lastname: 'Uanini',
+            occupation: 'Artist',
+            date: '2023-02-03',
+            pets: 5,
+          };
         } else if (j % 3 === 0) {
           return {
             name: `Carlos_${j}`,
@@ -62,6 +69,7 @@ const Template: Story<Omit<TableProps<{ name: string; lastname: string }>, 'rows
             available: true,
             date: '2023-04-27',
             pets: 12,
+            previousStudies: 'natural Sciences, social Sciences',
           };
         }
       });
@@ -94,7 +102,8 @@ const Template: Story<Omit<TableProps<{ name: string; lastname: string }>, 'rows
             buttonText: 'Tooltip',
             onButtonClick: () => window.alert('you should not see this either'),
             disabled: true,
-            tooltipTitle: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+            tooltipTitle:
+              'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
           },
         ]}
       />
@@ -116,8 +125,9 @@ Default.args = {
     { key: 'lastname', name: 'Lastname', type: 'string' },
     { key: 'occupation', name: 'Occupation', type: 'string' },
     { key: 'available', name: 'Available', type: 'boolean' },
-    { key: 'date', name: 'Date', type: 'string' },
-    { key: 'pets', name: 'Pets', type: 'string' },
+    { key: 'previousStudies', name: 'Previous Studies', type: 'string', alignment: 'right' },
+    { key: 'date', name: 'Date', type: 'string', tooltipTitle: 'Right aligend with tooltip', alignment: 'right' },
+    { key: 'pets', name: 'Pets', type: 'string', alignment: 'right' },
   ],
   rowCount: 150,
   showTopBar: false,

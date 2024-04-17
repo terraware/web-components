@@ -59,7 +59,11 @@ const SvgBlobbyIconSite = ({ title, titleId, ...props }: SVGProps<SVGSVGElement>
         />
       </mask>
       <g mask='url(#blobby-icon-site_svg__g)'>
-        <path fill='url(#blobby-icon-site_svg__h)' d='m146.963 80.963-33.638-33.638L94.5 74.5 77.5 88l27.5 27.5 41.963-34.537Z' opacity={0.25} />
+        <path
+          fill='url(#blobby-icon-site_svg__h)'
+          d='m146.963 80.963-33.638-33.638L94.5 74.5 77.5 88l27.5 27.5 41.963-34.537Z'
+          opacity={0.25}
+        />
       </g>
       <path
         fill='#EAF3DC'
@@ -95,7 +99,14 @@ const SvgBlobbyIconSite = ({ title, titleId, ...props }: SVGProps<SVGSVGElement>
         <stop stopColor='#F1F0EC' />
         <stop offset={1} stopColor='#84D6AC' />
       </linearGradient>
-      <linearGradient id='blobby-icon-site_svg__h' x1={94.5} x2={126.628} y1={70.114} y2={100.721} gradientUnits='userSpaceOnUse'>
+      <linearGradient
+        id='blobby-icon-site_svg__h'
+        x1={94.5}
+        x2={126.628}
+        y1={70.114}
+        y2={100.721}
+        gradientUnits='userSpaceOnUse'
+      >
         <stop stopColor='#2C8658' />
         <stop offset={1} stopColor='#ACD278' />
       </linearGradient>

@@ -15,7 +15,7 @@ export type PopoverMultiSelectProps = {
 };
 
 export default function PopoverMultiSelect(props: PopoverMultiSelectProps): JSX.Element {
-  const { anchorElement, initialSelection, menuAlign, onChange, sections, setAnchorElement} = props;
+  const { anchorElement, initialSelection, menuAlign, onChange, sections, setAnchorElement } = props;
   const [selection, setSelection] = useState(initialSelection);
   const addToSelection = (value: DropdownItem) => {
     const newSelection = [...selection];
@@ -31,32 +31,33 @@ export default function PopoverMultiSelect(props: PopoverMultiSelectProps): JSX.
   };
 
   const iconSpacer = () => {
-    return <div className='popover-multi-select__checkmark-spacer'/>;
+    return <div className='popover-multi-select__checkmark-spacer' />;
   };
 
-  return <Popover
-    sections={sections}
-    handleClick={(item) => {
-      const itemIndex = selection.findIndex((s) => s === item.value);
-      if (itemIndex >= 0) {
-        removeFromSelection(itemIndex);
-      } else {
-        addToSelection(item.value);
-      }
-    }}
-    anchorElement={anchorElement}
-    setAnchorElement={setAnchorElement}
-    itemRenderer={(item) => {
-      const selected = selection.find((s) => s === item.value);
-
-      return <>
-        {selected
-          ? <Icon name='checkmark' className='popover-multi-select__checkmark-selection'/>
-          : iconSpacer()
+  return (
+    <Popover
+      sections={sections}
+      handleClick={(item) => {
+        const itemIndex = selection.findIndex((s) => s === item.value);
+        if (itemIndex >= 0) {
+          removeFromSelection(itemIndex);
+        } else {
+          addToSelection(item.value);
         }
-        <ListItemText>{item.label}</ListItemText>
-      </>;
-    }}
-    menuAlign={menuAlign}
-  />;
+      }}
+      anchorElement={anchorElement}
+      setAnchorElement={setAnchorElement}
+      itemRenderer={(item) => {
+        const selected = selection.find((s) => s === item.value);
+
+        return (
+          <>
+            {selected ? <Icon name='checkmark' className='popover-multi-select__checkmark-selection' /> : iconSpacer()}
+            <ListItemText>{item.label}</ListItemText>
+          </>
+        );
+      }}
+      menuAlign={menuAlign}
+    />
+  );
 }

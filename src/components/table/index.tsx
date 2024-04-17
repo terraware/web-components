@@ -1,4 +1,17 @@
-import { Box, Checkbox, Pagination, Table, TableBody, TableCell, TableContainer, TableRow, Theme, TooltipProps, Typography, useTheme } from '@mui/material';
+import {
+  Box,
+  Checkbox,
+  Pagination,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableRow,
+  Theme,
+  TooltipProps,
+  Typography,
+  useTheme,
+} from '@mui/material';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import EnhancedTableToolbarV2 from './EnhancedTableToolbarV2';
 import { descendingComparator, getComparator, SortOrder, stableSort } from './sort';
@@ -37,11 +50,15 @@ const tableStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
+export type TextAlignment = 'right' | 'left';
+
 export interface HeadCell {
   disablePadding: boolean;
   id: string;
   label: string | JSX.Element;
   tooltipTitle?: TooltipProps['title'];
+  alignment?: TextAlignment;
+  className?: string;
 }
 
 export interface LocalizationProps {
@@ -326,7 +343,13 @@ export default function EnhancedTable<T extends TableRowType>({
 
       <TableContainer id={id}>
         <DndContext sensors={sensors} onDragEnd={handleDragEnd}>
-          <Table stickyHeader={stickyHeader} aria-labelledby='tableTitle' size='medium' aria-label='enhanced table' className={classes.table}>
+          <Table
+            stickyHeader={stickyHeader}
+            aria-labelledby='tableTitle'
+            size='medium'
+            aria-label='enhanced table'
+            className={classes.table}
+          >
             {!hideHeader && (
               <TableHeader
                 order={order}
@@ -369,7 +392,9 @@ export default function EnhancedTable<T extends TableRowType>({
                               handleClick(e, row as T);
                             }
                           }}
-                          className={`${isInactive && isInactive(row as T) ? classes.inactiveRow : undefined} ${classes.tableRow}`}
+                          className={`${isInactive && isInactive(row as T) ? classes.inactiveRow : undefined} ${
+                            classes.tableRow
+                          }`}
                           selected={isItemSelected}
                           aria-checked={isItemSelected}
                         >
@@ -380,7 +405,9 @@ export default function EnhancedTable<T extends TableRowType>({
                                 sx={CheckboxStyle(theme)}
                                 color='primary'
                                 checked={isItemSelected}
-                                onClick={(e) => (!isClickable || !isClickable(row as T) ? handleClick(e, row as T) : null)}
+                                onClick={(e) =>
+                                  !isClickable || !isClickable(row as T) ? handleClick(e, row as T) : null
+                                }
                               />
                             </TableCell>
                           )}
@@ -392,7 +419,11 @@ export default function EnhancedTable<T extends TableRowType>({
                                 row={row as T}
                                 column={c}
                                 value={row[c.key]}
-                                onRowClick={onSelect && controlledOnSelect ? (newValue?: string) => onSelect(row as T, c.key, newValue) : onClick}
+                                onRowClick={
+                                  onSelect && controlledOnSelect
+                                    ? (newValue?: string) => onSelect(row as T, c.key, newValue)
+                                    : onClick
+                                }
                                 reloadData={reloadData}
                                 booleanFalseText={booleanFalseText}
                                 booleanTrueText={booleanTrueText}

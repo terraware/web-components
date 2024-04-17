@@ -9,9 +9,11 @@ export default {
 };
 
 const Template: Story<SliderProps> = (args) => {
-  return <Box height='100vh' display='flex' alignItems='center'>
-    <Slider {...args} />
-  </Box>;
+  return (
+    <Box height='100vh' display='flex' alignItems='center'>
+      <Slider {...args} />
+    </Box>
+  );
 };
 
 export const Default = Template.bind({});

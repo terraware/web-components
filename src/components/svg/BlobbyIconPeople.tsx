@@ -75,7 +75,14 @@ const SvgBlobbyIconPeople = ({ title, titleId, ...props }: SVGProps<SVGSVGElemen
       />
     </g>
     <defs>
-      <linearGradient id='blobby-icon-people_svg__b' x1={126.5} x2={50} y1={104} y2={27.5} gradientUnits='userSpaceOnUse'>
+      <linearGradient
+        id='blobby-icon-people_svg__b'
+        x1={126.5}
+        x2={50}
+        y1={104}
+        y2={27.5}
+        gradientUnits='userSpaceOnUse'
+      >
         <stop stopColor='#F1F0EC' />
         <stop offset={1} stopColor='#84D6AC' />
       </linearGradient>
@@ -91,11 +98,25 @@ const SvgBlobbyIconPeople = ({ title, titleId, ...props }: SVGProps<SVGSVGElemen
         <stop stopColor='#2C8658' />
         <stop offset={1} stopColor='#ACD278' />
       </linearGradient>
-      <linearGradient id='blobby-icon-people_svg__f' x1={126.5} x2={50} y1={104} y2={27.5} gradientUnits='userSpaceOnUse'>
+      <linearGradient
+        id='blobby-icon-people_svg__f'
+        x1={126.5}
+        x2={50}
+        y1={104}
+        y2={27.5}
+        gradientUnits='userSpaceOnUse'
+      >
         <stop stopColor='#F1F0EC' />
         <stop offset={1} stopColor='#84D6AC' />
       </linearGradient>
-      <linearGradient id='blobby-icon-people_svg__h' x1={90.5} x2={136.049} y1={60.121} y2={97.834} gradientUnits='userSpaceOnUse'>
+      <linearGradient
+        id='blobby-icon-people_svg__h'
+        x1={90.5}
+        x2={136.049}
+        y1={60.121}
+        y2={97.834}
+        gradientUnits='userSpaceOnUse'
+      >
         <stop stopColor='#2C8658' />
         <stop offset={1} stopColor='#ACD278' />
       </linearGradient>

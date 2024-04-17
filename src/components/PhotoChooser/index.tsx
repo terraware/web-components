@@ -5,7 +5,7 @@ import { makeStyles } from '@mui/styles';
 import { useDeviceInfo } from '../../utils';
 import ErrorBox from '../ErrorBox/ErrorBox';
 import Button from '../Button/Button';
-import Icon from '../Icon/Icon';
+import FileChooser from '../FileChooser';
 
 export type PhotoChooserErrorType = {
   title: string;
@@ -18,16 +18,6 @@ const useStyles = makeStyles((theme: Theme) => ({
     top: -10,
     right: -10,
     backgroundColor: theme.palette.TwClrBgDanger,
-  },
-  hiddenInput: {
-    display: 'none',
-  },
-  icon: {
-    height: '120px',
-    width: '120px',
-  },
-  button: {
-    marginTop: theme.spacing(3),
   },
   error: {
     width: 'auto',
@@ -81,68 +71,24 @@ export default function PhotoChooser(props: PhotoChooserProps): JSX.Element {
   const classes = useStyles();
   const [files, setFiles] = useState<File[]>([]);
   const [filesData, setFilesData] = useState<string[]>([]);
-  const inputRef = useRef<HTMLInputElement>(null);
   const divRef = useRef<HTMLDivElement>(null);
   const theme = useTheme();
-  const [editing, setEditing] = useState<boolean>(false);
-
-  useEffect(() => {
-    setEditing(!!selectedFile);
-  }, [selectedFile]);
-
-  const addFiles = (fileList: FileList) => {
-    const newFiles: File[] = [];
-
-    for (let i = 0; i < fileList.length; i++) {
-      const fileItem = fileList.item(i);
-      if (fileItem) {
-        newFiles.push(fileItem);
-      }
-    }
-
-    if (newFiles.length) {
-      updateSelection([...files, ...newFiles].slice(0, maxPhotos));
-    }
-  };
 
   const removeFileAtIndex = (index: number) => {
     const filesList = [...files];
     filesList.splice(index, 1);
-    updateSelection(filesList);
+    setFiles(filesList);
   };
 
-  const updateSelection = (selected: File[]) => {
-    setFiles(selected);
-    onPhotosChanged(selected);
-  };
-
-  const dropHandler = (event: React.DragEvent<HTMLDivElement>) => {
-    event.preventDefault();
-    addFiles(event.dataTransfer.files);
-  };
-
-  const enableDropping = (event: React.DragEvent<HTMLDivElement>) => {
-    event.preventDefault();
-  };
-
-  const onChooseFileHandler = () => {
-    inputRef.current?.click();
+  const onChoosingFiles = () => {
     divRef.current?.focus();
-  };
-
-  const onFileChosen = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (editing) {
-      setEditing(false);
-    }
-    if (event.currentTarget.files) {
-      addFiles(event.currentTarget.files);
-    }
   };
 
   useEffect(() => {
     const filesDataList = files.map((file) => URL.createObjectURL(file));
 
     setFilesData(filesDataList);
+    onPhotosChanged(files);
 
     return () => {
       // we need to clean this up to avoid a memory leak
@@ -184,52 +130,34 @@ export default function PhotoChooser(props: PhotoChooserProps): JSX.Element {
                 marginTop={theme.spacing(1)}
                 border={`1px solid ${theme.palette.TwClrBrdrTertiary}`}
               >
-                <Button icon='iconTrashCan' onClick={() => removeFileAtIndex(index)} size='small' className={classes.removePhoto} />
+                <Button
+                  icon='iconTrashCan'
+                  onClick={() => removeFileAtIndex(index)}
+                  size='small'
+                  className={classes.removePhoto}
+                />
                 <img height='120px' src={fileData} alt={files[index]?.name} className={classes.thumbnail} />
               </Box>
             ))}
           </Box>
         )}
       </Box>
-      <Box
-        onDrop={dropHandler}
-        onDragOver={enableDropping}
-        border={`1px dashed ${theme.palette.TwClrBrdrTertiary}`}
-        borderRadius={theme.spacing(2)}
-        display='flex'
-        flexDirection='column'
-        alignItems='center'
-        padding={theme.spacing(3)}
-        sx={{ background: theme.palette.TwClrBg }}
-      >
-        <Icon name='blobbyGrayIconImage' className={classes.icon} size='xlarge' />
-        <Typography color={theme.palette.TwClrTxt} fontSize={14} fontWeight={600} margin={theme.spacing(0, 0, 1)}>
-          {!editing && (files.length > 0 && !multipleSelection ? files[0].name : uploadText)}
-        </Typography>
-        <Typography color={theme.palette.TwClrTxt} fontSize={12} fontWeight={400} margin={0}>
-          {(editing || files.length > 0) && !multipleSelection
-            ? photoSelectedText
-            : isMobile && uploadMobileDescription
-            ? uploadMobileDescription
-            : uploadDescription}
-        </Typography>
-        <input
-          type='file'
-          ref={inputRef}
-          className={classes.hiddenInput}
-          onChange={onFileChosen}
-          accept='image/jpeg,image/png'
-          multiple={multipleSelection || false}
-        />
-        <Button
-          onClick={onChooseFileHandler}
-          disabled={maxPhotos !== undefined ? files.length >= maxPhotos : false}
-          label={!multipleSelection && (files.length === 1 || editing) ? replaceFileText : chooseFileText}
-          priority='secondary'
-          type='passive'
-          className={classes.button}
-        />
-      </Box>
+      <FileChooser
+        acceptFileType='image/jpeg,image/png'
+        chooseFileText={chooseFileText}
+        files={files}
+        fileSelectedText={photoSelectedText}
+        iconName='blobbyGrayIconImage'
+        maxFiles={maxPhotos}
+        multipleSelection={multipleSelection}
+        onChoosingFiles={onChoosingFiles}
+        replaceFileText={replaceFileText}
+        selectedFile={selectedFile}
+        setFiles={setFiles}
+        uploadDescription={uploadDescription}
+        uploadMobileDescription={uploadMobileDescription}
+        uploadText={uploadText}
+      />
     </Box>
   );
 }

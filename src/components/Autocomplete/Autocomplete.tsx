@@ -59,7 +59,13 @@ export default function Autocomplete({
           {tooltipTitle && <IconTooltip placement='top' title={tooltipTitle} />}
         </label>
       )}
-      <TextField {...params} variant='outlined' size='small' placeholder={placeholder} className={errorText ? 'auto-complete--error' : ''} />
+      <TextField
+        {...params}
+        variant='outlined'
+        size='small'
+        placeholder={placeholder}
+        className={errorText ? 'auto-complete--error' : ''}
+      />
       {errorText && (
         <div className='textfield-label-container'>
           <Icon name='error' className='textfield-error-text--icon' />

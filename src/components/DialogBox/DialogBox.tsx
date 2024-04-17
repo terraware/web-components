@@ -4,9 +4,11 @@ import Icon from '../Icon/Icon';
 import { IconButton } from '@mui/material';
 import { useDeviceInfo } from '../../utils';
 
+export type DialogBoxSize = 'small' | 'medium' | 'large' | 'x-large';
+
 export interface Props {
   title: string;
-  size: 'small' | 'medium' | 'large' | 'x-large';
+  size: DialogBoxSize;
   message?: string | string[];
   children?: ReactNode;
   leftButton?: ReactNode;
@@ -19,7 +21,8 @@ export interface Props {
 }
 
 export default function DialogBox(props: Props): JSX.Element | null {
-  const { title, size, message, children, leftButton, rightButtons, middleButtons, onClose, open, scrolled, skrim } = props;
+  const { title, size, message, children, leftButton, rightButtons, middleButtons, onClose, open, scrolled, skrim } =
+    props;
 
   const hasFooter = leftButton || rightButtons || middleButtons;
 
@@ -33,7 +36,7 @@ export default function DialogBox(props: Props): JSX.Element | null {
     >
       <div className={`dialog-box dialog-box--${size}`}>
         <div className='dialog-box--header'>
-          <div className='close-icon-spacer'/>
+          <div className='close-icon-spacer' />
           <p className='title'>{title}</p>
           <IconButton onClick={onClose} size='small'>
             <Icon name='close' className='icon-close' />
