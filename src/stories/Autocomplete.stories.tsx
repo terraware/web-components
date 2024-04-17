@@ -19,7 +19,7 @@ export default {
 
 const Template: Story<AutocompleteProps> = (args) => {
   const classes = useStyles();
-  const [selected, setSelected] = React.useState<ValueType>('');
+  const [selected, setSelected] = React.useState<ValueType>();
   const handleChange = (value: ValueType) => {
     action('onChange')(value);
     setSelected(value);
@@ -41,7 +41,7 @@ Default.args = {
   label: 'Test',
   options: ['Test 1', 'Test 2', 'Hello'],
   onChange: () => true,
-  selected: '',
+  selected: undefined,
   freeSolo: true,
   errorText: '',
 };
