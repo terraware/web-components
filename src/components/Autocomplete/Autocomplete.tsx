@@ -6,14 +6,14 @@ import { DropdownItem as Option } from '../types';
 import '../Select/styles.scss';
 import './styles.scss';
 
-export type ValueType = string | Option;
+export type ValueType = string | Option | undefined;
 
 export interface Props {
   onChange: (value: ValueType) => void;
   options: ValueType[];
   id?: string;
   label?: string;
-  selected?: ValueType | undefined;
+  selected?: ValueType;
   freeSolo?: boolean;
   disabled?: boolean;
   className?: string;
@@ -24,6 +24,8 @@ export interface Props {
   tooltipTitle?: TooltipProps['title'];
   required?: boolean;
 }
+
+const isEmpty = (value: unknown) => ['', undefined].includes(value as string | undefined);
 
 export default function Autocomplete({
   id,
@@ -85,6 +87,9 @@ export default function Autocomplete({
 
   if (isEqual) {
     optionalArgs.isOptionEqualToValue = isEqual;
+  } else {
+    optionalArgs.isOptionEqualToValue = (option: unknown, value: unknown) =>
+      option === value || (isEmpty(option) && isEmpty(value));
   }
 
   return (
