@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1713384224209" clover="3.2.0">
-  <project timestamp="1713384224209" name="All files">
-    <metrics statements="1559" coveredstatements="198" conditionals="1269" coveredconditionals="98" methods="562" coveredmethods="34" elements="3390" coveredelements="330" complexity="0" loc="1559" ncloc="1559" packages="39" files="202" classes="202"/>
+<coverage generated="1713386204076" clover="3.2.0">
+  <project timestamp="1713386204077" name="All files">
+    <metrics statements="1565" coveredstatements="198" conditionals="1273" coveredconditionals="98" methods="564" coveredmethods="34" elements="3402" coveredelements="330" complexity="0" loc="1565" ncloc="1565" packages="39" files="202" classes="202"/>
     <package name="src">
       <metrics statements="1" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
       <file name="index.ts" path="/home/runner/work/web-components/web-components/src/index.ts">
@@ -151,30 +151,36 @@
       </file>
     </package>
     <package name="src.components.DatePicker">
-      <metrics statements="21" coveredstatements="0" conditionals="32" coveredconditionals="0" methods="6" coveredmethods="0"/>
+      <metrics statements="27" coveredstatements="0" conditionals="36" coveredconditionals="0" methods="8" coveredmethods="0"/>
       <file name="DatePicker.tsx" path="/home/runner/work/web-components/web-components/src/components/DatePicker/DatePicker.tsx">
-        <metrics statements="21" coveredstatements="0" conditionals="32" coveredconditionals="0" methods="6" coveredmethods="0"/>
+        <metrics statements="27" coveredstatements="0" conditionals="36" coveredconditionals="0" methods="8" coveredmethods="0"/>
         <line num="47" count="0" type="stmt"/>
         <line num="48" count="0" type="cond" truecount="0" falsecount="2"/>
         <line num="49" count="0" type="stmt"/>
         <line num="52" count="0" type="stmt"/>
         <line num="54" count="0" type="cond" truecount="0" falsecount="2"/>
         <line num="58" count="0" type="stmt"/>
-        <line num="59" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="59" count="0" type="stmt"/>
         <line num="60" count="0" type="stmt"/>
+        <line num="61" count="0" type="cond" truecount="0" falsecount="2"/>
         <line num="62" count="0" type="stmt"/>
-        <line num="63" count="0" type="stmt"/>
-        <line num="64" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="64" count="0" type="stmt"/>
         <line num="65" count="0" type="stmt"/>
+        <line num="66" count="0" type="cond" truecount="0" falsecount="4"/>
         <line num="67" count="0" type="stmt"/>
-        <line num="77" count="0" type="stmt"/>
+        <line num="69" count="0" type="stmt"/>
+        <line num="74" count="0" type="stmt"/>
+        <line num="75" count="0" type="stmt"/>
         <line num="78" count="0" type="stmt"/>
-        <line num="103" count="0" type="stmt"/>
-        <line num="117" count="0" type="stmt"/>
-        <line num="119" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="120" count="0" type="cond" truecount="0" falsecount="4"/>
-        <line num="122" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="123" count="0" type="cond" truecount="0" falsecount="4"/>
+        <line num="79" count="0" type="stmt"/>
+        <line num="87" count="0" type="stmt"/>
+        <line num="88" count="0" type="stmt"/>
+        <line num="113" count="0" type="stmt"/>
+        <line num="127" count="0" type="stmt"/>
+        <line num="129" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="130" count="0" type="cond" truecount="0" falsecount="4"/>
+        <line num="132" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="133" count="0" type="cond" truecount="0" falsecount="4"/>
       </file>
     </package>
     <package name="src.components.DialogBox">
