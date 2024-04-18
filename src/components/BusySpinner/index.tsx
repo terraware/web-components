@@ -37,7 +37,11 @@ export default function BusySpinner({ withSkrim, noBackground }: BusySpinnerProp
         flexDirection='column'
         height='100%'
       >
-        <CircularProgress />
+        <CircularProgress
+          sx={{
+            color: theme.palette.TwClrIcnBrand,
+          }}
+        />
       </Box>
     </Box>
   );
