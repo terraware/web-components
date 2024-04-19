@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { CSSProperties, useState } from 'react';
 import { Box, useTheme } from '@mui/material';
 import useDeviceInfo from '../../utils/useDeviceInfo';
 import FormBottomBar, { FormButton } from '../FormBottomBar';
@@ -16,10 +16,11 @@ export type PageFormProps = {
   className?: string;
   hideEdit?: boolean;
   additionalRightButtons?: FormButton[];
+  style?: CSSProperties;
 };
 
 export default function PageForm(props: PageFormProps): JSX.Element {
-  const { children, className, hideEdit, onSave, ...bottomBarProps } = props;
+  const { children, className, hideEdit, onSave, style, ...bottomBarProps } = props;
   const theme = useTheme();
   const { isMobile } = useDeviceInfo();
   const [processing, setProcessing] = useState(false);
@@ -33,7 +34,11 @@ export default function PageForm(props: PageFormProps): JSX.Element {
   return (
     <>
       {processing && <BusySpinner withSkrim={true} />}
-      <Box className={className} paddingBottom={hideEdit ? theme.spacing(4) : theme.spacing(isMobile ? 25 : 15)}>
+      <Box
+        className={className}
+        paddingBottom={hideEdit ? theme.spacing(4) : theme.spacing(isMobile ? 25 : 15)}
+        style={style}
+      >
         {children}
       </Box>
       {!hideEdit && <FormBottomBar onSave={handleSave} {...bottomBarProps} />}
