@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { CSSProperties } from 'react';
 import { makeStyles } from '@mui/styles';
 import { Size } from '../Size';
 import icons, { IconName } from './icons';
@@ -21,7 +21,7 @@ export interface Props {
   fillColor?: string;
   name: IconName;
   size?: Size;
-  style?: Record<string, unknown>;
+  style?: CSSProperties;
 }
 
 export default function Icon({ size = 'small', name, className, fillColor, style }: Props): JSX.Element {
