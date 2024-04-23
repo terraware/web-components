@@ -4874,16 +4874,13 @@ babel-jest@^27.4.2, babel-jest@^27.5.1:
     graceful-fs "^4.2.9"
     slash "^3.0.0"
 
-babel-loader@8.1.0, babel-loader@^8.2.3, babel-loader@^9.0.0:
-  version "8.1.0"
-  resolved "https://registry.yarnpkg.com/babel-loader/-/babel-loader-8.1.0.tgz#c611d5112bd5209abe8b9fa84c3e4da25275f1c3"
-  integrity sha512-7q7nC1tYOrqvUrN3LQK4GwSk/TQorZSOlO9C+RZDZpODgyN4ZlCqE5q9cDsyWOliN+aU9B4JX01xK9eJXowJLw==
+babel-loader@9.0.0, babel-loader@^8.2.3, babel-loader@^9.0.0:
+  version "9.0.0"
+  resolved "https://registry.yarnpkg.com/babel-loader/-/babel-loader-9.0.0.tgz#b90f48b49f5360e4678733755d1413e16cfee48e"
+  integrity sha512-qVGQb0PNw/B1sGhPf0/KKsHZAPfa2Bk+JbjkW7yGjAHZyvjAULXYq0et0+/+7DL/rGYU+y8UoGPzA32NP29pVQ==
   dependencies:
-    find-cache-dir "^2.1.0"
-    loader-utils "^1.4.0"
-    mkdirp "^0.5.3"
-    pify "^4.0.1"
-    schema-utils "^2.6.5"
+    find-cache-dir "^3.3.2"
+    schema-utils "^4.0.0"
 
 babel-plugin-add-react-displayname@^0.0.5:
   version "0.0.5"
@@ -7361,7 +7358,7 @@ finalhandler@1.2.0:
     statuses "2.0.1"
     unpipe "~1.0.0"
 
-find-cache-dir@^2.0.0, find-cache-dir@^2.1.0:
+find-cache-dir@^2.0.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/find-cache-dir/-/find-cache-dir-2.1.0.tgz#8d0f94cd13fe43c6c7c261a0d86115ca918c05f7"
   integrity sha512-Tq6PixE0w/VMFfCgbONnkiQIVol/JJL7nRMi20fqzA4NRs9AfeqMGeRdPi3wIhYkxjeBaWh2rxwapn5Tu3IqOQ==
@@ -7370,7 +7367,7 @@ find-cache-dir@^2.0.0, find-cache-dir@^2.1.0:
     make-dir "^2.0.0"
     pkg-dir "^3.0.0"
 
-find-cache-dir@^3.0.0, find-cache-dir@^3.3.1:
+find-cache-dir@^3.0.0, find-cache-dir@^3.3.1, find-cache-dir@^3.3.2:
   version "3.3.2"
   resolved "https://registry.yarnpkg.com/find-cache-dir/-/find-cache-dir-3.3.2.tgz#b30c5b6eff0730731aea9bbd9dbecbd80256d64b"
   integrity sha512-wXZV5emFEjrridIgED11OoUKLxiYjAcqot/NJdAkOhlJ+vGzwhOAfcG5OX1jP+S0PcjEn8bdMJv+g2jwQ3Onig==
@@ -9398,7 +9395,7 @@ json-stable-stringify-without-jsonify@^1.0.1:
   resolved "https://registry.yarnpkg.com/json-stable-stringify-without-jsonify/-/json-stable-stringify-without-jsonify-1.0.1.tgz#9db7b59496ad3f3cfef30a75142d2d930ad72651"
   integrity sha512-Bdboy+l7tA3OGW6FjyFHWkP5LuByj1Tk33Ljyq0axyzdk9//JSi2u3fP1QSmd1KNwq6VOKYGlAu87CisVir6Pw==
 
-json5@^1.0.1, json5@^1.0.2:
+json5@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/json5/-/json5-1.0.2.tgz#63d98d60f21b313b77c4d6da18bfa69d80e1d593"
   integrity sha512-g1MWMLBiz8FKi1e4w0UyVL3w+iJceWAFBAaBnnGKOpNa5f8TLktkbre1+s6oICydWAm+HRUGTmI+//xv2hvXYA==
@@ -9629,15 +9626,6 @@ loader-runner@^4.2.0:
   version "4.3.0"
   resolved "https://registry.yarnpkg.com/loader-runner/-/loader-runner-4.3.0.tgz#c1b4a163b99f614830353b16755e7149ac2314e1"
   integrity sha512-3R/1M+yS3j5ou80Me59j7F9IMs4PXs3VqRrm0TU3AbKPxlmpoY1TNscJV/oGJXo8qCatFGTfDbY6W6ipGOYXfg==
-
-loader-utils@^1.4.0:
-  version "1.4.2"
-  resolved "https://registry.yarnpkg.com/loader-utils/-/loader-utils-1.4.2.tgz#29a957f3a63973883eb684f10ffd3d151fec01a3"
-  integrity sha512-I5d00Pd/jwMD2QCduo657+YM/6L3KZu++pmX9VFncxaxvHcru9jx1lBaFft+r4Mt2jK0Yhp41XlRAihzPxHNCg==
-  dependencies:
-    big.js "^5.2.2"
-    emojis-list "^3.0.0"
-    json5 "^1.0.1"
 
 loader-utils@^2.0.0, loader-utils@^2.0.4:
   version "2.0.4"
@@ -12586,15 +12574,6 @@ schema-utils@2.7.0:
     "@types/json-schema" "^7.0.4"
     ajv "^6.12.2"
     ajv-keywords "^3.4.1"
-
-schema-utils@^2.6.5:
-  version "2.7.1"
-  resolved "https://registry.yarnpkg.com/schema-utils/-/schema-utils-2.7.1.tgz#1ca4f32d1b24c590c203b8e7a50bf0ea4cd394d7"
-  integrity sha512-SHiNtMOUGWBQJwzISiVYKu82GiV4QYGePp3odlY1tuKO7gPtphAT5R/py0fA6xtbgLL/RvtJZnU9b8s0F1q0Xg==
-  dependencies:
-    "@types/json-schema" "^7.0.5"
-    ajv "^6.12.4"
-    ajv-keywords "^3.5.2"
 
 schema-utils@^3.0.0, schema-utils@^3.1.1, schema-utils@^3.2.0:
   version "3.3.0"
