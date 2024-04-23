@@ -95,7 +95,7 @@
     "@storybook/addon-links": "^7.0.7",
     "@storybook/addon-mdx-gfm": "^7.0.7",
     "@storybook/node-logger": "^7.0.7",
-    "@storybook/preset-create-react-app": "^7.0.0",
+    "@storybook/preset-create-react-app": "^8.0.9",
     "@storybook/react": "^7.0.7",
     "@storybook/react-webpack5": "^7.0.7",
     "@svgr/cli": "^7.0.0",
