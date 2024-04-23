@@ -67,5 +67,6 @@ CustomContent.args = {
     </Box>
   ),
   onConfirm: () => window.alert('confirmed'),
+  skrim: true,
   title: 'Custom Confirm',
 };

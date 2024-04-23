@@ -23,6 +23,7 @@ export type ConfirmProps = {
   onConfirm: () => void; // required, callback on confirm button
   open?: boolean; // defaults to true, whether confirm modal is open
   size?: DialogBoxSize; // optional defaults to 'medium'
+  skrim?: boolean; // whether to show a blurred backdrop for the dialog
   textStyle?: Record<string, any>; // option style override for message text
   title: string; // required, title of confirm modal
 };
@@ -41,6 +42,7 @@ export default function Confirm({
   onConfirm,
   open,
   size,
+  skrim,
   textStyle,
   title,
 }: ConfirmProps): JSX.Element {
@@ -126,6 +128,7 @@ export default function Confirm({
       open={open ?? true}
       title={title}
       size={size || 'medium'}
+      skrim={skrim}
       middleButtons={middleButtons}
     >
       {content}
