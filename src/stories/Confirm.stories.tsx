@@ -8,6 +8,11 @@ export default {
   component: Confirm,
 };
 
+const largeMessage = [];
+for (let i = 0; i < 100; i++) {
+  largeMessage.push(`Hello World ${i}`);
+}
+
 const Template: Story<ConfirmProps> = (args) => {
   return <Confirm {...args} />;
 };
@@ -42,8 +47,9 @@ Disabled.args = {
   confirmButtonPriority: 'secondary',
   confirmButtonText: 'Ok',
   confirmButtonType: 'passive',
-  message: 'Hello World',
+  message: largeMessage,
   onConfirm: () => window.alert('confirmed'),
+  scrolled: true,
   title: 'Disabled Confirm',
 };
 

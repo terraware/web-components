@@ -22,6 +22,7 @@ export type ConfirmProps = {
   onClose?: () => void; // absence of onClose will hide the close button
   onConfirm: () => void; // required, callback on confirm button
   open?: boolean; // defaults to true, whether confirm modal is open
+  scrolled?: boolean; // scrolled dialog box
   size?: DialogBoxSize; // optional defaults to 'medium'
   skrim?: boolean; // whether to show a blurred backdrop for the dialog
   textStyle?: Record<string, any>; // option style override for message text
@@ -41,6 +42,7 @@ export default function Confirm({
   onClose,
   onConfirm,
   open,
+  scrolled,
   size,
   skrim,
   textStyle,
@@ -127,6 +129,7 @@ export default function Confirm({
       onClose={onClose}
       open={open ?? true}
       title={title}
+      scrolled={scrolled}
       size={size || 'medium'}
       skrim={skrim}
       middleButtons={middleButtons}
