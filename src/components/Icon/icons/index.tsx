@@ -71,6 +71,7 @@ import IconSynced from '../../svg/IconSynced';
 import IconTrashCan from '../../svg/IconTrashCan';
 import IconTreasureMap from '../../svg/IconTreasureMap';
 import IconUndo from '../../svg/IconUndo';
+import IconVariable from '../../svg/IconVariable';
 import Info from '../../svg/Info';
 import Key from '../../svg/Key';
 import Leaf from '../../svg/Leaf';
@@ -175,6 +176,7 @@ export type IconName =
   | 'iconTrashCan'
   | 'iconTreasureMap'
   | 'iconUndo'
+  | 'iconVariable'
   | 'info'
   | 'key'
   | 'leaf'
@@ -283,6 +285,7 @@ const icons: Record<IconName, SVGComponent> = {
   iconTrashCan: IconTrashCan,
   iconTreasureMap: IconTreasureMap,
   iconUndo: IconUndo,
+  iconVariable: IconVariable,
   info: Info,
   key: Key,
   leaf: Leaf,
