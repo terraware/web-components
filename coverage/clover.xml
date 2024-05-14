@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1715692264772" clover="3.2.0">
-  <project timestamp="1715692264772" name="All files">
+<coverage generated="1715713742808" clover="3.2.0">
+  <project timestamp="1715713742808" name="All files">
     <metrics statements="1562" coveredstatements="199" conditionals="1279" coveredconditionals="98" methods="558" coveredmethods="34" elements="3399" coveredelements="331" complexity="0" loc="1562" ncloc="1562" packages="39" files="203" classes="203"/>
     <package name="src">
       <metrics statements="1" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
@@ -646,19 +646,19 @@
         <line num="24" count="0" type="stmt"/>
         <line num="25" count="0" type="stmt"/>
         <line num="27" count="0" type="stmt"/>
-        <line num="50" count="0" type="stmt"/>
-        <line num="56" count="0" type="stmt"/>
+        <line num="54" count="0" type="stmt"/>
         <line num="60" count="0" type="stmt"/>
-        <line num="61" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="62" count="0" type="stmt"/>
         <line num="64" count="0" type="stmt"/>
+        <line num="65" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="66" count="0" type="stmt"/>
         <line num="68" count="0" type="stmt"/>
-        <line num="69" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="70" count="0" type="stmt"/>
+        <line num="72" count="0" type="stmt"/>
+        <line num="73" count="0" type="cond" truecount="0" falsecount="2"/>
         <line num="74" count="0" type="stmt"/>
-        <line num="81" count="0" type="stmt"/>
-        <line num="91" count="0" type="stmt"/>
-        <line num="103" count="0" type="stmt"/>
+        <line num="78" count="0" type="stmt"/>
+        <line num="85" count="0" type="stmt"/>
+        <line num="94" count="0" type="stmt"/>
+        <line num="106" count="0" type="stmt"/>
       </file>
     </package>
     <package name="src.components.TextTruncated">
