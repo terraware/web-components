@@ -25,14 +25,14 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/88</span>
+                <span class='fraction'>0/90</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/89</span>
+                <span class='fraction'>0/91</span>
             </div>
         
             
@@ -46,7 +46,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/86</span>
+                <span class='fraction'>0/88</span>
             </div>
         
             
@@ -378,7 +378,11 @@
 <a name='L313'></a><a href='#L313'>313</a>
 <a name='L314'></a><a href='#L314'>314</a>
 <a name='L315'></a><a href='#L315'>315</a>
-<a name='L316'></a><a href='#L316'>316</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L316'></a><a href='#L316'>316</a>
+<a name='L317'></a><a href='#L317'>317</a>
+<a name='L318'></a><a href='#L318'>318</a>
+<a name='L319'></a><a href='#L319'>319</a>
+<a name='L320'></a><a href='#L320'>320</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -579,16 +583,20 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -892,18 +900,22 @@ export default function <span class="fstat-no" title="function not covered" >Sel
   };
 &nbsp;
   const onKeyDownHandler = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >(e</span>: KeyboardEvent&lt;HTMLInputElement&gt;) =&gt; {</span>
-    const pressedLetter = <span class="cstat-no" title="statement not covered" >e.key.toUpperCase();</span>
-    const items = <span class="cstat-no" title="statement not covered" >dropdownRef.current?.getElementsByTagName('li');</span>
-<span class="cstat-no" title="statement not covered" >    if (items) {</span>
-      const arrayOfItems = <span class="cstat-no" title="statement not covered" >Array.from(items);</span>
-<span class="cstat-no" title="statement not covered" >      for (const item of arrayOfItems) {</span>
-<span class="cstat-no" title="statement not covered" >        if (item.dataset.key === pressedLetter) {</span>
-<span class="cstat-no" title="statement not covered" >          item.scrollIntoView({</span>
-            behavior: 'smooth',
-            block: 'start',
-          });
+<span class="cstat-no" title="statement not covered" >    if (e.key === 'Tab') {</span>
+<span class="cstat-no" title="statement not covered" >      toggleOptions();</span>
+    } else {
+      const pressedLetter = <span class="cstat-no" title="statement not covered" >e.key.toUpperCase();</span>
+      const items = <span class="cstat-no" title="statement not covered" >dropdownRef.current?.getElementsByTagName('li');</span>
+<span class="cstat-no" title="statement not covered" >      if (items) {</span>
+        const arrayOfItems = <span class="cstat-no" title="statement not covered" >Array.from(items);</span>
+<span class="cstat-no" title="statement not covered" >        for (const item of arrayOfItems) {</span>
+<span class="cstat-no" title="statement not covered" >          if (item.dataset.key === pressedLetter) {</span>
+<span class="cstat-no" title="statement not covered" >            item.scrollIntoView({</span>
+              behavior: 'smooth',
+              block: 'start',
+            });
 &nbsp;
-<span class="cstat-no" title="statement not covered" >          return;</span>
+<span class="cstat-no" title="statement not covered" >            return;</span>
+          }
         }
       }
     }
@@ -1015,7 +1027,7 @@ export default function <span class="fstat-no" title="function not covered" >Sel
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-05-13T22:36:54.357Z
+                at 2024-05-14T13:11:04.658Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>
