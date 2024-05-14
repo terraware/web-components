@@ -197,18 +197,22 @@ export default function SelectT<T>(props: SelectTProps<T>): JSX.Element {
   };
 
   const onKeyDownHandler = (e: KeyboardEvent<HTMLInputElement>) => {
-    const pressedLetter = e.key.toUpperCase();
-    const items = dropdownRef.current?.getElementsByTagName('li');
-    if (items) {
-      const arrayOfItems = Array.from(items);
-      for (const item of arrayOfItems) {
-        if (item.dataset.key === pressedLetter) {
-          item.scrollIntoView({
-            behavior: 'smooth',
-            block: 'start',
-          });
+    if (e.key === 'Tab') {
+      toggleOptions();
+    } else {
+      const pressedLetter = e.key.toUpperCase();
+      const items = dropdownRef.current?.getElementsByTagName('li');
+      if (items) {
+        const arrayOfItems = Array.from(items);
+        for (const item of arrayOfItems) {
+          if (item.dataset.key === pressedLetter) {
+            item.scrollIntoView({
+              behavior: 'smooth',
+              block: 'start',
+            });
 
-          return;
+            return;
+          }
         }
       }
     }
