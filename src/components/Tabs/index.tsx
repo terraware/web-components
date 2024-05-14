@@ -25,13 +25,17 @@ const Tabs = ({ tabs, onTabChange, activeTab }: TabsProps): JSX.Element => {
   const { isMobile } = useDeviceInfo();
 
   const tabStyles = {
-    fontSize: '14px',
+    color: '#7F775B',
+    fontSize: '16px',
+    fontWeight: 600,
     padding: theme.spacing(1, 2),
     minHeight: theme.spacing(4.5),
     textTransform: 'capitalize',
+    '&:hover': {
+      backgroundColor: theme.palette.TwClrBgHover as string,
+    },
     '&.Mui-selected': {
       color: theme.palette.TwClrTxtBrand as string,
-      fontWeight: 500,
     },
     '&.MuiTab-labelIcon': {
       display: 'flex',
@@ -83,7 +87,6 @@ const Tabs = ({ tabs, onTabChange, activeTab }: TabsProps): JSX.Element => {
               style: {
                 background: theme.palette.TwClrBgBrand,
                 height: '4px',
-                borderRadius: '4px 4px 0 0',
               },
             }}
           >
