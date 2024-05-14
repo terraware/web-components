@@ -34,6 +34,7 @@ const EditableTemplate: Story<SelectProps> = (args) => {
       <Box height='1000px'>
         <Box width='200px' margin='0 auto'>
           <Select {...args} onChange={handleChange} selectedValue={value} options={options} />
+          <input />
         </Box>
       </Box>
     </Box>
