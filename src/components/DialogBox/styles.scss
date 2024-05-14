@@ -54,7 +54,6 @@
 }
 
 .dialog-box {
-  border: 1px solid $tw-clr-brdr-tertiary;
   box-shadow: $tw-elvtn-base-800;
   border-radius: $tw-sz-base-small;
   display: flex;
@@ -83,7 +82,6 @@
   }
 
   &--header {
-    background-color: $tw-clr-base-gray-050;
     border-bottom: 1px solid $tw-clr-brdr-tertiary;
     padding: $tw-spc-base-small $tw-spc-base-medium;
     display: flex;
@@ -119,7 +117,6 @@
 
   &--body {
     background: $tw-clr-base-white;
-    border-bottom: 1px solid $tw-clr-brdr-tertiary;
     padding: $tw-spc-base-medium;
     text-align: center;
     &.scrolled {
@@ -147,7 +144,7 @@
 
   &--footer {
     border-radius: 0 0 $tw-sz-base-small $tw-sz-base-small;
-    background-color: $tw-clr-base-gray-050;
+    background-color: $tw-clr-bg-secondary;
     padding: $tw-spc-base-medium $tw-spc-base-medium;
     button + button {
       margin-left: $tw-spc-base-x-small;
