@@ -44,6 +44,7 @@ const Tabs = ({ tabs, onTabChange, activeTab }: TabsProps): JSX.Element => {
       alignItems: 'center',
     },
     '& .MuiTab-iconWrapper': {
+      fill: '#7F775B',
       marginBottom: 0,
       marginRight: theme.spacing(1),
     },
