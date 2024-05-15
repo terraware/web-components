@@ -28,6 +28,7 @@ const Tabs = ({ tabs, onTabChange, activeTab }: TabsProps): JSX.Element => {
     color: '#7F775B',
     fontSize: '16px',
     fontWeight: 600,
+    lineHeight: '24px',
     padding: theme.spacing(1, 2),
     minHeight: theme.spacing(4.5),
     textTransform: 'capitalize',
