@@ -55,6 +55,7 @@ export { default as IconHeartMonitor } from './IconHeartMonitor';
 export { default as IconHistory } from './IconHistory';
 export { default as IconImport } from './IconImport';
 export { default as IconLayers } from './IconLayers';
+export { default as IconLibrary } from './IconLibrary';
 export { default as IconList } from './IconList';
 export { default as IconMail } from './IconMail';
 export { default as IconManager } from './IconManager';
