@@ -14,6 +14,7 @@ const Template: Story<DialogBoxProps> = (args) => {
 
 const WithButtonTemplate: Story<DialogBoxProps> = (args) => {
   const [opened, setOpened] = useState(false);
+
   return (
     <main>
       <button onClick={() => setOpened(true)}>Click me</button>
