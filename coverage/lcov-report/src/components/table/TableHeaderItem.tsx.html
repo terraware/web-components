@@ -25,7 +25,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/11</span>
+                <span class='fraction'>0/8</span>
             </div>
         
             
@@ -39,14 +39,14 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/5</span>
+                <span class='fraction'>0/3</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/9</span>
+                <span class='fraction'>0/7</span>
             </div>
         
             
@@ -169,7 +169,11 @@
 <a name='L104'></a><a href='#L104'>104</a>
 <a name='L105'></a><a href='#L105'>105</a>
 <a name='L106'></a><a href='#L106'>106</a>
-<a name='L107'></a><a href='#L107'>107</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L107'></a><a href='#L107'>107</a>
+<a name='L108'></a><a href='#L108'>108</a>
+<a name='L109'></a><a href='#L109'>109</a>
+<a name='L110'></a><a href='#L110'>110</a>
+<a name='L111'></a><a href='#L111'>111</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -183,6 +187,22 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -203,21 +223,9 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -279,26 +287,11 @@
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import { DragHandle } from '@mui/icons-material';
-import { Box, TableCell, TableSortLabel, Theme } from '@mui/material';
-import { makeStyles } from '@mui/styles';
+import { Box, TableCell, TableSortLabel, useTheme } from '@mui/material';
 &nbsp;
 import { SortOrder } from './sort';
 import IconTooltip from '../IconTooltip';
 import { HeadCell } from '.';
-&nbsp;
-interface StyleProps {
-  rightAligned?: boolean;
-}
-&nbsp;
-const useStyles = <span class="cstat-no" title="statement not covered" >makeStyles(<span class="fstat-no" title="function not covered" >(t</span>heme: Theme) =&gt; (<span class="cstat-no" title="statement not covered" >{</span></span>
-  dragIcon: {
-    marginLeft: <span class="fstat-no" title="function not covered" >(p</span>rops: StyleProps) =&gt; (<span class="cstat-no" title="statement not covered" >props.rightAligned ? '0px' : '-20px')</span>,
-    color: theme.palette.common.white,
-    '&amp;:hover': {
-      color: theme.palette.neutral[600],
-    },
-  },
-}));
 &nbsp;
 type Props = {
   headCell: HeadCell;
@@ -310,7 +303,6 @@ type Props = {
 &nbsp;
 export default function <span class="fstat-no" title="function not covered" >TableHeaderItem(</span>props: Props): JSX.Element {
   const { headCell, order, orderBy, onRequestSort, i } = <span class="cstat-no" title="statement not covered" >props;</span>
-  const classes = <span class="cstat-no" title="statement not covered" >useStyles({ rightAligned: headCell.alignment === 'right' });</span>
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = <span class="cstat-no" title="statement not covered" >useSortable({</span>
     id: headCell.id,
   });
@@ -322,6 +314,7 @@ export default function <span class="fstat-no" title="function not covered" >Tab
   const createSortHandler = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >(p</span>roperty: string) =&gt; <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >(e</span>vent: React.MouseEvent&lt;unknown&gt;) =&gt; {</span></span>
 <span class="cstat-no" title="statement not covered" >    onRequestSort(event, property);</span>
   };
+  const theme = <span class="cstat-no" title="statement not covered" >useTheme();</span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >  return headCell.alignment === 'right' ? (</span>
     &lt;TableCell
@@ -348,10 +341,17 @@ export default function <span class="fstat-no" title="function not covered" >Tab
         )}
         {i &gt; 0 &amp;&amp; (
           &lt;DragHandle
-            className={classes.dragIcon}
             {...attributes}
             {...listeners}
-            sx={{ verticalAlign: 'middle', display: 'inline-flex' }}
+            sx={{
+              verticalAlign: 'middle',
+              display: 'inline-flex',
+              marginLeft: headCell.alignment === 'right' ? '0px' : '-20px',
+              color: theme.palette.common.white,
+              '&amp;:hover': {
+                color: theme.palette.neutral[600],
+              },
+            }}
           /&gt;
         )}
       &lt;/Box&gt;
@@ -373,7 +373,19 @@ export default function <span class="fstat-no" title="function not covered" >Tab
           direction={orderBy === headCell.id ? order : 'asc'}
           onClick={createSortHandler(headCell.id)}
         &gt;
-          {i &gt; 0 &amp;&amp; &lt;DragHandle className={classes.dragIcon} {...attributes} {...listeners} /&gt;}
+          {i &gt; 0 &amp;&amp; (
+            &lt;DragHandle
+              {...attributes}
+              {...listeners}
+              sx={{
+                marginLeft: '-20px',
+                color: theme.palette.common.white,
+                '&amp;:hover': {
+                  color: theme.palette.neutral[600],
+                },
+              }}
+            /&gt;
+          )}
           {headCell.label}
           {headCell.tooltipTitle &amp;&amp; &lt;IconTooltip title={headCell.tooltipTitle} /&gt;}
         &lt;/TableSortLabel&gt;
@@ -388,7 +400,7 @@ export default function <span class="fstat-no" title="function not covered" >Tab
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-05-21T16:35:23.903Z
+                at 2024-05-22T16:59:20.939Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>
