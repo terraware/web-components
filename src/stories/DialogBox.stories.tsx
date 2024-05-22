@@ -1,5 +1,5 @@
 import { Story } from '@storybook/react';
-import React from 'react';
+import React, { useState } from 'react';
 import Button from '../components/Button/Button';
 import DialogBox, { Props as DialogBoxProps } from '../components/DialogBox/DialogBox';
 
@@ -10,6 +10,16 @@ export default {
 
 const Template: Story<DialogBoxProps> = (args) => {
   return <DialogBox {...args} open={true} />;
+};
+
+const WithButtonTemplate: Story<DialogBoxProps> = (args) => {
+  const [opened, setOpened] = useState(false);
+  return (
+    <main>
+      <button onClick={() => setOpened(true)}>Click me</button>
+      <DialogBox {...args} open={opened} onClose={() => setOpened(false)} />
+    </main>
+  );
 };
 
 export const Small = Template.bind({});
@@ -74,4 +84,15 @@ noFooter.args = {
   title: 'Title',
   message: 'Message',
   size: 'small',
+};
+
+export const CloseOutside = WithButtonTemplate.bind({});
+CloseOutside.args = {
+  title: 'Title',
+  message: 'Message',
+  size: 'small',
+  middleButtons: [
+    <Button id='new-species' label='Test' onClick={() => true} size='small' key={'1'} />,
+    <Button id='new-species' label='Test' onClick={() => true} size='small' key={'2'} />,
+  ],
 };

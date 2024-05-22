@@ -33,8 +33,15 @@ export default function DialogBox(props: Props): JSX.Element | null {
       className={`dialog-box-container${skrim ? '--skrim' : ''} ${open ? 'dialog-box--opened' : 'dialog-box--closed'} ${
         isMobile ? 'mobile' : ''
       }`}
+      onClick={onClose}
     >
-      <div className={`dialog-box dialog-box--${size}`}>
+      <div
+        className={`dialog-box dialog-box--${size}`}
+        onClick={(e) => {
+          // do not close modal if anything inside modal content is clicked
+          e.stopPropagation();
+        }}
+      >
         <div className='dialog-box--header'>
           <div className='close-icon-spacer' />
           <p className='title'>{title}</p>
