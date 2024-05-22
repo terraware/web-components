@@ -2,26 +2,11 @@ import React from 'react';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import { DragHandle } from '@mui/icons-material';
-import { Box, TableCell, TableSortLabel, Theme } from '@mui/material';
-import { makeStyles } from '@mui/styles';
+import { Box, TableCell, TableSortLabel, useTheme } from '@mui/material';
 
 import { SortOrder } from './sort';
 import IconTooltip from '../IconTooltip';
 import { HeadCell } from '.';
-
-interface StyleProps {
-  rightAligned?: boolean;
-}
-
-const useStyles = makeStyles((theme: Theme) => ({
-  dragIcon: {
-    marginLeft: (props: StyleProps) => (props.rightAligned ? '0px' : '-20px'),
-    color: theme.palette.common.white,
-    '&:hover': {
-      color: theme.palette.neutral[600],
-    },
-  },
-}));
 
 type Props = {
   headCell: HeadCell;
@@ -33,7 +18,6 @@ type Props = {
 
 export default function TableHeaderItem(props: Props): JSX.Element {
   const { headCell, order, orderBy, onRequestSort, i } = props;
-  const classes = useStyles({ rightAligned: headCell.alignment === 'right' });
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
     id: headCell.id,
   });
@@ -45,6 +29,7 @@ export default function TableHeaderItem(props: Props): JSX.Element {
   const createSortHandler = (property: string) => (event: React.MouseEvent<unknown>) => {
     onRequestSort(event, property);
   };
+  const theme = useTheme();
 
   return headCell.alignment === 'right' ? (
     <TableCell
@@ -71,10 +56,17 @@ export default function TableHeaderItem(props: Props): JSX.Element {
         )}
         {i > 0 && (
           <DragHandle
-            className={classes.dragIcon}
             {...attributes}
             {...listeners}
-            sx={{ verticalAlign: 'middle', display: 'inline-flex' }}
+            sx={{
+              verticalAlign: 'middle',
+              display: 'inline-flex',
+              marginLeft: headCell.alignment === 'right' ? '0px' : '-20px',
+              color: theme.palette.common.white,
+              '&:hover': {
+                color: theme.palette.neutral[600],
+              },
+            }}
           />
         )}
       </Box>
@@ -96,7 +88,19 @@ export default function TableHeaderItem(props: Props): JSX.Element {
           direction={orderBy === headCell.id ? order : 'asc'}
           onClick={createSortHandler(headCell.id)}
         >
-          {i > 0 && <DragHandle className={classes.dragIcon} {...attributes} {...listeners} />}
+          {i > 0 && (
+            <DragHandle
+              {...attributes}
+              {...listeners}
+              sx={{
+                marginLeft: '-20px',
+                color: theme.palette.common.white,
+                '&:hover': {
+                  color: theme.palette.neutral[600],
+                },
+              }}
+            />
+          )}
           {headCell.label}
           {headCell.tooltipTitle && <IconTooltip title={headCell.tooltipTitle} />}
         </TableSortLabel>
