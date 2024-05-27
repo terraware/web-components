@@ -1,6 +1,6 @@
 import { Edit, Notes } from '@mui/icons-material';
 import { Box, Link, TableCell, Theme, Typography } from '@mui/material';
-import React, { ReactNode } from 'react';
+import React, { CSSProperties, ReactNode } from 'react';
 import { RendererProps } from './types';
 import { makeStyles } from '@mui/styles';
 import { getDateDisplayValue, preventDefaultEvent } from '../../utils';
@@ -30,13 +30,13 @@ const useStyles = makeStyles((theme: Theme) => ({
 export type TableRowType = Record<string, any>;
 
 export default function CellRenderer(props: RendererProps<TableRowType>): JSX.Element {
-  const { column, value, onRowClick, index, className, booleanFalseText, booleanTrueText, editText } = props;
+  const { column, value, onRowClick, index, className, booleanFalseText, booleanTrueText, editText, style } = props;
   const id = `row${index}-${column.key}`;
 
   if (column.type === 'date' && typeof value === 'string' && value) {
-    return <CellDateRenderer id={id} value={value} className={className} alignment={column.alignment} />;
+    return <CellDateRenderer id={id} value={value} className={className} alignment={column.alignment} style={style} />;
   } else if (column.type === 'notes' && value && typeof value === 'string') {
-    return <CellNotesRenderer id={id} value={value} className={className} alignment={column.alignment} />;
+    return <CellNotesRenderer id={id} value={value} className={className} alignment={column.alignment} style={style} />;
   } else if (column.type === 'boolean') {
     return (
       <CellBooleanRenderer
@@ -46,6 +46,7 @@ export default function CellRenderer(props: RendererProps<TableRowType>): JSX.El
         booleanFalseText={booleanFalseText}
         booleanTrueText={booleanTrueText}
         alignment={column.alignment}
+        style={style}
       />
     );
   } else if (column.type === 'edit') {
@@ -56,11 +57,12 @@ export default function CellRenderer(props: RendererProps<TableRowType>): JSX.El
         className={className}
         editText={editText}
         alignment={column.alignment}
+        style={style}
       />
     );
   }
 
-  return <CellTextRenderer id={id} value={value} className={className} alignment={column.alignment} />;
+  return <CellTextRenderer id={id} value={value} className={className} alignment={column.alignment} style={style} />;
 }
 
 export const cellDateFormatter = (value?: string): string | undefined => {
@@ -74,16 +76,23 @@ export function CellDateRenderer({
   value,
   className,
   alignment,
+  style,
 }: {
   id: string;
   value: string;
   className?: string;
   alignment?: TextAlignment;
+  style?: CSSProperties;
 }): JSX.Element {
   const classes = useStyles();
 
   return (
-    <TableCell id={id} align={alignment || 'left'} className={`${classes.date} ${classes.default} ${className}`}>
+    <TableCell
+      id={id}
+      align={alignment || 'left'}
+      className={`${classes.date} ${classes.default} ${className}`}
+      sx={style}
+    >
       <Typography component='p' variant='body1' fontSize='14px'>
         {cellDateFormatter(value)}
       </Typography>
@@ -96,11 +105,13 @@ export function CellTextRenderer({
   value,
   className,
   alignment,
+  style,
 }: {
   id: string;
   value?: string | number | any[] | ReactNode;
   className?: string;
   alignment?: TextAlignment;
+  style?: CSSProperties;
 }): JSX.Element {
   const classes = useStyles();
 
@@ -110,6 +121,7 @@ export function CellTextRenderer({
       align={alignment || 'left'}
       title={typeof value === 'string' ? value : ''}
       className={`${classes.default} ${className}`}
+      sx={style}
     >
       <Typography component='p' variant='body1' noWrap={true} classes={{ root: classes.textRoot }} fontSize='14px'>
         {value}
@@ -125,6 +137,7 @@ export function CellBooleanRenderer({
   booleanFalseText,
   booleanTrueText,
   alignment,
+  style,
 }: {
   id: string;
   value?: boolean | string | number | any[] | ReactNode;
@@ -132,11 +145,12 @@ export function CellBooleanRenderer({
   booleanFalseText: string;
   booleanTrueText: string;
   alignment?: TextAlignment;
+  style?: CSSProperties;
 }): JSX.Element {
   const classes = useStyles();
 
   return (
-    <TableCell id={id} align={alignment || 'left'} className={`${classes.default} ${className}`}>
+    <TableCell id={id} align={alignment || 'left'} className={`${classes.default} ${className}`} sx={style}>
       <Typography component='p' variant='body1' fontSize='14px'>
         {value?.toString() === 'true' ? booleanTrueText : booleanFalseText}
       </Typography>
@@ -149,16 +163,18 @@ export function CellNotesRenderer({
   value,
   className,
   alignment,
+  style,
 }: {
   id: string;
   value?: string;
   className?: string;
   alignment?: TextAlignment;
+  style?: CSSProperties;
 }): JSX.Element {
   const classes = useStyles();
 
   return (
-    <TableCell id={id} align={alignment || 'left'} className={`${classes.default} ${className}`}>
+    <TableCell id={id} align={alignment || 'left'} className={`${classes.default} ${className}`} sx={style}>
       <Typography id={id} component='p' variant='body1' fontSize='14px'>
         {value && value.length > 0 ? <Notes /> : ''}
       </Typography>
@@ -172,17 +188,19 @@ export function CellEditRenderer({
   className,
   editText,
   alignment,
+  style,
 }: {
   id: string;
   onRowClick?: () => void;
   className?: string;
   editText: string;
   alignment?: TextAlignment;
+  style?: CSSProperties;
 }): JSX.Element {
   const classes = useStyles();
 
   return (
-    <TableCell id={id} align={alignment || 'left'} className={`${classes.default} ${className}`}>
+    <TableCell id={id} align={alignment || 'left'} className={`${classes.default} ${className}`} sx={style}>
       <Link
         id={`${id}-button`}
         href='#'
