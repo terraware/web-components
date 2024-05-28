@@ -2,7 +2,7 @@ import { Story } from '@storybook/react';
 import React, { useState } from 'react';
 import MultiSelect, { MultiSelectProps } from '../components/MultiSelect';
 import Button from '../components/Button/Button';
-import { Card, Popover, Typography } from '@mui/material';
+import { Popover, Typography } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 
 export default {

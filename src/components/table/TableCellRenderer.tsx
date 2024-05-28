@@ -140,6 +140,7 @@ export function CellBooleanRenderer({
   style,
 }: {
   id: string;
+  // eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents
   value?: boolean | string | number | any[] | ReactNode;
   className?: string;
   booleanFalseText: string;

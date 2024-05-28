@@ -19,7 +19,7 @@ export default function ProgressCircle(props: Props): JSX.Element {
       <CircularProgress variant='determinate' value={100} className={`circle-track circle-track--${size}`} />
       <Box className='label-container'>
         {value && !hideValue && (
-          <p className={`progress-circle-label--{size}`}>{renderPercentText(Math.round(value))}</p>
+          <p className={`progress-circle-label--${size}`}>{renderPercentText(Math.round(value))}</p>
         )}
       </Box>
       <CircularProgress

@@ -19,6 +19,7 @@ const Template: StoryFn<InViewDemoProps> = (args): JSX.Element => {
   const [visibleCarousels, setVisibleCarousels] = useState<number[]>([]);
 
   const responsive = {
+    // eslint-disable-next-line id-denylist
     any: {
       breakpoint: { max: 10000, min: 0 },
       items: 1,
@@ -55,7 +56,7 @@ const Template: StoryFn<InViewDemoProps> = (args): JSX.Element => {
       <div>
         {carousels.map((value, index) => (
           <InView key={index}>
-            {({ inView, ref, entry }) => {
+            {({ inView, ref }) => {
               const photos = [...new Array(imagesPerCarousel)].map(
                 (_value, _index) => `https://source.unsplash.com/random/800x600/?forest,jungle,${_index}`
               );

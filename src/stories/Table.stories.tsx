@@ -29,7 +29,6 @@ function Renderer(props: RendererProps<any>): JSX.Element {
 }
 
 const Template: Story<Omit<TableProps<{ name: string; lastname: string }>, 'rows'> & { rowCount: number }> = (args) => {
-  const classes = useStyles();
   const styles = useStyles();
 
   const [selectedRows, setSelectedRows] = useState<any>([]);

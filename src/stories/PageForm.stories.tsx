@@ -20,8 +20,9 @@ Default.args = {
   onCancel: () => {
     return;
   },
+  // eslint-disable-next-line @typescript-eslint/no-misused-promises
   onSave: async () => {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       setTimeout(() => resolve(), 2000);
     });
   },

@@ -21,12 +21,12 @@ const Template: Story<{}> = () => {
 
   const handleChangeColor = (str: string) => {
     setColorStr(str);
-    setColorValue(palette[str] || (palette[COLORS[0]] as string));
+    setColorValue(palette[str] || palette[COLORS[0]]);
   };
 
   const handleChangeBgColor = (str: string) => {
     setBgColorStr(str);
-    setBgColorValue(palette[str] as string);
+    setBgColorValue(palette[str]);
   };
 
   return (

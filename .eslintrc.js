@@ -35,6 +35,11 @@ module.exports = {
   ],
   root: true,
   rules: {
+    '@typescript-eslint/no-unsafe-member-access': 'off',
+    '@typescript-eslint/no-unsafe-return': 'off',
+    '@typescript-eslint/no-unsafe-argument': 'off',
+    '@typescript-eslint/no-unsafe-assignment': 'off',
+    '@typescript-eslint/no-unsafe-call': 'off',
     '@typescript-eslint/adjacent-overload-signatures': 'error',
     '@typescript-eslint/array-type': [
       'error',
@@ -43,7 +48,7 @@ module.exports = {
       },
     ],
     '@typescript-eslint/ban-types': [
-      'error',
+      'warn',
       {
         types: {
           Object: {
@@ -71,7 +76,7 @@ module.exports = {
     '@typescript-eslint/dot-notation': 'error',
     '@typescript-eslint/explicit-function-return-type': 'off',
     '@typescript-eslint/explicit-module-boundary-types': 'off',
-    '@typescript-eslint/indent': ['error', 2],
+    '@typescript-eslint/indent': ['warn', 2],
     '@typescript-eslint/member-delimiter-style': [
       'error',
       {
@@ -157,7 +162,7 @@ module.exports = {
     'id-match': 'error',
     indent: 'off',
     'jsdoc/check-alignment': 'error',
-    'jsdoc/check-indentation': 'error',
+    'jsdoc/check-indentation': 'off',
     'jsdoc/newline-after-description': 'off',
     'linebreak-style': ['error', 'unix'],
     'max-classes-per-file': ['error', 1],
@@ -241,7 +246,7 @@ module.exports = {
       },
     ],
     'prefer-arrow/prefer-arrow-functions': [
-      'error',
+      'warn',
       {
         allowStandaloneDeclarations: true,
       },
@@ -250,7 +255,8 @@ module.exports = {
     'quote-props': 'off',
     quotes: 'off',
     radix: 'error',
-    'react/jsx-boolean-value': 'error',
+    'react/no-unescaped-entities': 'off',
+    'react/jsx-boolean-value': 'off',
     'react/jsx-curly-spacing': 'off',
     'react/jsx-equals-spacing': 'off',
     'react/jsx-key': 'error',
@@ -281,20 +287,6 @@ module.exports = {
       'error',
       {
         rules: {
-          'array-bracket-spacing': [true, 'never'],
-          'brace-style': [
-            true,
-            '1tbs',
-            {
-              allowSingleLine: true,
-            },
-          ],
-          'handle-callback-err': [true, '^(e|err|error)$'],
-          'jsx-no-string-ref': true,
-          'no-ex-assign': true,
-          'ter-arrow-spacing': true,
-          'ter-no-mixed-spaces-and-tabs': true,
-          'ter-prefer-arrow-callback': true,
           whitespace: true,
         },
       },

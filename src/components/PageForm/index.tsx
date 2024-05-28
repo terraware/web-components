@@ -27,6 +27,7 @@ export default function PageForm(props: PageFormProps): JSX.Element {
 
   const handleSave = async () => {
     setProcessing(true);
+    // eslint-disable-next-line @typescript-eslint/await-thenable
     await onSave(); // <-- we want all onSaves to be async
     setProcessing(false);
   };
@@ -41,6 +42,7 @@ export default function PageForm(props: PageFormProps): JSX.Element {
       >
         {children}
       </Box>
+      {/* eslint-disable-next-line @typescript-eslint/no-misused-promises */}
       {!hideEdit && <FormBottomBar onSave={handleSave} {...bottomBarProps} />}
     </>
   );

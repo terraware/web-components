@@ -21,8 +21,8 @@ const useStyles = makeStyles(() => ({
 }));
 
 export function DropdownV1({ id, label, values, onChange, selected, disabled }: Props): JSX.Element {
-  const onChangeH = (event: SelectChangeEvent<string>, _child: React.ReactNode) => {
-    onChange(event.target.value as string);
+  const onChangeH = (event: SelectChangeEvent<string>) => {
+    onChange(event.target.value);
   };
   const classes = useStyles();
 
