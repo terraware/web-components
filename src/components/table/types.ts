@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import { CSSProperties, ReactNode } from 'react';
 import { TooltipProps } from '@mui/material';
 import { TextAlignment } from '.';
 
@@ -19,6 +19,7 @@ export interface RendererProps<T> {
   onRowClick?: (newValue?: string) => void;
   reloadData?: () => void;
   className?: string;
+  style?: CSSProperties;
   booleanFalseText: string;
   booleanTrueText: string;
   editText: string;
