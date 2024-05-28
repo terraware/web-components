@@ -16,15 +16,15 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Set Environment
         run: .github/scripts/set-environment.sh
 
       - name: Setup Node
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
-          node-version: '16.x'
+          node-version: '20.x'
           registry-url: 'https://registry.npmjs.org'
 
       - name: Install Dependencies
@@ -45,14 +45,14 @@ jobs:
 
       - name: Prune package.json
         run: |
-             cd dist
-             npm pkg delete scripts
-             npm pkg delete devDependencies
-             npm pkg delete eslintConfig
-             npm pkg delete resolutions
-             npm pkg delete browserslist
-             pwd
-             cat `pwd`/package.json
+          cd dist
+          npm pkg delete scripts
+          npm pkg delete devDependencies
+          npm pkg delete eslintConfig
+          npm pkg delete resolutions
+          npm pkg delete browserslist
+          pwd
+          cat `pwd`/package.json
 
       - name: compare artifact package version
         run: .github/scripts/compare-artifact-package-versions.sh
@@ -61,4 +61,4 @@ jobs:
         if: env.UPDATE_NPM_PACKAGE == 'true'
         run: cd dist && npm publish --scope @terraware
         env:
-            NODE_AUTH_TOKEN: ${{ secrets.NPM_REGISTRY_AUTH_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_REGISTRY_AUTH_TOKEN }}
