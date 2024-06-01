@@ -28,8 +28,7 @@ import { CheckboxStyle } from '../Checkbox';
 const tableStyles = makeStyles((theme: Theme) => ({
   hover: {
     '&:hover': {
-      cursor: 'pointer',
-      backgroundColor: `${theme.palette.neutral[100]}!important`,
+      backgroundColor: theme.palette.TwClrBgSecondaryHover,
     },
   },
   table: {
@@ -40,12 +39,15 @@ const tableStyles = makeStyles((theme: Theme) => ({
   },
   tableRow: {
     '&.MuiTableRow-root.Mui-selected': {
-      backgroundColor: 'initial',
+      backgroundColor: theme.palette.TwClrBgSelectedTertiary,
+    },
+    '&:nth-of-type(odd)': {
+      backgroundColor: theme.palette.TwClrBgSecondary,
     },
   },
   cellDefault: {
     '&.MuiTableCell-root': {
-      borderBottom: `1px solid ${theme.palette.TwClrBrdrSecondary}`,
+      borderBottom: `1px solid ${theme.palette.TwClrBgSecondary}`,
     },
   },
 }));
@@ -387,7 +389,7 @@ export default function EnhancedTable<T extends TableRowType>({
                         <TableRow
                           id={`row${index + 1}`}
                           classes={{ hover: classes.hover }}
-                          hover={Boolean(onSelect) && (isClickable ? isClickable(row as T) : true) && !hasEditColumn}
+                          hover
                           onClick={(e) => {
                             e.stopPropagation();
                             if (onClick && !hasEditColumn && (isClickable ? isClickable(row as T) : true)) {

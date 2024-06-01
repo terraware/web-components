@@ -150,6 +150,7 @@ declare module '@mui/material/styles/createPalette' {
     TwClrTxtInfo?: React.CSSProperties['color'];
     TwClrTxtOnInfo?: React.CSSProperties['color'];
     TwClrBgSelected?: React.CSSProperties['color'];
+    TwClrBgSelectedTertiary?: React.CSSProperties['color'];
     TwClrBgSelectedGhost?: React.CSSProperties['color'];
     TwClrBgSelectedGhostActive?: React.CSSProperties['color'];
     TwClrBgSelectedGhostHover?: React.CSSProperties['color'];
@@ -332,6 +333,7 @@ declare module '@mui/material/styles/createPalette' {
     TwClrTxtInfo?: React.CSSProperties['color'];
     TwClrTxtOnInfo?: React.CSSProperties['color'];
     TwClrBgSelected?: React.CSSProperties['color'];
+    TwClrBgSelectedTertiary?: React.CSSProperties['color'];
     TwClrBgSelectedGhost?: React.CSSProperties['color'];
     TwClrBgSelectedGhostActive?: React.CSSProperties['color'];
     TwClrBgSelectedGhostHover?: React.CSSProperties['color'];
@@ -484,7 +486,7 @@ const TerrawareTheme: ThemeDictionary = {
     "TwClrShdw": "#333025",
     "TwClrTxt": "#333025",
     "TwClrTxtInverse": "#FFFFFF",
-    "TwClrTxtSecondary": "#645E48",
+    "TwClrTxtSecondary": "#7F775B",
     "TwClrTxtTertiary": "#B2AB93",
     "TwClrBgBrand": "#2C8658",
     "TwClrBgBrandActive": "#236A46",
@@ -520,6 +522,7 @@ const TerrawareTheme: ThemeDictionary = {
     "TwClrTxtInfo": "#645E48",
     "TwClrTxtOnInfo": "#FFFFFF",
     "TwClrBgSelected": "#6172BE",
+    "TwClrBgSelectedTertiary": "#EFF1F8",
     "TwClrBgSelectedGhost": "rgb(97 114 190 / 0%)",
     "TwClrBgSelectedGhostActive": "rgb(97 114 190 / 20%)",
     "TwClrBgSelectedGhostHover": "rgb(97 114 190 / 10%)",

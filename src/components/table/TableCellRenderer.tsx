@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme: Theme) => ({
       height: '52px',
       paddingTop: '0px',
       paddingBottom: '0px',
-      borderBottom: `1px solid ${theme.palette.TwClrBrdrSecondary}`,
+      borderBottom: `1px solid ${theme.palette.TwClrBgSecondary}`,
       fontVariantNumeric: 'tabular-nums',
     },
   },
@@ -93,7 +93,7 @@ export function CellDateRenderer({
       className={`${classes.date} ${classes.default} ${className}`}
       sx={style}
     >
-      <Typography component='p' variant='body1' fontSize='14px'>
+      <Typography component='p' variant='body1' fontSize='16px'>
         {cellDateFormatter(value)}
       </Typography>
     </TableCell>
@@ -123,7 +123,7 @@ export function CellTextRenderer({
       className={`${classes.default} ${className}`}
       sx={style}
     >
-      <Typography component='p' variant='body1' noWrap={true} classes={{ root: classes.textRoot }} fontSize='14px'>
+      <Typography component='p' variant='body1' noWrap={true} classes={{ root: classes.textRoot }} fontSize='16px'>
         {value}
       </Typography>
     </TableCell>
@@ -151,7 +151,7 @@ export function CellBooleanRenderer({
 
   return (
     <TableCell id={id} align={alignment || 'left'} className={`${classes.default} ${className}`} sx={style}>
-      <Typography component='p' variant='body1' fontSize='14px'>
+      <Typography component='p' variant='body1' fontSize='16px'>
         {value?.toString() === 'true' ? booleanTrueText : booleanFalseText}
       </Typography>
     </TableCell>
@@ -175,7 +175,7 @@ export function CellNotesRenderer({
 
   return (
     <TableCell id={id} align={alignment || 'left'} className={`${classes.default} ${className}`} sx={style}>
-      <Typography id={id} component='p' variant='body1' fontSize='14px'>
+      <Typography id={id} component='p' variant='body1' fontSize='16px'>
         {value && value.length > 0 ? <Notes /> : ''}
       </Typography>
     </TableCell>
@@ -212,7 +212,7 @@ export function CellEditRenderer({
         }}
       >
         <Box display='flex'>
-          <Typography component='p' variant='body1' fontSize='14px'>
+          <Typography component='p' variant='body1' fontSize='16px'>
             {editText}
           </Typography>
           <Edit fontSize='small' className={classes.editIcon} />
