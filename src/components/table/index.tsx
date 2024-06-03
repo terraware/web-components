@@ -389,7 +389,7 @@ export default function EnhancedTable<T extends TableRowType>({
                         <TableRow
                           id={`row${index + 1}`}
                           classes={{ hover: classes.hover }}
-                          hover
+                          hover={true}
                           onClick={(e) => {
                             e.stopPropagation();
                             if (onClick && !hasEditColumn && (isClickable ? isClickable(row as T) : true)) {
