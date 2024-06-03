@@ -51,11 +51,13 @@ const initializeDate = (value?: DatePickerDateType, timeZoneId?: string): DateTi
 
   const date = getDate(value, timeZoneId);
 
-  return date?.isValid ? date! : null;
+  return date?.isValid ? date : null;
 };
 
 export default function DatePicker(props: Props): JSX.Element {
-  const [temporalValue, setTemporalValue] = useState<DateTime | null>(initializeDate(props.value, props.defaultTimeZone));
+  const [temporalValue, setTemporalValue] = useState<DateTime | null>(
+    initializeDate(props.value, props.defaultTimeZone)
+  );
   const [minDateTime, setMinDateTime] = useState<DateTime | null>(initializeDate(props.minDate, props.defaultTimeZone));
   const [maxDateTime, setMaxDateTime] = useState<DateTime | null>(initializeDate(props.maxDate, props.defaultTimeZone));
   const locale = props.locale ?? 'en';

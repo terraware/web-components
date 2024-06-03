@@ -17,8 +17,8 @@ export default {
 const Template = (args: NavbarProps & { title?: boolean }) => {
   const [selectedItem, setSelectedItem] = React.useState('accessions');
 
-  // tslint:disable-next-line:no-empty
-  const showNavbar = (show: any) => {};
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  const showNavbar = () => {};
 
   return (
     <Navbar setShowNavBar={showNavbar} backgroundTransparent={args.backgroundTransparent}>

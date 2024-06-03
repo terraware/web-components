@@ -21,12 +21,12 @@ type DeviceInfoProps = {
  * This function returns properties on device type.
  *
  * {
- *   type: 'desktop' | 'tablet' | 'mobile',
- *   orientation: 'portrait' | 'landscape',
- *   isDesktop: <boolean>,
- *   isTablet: <boolean>,
- *   isMobile: <boolean>,
- *   isRetina: <boolean>,
+ * type: 'desktop' | 'tablet' | 'mobile',
+ * orientation: 'portrait' | 'landscape',
+ * isDesktop: <boolean>,
+ * isTablet: <boolean>,
+ * isMobile: <boolean>,
+ * isRetina: <boolean>,
  * }
  *
  * Clients can use whichever properties they see fit.

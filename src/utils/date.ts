@@ -50,14 +50,14 @@ const getDisplayValue = (date: DateTime) => {
  */
 export const getDate = (date: DateType, timeZoneId?: string) => {
   if (typeof date === 'string') {
-    const fromString = getDateFromISOString(date as string, timeZoneId);
+    const fromString = getDateFromISOString(date, timeZoneId);
     if (fromString.isValid) {
       return fromString;
     }
   }
 
   if (typeof date === 'number') {
-    const fromMillis = getDateFromMillis(date as number, timeZoneId);
+    const fromMillis = getDateFromMillis(date, timeZoneId);
     if (fromMillis.isValid) {
       return fromMillis;
     }
