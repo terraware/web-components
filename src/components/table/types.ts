@@ -1,5 +1,5 @@
 import { CSSProperties, ReactNode } from 'react';
-import { TooltipProps } from '@mui/material';
+import { SxProps, TooltipProps } from '@mui/material';
 import { TextAlignment } from '.';
 
 export interface TableColumnType {
@@ -9,6 +9,7 @@ export interface TableColumnType {
   className?: string;
   tooltipTitle?: TooltipProps['title'];
   alignment?: TextAlignment;
+  sx?: SxProps;
 }
 
 export interface RendererProps<T> {
@@ -23,6 +24,7 @@ export interface RendererProps<T> {
   booleanFalseText: string;
   booleanTrueText: string;
   editText: string;
+  sx?: SxProps;
 }
 
 export type EnhancedTableDetailsRow = {

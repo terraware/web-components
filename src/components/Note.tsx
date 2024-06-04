@@ -1,25 +1,22 @@
-import { Box, Theme, Typography } from '@mui/material';
-import { makeStyles } from '@mui/styles';
 import React from 'react';
-
-const useStyles = makeStyles((theme: Theme) => ({
-  note: {
-    borderRadius: 8,
-    backgroundColor: theme.palette.neutral[200],
-    marginBottom: theme.spacing(3),
-    padding: theme.spacing(2),
-  },
-}));
+import { Box, Typography, useTheme } from '@mui/material';
 
 export interface Props {
   children: string;
 }
 
 export default function Note({ children }: Props): JSX.Element {
-  const classes = useStyles();
+  const theme = useTheme();
 
   return (
-    <Box className={classes.note}>
+    <Box
+      sx={{
+        borderRadius: 8,
+        backgroundColor: theme.palette.neutral[200],
+        marginBottom: theme.spacing(3),
+        padding: theme.spacing(2),
+      }}
+    >
       <Typography component='p'>{children}</Typography>
     </Box>
   );

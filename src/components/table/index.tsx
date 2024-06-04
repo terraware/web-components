@@ -2,12 +2,12 @@ import {
   Box,
   Checkbox,
   Pagination,
+  SxProps,
   Table,
   TableBody,
   TableCell,
   TableContainer,
   TableRow,
-  Theme,
   TooltipProps,
   Typography,
   useTheme,
@@ -18,37 +18,11 @@ import { descendingComparator, getComparator, SortOrder, stableSort } from './so
 import TableCellRenderer, { TableRowType } from './TableCellRenderer';
 import TableHeader from './TableHeader';
 import { DatabaseColumn, DetailsRendererProps, RendererProps, TableColumnType } from './types';
-import { makeStyles } from '@mui/styles';
 import { DndContext, KeyboardSensor, MouseSensor, TouchSensor, useSensor, useSensors } from '@dnd-kit/core';
 import { sortableKeyboardCoordinates } from '@dnd-kit/sortable';
 import { useDeviceInfo } from '../../utils';
 import { IconName } from '../Icon/icons';
 import { CheckboxStyle } from '../Checkbox';
-
-const tableStyles = makeStyles((theme: Theme) => ({
-  hover: {
-    '&:hover': {
-      cursor: 'pointer',
-      backgroundColor: `${theme.palette.neutral[100]}!important`,
-    },
-  },
-  table: {
-    borderCollapse: 'initial',
-  },
-  inactiveRow: {
-    background: theme.palette.neutral[50],
-  },
-  tableRow: {
-    '&.MuiTableRow-root.Mui-selected': {
-      backgroundColor: 'initial',
-    },
-  },
-  cellDefault: {
-    '&.MuiTableCell-root': {
-      borderBottom: `1px solid ${theme.palette.TwClrBrdrSecondary}`,
-    },
-  },
-}));
 
 export type TextAlignment = 'right' | 'left';
 
@@ -59,6 +33,7 @@ export interface HeadCell {
   tooltipTitle?: TooltipProps['title'];
   alignment?: TextAlignment;
   className?: string;
+  sx?: SxProps;
 }
 
 export interface LocalizationProps {
@@ -160,7 +135,6 @@ export default function EnhancedTable<T extends TableRowType>({
   renderPaginationText,
   enhancedTopBarSelectionConfig,
 }: Props<T>): JSX.Element {
-  const classes = tableStyles();
   const theme = useTheme();
   const [order, setOrder] = React.useState<SortOrder>(_order);
   const [orderBy, setOrderBy] = React.useState(_orderBy);
@@ -275,6 +249,7 @@ export default function EnhancedTable<T extends TableRowType>({
       id: c.key,
       disablePadding: false,
       label: typeof c.name === 'string' ? c.name.toUpperCase() : c.name,
+      sx: c.sx,
       tooltipTitle: c.tooltipTitle,
     }));
   }
@@ -353,7 +328,7 @@ export default function EnhancedTable<T extends TableRowType>({
             aria-labelledby='tableTitle'
             size='medium'
             aria-label='enhanced table'
-            className={classes.table}
+            sx={{ borderCollapse: 'initial' }}
           >
             {!hideHeader && (
               <TableHeader
@@ -386,7 +361,6 @@ export default function EnhancedTable<T extends TableRowType>({
                       <React.Fragment key={index}>
                         <TableRow
                           id={`row${index + 1}`}
-                          classes={{ hover: classes.hover }}
                           hover={Boolean(onSelect) && (isClickable ? isClickable(row as T) : true) && !hasEditColumn}
                           onClick={(e) => {
                             e.stopPropagation();
@@ -397,14 +371,30 @@ export default function EnhancedTable<T extends TableRowType>({
                               handleClick(e, row as T);
                             }
                           }}
-                          className={`${isInactive && isInactive(row as T) ? classes.inactiveRow : undefined} ${
-                            classes.tableRow
-                          }`}
                           selected={isItemSelected}
                           aria-checked={isItemSelected}
+                          sx={{
+                            ...(isInactive && isInactive(row as T)
+                              ? { backgroundColor: theme.palette.neutral[50] }
+                              : {}),
+                            '&.MuiTableRow-root.Mui-selected': {
+                              backgroundColor: 'initial',
+                            },
+                            '&:hover': {
+                              cursor: 'pointer',
+                              backgroundColor: `${theme.palette.neutral[100]}!important`,
+                            },
+                          }}
                         >
                           {showCheckbox && (
-                            <TableCell padding='checkbox' className={classes.cellDefault}>
+                            <TableCell
+                              padding='checkbox'
+                              sx={{
+                                '&.MuiTableCell-root': {
+                                  borderBottom: `1px solid ${theme.palette.TwClrBrdrSecondary}`,
+                                },
+                              }}
+                            >
                               <Checkbox
                                 disableRipple={true}
                                 sx={CheckboxStyle(theme)}

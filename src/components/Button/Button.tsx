@@ -4,15 +4,7 @@ import { IconName } from '../Icon/icons';
 import { Size } from '../Size';
 import './styles.scss';
 
-import { makeStyles } from '@mui/styles';
-
-const useStyles = makeStyles(() => ({
-  svgIconFill: {
-    '& path': {
-      fill: 'currentColor',
-    },
-  },
-}));
+import { ButtonBase, SxProps } from '@mui/material';
 
 export type ButtonPriority = 'primary' | 'secondary' | 'ghost';
 export type ButtonType = 'productive' | 'passive' | 'destructive';
@@ -30,6 +22,7 @@ export interface Props {
   id?: string;
   className?: string;
   style?: CSSProperties;
+  sx?: SxProps;
 }
 
 export default function Button(props: Props): JSX.Element {
@@ -46,24 +39,30 @@ export default function Button(props: Props): JSX.Element {
     id,
     className,
     style,
+    sx,
   } = props;
-  const classes = useStyles();
 
   return (
-    <button
+    <ButtonBase
       id={id}
       onClick={onClick}
       className={`button ${type}-${priority} button--${size} ${type}-${priority}--${size} ${
         icon && !processing ? 'button-with-icon' : ''
-      } ${rightIcon && !processing ? 'button-with-right-icon' : ''} ${classes.svgIconFill}
+      } ${rightIcon && !processing ? 'button-with-right-icon' : ''}
       ${!label ? 'button-no-label' : ''} ${className ?? ''}`}
       disabled={disabled}
       style={style}
+      sx={[
+        {
+          '& path': { fill: 'currentColor' },
+        },
+        ...(Array.isArray(sx) ? sx : [sx]),
+      ]}
     >
       {processing && <Icon name='spinner' size={size} className='icon-spinner' />}
       {!processing && icon && <Icon name={icon} size={size} />}
       {!processing && !!label && label}
       {!processing && rightIcon && <Icon name={rightIcon} size={size} className='icon-right' />}
-    </button>
+    </ButtonBase>
   );
 }

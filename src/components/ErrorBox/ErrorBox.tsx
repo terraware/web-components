@@ -1,4 +1,6 @@
 import React from 'react';
+import { Box, SxProps } from '@mui/material';
+
 import Button from '../Button/Button';
 import Icon from '../Icon/Icon';
 import useDeviceInfo from '../../utils/useDeviceInfo';
@@ -10,14 +12,15 @@ export interface Props {
   buttonText?: string;
   title?: string;
   className?: string;
+  sx?: SxProps;
 }
 
 export default function ErrorBox(props: Props): JSX.Element {
-  const { text, onClick, buttonText, title, className } = props;
+  const { text, onClick, buttonText, title, className, sx } = props;
   const { isMobile } = useDeviceInfo();
 
   return (
-    <div className={`error-box ${className} ${isMobile ? 'mobile' : ''}`}>
+    <Box className={`error-box ${className} ${isMobile ? 'mobile' : ''}`} sx={sx}>
       <div className='error-box--container'>
         <Icon name='error' className='error-icon' size='large' />
         <div>
@@ -30,6 +33,6 @@ export default function ErrorBox(props: Props): JSX.Element {
           <Button label={buttonText} priority='secondary' type='passive' onClick={onClick} />
         </div>
       )}
-    </div>
+    </Box>
   );
 }

@@ -1,43 +1,6 @@
 import { Info } from '@mui/icons-material';
-import { Box, IconButton, Theme, Typography } from '@mui/material';
-import { makeStyles } from '@mui/styles';
-import React from 'react';
-
-const useStyles = makeStyles((theme: Theme) => ({
-  bold: {
-    fontWeight: theme.typography.fontWeightBold,
-    whiteSpace: 'pre-line',
-  },
-  summaryDefault: {
-    position: 'relative',
-    borderRadius: 8,
-    backgroundColor: theme.palette.neutral[200],
-    padding: theme.spacing(2),
-  },
-  summaryAvailable: {
-    borderRadius: 8,
-    backgroundColor: theme.palette.neutral[700],
-    padding: theme.spacing(2),
-    color: theme.palette.common.white,
-  },
-  summaryZero: {
-    borderRadius: 8,
-    backgroundColor: theme.palette.state[5],
-    padding: theme.spacing(2),
-    color: theme.palette.common.white,
-  },
-  full: {
-    borderRadius: 8,
-    backgroundColor: theme.palette.neutral[200],
-    padding: theme.spacing(2),
-    height: '100%',
-    boxSizing: 'border-box',
-  },
-  infoIcon: {
-    position: 'absolute',
-    right: theme.spacing(2),
-  },
-}));
+import { Box, IconButton, SxProps, Typography, useTheme } from '@mui/material';
+import React, { useMemo } from 'react';
 
 export interface Props {
   id?: string;
@@ -49,26 +12,58 @@ export interface Props {
 }
 
 export default function SummaryBox({ title, value, variant = 'default', id, icon, onIconClick }: Props): JSX.Element {
-  const classes = useStyles();
+  const theme = useTheme();
 
-  const style =
-    variant === 'default'
-      ? classes.summaryDefault
-      : variant === 'available'
-      ? classes.summaryAvailable
-      : variant === 'full'
-      ? classes.full
-      : classes.summaryZero;
+  const summaryBoxStyles: SxProps = useMemo(() => {
+    switch (variant) {
+      case 'default':
+        return {
+          position: 'relative',
+          borderRadius: 8,
+          backgroundColor: theme.palette.neutral[200],
+          padding: theme.spacing(2),
+        };
+      case 'available':
+        return {
+          borderRadius: 8,
+          backgroundColor: theme.palette.neutral[700],
+          padding: theme.spacing(2),
+          color: theme.palette.common.white,
+        };
+      case 'full':
+        return {
+          borderRadius: 8,
+          backgroundColor: theme.palette.neutral[200],
+          padding: theme.spacing(2),
+          height: '100%',
+          boxSizing: 'border-box',
+        };
+      default:
+        return {
+          borderRadius: 8,
+          backgroundColor: theme.palette.state[5],
+          padding: theme.spacing(2),
+          color: theme.palette.common.white,
+        };
+    }
+  }, [theme, variant]);
 
   return (
-    <Box className={style} id={id}>
+    <Box id={id} sx={summaryBoxStyles}>
       {icon && (
-        <IconButton className={classes.infoIcon} onClick={onIconClick}>
+        <IconButton onClick={onIconClick} sx={{ position: 'absolute', right: theme.spacing(2) }}>
           <Info />
         </IconButton>
       )}
       <Typography component='p'>{title}</Typography>
-      <Typography component='p' variant='h6' className={classes.bold}>
+      <Typography
+        component='p'
+        variant='h6'
+        sx={{
+          fontWeight: theme.typography.fontWeightBold,
+          whiteSpace: 'pre-line',
+        }}
+      >
         {value}
       </Typography>
     </Box>

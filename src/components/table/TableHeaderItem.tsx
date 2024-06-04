@@ -41,6 +41,7 @@ export default function TableHeaderItem(props: Props): JSX.Element {
       sortDirection={orderBy === headCell.id ? order : false}
       style={style}
       className={headCell.className || ''}
+      sx={headCell.sx}
     >
       <Box display='flex' alignItems='center' flexDirection='row-reverse'>
         {headCell.label && (
@@ -81,6 +82,7 @@ export default function TableHeaderItem(props: Props): JSX.Element {
       sortDirection={orderBy === headCell.id ? order : false}
       style={style}
       className={headCell.className || ''}
+      sx={headCell.sx}
     >
       {headCell.label && (
         <TableSortLabel
