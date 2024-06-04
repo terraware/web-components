@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './styles.scss';
 import IconTooltip from '../IconTooltip';
-import { TooltipProps } from '@mui/material';
+import { Box, SxProps, TooltipProps } from '@mui/material';
 import Icon from '../Icon/Icon';
 import PillList, { PillListItem } from '../PillList';
 
@@ -23,6 +23,7 @@ export type MultiSelectProps<K, V> = {
   pillListClassName?: string;
   placeHolder?: string;
   selectedOptions: K[];
+  sx?: SxProps;
   tooltipTitle?: TooltipProps['title'];
   valueRenderer: (value: V) => string;
 };
@@ -44,6 +45,7 @@ export default function MultiSelect<K, V>(props: MultiSelectProps<K, V>): JSX.El
     pillListClassName,
     placeHolder,
     selectedOptions,
+    sx,
     tooltipTitle,
     valueRenderer,
   } = props;
@@ -86,7 +88,7 @@ export default function MultiSelect<K, V>(props: MultiSelectProps<K, V>): JSX.El
     .filter((data) => data.value) as PillListItem<K>[];
 
   return (
-    <div className={`multi-select ${className}`}>
+    <Box className={`multi-select ${className}`} sx={sx}>
       {label && (
         <label htmlFor={id} className='multi-select__label'>
           {label} {tooltipTitle && <IconTooltip title={tooltipTitle} />}
@@ -131,6 +133,6 @@ export default function MultiSelect<K, V>(props: MultiSelectProps<K, V>): JSX.El
           {helperText}
         </label>
       )}
-    </div>
+    </Box>
   );
 }

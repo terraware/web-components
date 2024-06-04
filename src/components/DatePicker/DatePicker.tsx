@@ -1,5 +1,5 @@
 import React, { useState, KeyboardEventHandler } from 'react';
-import { TextField, TextFieldProps } from '@mui/material';
+import { Box, SxProps, TextField, TextFieldProps } from '@mui/material';
 import { LocalizationProvider, DesktopDatePicker } from '@mui/x-date-pickers';
 import AdapterLuxon from '@date-io/luxon';
 import { DateTime, Settings } from 'luxon';
@@ -41,6 +41,7 @@ export interface Props {
   onDateChange?: (value?: DateTime) => void;
   onError?: (reason: any, value: any) => void;
   onKeyPress?: KeyboardEventHandler;
+  sx?: SxProps;
   value?: DatePickerDateType;
 }
 
@@ -113,7 +114,7 @@ export default function DatePicker(props: Props): JSX.Element {
   //       empty. It appears to be generated programmatically deep in the guts of the MUI DatePicker
   //       code, and it most likely uses the browser's locale.
   return (
-    <div className={`date-picker ${props.className} ${props.errorText ? 'date-picker--error' : ''}`}>
+    <Box className={`date-picker ${props.className} ${props.errorText ? 'date-picker--error' : ''}`} sx={props.sx}>
       <LocalizationProvider dateAdapter={AdapterLuxon} adapterLocale={locale}>
         {props.label && (
           <label htmlFor={props.id} className='textfield-label'>
@@ -140,6 +141,6 @@ export default function DatePicker(props: Props): JSX.Element {
           value={temporalValue}
         />
       </LocalizationProvider>
-    </div>
+    </Box>
   );
 }

@@ -1,4 +1,4 @@
-import { Checkbox as MUICheckbox, FormControlLabel, Theme, useTheme } from '@mui/material';
+import { Checkbox as MUICheckbox, FormControlLabel, Theme, useTheme, SxProps } from '@mui/material';
 import React, { SyntheticEvent } from 'react';
 
 export const CheckboxStyle = (theme: Theme) => ({
@@ -33,6 +33,7 @@ export interface Props {
   onChange: (value: boolean) => void;
   disabled?: boolean;
   className?: string;
+  sx?: SxProps;
 }
 
 export default function Checkbox(props: Props): JSX.Element {
@@ -55,7 +56,10 @@ export default function Checkbox(props: Props): JSX.Element {
           id={'check-' + props.id}
           checked={props.value ?? false}
           size='medium'
-          sx={CheckboxStyle(theme)}
+          sx={{
+            ...CheckboxStyle(theme),
+            ...(props.sx || {}),
+          }}
         />
       }
       className={props.className}

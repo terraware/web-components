@@ -1,4 +1,4 @@
-import { TooltipProps } from '@mui/material';
+import { Box, SxProps, TooltipProps } from '@mui/material';
 import classNames from 'classnames';
 import React, { ChangeEvent, KeyboardEvent, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
@@ -39,6 +39,7 @@ export interface SelectTProps<T> {
   required?: boolean;
   selectedValue?: T;
   selectStyles?: SelectStyles;
+  sx?: SxProps;
   toT: (input: string) => T;
   tooltipTitle?: TooltipProps['title'];
   warningText?: string | string[];
@@ -68,6 +69,7 @@ export default function SelectT<T>(props: SelectTProps<T>): JSX.Element {
     required,
     selectedValue,
     selectStyles,
+    sx,
     tooltipTitle,
     toT,
     warningText,
@@ -236,7 +238,7 @@ export default function SelectT<T>(props: SelectTProps<T>): JSX.Element {
   };
 
   return (
-    <div className={`select ${className}`}>
+    <Box className={`select ${className}`} sx={sx}>
       {label && (
         <label htmlFor={id} className='textfield-label'>
           {label} {required ? '*' : ''} {tooltipTitle && <IconTooltip title={tooltipTitle} />}
@@ -314,6 +316,6 @@ export default function SelectT<T>(props: SelectTProps<T>): JSX.Element {
           {helperText}
         </label>
       )}
-    </div>
+    </Box>
   );
 }

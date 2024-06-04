@@ -5,6 +5,7 @@ import { Size } from '../Size';
 import './styles.scss';
 
 import { makeStyles } from '@mui/styles';
+import { ButtonBase, SxProps } from '@mui/material';
 
 const useStyles = makeStyles(() => ({
   svgIconFill: {
@@ -30,6 +31,7 @@ export interface Props {
   id?: string;
   className?: string;
   style?: CSSProperties;
+  sx?: SxProps;
 }
 
 export default function Button(props: Props): JSX.Element {
@@ -46,11 +48,12 @@ export default function Button(props: Props): JSX.Element {
     id,
     className,
     style,
+    sx,
   } = props;
   const classes = useStyles();
 
   return (
-    <button
+    <ButtonBase
       id={id}
       onClick={onClick}
       className={`button ${type}-${priority} button--${size} ${type}-${priority}--${size} ${
@@ -59,11 +62,12 @@ export default function Button(props: Props): JSX.Element {
       ${!label ? 'button-no-label' : ''} ${className ?? ''}`}
       disabled={disabled}
       style={style}
+      sx={sx}
     >
       {processing && <Icon name='spinner' size={size} className='icon-spinner' />}
       {!processing && icon && <Icon name={icon} size={size} />}
       {!processing && !!label && label}
       {!processing && rightIcon && <Icon name={rightIcon} size={size} className='icon-right' />}
-    </button>
+    </ButtonBase>
   );
 }

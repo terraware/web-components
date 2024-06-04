@@ -1,4 +1,4 @@
-import { Autocomplete as MUIAutocomplete, TextField, TooltipProps } from '@mui/material';
+import { Box, Autocomplete as MUIAutocomplete, SxProps, TextField, TooltipProps } from '@mui/material';
 import React, { ChangeEvent } from 'react';
 import Icon from '../Icon/Icon';
 import IconTooltip from '../IconTooltip';
@@ -23,6 +23,7 @@ export interface Props {
   errorText?: string;
   tooltipTitle?: TooltipProps['title'];
   required?: boolean;
+  sx?: SxProps;
 }
 
 const isEmpty = (value: unknown) => ['', undefined].includes(value as string | undefined);
@@ -42,6 +43,7 @@ export default function Autocomplete({
   errorText,
   tooltipTitle,
   required,
+  sx,
 }: Props): JSX.Element {
   const onChangeHandler = (event: ChangeEvent<any>, value: string | null) => {
     if (event) {
@@ -54,7 +56,7 @@ export default function Autocomplete({
   };
 
   const renderInput = (params: object) => (
-    <div className={`auto-complete ${className}`}>
+    <Box className={`auto-complete ${className}`} sx={sx}>
       {label && (
         <label htmlFor={id} className='textfield-label'>
           {label} {required ? '*' : ''}
@@ -76,7 +78,7 @@ export default function Autocomplete({
           </label>
         </div>
       )}
-    </div>
+    </Box>
   );
 
   const optionalArgs: any = {};
