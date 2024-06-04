@@ -1,27 +1,12 @@
 import React from 'react';
-import { Tooltip as MUITooltip, Theme, TooltipProps } from '@mui/material';
-import { makeStyles } from '@mui/styles';
+import { Tooltip as MUITooltip, TooltipProps, useTheme } from '@mui/material';
 
 import { useDeviceInfo } from '../../utils';
-
-const useStyles = makeStyles((theme: Theme) => ({
-  arrow: {
-    color: theme.palette.TwClrBaseGray800,
-  },
-  tooltip: {
-    backgroundColor: theme.palette.TwClrBaseGray800,
-    color: theme.palette.TwClrBaseWhite,
-    padding: '8px',
-    '& a': {
-      color: theme.palette.TwClrBaseWhite,
-    },
-  },
-}));
 
 export default function Tooltip({ placement = 'top-start', title, children }: TooltipProps): JSX.Element {
   const [open, setOpen] = React.useState(false);
   const { isMobile } = useDeviceInfo();
-  const classes = useStyles();
+  const theme = useTheme();
 
   const handleTooltipClose = () => {
     setOpen(false);
@@ -36,16 +21,23 @@ export default function Tooltip({ placement = 'top-start', title, children }: To
   return (
     <MUITooltip
       arrow={true}
-      classes={{
-        arrow: classes.arrow,
-        tooltip: classes.tooltip,
-      }}
       onOpen={handleTooltipOpen}
       onClose={handleTooltipClose}
       open={open}
       placement={placement}
       sx={{
         maxWidth: isMobile ? '342px' : '464px',
+        '& .MuiTooltip-arrow': {
+          color: theme.palette.TwClrBaseGray800,
+        },
+        '& .MuiTooltip-tooltip': {
+          backgroundColor: theme.palette.TwClrBaseGray800,
+          color: theme.palette.TwClrBaseWhite,
+          padding: '8px',
+          '& a': {
+            color: theme.palette.TwClrBaseWhite,
+          },
+        },
       }}
       title={title}
     >

@@ -1,25 +1,8 @@
 import React, { useState } from 'react';
 import Icon from '../Icon/Icon';
-import { IconButton, Theme } from '@mui/material';
-import { makeStyles } from '@mui/styles';
+import { IconButton, useTheme } from '@mui/material';
 import Popover, { Section } from './Popover';
 import { DropdownItem } from '../types';
-
-const useStyles = makeStyles((theme: Theme) => ({
-  iconContainer: {
-    height: '48px',
-    borderRadius: '16px',
-    padding: theme.spacing(1.5, 2),
-  },
-  icon: {
-    width: '32px',
-    height: '32px',
-  },
-  chevronDown: {
-    marginLeft: '8px',
-    fill: theme.palette.TwClrIcn,
-  },
-}));
 
 export type PopoverMenuProps = {
   anchor: React.ReactNode;
@@ -28,7 +11,7 @@ export type PopoverMenuProps = {
 };
 
 export default function PopoverMenu({ anchor, menuSections, onClick }: PopoverMenuProps): JSX.Element {
-  const classes = useStyles();
+  const theme = useTheme();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -47,9 +30,24 @@ export default function PopoverMenu({ anchor, menuSections, onClick }: PopoverMe
 
   return (
     <div>
-      <IconButton onClick={handleClick} size='small' className={classes.iconContainer}>
+      <IconButton
+        onClick={handleClick}
+        size='small'
+        sx={{
+          height: '48px',
+          borderRadius: '16px',
+          padding: theme.spacing(1.5, 2),
+        }}
+      >
         {anchor}
-        <Icon name='chevronDown' size='medium' className={classes.chevronDown} />
+        <Icon
+          name='chevronDown'
+          size='medium'
+          style={{
+            marginLeft: '8px',
+            fill: theme.palette.TwClrIcn,
+          }}
+        />
       </IconButton>
       <Popover
         sections={menuSections}

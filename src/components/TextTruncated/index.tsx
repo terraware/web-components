@@ -1,27 +1,5 @@
-import { Link, Theme, Tooltip, Typography, useTheme } from '@mui/material';
+import { Link, Tooltip, Typography, useTheme } from '@mui/material';
 import React, { useEffect, useMemo, useState } from 'react';
-import { makeStyles } from '@mui/styles';
-
-const useStyles = makeStyles((theme: Theme) => ({
-  arrow: {
-    color: `${theme.palette.TwClrBg} !important`,
-    '&:before': {
-      border: `1px solid ${theme.palette.TwClrBrdrTertiary}`,
-    },
-  },
-  popper: {
-    maxHeight: '200px',
-    overflow: 'auto',
-  },
-  tooltip: {
-    backgroundColor: `${theme.palette.TwClrBg} !important`,
-    color: `${theme.palette.TwClrTxt} !important`,
-    border: `1px solid ${theme.palette.TwClrBrdrTertiary} !important`,
-    borderRadius: '8px !important',
-    boxShadow: `0px 3px 3px ${theme.palette.TwClrBaseGray100}`,
-    padding: '8px',
-  },
-}));
 
 /**
  * Represents the result of truncating the string list
@@ -87,7 +65,6 @@ export default function TextTruncated(props: Props): JSX.Element {
   const { stringList, listSeparator, maxLengthPx, moreSeparator, moreText, textStyle, showAllStyle, placeHolder } =
     props;
   const [showAllOpen, setShowAllOpen] = useState(false);
-  const classes = useStyles();
   const [canvasContext, setCanvasContext] = useState<CanvasRenderingContext2D>();
   const theme = useTheme();
 
@@ -131,17 +108,32 @@ export default function TextTruncated(props: Props): JSX.Element {
       {textToDisplay.numberMore !== 0 ? (
         <Tooltip
           arrow={true}
-          classes={{
-            arrow: classes.arrow,
-            popper: classes.popper,
-            tooltip: classes.tooltip,
-          }}
           open={showAllOpen}
           title={
             <Typography sx={showAllStyle} fontSize='14px'>
               {stringList.join(listSeparator)}
             </Typography>
           }
+          sx={{
+            '& .MuiTooltip-arrow': {
+              color: `${theme.palette.TwClrBg} !important`,
+              '&:before': {
+                border: `1px solid ${theme.palette.TwClrBrdrTertiary}`,
+              },
+            },
+            '& .MuiTooltip-popper': {
+              maxHeight: '200px',
+              overflow: 'auto',
+            },
+            '& .MuiTooltip-tooltip': {
+              backgroundColor: `${theme.palette.TwClrBg} !important`,
+              color: `${theme.palette.TwClrTxt} !important`,
+              border: `1px solid ${theme.palette.TwClrBrdrTertiary} !important`,
+              borderRadius: '8px !important',
+              boxShadow: `0px 3px 3px ${theme.palette.TwClrBaseGray100}`,
+              padding: '8px',
+            },
+          }}
         >
           <Link
             component='button'

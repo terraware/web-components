@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 import MultiSelect, { MultiSelectProps } from '../components/MultiSelect';
 import Button from '../components/Button/Button';
 import { Popover, Typography } from '@mui/material';
-import { makeStyles } from '@mui/styles';
 
 export default {
   title: 'MultiSelect',
@@ -46,20 +45,7 @@ const Template: Story<MultiSelectProps<number, string>> = (args) => {
   );
 };
 
-const useStyles = makeStyles(() => ({
-  popoverContainer: {
-    '& .MuiPaper-root': {
-      borderRadius: '8px',
-      padding: '10px',
-      overflow: 'visible',
-      width: '480px',
-    },
-  },
-}));
-
 const WithParentOptionsVisibilityControlTemplate: Story<MultiSelectProps<number, string>> = (args) => {
-  const classes = useStyles();
-
   const [selectedOptions, setSelectedOptions] = useState<number[]>([]);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [optionsVisible, setOptionsVisible] = useState(false);
@@ -147,7 +133,6 @@ const WithParentOptionsVisibilityControlTemplate: Story<MultiSelectProps<number,
       <Button onClick={toggleMultiSelectVisible} label={Boolean(anchorEl) ? 'Hide MultiSelect' : 'Show MultiSelect'} />
 
       <Popover
-        className={classes.popoverContainer}
         id='filter-popover'
         open={Boolean(anchorEl)}
         onClose={hideOptionsOrClose}
@@ -178,6 +163,14 @@ const WithParentOptionsVisibilityControlTemplate: Story<MultiSelectProps<number,
         transformOrigin={{
           vertical: 'top',
           horizontal: 'left',
+        }}
+        sx={{
+          '& .MuiPaper-root': {
+            borderRadius: '8px',
+            padding: '10px',
+            overflow: 'visible',
+            width: '480px',
+          },
         }}
       >
         {renderMultiSelect()}

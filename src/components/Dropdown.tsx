@@ -1,8 +1,7 @@
-import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, TooltipProps } from '@mui/material';
+import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, SxProps, TooltipProps } from '@mui/material';
 import { DropdownItem } from './types';
 import SelectT, { SelectStyles } from './Select/SelectT';
 import Autocomplete, { ValueType } from './Autocomplete/Autocomplete';
-import { makeStyles } from '@mui/styles';
 import React from 'react';
 
 export interface Props {
@@ -14,20 +13,13 @@ export interface Props {
   disabled?: boolean;
 }
 
-const useStyles = makeStyles(() => ({
-  formControl: {
-    width: '100%',
-  },
-}));
-
 export function DropdownV1({ id, label, values, onChange, selected, disabled }: Props): JSX.Element {
   const onChangeH = (event: SelectChangeEvent<string>) => {
     onChange(event.target.value);
   };
-  const classes = useStyles();
 
   return (
-    <FormControl variant='outlined' className={classes.formControl} size='small' disabled={disabled}>
+    <FormControl variant='outlined' size='small' disabled={disabled} sx={{ width: '100%' }}>
       <InputLabel id={`${id}-outlined-label`}>{label}</InputLabel>
       <Select labelId={`${id}-outlined-label`} id={id} label={label} onChange={onChangeH} value={selected}>
         {values?.map(({ label: inLabel, value }) => (
@@ -51,6 +43,7 @@ export interface DropdownProps {
   placeholder?: string;
   errorText?: string;
   tooltipTitle?: TooltipProps['title'];
+  sx?: SxProps;
 
   // select props
   helperText?: string | string[];

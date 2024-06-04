@@ -1,4 +1,4 @@
-import { TooltipProps } from '@mui/material';
+import { SxProps, TooltipProps } from '@mui/material';
 import React from 'react';
 
 import './styles.scss';
@@ -23,6 +23,7 @@ export interface SelectProps {
   readonly?: boolean;
   selectedValue?: string;
   selectStyles?: SelectStyles;
+  sx?: SxProps;
   tooltipTitle?: TooltipProps['title'];
   warningText?: string | string[];
 }
