@@ -1,7 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Box, Typography, useTheme } from '@mui/material';
-import { Theme } from '@mui/material';
-import { makeStyles } from '@mui/styles';
 import { useDeviceInfo } from '../../utils';
 import ErrorBox from '../ErrorBox/ErrorBox';
 import Button from '../Button/Button';
@@ -11,29 +9,6 @@ export type PhotoChooserErrorType = {
   title: string;
   text: string;
 };
-
-const useStyles = makeStyles((theme: Theme) => ({
-  removePhoto: {
-    position: 'absolute',
-    top: -10,
-    right: -10,
-    backgroundColor: theme.palette.TwClrBgDanger,
-  },
-  error: {
-    width: 'auto',
-    marginBottom: theme.spacing(2),
-    '&.mobile': {
-      width: 'auto',
-    },
-  },
-  thumbnail: {
-    margin: 'auto auto',
-    objectFit: 'contain',
-    display: 'flex',
-    maxWidth: '120px',
-    maxHeight: '120px',
-  },
-}));
 
 export type PhotoChooserProps = {
   title?: string;
@@ -68,7 +43,6 @@ export default function PhotoChooser(props: PhotoChooserProps): JSX.Element {
     maxPhotos,
   } = props;
   const { isMobile } = useDeviceInfo();
-  const classes = useStyles();
   const [files, setFiles] = useState<File[]>([]);
   const [filesData, setFilesData] = useState<string[]>([]);
   const divRef = useRef<HTMLDivElement>(null);
@@ -117,7 +91,19 @@ export default function PhotoChooser(props: PhotoChooserProps): JSX.Element {
             {Array.isArray(description) ? description.map((txt, i) => <div key={i}>{txt}</div>) : description}
           </Typography>
         )}
-        {error && <ErrorBox title={error.title} text={error.text} className={classes.error} />}
+        {error && (
+          <ErrorBox
+            title={error.title}
+            text={error.text}
+            sx={{
+              width: 'auto',
+              marginBottom: theme.spacing(2),
+              '&.mobile': {
+                width: 'auto',
+              },
+            }}
+          />
+        )}
         {filesData.length > 0 && multipleSelection && (
           <Box display='flex' flexDirection='row' flexWrap='wrap' marginBottom={theme.spacing(2)}>
             {filesData.map((fileData, index) => (
@@ -134,9 +120,25 @@ export default function PhotoChooser(props: PhotoChooserProps): JSX.Element {
                   icon='iconTrashCan'
                   onClick={() => removeFileAtIndex(index)}
                   size='small'
-                  className={classes.removePhoto}
+                  style={{
+                    position: 'absolute',
+                    top: -10,
+                    right: -10,
+                    backgroundColor: theme.palette.TwClrBgDanger,
+                  }}
                 />
-                <img height='120px' src={fileData} alt={files[index]?.name} className={classes.thumbnail} />
+                <img
+                  height='120px'
+                  src={fileData}
+                  alt={files[index]?.name}
+                  style={{
+                    margin: 'auto auto',
+                    objectFit: 'contain',
+                    display: 'flex',
+                    maxWidth: '120px',
+                    maxHeight: '120px',
+                  }}
+                />
               </Box>
             ))}
           </Box>

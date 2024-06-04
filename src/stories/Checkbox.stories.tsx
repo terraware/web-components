@@ -1,19 +1,13 @@
+import React from 'react';
 import { action } from '@storybook/addon-actions';
 import { Story } from '@storybook/react';
-import React from 'react';
-import { makeStyles } from '@mui/styles';
+
 import Checkbox, { Props as CheckboxProps } from '../components/Checkbox';
 
 export default {
   title: 'Checkbox',
   component: Checkbox,
 };
-
-const useStyles = makeStyles(() => ({
-  narrowWidth: {
-    width: '200px',
-  },
-}));
 
 const Template: Story<CheckboxProps> = (args) => {
   const [value, setValue] = React.useState(true);
@@ -22,10 +16,7 @@ const Template: Story<CheckboxProps> = (args) => {
     setValue(_value);
   };
 
-  const classes = useStyles();
-  const className = classes.narrowWidth;
-
-  return <Checkbox {...args} onChange={toggleChange} value={value} className={className} />;
+  return <Checkbox {...args} onChange={toggleChange} value={value} sx={{ width: '200px' }} />;
 };
 
 export const Default = Template.bind({});

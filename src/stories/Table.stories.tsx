@@ -1,16 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { Story } from '@storybook/react';
 import { Box } from '@mui/material';
-import { makeStyles } from '@mui/styles';
 import Table, { EnhancedTopBarSelectionProps, Props as TableProps } from '../components/table/index';
 import CellRenderer from '../components/table/TableCellRenderer';
 import { RendererProps } from '../components/table/types';
-
-const useStyles = makeStyles(() => ({
-  italic: {
-    fontStyle: 'italic',
-  },
-}));
 
 export default {
   title: 'Table',
@@ -19,22 +12,19 @@ export default {
 
 function Renderer(props: RendererProps<any>): JSX.Element {
   const { column } = props;
-  const classes = useStyles();
 
   if (column.key === 'middlename') {
-    return <CellRenderer {...props} className={classes.italic} />;
+    return <CellRenderer {...props} sx={{ fontStyle: 'italic' }} />;
   }
 
   return <CellRenderer {...props} />;
 }
 
 const Template: Story<Omit<TableProps<{ name: string; lastname: string }>, 'rows'> & { rowCount: number }> = (args) => {
-  const styles = useStyles();
-
   const [selectedRows, setSelectedRows] = useState<any>([]);
   const [rows, setRows] = useState<any>([]);
 
-  args.columns[1].className = styles.italic;
+  args.columns[1].sx = { fontStyle: 'italic' };
 
   useEffect(() => {
     const nextRows = Array(args.rowCount)

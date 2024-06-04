@@ -1,16 +1,8 @@
 import { action } from '@storybook/addon-actions';
 import { Story } from '@storybook/react';
-import { Box, Theme } from '@mui/material';
+import { Box, useTheme } from '@mui/material';
 import React from 'react';
 import Autocomplete, { ValueType, Props as AutocompleteProps } from '../components/Autocomplete/Autocomplete';
-import { makeStyles } from '@mui/styles';
-
-const useStyles = makeStyles((theme: Theme) => ({
-  container: {
-    width: '300px',
-    backgroundColor: theme.palette.TwClrBaseWhite,
-  },
-}));
 
 export default {
   title: 'Autocomplete',
@@ -18,7 +10,7 @@ export default {
 };
 
 const Template: Story<AutocompleteProps> = (args) => {
-  const classes = useStyles();
+  const theme = useTheme();
   const [selected, setSelected] = React.useState<ValueType>();
   const handleChange = (value: ValueType) => {
     action('onChange')(value);
@@ -27,7 +19,15 @@ const Template: Story<AutocompleteProps> = (args) => {
 
   return (
     <Box sx={{ marginTop: '30px' }}>
-      <Autocomplete {...args} selected={selected} onChange={handleChange} className={classes.container} />
+      <Autocomplete
+        {...args}
+        selected={selected}
+        onChange={handleChange}
+        sx={{
+          backgroundColor: theme.palette.TwClrBaseWhite,
+          width: '300px',
+        }}
+      />
     </Box>
   );
 };

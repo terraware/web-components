@@ -9,6 +9,7 @@ export interface TableColumnType {
   className?: string;
   tooltipTitle?: TooltipProps['title'];
   alignment?: TextAlignment;
+  sx?: SxProps;
 }
 
 export interface RendererProps<T> {

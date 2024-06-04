@@ -56,10 +56,7 @@ export default function Checkbox(props: Props): JSX.Element {
           id={'check-' + props.id}
           checked={props.value ?? false}
           size='medium'
-          sx={{
-            ...CheckboxStyle(theme),
-            ...(props.sx || {}),
-          }}
+          sx={[CheckboxStyle(theme), ...(Array.isArray(props.sx) ? props.sx : [props.sx])]}
         />
       }
       className={props.className}

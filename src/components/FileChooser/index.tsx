@@ -1,36 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Box, Link, Typography, useTheme } from '@mui/material';
-import { Theme } from '@mui/material';
-import { makeStyles } from '@mui/styles';
+
 import { useDeviceInfo } from '../../utils';
 import Button from '../Button/Button';
 import Icon from '../Icon/Icon';
 import { IconName } from '../Icon/icons';
-
-const useStyles = makeStyles((theme: Theme) => ({
-  hiddenInput: {
-    display: 'none',
-  },
-  icon: {
-    height: '120px',
-    width: '120px',
-  },
-  button: {
-    marginTop: theme.spacing(3),
-  },
-  link: {
-    color: theme.palette.TwClrTxtBrand,
-    fontFamily: 'Inter',
-    fontSize: '12px',
-    fontWeight: 500,
-    lineHeight: '16px',
-    marginTop: theme.spacing(2),
-    textDecoration: 'none',
-    '&:hover': {
-      textDecoration: 'underline',
-    },
-  },
-}));
 
 export type FileTemplate = {
   text: string;
@@ -75,7 +49,6 @@ export default function FileChooser(props: FileChooserProps): JSX.Element {
     uploadText,
   } = props;
   const { isMobile } = useDeviceInfo();
-  const classes = useStyles();
   const inputRef = useRef<HTMLInputElement>(null);
   const theme = useTheme();
   const [editing, setEditing] = useState<boolean>(false);
@@ -134,7 +107,16 @@ export default function FileChooser(props: FileChooserProps): JSX.Element {
       padding={theme.spacing(3)}
       sx={{ background: theme.palette.TwClrBg }}
     >
-      {iconName && <Icon name={iconName} className={classes.icon} size='xlarge' />}
+      {iconName && (
+        <Icon
+          name={iconName}
+          size='xlarge'
+          style={{
+            height: '120px',
+            width: '120px',
+          }}
+        />
+      )}
       <Typography color={theme.palette.TwClrTxt} fontSize={14} fontWeight={600} margin={theme.spacing(0, 0, 1)}>
         {!editing && ((files || []).length > 0 && !multipleSelection ? files?.[0].name : uploadText)}
       </Typography>
@@ -148,11 +130,11 @@ export default function FileChooser(props: FileChooserProps): JSX.Element {
       <input
         type='file'
         ref={inputRef}
-        className={classes.hiddenInput}
         onChange={onFileChosen}
         accept={acceptFileType}
         multiple={multipleSelection || false}
         value={''}
+        style={{ display: 'none' }}
       />
       <Button
         onClick={onChooseFileHandler}
@@ -160,10 +142,25 @@ export default function FileChooser(props: FileChooserProps): JSX.Element {
         label={!multipleSelection && ((files || []).length === 1 || editing) ? replaceFileText : chooseFileText}
         priority='secondary'
         type='passive'
-        className={classes.button}
+        sx={{ marginTop: theme.spacing(3) }}
       />
       {template && (
-        <Link href={template.url} target='_blank' className={classes.link}>
+        <Link
+          href={template.url}
+          target='_blank'
+          sx={{
+            color: theme.palette.TwClrTxtBrand,
+            fontFamily: 'Inter',
+            fontSize: '12px',
+            fontWeight: 500,
+            lineHeight: '16px',
+            marginTop: theme.spacing(2),
+            textDecoration: 'none',
+            '&:hover': {
+              textDecoration: 'underline',
+            },
+          }}
+        >
           {template.text}
         </Link>
       )}

@@ -1,33 +1,21 @@
 import { Edit, Notes } from '@mui/icons-material';
-import { Box, Link, SxProps, TableCell, Theme, Typography } from '@mui/material';
+import { Box, Link, SxProps, TableCell, Theme, Typography, useTheme } from '@mui/material';
 import React, { CSSProperties, ReactNode } from 'react';
 import { RendererProps } from './types';
-import { makeStyles } from '@mui/styles';
 import { getDateDisplayValue, preventDefaultEvent } from '../../utils';
 import { TextAlignment } from '.';
 
-const useStyles = makeStyles((theme: Theme) => ({
-  editIcon: {
-    marginLeft: theme.spacing(1),
-  },
-  textRoot: {
-    maxWidth: 400,
-  },
-  date: {
-    whiteSpace: 'nowrap',
-  },
-  default: {
-    '&.MuiTableCell-root': {
-      height: '52px',
-      paddingTop: '0px',
-      paddingBottom: '0px',
-      borderBottom: `1px solid ${theme.palette.TwClrBrdrSecondary}`,
-      fontVariantNumeric: 'tabular-nums',
-    },
-  },
-}));
-
 export type TableRowType = Record<string, any>;
+
+const defaultStyles = (theme: Theme) => ({
+  '&.MuiTableCell-root': {
+    height: '52px',
+    paddingTop: '0px',
+    paddingBottom: '0px',
+    borderBottom: `1px solid ${theme.palette.TwClrBrdrSecondary}`,
+    fontVariantNumeric: 'tabular-nums',
+  },
+});
 
 export default function CellRenderer(props: RendererProps<TableRowType>): JSX.Element {
   const { column, value, onRowClick, index, className, booleanFalseText, booleanTrueText, editText, style, sx } = props;
@@ -108,17 +96,14 @@ export function CellDateRenderer({
   style?: CSSProperties;
   sx?: SxProps;
 }): JSX.Element {
-  const classes = useStyles();
+  const theme = useTheme();
 
   return (
     <TableCell
       id={id}
       align={alignment || 'left'}
-      className={`${classes.date} ${classes.default} ${className}`}
-      sx={{
-        ...(style || {}),
-        ...(sx || {}),
-      }}
+      className={className}
+      sx={[defaultStyles(theme), { whiteSpace: 'nowrap' }, style, ...(Array.isArray(sx) ? sx : [sx])]}
     >
       <Typography component='p' variant='body1' fontSize='14px'>
         {cellDateFormatter(value)}
@@ -142,20 +127,17 @@ export function CellTextRenderer({
   style?: CSSProperties;
   sx?: SxProps;
 }): JSX.Element {
-  const classes = useStyles();
+  const theme = useTheme();
 
   return (
     <TableCell
       id={id}
       align={alignment || 'left'}
       title={typeof value === 'string' ? value : ''}
-      className={`${classes.default} ${className}`}
-      sx={{
-        ...(style || {}),
-        ...(sx || {}),
-      }}
+      className={className}
+      sx={[defaultStyles(theme), style, ...(Array.isArray(sx) ? sx : [sx])]}
     >
-      <Typography component='p' variant='body1' noWrap={true} classes={{ root: classes.textRoot }} fontSize='14px'>
+      <Typography component='p' variant='body1' noWrap={true} fontSize='14px' sx={{ root: { maxWidth: 400 } }}>
         {value}
       </Typography>
     </TableCell>
@@ -182,17 +164,14 @@ export function CellBooleanRenderer({
   style?: CSSProperties;
   sx?: SxProps;
 }): JSX.Element {
-  const classes = useStyles();
+  const theme = useTheme();
 
   return (
     <TableCell
       id={id}
       align={alignment || 'left'}
-      className={`${classes.default} ${className}`}
-      sx={{
-        ...(style || {}),
-        ...(sx || {}),
-      }}
+      className={className}
+      sx={[defaultStyles(theme), style, ...(Array.isArray(sx) ? sx : [sx])]}
     >
       <Typography component='p' variant='body1' fontSize='14px'>
         {value?.toString() === 'true' ? booleanTrueText : booleanFalseText}
@@ -216,17 +195,14 @@ export function CellNotesRenderer({
   style?: CSSProperties;
   sx?: SxProps;
 }): JSX.Element {
-  const classes = useStyles();
+  const theme = useTheme();
 
   return (
     <TableCell
       id={id}
       align={alignment || 'left'}
-      className={`${classes.default} ${className}`}
-      sx={{
-        ...(style || {}),
-        ...(sx || {}),
-      }}
+      className={className}
+      sx={[defaultStyles(theme), style, ...(Array.isArray(sx) ? sx : [sx])]}
     >
       <Typography id={id} component='p' variant='body1' fontSize='14px'>
         {value && value.length > 0 ? <Notes /> : ''}
@@ -252,17 +228,14 @@ export function CellEditRenderer({
   style?: CSSProperties;
   sx?: SxProps;
 }): JSX.Element {
-  const classes = useStyles();
+  const theme = useTheme();
 
   return (
     <TableCell
       id={id}
       align={alignment || 'left'}
-      className={`${classes.default} ${className}`}
-      sx={{
-        ...(style || {}),
-        ...(sx || {}),
-      }}
+      className={className}
+      sx={[defaultStyles(theme), style, ...(Array.isArray(sx) ? sx : [sx])]}
     >
       <Link
         id={`${id}-button`}
@@ -278,7 +251,7 @@ export function CellEditRenderer({
           <Typography component='p' variant='body1' fontSize='14px'>
             {editText}
           </Typography>
-          <Edit fontSize='small' className={classes.editIcon} />
+          <Edit fontSize='small' sx={{ marginLeft: theme.spacing(1) }} />
         </Box>
       </Link>
     </TableCell>
