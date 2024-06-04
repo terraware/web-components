@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">9.09% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>1/11</span>
+                <span class='fraction'>0/8</span>
             </div>
         
             
@@ -39,14 +39,14 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/5</span>
+                <span class='fraction'>0/3</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">10% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>1/10</span>
+                <span class='fraction'>0/8</span>
             </div>
         
             
@@ -131,42 +131,7 @@
 <a name='L66'></a><a href='#L66'>66</a>
 <a name='L67'></a><a href='#L67'>67</a>
 <a name='L68'></a><a href='#L68'>68</a>
-<a name='L69'></a><a href='#L69'>69</a>
-<a name='L70'></a><a href='#L70'>70</a>
-<a name='L71'></a><a href='#L71'>71</a>
-<a name='L72'></a><a href='#L72'>72</a>
-<a name='L73'></a><a href='#L73'>73</a>
-<a name='L74'></a><a href='#L74'>74</a>
-<a name='L75'></a><a href='#L75'>75</a>
-<a name='L76'></a><a href='#L76'>76</a>
-<a name='L77'></a><a href='#L77'>77</a>
-<a name='L78'></a><a href='#L78'>78</a>
-<a name='L79'></a><a href='#L79'>79</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L69'></a><a href='#L69'>69</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -199,6 +164,21 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -220,36 +200,11 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import React from 'react';
-import { Theme, Tooltip, TooltipProps } from '@mui/material';
-import { makeStyles } from '@mui/styles';
+import { Tooltip, TooltipProps, useTheme } from '@mui/material';
 &nbsp;
 import Icon from '../Icon/Icon';
 import { IconName } from '../Icon/icons';
 import { useDeviceInfo } from '../../utils';
-&nbsp;
-interface StyleProps {
-  disableRightMargin?: boolean;
-}
-&nbsp;
-const useStyles = makeStyles(<span class="fstat-no" title="function not covered" >(t</span>heme: Theme) =&gt; (<span class="cstat-no" title="statement not covered" >{</span>
-  arrow: {
-    color: theme.palette.TwClrBaseGray800,
-  },
-  icon: {
-    fill: theme.palette.TwClrIcnSecondary,
-    marginLeft: '4px',
-    marginRight: <span class="fstat-no" title="function not covered" >(p</span>rops: StyleProps) =&gt; (<span class="cstat-no" title="statement not covered" >props.disableRightMargin ? '0px' : '4px')</span>,
-    verticalAlign: 'text-top',
-  },
-  tooltip: {
-    backgroundColor: theme.palette.TwClrBaseGray800,
-    color: theme.palette.TwClrBaseWhite,
-    padding: '8px',
-    '&amp; a': {
-      color: theme.palette.TwClrBaseWhite,
-    },
-  },
-}));
 &nbsp;
 export type IconTooltipProps = {
   iconName?: IconName;
@@ -266,7 +221,7 @@ export default function <span class="fstat-no" title="function not covered" >Ico
 }: IconTooltipProps): JSX.Element {
   const [open, setOpen] = <span class="cstat-no" title="statement not covered" >React.useState(false);</span>
   const { isMobile } = <span class="cstat-no" title="statement not covered" >useDeviceInfo();</span>
-  const classes = <span class="cstat-no" title="statement not covered" >useStyles({ disableRightMargin });</span>
+  const theme = <span class="cstat-no" title="statement not covered" >useTheme();</span>
 &nbsp;
   const handleTooltipClose = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >()</span> =&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    setOpen(false);</span>
@@ -279,20 +234,35 @@ export default function <span class="fstat-no" title="function not covered" >Ico
 <span class="cstat-no" title="statement not covered" >  return (</span>
     &lt;Tooltip
       arrow={true}
-      classes={{
-        arrow: classes.arrow,
-        tooltip: classes.tooltip,
-      }}
       onClose={handleTooltipClose}
       open={isMobile ? open : undefined}
       placement={placement}
       sx={{
         maxWidth: isMobile ? '342px' : '464px',
+        '&amp; .MuiTooltip-arrow': {
+          color: theme.palette.TwClrBaseGray800,
+        },
+        '&amp; .MuiTooltip-tooltip': {
+          backgroundColor: theme.palette.TwClrBaseGray800,
+          color: theme.palette.TwClrBaseWhite,
+          padding: '8px',
+          '&amp; a': {
+            color: theme.palette.TwClrBaseWhite,
+          },
+        },
       }}
       title={title}
     &gt;
       &lt;span onClick={handleTooltipOpen}&gt;
-        &lt;Icon name={iconName} className={classes.icon} /&gt;
+        &lt;Icon
+          name={iconName}
+          style={{
+            fill: theme.palette.TwClrIcnSecondary,
+            marginLeft: '4px',
+            marginRight: disableRightMargin ? '0px' : '4px',
+            verticalAlign: 'text-top',
+          }}
+        /&gt;
       &lt;/span&gt;
     &lt;/Tooltip&gt;
   );
@@ -304,7 +274,7 @@ export default function <span class="fstat-no" title="function not covered" >Ico
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-06-03T12:36:38.037Z
+                at 2024-06-04T23:27:25.511Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>

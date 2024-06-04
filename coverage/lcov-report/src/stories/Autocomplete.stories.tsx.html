@@ -25,7 +25,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/16</span>
+                <span class='fraction'>0/14</span>
             </div>
         
             
@@ -39,14 +39,14 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/6</span>
+                <span class='fraction'>0/5</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/15</span>
+                <span class='fraction'>0/14</span>
             </div>
         
             
@@ -147,14 +147,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -168,6 +160,14 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -219,17 +219,9 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { action } from '@storybook/addon-actions';
 import { Story } from '@storybook/react';
-import { Box, Theme } from '@mui/material';
+import { Box, useTheme } from '@mui/material';
 import React from 'react';
 import Autocomplete, { ValueType, Props as AutocompleteProps } from '../components/Autocomplete/Autocomplete';
-import { makeStyles } from '@mui/styles';
-&nbsp;
-const useStyles = <span class="cstat-no" title="statement not covered" >makeStyles(<span class="fstat-no" title="function not covered" >(t</span>heme: Theme) =&gt; (<span class="cstat-no" title="statement not covered" >{</span></span>
-  container: {
-    width: '300px',
-    backgroundColor: theme.palette.TwClrBaseWhite,
-  },
-}));
 &nbsp;
 export default {
   title: 'Autocomplete',
@@ -237,7 +229,7 @@ export default {
 };
 &nbsp;
 const Template: Story&lt;AutocompleteProps&gt; = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >(a</span>rgs) =&gt; {</span>
-  const classes = <span class="cstat-no" title="statement not covered" >useStyles();</span>
+  const theme = <span class="cstat-no" title="statement not covered" >useTheme();</span>
   const [selected, setSelected] = <span class="cstat-no" title="statement not covered" >React.useState&lt;ValueType&gt;();</span>
   const handleChange = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >(v</span>alue: ValueType) =&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    action('onChange')(value);</span>
@@ -246,7 +238,15 @@ const Template: Story&lt;AutocompleteProps&gt; = <span class="cstat-no" title="s
 &nbsp;
 <span class="cstat-no" title="statement not covered" >  return (</span>
     &lt;Box sx={{ marginTop: '30px' }}&gt;
-      &lt;Autocomplete {...args} selected={selected} onChange={handleChange} className={classes.container} /&gt;
+      &lt;Autocomplete
+        {...args}
+        selected={selected}
+        onChange={handleChange}
+        sx={{
+          backgroundColor: theme.palette.TwClrBaseWhite,
+          width: '300px',
+        }}
+      /&gt;
     &lt;/Box&gt;
   );
 };
@@ -301,7 +301,7 @@ export const Complex = <span class="cstat-no" title="statement not covered" >Tem
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-06-03T12:36:38.037Z
+                at 2024-06-04T23:27:25.511Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

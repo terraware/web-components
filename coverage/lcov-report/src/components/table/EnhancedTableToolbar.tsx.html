@@ -25,7 +25,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/13</span>
+                <span class='fraction'>0/12</span>
             </div>
         
             
@@ -39,7 +39,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/4</span>
+                <span class='fraction'>0/3</span>
             </div>
         
             
@@ -152,33 +152,7 @@
 <a name='L87'></a><a href='#L87'>87</a>
 <a name='L88'></a><a href='#L88'>88</a>
 <a name='L89'></a><a href='#L89'>89</a>
-<a name='L90'></a><a href='#L90'>90</a>
-<a name='L91'></a><a href='#L91'>91</a>
-<a name='L92'></a><a href='#L92'>92</a>
-<a name='L93'></a><a href='#L93'>93</a>
-<a name='L94'></a><a href='#L94'>94</a>
-<a name='L95'></a><a href='#L95'>95</a>
-<a name='L96'></a><a href='#L96'>96</a>
-<a name='L97'></a><a href='#L97'>97</a>
-<a name='L98'></a><a href='#L98'>98</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L90'></a><a href='#L90'>90</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -196,6 +170,11 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -232,6 +211,11 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -258,29 +242,11 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import React, { useMemo } from 'react';
-import { Link, Theme, Toolbar, Typography } from '@mui/material';
-import { makeStyles } from '@mui/styles';
+import { Link, Toolbar, Typography, useTheme } from '@mui/material';
 import { isTopBarButton, TopBarButton } from '.';
 import Button from '../Button/Button';
 import Tooltip from '../Tooltip/Tooltip';
 import { EnhancedTopBarSelectionConfig } from './EnhancedTableToolbarV2';
-&nbsp;
-const styles = <span class="cstat-no" title="statement not covered" >makeStyles(<span class="fstat-no" title="function not covered" >(t</span>heme: Theme) =&gt; (<span class="cstat-no" title="statement not covered" >{</span></span>
-  toolbar: {
-    background: theme.palette.TwClrBgSecondary,
-    borderRadius: theme.spacing(0.5),
-  },
-  flexText: {
-    flex: '1 1 auto',
-  },
-  buttonSpacing: {
-    marginLeft: theme.spacing(1),
-  },
-  selectLink: {
-    color: theme.palette.TwClrTxtBrand,
-    cursor: 'pointer',
-  },
-}));
 &nbsp;
 interface EnhancedTableToolbarProps {
   isAllSelected?: boolean;
@@ -292,7 +258,12 @@ interface EnhancedTableToolbarProps {
 &nbsp;
 export default function <span class="fstat-no" title="function not covered" >EnhancedTableToolbar(</span>props: EnhancedTableToolbarProps): JSX.Element | null {
   const { isAllSelected, numSelected, renderNumSelectedText, topBarButtons, topBarSelectionConfig } = <span class="cstat-no" title="statement not covered" >props;</span>
-  const classes = <span class="cstat-no" title="statement not covered" >styles();</span>
+  const theme = <span class="cstat-no" title="statement not covered" >useTheme();</span>
+&nbsp;
+  const selectLinkStyles = <span class="cstat-no" title="statement not covered" >{</span>
+    color: theme.palette.TwClrTxtBrand,
+    cursor: 'pointer',
+  };
 &nbsp;
   const topBarSelection = <span class="cstat-no" title="statement not covered" >useMemo(<span class="fstat-no" title="function not covered" >()</span> =&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    if (!renderNumSelectedText) {</span>
@@ -315,12 +286,12 @@ export default function <span class="fstat-no" title="function not covered" >Enh
       &lt;&gt;
         {renderEnhancedNumSelectedText ? renderEnhancedNumSelectedText() : renderNumSelectedText(numSelected)}{' '}
         {!isAllSelected &amp;&amp; handleSelectAll &amp;&amp; renderSelectAllText &amp;&amp; (
-          &lt;Link className={classes.selectLink} onClick={handleSelectAll}&gt;
+          &lt;Link onClick={handleSelectAll} sx={selectLinkStyles}&gt;
             {renderSelectAllText()}
           &lt;/Link&gt;
         )}
         {isAllSelected &amp;&amp; handleSelectNone &amp;&amp; renderSelectNoneText &amp;&amp; (
-          &lt;Link className={classes.selectLink} onClick={handleSelectNone}&gt;
+          &lt;Link onClick={handleSelectNone} sx={selectLinkStyles}&gt;
             {renderSelectNoneText()}
           &lt;/Link&gt;
         )}
@@ -329,15 +300,19 @@ export default function <span class="fstat-no" title="function not covered" >Enh
   }, [renderNumSelectedText, topBarSelectionConfig, numSelected]);
 &nbsp;
 <span class="cstat-no" title="statement not covered" >  return renderNumSelectedText &amp;&amp; numSelected &gt; 0 ? (</span>
-    &lt;Toolbar className={classes.toolbar}&gt;
-      &lt;Typography color='inherit' variant='subtitle1' component='div' className={classes.flexText}&gt;
+    &lt;Toolbar
+      sx={{
+        background: theme.palette.TwClrBgSecondary,
+        borderRadius: theme.spacing(0.5),
+      }}
+    &gt;
+      &lt;Typography color='inherit' variant='subtitle1' component='div' sx={{ flex: '1 1 auto' }}&gt;
         {topBarSelection}
       &lt;/Typography&gt;
       {topBarButtons?.map(<span class="fstat-no" title="function not covered" >(t</span>bButton: TopBarButton | JSX.Element, index) =&gt;
 <span class="cstat-no" title="statement not covered" >        isTopBarButton(tbButton) ? (</span>
           &lt;Tooltip title={tbButton.tooltipTitle} key={index}&gt;
             &lt;Button
-              className={classes.buttonSpacing}
               key={tbButton.buttonText}
               label={tbButton.buttonText}
               priority='secondary'
@@ -345,6 +320,7 @@ export default function <span class="fstat-no" title="function not covered" >Enh
               onClick={tbButton.onButtonClick}
               icon={tbButton.icon}
               disabled={tbButton.disabled}
+              sx={{ marginLeft: theme.spacing(1) }}
             /&gt;
           &lt;/Tooltip&gt;
         ) : (
@@ -361,7 +337,7 @@ export default function <span class="fstat-no" title="function not covered" >Enh
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-06-03T12:36:38.037Z
+                at 2024-06-04T23:27:25.511Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>
