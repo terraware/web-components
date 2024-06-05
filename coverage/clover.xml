@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1717603375316" clover="3.2.0">
-  <project timestamp="1717603375316" name="All files">
-    <metrics statements="1544" coveredstatements="194" conditionals="1293" coveredconditionals="98" methods="543" coveredmethods="31" elements="3380" coveredelements="323" complexity="0" loc="1544" ncloc="1544" packages="39" files="204" classes="204"/>
+<coverage generated="1717608195807" clover="3.2.0">
+  <project timestamp="1717608195807" name="All files">
+    <metrics statements="1544" coveredstatements="194" conditionals="1288" coveredconditionals="98" methods="543" coveredmethods="31" elements="3375" coveredelements="323" complexity="0" loc="1544" ncloc="1544" packages="39" files="204" classes="204"/>
     <package name="src">
       <metrics statements="1" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
       <file name="index.ts" path="/home/runner/work/web-components/web-components/src/index.ts">
@@ -1339,7 +1339,7 @@
       </file>
     </package>
     <package name="src.components.table">
-      <metrics statements="204" coveredstatements="19" conditionals="307" coveredconditionals="23" methods="65" coveredmethods="3"/>
+      <metrics statements="204" coveredstatements="19" conditionals="302" coveredconditionals="23" methods="65" coveredmethods="3"/>
       <file name="EnhancedTableToolbar.tsx" path="/home/runner/work/web-components/web-components/src/components/table/EnhancedTableToolbar.tsx">
         <metrics statements="12" coveredstatements="0" conditionals="20" coveredconditionals="0" methods="3" coveredmethods="0"/>
         <line num="17" count="0" type="stmt"/>
@@ -1423,7 +1423,7 @@
         <line num="34" count="0" type="cond" truecount="0" falsecount="2"/>
       </file>
       <file name="index.tsx" path="/home/runner/work/web-components/web-components/src/components/table/index.tsx">
-        <metrics statements="105" coveredstatements="0" conditionals="142" coveredconditionals="0" methods="32" coveredmethods="0"/>
+        <metrics statements="105" coveredstatements="0" conditionals="137" coveredconditionals="0" methods="32" coveredmethods="0"/>
         <line num="100" count="0" type="stmt"/>
         <line num="101" count="0" type="stmt"/>
         <line num="103" count="0" type="cond" truecount="0" falsecount="2"/>
@@ -1523,12 +1523,12 @@
         <line num="368" count="0" type="stmt"/>
         <line num="370" count="0" type="cond" truecount="0" falsecount="7"/>
         <line num="371" count="0" type="stmt"/>
-        <line num="404" count="0" type="cond" truecount="0" falsecount="4"/>
-        <line num="411" count="0" type="stmt"/>
-        <line num="419" count="0" type="stmt"/>
-        <line num="473" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="474" count="0" type="stmt"/>
-        <line num="477" count="0" type="stmt"/>
+        <line num="406" count="0" type="cond" truecount="0" falsecount="4"/>
+        <line num="413" count="0" type="stmt"/>
+        <line num="421" count="0" type="stmt"/>
+        <line num="475" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="476" count="0" type="stmt"/>
+        <line num="479" count="0" type="stmt"/>
       </file>
       <file name="sort.ts" path="/home/runner/work/web-components/web-components/src/components/table/sort.ts">
         <metrics statements="32" coveredstatements="19" conditionals="38" coveredconditionals="23" methods="9" coveredmethods="3"/>
@@ -2192,7 +2192,7 @@
       <metrics statements="1" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
       <file name="TerrawareTheme.ts" path="/home/runner/work/web-components/web-components/src/style-dictionary-dist/TerrawareTheme.ts">
         <metrics statements="1" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
-        <line num="371" count="0" type="stmt"/>
+        <line num="373" count="0" type="stmt"/>
       </file>
     </package>
     <package name="src.utils">
