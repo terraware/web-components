@@ -105,7 +105,7 @@ export function CellDateRenderer({
       className={className}
       sx={[defaultStyles(theme), { whiteSpace: 'nowrap' }, style, ...(Array.isArray(sx) ? sx : [sx])]}
     >
-      <Typography component='p' variant='body1' fontSize='14px'>
+      <Typography component='p' variant='body1' fontSize='16px'>
         {cellDateFormatter(value)}
       </Typography>
     </TableCell>
@@ -137,7 +137,7 @@ export function CellTextRenderer({
       className={className}
       sx={[defaultStyles(theme), style, ...(Array.isArray(sx) ? sx : [sx])]}
     >
-      <Typography component='p' variant='body1' noWrap={true} fontSize='14px' sx={{ root: { maxWidth: 400 } }}>
+      <Typography component='p' variant='body1' noWrap={true} fontSize='16px' sx={{ root: { maxWidth: 400 } }}>
         {value}
       </Typography>
     </TableCell>
@@ -173,7 +173,7 @@ export function CellBooleanRenderer({
       className={className}
       sx={[defaultStyles(theme), style, ...(Array.isArray(sx) ? sx : [sx])]}
     >
-      <Typography component='p' variant='body1' fontSize='14px'>
+      <Typography component='p' variant='body1' fontSize='16px'>
         {value?.toString() === 'true' ? booleanTrueText : booleanFalseText}
       </Typography>
     </TableCell>
@@ -204,7 +204,7 @@ export function CellNotesRenderer({
       className={className}
       sx={[defaultStyles(theme), style, ...(Array.isArray(sx) ? sx : [sx])]}
     >
-      <Typography id={id} component='p' variant='body1' fontSize='14px'>
+      <Typography id={id} component='p' variant='body1' fontSize='16px'>
         {value && value.length > 0 ? <Notes /> : ''}
       </Typography>
     </TableCell>
@@ -248,7 +248,7 @@ export function CellEditRenderer({
         }}
       >
         <Box display='flex'>
-          <Typography component='p' variant='body1' fontSize='14px'>
+          <Typography component='p' variant='body1' fontSize='16px'>
             {editText}
           </Typography>
           <Edit fontSize='small' sx={{ marginLeft: theme.spacing(1) }} />
