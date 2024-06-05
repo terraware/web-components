@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import React, { useMemo } from 'react';
-import { TooltipProps } from '@mui/material';
+import { Box, SxProps, TooltipProps } from '@mui/material';
 import Icon from '../Icon/Icon';
 import { IconName } from '../Icon/icons';
 import './styles.scss';
@@ -45,6 +45,7 @@ export interface Props {
   // Since useStyles is deprecated, we can start passing in element specific styles in here
   // For now only the `textarea` has styles passed into it
   styles?: Record<string, Record<string, unknown>>;
+  sx?: SxProps;
   tooltipTitle?: TooltipProps['title'];
   truncateConfig?: TruncateConfig;
   type: TextfieldType;
@@ -76,6 +77,7 @@ export default function TextField(props: Props): JSX.Element {
     readonly,
     required,
     styles,
+    sx,
     tooltipTitle,
     truncateConfig,
     type,
@@ -150,7 +152,7 @@ export default function TextField(props: Props): JSX.Element {
   }, [display, preserveNewlines, truncateConfig, type, value]);
 
   return (
-    <div className={`textfield ${className}`}>
+    <Box className={`textfield ${className}`} sx={sx}>
       <label htmlFor={id} className='textfield-label'>
         {required ? `${label} *` : label}
         {tooltipTitle && <IconTooltip placement='top' title={tooltipTitle} />}
@@ -208,6 +210,6 @@ export default function TextField(props: Props): JSX.Element {
           {helperText}
         </label>
       )}
-    </div>
+    </Box>
   );
 }
