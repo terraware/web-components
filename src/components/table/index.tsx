@@ -383,7 +383,6 @@ export default function EnhancedTable<T extends TableRowType>({
                             '&:nth-of-type(odd)': {
                               backgroundColor: theme.palette.TwClrBgSecondary,
                             },
-                        
                             '&:hover': {
                               backgroundColor: theme.palette.TwClrBgSecondaryHover,
                             },
