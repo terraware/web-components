@@ -378,11 +378,14 @@ export default function EnhancedTable<T extends TableRowType>({
                               ? { backgroundColor: theme.palette.neutral[50] }
                               : {}),
                             '&.MuiTableRow-root.Mui-selected': {
-                              backgroundColor: 'initial',
+                              backgroundColor: theme.palette.TwClrBgSelectedTertiary,
                             },
+                            '&:nth-of-type(odd)': {
+                              backgroundColor: theme.palette.TwClrBgSecondary,
+                            },
+                        
                             '&:hover': {
-                              cursor: 'pointer',
-                              backgroundColor: `${theme.palette.neutral[100]}!important`,
+                              backgroundColor: theme.palette.TwClrBgSecondaryHover,
                             },
                           }}
                         >
@@ -391,7 +394,7 @@ export default function EnhancedTable<T extends TableRowType>({
                               padding='checkbox'
                               sx={{
                                 '&.MuiTableCell-root': {
-                                  borderBottom: `1px solid ${theme.palette.TwClrBrdrSecondary}`,
+                                  borderBottom: `1px solid ${theme.palette.TwClrBgSecondary}`,
                                 },
                               }}
                             >
