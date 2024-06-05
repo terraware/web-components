@@ -12,7 +12,7 @@ const defaultStyles = (theme: Theme) => ({
     height: '52px',
     paddingTop: '0px',
     paddingBottom: '0px',
-    borderBottom: `1px solid ${theme.palette.TwClrBrdrSecondary}`,
+    borderBottom: `1px solid ${theme.palette.TwClrBgSecondary}`,
     fontVariantNumeric: 'tabular-nums',
   },
 });
