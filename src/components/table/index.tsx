@@ -361,7 +361,7 @@ export default function EnhancedTable<T extends TableRowType>({
                       <React.Fragment key={index}>
                         <TableRow
                           id={`row${index + 1}`}
-                          hover={Boolean(onSelect) && (isClickable ? isClickable(row as T) : true) && !hasEditColumn}
+                          hover={true}
                           onClick={(e) => {
                             e.stopPropagation();
                             if (onClick && !hasEditColumn && (isClickable ? isClickable(row as T) : true)) {
