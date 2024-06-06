@@ -71,6 +71,7 @@ export { default as IconRedo } from './IconRedo';
 export { default as IconRestorationSite } from './IconRestorationSite';
 export { default as IconSeedBank } from './IconSeedBank';
 export { default as IconSeedling } from './IconSeedling';
+export { default as IconSettings } from './IconSettings';
 export { default as IconSlice } from './IconSlice';
 export { default as IconSubmit } from './IconSubmit';
 export { default as IconSubtract } from './IconSubtract';
