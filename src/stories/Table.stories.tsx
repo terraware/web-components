@@ -8,6 +8,12 @@ import { RendererProps } from '../components/table/types';
 export default {
   title: 'Table',
   component: Table,
+  argTypes: {
+    density: {
+      options: ['comfortable', 'compact', 'roomy'],
+      control: { type: 'radio' },
+    },
+  }
 };
 
 function Renderer(props: RendererProps<any>): JSX.Element {
@@ -125,6 +131,7 @@ Default.args = {
   editText: 'Edit',
   renderNumSelectedText: (num) => `${num} selected`,
   renderPaginationText: (from, to, total) => `${from} to ${to} of ${total}`,
+  density: 'comfortable',
 };
 
 Selectable.args = {

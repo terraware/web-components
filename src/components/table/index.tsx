@@ -13,11 +13,12 @@ import {
   useTheme,
 } from '@mui/material';
 import React, { useCallback, useEffect, useState } from 'react';
+import { getTableCellPaddingY, getTableRowHeight } from './density';
 import EnhancedTableToolbarV2 from './EnhancedTableToolbarV2';
 import { descendingComparator, getComparator, SortOrder, stableSort } from './sort';
 import TableCellRenderer, { TableRowType } from './TableCellRenderer';
 import TableHeader from './TableHeader';
-import { DatabaseColumn, DetailsRendererProps, RendererProps, TableColumnType } from './types';
+import { DatabaseColumn, DetailsRendererProps, RendererProps, TableColumnType, TableDensityType } from './types';
 import { DndContext, KeyboardSensor, MouseSensor, TouchSensor, useSensor, useSensors } from '@dnd-kit/core';
 import { sortableKeyboardCoordinates } from '@dnd-kit/sortable';
 import { useDeviceInfo } from '../../utils';
@@ -81,6 +82,7 @@ export interface Props<T> extends LocalizationProps {
   hideHeader?: boolean;
   // Adds "select all rows across all pages" and "clear selection" to the table top bar
   enhancedTopBarSelectionConfig?: EnhancedTopBarSelectionProps;
+  density?: TableDensityType;
 }
 
 export type TopBarButton = {
@@ -134,6 +136,7 @@ export default function EnhancedTable<T extends TableRowType>({
   renderNumSelectedText,
   renderPaginationText,
   enhancedTopBarSelectionConfig,
+  density = 'comfortable',
 }: Props<T>): JSX.Element {
   const theme = useTheme();
   const [order, setOrder] = React.useState<SortOrder>(_order);
@@ -247,9 +250,9 @@ export default function EnhancedTable<T extends TableRowType>({
   function columnsToHeadCells(columnsR: TableColumnType[]): HeadCell[] {
     return columnsR.map((c) => ({
       id: c.key,
-      disablePadding: false,
+      disablePadding: true,
       label: typeof c.name === 'string' ? c.name.toUpperCase() : c.name,
-      sx: c.sx,
+      sx: [{ paddingY: getTableCellPaddingY(density) }, ...(Array.isArray(c.sx) ? c.sx : [c.sx])],
       tooltipTitle: c.tooltipTitle,
     }));
   }
@@ -340,6 +343,7 @@ export default function EnhancedTable<T extends TableRowType>({
                 numSelected={showCheckbox ? selectedRows?.length : undefined}
                 onSelectAllClick={showCheckbox ? handleSelectAllClick : undefined}
                 rowCount={showCheckbox ? rows?.length : undefined}
+                density={density}
               />
             )}
             <TableBody>
@@ -377,6 +381,7 @@ export default function EnhancedTable<T extends TableRowType>({
                             ...(isInactive && isInactive(row as T)
                               ? { backgroundColor: theme.palette.neutral[50] }
                               : {}),
+                            height: getTableRowHeight(density),
                             '&.MuiTableRow-root.Mui-selected': {
                               backgroundColor: theme.palette.TwClrBgSelectedTertiary,
                             },
@@ -425,6 +430,7 @@ export default function EnhancedTable<T extends TableRowType>({
                                 booleanFalseText={booleanFalseText}
                                 booleanTrueText={booleanTrueText}
                                 editText={editText}
+                                sx={{ paddingY: getTableCellPaddingY(density) }}
                               />
                             ))}
                         </TableRow>
