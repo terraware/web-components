@@ -9,7 +9,6 @@ export type TableRowType = Record<string, any>;
 
 const defaultStyles = (theme: Theme) => ({
   '&.MuiTableCell-root': {
-    height: '52px',
     paddingTop: '0px',
     paddingBottom: '0px',
     borderBottom: `1px solid ${theme.palette.TwClrBgSecondary}`,
