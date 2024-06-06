@@ -32,7 +32,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/137</span>
+                <span class='fraction'>0/140</span>
             </div>
         
             
@@ -543,7 +543,13 @@
 <a name='L478'></a><a href='#L478'>478</a>
 <a name='L479'></a><a href='#L479'>479</a>
 <a name='L480'></a><a href='#L480'>480</a>
-<a name='L481'></a><a href='#L481'>481</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L481'></a><a href='#L481'>481</a>
+<a name='L482'></a><a href='#L482'>482</a>
+<a name='L483'></a><a href='#L483'>483</a>
+<a name='L484'></a><a href='#L484'>484</a>
+<a name='L485'></a><a href='#L485'>485</a>
+<a name='L486'></a><a href='#L486'>486</a>
+<a name='L487'></a><a href='#L487'>487</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -642,10 +648,13 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -899,6 +908,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -948,6 +958,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -964,6 +975,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -1038,11 +1050,12 @@
   useTheme,
 } from '@mui/material';
 import React, { useCallback, useEffect, useState } from 'react';
+import { getTableCellPaddingY, getTableRowHeight } from './density';
 import EnhancedTableToolbarV2 from './EnhancedTableToolbarV2';
 import { descendingComparator, getComparator, SortOrder, stableSort } from './sort';
 import TableCellRenderer, { TableRowType } from './TableCellRenderer';
 import TableHeader from './TableHeader';
-import { DatabaseColumn, DetailsRendererProps, RendererProps, TableColumnType } from './types';
+import { DatabaseColumn, DetailsRendererProps, RendererProps, TableColumnType, TableDensityType } from './types';
 import { DndContext, KeyboardSensor, MouseSensor, TouchSensor, useSensor, useSensors } from '@dnd-kit/core';
 import { sortableKeyboardCoordinates } from '@dnd-kit/sortable';
 import { useDeviceInfo } from '../../utils';
@@ -1106,6 +1119,7 @@ export interface Props&lt;T&gt; extends LocalizationProps {
   hideHeader?: boolean;
   // Adds "select all rows across all pages" and "clear selection" to the table top bar
   enhancedTopBarSelectionConfig?: EnhancedTopBarSelectionProps;
+  density?: TableDensityType;
 }
 &nbsp;
 export type TopBarButton = {
@@ -1159,6 +1173,7 @@ export default function <span class="fstat-no" title="function not covered" >Enh
   renderNumSelectedText,
   renderPaginationText,
   enhancedTopBarSelectionConfig,
+  density = <span class="branch-0 cbranch-no" title="branch not covered" >'comfortable',</span>
 }: Props&lt;T&gt;): JSX.Element {
   const theme = <span class="cstat-no" title="statement not covered" >useTheme();</span>
   const [order, setOrder] = <span class="cstat-no" title="statement not covered" >React.useState&lt;SortOrder&gt;(_order);</span>
@@ -1272,9 +1287,9 @@ export default function <span class="fstat-no" title="function not covered" >Enh
   function <span class="fstat-no" title="function not covered" >columnsToHeadCells(</span>columnsR: TableColumnType[]): HeadCell[] {
 <span class="cstat-no" title="statement not covered" >    return columnsR.map(<span class="fstat-no" title="function not covered" >(c</span>) =&gt; (<span class="cstat-no" title="statement not covered" >{</span></span>
       id: c.key,
-      disablePadding: false,
+      disablePadding: true,
       label: typeof c.name === 'string' ? c.name.toUpperCase() : c.name,
-      sx: c.sx,
+      sx: [{ paddingY: getTableCellPaddingY(density) }, ...(Array.isArray(c.sx) ? c.sx : [c.sx])],
       tooltipTitle: c.tooltipTitle,
     }));
   }
@@ -1365,6 +1380,7 @@ export default function <span class="fstat-no" title="function not covered" >Enh
                 numSelected={showCheckbox ? selectedRows?.length : undefined}
                 onSelectAllClick={showCheckbox ? handleSelectAllClick : undefined}
                 rowCount={showCheckbox ? rows?.length : undefined}
+                density={density}
               /&gt;
             )}
             &lt;TableBody&gt;
@@ -1402,6 +1418,7 @@ export default function <span class="fstat-no" title="function not covered" >Enh
                             ...(isInactive &amp;&amp; isInactive(row as T)
                               ? { backgroundColor: theme.palette.neutral[50] }
                               : {}),
+                            height: getTableRowHeight(density),
                             '&amp;.MuiTableRow-root.Mui-selected': {
                               backgroundColor: theme.palette.TwClrBgSelectedTertiary,
                             },
@@ -1450,6 +1467,7 @@ export default function <span class="fstat-no" title="function not covered" >Enh
                                 booleanFalseText={booleanFalseText}
                                 booleanTrueText={booleanTrueText}
                                 editText={editText}
+                                sx={{ paddingY: getTableCellPaddingY(density) }}
                               /&gt;
                             ))}
                         &lt;/TableRow&gt;
@@ -1510,7 +1528,7 @@ export function <span class="fstat-no" title="function not covered" >tableSort&l
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-06-06T15:25:25.613Z
+                at 2024-06-06T18:06:36.351Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>
