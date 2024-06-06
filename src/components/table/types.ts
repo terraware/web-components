@@ -31,7 +31,7 @@ export type EnhancedTableDetailsRow = {
   [x: string]: string | number | [] | undefined;
 };
 
-export type TableDensityType = 'comfortable' | 'compact' | 'roomy'
+export type TableDensityType = 'comfortable' | 'compact' | 'roomy';
 
 export interface DetailsRendererProps {
   index: number;
