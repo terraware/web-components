@@ -11,10 +11,11 @@ export type PopoverProps = {
   setAnchorElement: (anchorEl: HTMLElement | null) => void;
   itemRenderer?: (item: DropdownItem) => React.ReactNode;
   menuAlign?: 'left' | 'center' | 'right';
+  selectedValue?: any;
 };
 
 export default function PopoverDropdown(props: PopoverProps): JSX.Element {
-  const { sections, handleClick, anchorElement, setAnchorElement, itemRenderer, menuAlign } = props;
+  const { sections, handleClick, anchorElement, setAnchorElement, itemRenderer, menuAlign, selectedValue } = props;
   const theme = useTheme();
 
   const handleClose = () => {
@@ -78,6 +79,7 @@ export default function PopoverDropdown(props: PopoverProps): JSX.Element {
                   sx={itemStyles(item.type)}
                   disableRipple={true}
                   disabled={item.disabled}
+                  selected={item.value === selectedValue}
                 >
                   {itemRenderer ? itemRenderer(item) : item.label}
                 </MenuItem>
