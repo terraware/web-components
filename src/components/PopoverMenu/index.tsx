@@ -8,9 +8,11 @@ export type PopoverMenuProps = {
   anchor: React.ReactNode;
   menuSections: Section[];
   onClick?: (selected: DropdownItem) => void;
+  showChevron?: boolean;
+  selectedValue?: any;
 };
 
-export default function PopoverMenu({ anchor, menuSections, onClick }: PopoverMenuProps): JSX.Element {
+export default function PopoverMenu({ anchor, menuSections, onClick, showChevron = true, selectedValue }: PopoverMenuProps): JSX.Element {
   const theme = useTheme();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
@@ -40,20 +42,21 @@ export default function PopoverMenu({ anchor, menuSections, onClick }: PopoverMe
         }}
       >
         {anchor}
-        <Icon
+        {showChevron && <Icon
           name='chevronDown'
           size='medium'
           style={{
             marginLeft: '8px',
             fill: theme.palette.TwClrIcn,
           }}
-        />
+        />}
       </IconButton>
       <Popover
         sections={menuSections}
         handleClick={onItemClick}
         anchorElement={anchorEl}
         setAnchorElement={setAnchorEl}
+        selectedValue={selectedValue}
       />
     </div>
   );
