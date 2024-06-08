@@ -21,7 +21,10 @@ export default function TableHeaderItem(props: Props): JSX.Element {
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
     id: headCell.id,
   });
+  const theme = useTheme();
   const style = {
+    paddingLeft: theme.spacing(1.5),
+    paddingRight: theme.spacing(1.5),
     transform: CSS.Transform.toString(transform),
     transition,
     opacity: isDragging ? 0.5 : 1,
@@ -29,7 +32,6 @@ export default function TableHeaderItem(props: Props): JSX.Element {
   const createSortHandler = (property: string) => (event: React.MouseEvent<unknown>) => {
     onRequestSort(event, property);
   };
-  const theme = useTheme();
 
   return headCell.alignment === 'right' ? (
     <TableCell
