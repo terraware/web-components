@@ -1,5 +1,5 @@
 import React from 'react';
-import { ListItem, MenuItem, MenuList, Popover, useTheme } from '@mui/material';
+import { Divider, MenuItem, MenuList, Popover, useTheme } from '@mui/material';
 import { DropdownItem } from '../types';
 
 export type Section = DropdownItem[];
@@ -67,7 +67,7 @@ export default function PopoverDropdown(props: PopoverProps): JSX.Element {
         {sections?.map((section, index) => {
           let elements: JSX.Element[] = [];
           if (index > 0) {
-            elements.push(<ListItem>---</ListItem>);
+            elements.push(<Divider />);
           }
           elements = [
             ...elements,
