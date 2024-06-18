@@ -23,8 +23,6 @@ export default function TableHeaderItem(props: Props): JSX.Element {
   });
   const theme = useTheme();
   const style = {
-    paddingLeft: theme.spacing(1.5),
-    paddingRight: theme.spacing(1.5),
     transform: CSS.Transform.toString(transform),
     transition,
     opacity: isDragging ? 0.5 : 1,
