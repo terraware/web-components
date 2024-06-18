@@ -136,7 +136,7 @@ export function CellTextRenderer({
       className={className}
       sx={[defaultStyles(theme), style, ...(Array.isArray(sx) ? sx : [sx])]}
     >
-      <Typography component='p' variant='body1' noWrap={true} fontSize='16px' sx={{ root: { maxWidth: 400 } }}>
+      <Typography component='p' variant='body1' noWrap={true} fontSize='16px' sx={{ maxWidth: 400 }}>
         {value}
       </Typography>
     </TableCell>
