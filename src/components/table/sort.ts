@@ -1,13 +1,15 @@
-export function descendingComparator<T>(a: T, b: T, orderBy: keyof T, order: SortOrder): number {
-  // first attempt to parse into a numeric value and compare
-  const numCompare = descendingNumComparator(a, b, orderBy);
-  if (numCompare !== null) {
-    return numCompare;
-  }
+export function descendingComparator<T>(a: T, b: T, orderBy: keyof T | string, order: SortOrder): number {
+  const getValue = (obj: any, path: string) => {
+    return path.split('.').reduce((acc, part) => acc && acc[part], obj);
+  };
 
-  // if non-numeric, compare using the javascript built-in compare for this type
-  const bValue = b[orderBy] ?? '';
-  const aValue = a[orderBy] ?? '';
+  const aValue = getValue(a, orderBy as string) ?? '';
+  const bValue = getValue(b, orderBy as string) ?? '';
+
+  const numCompareResult = descendingNumComparator(aValue, bValue);
+  if (numCompareResult !== null) {
+    return order === 'desc' ? numCompareResult : -numCompareResult;
+  }
 
   // blank values at the end always (any order)
   if (isEmptyValue(aValue.toString()) && isEmptyValue(bValue.toString())) {
@@ -40,9 +42,9 @@ function isEmptyValue(value?: string): boolean {
   }
 }
 
-function descendingNumComparator<T>(a: T, b: T, orderBy: keyof T): number | null {
-  const aNumValue = Number((a[orderBy] ?? '0.0') as string);
-  const bNumValue = Number((b[orderBy] ?? '0.0') as string);
+function descendingNumComparator(aValue: any, bValue: any): number | null {
+  const aNumValue = Number(aValue);
+  const bNumValue = Number(bValue);
 
   if (!isNaN(aNumValue) && !isNaN(bNumValue)) {
     return bNumValue - aNumValue;
