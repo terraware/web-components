@@ -42,7 +42,7 @@ function isEmptyValue(value?: string): boolean {
   }
 }
 
-function descendingNumComparator(aValue: any, bValue: any): number | null {
+function descendingNumComparator<T>(aValue: T, bValue: T): number | null {
   const aNumValue = Number(aValue);
   const bNumValue = Number(bValue);
 
