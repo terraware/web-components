@@ -42,9 +42,9 @@ function isEmptyValue(value?: string): boolean {
   }
 }
 
-function descendingNumComparator<T>(aValue: T, bValue: T): number | null {
-  const aNumValue = Number(aValue);
-  const bNumValue = Number(bValue);
+function descendingNumComparator<T>(a: T, b: T): number | null {
+  const aNumValue = Number(a);
+  const bNumValue = Number(b);
 
   if (!isNaN(aNumValue) && !isNaN(bNumValue)) {
     return bNumValue - aNumValue;
