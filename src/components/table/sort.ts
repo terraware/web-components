@@ -69,7 +69,7 @@ export function getComparator<Key extends keyof any>(
   order: SortOrder,
   orderBy: Key,
   splitDots: boolean,
-  sorting: (a: any, b: any, orderBy: any, order: SortOrder, splitDots: boolean) => number
+  sorting: (a: any, b: any, orderBy: any, order: SortOrder, splitDots?: boolean) => number
 ): (a: { [key in Key]?: string | number | [] }, b: { [key in Key]?: string | number | [] }) => number {
   return (a, b) => sorting(a, b, orderBy, order, splitDots);
 }
