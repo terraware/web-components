@@ -8,8 +8,10 @@ export function descendingComparator<T>(
   const getValue = (obj: any, path: string) => {
     if (splitDots) {
       const parts = path.split('.');
+
       return parts.reduce((acc, part) => acc && acc[part], obj);
     }
+
     return obj[path];
   };
 
