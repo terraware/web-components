@@ -1,27 +1,13 @@
-export function descendingComparator<T>(
-  a: T,
-  b: T,
-  orderBy: keyof T | string,
-  order: SortOrder,
-  splitDots?: boolean
-): number {
-  const getValue = (obj: any, path: string) => {
-    if (splitDots) {
-      const parts = path.split('.');
-
-      return parts.reduce((acc, part) => acc && acc[part], obj);
-    }
-
-    return obj[path];
-  };
-
-  const aValue = getValue(a, orderBy as string) ?? '';
-  const bValue = getValue(b, orderBy as string) ?? '';
-
-  const numCompareResult = descendingNumComparator(aValue, bValue);
-  if (numCompareResult !== null) {
-    return order === 'desc' ? numCompareResult : -numCompareResult;
+export function descendingComparator<T>(a: T, b: T, orderBy: keyof T, order: SortOrder): number {
+  // first attempt to parse into a numeric value and compare
+  const numCompare = descendingNumComparator(a, b, orderBy);
+  if (numCompare !== null) {
+    return numCompare;
   }
+
+  // if non-numeric, compare using the javascript built-in compare for this type
+  const bValue = b[orderBy] ?? '';
+  const aValue = a[orderBy] ?? '';
 
   // blank values at the end always (any order)
   if (isEmptyValue(aValue.toString()) && isEmptyValue(bValue.toString())) {
@@ -54,9 +40,9 @@ function isEmptyValue(value?: string): boolean {
   }
 }
 
-function descendingNumComparator<T>(a: T, b: T): number | null {
-  const aNumValue = Number(a);
-  const bNumValue = Number(b);
+function descendingNumComparator<T>(a: T, b: T, orderBy: keyof T): number | null {
+  const aNumValue = Number((a[orderBy] ?? '0.0') as string);
+  const bNumValue = Number((b[orderBy] ?? '0.0') as string);
 
   if (!isNaN(aNumValue) && !isNaN(bNumValue)) {
     return bNumValue - aNumValue;
@@ -70,10 +56,9 @@ export type SortOrder = 'asc' | 'desc';
 export function getComparator<Key extends keyof any>(
   order: SortOrder,
   orderBy: Key,
-  splitDots: boolean,
-  sorting: (a: any, b: any, orderBy: any, order: SortOrder, splitDots?: boolean) => number
+  sorting: (a: any, b: any, orderBy: any, order: SortOrder) => number
 ): (a: { [key in Key]?: string | number | [] }, b: { [key in Key]?: string | number | [] }) => number {
-  return (a, b) => sorting(a, b, orderBy, order, splitDots);
+  return (a, b) => sorting(a, b, orderBy, order);
 }
 
 export function stableSort<T>(array: T[], comparator: (a: T, b: T) => number): T[] {
