@@ -64,9 +64,8 @@ export interface Props<T> extends LocalizationProps {
   // an optional "newValue" parameter from that call
   onSelect?: (value: T, fromColumn?: string, newValue?: string) => void;
   DetailsRenderer?: (props: DetailsRendererProps) => JSX.Element;
-  sortComparator?: (a: T, b: T, orderBy: keyof T, order: SortOrder, splitDots?: boolean) => number;
+  sortComparator?: (a: T, b: T, orderBy: keyof T, order: SortOrder) => number;
   sortHandler?: (order: SortOrder, orderBy: string) => void;
-  sortSplitDots?: boolean;
   isInactive?: (row: T) => boolean;
   isPresorted?: boolean;
   onReorderEnd?: (newOrder: string[]) => void;
@@ -117,7 +116,6 @@ export default function EnhancedTable<T extends TableRowType>({
   DetailsRenderer,
   sortComparator = descendingComparator,
   sortHandler,
-  sortSplitDots = false,
   isInactive,
   isPresorted,
   onReorderEnd,
@@ -357,7 +355,7 @@ export default function EnhancedTable<T extends TableRowType>({
                 </TableRow>
               )}
               {rows &&
-                (isPresorted ? rows : stableSort(rows, getComparator(order, orderBy, sortSplitDots, sortComparator)))
+                (isPresorted ? rows : stableSort(rows, getComparator(order, orderBy, sortComparator)))
                   .slice(itemsToSkip, itemsToSkip + maxItemsPerPage)
                   .map((row, index) => {
                     const onClick = onSelect && !controlledOnSelect ? () => onSelect(row as T) : undefined;
