@@ -1,6 +1,16 @@
-export function descendingComparator<T>(a: T, b: T, orderBy: keyof T | string, order: SortOrder): number {
+export function descendingComparator<T>(
+  a: T,
+  b: T,
+  orderBy: keyof T | string,
+  order: SortOrder,
+  splitDots?: boolean
+): number {
   const getValue = (obj: any, path: string) => {
-    return path.split('.').reduce((acc, part) => acc && acc[part], obj);
+    if (splitDots) {
+      const parts = path.split('.');
+      return parts.reduce((acc, part) => acc && acc[part], obj);
+    }
+    return obj[path];
   };
 
   const aValue = getValue(a, orderBy as string) ?? '';
@@ -58,9 +68,10 @@ export type SortOrder = 'asc' | 'desc';
 export function getComparator<Key extends keyof any>(
   order: SortOrder,
   orderBy: Key,
-  sorting: (a: any, b: any, orderBy: any, order: SortOrder) => number
+  splitDots: boolean,
+  sorting: (a: any, b: any, orderBy: any, order: SortOrder, splitDots: boolean) => number
 ): (a: { [key in Key]?: string | number | [] }, b: { [key in Key]?: string | number | [] }) => number {
-  return (a, b) => sorting(a, b, orderBy, order);
+  return (a, b) => sorting(a, b, orderBy, order, splitDots);
 }
 
 export function stableSort<T>(array: T[], comparator: (a: T, b: T) => number): T[] {
