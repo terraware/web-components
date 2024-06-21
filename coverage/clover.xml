@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1719009780977" clover="3.2.0">
-  <project timestamp="1719009780977" name="All files">
-    <metrics statements="1556" coveredstatements="195" conditionals="1303" coveredconditionals="98" methods="546" coveredmethods="31" elements="3405" coveredelements="324" complexity="0" loc="1556" ncloc="1556" packages="39" files="206" classes="206"/>
+<coverage generated="1719010633756" clover="3.2.0">
+  <project timestamp="1719010633756" name="All files">
+    <metrics statements="1556" coveredstatements="195" conditionals="1305" coveredconditionals="100" methods="546" coveredmethods="31" elements="3407" coveredelements="326" complexity="0" loc="1556" ncloc="1556" packages="39" files="206" classes="206"/>
     <package name="src">
       <metrics statements="1" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
       <file name="index.ts" path="/home/runner/work/web-components/web-components/src/index.ts">
@@ -292,9 +292,9 @@
       </file>
     </package>
     <package name="src.components.MultiSelect">
-      <metrics statements="22" coveredstatements="17" conditionals="36" coveredconditionals="19" methods="10" coveredmethods="9"/>
+      <metrics statements="22" coveredstatements="17" conditionals="38" coveredconditionals="21" methods="10" coveredmethods="9"/>
       <file name="index.tsx" path="/home/runner/work/web-components/web-components/src/components/MultiSelect/index.tsx">
-        <metrics statements="22" coveredstatements="17" conditionals="36" coveredconditionals="19" methods="10" coveredmethods="9"/>
+        <metrics statements="22" coveredstatements="17" conditionals="38" coveredconditionals="21" methods="10" coveredmethods="9"/>
         <line num="51" count="5" type="stmt"/>
         <line num="53" count="5" type="stmt"/>
         <line num="55" count="5" type="stmt"/>
@@ -314,9 +314,9 @@
         <line num="83" count="1" type="stmt"/>
         <line num="88" count="1" type="stmt"/>
         <line num="90" count="5" type="stmt"/>
-        <line num="119" count="6" type="stmt"/>
-        <line num="121" count="6" type="stmt"/>
-        <line num="122" count="1" type="stmt"/>
+        <line num="123" count="6" type="stmt"/>
+        <line num="125" count="6" type="stmt"/>
+        <line num="126" count="1" type="stmt"/>
       </file>
     </package>
     <package name="src.components.Navbar">
