@@ -64,6 +64,16 @@
     align-items: flex-start;
     justify-content: space-between;
 
+    &:hover {
+      border: $tw-sz-frm-fld-text-input-stroke solid $tw-clr-brdr-hover;
+    }
+
+    &.open {
+      border: $tw-sz-frm-fld-text-input-stroke solid $tw-clr-brdr-active;
+      outline: $tw-sz-frm-fld-text-input-stroke-active solid $tw-clr-brdr-active;
+      outline-offset: -$tw-sz-frm-fld-text-input-stroke;
+    }
+
     &--disabled {
       background-color: $tw-clr-bg;
       border: $tw-sz-frm-fld-text-input-stroke solid $tw-clr-brdr-tertiary;

@@ -99,7 +99,11 @@ export default function MultiSelect<K, V>(props: MultiSelectProps<K, V>): JSX.El
         onBlur={onBlurHandler}
         tabIndex={0}
       >
-        <div id={id} className={`multi-select__values${disabled ? '--disabled' : ''}`} onClick={toggleOptions}>
+        <div
+          id={id}
+          className={`multi-select__values${disabled ? '--disabled' : ''}${openedOptions ? ' open' : ''}`}
+          onClick={toggleOptions}
+        >
           {selectedOptions.length > 0 ? (
             <PillList data={valuesPillData} onRemove={onRemove} onClick={onPillClick} className={pillListClassName} />
           ) : (
