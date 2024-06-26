@@ -2,6 +2,7 @@ import { Story } from '@storybook/react';
 import React, { useState } from 'react';
 import Button from '../components/Button/Button';
 import DialogBox, { Props as DialogBoxProps } from '../components/DialogBox/DialogBox';
+import Dropdown from '../components/Dropdown';
 
 export default {
   title: 'Dialog Box',
@@ -18,7 +19,19 @@ const WithButtonTemplate: Story<DialogBoxProps> = (args) => {
   return (
     <main>
       <button onClick={() => setOpened(true)}>Click me</button>
-      <DialogBox {...args} open={opened} onClose={() => setOpened(false)} />
+      <DialogBox {...args} open={opened} onClose={() => setOpened(false)}>
+        <Dropdown
+          fullWidth
+          onChange={() => {
+            return;
+          }}
+          options={[
+            { label: 'Item 1', value: 'item1' },
+            { label: 'Item 2', value: 'item2' },
+            { label: 'Item 3', value: 'item3' },
+          ]}
+        />
+      </DialogBox>
     </main>
   );
 };
