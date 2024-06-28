@@ -16,15 +16,17 @@ const Badge = (props: BadgeProps): JSX.Element => {
 
   return (
     <Box
+      component='span'
       sx={{
         backgroundColor,
         border: `1px solid ${borderColor}`,
         borderRadius: theme.spacing(1),
+        display: 'inline-block',
         padding: theme.spacing(0.5, 1),
         width: 'fit-content',
       }}
     >
-      <Typography color={labelColor} fontSize='14px' fontWeight={500}>
+      <Typography color={labelColor} component='span' fontSize='14px' fontWeight={500}>
         {props.label}
       </Typography>
     </Box>
