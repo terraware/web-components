@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1719612910592" clover="3.2.0">
-  <project timestamp="1719612910593" name="All files">
-    <metrics statements="1558" coveredstatements="195" conditionals="1309" coveredconditionals="100" methods="547" coveredmethods="31" elements="3414" coveredelements="326" complexity="0" loc="1558" ncloc="1558" packages="39" files="206" classes="206"/>
+<coverage generated="1720462838920" clover="3.2.0">
+  <project timestamp="1720462838920" name="All files">
+    <metrics statements="1560" coveredstatements="195" conditionals="1311" coveredconditionals="100" methods="547" coveredmethods="31" elements="3418" coveredelements="326" complexity="0" loc="1560" ncloc="1560" packages="39" files="206" classes="206"/>
     <package name="src">
       <metrics statements="1" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
       <file name="index.ts" path="/home/runner/work/web-components/web-components/src/index.ts">
@@ -434,26 +434,28 @@
       </file>
     </package>
     <package name="src.components.PopoverMenu">
-      <metrics statements="28" coveredstatements="0" conditionals="17" coveredconditionals="0" methods="11" coveredmethods="0"/>
+      <metrics statements="30" coveredstatements="0" conditionals="19" coveredconditionals="0" methods="11" coveredmethods="0"/>
       <file name="Popover.tsx" path="/home/runner/work/web-components/web-components/src/components/PopoverMenu/Popover.tsx">
-        <metrics statements="17" coveredstatements="0" conditionals="12" coveredconditionals="0" methods="7" coveredmethods="0"/>
-        <line num="18" count="0" type="stmt"/>
-        <line num="19" count="0" type="stmt"/>
+        <metrics statements="19" coveredstatements="0" conditionals="14" coveredconditionals="0" methods="7" coveredmethods="0"/>
+        <line num="20" count="0" type="stmt"/>
         <line num="21" count="0" type="stmt"/>
-        <line num="22" count="0" type="stmt"/>
+        <line num="23" count="0" type="stmt"/>
+        <line num="24" count="0" type="cond" truecount="0" falsecount="2"/>
         <line num="25" count="0" type="stmt"/>
-        <line num="26" count="0" type="cond" truecount="0" falsecount="2"/>
         <line num="27" count="0" type="stmt"/>
-        <line num="29" count="0" type="stmt"/>
+        <line num="30" count="0" type="stmt"/>
+        <line num="31" count="0" type="cond" truecount="0" falsecount="2"/>
         <line num="32" count="0" type="stmt"/>
-        <line num="42" count="0" type="stmt"/>
-        <line num="68" count="0" type="stmt"/>
-        <line num="69" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="70" count="0" type="stmt"/>
-        <line num="72" count="0" type="stmt"/>
+        <line num="34" count="0" type="stmt"/>
+        <line num="37" count="0" type="stmt"/>
+        <line num="47" count="0" type="stmt"/>
+        <line num="73" count="0" type="stmt"/>
+        <line num="74" count="0" type="cond" truecount="0" falsecount="2"/>
         <line num="75" count="0" type="stmt"/>
         <line num="77" count="0" type="stmt"/>
-        <line num="90" count="0" type="stmt"/>
+        <line num="80" count="0" type="stmt"/>
+        <line num="82" count="0" type="stmt"/>
+        <line num="95" count="0" type="stmt"/>
       </file>
       <file name="index.tsx" path="/home/runner/work/web-components/web-components/src/components/PopoverMenu/index.tsx">
         <metrics statements="11" coveredstatements="0" conditionals="5" coveredconditionals="0" methods="4" coveredmethods="0"/>
