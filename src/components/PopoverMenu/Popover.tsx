@@ -12,13 +12,18 @@ export type PopoverProps = {
   itemRenderer?: (item: DropdownItem) => React.ReactNode;
   menuAlign?: 'left' | 'center' | 'right';
   selectedValue?: any;
+  onClose?: () => void;
 };
 
 export default function PopoverDropdown(props: PopoverProps): JSX.Element {
-  const { sections, handleClick, anchorElement, setAnchorElement, itemRenderer, menuAlign, selectedValue } = props;
+  const { sections, handleClick, anchorElement, setAnchorElement, itemRenderer, menuAlign, selectedValue, onClose } =
+    props;
   const theme = useTheme();
 
   const handleClose = () => {
+    if (onClose) {
+      onClose();
+    }
     setAnchorElement(null);
   };
 
