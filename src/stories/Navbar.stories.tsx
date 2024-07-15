@@ -83,6 +83,7 @@ const Template = (args: NavbarProps & { title?: boolean }) => {
             label='Seed Bank'
             selected={selectedItem === 'seedbank'}
             onClick={() => setSelectedItem('seedbank')}
+            disabled
           />
           <NavItem
             label='Nurseries'

@@ -8,6 +8,7 @@ export interface NavItemProps {
   label: string | React.ReactNode;
   icon?: IconName;
   children?: ReactElement<SubNavbarProps>;
+  disabled?: boolean;
   selected?: boolean;
   onClick?: (open: boolean | undefined) => void;
   id?: string;
@@ -16,7 +17,7 @@ export interface NavItemProps {
 }
 
 export default function NavItem(props: NavItemProps): JSX.Element {
-  const { label, icon, children: childrenProps, selected, onClick, id, isFooter, href } = props;
+  const { label, icon, children: childrenProps, disabled, selected, onClick, id, isFooter, href } = props;
   const children = href ? null : childrenProps;
 
   const hasChildrenSelected = useCallback(() => {
@@ -41,9 +42,11 @@ export default function NavItem(props: NavItemProps): JSX.Element {
   const [open, setOpen] = React.useState(hasChildrenSelected());
 
   const onClickHandler = () => {
-    setOpen(!open || hasChildrenSelected());
-    if (onClick) {
-      onClick(!open);
+    if (!disabled) {
+      setOpen(!open || hasChildrenSelected());
+      if (onClick) {
+        onClick(!open);
+      }
     }
   };
 
@@ -57,6 +60,7 @@ export default function NavItem(props: NavItemProps): JSX.Element {
         ${hasChildrenSelected() ? 'nav-item--children-selected' : ''}
         ${isFooter ? 'nav-item--footer' : ''}
         ${children ? 'nav-item--has-children' : ''}
+        ${disabled ? 'nav-item--disabled' : ''}
       `}
     >
       <button className={customLabel ? 'nav-item-custom-content' : 'nav-item-content'} onClick={onClickHandler} id={id}>
