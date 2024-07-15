@@ -60,10 +60,15 @@ export default function NavItem(props: NavItemProps): JSX.Element {
         ${hasChildrenSelected() ? 'nav-item--children-selected' : ''}
         ${isFooter ? 'nav-item--footer' : ''}
         ${children ? 'nav-item--has-children' : ''}
-        ${disabled ? 'nav-item--disabled' : ''}
       `}
     >
-      <button className={customLabel ? 'nav-item-custom-content' : 'nav-item-content'} onClick={onClickHandler} id={id}>
+      <button
+        className={`
+          ${customLabel ? 'nav-item-custom-content' : 'nav-item-content'}
+          ${disabled ? 'nav-item--disabled' : ''}
+        `}
+        onClick={onClickHandler} id={id}
+      >
         {icon && <Icon name={icon} className='nav-item--icon' />}
         {!href && <span className='nav-item--label'>{label}</span>}
         {href && (
