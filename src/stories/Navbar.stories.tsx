@@ -76,6 +76,7 @@ const Template = (args: NavbarProps & { title?: boolean }) => {
         icon='peopleNav'
         selected={selectedItem === 'people'}
         onClick={() => setSelectedItem('people')}
+        disabled
       />
       <NavItem label='Locations' icon='seedbankNav'>
         <SubNavbar>
@@ -83,6 +84,7 @@ const Template = (args: NavbarProps & { title?: boolean }) => {
             label='Seed Bank'
             selected={selectedItem === 'seedbank'}
             onClick={() => setSelectedItem('seedbank')}
+            disabled
           />
           <NavItem
             label='Nurseries'
