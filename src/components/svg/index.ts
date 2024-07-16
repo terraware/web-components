@@ -54,6 +54,7 @@ export { default as IconGraphReport } from './IconGraphReport';
 export { default as IconHeartMonitor } from './IconHeartMonitor';
 export { default as IconHistory } from './IconHistory';
 export { default as IconImport } from './IconImport';
+export { default as IconIndex } from './IconIndex';
 export { default as IconLayers } from './IconLayers';
 export { default as IconLibrary } from './IconLibrary';
 export { default as IconList } from './IconList';
