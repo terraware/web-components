@@ -23,7 +23,11 @@ const Template = (args: NavbarProps & { title?: boolean }) => {
   return (
     <Navbar setShowNavBar={showNavbar} backgroundTransparent={args.backgroundTransparent}>
       {args.title && <NavSection title='Account' separator={false} />}
-      <NavItem label='Home' icon='home' selected={selectedItem === 'home'} onClick={() => setSelectedItem('home')} />
+      <NavItem
+        label='Home'
+        icon='home'
+        selected={selectedItem === 'home'}
+        onClick={() => setSelectedItem('home')} />
       <NavItem
         label='Species'
         icon='species'
