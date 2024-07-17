@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1721174605402" clover="3.2.0">
-  <project timestamp="1721174605402" name="All files">
-    <metrics statements="1563" coveredstatements="196" conditionals="1317" coveredconditionals="100" methods="548" coveredmethods="31" elements="3428" coveredelements="327" complexity="0" loc="1563" ncloc="1563" packages="39" files="207" classes="207"/>
+<coverage generated="1721231740635" clover="3.2.0">
+  <project timestamp="1721231740635" name="All files">
+    <metrics statements="1569" coveredstatements="196" conditionals="1319" coveredconditionals="100" methods="551" coveredmethods="31" elements="3439" coveredelements="327" complexity="0" loc="1569" ncloc="1569" packages="39" files="208" classes="208"/>
     <package name="src">
       <metrics statements="1" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
       <file name="index.ts" path="/home/runner/work/web-components/web-components/src/index.ts">
@@ -321,34 +321,34 @@
       </file>
     </package>
     <package name="src.components.Navbar">
-      <metrics statements="31" coveredstatements="0" conditionals="59" coveredconditionals="0" methods="10" coveredmethods="0"/>
+      <metrics statements="31" coveredstatements="0" conditionals="61" coveredconditionals="0" methods="10" coveredmethods="0"/>
       <file name="NavFooter.tsx" path="/home/runner/work/web-components/web-components/src/components/Navbar/NavFooter.tsx">
         <metrics statements="2" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
         <line num="9" count="0" type="stmt"/>
         <line num="11" count="0" type="stmt"/>
       </file>
       <file name="NavItem.tsx" path="/home/runner/work/web-components/web-components/src/components/Navbar/NavItem.tsx">
-        <metrics statements="20" coveredstatements="0" conditionals="48" coveredconditionals="0" methods="5" coveredmethods="0"/>
-        <line num="20" count="0" type="stmt"/>
-        <line num="21" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="23" count="0" type="stmt"/>
-        <line num="24" count="0" type="cond" truecount="0" falsecount="5"/>
+        <metrics statements="20" coveredstatements="0" conditionals="50" coveredconditionals="0" methods="5" coveredmethods="0"/>
+        <line num="22" count="0" type="stmt"/>
+        <line num="23" count="0" type="cond" truecount="0" falsecount="2"/>
         <line num="25" count="0" type="stmt"/>
-        <line num="26" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="27" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="30" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="33" count="0" type="stmt"/>
-        <line num="36" count="0" type="stmt"/>
-        <line num="37" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="26" count="0" type="cond" truecount="0" falsecount="5"/>
+        <line num="27" count="0" type="stmt"/>
+        <line num="28" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="29" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="32" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="35" count="0" type="stmt"/>
         <line num="38" count="0" type="stmt"/>
-        <line num="42" count="0" type="stmt"/>
+        <line num="39" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="40" count="0" type="stmt"/>
         <line num="44" count="0" type="stmt"/>
-        <line num="45" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="46" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="46" count="0" type="stmt"/>
         <line num="47" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="48" count="0" type="stmt"/>
-        <line num="53" count="0" type="stmt"/>
+        <line num="48" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="49" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="50" count="0" type="stmt"/>
         <line num="55" count="0" type="stmt"/>
+        <line num="57" count="0" type="stmt"/>
       </file>
       <file name="NavSection.tsx" path="/home/runner/work/web-components/web-components/src/components/Navbar/NavSection.tsx">
         <metrics statements="2" coveredstatements="0" conditionals="7" coveredconditionals="0" methods="1" coveredmethods="0"/>
@@ -1603,7 +1603,7 @@
       </file>
     </package>
     <package name="src.stories">
-      <metrics statements="500" coveredstatements="0" conditionals="60" coveredconditionals="0" methods="173" coveredmethods="0"/>
+      <metrics statements="506" coveredstatements="0" conditionals="60" coveredconditionals="0" methods="176" coveredmethods="0"/>
       <file name="Autocomplete.stories.tsx" path="/home/runner/work/web-components/web-components/src/stories/Autocomplete.stories.tsx">
         <metrics statements="14" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="5" coveredmethods="0"/>
         <line num="12" count="0" type="stmt"/>
@@ -1910,29 +1910,38 @@
         <line num="196" count="0" type="stmt"/>
         <line num="206" count="0" type="stmt"/>
       </file>
+      <file name="NavItem.stories.tsx" path="/home/runner/work/web-components/web-components/src/stories/NavItem.stories.tsx">
+        <metrics statements="6" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="3" coveredmethods="0"/>
+        <line num="11" count="0" type="stmt"/>
+        <line num="13" count="0" type="stmt"/>
+        <line num="15" count="0" type="stmt"/>
+        <line num="21" count="0" type="stmt"/>
+        <line num="23" count="0" type="stmt"/>
+        <line num="27" count="0" type="stmt"/>
+      </file>
       <file name="Navbar.stories.tsx" path="/home/runner/work/web-components/web-components/src/stories/Navbar.stories.tsx">
         <metrics statements="21" coveredstatements="0" conditionals="2" coveredconditionals="0" methods="17" coveredmethods="0"/>
         <line num="17" count="0" type="stmt"/>
         <line num="18" count="0" type="stmt"/>
         <line num="21" count="0" type="stmt"/>
         <line num="23" count="0" type="stmt"/>
-        <line num="26" count="0" type="stmt"/>
-        <line num="31" count="0" type="stmt"/>
-        <line num="39" count="0" type="stmt"/>
-        <line num="44" count="0" type="stmt"/>
-        <line num="49" count="0" type="stmt"/>
-        <line num="58" count="0" type="stmt"/>
-        <line num="63" count="0" type="stmt"/>
-        <line num="72" count="0" type="stmt"/>
-        <line num="78" count="0" type="stmt"/>
-        <line num="86" count="0" type="stmt"/>
-        <line num="92" count="0" type="stmt"/>
-        <line num="97" count="0" type="stmt"/>
-        <line num="112" count="0" type="stmt"/>
-        <line num="121" count="0" type="stmt"/>
-        <line num="122" count="0" type="stmt"/>
-        <line num="124" count="0" type="stmt"/>
+        <line num="30" count="0" type="stmt"/>
+        <line num="35" count="0" type="stmt"/>
+        <line num="43" count="0" type="stmt"/>
+        <line num="48" count="0" type="stmt"/>
+        <line num="53" count="0" type="stmt"/>
+        <line num="62" count="0" type="stmt"/>
+        <line num="67" count="0" type="stmt"/>
+        <line num="76" count="0" type="stmt"/>
+        <line num="82" count="0" type="stmt"/>
+        <line num="90" count="0" type="stmt"/>
+        <line num="96" count="0" type="stmt"/>
+        <line num="101" count="0" type="stmt"/>
+        <line num="116" count="0" type="stmt"/>
+        <line num="125" count="0" type="stmt"/>
         <line num="126" count="0" type="stmt"/>
+        <line num="128" count="0" type="stmt"/>
+        <line num="130" count="0" type="stmt"/>
       </file>
       <file name="Note.stories.tsx" path="/home/runner/work/web-components/web-components/src/stories/Note.stories.tsx">
         <metrics statements="3" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
