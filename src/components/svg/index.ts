@@ -99,6 +99,7 @@ export { default as Sparkles } from './Sparkles';
 export { default as Species } from './Species';
 export { default as Species2 } from './Species2';
 export { default as Spinner } from './Spinner';
+export { default as SuccessFilled } from './SuccessFilled';
 export { default as Success } from './Success';
 export { default as Touchscreen } from './Touchscreen';
 export { default as UploadCloud } from './UploadCloud';

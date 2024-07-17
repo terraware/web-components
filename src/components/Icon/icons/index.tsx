@@ -100,6 +100,7 @@ import Species from '../../svg/Species';
 import Species2 from '../../svg/Species2';
 import Spinner from '../../svg/Spinner';
 import Success from '../../svg/Success';
+import SuccessFilled from '../../svg/SuccessFilled';
 import Touchscreen from '../../svg/Touchscreen';
 import UploadCloud from '../../svg/UploadCloud';
 import Warning from '../../svg/Warning';
@@ -208,6 +209,7 @@ export type IconName =
   | 'species2'
   | 'spinner'
   | 'success'
+  | 'successFilled'
   | 'touchscreen'
   | 'uploadCloud'
   | 'warning'
@@ -320,6 +322,7 @@ const icons: Record<IconName, SVGComponent> = {
   species2: Species2,
   spinner: Spinner,
   success: Success,
+  successFilled: SuccessFilled,
   touchscreen: Touchscreen,
   uploadCloud: UploadCloud,
   warning: Warning,
