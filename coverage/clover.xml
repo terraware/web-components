@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1721246880483" clover="3.2.0">
-  <project timestamp="1721246880483" name="All files">
-    <metrics statements="1571" coveredstatements="197" conditionals="1321" coveredconditionals="100" methods="552" coveredmethods="31" elements="3444" coveredelements="328" complexity="0" loc="1571" ncloc="1571" packages="39" files="209" classes="209"/>
+<coverage generated="1721324148702" clover="3.2.0">
+  <project timestamp="1721324148702" name="All files">
+    <metrics statements="1571" coveredstatements="197" conditionals="1319" coveredconditionals="100" methods="552" coveredmethods="31" elements="3442" coveredelements="328" complexity="0" loc="1571" ncloc="1571" packages="39" files="209" classes="209"/>
     <package name="src">
       <metrics statements="1" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
       <file name="index.ts" path="/home/runner/work/web-components/web-components/src/index.ts">
@@ -321,14 +321,14 @@
       </file>
     </package>
     <package name="src.components.Navbar">
-      <metrics statements="31" coveredstatements="0" conditionals="61" coveredconditionals="0" methods="10" coveredmethods="0"/>
+      <metrics statements="31" coveredstatements="0" conditionals="59" coveredconditionals="0" methods="10" coveredmethods="0"/>
       <file name="NavFooter.tsx" path="/home/runner/work/web-components/web-components/src/components/Navbar/NavFooter.tsx">
         <metrics statements="2" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
         <line num="9" count="0" type="stmt"/>
         <line num="11" count="0" type="stmt"/>
       </file>
       <file name="NavItem.tsx" path="/home/runner/work/web-components/web-components/src/components/Navbar/NavItem.tsx">
-        <metrics statements="20" coveredstatements="0" conditionals="50" coveredconditionals="0" methods="5" coveredmethods="0"/>
+        <metrics statements="20" coveredstatements="0" conditionals="48" coveredconditionals="0" methods="5" coveredmethods="0"/>
         <line num="22" count="0" type="stmt"/>
         <line num="23" count="0" type="cond" truecount="0" falsecount="2"/>
         <line num="25" count="0" type="stmt"/>
