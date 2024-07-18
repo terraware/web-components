@@ -57,7 +57,7 @@ export default function NavItem(props: NavItemProps): JSX.Element {
   return (
     <div
       className={`
-        ${customLabel ? '' : 'nav-item'}
+        nav-item 
         ${selected ? 'nav-item--selected' : ''}
         ${hasChildrenSelected() ? 'nav-item--children-selected' : ''}
         ${isFooter ? 'nav-item--footer' : ''}
@@ -69,9 +69,12 @@ export default function NavItem(props: NavItemProps): JSX.Element {
           ${customLabel ? 'nav-item-custom-content' : 'nav-item-content'}
           ${disabled ? 'nav-item--disabled' : ''}
         `}
-        onClick={onClickHandler} id={id}
+        onClick={onClickHandler}
+        id={id}
       >
-        {icon && <Icon name={icon} className='nav-item--icon' fillColor={iconColor ?? theme.palette.TwClrIcnSecondary} />}
+        {icon && (
+          <Icon name={icon} className='nav-item--icon' fillColor={iconColor ?? theme.palette.TwClrIcnSecondary} />
+        )}
         {!href && <span className='nav-item--label'>{label}</span>}
         {href && (
           <a className='nav-item--label nav-item--anchor' href={href} rel='noopener noreferrer' target='_external'>
