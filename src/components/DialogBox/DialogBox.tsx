@@ -4,10 +4,11 @@ import Icon from '../Icon/Icon';
 import { IconButton } from '@mui/material';
 import { useDeviceInfo } from '../../utils';
 
-export type DialogBoxSize = 'small' | 'medium' | 'large' | 'x-large';
+export type DialogBoxSize = 'small' | 'medium' | 'large' | 'x-large' | 'full';
 
 export interface Props {
   title: string;
+  identifier?: string;
   size: DialogBoxSize;
   message?: string | string[];
   children?: ReactNode;
@@ -21,8 +22,20 @@ export interface Props {
 }
 
 export default function DialogBox(props: Props): JSX.Element | null {
-  const { title, size, message, children, leftButton, rightButtons, middleButtons, onClose, open, scrolled, skrim } =
-    props;
+  const {
+    identifier,
+    title,
+    size,
+    message,
+    children,
+    leftButton,
+    rightButtons,
+    middleButtons,
+    onClose,
+    open,
+    scrolled,
+    skrim,
+  } = props;
 
   const hasFooter = leftButton || rightButtons || middleButtons;
 
@@ -30,9 +43,9 @@ export default function DialogBox(props: Props): JSX.Element | null {
 
   return open ? (
     <div
-      className={`dialog-box-container${skrim ? '--skrim' : ''} ${open ? 'dialog-box--opened' : 'dialog-box--closed'} ${
-        isMobile ? 'mobile' : ''
-      }`}
+      className={`dialog-box-${identifier || 'noid'} dialog-box-container${skrim ? '--skrim' : ''} ${
+        open ? 'dialog-box--opened' : 'dialog-box--closed'
+      } ${isMobile ? 'mobile' : ''}`}
       onClick={(event) => {
         if (event.target instanceof HTMLElement && event.target.classList.contains('dialog-box--opened')) {
           onClose?.();

@@ -81,6 +81,17 @@ XLarge.args = {
   ],
 };
 
+export const Full = Template.bind({});
+Full.args = {
+  title: 'Title',
+  message: 'Message',
+  size: 'full',
+  middleButtons: [
+    <Button id='new-species' label='Test' onClick={() => true} size='small' key={'1'} />,
+    <Button id='new-species' label='Test' onClick={() => true} size='small' key={'2'} />,
+  ],
+};
+
 export const threeButtons = Template.bind({});
 threeButtons.args = {
   title: 'Title',

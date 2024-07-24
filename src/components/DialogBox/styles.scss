@@ -80,6 +80,10 @@
   &--x-large {
     width: 800px;
   }
+  &--full {
+    width: 100vw;
+    height: 100vh;
+  }
 
   &--header {
     border-bottom: 1px solid $tw-clr-brdr-tertiary;
