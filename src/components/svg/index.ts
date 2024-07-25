@@ -52,6 +52,7 @@ export { default as IconFullScreen } from './IconFullScreen';
 export { default as IconFutures } from './IconFutures';
 export { default as IconGraphReport } from './IconGraphReport';
 export { default as IconHeartMonitor } from './IconHeartMonitor';
+export { default as IconHelp } from './IconHelp';
 export { default as IconHistory } from './IconHistory';
 export { default as IconImport } from './IconImport';
 export { default as IconIndex } from './IconIndex';
