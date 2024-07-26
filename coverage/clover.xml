@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1721943166827" clover="3.2.0">
-  <project timestamp="1721943166827" name="All files">
-    <metrics statements="1573" coveredstatements="198" conditionals="1321" coveredconditionals="100" methods="553" coveredmethods="31" elements="3447" coveredelements="329" complexity="0" loc="1573" ncloc="1573" packages="39" files="210" classes="210"/>
+<coverage generated="1722013223887" clover="3.2.0">
+  <project timestamp="1722013223887" name="All files">
+    <metrics statements="1573" coveredstatements="198" conditionals="1325" coveredconditionals="102" methods="553" coveredmethods="31" elements="3451" coveredelements="331" complexity="0" loc="1573" ncloc="1573" packages="39" files="210" classes="210"/>
     <package name="src">
       <metrics statements="1" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
       <file name="index.ts" path="/home/runner/work/web-components/web-components/src/index.ts">
@@ -293,31 +293,31 @@
       </file>
     </package>
     <package name="src.components.MultiSelect">
-      <metrics statements="22" coveredstatements="17" conditionals="38" coveredconditionals="21" methods="10" coveredmethods="9"/>
+      <metrics statements="22" coveredstatements="17" conditionals="42" coveredconditionals="23" methods="10" coveredmethods="9"/>
       <file name="index.tsx" path="/home/runner/work/web-components/web-components/src/components/MultiSelect/index.tsx">
-        <metrics statements="22" coveredstatements="17" conditionals="38" coveredconditionals="21" methods="10" coveredmethods="9"/>
-        <line num="51" count="5" type="stmt"/>
+        <metrics statements="22" coveredstatements="17" conditionals="42" coveredconditionals="23" methods="10" coveredmethods="9"/>
         <line num="53" count="5" type="stmt"/>
         <line num="55" count="5" type="stmt"/>
-        <line num="56" count="2" type="cond" truecount="2" falsecount="0"/>
-        <line num="58" count="2" type="cond" truecount="1" falsecount="1"/>
-        <line num="59" count="0" type="stmt"/>
-        <line num="63" count="5" type="stmt"/>
-        <line num="64" count="3" type="cond" truecount="1" falsecount="1"/>
-        <line num="65" count="0" type="stmt"/>
-        <line num="69" count="5" type="stmt"/>
-        <line num="70" count="0" type="stmt"/>
-        <line num="72" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="73" count="0" type="stmt"/>
-        <line num="77" count="13" type="stmt"/>
-        <line num="79" count="5" type="stmt"/>
-        <line num="81" count="1" type="stmt"/>
+        <line num="57" count="5" type="stmt"/>
+        <line num="58" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="60" count="2" type="cond" truecount="1" falsecount="1"/>
+        <line num="61" count="0" type="stmt"/>
+        <line num="65" count="5" type="stmt"/>
+        <line num="66" count="3" type="cond" truecount="1" falsecount="1"/>
+        <line num="67" count="0" type="stmt"/>
+        <line num="71" count="5" type="stmt"/>
+        <line num="72" count="0" type="stmt"/>
+        <line num="74" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="75" count="0" type="stmt"/>
+        <line num="79" count="13" type="stmt"/>
+        <line num="81" count="5" type="stmt"/>
         <line num="83" count="1" type="stmt"/>
-        <line num="88" count="1" type="stmt"/>
-        <line num="90" count="5" type="stmt"/>
-        <line num="123" count="6" type="stmt"/>
-        <line num="125" count="6" type="stmt"/>
-        <line num="126" count="1" type="stmt"/>
+        <line num="85" count="1" type="stmt"/>
+        <line num="90" count="1" type="stmt"/>
+        <line num="92" count="5" type="stmt"/>
+        <line num="127" count="6" type="stmt"/>
+        <line num="129" count="6" type="stmt"/>
+        <line num="130" count="1" type="stmt"/>
       </file>
     </package>
     <package name="src.components.Navbar">
