@@ -10,6 +10,7 @@ export type MultiSelectProps<K, V> = {
   disabled?: boolean;
   fullWidth?: boolean;
   helperText?: string;
+  errorText?: string;
   id?: string;
   label?: string;
   missingValuePlaceholder?: string;
@@ -34,6 +35,7 @@ export default function MultiSelect<K, V>(props: MultiSelectProps<K, V>): JSX.El
     disabled,
     fullWidth,
     helperText,
+    errorText,
     id,
     label,
     missingValuePlaceholder,
@@ -101,7 +103,9 @@ export default function MultiSelect<K, V>(props: MultiSelectProps<K, V>): JSX.El
       >
         <div
           id={id}
-          className={`multi-select__values${disabled ? '--disabled' : ''}${openedOptions ? ' open' : ''}`}
+          className={`multi-select__values${disabled ? '--disabled' : ''}${openedOptions ? ' open' : ''}${
+            errorText ? ' error' : ''
+          }`}
           onClick={toggleOptions}
         >
           {selectedOptions.length > 0 ? (
@@ -136,6 +140,14 @@ export default function MultiSelect<K, V>(props: MultiSelectProps<K, V>): JSX.El
         <label htmlFor={id} className='multi-select__help-text'>
           {helperText}
         </label>
+      )}
+      {errorText && (
+        <div className='multi-select__error'>
+          <Icon name='error' className='multi-select__error-icon' />
+          <label htmlFor={id} className='multi-select__error-text'>
+            {errorText}
+          </label>
+        </div>
       )}
     </Box>
   );
