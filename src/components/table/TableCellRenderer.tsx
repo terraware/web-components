@@ -17,7 +17,8 @@ const defaultStyles = (theme: Theme) => ({
 });
 
 export default function CellRenderer(props: RendererProps<TableRowType>): JSX.Element {
-  const { column, value, onRowClick, index, className, booleanFalseText, booleanTrueText, editText, style, sx } = props;
+  const { column, value, onRowClick, index, className, booleanFalseText, booleanTrueText, editText, style, sx, title } =
+    props;
   const id = `row${index}-${column.key}`;
 
   if (column.type === 'date' && typeof value === 'string' && value) {
@@ -29,6 +30,7 @@ export default function CellRenderer(props: RendererProps<TableRowType>): JSX.El
         alignment={column.alignment}
         style={style}
         sx={sx}
+        title={title}
       />
     );
   } else if (column.type === 'notes' && value && typeof value === 'string') {
@@ -40,6 +42,7 @@ export default function CellRenderer(props: RendererProps<TableRowType>): JSX.El
         alignment={column.alignment}
         style={style}
         sx={sx}
+        title={title}
       />
     );
   } else if (column.type === 'boolean') {
@@ -53,6 +56,7 @@ export default function CellRenderer(props: RendererProps<TableRowType>): JSX.El
         alignment={column.alignment}
         style={style}
         sx={sx}
+        title={title}
       />
     );
   } else if (column.type === 'edit') {
@@ -65,12 +69,21 @@ export default function CellRenderer(props: RendererProps<TableRowType>): JSX.El
         alignment={column.alignment}
         style={style}
         sx={sx}
+        title={title}
       />
     );
   }
 
   return (
-    <CellTextRenderer id={id} value={value} className={className} alignment={column.alignment} style={style} sx={sx} />
+    <CellTextRenderer
+      id={id}
+      value={value}
+      className={className}
+      alignment={column.alignment}
+      style={style}
+      sx={sx}
+      title={title}
+    />
   );
 }
 
@@ -87,6 +100,7 @@ export function CellDateRenderer({
   alignment,
   style,
   sx,
+  title,
 }: {
   id: string;
   value: string;
@@ -94,6 +108,7 @@ export function CellDateRenderer({
   alignment?: TextAlignment;
   style?: CSSProperties;
   sx?: SxProps;
+  title?: string;
 }): JSX.Element {
   const theme = useTheme();
 
@@ -103,6 +118,7 @@ export function CellDateRenderer({
       align={alignment || 'left'}
       className={className}
       sx={[defaultStyles(theme), { whiteSpace: 'nowrap' }, style, ...(Array.isArray(sx) ? sx : [sx])]}
+      title={title}
     >
       <Typography component='p' variant='body1' fontSize='16px'>
         {cellDateFormatter(value)}
@@ -118,6 +134,7 @@ export function CellTextRenderer({
   alignment,
   style,
   sx,
+  title,
 }: {
   id: string;
   value?: string | number | any[] | ReactNode;
@@ -125,6 +142,7 @@ export function CellTextRenderer({
   alignment?: TextAlignment;
   style?: CSSProperties;
   sx?: SxProps;
+  title?: string;
 }): JSX.Element {
   const theme = useTheme();
 
@@ -132,7 +150,7 @@ export function CellTextRenderer({
     <TableCell
       id={id}
       align={alignment || 'left'}
-      title={typeof value === 'string' ? value : ''}
+      title={title ? title : typeof value === 'string' ? value : ''}
       className={className}
       sx={[defaultStyles(theme), style, ...(Array.isArray(sx) ? sx : [sx])]}
     >
@@ -152,6 +170,7 @@ export function CellBooleanRenderer({
   alignment,
   style,
   sx,
+  title,
 }: {
   id: string;
   // eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents
@@ -162,6 +181,7 @@ export function CellBooleanRenderer({
   alignment?: TextAlignment;
   style?: CSSProperties;
   sx?: SxProps;
+  title?: string;
 }): JSX.Element {
   const theme = useTheme();
 
@@ -171,6 +191,7 @@ export function CellBooleanRenderer({
       align={alignment || 'left'}
       className={className}
       sx={[defaultStyles(theme), style, ...(Array.isArray(sx) ? sx : [sx])]}
+      title={title}
     >
       <Typography component='p' variant='body1' fontSize='16px'>
         {value?.toString() === 'true' ? booleanTrueText : booleanFalseText}
@@ -186,6 +207,7 @@ export function CellNotesRenderer({
   alignment,
   style,
   sx,
+  title,
 }: {
   id: string;
   value?: string;
@@ -193,6 +215,7 @@ export function CellNotesRenderer({
   alignment?: TextAlignment;
   style?: CSSProperties;
   sx?: SxProps;
+  title?: string;
 }): JSX.Element {
   const theme = useTheme();
 
@@ -202,6 +225,7 @@ export function CellNotesRenderer({
       align={alignment || 'left'}
       className={className}
       sx={[defaultStyles(theme), style, ...(Array.isArray(sx) ? sx : [sx])]}
+      title={title}
     >
       <Typography id={id} component='p' variant='body1' fontSize='16px'>
         {value && value.length > 0 ? <Notes /> : ''}
@@ -218,6 +242,7 @@ export function CellEditRenderer({
   alignment,
   style,
   sx,
+  title,
 }: {
   id: string;
   onRowClick?: () => void;
@@ -226,6 +251,7 @@ export function CellEditRenderer({
   alignment?: TextAlignment;
   style?: CSSProperties;
   sx?: SxProps;
+  title?: string;
 }): JSX.Element {
   const theme = useTheme();
 
@@ -235,6 +261,7 @@ export function CellEditRenderer({
       align={alignment || 'left'}
       className={className}
       sx={[defaultStyles(theme), style, ...(Array.isArray(sx) ? sx : [sx])]}
+      title={title}
     >
       <Link
         id={`${id}-button`}
