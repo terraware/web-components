@@ -25,6 +25,7 @@ export interface RendererProps<T> {
   booleanTrueText: string;
   editText: string;
   sx?: SxProps;
+  title?: string;
 }
 
 export type EnhancedTableDetailsRow = {
