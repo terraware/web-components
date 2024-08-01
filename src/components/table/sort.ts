@@ -2,7 +2,7 @@ export function descendingComparator<T>(a: T, b: T, orderBy: keyof T, order: Sor
   // first attempt to parse into a numeric value and compare
   const numCompare = descendingNumComparator(a, b, orderBy);
   if (numCompare !== null) {
-    return numCompare;
+    return order === 'desc' ? numCompare : numCompare * -1;
   }
 
   // if non-numeric, compare using the javascript built-in compare for this type
