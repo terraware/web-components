@@ -26,20 +26,27 @@ export const CheckboxStyle = (theme: Theme) => ({
 });
 
 export interface Props {
-  id: string;
-  name: string;
-  label: React.ReactNode;
-  value?: boolean | null;
-  onChange: (value: boolean) => void;
-  disabled?: boolean;
   className?: string;
+  disabled?: boolean;
+  id: string;
+  indeterminate?: boolean;
+  label: React.ReactNode;
+  name: string;
+  onChange: (value: boolean) => void;
   sx?: SxProps;
+  value?: boolean | null;
 }
 
 export default function Checkbox(props: Props): JSX.Element {
   const theme = useTheme();
 
   const onChange = (event: SyntheticEvent<Element, Event>, checked: boolean) => {
+    if (props.indeterminate) {
+      props.onChange(true);
+
+      return;
+    }
+
     props.onChange(checked);
   };
 
@@ -54,6 +61,7 @@ export default function Checkbox(props: Props): JSX.Element {
           disabled={props.disabled}
           disableRipple={true}
           id={'check-' + props.id}
+          indeterminate={props.indeterminate}
           checked={props.value ?? false}
           size='medium'
           sx={[CheckboxStyle(theme), ...(Array.isArray(props.sx) ? props.sx : [props.sx])]}
