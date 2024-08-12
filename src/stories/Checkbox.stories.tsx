@@ -27,6 +27,7 @@ Default.args = {
   name: 'Test',
   label: 'Test',
   disabled: false,
+  indeterminate: false,
 };
 
 TopAlignLongLabel.args = {
@@ -34,4 +35,5 @@ TopAlignLongLabel.args = {
   name: 'Alignment Test',
   label: 'The Quick Brown Fox Jumped Over The Silly Lazy Goat',
   disabled: false,
+  indeterminate: undefined,
 };
