@@ -23,6 +23,7 @@ export interface TruncateConfig {
 export interface Props {
   autoFocus?: boolean;
   className?: string;
+  defaultValue?: string | number;
   disabled?: boolean;
   disabledCharacters?: string[];
   display?: boolean;
@@ -58,6 +59,7 @@ export default function TextField(props: Props): JSX.Element {
     autoFocus,
     label,
     className,
+    defaultValue,
     disabled,
     disabledCharacters,
     display,
@@ -115,7 +117,7 @@ export default function TextField(props: Props): JSX.Element {
   };
 
   const renderRightIcon = () => {
-    if (iconRight === 'cancel' && !value) {
+    if (iconRight === 'cancel' && !(defaultValue || value)) {
       return null;
     }
 
@@ -145,11 +147,21 @@ export default function TextField(props: Props): JSX.Element {
     }
 
     if (type === 'textarea' && truncateConfig) {
-      return <TruncatedTextArea preserveNewlines={preserveNewlines} truncateConfig={truncateConfig} value={value} />;
+      return (
+        <TruncatedTextArea
+          preserveNewlines={preserveNewlines}
+          truncateConfig={truncateConfig}
+          value={defaultValue || value}
+        />
+      );
     }
 
-    return <p className={`textfield-value--display${preserveNewlines ? ' preserve-newlines' : ''}`}>{value}</p>;
-  }, [display, preserveNewlines, truncateConfig, type, value]);
+    return (
+      <p className={`textfield-value--display${preserveNewlines ? ' preserve-newlines' : ''}`}>
+        {defaultValue || value}
+      </p>
+    );
+  }, [defaultValue, display, preserveNewlines, truncateConfig, type, value]);
 
   return (
     <Box className={`textfield ${className}`} sx={sx}>
@@ -163,7 +175,8 @@ export default function TextField(props: Props): JSX.Element {
             {iconLeft && <Icon name={iconLeft} className='textfield-value--icon-left' />}
             <input
               autoFocus={autoFocus}
-              value={type === 'number' ? value : value || ''}
+              defaultValue={defaultValue}
+              value={type === 'number' || defaultValue !== undefined ? value : value || ''}
               disabled={readonly || disabled}
               placeholder={placeholder}
               onChange={textfieldOnChange}
@@ -179,6 +192,7 @@ export default function TextField(props: Props): JSX.Element {
           <textarea
             autoFocus={autoFocus}
             className={textfieldClass}
+            defaultValue={defaultValue}
             value={value}
             disabled={readonly || disabled}
             placeholder={placeholder}
