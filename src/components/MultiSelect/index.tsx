@@ -68,7 +68,13 @@ export default function MultiSelect<K, V>(props: MultiSelectProps<K, V>): JSX.El
     }
   }, [optionsVisible]);
 
-  const onBlurHandler = () => {
+  const onBlurHandler = (event: any) => {
+    // In Chrome > 126, the onBlur event will fire even if you are clicking _within_ the focused element
+    // If this is the case, we do not actually want to blur
+    if (event.currentTarget.contains(event.relatedTarget)) {
+      return;
+    }
+
     setOpenedOptions(false);
 
     if (props.onBlur) {
