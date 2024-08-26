@@ -37,6 +37,7 @@ export interface Props {
   onBlur?: () => void;
   onChange?: Handler;
   onClickRightIcon?: () => void;
+  onFocus?: () => void;
   onKeyDown?: (key: string) => void;
   placeholder?: string;
   preserveNewlines?: boolean;
@@ -71,6 +72,7 @@ export default function TextField(props: Props): JSX.Element {
     onBlur,
     onChange,
     onClickRightIcon,
+    onFocus,
     onKeyDown,
     placeholder,
     preserveNewlines,
@@ -168,6 +170,7 @@ export default function TextField(props: Props): JSX.Element {
               placeholder={placeholder}
               onChange={textfieldOnChange}
               onBlur={onBlur}
+              onFocus={onFocus}
               onKeyDown={onKeyDownHandler}
               onWheel={(e) => e.currentTarget.blur()}
               required={required}
@@ -184,6 +187,7 @@ export default function TextField(props: Props): JSX.Element {
             placeholder={placeholder}
             onChange={textfieldOnChange}
             onBlur={onBlur}
+            onFocus={onFocus}
             required={required}
             style={(styles || {}).textarea}
           />
