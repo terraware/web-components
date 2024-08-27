@@ -24,6 +24,7 @@ export interface Props {
   tooltipTitle?: TooltipProps['title'];
   required?: boolean;
   sx?: SxProps;
+  renderOption?: (props: React.HTMLAttributes<HTMLLIElement>, option: ValueType) => React.ReactNode;
 }
 
 const isEmpty = (value: unknown) => ['', undefined].includes(value as string | undefined);
@@ -44,6 +45,7 @@ export default function Autocomplete({
   tooltipTitle,
   required,
   sx,
+  renderOption,
 }: Props): JSX.Element {
   const onChangeHandler = (event: ChangeEvent<any>, value: string | null) => {
     if (event) {
@@ -131,6 +133,7 @@ export default function Autocomplete({
         },
       }}
       {...optionalArgs}
+      renderOption={renderOption}
     />
   );
 }
