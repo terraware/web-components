@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1725909163282" clover="3.2.0">
-  <project timestamp="1725909163282" name="All files">
-    <metrics statements="1580" coveredstatements="200" conditionals="1335" coveredconditionals="105" methods="553" coveredmethods="31" elements="3468" coveredelements="336" complexity="0" loc="1580" ncloc="1580" packages="39" files="210" classes="210"/>
+<coverage generated="1725910155110" clover="3.2.0">
+  <project timestamp="1725910155110" name="All files">
+    <metrics statements="1580" coveredstatements="200" conditionals="1337" coveredconditionals="105" methods="553" coveredmethods="31" elements="3470" coveredelements="336" complexity="0" loc="1580" ncloc="1580" packages="39" files="210" classes="210"/>
     <package name="src">
       <metrics statements="1" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
       <file name="index.ts" path="/home/runner/work/web-components/web-components/src/index.ts">
@@ -705,9 +705,9 @@
       </file>
     </package>
     <package name="src.components.Textfield">
-      <metrics statements="50" coveredstatements="0" conditionals="75" coveredconditionals="0" methods="11" coveredmethods="0"/>
+      <metrics statements="50" coveredstatements="0" conditionals="77" coveredconditionals="0" methods="11" coveredmethods="0"/>
       <file name="Textfield.tsx" path="/home/runner/work/web-components/web-components/src/components/Textfield/Textfield.tsx">
-        <metrics statements="32" coveredstatements="0" conditionals="60" coveredconditionals="0" methods="6" coveredmethods="0"/>
+        <metrics statements="32" coveredstatements="0" conditionals="62" coveredconditionals="0" methods="6" coveredmethods="0"/>
         <line num="88" count="0" type="stmt"/>
         <line num="90" count="0" type="stmt"/>
         <line num="98" count="0" type="stmt"/>
