@@ -156,7 +156,7 @@ export default function TextField(props: Props): JSX.Element {
   return (
     <Box className={`textfield ${className}`} sx={sx}>
       <label htmlFor={id} className='textfield-label'>
-        {required ? `${label} *` : label}
+        {required && label ? `${label} *` : label}
         {tooltipTitle && <IconTooltip placement='top' title={tooltipTitle} />}
       </label>
       {!display &&
