@@ -14,6 +14,7 @@ export interface Props {
   id?: string;
   label?: string;
   selected?: ValueType;
+  filterOptions?: (options: ValueType[], state: object) => ValueType[];
   freeSolo?: boolean;
   disabled?: boolean;
   className?: string;
@@ -23,6 +24,12 @@ export interface Props {
   errorText?: string;
   tooltipTitle?: TooltipProps['title'];
   required?: boolean;
+  noOptionsText?: string;
+  loading?: boolean;
+  loadingText?: string;
+  open?: boolean;
+  onOpen?: (event: React.SyntheticEvent) => void;
+  onClose?: (event: React.SyntheticEvent) => void;
   sx?: SxProps;
   renderOption?: (props: React.HTMLAttributes<HTMLLIElement>, option: ValueType) => React.ReactNode;
 }
@@ -35,6 +42,7 @@ export default function Autocomplete({
   options,
   onChange,
   selected,
+  filterOptions,
   freeSolo,
   disabled,
   className,
@@ -44,6 +52,12 @@ export default function Autocomplete({
   errorText,
   tooltipTitle,
   required,
+  noOptionsText,
+  loading,
+  loadingText,
+  open,
+  onOpen,
+  onClose,
   sx,
   renderOption,
 }: Props): JSX.Element {
@@ -111,11 +125,23 @@ export default function Autocomplete({
       onChange={onChangeHandler}
       onInputChange={(event: any, value: any) => freeSolo && onChangeHandler(event, value)}
       value={selected}
+      filterOptions={filterOptions}
       freeSolo={freeSolo}
       forcePopupIcon={true}
       renderInput={renderInput}
       aria-required={required}
-      popupIcon={<Icon name='chevronDown' className='auto-complete--icon-right' size='medium' />}
+      noOptionsText={noOptionsText}
+      loading={loading}
+      loadingText={loadingText}
+      open={open}
+      onOpen={onOpen}
+      onClose={onClose}
+      popupIcon={
+        <Icon
+          name={loading ? 'spinner' : open ? 'chevronUp' : 'chevronDown'}
+          className='auto-complete--icon-right'
+          size='medium'
+        />}
       classes={{
         paper: 'auto-complete select',
         listbox: 'options-container',
