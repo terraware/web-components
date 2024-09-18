@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1725910155110" clover="3.2.0">
-  <project timestamp="1725910155110" name="All files">
-    <metrics statements="1580" coveredstatements="200" conditionals="1337" coveredconditionals="105" methods="553" coveredmethods="31" elements="3470" coveredelements="336" complexity="0" loc="1580" ncloc="1580" packages="39" files="210" classes="210"/>
+<coverage generated="1726676706427" clover="3.2.0">
+  <project timestamp="1726676706427" name="All files">
+    <metrics statements="1608" coveredstatements="200" conditionals="1341" coveredconditionals="105" methods="562" coveredmethods="31" elements="3511" coveredelements="336" complexity="0" loc="1608" ncloc="1608" packages="39" files="210" classes="210"/>
     <package name="src">
       <metrics statements="1" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
       <file name="index.ts" path="/home/runner/work/web-components/web-components/src/index.ts">
@@ -77,29 +77,29 @@
       </file>
     </package>
     <package name="src.components.Autocomplete">
-      <metrics statements="20" coveredstatements="0" conditionals="29" coveredconditionals="0" methods="7" coveredmethods="0"/>
+      <metrics statements="20" coveredstatements="0" conditionals="33" coveredconditionals="0" methods="7" coveredmethods="0"/>
       <file name="Autocomplete.tsx" path="/home/runner/work/web-components/web-components/src/components/Autocomplete/Autocomplete.tsx">
-        <metrics statements="20" coveredstatements="0" conditionals="29" coveredconditionals="0" methods="7" coveredmethods="0"/>
-        <line num="30" count="0" type="stmt"/>
-        <line num="50" count="0" type="stmt"/>
-        <line num="51" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="52" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="53" count="0" type="stmt"/>
-        <line num="55" count="0" type="stmt"/>
-        <line num="60" count="0" type="stmt"/>
-        <line num="61" count="0" type="stmt"/>
-        <line num="86" count="0" type="stmt"/>
-        <line num="88" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="89" count="0" type="stmt"/>
-        <line num="92" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="93" count="0" type="stmt"/>
-        <line num="95" count="0" type="stmt"/>
-        <line num="96" count="0" type="cond" truecount="0" falsecount="3"/>
-        <line num="99" count="0" type="stmt"/>
-        <line num="105" count="0" type="cond" truecount="0" falsecount="2"/>
+        <metrics statements="20" coveredstatements="0" conditionals="33" coveredconditionals="0" methods="7" coveredmethods="0"/>
+        <line num="37" count="0" type="stmt"/>
+        <line num="64" count="0" type="stmt"/>
+        <line num="65" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="66" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="67" count="0" type="stmt"/>
+        <line num="69" count="0" type="stmt"/>
+        <line num="74" count="0" type="stmt"/>
+        <line num="75" count="0" type="stmt"/>
+        <line num="100" count="0" type="stmt"/>
+        <line num="102" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="103" count="0" type="stmt"/>
         <line num="106" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="109" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="112" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="107" count="0" type="stmt"/>
+        <line num="109" count="0" type="stmt"/>
+        <line num="110" count="0" type="cond" truecount="0" falsecount="3"/>
+        <line num="113" count="0" type="stmt"/>
+        <line num="119" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="120" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="123" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="126" count="0" type="cond" truecount="0" falsecount="2"/>
       </file>
     </package>
     <package name="src.components.Badge">
@@ -1620,9 +1620,9 @@
       </file>
     </package>
     <package name="src.stories">
-      <metrics statements="506" coveredstatements="0" conditionals="60" coveredconditionals="0" methods="176" coveredmethods="0"/>
+      <metrics statements="534" coveredstatements="0" conditionals="60" coveredconditionals="0" methods="185" coveredmethods="0"/>
       <file name="Autocomplete.stories.tsx" path="/home/runner/work/web-components/web-components/src/stories/Autocomplete.stories.tsx">
-        <metrics statements="14" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="5" coveredmethods="0"/>
+        <metrics statements="42" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="14" coveredmethods="0"/>
         <line num="12" count="0" type="stmt"/>
         <line num="13" count="0" type="stmt"/>
         <line num="14" count="0" type="stmt"/>
@@ -1631,12 +1631,40 @@
         <line num="17" count="0" type="stmt"/>
         <line num="20" count="0" type="stmt"/>
         <line num="35" count="0" type="stmt"/>
-        <line num="37" count="0" type="stmt"/>
+        <line num="36" count="0" type="stmt"/>
+        <line num="38" count="0" type="stmt"/>
         <line num="39" count="0" type="stmt"/>
+        <line num="40" count="0" type="stmt"/>
+        <line num="41" count="0" type="stmt"/>
         <line num="43" count="0" type="stmt"/>
-        <line num="49" count="0" type="stmt"/>
-        <line num="71" count="0" type="stmt"/>
-        <line num="75" count="0" type="stmt"/>
+        <line num="44" count="0" type="stmt"/>
+        <line num="45" count="0" type="stmt"/>
+        <line num="46" count="0" type="stmt"/>
+        <line num="51" count="0" type="stmt"/>
+        <line num="52" count="0" type="stmt"/>
+        <line num="53" count="0" type="stmt"/>
+        <line num="54" count="0" type="stmt"/>
+        <line num="55" count="0" type="stmt"/>
+        <line num="58" count="0" type="stmt"/>
+        <line num="59" count="0" type="stmt"/>
+        <line num="60" count="0" type="stmt"/>
+        <line num="63" count="0" type="stmt"/>
+        <line num="64" count="0" type="stmt"/>
+        <line num="65" count="0" type="stmt"/>
+        <line num="68" count="0" type="stmt"/>
+        <line num="69" count="0" type="stmt"/>
+        <line num="70" count="0" type="stmt"/>
+        <line num="73" count="0" type="stmt"/>
+        <line num="78" count="0" type="stmt"/>
+        <line num="93" count="0" type="stmt"/>
+        <line num="95" count="0" type="stmt"/>
+        <line num="97" count="0" type="stmt"/>
+        <line num="100" count="0" type="stmt"/>
+        <line num="104" count="0" type="stmt"/>
+        <line num="110" count="0" type="stmt"/>
+        <line num="132" count="0" type="stmt"/>
+        <line num="136" count="0" type="stmt"/>
+        <line num="140" count="0" type="stmt"/>
       </file>
       <file name="Badge.stories.tsx" path="/home/runner/work/web-components/web-components/src/stories/Badge.stories.tsx">
         <metrics statements="3" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
