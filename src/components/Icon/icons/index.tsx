@@ -44,6 +44,7 @@ import IconArrowRight from '../../svg/IconArrowRight';
 import IconBusinessNetwork from '../../svg/IconBusinessNetwork';
 import IconCoinInHand from '../../svg/IconCoinInHand';
 import IconColumns from '../../svg/IconColumns';
+import IconComment from '../../svg/IconComment';
 import IconEdit from '../../svg/IconEdit';
 import IconExport from '../../svg/IconExport';
 import IconFile from '../../svg/IconFile';
@@ -153,6 +154,7 @@ export type IconName =
   | 'iconBusinessNetwork'
   | 'iconCoinInHand'
   | 'iconColumns'
+  | 'iconComment'
   | 'iconEdit'
   | 'iconExport'
   | 'iconFile'
@@ -267,6 +269,7 @@ const icons: Record<IconName, SVGComponent> = {
   iconBusinessNetwork: IconBusinessNetwork,
   iconCoinInHand: IconCoinInHand,
   iconColumns: IconColumns,
+  iconComment: IconComment,
   iconEdit: IconEdit,
   iconExport: IconExport,
   iconFile: IconFile,
