@@ -116,3 +116,18 @@ LuxonValueInitializedDate.args = {
   minDate: luxonNow.minus({ months: 1 }),
   value: luxonNow.minus({ days: 7 }),
 };
+
+export const DateTimePicker = Template.bind({});
+
+DateTimePicker.args = {
+  autoFocus: false,
+  defaultTimeZone: undefined,
+  errorText: '',
+  helperText: '',
+  id: '1',
+  label: 'DateTimepicker',
+  locale: undefined,
+  maxDate: undefined,
+  minDate: undefined,
+  showTime: true,
+};
