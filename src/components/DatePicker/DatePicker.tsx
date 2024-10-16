@@ -1,6 +1,6 @@
 import React, { useState, KeyboardEventHandler } from 'react';
 import { Box, SxProps, TextField, TextFieldProps } from '@mui/material';
-import { LocalizationProvider, DesktopDatePicker } from '@mui/x-date-pickers';
+import { LocalizationProvider, DesktopDatePicker, DateTimePicker } from '@mui/x-date-pickers';
 import AdapterLuxon from '@date-io/luxon';
 import { DateTime, Settings } from 'luxon';
 import Icon from '../Icon/Icon';
@@ -43,6 +43,7 @@ export interface Props {
   onKeyPress?: KeyboardEventHandler;
   sx?: SxProps;
   value?: DatePickerDateType;
+  showTime?: boolean;
 }
 
 const initializeDate = (value?: DatePickerDateType, timeZoneId?: string): DateTime | null => {
@@ -121,25 +122,46 @@ export default function DatePicker(props: Props): JSX.Element {
             {props.label}
           </label>
         )}
-        <DesktopDatePicker
-          disabled={props.disabled}
-          inputFormat='yyyy-MM-dd'
-          minDate={minDateTime && minDateTime.isValid ? minDateTime : undefined}
-          maxDate={maxDateTime && maxDateTime.isValid ? maxDateTime : undefined}
-          onChange={(newValue: DateTime | null) => {
-            setTemporalValue(newValue);
-            // TODO: remove onChange and make onDateChange required
-            if (props.onChange) {
-              props.onChange(newValue && newValue.isValid ? newValue.toJSDate() : null);
-            }
-            if (props.onDateChange) {
-              props.onDateChange(newValue && newValue.isValid ? newValue : undefined);
-            }
-          }}
-          onError={props.onError}
-          renderInput={renderInput}
-          value={temporalValue}
-        />
+        {props.showTime ? (
+          <DateTimePicker
+            disabled={props.disabled}
+            minDate={minDateTime && minDateTime.isValid ? minDateTime : undefined}
+            maxDate={maxDateTime && maxDateTime.isValid ? maxDateTime : undefined}
+            onChange={(newValue: DateTime | null) => {
+              setTemporalValue(newValue);
+              // TODO: remove onChange and make onDateChange required
+              if (props.onChange) {
+                props.onChange(newValue && newValue.isValid ? newValue.toJSDate() : null);
+              }
+              if (props.onDateChange) {
+                props.onDateChange(newValue && newValue.isValid ? newValue : undefined);
+              }
+            }}
+            onError={props.onError}
+            renderInput={renderInput}
+            value={temporalValue}
+          />
+        ) : (
+          <DesktopDatePicker
+            disabled={props.disabled}
+            inputFormat='yyyy-MM-dd'
+            minDate={minDateTime && minDateTime.isValid ? minDateTime : undefined}
+            maxDate={maxDateTime && maxDateTime.isValid ? maxDateTime : undefined}
+            onChange={(newValue: DateTime | null) => {
+              setTemporalValue(newValue);
+              // TODO: remove onChange and make onDateChange required
+              if (props.onChange) {
+                props.onChange(newValue && newValue.isValid ? newValue.toJSDate() : null);
+              }
+              if (props.onDateChange) {
+                props.onDateChange(newValue && newValue.isValid ? newValue : undefined);
+              }
+            }}
+            onError={props.onError}
+            renderInput={renderInput}
+            value={temporalValue}
+          />
+        )}
       </LocalizationProvider>
     </Box>
   );
