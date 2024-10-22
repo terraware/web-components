@@ -54,7 +54,7 @@ export interface Props {
   stringList: string[];
   maxLengthPx: number;
   moreSeparator: string;
-  moreText: string;
+  moreText?: string;
   listSeparator: string;
   textStyle?: Record<string, any>;
   showAllStyle?: Record<string, any>;
@@ -92,7 +92,7 @@ export default function TextTruncated(props: Props): JSX.Element {
   if (pixelsPerChar > 0) {
     const maxChars = maxLengthPx / pixelsPerChar;
     maxExcludingSuffix =
-      maxChars - moreSeparator.length - moreText.length - 1 - Math.ceil(Math.log10(stringList.length));
+      maxChars - moreSeparator.length - (moreText ? moreText.length : 0 ) - 1 - Math.ceil(Math.log10(stringList.length));
   }
   const textToDisplay = computeFromStringList(stringList, maxExcludingSuffix, listSeparator);
 
@@ -104,11 +104,11 @@ export default function TextTruncated(props: Props): JSX.Element {
   return stringList.length > 0 ? (
     <Typography sx={textStyle}>
       {textToDisplay.text}
-      {textToDisplay.numberMore !== 0 ? moreSeparator : ''}
+      {(textToDisplay.numberMore !== 0 && moreText ) ? moreSeparator : ''}
       {textToDisplay.numberMore !== 0 ? (
         <Tooltip
           arrow={true}
-          open={showAllOpen}
+          open={moreText ? showAllOpen : undefined}
           title={
             <Typography sx={showAllStyle} fontSize='14px'>
               {stringList.join(listSeparator)}
@@ -135,18 +135,24 @@ export default function TextTruncated(props: Props): JSX.Element {
             },
           }}
         >
-          <Link
-            component='button'
-            onClick={onClickHandler}
-            onBlur={() => setShowAllOpen(false)}
-            sx={{ color: theme.palette.TwClrTxtBrand, textDecorationColor: `${theme.palette.TwClrTxtBrand}80` }}
-          >
-            <Typography sx={{ ...textStyle, marginTop: '-3px' }}>
-              {(textToDisplay.numberMore > 0 ? textToDisplay.numberMore + ' ' : '') + moreText}
+          {moreText ? (
+            <Link
+              component='button'
+              onClick={onClickHandler}
+              onBlur={() => setShowAllOpen(false)}
+              sx={{ color: theme.palette.TwClrTxtBrand, textDecorationColor: `${theme.palette.TwClrTxtBrand}80` }}
+            >
+              <Typography sx={{ ...textStyle, marginTop: '-3px' }}>
+                {(textToDisplay.numberMore > 0 ? textToDisplay.numberMore + ' ' : '') + moreText}
+              </Typography>
+            </Link>
+          ) : (
+            <Typography sx={{ ...textStyle, display: 'inline' }}>
+              {moreSeparator}
             </Typography>
-          </Link>
+          )}
         </Tooltip>
-      ) : null}
+       ) : null}
     </Typography>
   ) : (
     placeHolder || <div />

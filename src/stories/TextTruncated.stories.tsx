@@ -27,7 +27,7 @@ Default.args = {
   showAllStyle: { fontSize: 14 },
   textStyle: { fontSize: 14 },
   moreSeparator: '...',
-  moreText: 'more',
+  moreText: undefined,
   placeHolder: undefined,
 };
 
