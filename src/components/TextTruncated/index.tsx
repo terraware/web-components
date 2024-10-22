@@ -109,6 +109,7 @@ export default function TextTruncated(props: Props): JSX.Element {
         <Tooltip
           arrow={true}
           open={moreText ? showAllOpen : undefined}
+          enterDelay={moreText ? 0 : 400}
           title={
             <Typography sx={showAllStyle} fontSize='14px'>
               {stringList.join(listSeparator)}
