@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1729101940109" clover="3.2.0">
-  <project timestamp="1729101940109" name="All files">
-    <metrics statements="1621" coveredstatements="201" conditionals="1369" coveredconditionals="105" methods="566" coveredmethods="31" elements="3556" coveredelements="337" complexity="0" loc="1621" ncloc="1621" packages="39" files="213" classes="213"/>
+<coverage generated="1729716033400" clover="3.2.0">
+  <project timestamp="1729716033400" name="All files">
+    <metrics statements="1621" coveredstatements="201" conditionals="1379" coveredconditionals="105" methods="566" coveredmethods="31" elements="3566" coveredelements="337" complexity="0" loc="1621" ncloc="1621" packages="39" files="213" classes="213"/>
     <package name="src">
       <metrics statements="1" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
       <file name="index.ts" path="/home/runner/work/web-components/web-components/src/index.ts">
@@ -665,9 +665,9 @@
       </file>
     </package>
     <package name="src.components.TextTruncated">
-      <metrics statements="39" coveredstatements="0" conditionals="30" coveredconditionals="0" methods="6" coveredmethods="0"/>
+      <metrics statements="39" coveredstatements="0" conditionals="40" coveredconditionals="0" methods="6" coveredmethods="0"/>
       <file name="index.tsx" path="/home/runner/work/web-components/web-components/src/components/TextTruncated/index.tsx">
-        <metrics statements="39" coveredstatements="0" conditionals="30" coveredconditionals="0" methods="6" coveredmethods="0"/>
+        <metrics statements="39" coveredstatements="0" conditionals="40" coveredconditionals="0" methods="6" coveredmethods="0"/>
         <line num="24" count="0" type="cond" truecount="0" falsecount="2"/>
         <line num="25" count="0" type="stmt"/>
         <line num="27" count="0" type="cond" truecount="0" falsecount="2"/>
@@ -706,7 +706,7 @@
         <line num="100" count="0" type="stmt"/>
         <line num="101" count="0" type="stmt"/>
         <line num="104" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="141" count="0" type="stmt"/>
+        <line num="143" count="0" type="stmt"/>
       </file>
     </package>
     <package name="src.components.Textfield">
