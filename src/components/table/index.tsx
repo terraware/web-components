@@ -83,6 +83,7 @@ export interface Props<T> extends LocalizationProps {
   // Adds "select all rows across all pages" and "clear selection" to the table top bar
   enhancedTopBarSelectionConfig?: EnhancedTopBarSelectionProps;
   density?: TableDensityType;
+  tableComments?: string;
 }
 
 export type TopBarButton = {
@@ -137,6 +138,7 @@ export default function EnhancedTable<T extends TableRowType>({
   renderPaginationText,
   enhancedTopBarSelectionConfig,
   density = 'comfortable',
+  tableComments,
 }: Props<T>): JSX.Element {
   const theme = useTheme();
   const [order, setOrder] = React.useState<SortOrder>(_order);
@@ -441,6 +443,11 @@ export default function EnhancedTable<T extends TableRowType>({
             </TableBody>
           </Table>
         </DndContext>
+        {tableComments && (
+          <Typography fontWeight={400} fontSize='14px' color={theme.palette.TwClrTxtSecondary} marginTop={2}>
+            {tableComments}
+          </Typography>
+        )}
       </TableContainer>
       {renderPaginationText && (
         <Box display='flex' alignItems='center' justifyContent='flex-end' paddingTop='24px'>

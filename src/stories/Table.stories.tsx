@@ -13,7 +13,7 @@ export default {
       options: ['comfortable', 'compact', 'roomy'],
       control: { type: 'radio' },
     },
-  }
+  },
 };
 
 function Renderer(props: RendererProps<any>): JSX.Element {
@@ -101,6 +101,7 @@ const Template: Story<Omit<TableProps<{ name: string; lastname: string }>, 'rows
               'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
           },
         ]}
+        tableComments='* Data collected in 2024'
       />
     </Box>
   );
