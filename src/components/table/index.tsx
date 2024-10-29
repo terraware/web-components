@@ -443,12 +443,12 @@ export default function EnhancedTable<T extends TableRowType>({
             </TableBody>
           </Table>
         </DndContext>
-        {tableComments && (
-          <Typography fontWeight={400} fontSize='14px' color={theme.palette.TwClrTxtSecondary} marginTop={2}>
-            {tableComments}
-          </Typography>
-        )}
       </TableContainer>
+      {tableComments && (
+        <Typography fontWeight={400} fontSize='14px' color={theme.palette.TwClrTxtSecondary} marginTop={2}>
+          {tableComments}
+        </Typography>
+      )}
       {renderPaginationText && (
         <Box display='flex' alignItems='center' justifyContent='flex-end' paddingTop='24px'>
           {/*
