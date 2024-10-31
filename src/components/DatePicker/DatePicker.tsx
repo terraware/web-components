@@ -1,5 +1,5 @@
 import React, { useState, KeyboardEventHandler } from 'react';
-import { Box, SxProps, TextField, TextFieldProps } from '@mui/material';
+import { Box, SxProps } from '@mui/material';
 import { LocalizationProvider, DesktopDatePicker, DesktopDateTimePicker } from '@mui/x-date-pickers';
 import { AdapterLuxon } from '@mui/x-date-pickers/AdapterLuxon';
 import { DateTime, Settings } from 'luxon';
@@ -84,36 +84,6 @@ export default function DatePicker(props: Props): JSX.Element {
     setMaxDateTime(initializeDate(props.maxDate, props.defaultTimeZone));
   }, [props.defaultTimeZone, props.maxDate]);
 
-  /**
-   * Note: the inputProps override for placeholder is needed
-   * with luxon since DatePicker's inputFormat as placeholder does not
-   * work at least with MUI 5.x
-   */
-  const CustomTextField = (params: TextFieldProps) => {
-    return (
-      <>
-        <TextField
-          {...params}
-          inputProps={{
-            ...params.inputProps,
-            placeholder: props.placeholder || 'yyyy-mm-dd',
-          }}
-          id={props.id}
-          autoFocus={props.autoFocus}
-          onKeyPress={props.onKeyPress}
-        />
-        {props.errorText && (
-          <div className='textfield-error-text-container'>
-            <Icon name='error' className='textfield-error-text--icon' />
-            <label htmlFor={props.id} className='textfield-error-text'>
-              {props.errorText}
-            </label>
-          </div>
-        )}
-      </>
-    );
-  };
-
   // TODO: Localize the yyyy-mm-dd placeholder string that is shown to users when the input is
   //       empty. It appears to be generated programmatically deep in the guts of the MUI DatePicker
   //       code, and it most likely uses the browser's locale.
@@ -141,7 +111,31 @@ export default function DatePicker(props: Props): JSX.Element {
               }
             }}
             onError={props.onError}
-            slots={{ textField: CustomTextField }}
+            slotProps={{
+              textField: {
+                sx: {
+                  '& fieldset': {
+                    border: 'none',
+                  },
+                  '& .MuiFormHelperText-root': {
+                    marginLeft: 0,
+                  },
+                },
+                helperText: props.errorText ? (
+                  <div className='textfield-error-text-container'>
+                    <Icon name='error' className='textfield-error-text--icon' />
+                    <label htmlFor={props.id} className='textfield-error-text'>
+                      {props.errorText}
+                    </label>
+                  </div>
+                ) : (
+                  props.helperText
+                ),
+                placeholder: props.placeholder,
+                autoFocus: props.autoFocus,
+                onKeyPress: props.onKeyPress,
+              },
+            }}
             value={temporalValue}
           />
         ) : (
@@ -161,7 +155,31 @@ export default function DatePicker(props: Props): JSX.Element {
               }
             }}
             onError={props.onError}
-            slots={{ textField: CustomTextField }}
+            slotProps={{
+              textField: {
+                sx: {
+                  '& fieldset': {
+                    border: 'none',
+                  },
+                  '& .MuiFormHelperText-root': {
+                    marginLeft: 0,
+                  },
+                },
+                helperText: props.errorText ? (
+                  <div className='textfield-error-text-container'>
+                    <Icon name='error' className='textfield-error-text--icon' />
+                    <label htmlFor={props.id} className='textfield-error-text'>
+                      {props.errorText}
+                    </label>
+                  </div>
+                ) : (
+                  props.helperText
+                ),
+                placeholder: props.placeholder,
+                autoFocus: props.autoFocus,
+                onKeyPress: props.onKeyPress,
+              },
+            }}
             value={temporalValue}
           />
         )}
