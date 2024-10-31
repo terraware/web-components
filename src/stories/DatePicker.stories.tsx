@@ -130,4 +130,5 @@ DateTimePicker.args = {
   maxDate: undefined,
   minDate: undefined,
   showTime: true,
+  placeholder: 'yyyy-mm-dd  hh:mm',
 };

@@ -64,30 +64,27 @@
   }
 
   .MuiOutlinedInput-root {
-    fieldset {
+
       border-color: $tw-clr-brdr-secondary;
-    }
-    &:hover fieldset {
+
+    &:hover  {
       border-color: $tw-clr-brdr-hover;
     }
-    &.Mui-focused fieldset {
+    &.Mui-focused  {
       border-color: $tw-clr-brdr-hover;
     }
   }
 
   &--error {
     .MuiInputBase-root {
-      fieldset {
-        border: $tw-sz-frm-fld-text-input-stroke solid $tw-clr-brdr-danger;
-      }
-
+      border: $tw-sz-frm-fld-text-input-stroke solid $tw-clr-brdr-danger;
       background-color: $tw-clr-bg-danger-tertiary;
 
-      &:hover fieldset {
+      &:hover {
         border: $tw-sz-frm-fld-text-input-stroke solid $tw-clr-brdr-danger;
       }
 
-      &:active fieldset {
+      &:active {
         border: $tw-sz-frm-fld-text-input-stroke-active solid $tw-clr-brdr-danger;
       }
     }

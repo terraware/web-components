@@ -1,7 +1,7 @@
 import React, { useState, KeyboardEventHandler } from 'react';
-import { Box, SxProps, TextField, TextFieldProps } from '@mui/material';
-import { LocalizationProvider, DesktopDatePicker, DateTimePicker } from '@mui/x-date-pickers';
-import AdapterLuxon from '@date-io/luxon';
+import { Box, SxProps } from '@mui/material';
+import { LocalizationProvider, DesktopDatePicker, DesktopDateTimePicker } from '@mui/x-date-pickers';
+import { AdapterLuxon } from '@mui/x-date-pickers/AdapterLuxon';
 import { DateTime, Settings } from 'luxon';
 import Icon from '../Icon/Icon';
 import './styles.scss';
@@ -44,6 +44,7 @@ export interface Props {
   sx?: SxProps;
   value?: DatePickerDateType;
   showTime?: boolean;
+  placeholder?: string;
 }
 
 const initializeDate = (value?: DatePickerDateType, timeZoneId?: string): DateTime | null => {
@@ -83,34 +84,6 @@ export default function DatePicker(props: Props): JSX.Element {
     setMaxDateTime(initializeDate(props.maxDate, props.defaultTimeZone));
   }, [props.defaultTimeZone, props.maxDate]);
 
-  /**
-   * Note: the inputProps override for placeholder is needed
-   * with luxon since DatePicker's inputFormat as placeholder does not
-   * work at least with MUI 5.x
-   */
-  const renderInput = (params: TextFieldProps) => (
-    <>
-      <TextField
-        {...params}
-        inputProps={{
-          ...params.inputProps,
-          placeholder: 'yyyy-mm-dd',
-        }}
-        id={props.id}
-        autoFocus={props.autoFocus}
-        onKeyPress={props.onKeyPress}
-      />
-      {props.errorText && (
-        <div className='textfield-error-text-container'>
-          <Icon name='error' className='textfield-error-text--icon' />
-          <label htmlFor={props.id} className='textfield-error-text'>
-            {props.errorText}
-          </label>
-        </div>
-      )}
-    </>
-  );
-
   // TODO: Localize the yyyy-mm-dd placeholder string that is shown to users when the input is
   //       empty. It appears to be generated programmatically deep in the guts of the MUI DatePicker
   //       code, and it most likely uses the browser's locale.
@@ -123,7 +96,7 @@ export default function DatePicker(props: Props): JSX.Element {
           </label>
         )}
         {props.showTime ? (
-          <DateTimePicker
+          <DesktopDateTimePicker
             disabled={props.disabled}
             minDate={minDateTime && minDateTime.isValid ? minDateTime : undefined}
             maxDate={maxDateTime && maxDateTime.isValid ? maxDateTime : undefined}
@@ -138,13 +111,37 @@ export default function DatePicker(props: Props): JSX.Element {
               }
             }}
             onError={props.onError}
-            renderInput={renderInput}
+            slotProps={{
+              textField: {
+                sx: {
+                  '& fieldset': {
+                    border: 'none',
+                  },
+                  '& .MuiFormHelperText-root': {
+                    marginLeft: 0,
+                  },
+                },
+                helperText: props.errorText ? (
+                  <div className='textfield-error-text-container'>
+                    <Icon name='error' className='textfield-error-text--icon' />
+                    <label htmlFor={props.id} className='textfield-error-text'>
+                      {props.errorText}
+                    </label>
+                  </div>
+                ) : (
+                  props.helperText
+                ),
+                placeholder: props.placeholder,
+                autoFocus: props.autoFocus,
+                onKeyPress: props.onKeyPress,
+              },
+            }}
             value={temporalValue}
           />
         ) : (
           <DesktopDatePicker
             disabled={props.disabled}
-            inputFormat='yyyy-MM-dd'
+            format='yyyy-MM-dd'
             minDate={minDateTime && minDateTime.isValid ? minDateTime : undefined}
             maxDate={maxDateTime && maxDateTime.isValid ? maxDateTime : undefined}
             onChange={(newValue: DateTime | null) => {
@@ -158,7 +155,31 @@ export default function DatePicker(props: Props): JSX.Element {
               }
             }}
             onError={props.onError}
-            renderInput={renderInput}
+            slotProps={{
+              textField: {
+                sx: {
+                  '& fieldset': {
+                    border: 'none',
+                  },
+                  '& .MuiFormHelperText-root': {
+                    marginLeft: 0,
+                  },
+                },
+                helperText: props.errorText ? (
+                  <div className='textfield-error-text-container'>
+                    <Icon name='error' className='textfield-error-text--icon' />
+                    <label htmlFor={props.id} className='textfield-error-text'>
+                      {props.errorText}
+                    </label>
+                  </div>
+                ) : (
+                  props.helperText
+                ),
+                placeholder: props.placeholder,
+                autoFocus: props.autoFocus,
+                onKeyPress: props.onKeyPress,
+              },
+            }}
             value={temporalValue}
           />
         )}
