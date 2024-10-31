@@ -131,6 +131,7 @@ export default function DatePicker(props: Props): JSX.Element {
                 ) : (
                   props.helperText
                 ),
+                id: props.id,
                 placeholder: props.placeholder,
                 autoFocus: props.autoFocus,
                 onKeyPress: props.onKeyPress,
@@ -175,6 +176,7 @@ export default function DatePicker(props: Props): JSX.Element {
                 ) : (
                   props.helperText
                 ),
+                id: props.id,
                 placeholder: props.placeholder,
                 autoFocus: props.autoFocus,
                 onKeyPress: props.onKeyPress,
