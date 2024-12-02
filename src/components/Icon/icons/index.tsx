@@ -108,6 +108,7 @@ import UploadCloud from '../../svg/UploadCloud';
 import Warning from '../../svg/Warning';
 import Wifi from '../../svg/IconWifi';
 import IconMarker from '../../svg/IconMarker';
+import WelcomeClipboard from '../../svg/WelcomeClipboard';
 
 export type IconName =
   | 'blobbyGrayIconImage'
@@ -196,6 +197,7 @@ export type IconName =
   | 'menuVertical'
   | 'monitoring'
   | 'monitoringNav'
+  | 'newOrganization'
   | 'notification'
   | 'organization'
   | 'organizationNav'
@@ -311,6 +313,7 @@ const icons: Record<IconName, SVGComponent> = {
   menuVertical: MenuVertical,
   monitoring: Monitoring,
   monitoringNav: MonitoringNav,
+  newOrganization: WelcomeClipboard,
   notification: Notification,
   organization: Organization,
   organizationNav: OrganizationNav,
