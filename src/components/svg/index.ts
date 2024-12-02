@@ -108,3 +108,4 @@ export { default as TerrawareLogoMobile } from './TerrawareLogoMobile';
 export { default as Touchscreen } from './Touchscreen';
 export { default as UploadCloud } from './UploadCloud';
 export { default as Warning } from './Warning';
+export { default as WelcomeClipboard } from './WelcomeClipboard';
