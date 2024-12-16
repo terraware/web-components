@@ -1,9 +1,10 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
-    "config:base",
+    "config:recommended",
     ":preserveSemverRanges"
   ],
+  "labels": [ "bot", "renovate" ],
   "packageRules": [
     {
       "matchUpdateTypes": ["minor", "patch"],
@@ -12,7 +13,7 @@
     },
     {
       "matchUpdateTypes": ["major"],
-      "labels": ["UPDATE-MAJOR"],
+      "addLabels": ["UPDATE-MAJOR"],
       "schedule": ["every weekend"],
       "stabilityDays": 3
     }
