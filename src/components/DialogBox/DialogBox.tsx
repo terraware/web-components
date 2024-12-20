@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import React, { CSSProperties, ReactNode } from 'react';
 import './styles.scss';
 import Icon from '../Icon/Icon';
 import { IconButton } from '@mui/material';
@@ -18,11 +18,24 @@ export interface Props {
   open: boolean;
   scrolled?: boolean;
   skrim?: boolean;
+  style?: CSSProperties;
 }
 
 export default function DialogBox(props: Props): JSX.Element | null {
-  const { title, size, message, children, leftButton, rightButtons, middleButtons, onClose, open, scrolled, skrim } =
-    props;
+  const {
+    title,
+    size,
+    message,
+    children,
+    leftButton,
+    rightButtons,
+    middleButtons,
+    onClose,
+    open,
+    scrolled,
+    skrim,
+    style,
+  } = props;
 
   const hasFooter = leftButton || rightButtons || middleButtons;
 
@@ -38,6 +51,7 @@ export default function DialogBox(props: Props): JSX.Element | null {
           onClose?.();
         }
       }}
+      style={style}
     >
       <div className={`dialog-box dialog-box--${size}`}>
         <div className='dialog-box--header'>
