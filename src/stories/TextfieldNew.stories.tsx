@@ -15,6 +15,9 @@ export default {
       options: ['calendar', 'chevronDown', 'cancel', null],
       control: { type: 'radio' },
     },
+    maxLength: {
+      control: { type: 'number' },
+    },
     type: {
       options: ['text', 'textarea'],
       control: { type: 'radio' },

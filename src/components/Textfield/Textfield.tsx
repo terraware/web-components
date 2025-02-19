@@ -34,6 +34,7 @@ export interface Props {
   label: string;
   min?: number;
   max?: number;
+  maxLength?: number;
   onBlur?: () => void;
   onChange?: Handler;
   onClickRightIcon?: () => void;
@@ -69,6 +70,7 @@ export default function TextField(props: Props): JSX.Element {
     id,
     min,
     max,
+    maxLength,
     onBlur,
     onChange,
     onClickRightIcon,
@@ -174,6 +176,7 @@ export default function TextField(props: Props): JSX.Element {
               onKeyDown={onKeyDownHandler}
               onWheel={(e) => e.currentTarget.blur()}
               required={required}
+              maxLength={maxLength}
               {...typeProps}
             />
             {iconRight ? renderRightIcon() : null}
@@ -189,6 +192,7 @@ export default function TextField(props: Props): JSX.Element {
             onBlur={onBlur}
             onFocus={onFocus}
             required={required}
+            maxLength={maxLength}
             style={(styles || {}).textarea}
           />
         ))}
