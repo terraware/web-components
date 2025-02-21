@@ -110,7 +110,6 @@ import Warning from '../../svg/Warning';
 import Wifi from '../../svg/IconWifi';
 import IconMarker from '../../svg/IconMarker';
 import WelcomeClipboard from '../../svg/WelcomeClipboard';
-import { IconNote } from '../../svg';
 
 export type IconName =
   | 'blobbyGrayIconImage'
