@@ -85,6 +85,7 @@ import MenuVertical from '../../svg/MenuVertical';
 import Monitoring from '../../svg/BlobbyIconHeartMonitor';
 import MonitoringNav from '../../svg/IconHeartMonitor';
 import Mail from '../../svg/IconMail';
+import Note from '../../svg/IconNote';
 import Notification from '../../svg/Notification';
 import Organization from '../../svg/BlobbyIconOrganization';
 import OrganizationNav from '../../svg/IconOrg';
@@ -109,6 +110,7 @@ import Warning from '../../svg/Warning';
 import Wifi from '../../svg/IconWifi';
 import IconMarker from '../../svg/IconMarker';
 import WelcomeClipboard from '../../svg/WelcomeClipboard';
+import { IconNote } from '../../svg';
 
 export type IconName =
   | 'blobbyGrayIconImage'
@@ -198,6 +200,7 @@ export type IconName =
   | 'monitoring'
   | 'monitoringNav'
   | 'newOrganization'
+  | 'note'
   | 'notification'
   | 'organization'
   | 'organizationNav'
@@ -314,6 +317,7 @@ const icons: Record<IconName, SVGComponent> = {
   monitoring: Monitoring,
   monitoringNav: MonitoringNav,
   newOrganization: WelcomeClipboard,
+  note: IconNote,
   notification: Notification,
   organization: Organization,
   organizationNav: OrganizationNav,
