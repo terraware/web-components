@@ -85,6 +85,7 @@ import MenuVertical from '../../svg/MenuVertical';
 import Monitoring from '../../svg/BlobbyIconHeartMonitor';
 import MonitoringNav from '../../svg/IconHeartMonitor';
 import Mail from '../../svg/IconMail';
+import Note from '../../svg/IconNote';
 import Notification from '../../svg/Notification';
 import Organization from '../../svg/BlobbyIconOrganization';
 import OrganizationNav from '../../svg/IconOrg';
@@ -198,6 +199,7 @@ export type IconName =
   | 'monitoring'
   | 'monitoringNav'
   | 'newOrganization'
+  | 'note'
   | 'notification'
   | 'organization'
   | 'organizationNav'
@@ -314,6 +316,7 @@ const icons: Record<IconName, SVGComponent> = {
   monitoring: Monitoring,
   monitoringNav: MonitoringNav,
   newOrganization: WelcomeClipboard,
+  note: Note,
   notification: Notification,
   organization: Organization,
   organizationNav: OrganizationNav,
