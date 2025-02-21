@@ -316,7 +316,7 @@ const icons: Record<IconName, SVGComponent> = {
   monitoring: Monitoring,
   monitoringNav: MonitoringNav,
   newOrganization: WelcomeClipboard,
-  note: IconNote,
+  note: Note,
   notification: Notification,
   organization: Organization,
   organizationNav: OrganizationNav,
