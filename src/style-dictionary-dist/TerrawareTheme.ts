@@ -180,6 +180,8 @@ declare module '@mui/material/styles/createPalette' {
     TwClrBgAccent?: React.CSSProperties['color'];
     TwClrTxtAccent?: React.CSSProperties['color'];
     TwClrTxtOnAccent?: React.CSSProperties['color'];
+    TwClrBgAccentAux?: React.CSSProperties['color'];
+    TwClrTxtAccentAux?: React.CSSProperties['color'];
   }
 
   export interface PaletteOptions {
@@ -363,6 +365,8 @@ declare module '@mui/material/styles/createPalette' {
     TwClrBgAccent?: React.CSSProperties['color'];
     TwClrTxtAccent?: React.CSSProperties['color'];
     TwClrTxtOnAccent?: React.CSSProperties['color'];
+    TwClrBgAccentAux?: React.CSSProperties['color'];
+    TwClrTxtAccentAux?: React.CSSProperties['color'];
   }
 }
 
@@ -551,7 +555,9 @@ const TerrawareTheme: ThemeDictionary = {
     'TwClrTxtWarning': '#A36A2D',
     'TwClrBgAccent': '#EF7047',
     'TwClrTxtAccent': '#EF7047',
-    'TwClrTxtOnAccent': '#FFFFFF'
+    'TwClrTxtOnAccent': '#FFFFFF',
+    'TwClrBgAccentAux': '#7473BA',
+    'TwClrTxtAccentAux': '#7473BA'
   }
 };
 
