@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1740165265889" clover="3.2.0">
-  <project timestamp="1740165265889" name="All files">
+<coverage generated="1741629597269" clover="3.2.0">
+  <project timestamp="1741629597269" name="All files">
     <metrics statements="1623" coveredstatements="203" conditionals="1387" coveredconditionals="105" methods="567" coveredmethods="31" elements="3577" coveredelements="339" complexity="0" loc="1623" ncloc="1623" packages="39" files="215" classes="215"/>
     <package name="src">
       <metrics statements="1" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
@@ -2304,7 +2304,7 @@
       <metrics statements="1" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
       <file name="TerrawareTheme.ts" path="/home/runner/work/web-components/web-components/src/style-dictionary-dist/TerrawareTheme.ts">
         <metrics statements="1" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
-        <line num="373" count="0" type="stmt"/>
+        <line num="377" count="0" type="stmt"/>
       </file>
     </package>
     <package name="src.utils">
