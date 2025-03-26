@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1741629597269" clover="3.2.0">
-  <project timestamp="1741629597269" name="All files">
-    <metrics statements="1623" coveredstatements="203" conditionals="1387" coveredconditionals="105" methods="567" coveredmethods="31" elements="3577" coveredelements="339" complexity="0" loc="1623" ncloc="1623" packages="39" files="215" classes="215"/>
+<coverage generated="1743009284754" clover="3.2.0">
+  <project timestamp="1743009284754" name="All files">
+    <metrics statements="1624" coveredstatements="203" conditionals="1389" coveredconditionals="105" methods="567" coveredmethods="31" elements="3580" coveredelements="339" complexity="0" loc="1624" ncloc="1624" packages="39" files="215" classes="215"/>
     <package name="src">
       <metrics statements="1" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
       <file name="index.ts" path="/home/runner/work/web-components/web-components/src/index.ts">
@@ -249,13 +249,14 @@
       </file>
     </package>
     <package name="src.components.FormBottomBar">
-      <metrics statements="4" coveredstatements="0" conditionals="22" coveredconditionals="0" methods="2" coveredmethods="0"/>
+      <metrics statements="5" coveredstatements="0" conditionals="24" coveredconditionals="0" methods="2" coveredmethods="0"/>
       <file name="index.tsx" path="/home/runner/work/web-components/web-components/src/components/FormBottomBar/index.tsx">
-        <metrics statements="4" coveredstatements="0" conditionals="22" coveredconditionals="0" methods="2" coveredmethods="0"/>
-        <line num="36" count="0" type="stmt"/>
-        <line num="37" count="0" type="stmt"/>
-        <line num="39" count="0" type="stmt"/>
-        <line num="84" count="0" type="stmt"/>
+        <metrics statements="5" coveredstatements="0" conditionals="24" coveredconditionals="0" methods="2" coveredmethods="0"/>
+        <line num="6" count="0" type="stmt"/>
+        <line num="40" count="0" type="stmt"/>
+        <line num="41" count="0" type="stmt"/>
+        <line num="43" count="0" type="stmt"/>
+        <line num="88" count="0" type="stmt"/>
       </file>
     </package>
     <package name="src.components.Icon">
@@ -381,15 +382,15 @@
       <metrics statements="9" coveredstatements="0" conditionals="8" coveredconditionals="0" methods="2" coveredmethods="0"/>
       <file name="index.tsx" path="/home/runner/work/web-components/web-components/src/components/PageForm/index.tsx">
         <metrics statements="9" coveredstatements="0" conditionals="8" coveredconditionals="0" methods="2" coveredmethods="0"/>
-        <line num="23" count="0" type="stmt"/>
         <line num="24" count="0" type="stmt"/>
         <line num="25" count="0" type="stmt"/>
         <line num="26" count="0" type="stmt"/>
-        <line num="28" count="0" type="stmt"/>
+        <line num="27" count="0" type="stmt"/>
         <line num="29" count="0" type="stmt"/>
-        <line num="31" count="0" type="stmt"/>
+        <line num="30" count="0" type="stmt"/>
         <line num="32" count="0" type="stmt"/>
-        <line num="35" count="0" type="stmt"/>
+        <line num="33" count="0" type="stmt"/>
+        <line num="36" count="0" type="stmt"/>
       </file>
     </package>
     <package name="src.components.PhotoChooser">
