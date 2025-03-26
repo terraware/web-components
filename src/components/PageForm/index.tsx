@@ -17,6 +17,7 @@ export type PageFormProps = {
   hideEdit?: boolean;
   additionalRightButtons?: FormButton[];
   style?: CSSProperties;
+  desktopOffset?: string;
 };
 
 export default function PageForm(props: PageFormProps): JSX.Element {

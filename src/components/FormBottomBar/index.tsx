@@ -3,6 +3,8 @@ import { AppBar, Box, useTheme } from '@mui/material';
 import Button from '../Button/Button';
 import useDeviceInfo from '../../utils/useDeviceInfo';
 
+const defaultDesktopOffset = '200px';
+
 export interface FormButton {
   id: string;
   text: string;
@@ -21,6 +23,7 @@ export interface Props {
   saveDisabled?: boolean;
   onSave: () => void;
   additionalRightButtons?: FormButton[];
+  desktopOffset?: string;
 }
 
 export default function FormBottomBar({
@@ -32,6 +35,7 @@ export default function FormBottomBar({
   saveDisabled,
   onSave,
   additionalRightButtons,
+  desktopOffset,
 }: Props): JSX.Element {
   const { isMobile, isDesktop } = useDeviceInfo();
   const theme = useTheme();
@@ -57,7 +61,7 @@ export default function FormBottomBar({
         display: 'flex',
         flexDirection: isMobile ? 'column-reverse' : 'row',
         padding: isDesktop ? '16px 24px' : `16px 24px ${theme.spacing(5)}`,
-        width: isDesktop ? 'calc(100% - 200px)' : '100%',
+        width: isDesktop ? `calc(100% - ${desktopOffset || defaultDesktopOffset})` : '100%',
         zIndex: 1000,
       }}
     >
