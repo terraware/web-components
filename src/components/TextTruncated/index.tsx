@@ -61,7 +61,7 @@ export interface Props {
   placeHolder?: React.ReactElement;
 }
 
-export default function TextTruncated(props: Props): JSX.Element {
+export default function TextTruncated(props: Props): JSX.Element | null {
   const { stringList, listSeparator, maxLengthPx, moreSeparator, moreText, textStyle, showAllStyle, placeHolder } =
     props;
   const [showAllOpen, setShowAllOpen] = useState(false);
@@ -156,6 +156,6 @@ export default function TextTruncated(props: Props): JSX.Element {
        ) : null}
     </Typography>
   ) : (
-    placeHolder || <div />
+    placeHolder || null
   );
 }
