@@ -6,21 +6,21 @@ import Icon from '../Icon/Icon';
 import { IconName } from '../Icon/icons';
 
 export type Tab = {
+  children: React.ReactNode;
+  disabled?: boolean;
   icon?: IconName;
   id: string;
   label: string;
-  children: React.ReactNode;
-  disabled?: boolean;
 };
 
 export type TabsProps = {
-  tabs: Tab[];
-  onTabChange?: (tab: string) => void;
   activeTab?: string;
+  onTabChange?: (tab: string) => void;
+  tabs: Tab[];
   tabStyle?: SxProps<Theme>;
 };
 
-const Tabs = ({ tabs, onTabChange, activeTab, tabStyle }: TabsProps): JSX.Element => {
+const Tabs = ({ activeTab, onTabChange, tabs, tabStyle }: TabsProps): JSX.Element => {
   const [selectedTab, setSelectedTab] = useState<string>(activeTab ?? tabs[0]?.id ?? '');
   const theme = useTheme();
   const { isMobile } = useDeviceInfo();
@@ -31,8 +31,8 @@ const Tabs = ({ tabs, onTabChange, activeTab, tabStyle }: TabsProps): JSX.Elemen
       fontSize: '16px',
       fontWeight: 600,
       lineHeight: '24px',
-      padding: theme.spacing(1, 2),
       minHeight: theme.spacing(4.5),
+      padding: theme.spacing(1, 2),
       textTransform: 'capitalize',
       '&:hover': {
         backgroundColor: theme.palette.TwClrBgHover as string,
@@ -41,9 +41,9 @@ const Tabs = ({ tabs, onTabChange, activeTab, tabStyle }: TabsProps): JSX.Elemen
         color: theme.palette.TwClrTxtBrand as string,
       },
       '&.MuiTab-labelIcon': {
+        alignItems: 'center',
         display: 'flex',
         flexDirection: 'row',
-        alignItems: 'center',
       },
       '& .MuiTab-iconWrapper': {
         fill: theme.palette.TwClrIcnSecondary as string,
@@ -86,30 +86,30 @@ const Tabs = ({ tabs, onTabChange, activeTab, tabStyle }: TabsProps): JSX.Elemen
       <TabContext value={selectedTab}>
         <Box sx={tabHeaderProps}>
           <TabList
-            variant='scrollable'
-            sx={{ minHeight: theme.spacing(4.5) }}
             onChange={(unused, value: string) => setTab(value)}
+            sx={{ minHeight: theme.spacing(4.5) }}
             TabIndicatorProps={{
               style: {
                 background: theme.palette.TwClrBgBrand,
                 height: '4px',
               },
             }}
+            variant='scrollable'
           >
             {tabs.map((tab, index) => (
               <MuiTab
-                icon={tab.icon ? <Icon name={tab.icon} /> : undefined}
-                label={tab.label}
-                value={tab.id}
-                sx={tabStyles}
-                key={index}
                 disabled={tab.disabled}
+                icon={tab.icon ? <Icon name={tab.icon} /> : undefined}
+                key={index}
+                label={tab.label}
+                sx={tabStyles}
+                value={tab.id}
               />
             ))}
           </TabList>
         </Box>
         {tabs.map((tab, index) => (
-          <TabPanel value={tab.id} key={index} sx={tabPanelStyles}>
+          <TabPanel key={index} sx={tabPanelStyles} value={tab.id}>
             {tab.children}
           </TabPanel>
         ))}
