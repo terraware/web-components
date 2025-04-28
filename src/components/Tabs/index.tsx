@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { TabContext, TabList, TabPanel } from '@mui/lab';
-import { Box, Tab as MuiTab, useTheme } from '@mui/material';
+import { Box, Tab as MuiTab, SxProps, Theme, useTheme } from '@mui/material';
 import { useDeviceInfo } from '../../utils';
 import Icon from '../Icon/Icon';
 import { IconName } from '../Icon/icons';
@@ -17,41 +17,45 @@ export type TabsProps = {
   tabs: Tab[];
   onTabChange?: (tab: string) => void;
   activeTab?: string;
+  tabStyle?: SxProps<Theme>;
 };
 
-const Tabs = ({ tabs, onTabChange, activeTab }: TabsProps): JSX.Element => {
+const Tabs = ({ tabs, onTabChange, activeTab, tabStyle }: TabsProps): JSX.Element => {
   const [selectedTab, setSelectedTab] = useState<string>(activeTab ?? tabs[0]?.id ?? '');
   const theme = useTheme();
   const { isMobile } = useDeviceInfo();
 
-  const tabStyles = {
-    color: theme.palette.TwClrTxtSecondary as string,
-    fontSize: '16px',
-    fontWeight: 600,
-    lineHeight: '24px',
-    padding: theme.spacing(1, 2),
-    minHeight: theme.spacing(4.5),
-    textTransform: 'capitalize',
-    '&:hover': {
-      backgroundColor: theme.palette.TwClrBgHover as string,
+  const tabStyles = [
+    {
+      color: theme.palette.TwClrTxtSecondary as string,
+      fontSize: '16px',
+      fontWeight: 600,
+      lineHeight: '24px',
+      padding: theme.spacing(1, 2),
+      minHeight: theme.spacing(4.5),
+      textTransform: 'capitalize',
+      '&:hover': {
+        backgroundColor: theme.palette.TwClrBgHover as string,
+      },
+      '&.Mui-selected': {
+        color: theme.palette.TwClrTxtBrand as string,
+      },
+      '&.MuiTab-labelIcon': {
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center',
+      },
+      '& .MuiTab-iconWrapper': {
+        fill: theme.palette.TwClrIcnSecondary as string,
+        marginBottom: 0,
+        marginRight: theme.spacing(1),
+      },
+      '&.Mui-selected .MuiTab-iconWrapper': {
+        fill: theme.palette.TwClrIcnBrand as string,
+      },
     },
-    '&.Mui-selected': {
-      color: theme.palette.TwClrTxtBrand as string,
-    },
-    '&.MuiTab-labelIcon': {
-      display: 'flex',
-      flexDirection: 'row',
-      alignItems: 'center',
-    },
-    '& .MuiTab-iconWrapper': {
-      fill: theme.palette.TwClrIcnSecondary as string,
-      marginBottom: 0,
-      marginRight: theme.spacing(1),
-    },
-    '&.Mui-selected .MuiTab-iconWrapper': {
-      fill: theme.palette.TwClrIcnBrand as string,
-    },
-  };
+    ...(Array.isArray(tabStyle) ? tabStyle : [tabStyle]),
+  ];
 
   const tabHeaderProps = {
     borderBottom: 1,
