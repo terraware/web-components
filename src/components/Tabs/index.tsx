@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react';
 import { TabContext, TabList, TabPanel } from '@mui/lab';
 import { Box, Tab as MuiTab, SxProps, Theme, useTheme } from '@mui/material';
+import React, { useEffect, useState } from 'react';
+
 import { useDeviceInfo } from '../../utils';
 import Icon from '../Icon/Icon';
 import { IconName } from '../Icon/icons';
