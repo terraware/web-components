@@ -8,6 +8,16 @@ export type PlacementWrapperProps = {
   objectPlacement: TooltipProps['placement'];
 };
 
+/**
+ * A component that allows simple management of the location of an object around some children
+ *
+ * Example:
+ * ```
+ * <PlacementWrapper objectPlacement={'right-end'} placedObject={<Button icon={'iconComment'} onClick={onClick} />}>
+ *   <Box>Stuff and Things</Box>
+ * </PlacementWrapper>
+ * ```
+ */
 const PlacementWrapper = ({ placedObject, children, objectPlacement }: PlacementWrapperProps) => {
   const theme = useTheme();
 
@@ -40,7 +50,7 @@ const PlacementWrapper = ({ placedObject, children, objectPlacement }: Placement
   }, [objectPlacement]);
 
   return (
-    <Box display='flex' flexDirection={outsideDirection} flexGrow={1} marginBottom={theme.spacing(2)}>
+    <Box display={'flex'} flexDirection={outsideDirection} flexGrow={1} marginBottom={theme.spacing(2)}>
       <Box alignSelf={insideAlignment} margin={theme.spacing(1)}>
         {placedObject}
       </Box>
