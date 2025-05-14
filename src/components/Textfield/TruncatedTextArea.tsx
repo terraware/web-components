@@ -50,7 +50,7 @@ const TruncatedTextArea = ({ preserveNewlines, truncateConfig, value }: Truncate
       </p>
 
       {needsTruncating && (
-        <div>
+        <div style={{ width: '100%' }}>
           <Link
             component='button'
             onClick={toggleShowAll}
