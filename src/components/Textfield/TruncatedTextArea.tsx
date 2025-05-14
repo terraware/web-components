@@ -9,7 +9,7 @@ interface TruncatedTextAreaProps {
 }
 
 const TruncatedTextArea = ({ preserveNewlines, truncateConfig, value }: TruncatedTextAreaProps) => {
-  const { maxHeight, showLessText, showMoreText, showTextStyle, valueTextStyle } = truncateConfig;
+  const { maxHeight, showLessText, showMoreText, showTextStyle, valueTextStyle, alignment = 'left' } = truncateConfig;
 
   const theme = useTheme();
   const [showAll, setShowAll] = useState(false);
@@ -50,7 +50,7 @@ const TruncatedTextArea = ({ preserveNewlines, truncateConfig, value }: Truncate
       </p>
 
       {needsTruncating && (
-        <div style={{ width: '100%' }}>
+        <div style={{ width: '100%', textAlign: alignment }}>
           <Link
             component='button'
             onClick={toggleShowAll}
