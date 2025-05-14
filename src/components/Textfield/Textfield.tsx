@@ -18,6 +18,7 @@ export interface TruncateConfig {
   showLessText: string;
   showTextStyle?: Record<string, any>;
   valueTextStyle?: Record<string, any>;
+  alignment?: 'left' | 'right';
 }
 
 export interface Props {
