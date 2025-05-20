@@ -19,9 +19,10 @@ export type TabsProps = {
   onTabChange?: (tab: string) => void;
   tabs: Tab[];
   tabStyle?: SxProps<Theme>;
+  headerBorder?: boolean;
 };
 
-const Tabs = ({ activeTab, onTabChange, tabs, tabStyle }: TabsProps): JSX.Element => {
+const Tabs = ({ activeTab, onTabChange, tabs, tabStyle, headerBorder = false }: TabsProps): JSX.Element => {
   const [selectedTab, setSelectedTab] = useState<string>(activeTab ?? tabs[0]?.id ?? '');
   const theme = useTheme();
   const { isMobile } = useDeviceInfo();
@@ -59,7 +60,7 @@ const Tabs = ({ activeTab, onTabChange, tabs, tabStyle }: TabsProps): JSX.Elemen
   ];
 
   const tabHeaderProps = {
-    borderBottom: 1,
+    borderBottom: headerBorder ? 1 : 0,
     borderColor: 'divider',
     margin: isMobile ? 0 : theme.spacing(0, 4),
   };
@@ -95,7 +96,7 @@ const Tabs = ({ activeTab, onTabChange, tabs, tabStyle }: TabsProps): JSX.Elemen
                 height: '4px',
               },
             }}
-            variant='scrollable'
+            variant={'scrollable'}
           >
             {tabs.map((tab, index) => (
               <MuiTab
