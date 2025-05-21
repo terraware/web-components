@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1747837342250" clover="3.2.0">
-  <project timestamp="1747837342250" name="All files">
-    <metrics statements="1650" coveredstatements="204" conditionals="1411" coveredconditionals="105" methods="574" coveredmethods="31" elements="3635" coveredelements="340" complexity="0" loc="1650" ncloc="1650" packages="40" files="218" classes="218"/>
+<coverage generated="1747858147931" clover="3.2.0">
+  <project timestamp="1747858147931" name="All files">
+    <metrics statements="1650" coveredstatements="204" conditionals="1413" coveredconditionals="105" methods="574" coveredmethods="31" elements="3637" coveredelements="340" complexity="0" loc="1650" ncloc="1650" packages="40" files="218" classes="218"/>
     <package name="src">
       <metrics statements="1" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
       <file name="index.ts" path="/home/runner/work/web-components/web-components/src/index.ts">
@@ -1429,7 +1429,7 @@
       </file>
     </package>
     <package name="src.components.table">
-      <metrics statements="216" coveredstatements="21" conditionals="320" coveredconditionals="26" methods="67" coveredmethods="3"/>
+      <metrics statements="216" coveredstatements="21" conditionals="322" coveredconditionals="26" methods="67" coveredmethods="3"/>
       <file name="EnhancedTableToolbar.tsx" path="/home/runner/work/web-components/web-components/src/components/table/EnhancedTableToolbar.tsx">
         <metrics statements="12" coveredstatements="0" conditionals="20" coveredconditionals="0" methods="3" coveredmethods="0"/>
         <line num="17" count="0" type="stmt"/>
@@ -1460,35 +1460,35 @@
         <line num="63" count="0" type="stmt"/>
       </file>
       <file name="TableCellRenderer.tsx" path="/home/runner/work/web-components/web-components/src/components/table/TableCellRenderer.tsx">
-        <metrics statements="28" coveredstatements="0" conditionals="48" coveredconditionals="0" methods="9" coveredmethods="0"/>
+        <metrics statements="28" coveredstatements="0" conditionals="50" coveredconditionals="0" methods="9" coveredmethods="0"/>
         <line num="10" count="0" type="stmt"/>
-        <line num="21" count="0" type="stmt"/>
-        <line num="22" count="0" type="stmt"/>
-        <line num="24" count="0" type="cond" truecount="0" falsecount="5"/>
-        <line num="25" count="0" type="stmt"/>
+        <line num="33" count="0" type="stmt"/>
+        <line num="34" count="0" type="stmt"/>
         <line num="36" count="0" type="cond" truecount="0" falsecount="5"/>
         <line num="37" count="0" type="stmt"/>
-        <line num="48" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="48" count="0" type="cond" truecount="0" falsecount="5"/>
         <line num="49" count="0" type="stmt"/>
-        <line num="62" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="63" count="0" type="stmt"/>
-        <line num="77" count="0" type="stmt"/>
-        <line num="90" count="0" type="stmt"/>
-        <line num="91" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="92" count="0" type="stmt"/>
-        <line num="113" count="0" type="stmt"/>
-        <line num="115" count="0" type="stmt"/>
-        <line num="147" count="0" type="stmt"/>
-        <line num="149" count="0" type="stmt"/>
-        <line num="186" count="0" type="stmt"/>
-        <line num="188" count="0" type="stmt"/>
-        <line num="220" count="0" type="stmt"/>
-        <line num="222" count="0" type="stmt"/>
-        <line num="256" count="0" type="stmt"/>
-        <line num="258" count="0" type="stmt"/>
-        <line num="270" count="0" type="stmt"/>
-        <line num="271" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="272" count="0" type="stmt"/>
+        <line num="60" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="61" count="0" type="stmt"/>
+        <line num="74" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="75" count="0" type="stmt"/>
+        <line num="89" count="0" type="stmt"/>
+        <line num="103" count="0" type="stmt"/>
+        <line num="104" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="105" count="0" type="stmt"/>
+        <line num="126" count="0" type="stmt"/>
+        <line num="128" count="0" type="stmt"/>
+        <line num="162" count="0" type="stmt"/>
+        <line num="164" count="0" type="stmt"/>
+        <line num="201" count="0" type="stmt"/>
+        <line num="203" count="0" type="stmt"/>
+        <line num="235" count="0" type="stmt"/>
+        <line num="237" count="0" type="stmt"/>
+        <line num="271" count="0" type="stmt"/>
+        <line num="273" count="0" type="stmt"/>
+        <line num="285" count="0" type="stmt"/>
+        <line num="286" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="287" count="0" type="stmt"/>
       </file>
       <file name="TableHeader.tsx" path="/home/runner/work/web-components/web-components/src/components/table/TableHeader.tsx">
         <metrics statements="9" coveredstatements="0" conditionals="16" coveredconditionals="0" methods="5" coveredmethods="0"/>
