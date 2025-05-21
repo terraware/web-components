@@ -26,6 +26,7 @@ export interface RendererProps<T> {
   editText: string;
   sx?: SxProps;
   title?: string;
+  component?: 'span' | 'p' | 'div';
 }
 
 export type EnhancedTableDetailsRow = {
