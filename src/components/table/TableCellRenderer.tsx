@@ -17,8 +17,20 @@ const defaultStyles = (theme: Theme) => ({
 });
 
 export default function CellRenderer(props: RendererProps<TableRowType>): JSX.Element {
-  const { column, value, onRowClick, index, className, booleanFalseText, booleanTrueText, editText, style, sx, title } =
-    props;
+  const {
+    column,
+    value,
+    onRowClick,
+    index,
+    className,
+    booleanFalseText,
+    booleanTrueText,
+    editText,
+    style,
+    sx,
+    title,
+    component,
+  } = props;
   const id = `row${index}-${column.key}`;
 
   if (column.type === 'date' && typeof value === 'string' && value) {
@@ -83,6 +95,7 @@ export default function CellRenderer(props: RendererProps<TableRowType>): JSX.El
       style={style}
       sx={sx}
       title={title}
+      component={component}
     />
   );
 }
@@ -135,6 +148,7 @@ export function CellTextRenderer({
   style,
   sx,
   title,
+  component,
 }: {
   id: string;
   value?: string | number | any[] | ReactNode;
@@ -143,6 +157,7 @@ export function CellTextRenderer({
   style?: CSSProperties;
   sx?: SxProps;
   title?: string;
+  component?: 'span' | 'p' | 'div';
 }): JSX.Element {
   const theme = useTheme();
 
@@ -154,7 +169,7 @@ export function CellTextRenderer({
       className={className}
       sx={[defaultStyles(theme), style, ...(Array.isArray(sx) ? sx : [sx])]}
     >
-      <Typography component='p' variant='body1' noWrap={true} fontSize='16px' sx={{ maxWidth: 400 }}>
+      <Typography component={component || 'p'} variant='body1' noWrap={true} fontSize='16px' sx={{ maxWidth: 400 }}>
         {value}
       </Typography>
     </TableCell>
