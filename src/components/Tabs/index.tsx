@@ -99,16 +99,11 @@ const Tabs = ({
     (tab: string) => {
       if (onTabChange) {
         onTabChange(tab);
-
-        return;
-      }
-
-      setSelectedTab(tab);
-      if (sessionViewId) {
-        writeTabToSession(sessionViewId, tab);
+      } else {
+        setSelectedTab(tab);
       }
     },
-    [onTabChange, sessionViewId, setSelectedTab]
+    [onTabChange, setSelectedTab]
   );
 
   // get previous session tab, if sessionViewId is provided
