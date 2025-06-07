@@ -16,13 +16,13 @@ export type Tab = {
 
 export type TabsProps = {
   activeTab?: string;
-  onTabChange?: (tab: string) => void;
+  onChangeTab?: (tab: string) => void;
   tabs: Tab[];
   tabStyle?: SxProps<Theme>;
   headerBorder?: boolean;
 };
 
-const Tabs = ({ activeTab, onTabChange, tabs, tabStyle, headerBorder = false }: TabsProps): JSX.Element => {
+const Tabs = ({ activeTab, onChangeTab, tabs, tabStyle, headerBorder = false }: TabsProps): JSX.Element => {
   const [selectedTab, setSelectedTab] = useState<string>(activeTab ?? tabs[0]?.id ?? '');
   const theme = useTheme();
   const { isMobile } = useDeviceInfo();
@@ -70,8 +70,8 @@ const Tabs = ({ activeTab, onTabChange, tabs, tabStyle, headerBorder = false }: 
   };
 
   const setTab = (tab: string) => {
-    if (onTabChange) {
-      onTabChange(tab);
+    if (onChangeTab) {
+      onChangeTab(tab);
     } else {
       setSelectedTab(tab);
     }
