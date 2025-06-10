@@ -80,6 +80,9 @@
   &--x-large {
     width: 800px;
   }
+  &--fill {
+    width: 100%
+  }
 
   &--header {
     border-bottom: 1px solid $tw-clr-brdr-tertiary;

@@ -36,6 +36,19 @@ const WithButtonTemplate: Story<DialogBoxProps> = (args) => {
   );
 };
 
+export const Fill = Template.bind({});
+Fill.args = {
+  open: true,
+  title: 'Title',
+  message: 'Message',
+  size: 'fill',
+  middleButtons: [
+    <Button id='new-species' label='Test' onClick={() => true} size='small' key={'1'} />,
+    <Button id='new-species' label='Test' onClick={() => true} size='small' key={'2'} />,
+  ],
+};
+
+
 export const Small = Template.bind({});
 Small.args = {
   open: true,
