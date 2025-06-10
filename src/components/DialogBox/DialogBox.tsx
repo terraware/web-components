@@ -4,7 +4,7 @@ import Icon from '../Icon/Icon';
 import { IconButton } from '@mui/material';
 import { useDeviceInfo } from '../../utils';
 
-export type DialogBoxSize = 'small' | 'medium' | 'large' | 'x-large';
+export type DialogBoxSize = 'small' | 'medium' | 'large' | 'x-large' | 'xx-large';
 
 export interface Props {
   title: string;
