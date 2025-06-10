@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1749267436445" clover="3.2.0">
-  <project timestamp="1749267436445" name="All files">
-    <metrics statements="1650" coveredstatements="204" conditionals="1413" coveredconditionals="105" methods="574" coveredmethods="31" elements="3637" coveredelements="340" complexity="0" loc="1650" ncloc="1650" packages="40" files="218" classes="218"/>
+<coverage generated="1749580441547" clover="3.2.0">
+  <project timestamp="1749580441547" name="All files">
+    <metrics statements="1654" coveredstatements="204" conditionals="1413" coveredconditionals="105" methods="576" coveredmethods="31" elements="3643" coveredelements="340" complexity="0" loc="1654" ncloc="1654" packages="40" files="218" classes="218"/>
     <package name="src">
       <metrics statements="1" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
       <file name="index.ts" path="/home/runner/work/web-components/web-components/src/index.ts">
@@ -1681,7 +1681,7 @@
       </file>
     </package>
     <package name="src.stories">
-      <metrics statements="539" coveredstatements="0" conditionals="60" coveredconditionals="0" methods="188" coveredmethods="0"/>
+      <metrics statements="543" coveredstatements="0" conditionals="60" coveredconditionals="0" methods="190" coveredmethods="0"/>
       <file name="Autocomplete.stories.tsx" path="/home/runner/work/web-components/web-components/src/stories/Autocomplete.stories.tsx">
         <metrics statements="42" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="14" coveredmethods="0"/>
         <line num="12" count="0" type="stmt"/>
@@ -1808,7 +1808,7 @@
         <line num="122" count="0" type="stmt"/>
       </file>
       <file name="DialogBox.stories.tsx" path="/home/runner/work/web-components/web-components/src/stories/DialogBox.stories.tsx">
-        <metrics statements="35" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="18" coveredmethods="0"/>
+        <metrics statements="39" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="20" coveredmethods="0"/>
         <line num="12" count="0" type="stmt"/>
         <line num="13" count="0" type="stmt"/>
         <line num="16" count="0" type="stmt"/>
@@ -1835,15 +1835,19 @@
         <line num="80" count="0" type="stmt"/>
         <line num="84" count="0" type="stmt"/>
         <line num="85" count="0" type="stmt"/>
-        <line num="89" count="0" type="stmt"/>
         <line num="91" count="0" type="stmt"/>
         <line num="92" count="0" type="stmt"/>
         <line num="96" count="0" type="stmt"/>
         <line num="97" count="0" type="stmt"/>
+        <line num="101" count="0" type="stmt"/>
         <line num="103" count="0" type="stmt"/>
         <line num="104" count="0" type="stmt"/>
+        <line num="108" count="0" type="stmt"/>
         <line num="109" count="0" type="stmt"/>
-        <line num="110" count="0" type="stmt"/>
+        <line num="115" count="0" type="stmt"/>
+        <line num="116" count="0" type="stmt"/>
+        <line num="121" count="0" type="stmt"/>
+        <line num="122" count="0" type="stmt"/>
       </file>
       <file name="Divisor.stories.tsx" path="/home/runner/work/web-components/web-components/src/stories/Divisor.stories.tsx">
         <metrics statements="3" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
