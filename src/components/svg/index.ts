@@ -48,6 +48,7 @@ export { default as IconDashboard } from './IconDashboard';
 export { default as IconDataMigration } from './IconDataMigration';
 export { default as IconEdit } from './IconEdit';
 export { default as IconExport } from './IconExport';
+export { default as IconExternalLink } from './IconExternalLink';
 export { default as IconFile } from './IconFile';
 export { default as IconFolder } from './IconFolder';
 export { default as IconFullScreen } from './IconFullScreen';
