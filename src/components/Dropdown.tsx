@@ -65,7 +65,7 @@ export interface DropdownProps {
 }
 
 /**
- * This is a simple dropdwn that takes in a tuple { label, value }
+ * This is a simple dropdown that takes in a tuple { label, value }
  * for list of options.
  * The label is used for display, the value is passed back in onChange, and used to set selectedValue.
  *
