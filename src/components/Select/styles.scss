@@ -19,6 +19,7 @@
       width: 100%;
     }
   }
+
   .textfield-label {
     font-family: $tw-fnt-frm-fld-label-font-family;
     font-size: $tw-fnt-frm-fld-label-font-size;
@@ -78,6 +79,7 @@
       background: transparent;
       padding-top: 0;
       padding-bottom: 0;
+
       &::placeholder {
         font-family: $tw-fnt-frm-fld-text-placeholder-font-family;
         font-size: $tw-fnt-frm-fld-text-placeholder-font-size;
@@ -85,6 +87,7 @@
         line-height: $tw-fnt-frm-fld-text-placeholder-line-height;
         color: $tw-clr-txt-tertiary;
       }
+
       &:focus-visible {
         outline: none;
       }
@@ -175,6 +178,7 @@
 
     &--readonly {
       background-color: $tw-clr-bg-secondary;
+
       &:hover {
         border: $tw-sz-frm-fld-text-input-stroke solid $tw-clr-brdr-secondary;
       }
@@ -249,11 +253,12 @@
     border: 1px solid $tw-clr-brdr-secondary;
     margin: $tw-spc-base-xx-small 0 0;
     border-radius: $tw-sz-base-x-small;
-    max-height: 140px;
+    max-height: 300px;
     overflow-y: auto;
 
     &.fixed-menu {
       visibility: 'hidden';
+
       &.positioned {
         visibility: 'visible';
         position: fixed;
