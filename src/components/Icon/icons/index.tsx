@@ -49,6 +49,8 @@ import IconDataMigration from '../../svg/IconDataMigration';
 import IconEdit from '../../svg/IconEdit';
 import IconExport from '../../svg/IconExport';
 import IconExternalLink from '../../svg/IconExternalLink';
+import IconEye from '../../svg/IconEye';
+import IconEyeOff from '../../svg/IconEyeOff';
 import IconFile from '../../svg/IconFile';
 import IconFolder from '../../svg/IconFolder';
 import IconFullScreen from '../../svg/IconFullScreen';
@@ -163,6 +165,8 @@ export type IconName =
   | 'iconEdit'
   | 'iconExport'
   | 'iconExternalLink'
+  | 'iconEye'
+  | 'iconEyeOff'
   | 'iconFile'
   | 'iconFolder'
   | 'iconFullScreen'
@@ -282,6 +286,8 @@ const icons: Record<IconName, SVGComponent> = {
   iconEdit: IconEdit,
   iconExport: IconExport,
   iconExternalLink: IconExternalLink,
+  iconEye: IconEye,
+  iconEyeOff: IconEyeOff,
   iconFile: IconFile,
   iconFolder: IconFolder,
   iconFullScreen: IconFullScreen,
