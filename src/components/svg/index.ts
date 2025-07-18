@@ -64,6 +64,7 @@ export { default as IconIndex } from './IconIndex';
 export { default as IconLayers } from './IconLayers';
 export { default as IconLibrary } from './IconLibrary';
 export { default as IconList } from './IconList';
+export { default as IconLivePlant } from './IconLivePlant';
 export { default as IconMail } from './IconMail';
 export { default as IconManager } from './IconManager';
 export { default as IconMarker } from './IconMarker';

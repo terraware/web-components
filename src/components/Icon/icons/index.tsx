@@ -62,6 +62,7 @@ import IconIndex from '../../svg/IconIndex';
 import IconLayers from '../../svg/IconLayers';
 import IconLibrary from '../../svg/IconLibrary';
 import IconList from '../../svg/IconList';
+import IconLivePlant from '../../svg/IconLivePlant';
 import IconLocations from '../../svg/IconLocations';
 import IconMenu from '../../svg/IconMenu';
 import IconMenuHorizontal from '../../svg/IconMenuHorizontal';
@@ -174,6 +175,7 @@ export type IconName =
   | 'iconGraphReport'
   | 'iconHelp'
   | 'iconHistory'
+  | 'iconLivePlant'
   | 'iconImport'
   | 'iconIndex'
   | 'iconLayers'
@@ -301,6 +303,7 @@ const icons: Record<IconName, SVGComponent> = {
   iconLayers: IconLayers,
   iconLibrary: IconLibrary,
   iconList: IconList,
+  iconLivePlant: IconLivePlant,
   iconLocations: IconLocations,
   iconMarker: IconMarker,
   iconMenu: IconMenu,
