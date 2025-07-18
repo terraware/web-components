@@ -1,3 +1,5 @@
+@import '../../style-dictionary-dist/terraware.scss';
+
 .ant-switch {
   width: 28px;
   height: 16px;
@@ -49,6 +51,16 @@
     // Dark mode override
     body.dark & {
       background-color: rgba(255, 255, 255, 0.35);
+    }
+  }
+
+  .Mui-disabled {
+    opacity: $tw-opcty-semantic-off;
+
+    &.Mui-checked {
+      + .MuiSwitch-track {
+        opacity: $tw-opcty-semantic-off;
+      }
     }
   }
 }
