@@ -1,0 +1,54 @@
+.ant-switch {
+  width: 28px;
+  height: 16px;
+  padding: 0;
+  display: flex;
+
+  .MuiSwitch-switchBase {
+    padding: 2px;
+
+    &.Mui-checked {
+      transform: translateX(12px);
+      color: #fff;
+
+      + .MuiSwitch-track {
+        opacity: 1;
+        background-color: #1890ff;
+      }
+
+      // Add dark mode override using a body class or custom data attribute
+      body.dark & + .MuiSwitch-track {
+        background-color: #177ddc;
+      }
+    }
+  }
+
+  .MuiSwitch-thumb {
+    box-shadow: 0 2px 4px 0 rgba(0, 35, 11, 0.2);
+    width: 12px;
+    height: 12px;
+    border-radius: 6px;
+    transition: width 200ms;
+
+    // Width change on active
+    .ant-switch:active & {
+      width: 15px;
+    }
+
+    .ant-switch:active .MuiSwitch-switchBase.Mui-checked {
+      transform: translateX(9px);
+    }
+  }
+
+  .MuiSwitch-track {
+    border-radius: 8px;
+    opacity: 1;
+    background-color: rgba(0, 0, 0, 0.25);
+    box-sizing: border-box;
+
+    // Dark mode override
+    body.dark & {
+      background-color: rgba(255, 255, 255, 0.35);
+    }
+  }
+}
