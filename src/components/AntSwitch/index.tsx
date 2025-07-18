@@ -1,9 +1,21 @@
-import React from 'react';
-import { Switch, SwitchProps } from '@mui/material';
+import React, { useCallback } from 'react';
+import { Switch } from '@mui/material';
 import './styles.scss';
 
-const AntSwitch = (props: SwitchProps) => {
-  return <Switch className="ant-switch" {...props} />;
+export type AntSwitchProps = {
+  checked?: boolean;
+  disabled?: boolean;
+  onChange: (checked: boolean) => void;
 };
 
-export { AntSwitch };
+const AntSwitch = (props: AntSwitchProps) => {
+  const { checked, disabled, onChange } = props;
+
+  const onChangeHandler = useCallback((event: React.ChangeEvent<HTMLInputElement>, value: boolean) => {
+    onChange(value);
+  }, [onChange]);
+
+  return <Switch className="ant-switch" checked={checked} disabled={disabled} onChange={onChangeHandler} />;
+};
+
+export default AntSwitch;
