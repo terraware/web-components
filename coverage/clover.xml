@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1753123378667" clover="3.2.0">
-  <project timestamp="1753123378667" name="All files">
-    <metrics statements="1664" coveredstatements="209" conditionals="1423" coveredconditionals="105" methods="581" coveredmethods="31" elements="3668" coveredelements="345" complexity="0" loc="1664" ncloc="1664" packages="40" files="223" classes="223"/>
+<coverage generated="1753125704472" clover="3.2.0">
+  <project timestamp="1753125704472" name="All files">
+    <metrics statements="1677" coveredstatements="209" conditionals="1423" coveredconditionals="105" methods="585" coveredmethods="31" elements="3685" coveredelements="345" complexity="0" loc="1677" ncloc="1677" packages="41" files="225" classes="225"/>
     <package name="src">
       <metrics statements="1" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
       <file name="index.ts" path="/home/runner/work/web-components/web-components/src/index.ts">
@@ -74,6 +74,17 @@
         <line num="34" count="0" type="stmt"/>
         <line num="42" count="0" type="stmt"/>
         <line num="51" count="0" type="stmt"/>
+      </file>
+    </package>
+    <package name="src.components.AntSwitch">
+      <metrics statements="5" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="0"/>
+      <file name="index.tsx" path="/home/runner/work/web-components/web-components/src/components/AntSwitch/index.tsx">
+        <metrics statements="5" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="0"/>
+        <line num="11" count="0" type="stmt"/>
+        <line num="12" count="0" type="stmt"/>
+        <line num="14" count="0" type="stmt"/>
+        <line num="15" count="0" type="stmt"/>
+        <line num="18" count="0" type="stmt"/>
       </file>
     </package>
     <package name="src.components.Autocomplete">
@@ -1706,7 +1717,18 @@
       </file>
     </package>
     <package name="src.stories">
-      <metrics statements="543" coveredstatements="0" conditionals="60" coveredconditionals="0" methods="190" coveredmethods="0"/>
+      <metrics statements="551" coveredstatements="0" conditionals="60" coveredconditionals="0" methods="192" coveredmethods="0"/>
+      <file name="AntSwitch.stories.tsx" path="/home/runner/work/web-components/web-components/src/stories/AntSwitch.stories.tsx">
+        <metrics statements="8" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="0"/>
+        <line num="12" count="0" type="stmt"/>
+        <line num="13" count="0" type="stmt"/>
+        <line num="14" count="0" type="stmt"/>
+        <line num="15" count="0" type="stmt"/>
+        <line num="16" count="0" type="stmt"/>
+        <line num="19" count="0" type="stmt"/>
+        <line num="24" count="0" type="stmt"/>
+        <line num="26" count="0" type="stmt"/>
+      </file>
       <file name="Autocomplete.stories.tsx" path="/home/runner/work/web-components/web-components/src/stories/Autocomplete.stories.tsx">
         <metrics statements="42" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="14" coveredmethods="0"/>
         <line num="12" count="0" type="stmt"/>
