@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for src/components/Navbar/NavFooter.tsx</title>
+    <title>Code coverage report for src/components/svg/IconLivePlant.tsx</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../../../prettify.css" />
     <link rel="stylesheet" href="../../../base.css" />
@@ -19,20 +19,20 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../../../index.html">All files</a> / <a href="index.html">src/components/Navbar</a> NavFooter.tsx</h1>
+        <h1><a href="../../../index.html">All files</a> / <a href="index.html">src/components/svg</a> IconLivePlant.tsx</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">50% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/2</span>
+                <span class='fraction'>1/2</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/0</span>
+                <span class='fraction'>0/2</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">50% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/2</span>
+                <span class='fraction'>1/2</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line medium'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -75,30 +75,33 @@
 <a name='L10'></a><a href='#L10'>10</a>
 <a name='L11'></a><a href='#L11'>11</a>
 <a name='L12'></a><a href='#L12'>12</a>
-<a name='L13'></a><a href='#L13'>13</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L13'></a><a href='#L13'>13</a>
+<a name='L14'></a><a href='#L14'>14</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import React, { ReactNode } from 'react';
-import './styles.scss';
-&nbsp;
-export interface Props {
-  children: ReactNode;
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import * as React from 'react';
+import { SVGProps } from 'react';
+interface SVGRProps {
+  title?: string;
+  titleId?: string;
 }
-&nbsp;
-export default function <span class="fstat-no" title="function not covered" >NavFooter(</span>props: Props): JSX.Element {
-  const { children } = <span class="cstat-no" title="statement not covered" >props;</span>
-&nbsp;
-<span class="cstat-no" title="statement not covered" >  return &lt;div className='nav-footer'&gt;{children}&lt;/div&gt;;</span>
-}
+const SvgIconLivePlant = <span class="fstat-no" title="function not covered" >({</span> title, titleId, ...props }: SVGProps&lt;SVGSVGElement&gt; &amp; SVGRProps) =&gt; (
+<span class="cstat-no" title="statement not covered" >  &lt;svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 19' aria-labelledby={titleId} {...props}&gt;</span>
+    {title ? &lt;title id={titleId}&gt;{title}&lt;/title&gt; : null}
+    &lt;path d='M5.185.004a4 4 0 0 0-.359.03c-.479.06-.958.198-1.42.41C1.562 1.287 0 3.348 0 6.302a.7.7 0 0 0 .364.615.67.67 0 0 0 .704-.042c.51-.357 1.091-.302 1.848-.086.757.215 1.549.625 2.442.625 1.06 0 2.13-.448 2.873-1.278a.7.7 0 0 0 .193-.505.7.7 0 0 0-.222-.494.68.68 0 0 0-.502-.18.67.67 0 0 0-.476.242c-.454.508-1.2.825-1.866.825-.383 0-1.185-.32-2.075-.574-.54-.154-1.163-.245-1.789-.16.297-1.845 1.315-3.05 2.472-3.58.681-.312 1.391-.39 1.98-.257.16.037.288.124.43.19C4.737 1.97 3.8 3.024 3.8 3.024a.7.7 0 0 0-.167.507.7.7 0 0 0 .236.478.68.68 0 0 0 .5.165.67.67 0 0 0 .466-.245s1.043-1.331 3.224-.927l.037.006s.198.003.512.323.71.973.71 2.462V9.27H3.862a.67.67 0 0 0-.488.2.7.7 0 0 0-.203.495.7.7 0 0 0 .203.495.68.68 0 0 0 .489.2h.299l.661 6.074C4.964 18.018 6.041 19 7.31 19h5.383c1.268 0 2.344-.983 2.485-2.267l.66-6.074h.3a.67.67 0 0 0 .488-.2.7.7 0 0 0 .203-.495.7.7 0 0 0-.203-.495.68.68 0 0 0-.489-.2h-5.454V5.793c0-1.49.395-2.142.71-2.462.313-.32.51-.323.51-.323l.038-.006c2.181-.404 3.224.927 3.224.927a.68.68 0 0 0 .467.245.67.67 0 0 0 .499-.165.7.7 0 0 0 .236-.478.7.7 0 0 0-.167-.507s-.937-1.053-2.574-1.38c.141-.066.268-.153.429-.19.589-.133 1.299-.055 1.98.257 1.157.53 2.175 1.735 2.472 3.58-.626-.085-1.25.006-1.789.16-.89.254-1.692.574-2.075.574-.666 0-1.412-.317-1.866-.825a.68.68 0 0 0-.476-.242.67.67 0 0 0-.502.18.7.7 0 0 0-.222.494.7.7 0 0 0 .193.505 3.88 3.88 0 0 0 2.873 1.278c.893 0 1.685-.41 2.442-.625s1.339-.27 1.848.086a.673.673 0 0 0 .97-.214.7.7 0 0 0 .098-.36c0-2.953-1.562-5.014-3.406-5.859-.923-.422-1.919-.554-2.837-.345-.859.195-1.626.74-2.135 1.554a.7.7 0 0 0-.12.047H11.5c-.236.066-.64.206-1.073.649-.163.166-.285.467-.427.71-.142-.243-.264-.544-.427-.71-.436-.444-.84-.585-1.076-.65a1 1 0 0 0-.119-.046C7.868.839 7.102.292 6.243.098A4 4 0 0 0 5.185.004' /&gt;
+  &lt;/svg&gt;
+);
+export default SvgIconLivePlant;
 &nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
