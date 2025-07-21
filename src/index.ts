@@ -2,6 +2,7 @@
  * Defines the public components
  */
 
+import AntSwitch from './components/AntSwitch';
 import Autocomplete from './components/Autocomplete/Autocomplete';
 import Badge from './components/Badge';
 import BusySpinner from './components/BusySpinner';
@@ -68,6 +69,7 @@ export type { DatePickerDateType, Props as DatePickerProps } from './components/
 export type { DateType } from './utils/date';
 
 export {
+  AntSwitch,
   Autocomplete,
   Badge,
   BusySpinner,
