@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 
 import { Box, Tooltip, Typography, useTheme } from '@mui/material';
 import { useDeviceInfo } from '../../utils';
@@ -71,6 +71,14 @@ export type MapLegendProps = {
 const MapLegend = ({ legends }: MapLegendProps): JSX.Element => {
   const theme = useTheme();
   const { isMobile, isDesktop } = useDeviceInfo();
+
+  const borderRadius = useMemo(() => {
+    if (isDesktop) {
+      return '0 8px 8px 0'; // right-side
+    } else {
+      return '0 0 8px 8px'; // bottom-side
+    }
+  }, [isDesktop]);
 
   const legendComponents = legends.map((legend, index) => {
     const isFirst = index === 0;
@@ -274,13 +282,12 @@ const MapLegend = ({ legends }: MapLegendProps): JSX.Element => {
       display='flex'
       justifyItems='flex-start'
       border={`1px solid ${theme.palette.TwClrBrdrTertiary}`}
-      borderRadius='8px'
+      borderRadius={borderRadius}
       padding={theme.spacing(2, 1)}
       flexDirection={'column'}
-      maxWidth={isDesktop ? '184px' : '100%'}
-      width={isDesktop ? 'auto' : '100%'}
-      marginRight={2}
-      marginTop={isDesktop ? 0 : 2}
+      maxWidth={isDesktop ? '184px' : 'fill'}
+      width={isDesktop ? 'auto' : 'fill'}
+      margin={0}
     >
       {legendComponents}
     </Box>

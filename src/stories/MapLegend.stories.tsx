@@ -19,6 +19,14 @@ const Template: Story<MapLegendProps> = () => {
 
   const [rainfallVisible, setRainfallVisible] = useState<boolean>(false);
 
+  const mapBorderRadius = useMemo(() => {
+    if (isDesktop) {
+      return '8px 0 0 8px';
+    } else {
+      return '8px 8px 0 0';
+    }
+  }, [isDesktop]);
+
   const legends = useMemo(() : MapLegendGroup[] => [
       {
         title: 'Boundaries',
@@ -156,16 +164,17 @@ const Template: Story<MapLegendProps> = () => {
 
   return (
     <Box sx={{ marginTop: '30px' }}>
-      <Box display={'flex'} flexDirection={isDesktop ? 'row' : 'column-reverse'}>
+      <Box display={'flex'} flexDirection={isDesktop ? 'row' : 'column'}>
         <Box
           display={'flex'}
           width={'100%'}
           height={'fill'}
-          border={'2px solid black'}
-          borderRadius={'8px'}
+          minHeight={'700px'}
+          borderRadius={mapBorderRadius}
+          bgcolor={'#9DC183'}
           alignItems={'center'}
           justifyContent={'center'}
-          marginX={'4px'}
+          margin={0}
         >
           Map Placeholder
         </Box>
