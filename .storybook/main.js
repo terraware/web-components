@@ -5,6 +5,7 @@ module.exports = {
     name: "@storybook/react-webpack5",
     options: {}
   },
+  staticDirs: ['../static'],
   docs: {
     autodocs: true
   }
