@@ -1,7 +1,7 @@
 import React, { useMemo, useState } from 'react';
 import { Story } from '@storybook/react';
 import MapLegend, { MapLegendGroup, MapLegendProps } from '../components/Map/MapLegend';
-import { Box } from '@mui/material';
+import { Box, useTheme } from '@mui/material';
 import { useDeviceInfo } from '../utils';
 
 
@@ -11,6 +11,7 @@ export default {
 };
 
 const Template: Story<MapLegendProps> = () => {
+  const theme = useTheme();
   const { isDesktop } = useDeviceInfo();
   const [layer, setLayer] = useState<string>('forest');
 
@@ -164,12 +165,13 @@ const Template: Story<MapLegendProps> = () => {
 
   return (
     <Box sx={{ marginTop: '30px' }}>
-      <Box display={'flex'} flexDirection={isDesktop ? 'row' : 'column'}>
+      <Box display={'flex'} flexDirection={isDesktop ? 'row' : 'column'} maxHeight={'700px'}>
         <Box
           display={'flex'}
           width={'100%'}
-          height={'fill'}
           minHeight={'700px'}
+          height={'fill'}
+          border={`1px solid ${theme.palette.TwClrBrdrTertiary}`}
           borderRadius={mapBorderRadius}
           bgcolor={'#9DC183'}
           alignItems={'center'}
