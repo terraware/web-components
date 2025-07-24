@@ -5,7 +5,7 @@
   flex-direction: column;
   background: $tw-clr-base-white;
 
-  &--closed {
+  &--mobile {
     display: none;
   }
 
@@ -30,7 +30,10 @@
       line-height: $tw-fnt-mssg-title-line-height;
       color: $tw-clr-txt;
       text-align: center;
-      margin: 0;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
+      margin: 0 $tw-spc-base-xx-small;
       width: 100%;
     }
 

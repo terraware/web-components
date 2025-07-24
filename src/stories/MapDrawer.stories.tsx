@@ -4,6 +4,7 @@ import { Story } from '@storybook/react';
 import { Box, useTheme } from '@mui/material';
 import { useDeviceInfo } from '../utils';
 import MapDrawer, { MapDrawerProp } from '../components/Map/MapDrawer';
+import Button from '../components/Button/Button';
 
 export default {
   title: 'MapDrawer',
@@ -41,6 +42,7 @@ const Template: Story<MapDrawerProp> = (args) => {
       <Box display={'flex'} flexDirection={isDesktop ? 'row' : 'column'} maxHeight={'700px'}>
         <Box
           display={'flex'}
+          flexDirection={'column'}
           width={'100%'}
           minHeight={'700px'}
           height={'fill'}
@@ -53,6 +55,7 @@ const Template: Story<MapDrawerProp> = (args) => {
           margin={0}
         >
           Map Placeholder
+          <Button onClick={() => setOpen(true)} label='Open Drawer' />
         </Box>
         <MapDrawer {...args} onClose={onClose} open={open} >
           {args.children}
