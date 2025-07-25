@@ -1,0 +1,64 @@
+@import '../../style-dictionary-dist/terraware.scss';
+
+.map-drawer {
+  display: flex;
+  flex-direction: column;
+  background: $tw-clr-base-white;
+
+  &--mobile {
+    display: none;
+  }
+
+  &--small {
+    min-width: 280px;
+    width: 280px;
+  }
+  &--medium {
+    min-width: 420px;
+    width: 420px;
+  }
+
+  &--header {
+    padding: $tw-spc-base-x-small $tw-spc-base-xx-small;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .title {
+      font-family: $tw-fnt-mssg-title-font-family;
+      font-size: $tw-fnt-mssg-title-font-size;
+      font-weight: $tw-fnt-mssg-title-font-weight;
+      line-height: $tw-fnt-mssg-title-line-height;
+      color: $tw-clr-txt;
+      text-align: center;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
+      margin: 0 $tw-spc-base-xx-small;
+      width: 100%;
+    }
+
+    .icon-close {
+      fill: $tw-clr-icn-secondary;
+      height: $tw-sz-base-medium;
+      width: $tw-sz-base-medium;
+    }
+  }
+
+  &--body {
+    background: $tw-clr-base-white;
+    padding: $tw-spc-base-small $tw-spc-base-x-small;
+    text-align: start;
+    overflow: auto;
+    white-space: pre-wrap;
+  }
+
+  &--message {
+    font-family: $tw-fnt-dlg-bx-message-font-family;
+    font-size: $tw-fnt-dlg-bx-message-font-size;
+    font-weight: $tw-fnt-dlg-bx-message-font-weight;
+    line-height: $tw-fnt-dlg-bx-message-line-height;
+    color: $tw-clr-txt;
+    width: 100%;
+    text-align: start;
+  }
+}
