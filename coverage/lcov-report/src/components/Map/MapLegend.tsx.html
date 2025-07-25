@@ -25,7 +25,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/33</span>
+                <span class='fraction'>0/37</span>
             </div>
         
             
@@ -39,14 +39,14 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/7</span>
+                <span class='fraction'>0/8</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/33</span>
+                <span class='fraction'>0/37</span>
             </div>
         
             
@@ -352,7 +352,14 @@
 <a name='L287'></a><a href='#L287'>287</a>
 <a name='L288'></a><a href='#L288'>288</a>
 <a name='L289'></a><a href='#L289'>289</a>
-<a name='L290'></a><a href='#L290'>290</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L290'></a><a href='#L290'>290</a>
+<a name='L291'></a><a href='#L291'>291</a>
+<a name='L292'></a><a href='#L292'>292</a>
+<a name='L293'></a><a href='#L293'>293</a>
+<a name='L294'></a><a href='#L294'>294</a>
+<a name='L295'></a><a href='#L295'>295</a>
+<a name='L296'></a><a href='#L296'>296</a>
+<a name='L297'></a><a href='#L297'>297</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -434,6 +441,14 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -640,8 +655,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import React from 'react';
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import React, { useMemo } from 'react';
 &nbsp;
 import { Box, Tooltip, Typography, useTheme } from '@mui/material';
 import { useDeviceInfo } from '../../utils';
@@ -714,6 +728,14 @@ export type MapLegendProps = {
 const MapLegend = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >({</span> legends }: MapLegendProps): JSX.Element =&gt; {</span>
   const theme = <span class="cstat-no" title="statement not covered" >useTheme();</span>
   const { isMobile, isDesktop } = <span class="cstat-no" title="statement not covered" >useDeviceInfo();</span>
+&nbsp;
+  const borderRadius = <span class="cstat-no" title="statement not covered" >useMemo(<span class="fstat-no" title="function not covered" >()</span> =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >    if (isDesktop) {</span>
+<span class="cstat-no" title="statement not covered" >      return '0 8px 8px 0'; </span>// right-side
+    } else {
+<span class="cstat-no" title="statement not covered" >      return '0 0 8px 8px'; </span>// bottom-side
+    }
+  }, [isDesktop]);
 &nbsp;
   const legendComponents = <span class="cstat-no" title="statement not covered" >legends.map(<span class="fstat-no" title="function not covered" >(l</span>egend, index) =&gt; {</span>
     const isFirst = <span class="cstat-no" title="statement not covered" >index === 0;</span>
@@ -917,13 +939,12 @@ const MapLegend = <span class="cstat-no" title="statement not covered" ><span cl
       display='flex'
       justifyItems='flex-start'
       border={`1px solid ${theme.palette.TwClrBrdrTertiary}`}
-      borderRadius='8px'
+      borderRadius={borderRadius}
       padding={theme.spacing(2, 1)}
       flexDirection={'column'}
-      maxWidth={isDesktop ? '184px' : '100%'}
-      width={isDesktop ? 'auto' : '100%'}
-      marginRight={2}
-      marginTop={isDesktop ? 0 : 2}
+      maxWidth={isDesktop ? '184px' : 'fill'}
+      width={isDesktop ? 'auto' : 'fill'}
+      margin={0}
     &gt;
       {legendComponents}
     &lt;/Box&gt;
@@ -937,7 +958,7 @@ export default MapLegend;</pre></td></tr></table></pre>
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-07-23T17:49:41.753Z
+                at 2025-07-25T17:10:24.793Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>

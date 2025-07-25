@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for src/components/ErrorBox/ErrorBox.tsx</title>
+    <title>Code coverage report for src/components/Map/MapDrawer.tsx</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../../../prettify.css" />
     <link rel="stylesheet" href="../../../base.css" />
@@ -19,20 +19,20 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../../../index.html">All files</a> / <a href="index.html">src/components/ErrorBox</a> ErrorBox.tsx</h1>
+        <h1><a href="../../../index.html">All files</a> / <a href="index.html">src/components/Map</a> MapDrawer.tsx</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/3</span>
+                <span class='fraction'>0/5</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/7</span>
+                <span class='fraction'>0/4</span>
             </div>
         
             
@@ -46,7 +46,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/3</span>
+                <span class='fraction'>0/5</span>
             </div>
         
             
@@ -101,7 +101,12 @@
 <a name='L36'></a><a href='#L36'>36</a>
 <a name='L37'></a><a href='#L37'>37</a>
 <a name='L38'></a><a href='#L38'>38</a>
-<a name='L39'></a><a href='#L39'>39</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L39'></a><a href='#L39'>39</a>
+<a name='L40'></a><a href='#L40'>40</a>
+<a name='L41'></a><a href='#L41'>41</a>
+<a name='L42'></a><a href='#L42'>42</a>
+<a name='L43'></a><a href='#L43'>43</a>
+<a name='L44'></a><a href='#L44'>44</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -118,7 +123,8 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -139,45 +145,54 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import React from 'react';
-import { Box, SxProps } from '@mui/material';
-&nbsp;
-import Button from '../Button/Button';
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import React, { CSSProperties, ReactNode } from 'react';
+import { Box, IconButton, useTheme } from '@mui/material';
 import Icon from '../Icon/Icon';
-import useDeviceInfo from '../../utils/useDeviceInfo';
 import './styles.scss';
+import { useDeviceInfo } from '../../utils';
 &nbsp;
-export interface Props {
-  text: string;
-  onClick?: () =&gt; void;
-  buttonText?: string;
-  title?: string;
-  className?: string;
-  sx?: SxProps;
-}
+type MapDrawerSize = 'small' | 'medium';
 &nbsp;
-export default function <span class="fstat-no" title="function not covered" >ErrorBox(</span>props: Props): JSX.Element {
-  const { text, onClick, buttonText, title, className, sx } = <span class="cstat-no" title="statement not covered" >props;</span>
-  const { isMobile } = <span class="cstat-no" title="statement not covered" >useDeviceInfo();</span>
+export type MapDrawerProp = {
+  children?: ReactNode;
+  onClose?: () =&gt; void;
+  open: boolean;
+  size: MapDrawerSize;
+  style?: CSSProperties;
+  title: string;
+};
 &nbsp;
-<span class="cstat-no" title="statement not covered" >  return (</span>
-    &lt;Box className={`error-box ${className} ${isMobile ? 'mobile' : ''}`} sx={sx}&gt;
-      &lt;div className='error-box--container'&gt;
-        &lt;Icon name='error' className='error-icon' size='large' /&gt;
-        &lt;div&gt;
-          {title &amp;&amp; &lt;h1 className='error-title'&gt;{title}&lt;/h1&gt;}
-          &lt;p className='error-text'&gt;{text}&lt;/p&gt;
-        &lt;/div&gt;
-      &lt;/div&gt;
-      {buttonText &amp;&amp; onClick &amp;&amp; (
-        &lt;div className='button-container'&gt;
-          &lt;Button label={buttonText} priority='secondary' type='passive' onClick={onClick} /&gt;
-        &lt;/div&gt;
-      )}
+const MapDrawer = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >(p</span>rops: MapDrawerProp) =&gt; {</span>
+  const { children, onClose, open, size, style, title } = <span class="cstat-no" title="statement not covered" >props;</span>
+  const theme = <span class="cstat-no" title="statement not covered" >useTheme();</span>
+  const { isDesktop } = <span class="cstat-no" title="statement not covered" >useDeviceInfo();</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >  return open ? (</span>
+    &lt;Box
+      className={`map-drawer map-drawer${isDesktop ? `--${size}` : '--mobile'}`}
+      border={`1px solid ${theme.palette.TwClrBrdrTertiary}`}
+      style={style}
+    &gt;
+      &lt;Box className='map-drawer--header'&gt;
+        &lt;p className='title'&gt;{title}&lt;/p&gt;
+        &lt;IconButton onClick={onClose} size='small'&gt;
+          &lt;Icon name='close' className='icon-close' /&gt;
+        &lt;/IconButton&gt;
+      &lt;/Box&gt;
+      &lt;Box
+        className={'map-drawer--body'}
+      &gt;
+        {children}
+      &lt;/Box&gt;
     &lt;/Box&gt;
-  );
-}
-&nbsp;</pre></td></tr></table></pre>
+  ) : null;
+};
+&nbsp;
+export default MapDrawer;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
             </div><!-- /wrapper -->
