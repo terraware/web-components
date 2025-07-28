@@ -1,10 +1,11 @@
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { action } from '@storybook/addon-actions';
 import { Story } from '@storybook/react';
-import { Box, useTheme } from '@mui/material';
+import { Box } from '@mui/material';
 import { useDeviceInfo } from '../utils';
 import MapDrawer, { MapDrawerProp } from '../components/Map/MapDrawer';
 import Button from '../components/Button/Button';
+import MapContainer from '../components/Map/MapContainer';
 
 export default {
   title: 'MapDrawer',
@@ -12,25 +13,8 @@ export default {
 };
 
 const Template: Story<MapDrawerProp> = (args) => {
-  const theme = useTheme();
   const { isDesktop } = useDeviceInfo();
   const [open, setOpen] = useState(true);
-
-  const mapBorderRadius = useMemo(() => {
-    if (isDesktop) {
-      return '8px 0 0 8px';
-    } else {
-      return '8px 8px 0 0';
-    }
-  }, [isDesktop]);
-
-  const legendBorderRadius = useMemo(() => {
-    if (isDesktop) {
-      return '0 8px 8px 0';
-    } else {
-      return '0 0 8px 8px';
-    }
-  }, [isDesktop]);
 
   const onClose = useCallback(() => {
     action('onClose')();
@@ -38,16 +22,14 @@ const Template: Story<MapDrawerProp> = (args) => {
   }, [setOpen]);
 
   return (
-    <Box sx={{ marginTop: '30px' }}>
-      <Box display={'flex'} flexDirection={isDesktop ? 'row' : 'column'} maxHeight={'700px'}>
+    <MapContainer
+      map={
         <Box
           display={'flex'}
           flexDirection={'column'}
           width={'100%'}
           minHeight={'700px'}
           height={'fill'}
-          border={`1px solid ${theme.palette.TwClrBrdrTertiary}`}
-          borderRadius={mapBorderRadius}
           bgcolor={'#9DC183'}
           alignItems={'center'}
           justifyContent={'center'}
@@ -57,17 +39,20 @@ const Template: Story<MapDrawerProp> = (args) => {
           Map Placeholder
           <Button onClick={() => setOpen(true)} label='Open Drawer' />
         </Box>
+      }
+      drawer={
         <MapDrawer {...args} onClose={onClose} open={open} >
           {args.children}
         </MapDrawer>
+      }
+      drawerOpen={open}
+      legend={
         <Box
           display={'flex'}
           minWidth={'184px'}
           width={isDesktop ? '184px' : 'fill'}
           minHeight={'700px'}
           height={'fill'}
-          border={`1px solid ${theme.palette.TwClrBrdrTertiary}`}
-          borderRadius={legendBorderRadius}
           bgcolor={'#FCF4A3'}
           alignItems={'center'}
           justifyContent={'center'}
@@ -75,8 +60,8 @@ const Template: Story<MapDrawerProp> = (args) => {
         >
           Legend Placeholder
         </Box>
-      </Box>
-    </Box>
+      }
+    />
   );
 };
 

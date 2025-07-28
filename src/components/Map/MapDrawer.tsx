@@ -23,7 +23,8 @@ const MapDrawer = (props: MapDrawerProp) => {
   return open ? (
     <Box
       className={`map-drawer map-drawer${isDesktop ? `--${size}` : '--mobile'}`}
-      border={`1px solid ${theme.palette.TwClrBrdrTertiary}`}
+      borderLeft={isDesktop ? `1px solid ${theme.palette.TwClrBrdrTertiary}` : undefined}
+      borderRight={isDesktop ? `1px solid ${theme.palette.TwClrBrdrTertiary}` : undefined}
       style={style}
     >
       <Box className='map-drawer--header'>

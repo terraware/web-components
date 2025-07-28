@@ -6,7 +6,7 @@
   background: $tw-clr-base-white;
 
   &--mobile {
-    display: none;
+    width: fill;
   }
 
   &--small {
@@ -19,7 +19,7 @@
   }
 
   &--header {
-    padding: $tw-spc-base-x-small $tw-spc-base-xx-small;
+    padding: $tw-spc-base-x-small;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -33,7 +33,7 @@
       text-overflow: ellipsis;
       overflow: hidden;
       white-space: nowrap;
-      margin: 0 $tw-spc-base-xx-small;
+      margin: 0;
       width: 100%;
     }
 
@@ -46,7 +46,7 @@
 
   &--body {
     background: $tw-clr-base-white;
-    padding: $tw-spc-base-small $tw-spc-base-x-small;
+    padding: $tw-spc-base-x-small $tw-spc-base-small;
     text-align: start;
     overflow: auto;
     white-space: pre-wrap;
