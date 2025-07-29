@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for src/components/BusySpinner/index.tsx</title>
+    <title>Code coverage report for src/components/Map/MapContainer.tsx</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../../../prettify.css" />
     <link rel="stylesheet" href="../../../base.css" />
@@ -19,34 +19,34 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../../../index.html">All files</a> / <a href="index.html">src/components/BusySpinner</a> index.tsx</h1>
+        <h1><a href="../../../index.html">All files</a> / <a href="index.html">src/components/Map</a> MapContainer.tsx</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/2</span>
+                <span class='fraction'>0/13</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/4</span>
+                <span class='fraction'>0/20</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/1</span>
+                <span class='fraction'>0/3</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/2</span>
+                <span class='fraction'>0/13</span>
             </div>
         
             
@@ -111,7 +111,11 @@
 <a name='L46'></a><a href='#L46'>46</a>
 <a name='L47'></a><a href='#L47'>47</a>
 <a name='L48'></a><a href='#L48'>48</a>
-<a name='L49'></a><a href='#L49'>49</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L49'></a><a href='#L49'>49</a>
+<a name='L50'></a><a href='#L50'>50</a>
+<a name='L51'></a><a href='#L51'>51</a>
+<a name='L52'></a><a href='#L52'>52</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -122,6 +126,25 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -142,71 +165,57 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import React from 'react';
-import { Box, CircularProgress, useTheme } from '@mui/material';
-import hexRgb from 'hex-rgb';
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import React, { ReactNode, useMemo } from 'react';
+import { Box, useTheme } from '@mui/material';
+import { useDeviceInfo } from '../../utils';
 &nbsp;
-export type BusySpinnerProps = {
-  withSkrim?: boolean;
-  noBackground?: boolean;
+type MapContainerProps = {
+  drawer?: ReactNode;
+  drawerOpen?: boolean;
+  legend?: ReactNode;
+  map: ReactNode;
 };
 &nbsp;
-export default function <span class="fstat-no" title="function not covered" >BusySpinner(</span>{ withSkrim, noBackground }: BusySpinnerProps): JSX.Element {
+const MapContainer = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >(p</span>rops: MapContainerProps) =&gt; {</span>
+  const { drawer, drawerOpen, legend, map } = <span class="cstat-no" title="statement not covered" >props;</span>
+  const { isDesktop } = <span class="cstat-no" title="statement not covered" >useDeviceInfo();</span>
   const theme = <span class="cstat-no" title="statement not covered" >useTheme();</span>
 &nbsp;
+  const border = <span class="cstat-no" title="statement not covered" >useMemo(<span class="fstat-no" title="function not covered" >()</span> =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >    if (!isDesktop &amp;&amp; drawerOpen) {</span>
+<span class="cstat-no" title="statement not covered" >      return undefined;</span>
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    return `1px solid ${theme.palette.TwClrBrdrTertiary}`;</span>
+  }, [drawerOpen, isDesktop, theme]);
+&nbsp;
+  const borderRadius = <span class="cstat-no" title="statement not covered" >useMemo(<span class="fstat-no" title="function not covered" >()</span> =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >    if (!isDesktop &amp;&amp; drawerOpen) {</span>
+<span class="cstat-no" title="statement not covered" >      return undefined;</span>
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    return '8px';</span>
+  }, [drawerOpen, isDesktop]);
+&nbsp;
 <span class="cstat-no" title="statement not covered" >  return (</span>
-    &lt;Box
-      sx={{
-        position: 'fixed',
-        left: 0,
-        right: 0,
-        top: 0,
-        bottom: 0,
-        backgroundColor: withSkrim
-          ? `${hexRgb(`${theme.palette.TwClrBaseGray025}`, { alpha: 0.6, format: 'css' })}`
-          : 'none',
-        zIndex: 2000,
-        backgroundImage: noBackground
-          ? 'none'
-          : 'linear-gradient(180deg,' +
-            `${hexRgb(`${theme.palette.TwClrBaseGreen050}`, { alpha: 0, format: 'css' })} 0%,` +
-            `${hexRgb(`${theme.palette.TwClrBaseGreen050}`, { alpha: 0.24, format: 'css' })} 100%)`,
-      }}
-    &gt;
+    &lt;Box sx={{ marginTop: '30px' }}&gt;
       &lt;Box
-        display='flex'
-        justifyContent='center'
-        alignItems='center'
-        padding={theme.spacing(5)}
-        flexDirection='column'
-        height='100%'
+        border={border}
+        borderRadius={borderRadius}
+        display={'flex'}
+        flexDirection={isDesktop ? 'row' : 'column'}
+        maxHeight={isDesktop ? '700px' : undefined}
+        overflow={'hidden'}
       &gt;
-        &lt;CircularProgress
-          sx={{
-            color: theme.palette.TwClrIcnBrand,
-          }}
-        /&gt;
+       {(isDesktop || !drawerOpen) &amp;&amp; map}
+       {drawerOpen &amp;&amp; drawer}
+       {(isDesktop || !drawerOpen) &amp;&amp; legend}
       &lt;/Box&gt;
     &lt;/Box&gt;
   );
-}
+};
+&nbsp;
+export default MapContainer;
 &nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
