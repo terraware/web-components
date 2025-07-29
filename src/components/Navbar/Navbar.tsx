@@ -1,9 +1,10 @@
-import { Box, ButtonBase, useTheme } from '@mui/material';
 import React, { ReactNode } from 'react';
 
-import './styles.scss';
-import Icon from '../Icon/Icon';
+import { Box, ButtonBase, useTheme } from '@mui/material';
+
 import { useDeviceInfo } from '../../utils';
+import Icon from '../Icon/Icon';
+import './styles.scss';
 
 export interface Props {
   children: ReactNode;

@@ -1,6 +1,8 @@
-import { Story } from '@storybook/react';
-import { Box, useTheme } from '@mui/material';
 import React from 'react';
+
+import { Box, useTheme } from '@mui/material';
+import { Story } from '@storybook/react';
+
 import Select from '../components/Select/Select';
 import TerrawareTheme from '../style-dictionary-dist/TerrawareTheme';
 

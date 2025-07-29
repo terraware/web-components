@@ -1,5 +1,8 @@
 import React from 'react';
-import { ThemeProvider, StyledEngineProvider } from '@mui/material';
+
+import { StyledEngineProvider, ThemeProvider } from '@mui/material';
+
+import { theme } from '../src/';
 
 export const parameters = {
   actions: { argTypesRegex: '^on[A-Z].*' },
@@ -10,8 +13,6 @@ export const parameters = {
     },
   },
 };
-
-import { theme } from '../src/';
 
 export const decorators = [
   (Story) => (

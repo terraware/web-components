@@ -1,7 +1,9 @@
 import React, { useMemo } from 'react';
+
 import { Typography, useTheme } from '@mui/material';
-import DialogBox, { DialogBoxSize } from '../DialogBox/DialogBox';
+
 import Button, { ButtonPriority, ButtonType } from '../Button/Button';
+import DialogBox, { DialogBoxSize } from '../DialogBox/DialogBox';
 import { IconName } from '../Icon/icons';
 
 /**
@@ -57,7 +59,7 @@ export default function Confirm({
         onClick={onConfirm}
         priority={confirmButtonPriority || 'primary'}
         type={confirmButtonType || 'productive'}
-      />
+      />,
     ];
 
     if (onClose && closeButtonText) {
@@ -69,7 +71,7 @@ export default function Confirm({
           onClick={onClose}
           priority='secondary'
           type='passive'
-        />,
+        />
       );
     }
 
@@ -102,19 +104,17 @@ export default function Confirm({
             '&:last-child': {
               marginBottom: 0,
             },
-            ...(textStyle || {})
+            ...(textStyle || {}),
           }}
-        >{str}</Typography>
+        >
+          {str}
+        </Typography>
       );
     };
     if (typeof message === 'string') {
       return text(message);
     } else if (Array.isArray(message)) {
-      return (
-        <>
-          {message.map((str, i) => text(str, `${str}_${i}`))}
-        </>
-      );
+      return <>{message.map((str, i) => text(str, `${str}_${i}`))}</>;
     } else {
       return message;
     }

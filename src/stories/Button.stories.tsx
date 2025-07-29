@@ -1,5 +1,7 @@
-import { Story } from '@storybook/react';
 import React from 'react';
+
+import { Story } from '@storybook/react';
+
 import Button, { Props as ButtonProps } from '../components/Button/Button';
 
 export default {

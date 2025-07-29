@@ -1,5 +1,7 @@
 import { CSSProperties, ReactNode } from 'react';
+
 import { SxProps, TooltipProps } from '@mui/material';
+
 import { TextAlignment } from '.';
 
 export interface TableColumnType {

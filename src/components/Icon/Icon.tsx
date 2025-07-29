@@ -1,4 +1,5 @@
 import React, { CSSProperties } from 'react';
+
 import { Size } from '../Size';
 import icons, { IconName } from './icons';
 import './styles.scss';

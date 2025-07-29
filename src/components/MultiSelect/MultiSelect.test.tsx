@@ -1,5 +1,7 @@
-import { fireEvent, render, screen } from '@testing-library/react';
 import React from 'react';
+
+import { fireEvent, render, screen } from '@testing-library/react';
+
 import MultiSelect from '.';
 
 test('show options when placeholder is clicked', () => {

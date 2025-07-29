@@ -1,7 +1,9 @@
 import React from 'react';
+
 import { AppBar, Box, useTheme } from '@mui/material';
-import Button from '../Button/Button';
+
 import useDeviceInfo from '../../utils/useDeviceInfo';
+import Button from '../Button/Button';
 
 const defaultDesktopOffset = '200px';
 

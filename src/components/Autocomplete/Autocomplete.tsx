@@ -1,9 +1,11 @@
-import { Box, Autocomplete as MUIAutocomplete, SxProps, TextField, TooltipProps } from '@mui/material';
 import React, { ChangeEvent } from 'react';
+
+import { Box, Autocomplete as MUIAutocomplete, SxProps, TextField, TooltipProps } from '@mui/material';
+
 import Icon from '../Icon/Icon';
 import IconTooltip from '../IconTooltip';
-import { DropdownItem as Option } from '../types';
 import '../Select/styles.scss';
+import { DropdownItem as Option } from '../types';
 import './styles.scss';
 
 export type ValueType = string | Option | undefined;
@@ -141,7 +143,8 @@ export default function Autocomplete({
           name={loading ? 'spinner' : open ? 'chevronUp' : 'chevronDown'}
           className='auto-complete--icon-right'
           size='medium'
-        />}
+        />
+      }
       classes={{
         paper: 'auto-complete select',
         listbox: 'options-container',

@@ -1,6 +1,7 @@
 import React, { useMemo } from 'react';
+
 import EnhancedTableToolbar from './EnhancedTableToolbar';
-import { TopBarButton, EnhancedTopBarSelectionProps } from './index';
+import { EnhancedTopBarSelectionProps, TopBarButton } from './index';
 
 export interface EnhancedTopBarSelectionConfig {
   handleSelectAll?: () => void;

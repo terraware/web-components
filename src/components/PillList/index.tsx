@@ -1,4 +1,5 @@
 import React from 'react';
+
 import Pill from '../Pill';
 import './styles.scss';
 

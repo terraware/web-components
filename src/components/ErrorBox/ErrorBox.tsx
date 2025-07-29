@@ -1,9 +1,10 @@
 import React from 'react';
+
 import { Box, SxProps } from '@mui/material';
 
+import useDeviceInfo from '../../utils/useDeviceInfo';
 import Button from '../Button/Button';
 import Icon from '../Icon/Icon';
-import useDeviceInfo from '../../utils/useDeviceInfo';
 import './styles.scss';
 
 export interface Props {

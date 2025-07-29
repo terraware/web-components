@@ -1,5 +1,7 @@
-import { IconButton } from '@mui/material';
 import React from 'react';
+
+import { IconButton } from '@mui/material';
+
 import Icon from '../Icon/Icon';
 import './styles.scss';
 

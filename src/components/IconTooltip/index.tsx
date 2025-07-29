@@ -1,9 +1,10 @@
 import React from 'react';
+
 import { Tooltip, TooltipProps, useTheme } from '@mui/material';
 
+import { useDeviceInfo } from '../../utils';
 import Icon from '../Icon/Icon';
 import { IconName } from '../Icon/icons';
-import { useDeviceInfo } from '../../utils';
 
 export type IconTooltipProps = {
   iconName?: IconName;

@@ -1,5 +1,7 @@
 import React from 'react';
+
 import { Divider, MenuItem, MenuList, Popover, useTheme } from '@mui/material';
+
 import { DropdownItem } from '../types';
 
 export type Section = DropdownItem[];

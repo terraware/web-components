@@ -1,12 +1,14 @@
-import classNames from 'classnames';
 import React, { useMemo } from 'react';
+
 import { Box, SxProps, TooltipProps } from '@mui/material';
+import classNames from 'classnames';
+
+import { isWhitespaces } from '../../utils';
 import Icon from '../Icon/Icon';
 import { IconName } from '../Icon/icons';
-import './styles.scss';
-import { isWhitespaces } from '../../utils';
 import IconTooltip from '../IconTooltip';
 import TruncatedTextArea from './TruncatedTextArea';
+import './styles.scss';
 
 type TextfieldType = 'text' | 'textarea' | 'number';
 

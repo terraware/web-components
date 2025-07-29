@@ -1,7 +1,7 @@
 import { TableDensityType } from './types';
 
 export const getTableCellPaddingY = (tableDensity: TableDensityType) => {
-  switch(tableDensity) {
+  switch (tableDensity) {
     case 'comfortable':
       return '16px';
     case 'compact':
@@ -12,7 +12,7 @@ export const getTableCellPaddingY = (tableDensity: TableDensityType) => {
 };
 
 export const getTableRowHeight = (tableDensity: TableDensityType) => {
-  switch(tableDensity) {
+  switch (tableDensity) {
     case 'comfortable':
       return '52px';
     case 'compact':

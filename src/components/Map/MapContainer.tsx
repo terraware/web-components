@@ -1,5 +1,7 @@
 import React, { ReactNode, useMemo } from 'react';
+
 import { Box, useTheme } from '@mui/material';
+
 import { useDeviceInfo } from '../../utils';
 
 type MapContainerProps = {
@@ -40,9 +42,9 @@ const MapContainer = (props: MapContainerProps) => {
         maxHeight={isDesktop ? '700px' : undefined}
         overflow={'hidden'}
       >
-       {(isDesktop || !drawerOpen) && map}
-       {drawerOpen && drawer}
-       {(isDesktop || !drawerOpen) && legend}
+        {(isDesktop || !drawerOpen) && map}
+        {drawerOpen && drawer}
+        {(isDesktop || !drawerOpen) && legend}
       </Box>
     </Box>
   );

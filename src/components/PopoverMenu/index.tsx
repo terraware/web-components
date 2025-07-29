@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
-import Icon from '../Icon/Icon';
+
 import { IconButton, useTheme } from '@mui/material';
-import Popover, { Section } from './Popover';
+
+import Icon from '../Icon/Icon';
 import { DropdownItem } from '../types';
+import Popover, { Section } from './Popover';
 
 export type PopoverMenuProps = {
   anchor: React.ReactNode;
@@ -12,7 +14,13 @@ export type PopoverMenuProps = {
   selectedValue?: any;
 };
 
-export default function PopoverMenu({ anchor, menuSections, onClick, showChevron = true, selectedValue }: PopoverMenuProps): JSX.Element {
+export default function PopoverMenu({
+  anchor,
+  menuSections,
+  onClick,
+  showChevron = true,
+  selectedValue,
+}: PopoverMenuProps): JSX.Element {
   const theme = useTheme();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
@@ -42,14 +50,16 @@ export default function PopoverMenu({ anchor, menuSections, onClick, showChevron
         }}
       >
         {anchor}
-        {showChevron && <Icon
-          name='chevronDown'
-          size='medium'
-          style={{
-            marginLeft: '8px',
-            fill: theme.palette.TwClrIcn,
-          }}
-        />}
+        {showChevron && (
+          <Icon
+            name='chevronDown'
+            size='medium'
+            style={{
+              marginLeft: '8px',
+              fill: theme.palette.TwClrIcn,
+            }}
+          />
+        )}
       </IconButton>
       <Popover
         sections={menuSections}

@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
+
 import { Story } from '@storybook/react';
+
 import Tabs, { TabsProps } from '../components/Tabs';
 
 export default {

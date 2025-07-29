@@ -1,6 +1,8 @@
-import { Story } from '@storybook/react';
 import React from 'react';
+
 import { Box } from '@mui/material';
+import { Story } from '@storybook/react';
+
 import Slider, { SliderProps } from '../components/Slider';
 
 export default {

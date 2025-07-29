@@ -1,10 +1,11 @@
 import React, { CSSProperties } from 'react';
+
+import { ButtonBase, SxProps } from '@mui/material';
+
 import Icon from '../Icon/Icon';
 import { IconName } from '../Icon/icons';
 import { Size } from '../Size';
 import './styles.scss';
-
-import { ButtonBase, SxProps } from '@mui/material';
 
 export type ButtonPriority = 'primary' | 'secondary' | 'ghost';
 export type ButtonType = 'productive' | 'passive' | 'destructive';

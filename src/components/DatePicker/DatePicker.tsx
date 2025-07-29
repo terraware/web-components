@@ -1,11 +1,13 @@
-import React, { useState, KeyboardEventHandler } from 'react';
+import React, { KeyboardEventHandler, useState } from 'react';
+
 import { Box, SxProps } from '@mui/material';
-import { LocalizationProvider, DesktopDatePicker, DesktopDateTimePicker } from '@mui/x-date-pickers';
+import { DesktopDatePicker, DesktopDateTimePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterLuxon } from '@mui/x-date-pickers/AdapterLuxon';
 import { DateTime, Settings } from 'luxon';
+
+import { DateType, getDate, tz } from '../../utils/date';
 import Icon from '../Icon/Icon';
 import './styles.scss';
-import { DateType, getDate, tz } from '../../utils/date';
 
 /**
  * TODO: remove support for JS Date in DatePickerDateType once

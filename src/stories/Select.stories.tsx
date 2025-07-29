@@ -1,6 +1,8 @@
-import { Story } from '@storybook/react';
 import React from 'react';
+
 import { Box, Typography } from '@mui/material';
+import { Story } from '@storybook/react';
+
 import Select, { SelectProps } from '../components/Select/Select';
 import SelectT, { SelectTProps } from '../components/Select/SelectT';
 

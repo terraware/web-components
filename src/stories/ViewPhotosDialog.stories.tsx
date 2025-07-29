@@ -1,9 +1,11 @@
 import { useState } from 'react';
-import { StoryFn } from '@storybook/react';
 import React from 'react';
-import ViewPhotosDialog, { ViewPhotosDialogProps } from '../components/ViewPhotosDialog';
-import Button from '../components/Button/Button';
+
 import { Typography } from '@mui/material';
+import { StoryFn } from '@storybook/react';
+
+import Button from '../components/Button/Button';
+import ViewPhotosDialog, { ViewPhotosDialogProps } from '../components/ViewPhotosDialog';
 
 export default {
   title: 'View Photos Dialog',

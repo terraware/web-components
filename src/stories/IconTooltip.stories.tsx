@@ -1,5 +1,7 @@
-import { Story } from '@storybook/react';
 import React from 'react';
+
+import { Story } from '@storybook/react';
+
 import IconTooltip, { IconTooltipProps } from '../components/IconTooltip';
 
 export default {

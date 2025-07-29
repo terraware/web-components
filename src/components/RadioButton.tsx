@@ -1,5 +1,6 @@
-import { FormControlLabel, Radio } from '@mui/material';
 import React, { SyntheticEvent } from 'react';
+
+import { FormControlLabel, Radio } from '@mui/material';
 
 export interface Props {
   id: string;

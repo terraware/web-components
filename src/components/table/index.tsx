@@ -1,3 +1,7 @@
+import React, { useCallback, useEffect, useState } from 'react';
+
+import { DndContext, KeyboardSensor, MouseSensor, TouchSensor, useSensor, useSensors } from '@dnd-kit/core';
+import { sortableKeyboardCoordinates } from '@dnd-kit/sortable';
 import {
   Box,
   Checkbox,
@@ -12,18 +16,16 @@ import {
   Typography,
   useTheme,
 } from '@mui/material';
-import React, { useCallback, useEffect, useState } from 'react';
-import { getTableCellPaddingY, getTableRowHeight } from './density';
+
+import { useDeviceInfo } from '../../utils';
+import { CheckboxStyle } from '../Checkbox';
+import { IconName } from '../Icon/icons';
 import EnhancedTableToolbarV2 from './EnhancedTableToolbarV2';
-import { descendingComparator, getComparator, SortOrder, stableSort } from './sort';
 import TableCellRenderer, { TableRowType } from './TableCellRenderer';
 import TableHeader from './TableHeader';
+import { getTableCellPaddingY, getTableRowHeight } from './density';
+import { SortOrder, descendingComparator, getComparator, stableSort } from './sort';
 import { DatabaseColumn, DetailsRendererProps, RendererProps, TableColumnType, TableDensityType } from './types';
-import { DndContext, KeyboardSensor, MouseSensor, TouchSensor, useSensor, useSensors } from '@dnd-kit/core';
-import { sortableKeyboardCoordinates } from '@dnd-kit/sortable';
-import { useDeviceInfo } from '../../utils';
-import { IconName } from '../Icon/icons';
-import { CheckboxStyle } from '../Checkbox';
 
 export type TextAlignment = 'right' | 'left';
 

@@ -1,5 +1,6 @@
-import { Link, Tooltip, Typography, useTheme } from '@mui/material';
 import React, { useEffect, useMemo, useState } from 'react';
+
+import { Link, Tooltip, Typography, useTheme } from '@mui/material';
 
 /**
  * Represents the result of truncating the string list
@@ -92,7 +93,7 @@ export default function TextTruncated(props: Props): JSX.Element | null {
   if (pixelsPerChar > 0) {
     const maxChars = maxLengthPx / pixelsPerChar;
     maxExcludingSuffix =
-      maxChars - moreSeparator.length - (moreText ? moreText.length : 0 ) - 1 - Math.ceil(Math.log10(stringList.length));
+      maxChars - moreSeparator.length - (moreText ? moreText.length : 0) - 1 - Math.ceil(Math.log10(stringList.length));
   }
   const textToDisplay = computeFromStringList(stringList, maxExcludingSuffix, listSeparator);
 
@@ -104,7 +105,7 @@ export default function TextTruncated(props: Props): JSX.Element | null {
   return stringList.length > 0 ? (
     <Typography sx={textStyle}>
       {textToDisplay.text}
-      {(textToDisplay.numberMore !== 0 && moreText ) ? moreSeparator : ''}
+      {textToDisplay.numberMore !== 0 && moreText ? moreSeparator : ''}
       {textToDisplay.numberMore !== 0 ? (
         <Tooltip
           arrow={true}
@@ -148,12 +149,10 @@ export default function TextTruncated(props: Props): JSX.Element | null {
               </Typography>
             </Link>
           ) : (
-            <Typography sx={{ ...textStyle, display: 'inline' }}>
-              {moreSeparator}
-            </Typography>
+            <Typography sx={{ ...textStyle, display: 'inline' }}>{moreSeparator}</Typography>
           )}
         </Tooltip>
-       ) : null}
+      ) : null}
     </Typography>
   ) : (
     placeHolder || null

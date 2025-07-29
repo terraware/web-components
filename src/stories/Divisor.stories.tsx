@@ -1,5 +1,7 @@
-import { Story } from '@storybook/react';
 import React from 'react';
+
+import { Story } from '@storybook/react';
+
 import Divisor, { Props as DivisorProps } from '../components/Divisor';
 
 export default {

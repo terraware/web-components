@@ -1,5 +1,7 @@
-import { Story } from '@storybook/react';
 import React from 'react';
+
+import { Story } from '@storybook/react';
+
 import FileChooser, { FileChooserProps } from '../components/FileChooser';
 
 export default {

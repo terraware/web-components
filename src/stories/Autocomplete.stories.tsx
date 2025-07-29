@@ -1,8 +1,10 @@
+import React, { useCallback } from 'react';
+
+import { Box, useTheme } from '@mui/material';
 import { action } from '@storybook/addon-actions';
 import { Story } from '@storybook/react';
-import { Box, useTheme } from '@mui/material';
-import React, { useCallback } from 'react';
-import Autocomplete, { ValueType, Props as AutocompleteProps } from '../components/Autocomplete/Autocomplete';
+
+import Autocomplete, { Props as AutocompleteProps, ValueType } from '../components/Autocomplete/Autocomplete';
 
 export default {
   title: 'Autocomplete',
@@ -95,7 +97,6 @@ export const Default = Template.bind({});
 export const Complex = Template.bind({});
 
 export const AsyncDefault = AsyncTemplate.bind({});
-
 
 Default.args = {
   id: '1',

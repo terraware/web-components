@@ -1,8 +1,10 @@
 import React, { CSSProperties, ReactNode } from 'react';
+
 import { Box, IconButton, useTheme } from '@mui/material';
+
+import { useDeviceInfo } from '../../utils';
 import Icon from '../Icon/Icon';
 import './styles.scss';
-import { useDeviceInfo } from '../../utils';
 
 type MapDrawerSize = 'small' | 'medium';
 
@@ -33,11 +35,7 @@ const MapDrawer = (props: MapDrawerProp) => {
           <Icon name='close' className='icon-close' />
         </IconButton>
       </Box>
-      <Box
-        className={'map-drawer--body'}
-      >
-        {children}
-      </Box>
+      <Box className={'map-drawer--body'}>{children}</Box>
     </Box>
   ) : null;
 };

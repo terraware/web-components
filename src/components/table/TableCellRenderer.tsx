@@ -1,9 +1,11 @@
+import React, { CSSProperties, ReactNode } from 'react';
+
 import { Edit, Notes } from '@mui/icons-material';
 import { Box, Link, SxProps, TableCell, Theme, Typography, useTheme } from '@mui/material';
-import React, { CSSProperties, ReactNode } from 'react';
-import { RendererProps } from './types';
-import { getDateDisplayValue, preventDefaultEvent } from '../../utils';
+
 import { TextAlignment } from '.';
+import { getDateDisplayValue, preventDefaultEvent } from '../../utils';
+import { RendererProps } from './types';
 
 export type TableRowType = Record<string, any>;
 

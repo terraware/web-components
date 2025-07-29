@@ -1,14 +1,15 @@
 import React from 'react';
+
 import { SortableContext } from '@dnd-kit/sortable';
 import { Checkbox, TableCell, TableHead, TableRow, useTheme } from '@mui/material';
 
+import { HeadCell } from '.';
+import { titleCase } from '../../utils/text';
+import { CheckboxStyle } from '../Checkbox';
+import TableHeaderItem from './TableHeaderItem';
 import { getTableRowHeight } from './density';
 import { SortOrder } from './sort';
 import { TableColumnType, TableDensityType } from './types';
-import TableHeaderItem from './TableHeaderItem';
-import { HeadCell } from '.';
-import { CheckboxStyle } from '../Checkbox';
-import { titleCase } from '../../utils/text';
 
 interface Props {
   onRequestSort: (event: React.MouseEvent<unknown>, property: string) => void;

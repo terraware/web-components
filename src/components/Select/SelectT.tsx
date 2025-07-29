@@ -1,11 +1,12 @@
-import { Box, SxProps, TooltipProps } from '@mui/material';
-import classNames from 'classnames';
 import React, { ChangeEvent, KeyboardEvent, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
-import './styles.scss';
+import { Box, SxProps, TooltipProps } from '@mui/material';
+import classNames from 'classnames';
+
+import { isWhitespaces } from '../../utils';
 import Icon from '../Icon/Icon';
 import IconTooltip from '../IconTooltip';
-import { isWhitespaces } from '../../utils';
+import './styles.scss';
 
 // Styles for overriding select dropdown
 export interface SelectStyles {

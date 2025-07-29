@@ -1,10 +1,11 @@
 import React from 'react';
 
 import { Box, Tooltip, Typography, useTheme } from '@mui/material';
+
 import { useDeviceInfo } from '../../utils';
+import AntSwitch from '../AntSwitch';
 import Icon from '../Icon/Icon';
 import { IconName } from '../Icon/icons';
-import AntSwitch from '../AntSwitch';
 
 export type MapLayerItem = {
   disabled?: boolean;
@@ -77,11 +78,7 @@ const MapLegend = ({ legends }: MapLegendProps): JSX.Element => {
     const isLast = index === legends.length - 1;
     const switchComponent =
       legend.type === 'highlight' ? (
-        <AntSwitch
-          disabled={legend.disabled}
-          checked={legend.visible}
-          onChange={legend.setVisible}
-        />
+        <AntSwitch disabled={legend.disabled} checked={legend.visible} onChange={legend.setVisible} />
       ) : undefined;
 
     const titleComponent = (
@@ -103,11 +100,7 @@ const MapLegend = ({ legends }: MapLegendProps): JSX.Element => {
             }}
           >
             <Box display='flex'>
-              <Icon
-                fillColor={theme.palette.TwClrIcnInfo}
-                name='info'
-                size='small'
-              />
+              <Icon fillColor={theme.palette.TwClrIcnInfo} name='info' size='small' />
             </Box>
           </Tooltip>
         )}
@@ -115,7 +108,6 @@ const MapLegend = ({ legends }: MapLegendProps): JSX.Element => {
     );
 
     const itemComponents = legend.items.map((item, itemIndex) => {
-
       const onClick = legend.disabled
         ? undefined
         : legend.type === 'layer'
@@ -187,24 +179,19 @@ const MapLegend = ({ legends }: MapLegendProps): JSX.Element => {
           case 'feature':
             const featureItem = item as MapFeatureItem;
 
-            const visibleIcon = featureItem.visible ? (
-              <Icon name='iconEye' />
-            ) : (
-              <Icon name='iconEyeOff' />
-            );
+            const visibleIcon = featureItem.visible ? <Icon name='iconEye' /> : <Icon name='iconEyeOff' />;
 
-            return (
-              <Box display='flex'>
-                {visibleIcon}
-              </Box>
-            );
+            return <Box display='flex'>{visibleIcon}</Box>;
           case 'layer':
             const layerLegend = legend as MapLayerGroup;
             const layerItem = item as MapLayerItem;
 
             return (
-              <Box display='flex' sx={{visibility: layerItem.id === layerLegend.selectedLayer ? 'visible' : 'hidden'}}>
-                <Icon name='checkmark' style={{marginRight: theme.spacing(1)}} />
+              <Box
+                display='flex'
+                sx={{ visibility: layerItem.id === layerLegend.selectedLayer ? 'visible' : 'hidden' }}
+              >
+                <Icon name='checkmark' style={{ marginRight: theme.spacing(1) }} />
               </Box>
             );
 
@@ -228,19 +215,13 @@ const MapLegend = ({ legends }: MapLegendProps): JSX.Element => {
           justifyContent={'space-between'}
           key={`${index}-${itemIndex}`}
         >
-          <Box
-            display='flex'
-            alignItems='center'
-            paddingRight={theme.spacing(1)}
-          >
+          <Box display='flex' alignItems='center' paddingRight={theme.spacing(1)}>
             {logoComponent()}
             <Typography fontSize='14px' fontWeight={400}>
               {item.label}
             </Typography>
           </Box>
-          <Box display='flex'>
-            {visibleComponent()}
-          </Box>
+          <Box display='flex'>{visibleComponent()}</Box>
         </Box>
       );
     });
@@ -249,16 +230,10 @@ const MapLegend = ({ legends }: MapLegendProps): JSX.Element => {
       <Box
         key={legend.title}
         sx={{ opacity: legend.disabled ? 0.7 : 1 }}
-        borderBottom={
-          isLast ? 'none' : `1px solid ${theme.palette.TwClrBrdrTertiary}`
-        }
+        borderBottom={isLast ? 'none' : `1px solid ${theme.palette.TwClrBrdrTertiary}`}
       >
-        <Box
-          paddingBottom={2}
-          paddingTop={isFirst ? 0 : 2}
-          flexDirection={'column'}
-        >
-          <Box display='flex' alignItems={'center'} paddingLeft={theme.spacing(1)} >
+        <Box paddingBottom={2} paddingTop={isFirst ? 0 : 2} flexDirection={'column'}>
+          <Box display='flex' alignItems={'center'} paddingLeft={theme.spacing(1)}>
             {switchComponent}
             {titleComponent}
           </Box>

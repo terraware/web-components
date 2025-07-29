@@ -1,5 +1,7 @@
-import { Story } from '@storybook/react';
 import React from 'react';
+
+import { Story } from '@storybook/react';
+
 import Note, { Props as NoteProps } from '../components/Note';
 
 export default {
