@@ -1,8 +1,8 @@
 import React, { useMemo, useState } from 'react';
 import { Story } from '@storybook/react';
 import MapLegend, { MapLegendGroup, MapLegendProps } from '../components/Map/MapLegend';
-import { Box, useTheme } from '@mui/material';
-import { useDeviceInfo } from '../utils';
+import { Box } from '@mui/material';
+import MapContainer from '../components/Map/MapContainer';
 
 
 export default {
@@ -11,22 +11,12 @@ export default {
 };
 
 const Template: Story<MapLegendProps> = () => {
-  const theme = useTheme();
-  const { isDesktop } = useDeviceInfo();
   const [layer, setLayer] = useState<string>('forest');
 
   const [houseVisible, setHouseVisible] = useState<boolean>(true);
   const [treeVisible, setTreeVisible] = useState<boolean>(true);
 
   const [rainfallVisible, setRainfallVisible] = useState<boolean>(false);
-
-  const mapBorderRadius = useMemo(() => {
-    if (isDesktop) {
-      return '8px 0 0 8px';
-    } else {
-      return '8px 8px 0 0';
-    }
-  }, [isDesktop]);
 
   const legends = useMemo(() : MapLegendGroup[] => [
       {
@@ -164,25 +154,25 @@ const Template: Story<MapLegendProps> = () => {
     ], [layer, houseVisible, treeVisible, rainfallVisible]);
 
   return (
-    <Box sx={{ marginTop: '30px' }}>
-      <Box display={'flex'} flexDirection={isDesktop ? 'row' : 'column'} maxHeight={'700px'}>
+    <MapContainer
+      map={
         <Box
           display={'flex'}
+          flexDirection={'column'}
           width={'100%'}
           minHeight={'700px'}
           height={'fill'}
-          border={`1px solid ${theme.palette.TwClrBrdrTertiary}`}
-          borderRadius={mapBorderRadius}
           bgcolor={'#9DC183'}
           alignItems={'center'}
           justifyContent={'center'}
+          textAlign={'center'}
           margin={0}
         >
           Map Placeholder
         </Box>
-        <MapLegend legends={legends} />
-      </Box>
-    </Box>
+      }
+      legend={<MapLegend legends={legends} />}
+    />
   );
 };
 
