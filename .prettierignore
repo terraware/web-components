@@ -20,9 +20,10 @@ tsconfig.json
 assets/
 dist/
 docs/
+src/components/svg
 static/
 style-dictionary/
-styule-dictionary-utils/
+style-dictionary-utils/
 
 # Misc
 .DS_Store
