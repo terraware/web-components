@@ -1,8 +1,10 @@
 import React, { CSSProperties, useState } from 'react';
+
 import { Box, useTheme } from '@mui/material';
+
 import useDeviceInfo from '../../utils/useDeviceInfo';
-import FormBottomBar, { FormButton } from '../FormBottomBar';
 import BusySpinner from '../BusySpinner';
+import FormBottomBar, { FormButton } from '../FormBottomBar';
 
 export type PageFormProps = {
   children: React.ReactNode;

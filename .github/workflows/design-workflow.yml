@@ -45,7 +45,7 @@ jobs:
           git checkout yarn.lock
           git status
 
-      - name: Build dictionary 
+      - name: Build dictionary
         run: yarn build-dictionary
 
       - name: Config user
@@ -58,7 +58,7 @@ jobs:
           git add -A
           git commit -m "$TITLE"
         env:
-          TITLE: "${{ github.event.inputs.jira }} ${{ github.event.inputs.description }}"
+          TITLE: '${{ github.event.inputs.jira }} ${{ github.event.inputs.description }}'
 
       - name: Push changes
         run: git push -u origin `git branch --show-current`

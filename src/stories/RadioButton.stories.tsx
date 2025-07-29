@@ -1,5 +1,7 @@
-import { Story } from '@storybook/react';
 import React from 'react';
+
+import { Story } from '@storybook/react';
+
 import RadioButton, { Props as RadioButtonProps } from '../components/RadioButton';
 
 export default {

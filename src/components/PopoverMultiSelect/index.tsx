@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
+
 import { ListItemText } from '@mui/material';
-import { DropdownItem } from '../types';
+
 import Icon from '../Icon/Icon';
-import './styles.scss';
 import Popover, { Section } from '../PopoverMenu/Popover';
+import { DropdownItem } from '../types';
+import './styles.scss';
 
 export type PopoverMultiSelectProps = {
   anchorElement: HTMLElement | null;

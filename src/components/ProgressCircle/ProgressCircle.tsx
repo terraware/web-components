@@ -1,5 +1,7 @@
-import { Box, CircularProgress } from '@mui/material';
 import React from 'react';
+
+import { Box, CircularProgress } from '@mui/material';
+
 import './styles.scss';
 
 export interface Props {

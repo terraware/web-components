@@ -1,5 +1,7 @@
-import { Story } from '@storybook/react';
 import React from 'react';
+
+import { Story } from '@storybook/react';
+
 import PillList, { PillListProps } from '../components/PillList';
 
 export default {

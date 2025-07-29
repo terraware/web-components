@@ -37,17 +37,17 @@
     display: flex;
     width: 100%;
     margin-top: $tw-spc-base-xx-small;
-  
-  &-text {
-    font-family: $tw-fnt-frm-fld-error-text-font-family;
-    font-size: $tw-fnt-frm-fld-error-text-font-size;
-    font-weight: $tw-fnt-frm-fld-error-text-font-weight;
-    line-height: $tw-fnt-frm-fld-error-text-line-height;
-    color: $tw-clr-txt-danger;
-    display: block;
-    width: 100%;
-    max-width: 100%;
-  }
+
+    &-text {
+      font-family: $tw-fnt-frm-fld-error-text-font-family;
+      font-size: $tw-fnt-frm-fld-error-text-font-size;
+      font-weight: $tw-fnt-frm-fld-error-text-font-weight;
+      line-height: $tw-fnt-frm-fld-error-text-line-height;
+      color: $tw-clr-txt-danger;
+      display: block;
+      width: 100%;
+      max-width: 100%;
+    }
 
     &-icon {
       fill: $tw-clr-icn-danger;

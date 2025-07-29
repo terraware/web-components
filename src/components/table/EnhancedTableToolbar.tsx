@@ -1,6 +1,8 @@
 import React, { useMemo } from 'react';
+
 import { Link, Toolbar, Typography, useTheme } from '@mui/material';
-import { isTopBarButton, TopBarButton } from '.';
+
+import { TopBarButton, isTopBarButton } from '.';
 import Button from '../Button/Button';
 import Tooltip from '../Tooltip/Tooltip';
 import { EnhancedTopBarSelectionConfig } from './EnhancedTableToolbarV2';

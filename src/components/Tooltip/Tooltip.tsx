@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { Tooltip as MUITooltip, TooltipProps, useTheme } from '@mui/material';
 
 import { useDeviceInfo } from '../../utils';

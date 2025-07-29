@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { StoryFn } from '@storybook/react';
 import { InView } from 'react-intersection-observer';
-import { Snackbar, Typography } from '@mui/material';
 import Carousel from 'react-multi-carousel';
+
+import { Snackbar, Typography } from '@mui/material';
+import { StoryFn } from '@storybook/react';
 
 export default {
   title: 'IntersectionObserver',

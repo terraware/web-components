@@ -1,8 +1,10 @@
-import { Story } from '@storybook/react';
 import React from 'react';
+
 import { Box, TooltipProps } from '@mui/material';
-import Tooltip from '../components/Tooltip/Tooltip';
+import { Story } from '@storybook/react';
+
 import Button from '../components/Button/Button';
+import Tooltip from '../components/Tooltip/Tooltip';
 
 export default {
   title: 'Tooltip',

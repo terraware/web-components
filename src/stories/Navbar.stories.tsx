@@ -1,10 +1,12 @@
-import { Story } from '@storybook/react';
 import React from 'react';
-import Navbar, { Props as NavbarProps } from '../components/Navbar/Navbar';
+
+import { Story } from '@storybook/react';
+
+import Button from '../components/Button/Button';
 import NavItem from '../components/Navbar/NavItem';
 import NavSection from '../components/Navbar/NavSection';
+import Navbar, { Props as NavbarProps } from '../components/Navbar/Navbar';
 import SubNavbar from '../components/Navbar/SubNavbar';
-import Button from '../components/Button/Button';
 
 export default {
   title: 'Navbar',
@@ -23,11 +25,7 @@ const Template = (args: NavbarProps & { title?: boolean }) => {
   return (
     <Navbar setShowNavBar={showNavbar} backgroundTransparent={args.backgroundTransparent}>
       {args.title && <NavSection title='Account' separator={false} />}
-      <NavItem
-        label='Home'
-        icon='home'
-        selected={selectedItem === 'home'}
-        onClick={() => setSelectedItem('home')} />
+      <NavItem label='Home' icon='home' selected={selectedItem === 'home'} onClick={() => setSelectedItem('home')} />
       <NavItem
         label='Species'
         icon='species'

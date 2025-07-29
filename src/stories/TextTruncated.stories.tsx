@@ -1,5 +1,7 @@
-import { Story } from '@storybook/react';
 import React from 'react';
+
+import { Story } from '@storybook/react';
+
 import TextTruncated, { Props as TextTruncatedProps } from '../components/TextTruncated/index';
 
 export default {

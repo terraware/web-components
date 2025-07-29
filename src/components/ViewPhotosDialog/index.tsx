@@ -1,11 +1,13 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import DialogBox from '../DialogBox/DialogBox';
-import Button from '../Button/Button';
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
+
 import { Box, Typography } from '@mui/material';
-import './styles.scss';
+
 import BusySpinner from '../BusySpinner';
+import Button from '../Button/Button';
+import DialogBox from '../DialogBox/DialogBox';
+import './styles.scss';
 
 export type PhotoItem = {
   url: string;

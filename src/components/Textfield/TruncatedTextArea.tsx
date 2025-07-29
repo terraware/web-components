@@ -1,6 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { TruncateConfig } from './Textfield';
+
 import { Link, Typography, useTheme } from '@mui/material';
+
+import { TruncateConfig } from './Textfield';
 
 interface TruncatedTextAreaProps {
   preserveNewlines?: boolean;

@@ -1,5 +1,6 @@
-import { Slider as MuiSlider, useTheme } from '@mui/material';
 import React from 'react';
+
+import { Slider as MuiSlider, useTheme } from '@mui/material';
 
 export type SliderMark = {
   label?: string;

@@ -1,8 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
+
 import { Box, Typography, useTheme } from '@mui/material';
+
 import { useDeviceInfo } from '../../utils';
-import ErrorBox from '../ErrorBox/ErrorBox';
 import Button from '../Button/Button';
+import ErrorBox from '../ErrorBox/ErrorBox';
 import FileChooser from '../FileChooser';
 
 export type PhotoChooserErrorType = {

@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { Story } from '@storybook/react';
+
 import { Box } from '@mui/material';
-import Table, { EnhancedTopBarSelectionProps, Props as TableProps } from '../components/table/index';
+import { Story } from '@storybook/react';
+
 import CellRenderer from '../components/table/TableCellRenderer';
+import Table, { EnhancedTopBarSelectionProps, Props as TableProps } from '../components/table/index';
 import { RendererProps } from '../components/table/types';
 
 export default {

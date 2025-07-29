@@ -1,7 +1,8 @@
 import React from 'react';
-import './styles.scss';
-import Icon from '../Icon/Icon';
+
 import { useDeviceInfo } from '../../utils';
+import Icon from '../Icon/Icon';
+import './styles.scss';
 
 export interface Props {
   type: 'page' | 'toast';

@@ -1,5 +1,7 @@
-import { Story } from '@storybook/react';
 import React from 'react';
+
+import { Story } from '@storybook/react';
+
 import SummaryBox, { Props as SummaryBoxProps } from '../components/SummaryBox';
 
 export default {

@@ -1,14 +1,12 @@
 /*
  * Defines the public components
  */
-
 import AntSwitch from './components/AntSwitch';
 import Autocomplete from './components/Autocomplete/Autocomplete';
 import Badge from './components/Badge';
 import BusySpinner from './components/BusySpinner';
 import Button from './components/Button/Button';
 import Checkbox from './components/Checkbox';
-import CellRenderer, { CellDateRenderer, TableRowType } from './components/table/TableCellRenderer';
 import Confirm from './components/Confirm';
 import DatePicker from './components/DatePicker/DatePicker';
 import DialogBox from './components/DialogBox/DialogBox';
@@ -18,22 +16,22 @@ import ErrorBox from './components/ErrorBox/ErrorBox';
 import FileChooser from './components/FileChooser';
 import FormBottomBar from './components/FormBottomBar';
 import Icon from './components/Icon/Icon';
-import IconTooltip from './components/IconTooltip';
 import icons from './components/Icon/icons';
+import IconTooltip from './components/IconTooltip';
 import Message from './components/Message/Message';
 import MultiSelect from './components/MultiSelect';
-import Navbar from './components/Navbar/Navbar';
 import NavFooter from './components/Navbar/NavFooter';
 import NavItem from './components/Navbar/NavItem';
 import NavSection from './components/Navbar/NavSection';
+import Navbar from './components/Navbar/Navbar';
 import Note from './components/Note';
 import PageForm from './components/PageForm';
 import PhotoChooser from './components/PhotoChooser';
 import Pill from './components/Pill';
 import PillList from './components/PillList';
 import PlacementWrapper from './components/PlacementWrapper';
-import Popover from './components/PopoverMenu/Popover';
 import PopoverMenu from './components/PopoverMenu';
+import Popover from './components/PopoverMenu/Popover';
 import PopoverMultiSelect from './components/PopoverMultiSelect';
 import ProgressCircle from './components/ProgressCircle/ProgressCircle';
 import RadioButton from './components/RadioButton';
@@ -42,15 +40,16 @@ import SelectT from './components/Select/SelectT';
 import Separator from './components/Separator';
 import Slider from './components/Slider';
 import SummaryBox from './components/SummaryBox';
-import Textfield from './components/Textfield/Textfield';
-import TextTruncated from './components/TextTruncated';
-import Table from './components/table';
 import Tabs from './components/Tabs';
+import TextTruncated from './components/TextTruncated';
+import Textfield from './components/Textfield/Textfield';
 import Tooltip from './components/Tooltip/Tooltip';
 import ViewPhotosDialog from './components/ViewPhotosDialog';
-import { descendingComparator, getComparator, SortOrder, stableSort } from './components/table/sort';
-import { EnhancedTableDetailsRow, RendererProps, TableColumnType } from './components/table/types';
 import * as Svg from './components/svg';
+import Table from './components/table';
+import CellRenderer, { CellDateRenderer, TableRowType } from './components/table/TableCellRenderer';
+import { SortOrder, descendingComparator, getComparator, stableSort } from './components/table/sort';
+import { EnhancedTableDetailsRow, RendererProps, TableColumnType } from './components/table/types';
 import theme from './theme';
 
 export type { PillListItem } from './components/PillList';

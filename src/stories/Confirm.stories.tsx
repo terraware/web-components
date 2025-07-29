@@ -1,6 +1,8 @@
-import { Story } from '@storybook/react';
 import React from 'react';
+
 import { Box } from '@mui/material';
+import { Story } from '@storybook/react';
+
 import Confirm, { ConfirmProps } from '../components/Confirm';
 
 export default {

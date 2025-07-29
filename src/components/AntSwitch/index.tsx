@@ -1,5 +1,7 @@
 import React, { useCallback } from 'react';
+
 import { Switch } from '@mui/material';
+
 import './styles.scss';
 
 export type AntSwitchProps = {
@@ -11,11 +13,14 @@ export type AntSwitchProps = {
 const AntSwitch = (props: AntSwitchProps) => {
   const { checked, disabled, onChange } = props;
 
-  const onChangeHandler = useCallback((event: React.ChangeEvent<HTMLInputElement>, value: boolean) => {
-    onChange?.(value);
-  }, [onChange]);
+  const onChangeHandler = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>, value: boolean) => {
+      onChange?.(value);
+    },
+    [onChange]
+  );
 
-  return <Switch className="ant-switch" checked={checked} disabled={disabled} onChange={onChangeHandler} />;
+  return <Switch className='ant-switch' checked={checked} disabled={disabled} onChange={onChangeHandler} />;
 };
 
 export default AntSwitch;

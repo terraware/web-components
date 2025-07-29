@@ -1,8 +1,10 @@
-import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, SxProps, TooltipProps } from '@mui/material';
-import { DropdownItem } from './types';
-import SelectT, { SelectStyles } from './Select/SelectT';
-import Autocomplete, { ValueType } from './Autocomplete/Autocomplete';
 import React from 'react';
+
+import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, SxProps, TooltipProps } from '@mui/material';
+
+import Autocomplete, { ValueType } from './Autocomplete/Autocomplete';
+import SelectT, { SelectStyles } from './Select/SelectT';
+import { DropdownItem } from './types';
 
 export interface Props {
   id: string;

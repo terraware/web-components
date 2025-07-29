@@ -1,8 +1,10 @@
-import { Story } from '@storybook/react';
 import React, { useState } from 'react';
-import MultiSelect, { MultiSelectProps } from '../components/MultiSelect';
-import Button from '../components/Button/Button';
+
 import { Popover, Typography } from '@mui/material';
+import { Story } from '@storybook/react';
+
+import Button from '../components/Button/Button';
+import MultiSelect, { MultiSelectProps } from '../components/MultiSelect';
 
 export default {
   title: 'MultiSelect',

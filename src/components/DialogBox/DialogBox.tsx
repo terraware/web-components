@@ -1,8 +1,10 @@
 import React, { CSSProperties, ReactNode } from 'react';
-import './styles.scss';
-import Icon from '../Icon/Icon';
+
 import { IconButton } from '@mui/material';
+
 import { useDeviceInfo } from '../../utils';
+import Icon from '../Icon/Icon';
+import './styles.scss';
 
 export type DialogBoxSize = 'small' | 'medium' | 'large' | 'x-large' | 'xx-large';
 

@@ -1,5 +1,6 @@
-import { Checkbox as MUICheckbox, FormControlLabel, Theme, useTheme, SxProps } from '@mui/material';
 import React, { SyntheticEvent } from 'react';
+
+import { FormControlLabel, Checkbox as MUICheckbox, SxProps, Theme, useTheme } from '@mui/material';
 
 export const CheckboxStyle = (theme: Theme) => ({
   padding: theme.spacing(0, 1, 0, 0),

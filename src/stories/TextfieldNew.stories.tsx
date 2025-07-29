@@ -1,6 +1,8 @@
-import { Story } from '@storybook/react';
 import React from 'react';
+
 import { Box } from '@mui/material';
+import { Story } from '@storybook/react';
+
 import TextField, { Props as TextFieldProps } from '../components/Textfield/Textfield';
 
 export default {
@@ -119,7 +121,7 @@ TextAreaWithTruncate.args = {
   truncateConfig: {
     valueTextStyle: {
       fontSize: '12px',
-      lineHeight: '16px'
+      lineHeight: '16px',
     },
     maxHeight: 48,
     showLessText: 'Show less',

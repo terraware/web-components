@@ -1,11 +1,13 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
+
+import { Box } from '@mui/material';
 import { action } from '@storybook/addon-actions';
 import { Story } from '@storybook/react';
-import { Box } from '@mui/material';
-import { useDeviceInfo } from '../utils';
-import MapDrawer, { MapDrawerProp } from '../components/Map/MapDrawer';
+
 import Button from '../components/Button/Button';
 import MapContainer from '../components/Map/MapContainer';
+import MapDrawer, { MapDrawerProp } from '../components/Map/MapDrawer';
+import { useDeviceInfo } from '../utils';
 
 export default {
   title: 'MapDrawer',
@@ -41,7 +43,7 @@ const Template: Story<MapDrawerProp> = (args) => {
         </Box>
       }
       drawer={
-        <MapDrawer {...args} onClose={onClose} open={open} >
+        <MapDrawer {...args} onClose={onClose} open={open}>
           {args.children}
         </MapDrawer>
       }
@@ -67,7 +69,6 @@ const Template: Story<MapDrawerProp> = (args) => {
 
 export const Default = Template.bind({});
 
-
 Default.args = {
   title: 'Map Drawer Title',
   size: 'small',
@@ -87,5 +88,5 @@ molestie at. Sed semper in elit eleifend accumsan. Pellentesque in porttitor eni
 odio, finibus vitae elit et, pharetra viverra justo. Duis eu ligula sit amet dui bibendum tempus. \
 Cras leo purus, lobortis ut leo vel, congue maximus dolor. Aliquam condimentum leo vitae nulla \
 vulputate, pulvinar blandit lorem condimentum. Duis eget leo et arcu rhoncus iaculis vel vel risus. \
-Sed scelerisque, justo quis auctor mollis, eros magna cursus risus, id suscipit lectus massa ac urna.`
+Sed scelerisque, justo quis auctor mollis, eros magna cursus risus, id suscipit lectus massa ac urna.`,
 };

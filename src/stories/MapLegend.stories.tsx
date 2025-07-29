@@ -1,9 +1,10 @@
 import React, { useMemo, useState } from 'react';
-import { Story } from '@storybook/react';
-import MapLegend, { MapLegendGroup, MapLegendProps } from '../components/Map/MapLegend';
-import { Box } from '@mui/material';
-import MapContainer from '../components/Map/MapContainer';
 
+import { Box } from '@mui/material';
+import { Story } from '@storybook/react';
+
+import MapContainer from '../components/Map/MapContainer';
+import MapLegend, { MapLegendGroup, MapLegendProps } from '../components/Map/MapLegend';
 
 export default {
   title: 'MapLegend',
@@ -18,7 +19,8 @@ const Template: Story<MapLegendProps> = () => {
 
   const [rainfallVisible, setRainfallVisible] = useState<boolean>(false);
 
-  const legends = useMemo(() : MapLegendGroup[] => [
+  const legends = useMemo(
+    (): MapLegendGroup[] => [
       {
         title: 'Boundaries',
         type: 'layer',
@@ -76,7 +78,7 @@ const Template: Story<MapLegendProps> = () => {
             id: 'house',
             label: 'House',
             visible: houseVisible,
-            setVisible: setHouseVisible
+            setVisible: setHouseVisible,
           },
           {
             icon: 'iconLivePlant',
@@ -85,7 +87,7 @@ const Template: Story<MapLegendProps> = () => {
             id: 'tree',
             label: 'Tree',
             visible: treeVisible,
-            setVisible: setTreeVisible
+            setVisible: setTreeVisible,
           },
           {
             icon: 'iconLivePlant',
@@ -151,7 +153,9 @@ const Template: Story<MapLegendProps> = () => {
           },
         ],
       },
-    ], [layer, houseVisible, treeVisible, rainfallVisible]);
+    ],
+    [layer, houseVisible, treeVisible, rainfallVisible]
+  );
 
   return (
     <MapContainer

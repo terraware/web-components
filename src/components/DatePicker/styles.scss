@@ -64,13 +64,12 @@
   }
 
   .MuiOutlinedInput-root {
+    border-color: $tw-clr-brdr-secondary;
 
-      border-color: $tw-clr-brdr-secondary;
-
-    &:hover  {
+    &:hover {
       border-color: $tw-clr-brdr-hover;
     }
-    &.Mui-focused  {
+    &.Mui-focused {
       border-color: $tw-clr-brdr-hover;
     }
   }

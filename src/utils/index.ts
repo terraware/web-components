@@ -1,6 +1,6 @@
 import getDateDisplayValue, { getDate, getTodaysDateFormatted, isInTheFuture } from './date';
-import isWhitespaces from './text';
 import preventDefaultEvent from './preventDefaultEvent';
+import isWhitespaces from './text';
 import useDeviceInfo from './useDeviceInfo';
 
 export {

@@ -1,9 +1,10 @@
 import React, { ReactElement, useCallback } from 'react';
+
+import theme from '../../theme';
 import Icon from '../Icon/Icon';
 import { IconName } from '../Icon/icons';
-import './styles.scss';
 import { SubNavbarProps } from './SubNavbar';
-import theme from '../../theme';
+import './styles.scss';
 
 export interface NavItemProps {
   label: string | React.ReactNode;

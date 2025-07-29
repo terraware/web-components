@@ -1,5 +1,6 @@
-import { deepmerge } from '@mui/utils';
 import { createTheme } from '@mui/material/styles';
+import { deepmerge } from '@mui/utils';
+
 import TerrawareTheme from './style-dictionary-dist/TerrawareTheme';
 
 declare module '@mui/material/styles/createPalette' {

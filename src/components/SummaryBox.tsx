@@ -1,6 +1,7 @@
+import React, { useMemo } from 'react';
+
 import { Info } from '@mui/icons-material';
 import { Box, IconButton, SxProps, Typography, useTheme } from '@mui/material';
-import React, { useMemo } from 'react';
 
 export interface Props {
   id?: string;

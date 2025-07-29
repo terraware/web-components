@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import './styles.scss';
-import IconTooltip from '../IconTooltip';
+
 import { Box, SxProps, TooltipProps } from '@mui/material';
+
 import Icon from '../Icon/Icon';
+import IconTooltip from '../IconTooltip';
 import PillList, { PillListItem } from '../PillList';
+import './styles.scss';
 
 export type MultiSelectProps<K, V> = {
   className?: string;

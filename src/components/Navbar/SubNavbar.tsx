@@ -1,4 +1,5 @@
 import React, { ReactElement } from 'react';
+
 import { NavItemProps } from './NavItem';
 import './styles.scss';
 

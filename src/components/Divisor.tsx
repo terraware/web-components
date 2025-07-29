@@ -1,5 +1,6 @@
-import { Box, Divider } from '@mui/material';
 import React from 'react';
+
+import { Box, Divider } from '@mui/material';
 
 export interface Props {
   mt?: number;

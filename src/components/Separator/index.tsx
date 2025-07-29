@@ -1,5 +1,7 @@
 import React from 'react';
+
 import { Box } from '@mui/material';
+
 import theme from '../../theme';
 
 const Separator = (props: { height?: string; color?: string }) => {

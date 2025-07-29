@@ -1,0 +1,37 @@
+# Dependencies
+node_modules
+.yalc
+
+# Tools
+.nyc_output
+coverage
+nginx
+
+# Editor settings
+.idea
+.vscode
+
+# Generated Code
+build
+style-dictionary-dist
+tsconfig.json
+
+# Data
+assets/
+dist/
+docs/
+src/components/svg
+static/
+style-dictionary/
+style-dictionary-utils/
+
+# Misc
+.DS_Store
+.env*
+yarn.lock
+
+# npm license report
+license-report.html
+
+# Test
+**/*.test.ts

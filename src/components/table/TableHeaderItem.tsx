@@ -1,12 +1,13 @@
 import React from 'react';
+
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import { DragHandle } from '@mui/icons-material';
 import { Box, TableCell, TableSortLabel, useTheme } from '@mui/material';
 
-import { SortOrder } from './sort';
-import IconTooltip from '../IconTooltip';
 import { HeadCell } from '.';
+import IconTooltip from '../IconTooltip';
+import { SortOrder } from './sort';
 
 type Props = {
   headCell: HeadCell;
