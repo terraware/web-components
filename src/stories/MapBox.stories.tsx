@@ -1,23 +1,27 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { Box } from '@mui/material';
 import { Story } from '@storybook/react';
 
+import MapBox, { MapBoxProps, MapViewStyle } from '../components/Map/MapBox';
 import MapContainer from '../components/Map/MapContainer';
-import MapView, { MapViewProps } from '../components/Map/MapView';
 import { useDeviceInfo } from '../utils';
 
 export default {
-  title: 'MapView',
-  component: MapView,
+  title: 'MapBox',
+  component: MapBox,
 };
 
-const Template: Story<MapViewProps> = (args) => {
+const Template: Story<MapBoxProps> = (args) => {
   const { isDesktop } = useDeviceInfo();
+  const [mapViewStyle, setMapViewStyle] = useState<MapViewStyle>('Satellite');
 
   return (
     <MapContainer
-      map={<MapView mapId={args.mapId} mapViewStyle={args.mapViewStyle} token={args.token} />}
+      containerId={'map-container'}
+      map={
+        <MapBox {...args} containerId={'map-container'} mapViewStyle={mapViewStyle} setMapViewStyle={setMapViewStyle} />
+      }
       legend={
         <Box
           display={'flex'}
