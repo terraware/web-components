@@ -1,5 +1,30 @@
 @import '../../style-dictionary-dist/terraware.scss';
 
+.map-container {
+  border: 1px solid $tw-clr-brdr-tertiary;
+  border-radius: 8px;
+  display: flex;
+  overflow: hidden;
+
+  &--desktop {
+    flex-direction: row;
+    max-height: 700px;
+
+    :fullscreen {
+      max-height: none;
+    }
+  }
+
+  &--mobile {
+    flex-direction: column;
+  }
+
+  &--mobile-drawer-open {
+    border: none;
+    border-radius: none;
+  }
+}
+
 .map-drawer {
   display: flex;
   flex-direction: column;

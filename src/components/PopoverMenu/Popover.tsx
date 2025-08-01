@@ -15,11 +15,21 @@ export type PopoverProps = {
   menuAlign?: 'left' | 'center' | 'right';
   selectedValue?: any;
   onClose?: () => void;
+  container?: HTMLElement | null; // handle fullscreen
 };
 
 export default function PopoverDropdown(props: PopoverProps): JSX.Element {
-  const { sections, handleClick, anchorElement, setAnchorElement, itemRenderer, menuAlign, selectedValue, onClose } =
-    props;
+  const {
+    sections,
+    handleClick,
+    anchorElement,
+    setAnchorElement,
+    itemRenderer,
+    menuAlign,
+    selectedValue,
+    onClose,
+    container,
+  } = props;
   const theme = useTheme();
 
   const handleClose = () => {
@@ -49,6 +59,7 @@ export default function PopoverDropdown(props: PopoverProps): JSX.Element {
   return (
     <Popover
       id='simple-popover'
+      container={container}
       open={Boolean(anchorElement)}
       anchorEl={anchorElement}
       onClose={handleClose}

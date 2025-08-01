@@ -1,10 +1,10 @@
-import React, { ReactNode, useMemo } from 'react';
-
-import { Box, useTheme } from '@mui/material';
+import React, { ReactNode } from 'react';
 
 import { useDeviceInfo } from '../../utils';
+import './styles.scss';
 
 type MapContainerProps = {
+  containerId?: string;
   drawer?: ReactNode;
   drawerOpen?: boolean;
   legend?: ReactNode;
@@ -12,41 +12,20 @@ type MapContainerProps = {
 };
 
 const MapContainer = (props: MapContainerProps) => {
-  const { drawer, drawerOpen, legend, map } = props;
+  const { containerId, drawer, drawerOpen, legend, map } = props;
   const { isDesktop } = useDeviceInfo();
-  const theme = useTheme();
-
-  const border = useMemo(() => {
-    if (!isDesktop && drawerOpen) {
-      return undefined;
-    }
-
-    return `1px solid ${theme.palette.TwClrBrdrTertiary}`;
-  }, [drawerOpen, isDesktop, theme]);
-
-  const borderRadius = useMemo(() => {
-    if (!isDesktop && drawerOpen) {
-      return undefined;
-    }
-
-    return '8px';
-  }, [drawerOpen, isDesktop]);
 
   return (
-    <Box sx={{ marginTop: '30px' }}>
-      <Box
-        border={border}
-        borderRadius={borderRadius}
-        display={'flex'}
-        flexDirection={isDesktop ? 'row' : 'column'}
-        maxHeight={isDesktop ? '700px' : undefined}
-        overflow={'hidden'}
-      >
-        {(isDesktop || !drawerOpen) && map}
-        {drawerOpen && drawer}
-        {(isDesktop || !drawerOpen) && legend}
-      </Box>
-    </Box>
+    <div
+      id={containerId}
+      className={`map-container map-container${
+        isDesktop ? '--desktop' : `--mobile${drawerOpen ? '-drawer-open' : ''}`
+      }`}
+    >
+      {(isDesktop || !drawerOpen) && map}
+      {drawerOpen && drawer}
+      {(isDesktop || !drawerOpen) && legend}
+    </div>
   );
 };
 

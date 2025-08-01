@@ -8,6 +8,7 @@ import Popover, { Section } from './Popover';
 
 export type PopoverMenuProps = {
   anchor: React.ReactNode;
+  container?: HTMLElement | null;
   menuSections: Section[];
   onClick?: (selected: DropdownItem) => void;
   showChevron?: boolean;
@@ -16,6 +17,7 @@ export type PopoverMenuProps = {
 
 export default function PopoverMenu({
   anchor,
+  container,
   menuSections,
   onClick,
   showChevron = true,
@@ -67,6 +69,7 @@ export default function PopoverMenu({
         anchorElement={anchorEl}
         setAnchorElement={setAnchorEl}
         selectedValue={selectedValue}
+        container={container}
       />
     </div>
   );
