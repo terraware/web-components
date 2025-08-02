@@ -1,10 +1,12 @@
-import React, { useCallback, useRef } from 'react';
-import ReactMapGL, { FullscreenControl, MapRef, NavigationControl } from 'react-map-gl/mapbox';
+import React, { useCallback, useMemo, useRef } from 'react';
+import ReactMapGL, { FullscreenControl, MapRef, Marker, NavigationControl } from 'react-map-gl/mapbox';
 
 import { useTheme } from '@mui/material';
 import 'mapbox-gl/dist/mapbox-gl.css';
 
 import { useDeviceInfo } from '../../utils';
+import Icon from '../Icon/Icon';
+import { IconName } from '../Icon/icons';
 import MapViewStyleControl from './MapViewStyleControl';
 
 export type MapViewStyle = 'Outdoors' | 'Satellite' | 'Light' | 'Dark' | 'Streets';
@@ -18,13 +20,26 @@ export const stylesUrl: Record<MapViewStyle, string> = {
   Dark: 'mapbox://styles/mapbox/dark-v11?optimize=true',
 };
 
+export type MapMarker = {
+  featureId?: string; // markers of the same feature ID can be clustered together
+  longitude: number;
+  latitude: number;
+  iconColor: string;
+  iconName: IconName;
+  iconOpacity?: number;
+  onClick: () => void;
+  selected?: boolean;
+};
+
 export type MapBoxProps = {
   containerId?: string;
   disableZoom?: boolean;
   hideFullScreenControl?: boolean;
+  hideMapViewStyleControl?: boolean;
   hideZoomControl?: boolean;
   mapId: string;
   mapViewStyle: MapViewStyle;
+  markers?: MapMarker[];
   setMapViewStyle: (style: MapViewStyle) => void;
   token: string;
 };
@@ -34,9 +49,11 @@ const MapBox = (props: MapBoxProps): JSX.Element => {
     containerId,
     disableZoom,
     hideFullScreenControl,
+    hideMapViewStyleControl,
     hideZoomControl,
     mapId,
     mapViewStyle,
+    markers,
     setMapViewStyle,
     token,
   } = props;
@@ -49,6 +66,29 @@ const MapBox = (props: MapBoxProps): JSX.Element => {
       mapRef.current = map;
     }
   }, []);
+
+  const markersComponents = useMemo(() => {
+    return markers?.map((marker, idx) => {
+      // TODO: apply clustering
+      return (
+        <Marker
+          className='map-marker'
+          key={idx}
+          longitude={marker.longitude}
+          latitude={marker.latitude}
+          anchor='bottom'
+          onClick={marker.onClick}
+        >
+          <Icon
+            fillColor={marker.iconColor}
+            name={marker.iconName}
+            size={'small'}
+            style={{ opacity: marker.iconOpacity }}
+          />
+        </Marker>
+      );
+    });
+  }, [markers]);
 
   return (
     <ReactMapGL
@@ -77,7 +117,10 @@ const MapBox = (props: MapBoxProps): JSX.Element => {
           position='bottom-right'
         />
       )}
-      <MapViewStyleControl containerId={containerId} mapViewStyle={mapViewStyle} setMapViewStyle={setMapViewStyle} />
+      {!hideMapViewStyleControl && (
+        <MapViewStyleControl containerId={containerId} mapViewStyle={mapViewStyle} setMapViewStyle={setMapViewStyle} />
+      )}
+      {markersComponents}
     </ReactMapGL>
   );
 };
