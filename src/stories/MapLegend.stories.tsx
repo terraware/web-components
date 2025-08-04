@@ -76,7 +76,7 @@ const Template: Story<MapLegendProps> = () => {
         type: 'marker',
         items: [
           {
-            icon: {
+            style: {
               iconColor: '#FCD12A',
               iconName: 'home',
               iconOpacity: 0.5,
@@ -88,7 +88,7 @@ const Template: Story<MapLegendProps> = () => {
             setVisible: setHouseVisible,
           },
           {
-            icon: {
+            style: {
               iconColor: '#008000',
               iconName: 'iconLivePlant',
               iconOpacity: 0.5,
@@ -100,7 +100,7 @@ const Template: Story<MapLegendProps> = () => {
             setVisible: setTreeVisible,
           },
           {
-            icon: {
+            style: {
               iconColor: '#FF0000',
               iconName: 'iconLivePlant',
               iconOpacity: 0.5,
@@ -113,7 +113,7 @@ const Template: Story<MapLegendProps> = () => {
             disabled: true,
           },
           {
-            icon: {
+            style: {
               iconColor: '#008000',
               iconName: 'iconHelp',
               iconOpacity: 0.5,

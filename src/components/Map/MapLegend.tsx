@@ -40,7 +40,7 @@ export type MapMarkerItem = {
   disabled?: boolean;
   id: string;
   label: string;
-  icon: MapLegendIcon;
+  style: MapLegendIcon | MapLegendFill;
   setVisible?: (visible: boolean) => void;
   visible: boolean;
 };
@@ -140,51 +140,33 @@ const MapLegend = ({ legends }: MapLegendProps): JSX.Element => {
           : false;
 
       const logoComponent = () => {
-        switch (legend.type) {
-          case 'marker':
-            const featureItem = item as MapMarkerItem;
+        if (item.style.type === 'icon') {
+          return (
+            <Icon
+              name={item.style.iconName}
+              fillColor={item.style.iconColor}
+              style={{ marginRight: theme.spacing(1), opacity: item.style.iconOpacity }}
+              size={'small'}
+            />
+          );
+        } else {
+          const opacity = item.style.opacity ?? 1.0;
 
-            return (
-              <Icon
-                name={featureItem.icon.iconName}
-                fillColor={featureItem.icon.iconColor}
-                style={{ marginRight: theme.spacing(1), opacity: featureItem.icon.iconOpacity }}
-                size={'small'}
-              />
-            );
-          case 'layer':
-          case 'highlight':
-            const layerItem = item as MapHighlightItem | MapLayerItem;
-
-            if (layerItem.style.type === 'icon') {
-              return (
-                <Icon
-                  name={layerItem.style.iconName}
-                  fillColor={layerItem.style.iconColor}
-                  style={{ marginRight: theme.spacing(1), opacity: layerItem.style.iconOpacity }}
-                  size={'small'}
-                />
-              );
-            } else {
-              const opacity = layerItem.style.opacity ?? 1.0;
-              return (
-                <Box
-                  sx={{
-                    border: `2px solid ${layerItem.style.borderColor}`,
-                    backgroundColor: layerItem.style.fillColor,
-                    backgroundImage: layerItem.style.fillPatternUrl
-                      ? `url('${layerItem.style.fillPatternUrl}')`
-                      : undefined,
-                    backgroundRepeat: 'repeat',
-                    opacity: disabled ? 0.7 * opacity : opacity,
-                    height: '16px',
-                    width: '24px',
-                    minWidth: '24px',
-                    marginRight: theme.spacing(1),
-                  }}
-                />
-              );
-            }
+          return (
+            <Box
+              sx={{
+                border: `2px solid ${item.style.borderColor}`,
+                backgroundColor: item.style.fillColor,
+                backgroundImage: item.style.fillPatternUrl ? `url('${item.style.fillPatternUrl}')` : undefined,
+                backgroundRepeat: 'repeat',
+                opacity: disabled ? 0.7 * opacity : opacity,
+                height: '16px',
+                width: '24px',
+                minWidth: '24px',
+                marginRight: theme.spacing(1),
+              }}
+            />
+          );
         }
       };
 
