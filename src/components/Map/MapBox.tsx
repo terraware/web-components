@@ -2,12 +2,13 @@ import React, { useCallback, useMemo, useRef } from 'react';
 import ReactMapGL, { FullscreenControl, MapRef, Marker, NavigationControl } from 'react-map-gl/mapbox';
 
 import { useTheme } from '@mui/material';
+import { MapMouseEvent } from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 
 import { useDeviceInfo } from '../../utils';
 import Icon from '../Icon/Icon';
-import { IconName } from '../Icon/icons';
 import MapViewStyleControl from './MapViewStyleControl';
+import { MapFillComponentStyle, MapIconComponentStyle } from './types';
 
 export type MapViewStyle = 'Outdoors' | 'Satellite' | 'Light' | 'Dark' | 'Streets';
 export const MapViewStyles: MapViewStyle[] = ['Outdoors', 'Satellite', 'Light', 'Dark', 'Streets'];
@@ -22,12 +23,11 @@ export const stylesUrl: Record<MapViewStyle, string> = {
 
 export type MapMarker = {
   featureId?: string; // markers of the same feature ID can be clustered together
+  id: string;
   longitude: number;
   latitude: number;
-  iconColor: string;
-  iconName: IconName;
-  iconOpacity?: number;
-  onClick: () => void;
+  style: MapIconComponentStyle | MapFillComponentStyle;
+  onClick?: () => void;
   selected?: boolean;
 };
 
@@ -40,6 +40,7 @@ export type MapBoxProps = {
   mapId: string;
   mapViewStyle: MapViewStyle;
   markers?: MapMarker[];
+  onClick?: (event: MapMouseEvent) => void;
   setMapViewStyle: (style: MapViewStyle) => void;
   token: string;
 };
@@ -54,6 +55,7 @@ const MapBox = (props: MapBoxProps): JSX.Element => {
     mapId,
     mapViewStyle,
     markers,
+    onClick,
     setMapViewStyle,
     token,
   } = props;
@@ -68,23 +70,37 @@ const MapBox = (props: MapBoxProps): JSX.Element => {
   }, []);
 
   const markersComponents = useMemo(() => {
-    return markers?.map((marker, idx) => {
-      // TODO: apply clustering
+    return markers?.map((marker) => {
+      // TODO: implement clustering
+      const fillStyle =
+        marker.style.type === 'fill'
+          ? {
+              border: `2px solid ${marker.style.borderColor}`,
+              backgroundColor: marker.style.fillColor,
+              backgroundImage: marker.style.fillPatternUrl ? `url('${marker.style.fillPatternUrl}')` : undefined,
+              backgroundRepeat: 'repeat',
+              opacity: marker.style.opacity,
+            }
+          : undefined;
+
       return (
         <Marker
           className='map-marker'
-          key={idx}
+          key={marker.id}
           longitude={marker.longitude}
           latitude={marker.latitude}
           anchor='bottom'
           onClick={marker.onClick}
+          style={fillStyle}
         >
-          <Icon
-            fillColor={marker.iconColor}
-            name={marker.iconName}
-            size={'small'}
-            style={{ opacity: marker.iconOpacity }}
-          />
+          {marker.style.type === 'icon' && (
+            <Icon
+              fillColor={marker.style.iconColor}
+              name={marker.style.iconName}
+              size={'small'}
+              style={{ opacity: marker.style.iconOpacity }}
+            />
+          )}
         </Marker>
       );
     });
@@ -105,6 +121,7 @@ const MapBox = (props: MapBoxProps): JSX.Element => {
       style={{ width: 'fill', height: isDesktop ? 'fill' : '80vh', flexGrow: isDesktop ? 1 : undefined }}
       scrollZoom={!disableZoom}
       doubleClickZoom={!disableZoom}
+      onClick={onClick}
     >
       {isDesktop && !hideFullScreenControl && <FullscreenControl position='top-left' containerId={containerId} />}
       {!hideZoomControl && (

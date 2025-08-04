@@ -5,28 +5,13 @@ import { Box, Tooltip, Typography, useTheme } from '@mui/material';
 import { useDeviceInfo } from '../../utils';
 import AntSwitch from '../AntSwitch';
 import Icon from '../Icon/Icon';
-import { IconName } from '../Icon/icons';
-
-export type MapLegendIcon = {
-  iconColor: string;
-  iconName: IconName;
-  iconOpacity?: number;
-  type: 'icon';
-};
-
-export type MapLegendFill = {
-  borderColor: string;
-  fillColor?: string;
-  fillPatternUrl?: string;
-  opacity?: number;
-  type: 'fill';
-};
+import { MapFillComponentStyle, MapIconComponentStyle } from './types';
 
 export type MapLayerItem = {
   disabled?: boolean;
   id: string;
   label: string;
-  style: MapLegendIcon | MapLegendFill;
+  style: MapIconComponentStyle | MapFillComponentStyle;
 };
 
 export type MapLayerGroup = {
@@ -40,7 +25,7 @@ export type MapMarkerItem = {
   disabled?: boolean;
   id: string;
   label: string;
-  style: MapLegendIcon | MapLegendFill;
+  style: MapIconComponentStyle | MapFillComponentStyle;
   setVisible?: (visible: boolean) => void;
   visible: boolean;
 };
@@ -52,7 +37,7 @@ export type MapMarkerGroup = {
 
 export type MapHighlightItem = {
   label: string;
-  style: MapLegendIcon | MapLegendFill;
+  style: MapIconComponentStyle | MapFillComponentStyle;
 };
 
 export type MapHighlightGroup = {
@@ -155,7 +140,7 @@ const MapLegend = ({ legends }: MapLegendProps): JSX.Element => {
           return (
             <Box
               sx={{
-                border: `2px solid ${item.style.borderColor}`,
+                border: `2px solid ${item.style.borderColor ?? theme.palette.TwClrBrdr}`,
                 backgroundColor: item.style.fillColor,
                 backgroundImage: item.style.fillPatternUrl ? `url('${item.style.fillPatternUrl}')` : undefined,
                 backgroundRepeat: 'repeat',
