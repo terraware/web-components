@@ -6,12 +6,10 @@ import { Story } from '@storybook/react';
 import { MapMouseEvent } from 'mapbox-gl';
 
 import Button from '../components/Button/Button';
-import Dropdown from '../components/Dropdown';
-import icons, { IconName } from '../components/Icon/icons';
-import MapBox, { MapMarker, MapViewStyle } from '../components/Map/MapBox';
+import MapBox, { MapMarker } from '../components/Map/MapBox';
 import MapContainer from '../components/Map/MapContainer';
+import { MapViewStyle } from '../components/Map/types';
 import TextField from '../components/Textfield/Textfield';
-import { DropdownItem } from '../components/types';
 import { useDeviceInfo } from '../utils';
 
 export default {
@@ -19,41 +17,25 @@ export default {
   component: MapBox,
 };
 
-const Template: Story<{ token: string }> = (args) => {
+const Template: Story<{ clusterRadius: number; token: string }> = (args) => {
   const { isDesktop } = useDeviceInfo();
   const [mapViewStyle, setMapViewStyle] = useState<MapViewStyle>('Satellite');
 
   const [markers, setMarkers] = useState<MapMarker[]>([]);
   const [latitude, setLatitude] = useState('');
   const [longitude, setLongitude] = useState('');
-  const [icon, setIcon] = useState<IconName>('iconLivePlant');
-  const [iconColor, setIconColor] = useState<string>('');
   const [markerNumber, setMarkerNumber] = useState(1);
-
-  const iconDropdownOptions = Object.keys(icons).map(
-    (iconName): DropdownItem => ({
-      label: iconName,
-      value: iconName,
-    })
-  );
 
   const [error, setError] = useState<string>();
 
   const onMarkerClick = useCallback(
     (markerId: string) => {
-      action('Marker Deleted')(markerId);
-      setMarkers((_markers) => {
-        const newMarkers = _markers.filter((marker) => marker.id !== markerId);
-
-        return [...newMarkers];
-      });
+      action('Marker Clicked')(markerId);
     },
-    [action, markers]
+    [action]
   );
 
   const onSubmit = useCallback(() => {
-    const color = iconColor || 'black';
-
     const lat = Number(latitude);
     const long = Number(longitude);
 
@@ -70,17 +52,12 @@ const Template: Story<{ token: string }> = (args) => {
         latitude: lat,
         longitude: long,
         onClick: () => onMarkerClick(`marker-${markerNumber}`),
-        style: {
-          iconColor: color,
-          iconName: icon,
-          type: 'icon',
-        },
       },
     ]);
 
     action('Marker Placed')(`marker-${markerNumber}`);
     setMarkerNumber((value) => value + 1);
-  }, [action, latitude, longitude, markerNumber, onMarkerClick, icon, iconColor]);
+  }, [action, latitude, longitude, markerNumber, onMarkerClick]);
 
   const onMapCLick = useCallback((event: MapMouseEvent) => {
     setLatitude(event.lngLat.lat.toString());
@@ -93,9 +70,19 @@ const Template: Story<{ token: string }> = (args) => {
       map={
         <MapBox
           mapId={'map'}
+          clusterRadius={args.clusterRadius}
           containerId={'map-container'}
           mapViewStyle={mapViewStyle}
-          markers={markers}
+          markerGroups={[
+            {
+              markers,
+              style: {
+                iconColor: 'green',
+                iconName: 'iconLivePlant',
+                type: 'icon',
+              },
+            },
+          ]}
           onClick={onMapCLick}
           setMapViewStyle={setMapViewStyle}
           token={args.token}
@@ -128,20 +115,6 @@ const Template: Story<{ token: string }> = (args) => {
             onChange={(value) => setLongitude(value as string)}
             errorText={error}
           />
-          <Dropdown
-            label={'Icon'}
-            options={iconDropdownOptions}
-            selectedValue={icon}
-            onChange={(value) => setIcon(value as IconName)}
-          />
-          <TextField
-            label={'color'}
-            value={iconColor}
-            onChange={(value) => setIconColor(value as string)}
-            id={''}
-            type={'text'}
-            errorText={error}
-          />
           <Button label={'Add Maker'} onClick={onSubmit} />
         </Box>
       }
@@ -152,5 +125,6 @@ const Template: Story<{ token: string }> = (args) => {
 export const Default = Template.bind({});
 
 Default.args = {
+  clusterRadius: 40,
   token: process.env.TERRAWARE_MAPBOX_API_TOKEN,
 };

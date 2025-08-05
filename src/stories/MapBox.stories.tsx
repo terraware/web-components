@@ -3,8 +3,9 @@ import React, { useState } from 'react';
 import { Box } from '@mui/material';
 import { Story } from '@storybook/react';
 
-import MapBox, { MapBoxProps, MapViewStyle } from '../components/Map/MapBox';
+import MapBox, { MapBoxProps } from '../components/Map/MapBox';
 import MapContainer from '../components/Map/MapContainer';
+import { MapViewStyle } from '../components/Map/types';
 import { useDeviceInfo } from '../utils';
 
 export default {

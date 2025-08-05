@@ -1,37 +1,36 @@
-import React, { useCallback, useMemo, useRef } from 'react';
-import ReactMapGL, { FullscreenControl, MapRef, Marker, NavigationControl } from 'react-map-gl/mapbox';
+import React, { useCallback, useMemo, useRef, useState } from 'react';
+import ReactMapGL, {
+  FullscreenControl,
+  MapRef,
+  Marker,
+  NavigationControl,
+  ViewStateChangeEvent,
+} from 'react-map-gl/mapbox';
 
 import { useTheme } from '@mui/material';
-import { MapMouseEvent } from 'mapbox-gl';
+import { MapMouseEvent, Point } from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 
 import { useDeviceInfo } from '../../utils';
 import Icon from '../Icon/Icon';
 import MapViewStyleControl from './MapViewStyleControl';
-import { MapFillComponentStyle, MapIconComponentStyle } from './types';
-
-export type MapViewStyle = 'Outdoors' | 'Satellite' | 'Light' | 'Dark' | 'Streets';
-export const MapViewStyles: MapViewStyle[] = ['Outdoors', 'Satellite', 'Light', 'Dark', 'Streets'];
-
-export const stylesUrl: Record<MapViewStyle, string> = {
-  Outdoors: 'mapbox://styles/mapbox/outdoors-v12?optimize=true',
-  Satellite: 'mapbox://styles/mapbox/satellite-streets-v12?optimize=true',
-  Streets: 'mapbox://styles/mapbox/streets-v12?optimize=true',
-  Light: 'mapbox://styles/mapbox/light-v11?optimize=true',
-  Dark: 'mapbox://styles/mapbox/dark-v11?optimize=true',
-};
+import { MapFillComponentStyle, MapIconComponentStyle, MapViewStyle, stylesUrl } from './types';
 
 export type MapMarker = {
-  featureId?: string; // markers of the same feature ID can be clustered together
-  id: string;
+  id: string; // Must be unique
   longitude: number;
   latitude: number;
-  style: MapIconComponentStyle | MapFillComponentStyle;
   onClick?: () => void;
   selected?: boolean;
 };
 
+export type MapMarkerGroup = {
+  style: MapIconComponentStyle | MapFillComponentStyle;
+  markers: MapMarker[];
+};
+
 export type MapBoxProps = {
+  clusterRadius?: number;
   containerId?: string;
   disableZoom?: boolean;
   hideFullScreenControl?: boolean;
@@ -39,7 +38,7 @@ export type MapBoxProps = {
   hideZoomControl?: boolean;
   mapId: string;
   mapViewStyle: MapViewStyle;
-  markers?: MapMarker[];
+  markerGroups?: MapMarkerGroup[];
   onClick?: (event: MapMouseEvent) => void;
   setMapViewStyle: (style: MapViewStyle) => void;
   token: string;
@@ -47,6 +46,7 @@ export type MapBoxProps = {
 
 const MapBox = (props: MapBoxProps): JSX.Element => {
   const {
+    clusterRadius,
     containerId,
     disableZoom,
     hideFullScreenControl,
@@ -54,7 +54,7 @@ const MapBox = (props: MapBoxProps): JSX.Element => {
     hideZoomControl,
     mapId,
     mapViewStyle,
-    markers,
+    markerGroups,
     onClick,
     setMapViewStyle,
     token,
@@ -62,49 +62,136 @@ const MapBox = (props: MapBoxProps): JSX.Element => {
   const theme = useTheme();
   const mapRef = useRef<MapRef | null>(null);
   const { isDesktop } = useDeviceInfo();
+  const [zoom, setZoom] = useState<number>();
 
   const mapRefCallback = useCallback((map: MapRef | null) => {
     if (map !== null) {
       mapRef.current = map;
+      setZoom(map.getZoom());
     }
   }, []);
 
+  const onMove = useCallback((view: ViewStateChangeEvent) => {
+    setZoom(view.viewState.zoom);
+  }, []);
+
+  const clusterMarkers = useCallback(
+    (map: MapRef | null, markers: MapMarker[]): MapMarker[][] => {
+      if (!map || map.getZoom() > 15) {
+        // Too zoomed in. Return all marker as is
+        return markers.map((marker) => [marker]);
+      }
+
+      const visited = new Set<string>();
+      const markerPixels: Record<string, Point> = {};
+      markers.forEach((marker) => {
+        markerPixels[marker.id] = map.project({
+          lat: marker.latitude,
+          lon: marker.longitude,
+        });
+      });
+
+      const clusters: MapMarker[][] = [];
+
+      markers.forEach((marker, idx) => {
+        if (!visited.has(marker.id)) {
+          const cluster = [marker];
+          markers.slice(idx + 1).forEach((otherMarker) => {
+            if (!visited.has(otherMarker.id)) {
+              const dx = markerPixels[marker.id].x - markerPixels[otherMarker.id].x;
+              const dy = markerPixels[marker.id].y - markerPixels[otherMarker.id].y;
+              const dist = Math.sqrt(dx * dx + dy * dy);
+
+              if (dist <= (clusterRadius ?? 40)) {
+                cluster.push(otherMarker);
+                visited.add(otherMarker.id);
+              }
+            }
+          });
+          clusters.push(cluster);
+        }
+      });
+
+      return clusters;
+    },
+    [clusterRadius]
+  );
+
   const markersComponents = useMemo(() => {
-    return markers?.map((marker) => {
-      // TODO: implement clustering
+    return markerGroups?.flatMap((markerGroup) => {
       const fillStyle =
-        marker.style.type === 'fill'
+        markerGroup.style.type === 'fill'
           ? {
-              border: `2px solid ${marker.style.borderColor}`,
-              backgroundColor: marker.style.fillColor,
-              backgroundImage: marker.style.fillPatternUrl ? `url('${marker.style.fillPatternUrl}')` : undefined,
+              border: `2px solid ${markerGroup.style.borderColor}`,
+              backgroundColor: markerGroup.style.fillColor,
+              backgroundImage: markerGroup.style.fillPatternUrl
+                ? `url('${markerGroup.style.fillPatternUrl}')`
+                : undefined,
               backgroundRepeat: 'repeat',
-              opacity: marker.style.opacity,
+              opacity: markerGroup.style.opacity,
             }
           : undefined;
 
-      return (
-        <Marker
-          className='map-marker'
-          key={marker.id}
-          longitude={marker.longitude}
-          latitude={marker.latitude}
-          anchor='center'
-          onClick={marker.onClick}
-          style={fillStyle}
-        >
-          {marker.style.type === 'icon' && (
-            <Icon
-              fillColor={marker.style.iconColor}
-              name={marker.style.iconName}
-              size={'small'}
-              style={{ opacity: marker.style.iconOpacity }}
-            />
-          )}
-        </Marker>
-      );
+      const markerIcon =
+        markerGroup.style.type === 'icon' ? (
+          <Icon
+            fillColor={markerGroup.style.iconColor}
+            name={markerGroup.style.iconName}
+            size={'small'}
+            style={{ opacity: markerGroup.style.iconOpacity }}
+          />
+        ) : undefined;
+
+      // cluster markers here
+      const clusteredMarkers = clusterMarkers(mapRef.current, markerGroup.markers);
+
+      return clusteredMarkers.map((markers, i) => {
+        if (markers.length === 1) {
+          const marker = markers[0];
+
+          return (
+            <Marker
+              className='map-marker'
+              key={`marker-${i}`}
+              longitude={marker.longitude}
+              latitude={marker.latitude}
+              anchor='center'
+              onClick={marker.onClick}
+              style={fillStyle}
+            >
+              {markerIcon}
+            </Marker>
+          );
+        } else if (markers.length > 1) {
+          const latSum = markers.reduce((sum, marker) => sum + marker.latitude, 0);
+          const lngSum = markers.reduce((sum, marker) => sum + marker.longitude, 0);
+          const latAvg = latSum / markers.length;
+          const lngAvg = lngSum / markers.length;
+
+          return (
+            <Marker
+              className='map-marker map-marker--cluster'
+              key={`marker-${i}`}
+              longitude={lngAvg}
+              latitude={latAvg}
+              anchor='center'
+              onClick={() =>
+                mapRef.current?.easeTo({
+                  center: { lat: latAvg, lon: lngAvg },
+                  zoom: (zoom ?? 10) + 1,
+                  duration: 500,
+                })
+              }
+              style={fillStyle}
+            >
+              <p className='count'>{markers.length}</p>
+              {markerIcon}
+            </Marker>
+          );
+        }
+      });
     });
-  }, [markers]);
+  }, [markerGroups, zoom]);
 
   return (
     <ReactMapGL
@@ -122,6 +209,7 @@ const MapBox = (props: MapBoxProps): JSX.Element => {
       scrollZoom={!disableZoom}
       doubleClickZoom={!disableZoom}
       onClick={onClick}
+      onMove={onMove}
     >
       {isDesktop && !hideFullScreenControl && <FullscreenControl position='top-left' containerId={containerId} />}
       {!hideZoomControl && (
