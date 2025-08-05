@@ -7,21 +7,21 @@ import AntSwitch from '../AntSwitch';
 import Icon from '../Icon/Icon';
 import { MapFillComponentStyle, MapIconComponentStyle } from './types';
 
-export type MapLayerItem = {
+export type MapLayerLegendItem = {
   disabled?: boolean;
   id: string;
   label: string;
   style: MapIconComponentStyle | MapFillComponentStyle;
 };
 
-export type MapLayerGroup = {
+export type MapLayerLegendGroup = {
   type: 'layer';
-  items: MapLayerItem[];
+  items: MapLayerLegendItem[];
   setSelectedLayer: (id: string) => void;
   selectedLayer: string;
 };
 
-export type MapMarkerItem = {
+export type MapMarkerLegendItem = {
   disabled?: boolean;
   id: string;
   label: string;
@@ -30,19 +30,19 @@ export type MapMarkerItem = {
   visible: boolean;
 };
 
-export type MapMarkerGroup = {
+export type MapMarkerLegendGroup = {
   type: 'marker';
-  items: MapMarkerItem[];
+  items: MapMarkerLegendItem[];
 };
 
-export type MapHighlightItem = {
+export type MapHighlightLegendItem = {
   label: string;
   style: MapIconComponentStyle | MapFillComponentStyle;
 };
 
-export type MapHighlightGroup = {
+export type MapHighlightLegendGroup = {
   type: 'highlight';
-  items: MapHighlightItem[];
+  items: MapHighlightLegendItem[];
   setVisible?: (visible: boolean) => void;
   visible: boolean;
 };
@@ -51,7 +51,7 @@ export type MapLegendGroup = {
   disabled?: boolean;
   tooltip?: string;
   title: string;
-} & (MapMarkerGroup | MapLayerGroup | MapHighlightGroup);
+} & (MapMarkerLegendGroup | MapLayerLegendGroup | MapHighlightLegendGroup);
 
 export type MapLegendProps = {
   legends: MapLegendGroup[];
@@ -99,29 +99,29 @@ const MapLegend = ({ legends }: MapLegendProps): JSX.Element => {
       const onClick = legend.disabled
         ? undefined
         : legend.type === 'layer'
-        ? (item as MapLayerItem).disabled
+        ? (item as MapLayerLegendItem).disabled
           ? undefined
-          : () => legend.setSelectedLayer((item as MapLayerItem).id)
+          : () => legend.setSelectedLayer((item as MapLayerLegendItem).id)
         : legend.type === 'marker'
-        ? (item as MapMarkerItem).disabled
+        ? (item as MapMarkerLegendItem).disabled
           ? undefined
-          : () => (item as MapMarkerItem).setVisible?.(!(item as MapMarkerItem).visible)
+          : () => (item as MapMarkerLegendItem).setVisible?.(!(item as MapMarkerLegendItem).visible)
         : undefined;
 
       const disabled =
         legend.disabled ||
         (legend.type === 'layer'
-          ? (item as MapLayerItem).disabled
+          ? (item as MapLayerLegendItem).disabled
           : legend.type === 'marker'
-          ? (item as MapMarkerItem).disabled
+          ? (item as MapMarkerLegendItem).disabled
           : false) ||
         false;
 
       const selected =
         legend.type === 'layer'
-          ? (item as MapLayerItem).id === legend.selectedLayer
+          ? (item as MapLayerLegendItem).id === legend.selectedLayer
           : legend.type === 'marker'
-          ? (item as MapMarkerItem).visible
+          ? (item as MapMarkerLegendItem).visible
           : false;
 
       const logoComponent = () => {
@@ -158,14 +158,14 @@ const MapLegend = ({ legends }: MapLegendProps): JSX.Element => {
       const visibleComponent = () => {
         switch (legend.type) {
           case 'marker':
-            const featureItem = item as MapMarkerItem;
+            const featureItem = item as MapMarkerLegendItem;
 
             const visibleIcon = featureItem.visible ? <Icon name='iconEye' /> : <Icon name='iconEyeOff' />;
 
             return <Box display='flex'>{visibleIcon}</Box>;
           case 'layer':
-            const layerLegend = legend as MapLayerGroup;
-            const layerItem = item as MapLayerItem;
+            const layerLegend = legend as MapLayerLegendGroup;
+            const layerItem = item as MapLayerLegendItem;
 
             return (
               <Box

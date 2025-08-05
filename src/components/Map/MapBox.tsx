@@ -8,13 +8,27 @@ import ReactMapGL, {
 } from 'react-map-gl/mapbox';
 
 import { Box, useTheme } from '@mui/material';
+import { MultiPolygon } from 'geojson';
 import { MapMouseEvent, Point } from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 
 import { useDeviceInfo } from '../../utils';
 import Icon from '../Icon/Icon';
 import MapViewStyleControl from './MapViewStyleControl';
-import { MapIconComponentStyle, MapViewStyle, stylesUrl } from './types';
+import { MapCursor, MapIconComponentStyle, MapViewStyle, stylesUrl } from './types';
+
+// Each layer item will become a Feature, with a property of id
+export type MapLayerItem = {
+  itemId: string;
+  geometry: MultiPolygon;
+  selected?: boolean;
+};
+
+// Each layer will become a FeatureCollection. Control styling here.
+export type MapLayer = {
+  layerId: string;
+  items: MapLayerItem[];
+};
 
 export type MapMarker = {
   id: string; // Must be unique
@@ -35,10 +49,13 @@ export type MapBoxProps = {
   containerId?: string;
   controlBottomLeft?: React.ReactNode;
   controlTopRight?: React.ReactNode;
+  cursorInteract?: MapCursor;
+  cursorMap?: MapCursor;
   disableZoom?: boolean;
   hideFullScreenControl?: boolean;
   hideMapViewStyleControl?: boolean;
   hideZoomControl?: boolean;
+  layers?: MapLayer;
   mapId: string;
   mapViewStyle: MapViewStyle;
   markerGroups?: MapMarkerGroup[];
@@ -54,6 +71,8 @@ const MapBox = (props: MapBoxProps): JSX.Element => {
     containerId,
     controlBottomLeft,
     controlTopRight,
+    cursorInteract,
+    cursorMap,
     disableZoom,
     hideFullScreenControl,
     hideMapViewStyleControl,
@@ -68,6 +87,7 @@ const MapBox = (props: MapBoxProps): JSX.Element => {
   const theme = useTheme();
   const mapRef = useRef<MapRef | null>(null);
   const { isDesktop } = useDeviceInfo();
+  const [cursor, setCursor] = useState<MapCursor>('auto');
   const [zoom, setZoom] = useState<number>();
 
   const mapRefCallback = useCallback((map: MapRef | null) => {
@@ -139,7 +159,10 @@ const MapBox = (props: MapBoxProps): JSX.Element => {
               longitude={marker.longitude}
               latitude={marker.latitude}
               anchor='center'
-              onClick={marker.onClick}
+              onClick={(event) => {
+                marker.onClick?.();
+                event.originalEvent.stopPropagation();
+              }}
               style={{ backgroundColor: marker.selected ? markerGroup.style.iconColor : theme.palette.TwClrBg }}
             >
               <Icon
@@ -165,13 +188,14 @@ const MapBox = (props: MapBoxProps): JSX.Element => {
               longitude={lngAvg}
               latitude={latAvg}
               anchor='center'
-              onClick={() =>
+              onClick={(event) => {
                 mapRef.current?.easeTo({
                   center: { lat: latAvg, lon: lngAvg },
                   zoom: (zoom ?? 10) + 1,
                   duration: 500,
-                })
-              }
+                });
+                event.originalEvent.stopPropagation();
+              }}
               style={{ backgroundColor: selected ? markerGroup.style.iconColor : theme.palette.TwClrBg }}
             >
               <p className='title'>{markers.length}</p>
@@ -188,10 +212,19 @@ const MapBox = (props: MapBoxProps): JSX.Element => {
     });
   }, [markerGroups, theme, zoom]);
 
+  // Hovering interactive layers
+  const onMouseEnter = useCallback(() => setCursor(cursorInteract ?? 'auto'), [cursorInteract]);
+  const onMouseLeave = useCallback(() => setCursor('auto'), []);
+
+  // Entering and exiting canvases
+  const onMouseOver = useCallback(() => setCursor(cursorMap ?? 'auto'), [cursorMap]);
+  const onMouseOut = useCallback(() => setCursor('auto'), []);
+
   return (
     <ReactMapGL
       key={mapId}
       attributionControl={false}
+      cursor={cursor}
       mapboxAccessToken={token}
       ref={mapRefCallback}
       mapStyle={stylesUrl[mapViewStyle]}
@@ -205,6 +238,10 @@ const MapBox = (props: MapBoxProps): JSX.Element => {
       doubleClickZoom={!disableZoom}
       onClick={onClick}
       onMove={onMove}
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
+      onMouseOver={onMouseOver}
+      onMouseOut={onMouseOut}
     >
       {isDesktop && !hideFullScreenControl && <FullscreenControl position='top-left' containerId={containerId} />}
       {!hideZoomControl && (

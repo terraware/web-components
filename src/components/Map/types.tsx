@@ -1,5 +1,7 @@
 import { IconName } from '../Icon/icons';
 
+export type MapCursor = 'auto' | 'crosshair' | 'default' | 'pointer' | 'grab';
+
 export type MapIconComponentStyle = {
   iconColor: string;
   iconName: IconName;
