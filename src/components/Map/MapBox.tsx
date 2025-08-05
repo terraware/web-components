@@ -89,7 +89,7 @@ const MapBox = (props: MapBoxProps): JSX.Element => {
           key={marker.id}
           longitude={marker.longitude}
           latitude={marker.latitude}
-          anchor='bottom'
+          anchor='center'
           onClick={marker.onClick}
           style={fillStyle}
         >
