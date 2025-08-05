@@ -14,7 +14,7 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 import { useDeviceInfo } from '../../utils';
 import Icon from '../Icon/Icon';
 import MapViewStyleControl from './MapViewStyleControl';
-import { MapFillComponentStyle, MapIconComponentStyle, MapViewStyle, stylesUrl } from './types';
+import { MapIconComponentStyle, MapViewStyle, stylesUrl } from './types';
 
 export type MapMarker = {
   id: string; // Must be unique
@@ -25,7 +25,7 @@ export type MapMarker = {
 };
 
 export type MapMarkerGroup = {
-  style: MapIconComponentStyle | MapFillComponentStyle;
+  style: MapIconComponentStyle;
   markers: MapMarker[];
 };
 
@@ -119,29 +119,6 @@ const MapBox = (props: MapBoxProps): JSX.Element => {
 
   const markersComponents = useMemo(() => {
     return markerGroups?.flatMap((markerGroup) => {
-      const fillStyle =
-        markerGroup.style.type === 'fill'
-          ? {
-              border: `2px solid ${markerGroup.style.borderColor}`,
-              backgroundColor: markerGroup.style.fillColor,
-              backgroundImage: markerGroup.style.fillPatternUrl
-                ? `url('${markerGroup.style.fillPatternUrl}')`
-                : undefined,
-              backgroundRepeat: 'repeat',
-              opacity: markerGroup.style.opacity,
-            }
-          : undefined;
-
-      const markerIcon =
-        markerGroup.style.type === 'icon' ? (
-          <Icon
-            fillColor={markerGroup.style.iconColor}
-            name={markerGroup.style.iconName}
-            size={'small'}
-            style={{ opacity: markerGroup.style.iconOpacity }}
-          />
-        ) : undefined;
-
       // cluster markers here
       const clusteredMarkers = clusterMarkers(mapRef.current, markerGroup.markers);
 
@@ -157,9 +134,14 @@ const MapBox = (props: MapBoxProps): JSX.Element => {
               latitude={marker.latitude}
               anchor='center'
               onClick={marker.onClick}
-              style={fillStyle}
+              style={{ backgroundColor: marker.selected ? markerGroup.style.iconColor : theme.palette.TwClrBg }}
             >
-              {markerIcon}
+              <Icon
+                fillColor={marker.selected ? theme.palette.TwClrBg : markerGroup.style.iconColor}
+                name={markerGroup.style.iconName}
+                size={'small'}
+                style={{ opacity: markerGroup.style.iconOpacity }}
+              />
             </Marker>
           );
         } else if (markers.length > 1) {
@@ -167,6 +149,8 @@ const MapBox = (props: MapBoxProps): JSX.Element => {
           const lngSum = markers.reduce((sum, marker) => sum + marker.longitude, 0);
           const latAvg = latSum / markers.length;
           const lngAvg = lngSum / markers.length;
+
+          const selected = markers.some((marker) => marker.selected);
 
           return (
             <Marker
@@ -182,16 +166,21 @@ const MapBox = (props: MapBoxProps): JSX.Element => {
                   duration: 500,
                 })
               }
-              style={fillStyle}
+              style={{ backgroundColor: selected ? markerGroup.style.iconColor : theme.palette.TwClrBg }}
             >
-              <p className='count'>{markers.length}</p>
-              {markerIcon}
+              <p className='title'>{markers.length}</p>
+              <Icon
+                fillColor={selected ? theme.palette.TwClrBg : markerGroup.style.iconColor}
+                name={markerGroup.style.iconName}
+                size={'small'}
+                style={{ opacity: markerGroup.style.iconOpacity }}
+              />
             </Marker>
           );
         }
       });
     });
-  }, [markerGroups, zoom]);
+  }, [markerGroups, theme, zoom]);
 
   return (
     <ReactMapGL
