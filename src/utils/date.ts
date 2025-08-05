@@ -44,6 +44,17 @@ const getDisplayValue = (date: DateTime) => {
 };
 
 /**
+ * Returns <Month> <Year> (eg. July 2023).
+ */
+export const getShortDate = (date: DateTime) => {
+  if (date.isValid) {
+    return date.toFormat('LLLL yyyy');
+  }
+
+  return date.toString();
+};
+
+/**
  * Utility that constructs a valid DateTime object from
  * any DateType value passed in (ISO string or epoch milliseconds or DateTime object).
  * Note: the DateTime object input support is mostly for ease of use and will essentially be a pass-through.

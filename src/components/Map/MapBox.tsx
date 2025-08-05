@@ -7,7 +7,7 @@ import ReactMapGL, {
   ViewStateChangeEvent,
 } from 'react-map-gl/mapbox';
 
-import { useTheme } from '@mui/material';
+import { Box, useTheme } from '@mui/material';
 import { MapMouseEvent, Point } from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 
@@ -30,8 +30,11 @@ export type MapMarkerGroup = {
 };
 
 export type MapBoxProps = {
+  children?: React.ReactNode;
   clusterRadius?: number;
   containerId?: string;
+  controlBottomLeft?: React.ReactNode;
+  controlTopRight?: React.ReactNode;
   disableZoom?: boolean;
   hideFullScreenControl?: boolean;
   hideMapViewStyleControl?: boolean;
@@ -46,8 +49,11 @@ export type MapBoxProps = {
 
 const MapBox = (props: MapBoxProps): JSX.Element => {
   const {
+    children,
     clusterRadius,
     containerId,
+    controlBottomLeft,
+    controlTopRight,
     disableZoom,
     hideFullScreenControl,
     hideMapViewStyleControl,
@@ -214,7 +220,36 @@ const MapBox = (props: MapBoxProps): JSX.Element => {
       {!hideMapViewStyleControl && (
         <MapViewStyleControl containerId={containerId} mapViewStyle={mapViewStyle} setMapViewStyle={setMapViewStyle} />
       )}
+      {controlTopRight && (
+        <Box
+          sx={{
+            height: 'max-content',
+            position: 'absolute',
+            right: theme.spacing(2),
+            top: theme.spacing(2),
+            width: 'max-content',
+            zIndex: 1000,
+          }}
+        >
+          {controlTopRight}
+        </Box>
+      )}
+      {controlBottomLeft && (
+        <Box
+          style={{
+            height: 'max-content',
+            position: 'absolute',
+            left: theme.spacing(2),
+            bottom: theme.spacing(4),
+            width: 'max-content',
+            zIndex: 1000,
+          }}
+        >
+          {controlBottomLeft}
+        </Box>
+      )}
       {markersComponents}
+      {children}
     </ReactMapGL>
   );
 };
