@@ -130,12 +130,12 @@ const MapLegend = ({ legends }: MapLegendProps): JSX.Element => {
             <Icon
               name={item.style.iconName}
               fillColor={item.style.iconColor}
-              style={{ marginRight: theme.spacing(1), opacity: item.style.iconOpacity }}
+              style={{ marginRight: theme.spacing(1) }}
               size={'small'}
             />
           );
         } else {
-          const opacity = item.style.opacity ?? 1.0;
+          const opacity = item.style.opacity ?? 0.2;
 
           return (
             <Box

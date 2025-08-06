@@ -1,34 +1,47 @@
 import React, { useCallback, useMemo, useRef, useState } from 'react';
 import ReactMapGL, {
   FullscreenControl,
+  Layer,
   MapRef,
   Marker,
   NavigationControl,
+  Source,
   ViewStateChangeEvent,
 } from 'react-map-gl/mapbox';
 
 import { Box, useTheme } from '@mui/material';
-import { MultiPolygon } from 'geojson';
-import { MapMouseEvent, Point } from 'mapbox-gl';
+import { Feature, FeatureCollection, MultiPolygon } from 'geojson';
+import { FilterSpecification, MapMouseEvent, Point } from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 
 import { useDeviceInfo } from '../../utils';
 import Icon from '../Icon/Icon';
 import MapViewStyleControl from './MapViewStyleControl';
-import { MapCursor, MapIconComponentStyle, MapProperties, MapViewStyle, stylesUrl } from './types';
+import {
+  MapCursor,
+  MapFillComponentStyle,
+  MapIconComponentStyle,
+  MapProperties,
+  MapViewStyle,
+  stylesUrl,
+} from './types';
 
 // Each layer item will become a feature, with a property of id.
-export type MapLayerItem = {
-  itemId: string;
+export type MapFeature = {
+  featureId: string;
   geometry: MultiPolygon;
-  selected?: boolean;
+  label?: string;
   onClick?: () => void;
+  priority?: number; // Items with higher priority will be clicked first
+  selected?: boolean;
 };
 
 // Each layer will become a set of features that have the same type.
-export type MapLayer = {
-  layerId: string;
-  items: MapLayerItem[];
+export type MapFeatureGroup = {
+  groupId: string;
+  hidden?: boolean;
+  features: MapFeature[];
+  style: MapFillComponentStyle;
 };
 
 export type MapMarker = {
@@ -56,8 +69,14 @@ export type MapBoxProps = {
   hideFullScreenControl?: boolean;
   hideMapViewStyleControl?: boolean;
   hideZoomControl?: boolean;
-  layers?: MapLayer[];
+  initialViewState?: {
+    latttude?: number;
+    longitude?: number;
+    zoom?: number;
+  };
+  featureGroups?: MapFeatureGroup[];
   mapId: string;
+  mapImageUrls?: string[];
   mapViewStyle: MapViewStyle;
   markerGroups?: MapMarkerGroup[];
   onClickCanvas?: (event: MapMouseEvent) => void;
@@ -75,14 +94,16 @@ const MapBox = (props: MapBoxProps): JSX.Element => {
     cursorInteract,
     cursorMap,
     disableZoom,
+    featureGroups,
     hideFullScreenControl,
     hideMapViewStyleControl,
     hideZoomControl,
-    layers,
+    initialViewState,
     mapId,
+    mapImageUrls,
     mapViewStyle,
     markerGroups,
-    onClickCanvas: onClick,
+    onClickCanvas,
     setMapViewStyle,
     token,
   } = props;
@@ -90,12 +111,29 @@ const MapBox = (props: MapBoxProps): JSX.Element => {
   const mapRef = useRef<MapRef | null>(null);
   const { isDesktop } = useDeviceInfo();
   const [cursor, setCursor] = useState<MapCursor>('auto');
+  const [hoverFeatureId, setHoverFeatureId] = useState<string>();
   const [zoom, setZoom] = useState<number>();
+
+  const loadImages = useCallback(
+    (map: MapRef) => {
+      mapImageUrls?.forEach((url) => {
+        if (!map.hasImage(url)) {
+          map.loadImage(url, (error, image) => {
+            if (image) {
+              map.addImage(url, image, { sdf: true });
+            }
+          });
+        }
+      });
+    },
+    [mapImageUrls]
+  );
 
   const mapRefCallback = useCallback((map: MapRef | null) => {
     if (map !== null) {
       mapRef.current = map;
       setZoom(map.getZoom());
+      loadImages(map);
     }
   }, []);
 
@@ -145,6 +183,197 @@ const MapBox = (props: MapBoxProps): JSX.Element => {
     [clusterRadius]
   );
 
+  // Find all layers with at least some clickable elements
+  const interactiveLayerIds = useMemo(() => {
+    return featureGroups
+      ?.filter((group) => group.features.some((feature) => feature.onClick !== undefined))
+      ?.map((group) => group.groupId);
+  }, [featureGroups]);
+
+  const geojson = useMemo((): FeatureCollection | undefined => {
+    const features = featureGroups?.flatMap((group) => {
+      return group.features.map((feature): Feature => {
+        const properties: MapProperties = {
+          id: feature.featureId,
+          clickable: feature.onClick !== undefined,
+          label: feature.label,
+          layerId: group.groupId,
+          priority: feature.priority ?? 0,
+          selected: feature.selected ?? false,
+        };
+
+        return {
+          type: 'Feature',
+          geometry: feature.geometry,
+          properties,
+        };
+      });
+    });
+
+    return features
+      ? {
+          type: 'FeatureCollection',
+          features,
+        }
+      : undefined;
+  }, [featureGroups]);
+
+  const mapLayers = useMemo(() => {
+    const visibleGroups = featureGroups?.filter((group) => !group.hidden);
+
+    const borderLayers =
+      visibleGroups?.map((group) => {
+        return (
+          <Layer
+            key={`${group.groupId}-border`}
+            id={`${group.groupId}-border`}
+            source={'mapData'}
+            type='line'
+            paint={{
+              'line-color': group.style.borderColor,
+              'line-width': 2,
+            }}
+            filter={['==', ['get', 'layerId'], group.groupId]}
+          />
+        );
+      }) ?? [];
+
+    const fillLayers =
+      visibleGroups?.map((group) => {
+        const opacity = Math.min(0.4, group.style.opacity ?? 0.2);
+        const selectedOpacity = opacity * 2;
+        const hoverOpacity = opacity * 1.5;
+        const hoverAndSelectedOpacity = opacity * 2.5;
+
+        const groupFilter: FilterSpecification = ['==', ['get', 'layerId'], group.groupId];
+
+        const selectedFilter: FilterSpecification = ['==', ['get', 'selected'], true];
+        const notSelectedFilter: FilterSpecification = ['==', ['get', 'selected'], false];
+
+        const hoverFilter: FilterSpecification = ['==', ['get', 'id'], hoverFeatureId ?? null];
+        const notHoverFilter: FilterSpecification = ['!=', ['get', 'id'], hoverFeatureId ?? null];
+
+        return (
+          <>
+            {/* Base fill. This layer is clickable */}
+            <Layer
+              key={group.groupId}
+              id={group.groupId}
+              source={'mapData'}
+              type={'fill'}
+              paint={{ 'fill-opacity': 0 }}
+              filter={groupFilter}
+            />
+            {/* Fill for base layer */}
+            <Layer
+              key={`${group.groupId}-unselected`}
+              id={`${group.groupId}-unselected`}
+              source={'mapData'}
+              type={'fill'}
+              paint={
+                group.style.fillPatternUrl
+                  ? {
+                      'fill-pattern': group.style.fillPatternUrl,
+                      'fill-opacity': opacity,
+                    }
+                  : {
+                      'fill-color': group.style.fillColor,
+                      'fill-opacity': opacity,
+                    }
+              }
+              filter={['all', groupFilter, notSelectedFilter, notHoverFilter]}
+            />
+            {/* Fill for seleced layer */}
+            <Layer
+              key={`${group.groupId}-selected`}
+              id={`${group.groupId}-selected`}
+              source={'mapData'}
+              type={'fill'}
+              paint={
+                group.style.fillPatternUrl
+                  ? {
+                      'fill-pattern': group.style.fillPatternUrl,
+                      'fill-opacity': selectedOpacity,
+                    }
+                  : {
+                      'fill-color': group.style.fillColor,
+                      'fill-opacity': selectedOpacity,
+                    }
+              }
+              filter={['all', groupFilter, selectedFilter, notHoverFilter]}
+            />
+            {/* Fill for hover layer */}
+            <Layer
+              key={`${group.groupId}-hover`}
+              id={`${group.groupId}-hover`}
+              source={'mapData'}
+              type={'fill'}
+              paint={
+                group.style.fillPatternUrl
+                  ? {
+                      'fill-pattern': group.style.fillPatternUrl,
+                      'fill-opacity': hoverOpacity,
+                    }
+                  : {
+                      'fill-color': group.style.fillColor,
+                      'fill-opacity': hoverOpacity,
+                    }
+              }
+              filter={['all', groupFilter, hoverFilter, notSelectedFilter]}
+            />
+            {/* Fill for hover and selected layer */}
+            <Layer
+              key={`${group.groupId}-selected-hover`}
+              id={`${group.groupId}-selected-hover`}
+              source={'mapData'}
+              type={'fill'}
+              paint={
+                group.style.fillPatternUrl
+                  ? {
+                      'fill-pattern': group.style.fillPatternUrl,
+                      'fill-opacity': hoverAndSelectedOpacity,
+                    }
+                  : {
+                      'fill-color': group.style.fillColor,
+                      'fill-opacity': hoverAndSelectedOpacity,
+                    }
+              }
+              filter={['all', groupFilter, hoverFilter, selectedFilter]}
+            />
+          </>
+        );
+      }) ?? [];
+
+    const textLayers =
+      visibleGroups?.map((group) => {
+        const groupFilter: FilterSpecification = ['==', ['get', 'layerId'], group.groupId];
+        const labelFilter: FilterSpecification = ['has', 'label'];
+
+        return (
+          <Layer
+            key={`${group.groupId}-label`}
+            id={`${group.groupId}-label`}
+            source={'mapData'}
+            type={'symbol'}
+            layout={{
+              'text-field': ['get', 'label'],
+              'text-size': 14,
+              'text-line-height': 20,
+              'text-font': ['Open Sans Bold', 'Arial Unicode MS Regular'],
+              'text-anchor': 'center',
+              'text-justify': 'center',
+            }}
+            paint={{
+              'text-color': '#ffffff',
+            }}
+            filter={['all', groupFilter, labelFilter]}
+          />
+        );
+      }) ?? [];
+
+    return [...borderLayers, ...fillLayers, ...textLayers];
+  }, [featureGroups, hoverFeatureId]);
+
   const markersComponents = useMemo(() => {
     return markerGroups?.flatMap((markerGroup) => {
       // cluster markers here
@@ -171,7 +400,6 @@ const MapBox = (props: MapBoxProps): JSX.Element => {
                 fillColor={marker.selected ? theme.palette.TwClrBg : markerGroup.style.iconColor}
                 name={markerGroup.style.iconName}
                 size={'small'}
-                style={{ opacity: markerGroup.style.iconOpacity }}
               />
             </Marker>
           );
@@ -205,7 +433,6 @@ const MapBox = (props: MapBoxProps): JSX.Element => {
                 fillColor={selected ? theme.palette.TwClrBg : markerGroup.style.iconColor}
                 name={markerGroup.style.iconName}
                 size={'small'}
-                style={{ opacity: markerGroup.style.iconOpacity }}
               />
             </Marker>
           );
@@ -214,8 +441,41 @@ const MapBox = (props: MapBoxProps): JSX.Element => {
     });
   }, [markerGroups, theme, zoom]);
 
+  const onMouseMove = useCallback((event: MapMouseEvent) => {
+    if (event.features && event.features.length) {
+      const properties = event.features
+        .map((feature) => feature.properties)
+        .filter(
+          (featureProperties): featureProperties is MapProperties =>
+            featureProperties &&
+            featureProperties.id !== undefined &&
+            featureProperties.priority !== undefined &&
+            featureProperties.clickable
+        );
+
+      if (properties.length) {
+        const topPriorityFeature = properties.reduce((top, current) => {
+          return current.priority > top.priority ? current : top;
+        }, properties[0]);
+        setHoverFeatureId(topPriorityFeature.id);
+
+        return;
+      }
+    }
+    setHoverFeatureId(undefined);
+  }, []);
+
   // Hovering interactive layers
-  const onMouseEnter = useCallback(() => setCursor(cursorInteract ?? 'auto'), [cursorInteract]);
+  const onMouseEnter = useCallback(
+    (event: MapMouseEvent) => {
+      if (event.features && event.features.some((feature) => feature.properties?.clickable)) {
+        setCursor(cursorInteract ?? 'auto');
+      } else {
+        setCursor('auto');
+      }
+    },
+    [cursorInteract]
+  );
   const onMouseLeave = useCallback(() => setCursor('auto'), []);
 
   // Entering and exiting canvases
@@ -225,33 +485,39 @@ const MapBox = (props: MapBoxProps): JSX.Element => {
   // On layer click
   const onMapClick = useCallback(
     (event: MapMouseEvent) => {
-      if (layers && event.features?.length) {
+      if (featureGroups && event.features?.length) {
         const properties = event.features
           .map((feature) => feature.properties)
           .filter(
-            (properties) =>
-              properties && properties.id !== undefined && properties.priority !== undefined && properties.clickable
-          ) as MapProperties[];
+            (featureProperties): featureProperties is MapProperties =>
+              featureProperties &&
+              featureProperties.id !== undefined &&
+              featureProperties.priority !== undefined &&
+              featureProperties.clickable
+          );
 
         if (properties.length) {
           const topPriorityFeature = properties.reduce((top, current) => {
             return current.priority > top.priority ? current : top;
           }, properties[0]);
 
-          const clickedItem = layers
-            .flatMap((layer) => layer.items)
-            .find((item) => item.itemId === topPriorityFeature.id);
+          const clickedItem = featureGroups
+            .flatMap((group) => group.features)
+            .find((feature) => feature.featureId === topPriorityFeature.id);
           if (clickedItem && clickedItem.onClick) {
             clickedItem.onClick();
+
             return;
           }
         }
         // If feature not clickable or not handled, fall through to canvas
       }
 
-      onClick?.(event);
+      if (onClickCanvas !== undefined) {
+        onClickCanvas(event);
+      }
     },
-    [onClick]
+    [featureGroups, onClickCanvas]
   );
 
   return (
@@ -259,23 +525,21 @@ const MapBox = (props: MapBoxProps): JSX.Element => {
       key={mapId}
       attributionControl={false}
       cursor={cursor}
-      mapboxAccessToken={token}
-      ref={mapRefCallback}
-      mapStyle={stylesUrl[mapViewStyle]}
-      initialViewState={{
-        longitude: -122.4,
-        latitude: 37.8,
-        zoom: 14,
-      }}
-      style={{ width: 'fill', height: isDesktop ? 'fill' : '80vh', flexGrow: isDesktop ? 1 : undefined }}
-      scrollZoom={!disableZoom}
       doubleClickZoom={!disableZoom}
+      interactiveLayerIds={interactiveLayerIds}
+      initialViewState={initialViewState}
+      mapboxAccessToken={token}
+      mapStyle={stylesUrl[mapViewStyle]}
+      ref={mapRefCallback}
+      scrollZoom={!disableZoom}
+      style={{ width: 'fill', height: isDesktop ? 'fill' : '80vh', flexGrow: isDesktop ? 1 : undefined }}
       onClick={onMapClick}
       onMove={onMove}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
       onMouseOver={onMouseOver}
       onMouseOut={onMouseOut}
+      onMouseMove={onMouseMove}
     >
       {isDesktop && !hideFullScreenControl && <FullscreenControl position='top-left' containerId={containerId} />}
       {!hideZoomControl && (
@@ -318,6 +582,11 @@ const MapBox = (props: MapBoxProps): JSX.Element => {
         >
           {controlBottomLeft}
         </Box>
+      )}
+      {geojson && (
+        <Source id='mapData' type='geojson' data={geojson}>
+          {mapLayers}
+        </Source>
       )}
       {markersComponents}
       {children}

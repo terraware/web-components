@@ -16,7 +16,6 @@ export type MapCursor = 'auto' | 'crosshair' | 'default' | 'pointer' | 'grab';
 export type MapIconComponentStyle = {
   iconColor: string;
   iconName: IconName;
-  iconOpacity?: number;
   type: 'icon';
 };
 
