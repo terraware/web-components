@@ -25,14 +25,14 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/33</span>
+                <span class='fraction'>0/31</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/63</span>
+                <span class='fraction'>0/64</span>
             </div>
         
             
@@ -46,7 +46,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/33</span>
+                <span class='fraction'>0/31</span>
             </div>
         
             
@@ -306,38 +306,7 @@
 <a name='L241'></a><a href='#L241'>241</a>
 <a name='L242'></a><a href='#L242'>242</a>
 <a name='L243'></a><a href='#L243'>243</a>
-<a name='L244'></a><a href='#L244'>244</a>
-<a name='L245'></a><a href='#L245'>245</a>
-<a name='L246'></a><a href='#L246'>246</a>
-<a name='L247'></a><a href='#L247'>247</a>
-<a name='L248'></a><a href='#L248'>248</a>
-<a name='L249'></a><a href='#L249'>249</a>
-<a name='L250'></a><a href='#L250'>250</a>
-<a name='L251'></a><a href='#L251'>251</a>
-<a name='L252'></a><a href='#L252'>252</a>
-<a name='L253'></a><a href='#L253'>253</a>
-<a name='L254'></a><a href='#L254'>254</a>
-<a name='L255'></a><a href='#L255'>255</a>
-<a name='L256'></a><a href='#L256'>256</a>
-<a name='L257'></a><a href='#L257'>257</a>
-<a name='L258'></a><a href='#L258'>258</a>
-<a name='L259'></a><a href='#L259'>259</a>
-<a name='L260'></a><a href='#L260'>260</a>
-<a name='L261'></a><a href='#L261'>261</a>
-<a name='L262'></a><a href='#L262'>262</a>
-<a name='L263'></a><a href='#L263'>263</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L244'></a><a href='#L244'>244</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -465,9 +434,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -477,13 +443,9 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -594,18 +556,13 @@ import { Box, Tooltip, Typography, useTheme } from '@mui/material';
 import { useDeviceInfo } from '../../utils';
 import AntSwitch from '../AntSwitch';
 import Icon from '../Icon/Icon';
-import { IconName } from '../Icon/icons';
+import { MapFillComponentStyle, MapIconComponentStyle } from './types';
 &nbsp;
 export type MapLayerItem = {
   disabled?: boolean;
   id: string;
   label: string;
-  style: {
-    borderColor: string;
-    fillColor?: string;
-    fillPatternUrl?: string;
-    opacity?: number;
-  };
+  style: MapIconComponentStyle | MapFillComponentStyle;
 };
 &nbsp;
 export type MapLayerGroup = {
@@ -615,30 +572,23 @@ export type MapLayerGroup = {
   selectedLayer: string;
 };
 &nbsp;
-export type MapFeatureItem = {
+export type MapMarkerItem = {
   disabled?: boolean;
-  icon: IconName;
-  iconColor: string;
-  iconOpacity?: number;
   id: string;
   label: string;
+  style: MapIconComponentStyle | MapFillComponentStyle;
   setVisible?: (visible: boolean) =&gt; void;
   visible: boolean;
 };
 &nbsp;
-export type MapFeatureGroup = {
-  type: 'feature';
-  items: MapFeatureItem[];
+export type MapMarkerGroup = {
+  type: 'marker';
+  items: MapMarkerItem[];
 };
 &nbsp;
 export type MapHighlightItem = {
   label: string;
-  style: {
-    borderColor: string;
-    fillColor?: string;
-    fillPatternUrl?: string;
-    opacity?: number;
-  };
+  style: MapIconComponentStyle | MapFillComponentStyle;
 };
 &nbsp;
 export type MapHighlightGroup = {
@@ -652,7 +602,7 @@ export type MapLegendGroup = {
   disabled?: boolean;
   tooltip?: string;
   title: string;
-} &amp; (MapFeatureGroup | MapLayerGroup | MapHighlightGroup);
+} &amp; (MapMarkerGroup | MapLayerGroup | MapHighlightGroup);
 &nbsp;
 export type MapLegendProps = {
   legends: MapLegendGroup[];
@@ -703,70 +653,63 @@ const MapLegend = <span class="cstat-no" title="statement not covered" ><span cl
         ? (item as MapLayerItem).disabled
           ? undefined
           : <span class="fstat-no" title="function not covered" >()</span> =&gt; <span class="cstat-no" title="statement not covered" >legend.setSelectedLayer((item as MapLayerItem).id)</span>
-        : legend.type === 'feature'
-        ? (item as MapFeatureItem).disabled
+        : legend.type === 'marker'
+        ? (item as MapMarkerItem).disabled
           ? undefined
-          : <span class="fstat-no" title="function not covered" >()</span> =&gt; <span class="cstat-no" title="statement not covered" >(item as MapFeatureItem).setVisible?.(!(item as MapFeatureItem).visible)</span>
+          : <span class="fstat-no" title="function not covered" >()</span> =&gt; <span class="cstat-no" title="statement not covered" >(item as MapMarkerItem).setVisible?.(!(item as MapMarkerItem).visible)</span>
         : undefined;
 &nbsp;
       const disabled =
 <span class="cstat-no" title="statement not covered" >        legend.disabled ||</span>
         (legend.type === 'layer'
           ? (item as MapLayerItem).disabled
-          : legend.type === 'feature'
-          ? (item as MapFeatureItem).disabled
+          : legend.type === 'marker'
+          ? (item as MapMarkerItem).disabled
           : false) ||
         false;
 &nbsp;
       const selected =
 <span class="cstat-no" title="statement not covered" >        legend.type === 'layer'</span>
           ? (item as MapLayerItem).id === legend.selectedLayer
-          : legend.type === 'feature'
-          ? (item as MapFeatureItem).visible
+          : legend.type === 'marker'
+          ? (item as MapMarkerItem).visible
           : false;
 &nbsp;
       const logoComponent = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >()</span> =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >        switch (legend.type) {</span>
-          case 'feature':
-            const featureItem = <span class="cstat-no" title="statement not covered" >item as MapFeatureItem;</span>
+<span class="cstat-no" title="statement not covered" >        if (item.style.type === 'icon') {</span>
+<span class="cstat-no" title="statement not covered" >          return (</span>
+            &lt;Icon
+              name={item.style.iconName}
+              fillColor={item.style.iconColor}
+              style={{ marginRight: theme.spacing(1), opacity: item.style.iconOpacity }}
+              size={'small'}
+            /&gt;
+          );
+        } else {
+          const opacity = <span class="cstat-no" title="statement not covered" >item.style.opacity ?? 1.0;</span>
 &nbsp;
-<span class="cstat-no" title="statement not covered" >            return (</span>
-              &lt;Icon
-                name={featureItem.icon}
-                fillColor={featureItem.iconColor}
-                style={{ marginRight: theme.spacing(1), opacity: featureItem.iconOpacity }}
-                size={'small'}
-              /&gt;
-            );
-          case 'layer':
-          case 'highlight':
-            const layerItem = <span class="cstat-no" title="statement not covered" >item as MapHighlightItem | MapLayerItem;</span>
-            const opacity = <span class="cstat-no" title="statement not covered" >layerItem.style.opacity ?? 1.0;</span>
-&nbsp;
-<span class="cstat-no" title="statement not covered" >            return (</span>
-              &lt;Box
-                sx={{
-                  border: `2px solid ${layerItem.style.borderColor}`,
-                  backgroundColor: layerItem.style.fillColor,
-                  backgroundImage: layerItem.style.fillPatternUrl
-                    ? `url('${layerItem.style.fillPatternUrl}')`
-                    : undefined,
-                  backgroundRepeat: 'repeat',
-                  opacity: disabled ? 0.7 * opacity : opacity,
-                  height: '16px',
-                  width: '24px',
-                  minWidth: '24px',
-                  marginRight: theme.spacing(1),
-                }}
-              /&gt;
-            );
+<span class="cstat-no" title="statement not covered" >          return (</span>
+            &lt;Box
+              sx={{
+                border: `2px solid ${item.style.borderColor ?? theme.palette.TwClrBrdr}`,
+                backgroundColor: item.style.fillColor,
+                backgroundImage: item.style.fillPatternUrl ? `url('${item.style.fillPatternUrl}')` : undefined,
+                backgroundRepeat: 'repeat',
+                opacity: disabled ? 0.7 * opacity : opacity,
+                height: '16px',
+                width: '24px',
+                minWidth: '24px',
+                marginRight: theme.spacing(1),
+              }}
+            /&gt;
+          );
         }
       };
 &nbsp;
       const visibleComponent = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >()</span> =&gt; {</span>
 <span class="cstat-no" title="statement not covered" >        switch (legend.type) {</span>
-          case 'feature':
-            const featureItem = <span class="cstat-no" title="statement not covered" >item as MapFeatureItem;</span>
+          case 'marker':
+            const featureItem = <span class="cstat-no" title="statement not covered" >item as MapMarkerItem;</span>
 &nbsp;
             const visibleIcon = <span class="cstat-no" title="statement not covered" >featureItem.visible ? &lt;Icon name='iconEye' /&gt; : &lt;Icon name='iconEyeOff' /&gt;;</span>
 &nbsp;
@@ -856,7 +799,7 @@ export default MapLegend;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-08-01T18:25:37.927Z
+                at 2025-08-06T16:46:49.525Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>
