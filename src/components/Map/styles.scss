@@ -97,5 +97,22 @@
   border-radius: 50%;
   cursor: pointer;
   display: flex;
+  flex-direction: column;
   justify-content: center;
+
+  &--cluster {
+    width: 42px;
+    height: 42px;
+
+    .count {
+      font-family: 'Inter', sans-serif;
+      font-size: 10px;
+      font-weight: 600;
+      line-height: 16px;
+      color: $tw-clr-txt;
+      text-align: center;
+      margin: 0;
+      width: 100%;
+    }
+  }
 }

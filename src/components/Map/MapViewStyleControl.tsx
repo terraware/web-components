@@ -4,7 +4,7 @@ import { Box, useTheme } from '@mui/material';
 
 import PopoverMenu from '../PopoverMenu';
 import { DropdownItem } from '../types';
-import { MapViewStyle, MapViewStyles } from './MapBox';
+import { MapViewStyle, MapViewStyles } from './types';
 
 type MapViewStyleControlProps = {
   containerId?: string;
