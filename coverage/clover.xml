@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1754499148304" clover="3.2.0">
-  <project timestamp="1754499148304" name="All files">
-    <metrics statements="1831" coveredstatements="209" conditionals="1560" coveredconditionals="105" methods="628" coveredmethods="31" elements="4019" coveredelements="345" complexity="0" loc="1831" ncloc="1831" packages="42" files="235" classes="235"/>
+<coverage generated="1754499495183" clover="3.2.0">
+  <project timestamp="1754499495183" name="All files">
+    <metrics statements="1832" coveredstatements="209" conditionals="1564" coveredconditionals="105" methods="631" coveredmethods="31" elements="4027" coveredelements="345" complexity="0" loc="1832" ncloc="1832" packages="42" files="235" classes="235"/>
     <package name="src">
       <metrics statements="1" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
       <file name="index.ts" path="/home/runner/work/web-components/web-components/src/index.ts">
@@ -299,9 +299,9 @@
       </file>
     </package>
     <package name="src.components.Map">
-      <metrics statements="102" coveredstatements="0" conditionals="127" coveredconditionals="0" methods="28" coveredmethods="0"/>
+      <metrics statements="101" coveredstatements="0" conditionals="129" coveredconditionals="0" methods="29" coveredmethods="0"/>
       <file name="MapBox.tsx" path="/home/runner/work/web-components/web-components/src/components/Map/MapBox.tsx">
-        <metrics statements="50" coveredstatements="0" conditionals="37" coveredconditionals="0" methods="14" coveredmethods="0"/>
+        <metrics statements="49" coveredstatements="0" conditionals="39" coveredconditionals="0" methods="15" coveredmethods="0"/>
         <line num="47" count="0" type="stmt"/>
         <line num="61" count="0" type="stmt"/>
         <line num="62" count="0" type="stmt"/>
@@ -337,21 +337,20 @@
         <line num="115" count="0" type="stmt"/>
         <line num="120" count="0" type="stmt"/>
         <line num="121" count="0" type="stmt"/>
-        <line num="123" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="136" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="146" count="0" type="stmt"/>
+        <line num="123" count="0" type="stmt"/>
+        <line num="125" count="0" type="stmt"/>
+        <line num="126" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="127" count="0" type="stmt"/>
+        <line num="129" count="0" type="stmt"/>
+        <line num="147" count="0" type="cond" truecount="0" falsecount="2"/>
         <line num="148" count="0" type="stmt"/>
-        <line num="149" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="149" count="0" type="stmt"/>
         <line num="150" count="0" type="stmt"/>
-        <line num="152" count="0" type="stmt"/>
-        <line num="165" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="166" count="0" type="stmt"/>
-        <line num="167" count="0" type="stmt"/>
-        <line num="168" count="0" type="stmt"/>
-        <line num="169" count="0" type="stmt"/>
-        <line num="171" count="0" type="stmt"/>
-        <line num="179" count="0" type="stmt"/>
-        <line num="196" count="0" type="stmt"/>
+        <line num="151" count="0" type="stmt"/>
+        <line num="153" count="0" type="stmt"/>
+        <line num="155" count="0" type="stmt"/>
+        <line num="163" count="0" type="stmt"/>
+        <line num="185" count="0" type="stmt"/>
       </file>
       <file name="MapContainer.tsx" path="/home/runner/work/web-components/web-components/src/components/Map/MapContainer.tsx">
         <metrics statements="4" coveredstatements="0" conditionals="12" coveredconditionals="0" methods="1" coveredmethods="0"/>
@@ -1839,7 +1838,7 @@
       </file>
     </package>
     <package name="src.stories">
-      <metrics statements="604" coveredstatements="0" conditionals="70" coveredconditionals="0" methods="207" coveredmethods="0"/>
+      <metrics statements="606" coveredstatements="0" conditionals="72" coveredconditionals="0" methods="209" coveredmethods="0"/>
       <file name="AntSwitch.stories.tsx" path="/home/runner/work/web-components/web-components/src/stories/AntSwitch.stories.tsx">
         <metrics statements="8" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="0"/>
         <line num="14" count="0" type="stmt"/>
@@ -2146,7 +2145,7 @@
         <line num="202" count="0" type="stmt"/>
       </file>
       <file name="MapMarker.stories.tsx" path="/home/runner/work/web-components/web-components/src/stories/MapMarker.stories.tsx">
-        <metrics statements="28" coveredstatements="0" conditionals="6" coveredconditionals="0" methods="9" coveredmethods="0"/>
+        <metrics statements="30" coveredstatements="0" conditionals="8" coveredconditionals="0" methods="11" coveredmethods="0"/>
         <line num="20" count="0" type="stmt"/>
         <line num="21" count="0" type="stmt"/>
         <line num="22" count="0" type="stmt"/>
@@ -2157,24 +2156,26 @@
         <line num="29" count="0" type="stmt"/>
         <line num="31" count="0" type="stmt"/>
         <line num="33" count="0" type="stmt"/>
-        <line num="38" count="0" type="stmt"/>
-        <line num="39" count="0" type="stmt"/>
-        <line num="40" count="0" type="stmt"/>
-        <line num="42" count="0" type="cond" truecount="0" falsecount="4"/>
-        <line num="43" count="0" type="stmt"/>
+        <line num="34" count="0" type="stmt"/>
+        <line num="35" count="0" type="stmt"/>
+        <line num="44" count="0" type="stmt"/>
         <line num="45" count="0" type="stmt"/>
-        <line num="48" count="0" type="stmt"/>
+        <line num="46" count="0" type="stmt"/>
+        <line num="48" count="0" type="cond" truecount="0" falsecount="4"/>
+        <line num="49" count="0" type="stmt"/>
+        <line num="51" count="0" type="stmt"/>
         <line num="54" count="0" type="stmt"/>
-        <line num="58" count="0" type="stmt"/>
-        <line num="59" count="0" type="stmt"/>
-        <line num="62" count="0" type="stmt"/>
-        <line num="63" count="0" type="stmt"/>
+        <line num="60" count="0" type="stmt"/>
         <line num="64" count="0" type="stmt"/>
-        <line num="67" count="0" type="stmt"/>
-        <line num="107" count="0" type="stmt"/>
-        <line num="115" count="0" type="stmt"/>
-        <line num="125" count="0" type="stmt"/>
-        <line num="127" count="0" type="stmt"/>
+        <line num="65" count="0" type="stmt"/>
+        <line num="68" count="0" type="stmt"/>
+        <line num="69" count="0" type="stmt"/>
+        <line num="70" count="0" type="stmt"/>
+        <line num="73" count="0" type="stmt"/>
+        <line num="113" count="0" type="stmt"/>
+        <line num="121" count="0" type="stmt"/>
+        <line num="131" count="0" type="stmt"/>
+        <line num="133" count="0" type="stmt"/>
       </file>
       <file name="Message.stories.tsx" path="/home/runner/work/web-components/web-components/src/stories/Message.stories.tsx">
         <metrics statements="9" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="4" coveredmethods="0"/>
