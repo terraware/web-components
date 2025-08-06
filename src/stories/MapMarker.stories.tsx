@@ -31,6 +31,12 @@ const Template: Story<{ clusterRadius: number; token: string }> = (args) => {
   const onMarkerClick = useCallback(
     (markerId: string) => {
       action('Marker Clicked')(markerId);
+      setMarkers((_markers) => {
+        return _markers.map((marker) => ({
+          ...marker,
+          selected: marker.id === markerId ? !marker.selected : marker.selected,
+        }));
+      });
     },
     [action]
   );

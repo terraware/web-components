@@ -25,7 +25,7 @@ export type MapMarkerItem = {
   disabled?: boolean;
   id: string;
   label: string;
-  style: MapIconComponentStyle | MapFillComponentStyle;
+  style: MapIconComponentStyle;
   setVisible?: (visible: boolean) => void;
   visible: boolean;
 };
