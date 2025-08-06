@@ -5,18 +5,13 @@ import { Box, Tooltip, Typography, useTheme } from '@mui/material';
 import { useDeviceInfo } from '../../utils';
 import AntSwitch from '../AntSwitch';
 import Icon from '../Icon/Icon';
-import { IconName } from '../Icon/icons';
+import { MapFillComponentStyle, MapIconComponentStyle } from './types';
 
 export type MapLayerItem = {
   disabled?: boolean;
   id: string;
   label: string;
-  style: {
-    borderColor: string;
-    fillColor?: string;
-    fillPatternUrl?: string;
-    opacity?: number;
-  };
+  style: MapIconComponentStyle | MapFillComponentStyle;
 };
 
 export type MapLayerGroup = {
@@ -26,30 +21,23 @@ export type MapLayerGroup = {
   selectedLayer: string;
 };
 
-export type MapFeatureItem = {
+export type MapMarkerItem = {
   disabled?: boolean;
-  icon: IconName;
-  iconColor: string;
-  iconOpacity?: number;
   id: string;
   label: string;
+  style: MapIconComponentStyle | MapFillComponentStyle;
   setVisible?: (visible: boolean) => void;
   visible: boolean;
 };
 
-export type MapFeatureGroup = {
-  type: 'feature';
-  items: MapFeatureItem[];
+export type MapMarkerGroup = {
+  type: 'marker';
+  items: MapMarkerItem[];
 };
 
 export type MapHighlightItem = {
   label: string;
-  style: {
-    borderColor: string;
-    fillColor?: string;
-    fillPatternUrl?: string;
-    opacity?: number;
-  };
+  style: MapIconComponentStyle | MapFillComponentStyle;
 };
 
 export type MapHighlightGroup = {
@@ -63,7 +51,7 @@ export type MapLegendGroup = {
   disabled?: boolean;
   tooltip?: string;
   title: string;
-} & (MapFeatureGroup | MapLayerGroup | MapHighlightGroup);
+} & (MapMarkerGroup | MapLayerGroup | MapHighlightGroup);
 
 export type MapLegendProps = {
   legends: MapLegendGroup[];
@@ -114,70 +102,63 @@ const MapLegend = ({ legends }: MapLegendProps): JSX.Element => {
         ? (item as MapLayerItem).disabled
           ? undefined
           : () => legend.setSelectedLayer((item as MapLayerItem).id)
-        : legend.type === 'feature'
-        ? (item as MapFeatureItem).disabled
+        : legend.type === 'marker'
+        ? (item as MapMarkerItem).disabled
           ? undefined
-          : () => (item as MapFeatureItem).setVisible?.(!(item as MapFeatureItem).visible)
+          : () => (item as MapMarkerItem).setVisible?.(!(item as MapMarkerItem).visible)
         : undefined;
 
       const disabled =
         legend.disabled ||
         (legend.type === 'layer'
           ? (item as MapLayerItem).disabled
-          : legend.type === 'feature'
-          ? (item as MapFeatureItem).disabled
+          : legend.type === 'marker'
+          ? (item as MapMarkerItem).disabled
           : false) ||
         false;
 
       const selected =
         legend.type === 'layer'
           ? (item as MapLayerItem).id === legend.selectedLayer
-          : legend.type === 'feature'
-          ? (item as MapFeatureItem).visible
+          : legend.type === 'marker'
+          ? (item as MapMarkerItem).visible
           : false;
 
       const logoComponent = () => {
-        switch (legend.type) {
-          case 'feature':
-            const featureItem = item as MapFeatureItem;
+        if (item.style.type === 'icon') {
+          return (
+            <Icon
+              name={item.style.iconName}
+              fillColor={item.style.iconColor}
+              style={{ marginRight: theme.spacing(1), opacity: item.style.iconOpacity }}
+              size={'small'}
+            />
+          );
+        } else {
+          const opacity = item.style.opacity ?? 1.0;
 
-            return (
-              <Icon
-                name={featureItem.icon}
-                fillColor={featureItem.iconColor}
-                style={{ marginRight: theme.spacing(1), opacity: featureItem.iconOpacity }}
-                size={'small'}
-              />
-            );
-          case 'layer':
-          case 'highlight':
-            const layerItem = item as MapHighlightItem | MapLayerItem;
-            const opacity = layerItem.style.opacity ?? 1.0;
-
-            return (
-              <Box
-                sx={{
-                  border: `2px solid ${layerItem.style.borderColor}`,
-                  backgroundColor: layerItem.style.fillColor,
-                  backgroundImage: layerItem.style.fillPatternUrl
-                    ? `url('${layerItem.style.fillPatternUrl}')`
-                    : undefined,
-                  backgroundRepeat: 'repeat',
-                  opacity: disabled ? 0.7 * opacity : opacity,
-                  height: '16px',
-                  width: '24px',
-                  minWidth: '24px',
-                  marginRight: theme.spacing(1),
-                }}
-              />
-            );
+          return (
+            <Box
+              sx={{
+                border: `2px solid ${item.style.borderColor ?? theme.palette.TwClrBrdr}`,
+                backgroundColor: item.style.fillColor,
+                backgroundImage: item.style.fillPatternUrl ? `url('${item.style.fillPatternUrl}')` : undefined,
+                backgroundRepeat: 'repeat',
+                opacity: disabled ? 0.7 * opacity : opacity,
+                height: '16px',
+                width: '24px',
+                minWidth: '24px',
+                marginRight: theme.spacing(1),
+              }}
+            />
+          );
         }
       };
 
       const visibleComponent = () => {
         switch (legend.type) {
-          case 'feature':
-            const featureItem = item as MapFeatureItem;
+          case 'marker':
+            const featureItem = item as MapMarkerItem;
 
             const visibleIcon = featureItem.visible ? <Icon name='iconEye' /> : <Icon name='iconEyeOff' />;
 
