@@ -15,16 +15,17 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 import { useDeviceInfo } from '../../utils';
 import Icon from '../Icon/Icon';
 import MapViewStyleControl from './MapViewStyleControl';
-import { MapCursor, MapIconComponentStyle, MapViewStyle, stylesUrl } from './types';
+import { MapCursor, MapIconComponentStyle, MapProperties, MapViewStyle, stylesUrl } from './types';
 
-// Each layer item will become a Feature, with a property of id
+// Each layer item will become a feature, with a property of id.
 export type MapLayerItem = {
   itemId: string;
   geometry: MultiPolygon;
   selected?: boolean;
+  onClick?: () => void;
 };
 
-// Each layer will become a FeatureCollection. Control styling here.
+// Each layer will become a set of features that have the same type.
 export type MapLayer = {
   layerId: string;
   items: MapLayerItem[];
@@ -55,11 +56,11 @@ export type MapBoxProps = {
   hideFullScreenControl?: boolean;
   hideMapViewStyleControl?: boolean;
   hideZoomControl?: boolean;
-  layers?: MapLayer;
+  layers?: MapLayer[];
   mapId: string;
   mapViewStyle: MapViewStyle;
   markerGroups?: MapMarkerGroup[];
-  onClick?: (event: MapMouseEvent) => void;
+  onClickCanvas?: (event: MapMouseEvent) => void;
   setMapViewStyle: (style: MapViewStyle) => void;
   token: string;
 };
@@ -77,10 +78,11 @@ const MapBox = (props: MapBoxProps): JSX.Element => {
     hideFullScreenControl,
     hideMapViewStyleControl,
     hideZoomControl,
+    layers,
     mapId,
     mapViewStyle,
     markerGroups,
-    onClick,
+    onClickCanvas: onClick,
     setMapViewStyle,
     token,
   } = props;
@@ -220,6 +222,38 @@ const MapBox = (props: MapBoxProps): JSX.Element => {
   const onMouseOver = useCallback(() => setCursor(cursorMap ?? 'auto'), [cursorMap]);
   const onMouseOut = useCallback(() => setCursor('auto'), []);
 
+  // On layer click
+  const onMapClick = useCallback(
+    (event: MapMouseEvent) => {
+      if (layers && event.features?.length) {
+        const properties = event.features
+          .map((feature) => feature.properties)
+          .filter(
+            (properties) =>
+              properties && properties.id !== undefined && properties.priority !== undefined && properties.clickable
+          ) as MapProperties[];
+
+        if (properties.length) {
+          const topPriorityFeature = properties.reduce((top, current) => {
+            return current.priority > top.priority ? current : top;
+          }, properties[0]);
+
+          const clickedItem = layers
+            .flatMap((layer) => layer.items)
+            .find((item) => item.itemId === topPriorityFeature.id);
+          if (clickedItem && clickedItem.onClick) {
+            clickedItem.onClick();
+            return;
+          }
+        }
+        // If feature not clickable or not handled, fall through to canvas
+      }
+
+      onClick?.(event);
+    },
+    [onClick]
+  );
+
   return (
     <ReactMapGL
       key={mapId}
@@ -236,7 +270,7 @@ const MapBox = (props: MapBoxProps): JSX.Element => {
       style={{ width: 'fill', height: isDesktop ? 'fill' : '80vh', flexGrow: isDesktop ? 1 : undefined }}
       scrollZoom={!disableZoom}
       doubleClickZoom={!disableZoom}
-      onClick={onClick}
+      onClick={onMapClick}
       onMove={onMove}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}

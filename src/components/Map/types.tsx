@@ -1,5 +1,16 @@
 import { IconName } from '../Icon/icons';
 
+/**
+ * Properties class for GeoJson, with a few reserved object defined.
+ */
+export type MapProperties = {
+  id: string;
+  clickable: boolean;
+  layerId: string; // determines which style to apply
+  priority: number;
+  [name: string]: any;
+};
+
 export type MapCursor = 'auto' | 'crosshair' | 'default' | 'pointer' | 'grab';
 
 export type MapIconComponentStyle = {

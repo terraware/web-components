@@ -91,7 +91,7 @@ const Template: Story<{ clusterRadius: number; token: string }> = (args) => {
               },
             },
           ]}
-          onClick={onMapCLick}
+          onClickCanvas={onMapCLick}
           setMapViewStyle={setMapViewStyle}
           token={args.token}
         />
