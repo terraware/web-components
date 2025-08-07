@@ -558,21 +558,21 @@ import AntSwitch from '../AntSwitch';
 import Icon from '../Icon/Icon';
 import { MapFillComponentStyle, MapIconComponentStyle } from './types';
 &nbsp;
-export type MapLayerItem = {
+export type MapLayerLegendItem = {
   disabled?: boolean;
   id: string;
   label: string;
   style: MapIconComponentStyle | MapFillComponentStyle;
 };
 &nbsp;
-export type MapLayerGroup = {
+export type MapLayerLegendGroup = {
   type: 'layer';
-  items: MapLayerItem[];
+  items: MapLayerLegendItem[];
   setSelectedLayer: (id: string) =&gt; void;
   selectedLayer: string;
 };
 &nbsp;
-export type MapMarkerItem = {
+export type MapMarkerLegendItem = {
   disabled?: boolean;
   id: string;
   label: string;
@@ -581,19 +581,19 @@ export type MapMarkerItem = {
   visible: boolean;
 };
 &nbsp;
-export type MapMarkerGroup = {
+export type MapMarkerLegendGroup = {
   type: 'marker';
-  items: MapMarkerItem[];
+  items: MapMarkerLegendItem[];
 };
 &nbsp;
-export type MapHighlightItem = {
+export type MapHighlightLegendItem = {
   label: string;
   style: MapIconComponentStyle | MapFillComponentStyle;
 };
 &nbsp;
-export type MapHighlightGroup = {
+export type MapHighlightLegendGroup = {
   type: 'highlight';
-  items: MapHighlightItem[];
+  items: MapHighlightLegendItem[];
   setVisible?: (visible: boolean) =&gt; void;
   visible: boolean;
 };
@@ -602,7 +602,7 @@ export type MapLegendGroup = {
   disabled?: boolean;
   tooltip?: string;
   title: string;
-} &amp; (MapMarkerGroup | MapLayerGroup | MapHighlightGroup);
+} &amp; (MapMarkerLegendGroup | MapLayerLegendGroup | MapHighlightLegendGroup);
 &nbsp;
 export type MapLegendProps = {
   legends: MapLegendGroup[];
@@ -650,29 +650,29 @@ const MapLegend = <span class="cstat-no" title="statement not covered" ><span cl
       const onClick = <span class="cstat-no" title="statement not covered" >legend.disabled</span>
         ? undefined
         : legend.type === 'layer'
-        ? (item as MapLayerItem).disabled
+        ? (item as MapLayerLegendItem).disabled
           ? undefined
-          : <span class="fstat-no" title="function not covered" >()</span> =&gt; <span class="cstat-no" title="statement not covered" >legend.setSelectedLayer((item as MapLayerItem).id)</span>
+          : <span class="fstat-no" title="function not covered" >()</span> =&gt; <span class="cstat-no" title="statement not covered" >legend.setSelectedLayer((item as MapLayerLegendItem).id)</span>
         : legend.type === 'marker'
-        ? (item as MapMarkerItem).disabled
+        ? (item as MapMarkerLegendItem).disabled
           ? undefined
-          : <span class="fstat-no" title="function not covered" >()</span> =&gt; <span class="cstat-no" title="statement not covered" >(item as MapMarkerItem).setVisible?.(!(item as MapMarkerItem).visible)</span>
+          : <span class="fstat-no" title="function not covered" >()</span> =&gt; <span class="cstat-no" title="statement not covered" >(item as MapMarkerLegendItem).setVisible?.(!(item as MapMarkerLegendItem).visible)</span>
         : undefined;
 &nbsp;
       const disabled =
 <span class="cstat-no" title="statement not covered" >        legend.disabled ||</span>
         (legend.type === 'layer'
-          ? (item as MapLayerItem).disabled
+          ? (item as MapLayerLegendItem).disabled
           : legend.type === 'marker'
-          ? (item as MapMarkerItem).disabled
+          ? (item as MapMarkerLegendItem).disabled
           : false) ||
         false;
 &nbsp;
       const selected =
 <span class="cstat-no" title="statement not covered" >        legend.type === 'layer'</span>
-          ? (item as MapLayerItem).id === legend.selectedLayer
+          ? (item as MapLayerLegendItem).id === legend.selectedLayer
           : legend.type === 'marker'
-          ? (item as MapMarkerItem).visible
+          ? (item as MapMarkerLegendItem).visible
           : false;
 &nbsp;
       const logoComponent = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >()</span> =&gt; {</span>
@@ -681,12 +681,12 @@ const MapLegend = <span class="cstat-no" title="statement not covered" ><span cl
             &lt;Icon
               name={item.style.iconName}
               fillColor={item.style.iconColor}
-              style={{ marginRight: theme.spacing(1), opacity: item.style.iconOpacity }}
+              style={{ marginRight: theme.spacing(1) }}
               size={'small'}
             /&gt;
           );
         } else {
-          const opacity = <span class="cstat-no" title="statement not covered" >item.style.opacity ?? 1.0;</span>
+          const opacity = <span class="cstat-no" title="statement not covered" >item.style.opacity ?? 0.2;</span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >          return (</span>
             &lt;Box
@@ -709,14 +709,14 @@ const MapLegend = <span class="cstat-no" title="statement not covered" ><span cl
       const visibleComponent = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >()</span> =&gt; {</span>
 <span class="cstat-no" title="statement not covered" >        switch (legend.type) {</span>
           case 'marker':
-            const featureItem = <span class="cstat-no" title="statement not covered" >item as MapMarkerItem;</span>
+            const featureItem = <span class="cstat-no" title="statement not covered" >item as MapMarkerLegendItem;</span>
 &nbsp;
             const visibleIcon = <span class="cstat-no" title="statement not covered" >featureItem.visible ? &lt;Icon name='iconEye' /&gt; : &lt;Icon name='iconEyeOff' /&gt;;</span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >            return &lt;Box display='flex'&gt;{visibleIcon}&lt;/Box&gt;;</span>
           case 'layer':
-            const layerLegend = <span class="cstat-no" title="statement not covered" >legend as MapLayerGroup;</span>
-            const layerItem = <span class="cstat-no" title="statement not covered" >item as MapLayerItem;</span>
+            const layerLegend = <span class="cstat-no" title="statement not covered" >legend as MapLayerLegendGroup;</span>
+            const layerItem = <span class="cstat-no" title="statement not covered" >item as MapLayerLegendItem;</span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >            return (</span>
               &lt;Box
@@ -799,7 +799,7 @@ export default MapLegend;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-08-06T17:03:15.540Z
+                at 2025-08-07T20:31:09.748Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>
