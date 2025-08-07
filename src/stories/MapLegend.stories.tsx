@@ -79,7 +79,6 @@ const Template: Story<MapLegendProps> = () => {
             style: {
               iconColor: '#FCD12A',
               iconName: 'home',
-              iconOpacity: 0.5,
               type: 'icon',
             },
             id: 'house',
@@ -91,7 +90,6 @@ const Template: Story<MapLegendProps> = () => {
             style: {
               iconColor: '#008000',
               iconName: 'iconLivePlant',
-              iconOpacity: 0.5,
               type: 'icon',
             },
             id: 'tree',
@@ -103,7 +101,6 @@ const Template: Story<MapLegendProps> = () => {
             style: {
               iconColor: '#FF0000',
               iconName: 'iconLivePlant',
-              iconOpacity: 0.5,
               type: 'icon',
             },
             id: 'dead-tree',
@@ -116,7 +113,6 @@ const Template: Story<MapLegendProps> = () => {
             style: {
               iconColor: '#008000',
               iconName: 'iconHelp',
-              iconOpacity: 0.5,
               type: 'icon',
             },
             id: 'unknown',

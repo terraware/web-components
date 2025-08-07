@@ -66,6 +66,7 @@ const Template: Story<{ clusterRadius: number; token: string }> = (args) => {
   }, [action, latitude, longitude, markerNumber, onMarkerClick]);
 
   const onMapCLick = useCallback((event: MapMouseEvent) => {
+    action('Map clicked')();
     setLatitude(event.lngLat.lat.toString());
     setLongitude(event.lngLat.lng.toString());
   }, []);
@@ -78,6 +79,7 @@ const Template: Story<{ clusterRadius: number; token: string }> = (args) => {
           mapId={'map'}
           clusterRadius={args.clusterRadius}
           containerId={'map-container'}
+          cursorMap={'crosshair'}
           mapViewStyle={mapViewStyle}
           markerGroups={[
             {
@@ -89,7 +91,7 @@ const Template: Story<{ clusterRadius: number; token: string }> = (args) => {
               },
             },
           ]}
-          onClick={onMapCLick}
+          onClickCanvas={onMapCLick}
           setMapViewStyle={setMapViewStyle}
           token={args.token}
         />
