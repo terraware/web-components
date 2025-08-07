@@ -44,6 +44,18 @@ export type MapFeatureGroup = {
   style: MapFillComponentStyle;
 };
 
+export type MapHighlight = {
+  featureIds: { featureGroupId: string; featureId: string }[];
+  highlightId: string;
+  style: MapFillComponentStyle;
+};
+
+// Additional shading/annotations for map entities
+export type MapHighlightGroup = {
+  hidden?: boolean;
+  highlights: MapHighlight[];
+};
+
 export type MapMarker = {
   id: string; // Must be unique
   longitude: number;
@@ -53,8 +65,9 @@ export type MapMarker = {
 };
 
 export type MapMarkerGroup = {
-  style: MapIconComponentStyle;
+  hidden?: boolean;
   markers: MapMarker[];
+  style: MapIconComponentStyle;
 };
 
 export type MapBoxProps = {
@@ -65,16 +78,18 @@ export type MapBoxProps = {
   controlTopRight?: React.ReactNode;
   cursorInteract?: MapCursor;
   cursorMap?: MapCursor;
+  disableDoubleClickZoom?: boolean;
   disableZoom?: boolean;
+  featureGroups?: MapFeatureGroup[];
   hideFullScreenControl?: boolean;
   hideMapViewStyleControl?: boolean;
   hideZoomControl?: boolean;
+  highlightGroups?: MapHighlightGroup[];
   initialViewState?: {
-    latttude?: number;
+    latitude?: number;
     longitude?: number;
     zoom?: number;
   };
-  featureGroups?: MapFeatureGroup[];
   mapId: string;
   mapImageUrls?: string[];
   mapViewStyle: MapViewStyle;
@@ -93,11 +108,13 @@ const MapBox = (props: MapBoxProps): JSX.Element => {
     controlTopRight,
     cursorInteract,
     cursorMap,
+    disableDoubleClickZoom,
     disableZoom,
     featureGroups,
     hideFullScreenControl,
     hideMapViewStyleControl,
     hideZoomControl,
+    highlightGroups,
     initialViewState,
     mapId,
     mapImageUrls,
@@ -197,6 +214,7 @@ const MapBox = (props: MapBoxProps): JSX.Element => {
           id: feature.featureId,
           clickable: feature.onClick !== undefined,
           label: feature.label,
+          layerFeatureId: `${group.groupId}/${feature.featureId}`,
           layerId: group.groupId,
           priority: feature.priority ?? 0,
           selected: feature.selected ?? false,
@@ -218,227 +236,269 @@ const MapBox = (props: MapBoxProps): JSX.Element => {
       : undefined;
   }, [featureGroups]);
 
-  const mapLayers = useMemo(() => {
+  const { borderLayers, fillLayers, textLayers } = useMemo(() => {
     const visibleGroups = featureGroups?.filter((group) => !group.hidden);
 
-    const borderLayers =
-      visibleGroups?.map((group) => {
-        return (
+    const _borderLayers = visibleGroups?.map((group) => {
+      return (
+        <Layer
+          key={`${group.groupId}-border`}
+          id={`${group.groupId}-border`}
+          source={'mapData'}
+          type='line'
+          paint={{
+            'line-color': group.style.borderColor,
+            'line-width': 2,
+          }}
+          filter={['==', ['get', 'layerId'], group.groupId]}
+        />
+      );
+    });
+
+    const _fillLayers = visibleGroups?.map((group) => {
+      const opacity = Math.min(0.4, group.style.opacity ?? 0.2);
+      const selectedOpacity = opacity * 2;
+      const hoverOpacity = opacity * 1.5;
+      const hoverAndSelectedOpacity = opacity * 2.5;
+
+      const groupFilter: FilterSpecification = ['==', ['get', 'layerId'], group.groupId];
+
+      const selectedFilter: FilterSpecification = ['==', ['get', 'selected'], true];
+      const notSelectedFilter: FilterSpecification = ['==', ['get', 'selected'], false];
+
+      const hoverFilter: FilterSpecification = ['==', ['get', 'id'], hoverFeatureId ?? null];
+      const notHoverFilter: FilterSpecification = ['!=', ['get', 'id'], hoverFeatureId ?? null];
+
+      return (
+        <>
+          {/* Base fill. This layer is clickable */}
           <Layer
-            key={`${group.groupId}-border`}
-            id={`${group.groupId}-border`}
+            key={group.groupId}
+            id={group.groupId}
             source={'mapData'}
-            type='line'
-            paint={{
-              'line-color': group.style.borderColor,
-              'line-width': 2,
-            }}
-            filter={['==', ['get', 'layerId'], group.groupId]}
+            type={'fill'}
+            paint={{ 'fill-opacity': 0 }}
+            filter={groupFilter}
           />
-        );
-      }) ?? [];
-
-    const fillLayers =
-      visibleGroups?.map((group) => {
-        const opacity = Math.min(0.4, group.style.opacity ?? 0.2);
-        const selectedOpacity = opacity * 2;
-        const hoverOpacity = opacity * 1.5;
-        const hoverAndSelectedOpacity = opacity * 2.5;
-
-        const groupFilter: FilterSpecification = ['==', ['get', 'layerId'], group.groupId];
-
-        const selectedFilter: FilterSpecification = ['==', ['get', 'selected'], true];
-        const notSelectedFilter: FilterSpecification = ['==', ['get', 'selected'], false];
-
-        const hoverFilter: FilterSpecification = ['==', ['get', 'id'], hoverFeatureId ?? null];
-        const notHoverFilter: FilterSpecification = ['!=', ['get', 'id'], hoverFeatureId ?? null];
-
-        return (
-          <>
-            {/* Base fill. This layer is clickable */}
-            <Layer
-              key={group.groupId}
-              id={group.groupId}
-              source={'mapData'}
-              type={'fill'}
-              paint={{ 'fill-opacity': 0 }}
-              filter={groupFilter}
-            />
-            {/* Fill for base layer */}
-            <Layer
-              key={`${group.groupId}-unselected`}
-              id={`${group.groupId}-unselected`}
-              source={'mapData'}
-              type={'fill'}
-              paint={
-                group.style.fillPatternUrl
-                  ? {
-                      'fill-pattern': group.style.fillPatternUrl,
-                      'fill-opacity': opacity,
-                    }
-                  : {
-                      'fill-color': group.style.fillColor,
-                      'fill-opacity': opacity,
-                    }
-              }
-              filter={['all', groupFilter, notSelectedFilter, notHoverFilter]}
-            />
-            {/* Fill for seleced layer */}
-            <Layer
-              key={`${group.groupId}-selected`}
-              id={`${group.groupId}-selected`}
-              source={'mapData'}
-              type={'fill'}
-              paint={
-                group.style.fillPatternUrl
-                  ? {
-                      'fill-pattern': group.style.fillPatternUrl,
-                      'fill-opacity': selectedOpacity,
-                    }
-                  : {
-                      'fill-color': group.style.fillColor,
-                      'fill-opacity': selectedOpacity,
-                    }
-              }
-              filter={['all', groupFilter, selectedFilter, notHoverFilter]}
-            />
-            {/* Fill for hover layer */}
-            <Layer
-              key={`${group.groupId}-hover`}
-              id={`${group.groupId}-hover`}
-              source={'mapData'}
-              type={'fill'}
-              paint={
-                group.style.fillPatternUrl
-                  ? {
-                      'fill-pattern': group.style.fillPatternUrl,
-                      'fill-opacity': hoverOpacity,
-                    }
-                  : {
-                      'fill-color': group.style.fillColor,
-                      'fill-opacity': hoverOpacity,
-                    }
-              }
-              filter={['all', groupFilter, hoverFilter, notSelectedFilter]}
-            />
-            {/* Fill for hover and selected layer */}
-            <Layer
-              key={`${group.groupId}-selected-hover`}
-              id={`${group.groupId}-selected-hover`}
-              source={'mapData'}
-              type={'fill'}
-              paint={
-                group.style.fillPatternUrl
-                  ? {
-                      'fill-pattern': group.style.fillPatternUrl,
-                      'fill-opacity': hoverAndSelectedOpacity,
-                    }
-                  : {
-                      'fill-color': group.style.fillColor,
-                      'fill-opacity': hoverAndSelectedOpacity,
-                    }
-              }
-              filter={['all', groupFilter, hoverFilter, selectedFilter]}
-            />
-          </>
-        );
-      }) ?? [];
-
-    const textLayers =
-      visibleGroups?.map((group) => {
-        const groupFilter: FilterSpecification = ['==', ['get', 'layerId'], group.groupId];
-        const labelFilter: FilterSpecification = ['has', 'label'];
-
-        return (
+          {/* Fill for base layer */}
           <Layer
-            key={`${group.groupId}-label`}
-            id={`${group.groupId}-label`}
+            key={`${group.groupId}-unselected`}
+            id={`${group.groupId}-unselected`}
             source={'mapData'}
-            type={'symbol'}
-            layout={{
-              'text-field': ['get', 'label'],
-              'text-size': 14,
-              'text-line-height': 20,
-              'text-font': ['Open Sans Bold', 'Arial Unicode MS Regular'],
-              'text-anchor': 'center',
-              'text-justify': 'center',
-            }}
-            paint={{
-              'text-color': '#ffffff',
-            }}
-            filter={['all', groupFilter, labelFilter]}
+            type={'fill'}
+            paint={
+              group.style.fillPatternUrl
+                ? {
+                    'fill-pattern': group.style.fillPatternUrl,
+                    'fill-opacity': opacity,
+                  }
+                : {
+                    'fill-color': group.style.fillColor,
+                    'fill-opacity': opacity,
+                  }
+            }
+            filter={['all', groupFilter, notSelectedFilter, notHoverFilter]}
           />
-        );
-      }) ?? [];
+          {/* Fill for seleced layer */}
+          <Layer
+            key={`${group.groupId}-selected`}
+            id={`${group.groupId}-selected`}
+            source={'mapData'}
+            type={'fill'}
+            paint={
+              group.style.fillPatternUrl
+                ? {
+                    'fill-pattern': group.style.fillPatternUrl,
+                    'fill-opacity': selectedOpacity,
+                  }
+                : {
+                    'fill-color': group.style.fillColor,
+                    'fill-opacity': selectedOpacity,
+                  }
+            }
+            filter={['all', groupFilter, selectedFilter, notHoverFilter]}
+          />
+          {/* Fill for hover layer */}
+          <Layer
+            key={`${group.groupId}-hover`}
+            id={`${group.groupId}-hover`}
+            source={'mapData'}
+            type={'fill'}
+            paint={
+              group.style.fillPatternUrl
+                ? {
+                    'fill-pattern': group.style.fillPatternUrl,
+                    'fill-opacity': hoverOpacity,
+                  }
+                : {
+                    'fill-color': group.style.fillColor,
+                    'fill-opacity': hoverOpacity,
+                  }
+            }
+            filter={['all', groupFilter, hoverFilter, notSelectedFilter]}
+          />
+          {/* Fill for hover and selected layer */}
+          <Layer
+            key={`${group.groupId}-selected-hover`}
+            id={`${group.groupId}-selected-hover`}
+            source={'mapData'}
+            type={'fill'}
+            paint={
+              group.style.fillPatternUrl
+                ? {
+                    'fill-pattern': group.style.fillPatternUrl,
+                    'fill-opacity': hoverAndSelectedOpacity,
+                  }
+                : {
+                    'fill-color': group.style.fillColor,
+                    'fill-opacity': hoverAndSelectedOpacity,
+                  }
+            }
+            filter={['all', groupFilter, hoverFilter, selectedFilter]}
+          />
+        </>
+      );
+    });
 
-    return [...borderLayers, ...fillLayers, ...textLayers];
+    const _textLayers = visibleGroups?.map((group) => {
+      const groupFilter: FilterSpecification = ['==', ['get', 'layerId'], group.groupId];
+      const labelFilter: FilterSpecification = ['has', 'label'];
+
+      return (
+        <Layer
+          key={`${group.groupId}-label`}
+          id={`${group.groupId}-label`}
+          source={'mapData'}
+          type={'symbol'}
+          layout={{
+            'text-field': ['get', 'label'],
+            'text-size': 14,
+            'text-line-height': 20,
+            'text-font': ['Open Sans Bold', 'Arial Unicode MS Regular'],
+            'text-anchor': 'center',
+            'text-justify': 'center',
+          }}
+          paint={{
+            'text-color': '#ffffff',
+          }}
+          filter={['all', groupFilter, labelFilter]}
+        />
+      );
+    });
+
+    return {
+      borderLayers: _borderLayers,
+      fillLayers: _fillLayers,
+      textLayers: _textLayers,
+    };
   }, [featureGroups, hoverFeatureId]);
 
+  const highlightLayers = useMemo(() => {
+    const visibleGroups = highlightGroups?.filter((group) => !group.hidden);
+
+    return (
+      visibleGroups?.flatMap((group) => {
+        return group.highlights.map((highlight) => {
+          const highlightFeatureIds = highlight.featureIds.map(
+            ({ featureGroupId, featureId }) => `${featureGroupId}/${featureId}`
+          );
+
+          return (
+            <Layer
+              key={`highlight-${highlight.highlightId}`}
+              id={`highlight-${highlight.highlightId}`}
+              source={'mapData'}
+              type={'fill'}
+              paint={
+                highlight.style.fillPatternUrl
+                  ? {
+                      'fill-pattern': highlight.style.fillPatternUrl,
+                      'fill-opacity': highlight.style.opacity ?? 0.5,
+                    }
+                  : {
+                      'fill-color': highlight.style.fillColor,
+                      'fill-opacity': highlight.style.opacity ?? 0.5,
+                    }
+              }
+              filter={[
+                'all',
+                ['has', 'layerFeatureId'],
+                ['match', ['get', 'layerFeatureId'], highlightFeatureIds, true, false],
+              ]}
+            />
+          );
+        });
+      }) ?? []
+    );
+  }, [highlightGroups]);
+
   const markersComponents = useMemo(() => {
-    return markerGroups?.flatMap((markerGroup) => {
-      // cluster markers here
-      const clusteredMarkers = clusterMarkers(mapRef.current, markerGroup.markers);
+    return markerGroups
+      ?.filter((markerGroup) => !markerGroup.hidden)
+      ?.flatMap((markerGroup) => {
+        // cluster markers here
+        const clusteredMarkers = clusterMarkers(mapRef.current, markerGroup.markers);
 
-      return clusteredMarkers.map((markers, i) => {
-        if (markers.length === 1) {
-          const marker = markers[0];
+        return clusteredMarkers.map((markers, i) => {
+          if (markers.length === 1) {
+            const marker = markers[0];
 
-          return (
-            <Marker
-              className='map-marker'
-              key={`marker-${i}`}
-              longitude={marker.longitude}
-              latitude={marker.latitude}
-              anchor='center'
-              onClick={(event) => {
-                marker.onClick?.();
-                event.originalEvent.stopPropagation();
-              }}
-              style={{ backgroundColor: marker.selected ? markerGroup.style.iconColor : theme.palette.TwClrBg }}
-            >
-              <Icon
-                fillColor={marker.selected ? theme.palette.TwClrBg : markerGroup.style.iconColor}
-                name={markerGroup.style.iconName}
-                size={'small'}
-              />
-            </Marker>
-          );
-        } else if (markers.length > 1) {
-          const latSum = markers.reduce((sum, marker) => sum + marker.latitude, 0);
-          const lngSum = markers.reduce((sum, marker) => sum + marker.longitude, 0);
-          const latAvg = latSum / markers.length;
-          const lngAvg = lngSum / markers.length;
+            return (
+              <Marker
+                className='map-marker'
+                key={`marker-${i}`}
+                longitude={marker.longitude}
+                latitude={marker.latitude}
+                anchor='center'
+                onClick={(event) => {
+                  marker.onClick?.();
+                  event.originalEvent.stopPropagation();
+                }}
+                style={{ backgroundColor: marker.selected ? markerGroup.style.iconColor : theme.palette.TwClrBg }}
+              >
+                <Icon
+                  fillColor={marker.selected ? theme.palette.TwClrBg : markerGroup.style.iconColor}
+                  name={markerGroup.style.iconName}
+                  size={'small'}
+                />
+              </Marker>
+            );
+          } else if (markers.length > 1) {
+            const latSum = markers.reduce((sum, marker) => sum + marker.latitude, 0);
+            const lngSum = markers.reduce((sum, marker) => sum + marker.longitude, 0);
+            const latAvg = latSum / markers.length;
+            const lngAvg = lngSum / markers.length;
 
-          const selected = markers.some((marker) => marker.selected);
+            const selected = markers.some((marker) => marker.selected);
 
-          return (
-            <Marker
-              className='map-marker map-marker--cluster'
-              key={`marker-${i}`}
-              longitude={lngAvg}
-              latitude={latAvg}
-              anchor='center'
-              onClick={(event) => {
-                mapRef.current?.easeTo({
-                  center: { lat: latAvg, lon: lngAvg },
-                  zoom: (zoom ?? 10) + 1,
-                  duration: 500,
-                });
-                event.originalEvent.stopPropagation();
-              }}
-              style={{ backgroundColor: selected ? markerGroup.style.iconColor : theme.palette.TwClrBg }}
-            >
-              <p className='title'>{markers.length}</p>
-              <Icon
-                fillColor={selected ? theme.palette.TwClrBg : markerGroup.style.iconColor}
-                name={markerGroup.style.iconName}
-                size={'small'}
-              />
-            </Marker>
-          );
-        }
+            return (
+              <Marker
+                className='map-marker map-marker--cluster'
+                key={`marker-${i}`}
+                longitude={lngAvg}
+                latitude={latAvg}
+                anchor='center'
+                onClick={(event) => {
+                  mapRef.current?.easeTo({
+                    center: { lat: latAvg, lon: lngAvg },
+                    zoom: (zoom ?? 10) + 1,
+                    duration: 500,
+                  });
+                  event.originalEvent.stopPropagation();
+                }}
+                style={{ backgroundColor: selected ? markerGroup.style.iconColor : theme.palette.TwClrBg }}
+              >
+                <p className='title'>{markers.length}</p>
+                <Icon
+                  fillColor={selected ? theme.palette.TwClrBg : markerGroup.style.iconColor}
+                  name={markerGroup.style.iconName}
+                  size={'small'}
+                />
+              </Marker>
+            );
+          }
+        });
       });
-    });
   }, [markerGroups, theme, zoom]);
 
   const onMouseMove = useCallback((event: MapMouseEvent) => {
@@ -525,7 +585,7 @@ const MapBox = (props: MapBoxProps): JSX.Element => {
       key={mapId}
       attributionControl={false}
       cursor={cursor}
-      doubleClickZoom={!disableZoom}
+      doubleClickZoom={!disableZoom && !disableDoubleClickZoom}
       interactiveLayerIds={interactiveLayerIds}
       initialViewState={initialViewState}
       mapboxAccessToken={token}
@@ -585,7 +645,10 @@ const MapBox = (props: MapBoxProps): JSX.Element => {
       )}
       {geojson && (
         <Source id='mapData' type='geojson' data={geojson}>
-          {mapLayers}
+          {borderLayers}
+          {fillLayers}
+          {highlightLayers}
+          {textLayers}
         </Source>
       )}
       {markersComponents}

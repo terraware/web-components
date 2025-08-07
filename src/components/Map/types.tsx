@@ -6,6 +6,7 @@ import { IconName } from '../Icon/icons';
 export type MapProperties = {
   id: string;
   clickable: boolean;
+  layerFeatureId: string; // combining layer + feautre ID
   layerId: string; // determines which style to apply
   priority: number;
   [name: string]: any;
