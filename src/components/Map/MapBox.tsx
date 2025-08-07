@@ -592,7 +592,7 @@ const MapBox = (props: MapBoxProps): JSX.Element => {
       mapStyle={stylesUrl[mapViewStyle]}
       ref={mapRefCallback}
       scrollZoom={!disableZoom}
-      style={{ width: 'fill', height: isDesktop ? 'fill' : '80vh', flexGrow: isDesktop ? 1 : undefined }}
+      style={{ width: 'auto', height: isDesktop ? 'auto' : '80vh', flexGrow: isDesktop ? 1 : undefined }}
       onClick={onMapClick}
       onMove={onMove}
       onMouseEnter={onMouseEnter}
