@@ -96,6 +96,7 @@ const Template: Story<MapBoxProps> = (args) => {
           {
             featureId: 'C',
             label: 'C',
+            // onClick is unset intentionally. There will be no cursor pointer or hover shading.
             // onClick: onFeatureClicked('Red', 'C'),
             priority: 2,
             selected: selectedFeatureId === 'C',
