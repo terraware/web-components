@@ -25,7 +25,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/17</span>
+                <span class='fraction'>0/18</span>
             </div>
         
             
@@ -46,7 +46,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/16</span>
+                <span class='fraction'>0/17</span>
             </div>
         
             
@@ -262,7 +262,32 @@
 <a name='L197'></a><a href='#L197'>197</a>
 <a name='L198'></a><a href='#L198'>198</a>
 <a name='L199'></a><a href='#L199'>199</a>
-<a name='L200'></a><a href='#L200'>200</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L200'></a><a href='#L200'>200</a>
+<a name='L201'></a><a href='#L201'>201</a>
+<a name='L202'></a><a href='#L202'>202</a>
+<a name='L203'></a><a href='#L203'>203</a>
+<a name='L204'></a><a href='#L204'>204</a>
+<a name='L205'></a><a href='#L205'>205</a>
+<a name='L206'></a><a href='#L206'>206</a>
+<a name='L207'></a><a href='#L207'>207</a>
+<a name='L208'></a><a href='#L208'>208</a>
+<a name='L209'></a><a href='#L209'>209</a>
+<a name='L210'></a><a href='#L210'>210</a>
+<a name='L211'></a><a href='#L211'>211</a>
+<a name='L212'></a><a href='#L212'>212</a>
+<a name='L213'></a><a href='#L213'>213</a>
+<a name='L214'></a><a href='#L214'>214</a>
+<a name='L215'></a><a href='#L215'>215</a>
+<a name='L216'></a><a href='#L216'>216</a>
+<a name='L217'></a><a href='#L217'>217</a>
+<a name='L218'></a><a href='#L218'>218</a>
+<a name='L219'></a><a href='#L219'>219</a>
+<a name='L220'></a><a href='#L220'>220</a>
+<a name='L221'></a><a href='#L221'>221</a>
+<a name='L222'></a><a href='#L222'>222</a>
+<a name='L223'></a><a href='#L223'>223</a>
+<a name='L224'></a><a href='#L224'>224</a>
+<a name='L225'></a><a href='#L225'>225</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -412,7 +437,32 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -467,7 +517,7 @@ import { Box } from '@mui/material';
 import { action } from '@storybook/addon-actions';
 import { Story } from '@storybook/react';
 &nbsp;
-import MapBox, { MapBoxProps, MapFeatureGroup } from '../components/Map/MapBox';
+import MapBox, { MapBoxProps, MapFeatureGroup, MapHighlightGroup } from '../components/Map/MapBox';
 import MapContainer from '../components/Map/MapContainer';
 import MapDrawer from '../components/Map/MapDrawer';
 import { MapViewStyle } from '../components/Map/types';
@@ -505,7 +555,7 @@ const Template: Story&lt;MapBoxProps&gt; = <span class="cstat-no" title="stateme
             featureId: 'A',
             label: 'A',
             onClick: onFeatureClicked('Green', 'A'),
-            priority: 3,
+            priority: 4,
             selected: selectedFeatureId === 'A',
             geometry: {
               type: 'MultiPolygon',
@@ -527,7 +577,7 @@ const Template: Story&lt;MapBoxProps&gt; = <span class="cstat-no" title="stateme
             featureId: 'B',
             label: 'B',
             onClick: onFeatureClicked('Green', 'B'),
-            priority: 4,
+            priority: 3,
             selected: selectedFeatureId === 'B',
             geometry: {
               type: 'MultiPolygon',
@@ -559,8 +609,9 @@ const Template: Story&lt;MapBoxProps&gt; = <span class="cstat-no" title="stateme
           {
             featureId: 'C',
             label: 'C',
-            onClick: onFeatureClicked('Red', 'C'),
-            priority: 1,
+            // onClick is unset intentionally. There will be no cursor pointer or hover shading.
+            // onClick: onFeatureClicked('Red', 'C'),
+            priority: 2,
             selected: selectedFeatureId === 'C',
             geometry: {
               type: 'MultiPolygon',
@@ -582,7 +633,7 @@ const Template: Story&lt;MapBoxProps&gt; = <span class="cstat-no" title="stateme
             featureId: 'D',
             label: 'D',
             onClick: onFeatureClicked('Red', 'D'),
-            priority: 2,
+            priority: 1,
             selected: selectedFeatureId === 'D',
             geometry: {
               type: 'MultiPolygon',
@@ -611,6 +662,22 @@ const Template: Story&lt;MapBoxProps&gt; = <span class="cstat-no" title="stateme
     ];
   }, [selectedFeatureId]);
 &nbsp;
+  const mapHighlightGroups: MapHighlightGroup[] = <span class="cstat-no" title="statement not covered" >[</span>
+    {
+      highlights: [
+        {
+          featureIds: [{ featureGroupId: 'Red', featureId: 'D' }],
+          highlightId: 'highlight',
+          style: {
+            fillPatternUrl: '/assets/stripes-m.png',
+            opacity: 1.0,
+            type: 'fill',
+          },
+        },
+      ],
+    },
+  ];
+&nbsp;
 <span class="cstat-no" title="statement not covered" >  return (</span>
     &lt;MapContainer
       containerId={'map-container'}
@@ -619,7 +686,15 @@ const Template: Story&lt;MapBoxProps&gt; = <span class="cstat-no" title="stateme
           {...args}
           containerId={'map-container'}
           cursorInteract={'pointer'}
+          disableDoubleClickZoom
           featureGroups={mapFeautureGroups}
+          highlightGroups={mapHighlightGroups}
+          initialViewState={{
+            latitude: 21.3,
+            longitude: -157.8,
+            zoom: 14,
+          }}
+          mapImageUrls={['/assets/stripes-m.png']}
           mapViewStyle={mapViewStyle}
           setMapViewStyle={setMapViewStyle}
           onClickCanvas={onMapCLick}
@@ -667,7 +742,7 @@ export const Default = <span class="cstat-no" title="statement not covered" >Tem
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-08-07T20:31:09.748Z
+                at 2025-08-08T18:39:16.234Z
             </div>
         <script src="../../prettify.js"></script>
         <script>
