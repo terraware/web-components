@@ -4,7 +4,7 @@ import { Box } from '@mui/material';
 import { action } from '@storybook/addon-actions';
 import { Story } from '@storybook/react';
 
-import MapBox, { MapBoxProps, MapFeatureGroup } from '../components/Map/MapBox';
+import MapBox, { MapBoxProps, MapFeatureGroup, MapHighlightGroup } from '../components/Map/MapBox';
 import MapContainer from '../components/Map/MapContainer';
 import MapDrawer from '../components/Map/MapDrawer';
 import { MapViewStyle } from '../components/Map/types';
@@ -42,7 +42,7 @@ const Template: Story<MapBoxProps> = (args) => {
             featureId: 'A',
             label: 'A',
             onClick: onFeatureClicked('Green', 'A'),
-            priority: 3,
+            priority: 4,
             selected: selectedFeatureId === 'A',
             geometry: {
               type: 'MultiPolygon',
@@ -64,7 +64,7 @@ const Template: Story<MapBoxProps> = (args) => {
             featureId: 'B',
             label: 'B',
             onClick: onFeatureClicked('Green', 'B'),
-            priority: 4,
+            priority: 3,
             selected: selectedFeatureId === 'B',
             geometry: {
               type: 'MultiPolygon',
@@ -96,8 +96,9 @@ const Template: Story<MapBoxProps> = (args) => {
           {
             featureId: 'C',
             label: 'C',
-            onClick: onFeatureClicked('Red', 'C'),
-            priority: 1,
+            // onClick is unset intentionally. There will be no cursor pointer or hover shading.
+            // onClick: onFeatureClicked('Red', 'C'),
+            priority: 2,
             selected: selectedFeatureId === 'C',
             geometry: {
               type: 'MultiPolygon',
@@ -119,7 +120,7 @@ const Template: Story<MapBoxProps> = (args) => {
             featureId: 'D',
             label: 'D',
             onClick: onFeatureClicked('Red', 'D'),
-            priority: 2,
+            priority: 1,
             selected: selectedFeatureId === 'D',
             geometry: {
               type: 'MultiPolygon',
@@ -148,6 +149,22 @@ const Template: Story<MapBoxProps> = (args) => {
     ];
   }, [selectedFeatureId]);
 
+  const mapHighlightGroups: MapHighlightGroup[] = [
+    {
+      highlights: [
+        {
+          featureIds: [{ featureGroupId: 'Red', featureId: 'D' }],
+          highlightId: 'highlight',
+          style: {
+            fillPatternUrl: '/assets/stripes-m.png',
+            opacity: 1.0,
+            type: 'fill',
+          },
+        },
+      ],
+    },
+  ];
+
   return (
     <MapContainer
       containerId={'map-container'}
@@ -156,7 +173,15 @@ const Template: Story<MapBoxProps> = (args) => {
           {...args}
           containerId={'map-container'}
           cursorInteract={'pointer'}
+          disableDoubleClickZoom
           featureGroups={mapFeautureGroups}
+          highlightGroups={mapHighlightGroups}
+          initialViewState={{
+            latitude: 21.3,
+            longitude: -157.8,
+            zoom: 14,
+          }}
+          mapImageUrls={['/assets/stripes-m.png']}
           mapViewStyle={mapViewStyle}
           setMapViewStyle={setMapViewStyle}
           onClickCanvas={onMapCLick}
