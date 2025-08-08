@@ -14,9 +14,7 @@ type MapContainerProps = {
 const MapContainer = (props: MapContainerProps) => {
   const { containerId, drawer, drawerOpen, legend, map } = props;
   const { isDesktop } = useDeviceInfo();
-  const drawerOnly = useMemo(() => {
-    return !isDesktop && drawerOpen;
-  }, [drawerOpen, isDesktop]);
+  const drawerOnly = useMemo(() => !isDesktop && drawerOpen, [drawerOpen, isDesktop]);
 
   return (
     <div

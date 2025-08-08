@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import ReactMapGL, {
   FullscreenControl,
   Layer,
@@ -523,6 +523,18 @@ const MapBox = (props: MapBoxProps): JSX.Element => {
       }
     }
     setHoverFeatureId(undefined);
+  }, []);
+
+  useEffect(() => {
+    if (!mapRef.current) {
+      return;
+    }
+    const observer = new ResizeObserver(() => {
+      mapRef.current?.resize();
+    });
+    observer.observe(mapRef.current.getContainer());
+
+    return () => observer.disconnect();
   }, []);
 
   // Hovering interactive layers
