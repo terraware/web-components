@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import React, { ReactNode, useMemo } from 'react';
 
 import { useDeviceInfo } from '../../utils';
 import './styles.scss';
@@ -14,6 +14,7 @@ type MapContainerProps = {
 const MapContainer = (props: MapContainerProps) => {
   const { containerId, drawer, drawerOpen, legend, map } = props;
   const { isDesktop } = useDeviceInfo();
+  const drawerOnly = useMemo(() => !isDesktop && drawerOpen, [drawerOpen, isDesktop]);
 
   return (
     <div
@@ -22,9 +23,9 @@ const MapContainer = (props: MapContainerProps) => {
         isDesktop ? '--desktop' : `--mobile${drawerOpen ? '-drawer-open' : ''}`
       }`}
     >
-      {(isDesktop || !drawerOpen) && map}
+      <div className={`map-holder${drawerOnly ? ' map-holder--hidden' : ''}`}>{map}</div>
       {drawerOpen && drawer}
-      {(isDesktop || !drawerOpen) && legend}
+      {!drawerOnly && legend}
     </div>
   );
 };

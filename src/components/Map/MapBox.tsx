@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import ReactMapGL, {
   FullscreenControl,
   Layer,
@@ -80,6 +80,7 @@ export type MapBoxProps = {
   cursorMap?: MapCursor;
   disableDoubleClickZoom?: boolean;
   disableZoom?: boolean;
+  drawerOpen?: boolean; // Used to trigger resize
   featureGroups?: MapFeatureGroup[];
   hideFullScreenControl?: boolean;
   hideMapViewStyleControl?: boolean;
@@ -110,6 +111,7 @@ const MapBox = (props: MapBoxProps): JSX.Element => {
     cursorMap,
     disableDoubleClickZoom,
     disableZoom,
+    drawerOpen,
     featureGroups,
     hideFullScreenControl,
     hideMapViewStyleControl,
@@ -525,6 +527,26 @@ const MapBox = (props: MapBoxProps): JSX.Element => {
     setHoverFeatureId(undefined);
   }, []);
 
+  useEffect(() => {
+    if (!mapRef.current) {
+      return;
+    }
+    const observer = new ResizeObserver(() => {
+      mapRef.current?.resize();
+    });
+    observer.observe(mapRef.current.getContainer());
+
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (!mapRef.current) {
+      return;
+    }
+
+    mapRef.current.resize();
+  }, [drawerOpen]);
+
   // Hovering interactive layers
   const onMouseEnter = useCallback(
     (event: MapMouseEvent) => {
@@ -592,7 +614,7 @@ const MapBox = (props: MapBoxProps): JSX.Element => {
       mapStyle={stylesUrl[mapViewStyle]}
       ref={mapRefCallback}
       scrollZoom={!disableZoom}
-      style={{ width: 'fill', height: isDesktop ? 'fill' : '80vh', flexGrow: isDesktop ? 1 : undefined }}
+      style={{ width: 'auto', height: isDesktop ? 'auto' : '80vh', flexGrow: isDesktop ? 1 : undefined }}
       onClick={onMapClick}
       onMove={onMove}
       onMouseEnter={onMouseEnter}
