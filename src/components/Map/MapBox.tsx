@@ -80,6 +80,7 @@ export type MapBoxProps = {
   cursorMap?: MapCursor;
   disableDoubleClickZoom?: boolean;
   disableZoom?: boolean;
+  drawerOpen?: boolean; // Used to trigger resize
   featureGroups?: MapFeatureGroup[];
   hideFullScreenControl?: boolean;
   hideMapViewStyleControl?: boolean;
@@ -110,6 +111,7 @@ const MapBox = (props: MapBoxProps): JSX.Element => {
     cursorMap,
     disableDoubleClickZoom,
     disableZoom,
+    drawerOpen,
     featureGroups,
     hideFullScreenControl,
     hideMapViewStyleControl,
@@ -536,6 +538,14 @@ const MapBox = (props: MapBoxProps): JSX.Element => {
 
     return () => observer.disconnect();
   }, []);
+
+  useEffect(() => {
+    if (!mapRef.current) {
+      return;
+    }
+
+    mapRef.current.resize();
+  }, [drawerOpen]);
 
   // Hovering interactive layers
   const onMouseEnter = useCallback(
