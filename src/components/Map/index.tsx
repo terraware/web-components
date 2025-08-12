@@ -44,6 +44,7 @@ export type MapComponentProps = {
   drawerTitle?: string;
   features?: MapFeatureSection[];
   hideFullScreenControl?: boolean;
+  hideLegend?: boolean;
   hideMapViewStyleControl?: boolean;
   hideZoomControl?: boolean;
   initialSelectedLayerId?: string;
@@ -73,6 +74,7 @@ const MapComponent = (props: MapComponentProps) => {
     drawerTitle,
     features,
     hideFullScreenControl,
+    hideLegend,
     hideMapViewStyleControl,
     hideZoomControl,
     initialSelectedLayerId,
@@ -227,7 +229,7 @@ const MapComponent = (props: MapComponentProps) => {
         </MapDrawer>
       }
       drawerOpen={drawerOpen}
-      legend={legends && <MapLegend legends={legends} />}
+      legend={!hideLegend && legends && <MapLegend legends={legends} />}
     />
   );
 };
