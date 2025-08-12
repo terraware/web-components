@@ -10,7 +10,7 @@ import ReactMapGL, {
 } from 'react-map-gl/mapbox';
 
 import { Box, useTheme } from '@mui/material';
-import { Feature, FeatureCollection, MultiPolygon } from 'geojson';
+import { Feature, FeatureCollection } from 'geojson';
 import { FilterSpecification, MapMouseEvent, Point } from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 
@@ -19,59 +19,17 @@ import Icon from '../Icon/Icon';
 import MapViewStyleControl from './MapViewStyleControl';
 import {
   MapCursor,
-  MapFillComponentStyle,
-  MapIconComponentStyle,
+  MapHighlightGroup,
+  MapLayer,
+  MapMarker,
+  MapMarkerGroup,
   MapProperties,
   MapViewStyle,
   stylesUrl,
 } from './types';
-
-// Each layer item will become a feature, with a property of id.
-export type MapFeature = {
-  featureId: string;
-  geometry: MultiPolygon;
-  label?: string;
-  onClick?: () => void;
-  priority?: number; // Items with higher priority will be clicked first
-  selected?: boolean;
-};
-
-// Each layer will become a set of features that have the same type.
-export type MapFeatureGroup = {
-  groupId: string;
-  hidden?: boolean;
-  features: MapFeature[];
-  style: MapFillComponentStyle;
-};
-
-export type MapHighlight = {
-  featureIds: { featureGroupId: string; featureId: string }[];
-  highlightId: string;
-  style: MapFillComponentStyle;
-};
-
-// Additional shading/annotations for map entities
-export type MapHighlightGroup = {
-  hidden?: boolean;
-  highlights: MapHighlight[];
-};
-
-export type MapMarker = {
-  id: string; // Must be unique
-  longitude: number;
-  latitude: number;
-  onClick?: () => void;
-  selected?: boolean;
-};
-
-export type MapMarkerGroup = {
-  hidden?: boolean;
-  markers: MapMarker[];
-  style: MapIconComponentStyle;
-};
+import { useMaintainLayerOrder } from './useMaintainLayerOrder';
 
 export type MapBoxProps = {
-  children?: React.ReactNode;
   clusterRadius?: number;
   containerId?: string;
   controlBottomLeft?: React.ReactNode;
@@ -81,7 +39,6 @@ export type MapBoxProps = {
   disableDoubleClickZoom?: boolean;
   disableZoom?: boolean;
   drawerOpen?: boolean; // Used to trigger resize
-  featureGroups?: MapFeatureGroup[];
   hideFullScreenControl?: boolean;
   hideMapViewStyleControl?: boolean;
   hideZoomControl?: boolean;
@@ -91,6 +48,7 @@ export type MapBoxProps = {
     longitude?: number;
     zoom?: number;
   };
+  layers?: MapLayer[];
   mapId: string;
   mapImageUrls?: string[];
   mapViewStyle: MapViewStyle;
@@ -102,7 +60,6 @@ export type MapBoxProps = {
 
 const MapBox = (props: MapBoxProps): JSX.Element => {
   const {
-    children,
     clusterRadius,
     containerId,
     controlBottomLeft,
@@ -112,7 +69,7 @@ const MapBox = (props: MapBoxProps): JSX.Element => {
     disableDoubleClickZoom,
     disableZoom,
     drawerOpen,
-    featureGroups,
+    layers: featureGroups,
     hideFullScreenControl,
     hideMapViewStyleControl,
     hideZoomControl,
@@ -206,7 +163,7 @@ const MapBox = (props: MapBoxProps): JSX.Element => {
   const interactiveLayerIds = useMemo(() => {
     return featureGroups
       ?.filter((group) => group.features.some((feature) => feature.onClick !== undefined))
-      ?.map((group) => group.groupId);
+      ?.map((group) => group.layerId);
   }, [featureGroups]);
 
   const geojson = useMemo((): FeatureCollection | undefined => {
@@ -216,8 +173,8 @@ const MapBox = (props: MapBoxProps): JSX.Element => {
           id: feature.featureId,
           clickable: feature.onClick !== undefined,
           label: feature.label,
-          layerFeatureId: `${group.groupId}/${feature.featureId}`,
-          layerId: group.groupId,
+          layerFeatureId: `${group.layerId}/${feature.featureId}`,
+          layerId: group.layerId,
           priority: feature.priority ?? 0,
           selected: feature.selected ?? false,
         };
@@ -239,31 +196,31 @@ const MapBox = (props: MapBoxProps): JSX.Element => {
   }, [featureGroups]);
 
   const { borderLayers, fillLayers, textLayers } = useMemo(() => {
-    const visibleGroups = featureGroups?.filter((group) => !group.hidden);
-
-    const _borderLayers = visibleGroups?.map((group) => {
+    const _borderLayers = featureGroups?.map((group) => {
       return (
         <Layer
-          key={`${group.groupId}-border`}
-          id={`${group.groupId}-border`}
+          key={`${group.layerId}-border`}
+          id={`${group.layerId}-border`}
           source={'mapData'}
           type='line'
           paint={{
             'line-color': group.style.borderColor,
             'line-width': 2,
           }}
-          filter={['==', ['get', 'layerId'], group.groupId]}
+          filter={['==', ['get', 'layerId'], group.layerId]}
         />
       );
     });
 
-    const _fillLayers = visibleGroups?.map((group) => {
+    const _fillLayers = featureGroups?.map((group) => {
       const opacity = Math.min(0.4, group.style.opacity ?? 0.2);
       const selectedOpacity = opacity * 2;
       const hoverOpacity = opacity * 1.5;
       const hoverAndSelectedOpacity = opacity * 2.5;
 
-      const groupFilter: FilterSpecification = ['==', ['get', 'layerId'], group.groupId];
+      const groupFilter: FilterSpecification = ['==', ['get', 'layerId'], group.layerId];
+
+      const clickableFilter: FilterSpecification = ['==', ['get', 'clickable'], true];
 
       const selectedFilter: FilterSpecification = ['==', ['get', 'selected'], true];
       const notSelectedFilter: FilterSpecification = ['==', ['get', 'selected'], false];
@@ -275,17 +232,17 @@ const MapBox = (props: MapBoxProps): JSX.Element => {
         <>
           {/* Base fill. This layer is clickable */}
           <Layer
-            key={group.groupId}
-            id={group.groupId}
+            key={group.layerId}
+            id={group.layerId}
             source={'mapData'}
             type={'fill'}
             paint={{ 'fill-opacity': 0 }}
-            filter={groupFilter}
+            filter={['all', groupFilter, clickableFilter]}
           />
           {/* Fill for base layer */}
           <Layer
-            key={`${group.groupId}-unselected`}
-            id={`${group.groupId}-unselected`}
+            key={`${group.layerId}-unselected`}
+            id={`${group.layerId}-unselected`}
             source={'mapData'}
             type={'fill'}
             paint={
@@ -303,8 +260,9 @@ const MapBox = (props: MapBoxProps): JSX.Element => {
           />
           {/* Fill for seleced layer */}
           <Layer
-            key={`${group.groupId}-selected`}
-            id={`${group.groupId}-selected`}
+            key={`${group.layerId}-selected`}
+            id={`${group.layerId}-selected`}
+            slot={'bottom'}
             source={'mapData'}
             type={'fill'}
             paint={
@@ -322,8 +280,8 @@ const MapBox = (props: MapBoxProps): JSX.Element => {
           />
           {/* Fill for hover layer */}
           <Layer
-            key={`${group.groupId}-hover`}
-            id={`${group.groupId}-hover`}
+            key={`${group.layerId}-hover`}
+            id={`${group.layerId}-hover`}
             source={'mapData'}
             type={'fill'}
             paint={
@@ -341,8 +299,8 @@ const MapBox = (props: MapBoxProps): JSX.Element => {
           />
           {/* Fill for hover and selected layer */}
           <Layer
-            key={`${group.groupId}-selected-hover`}
-            id={`${group.groupId}-selected-hover`}
+            key={`${group.layerId}-selected-hover`}
+            id={`${group.layerId}-selected-hover`}
             source={'mapData'}
             type={'fill'}
             paint={
@@ -362,14 +320,14 @@ const MapBox = (props: MapBoxProps): JSX.Element => {
       );
     });
 
-    const _textLayers = visibleGroups?.map((group) => {
-      const groupFilter: FilterSpecification = ['==', ['get', 'layerId'], group.groupId];
+    const _textLayers = featureGroups?.map((group) => {
+      const groupFilter: FilterSpecification = ['==', ['get', 'layerId'], group.layerId];
       const labelFilter: FilterSpecification = ['has', 'label'];
 
       return (
         <Layer
-          key={`${group.groupId}-label`}
-          id={`${group.groupId}-label`}
+          key={`${group.layerId}-label`}
+          id={`${group.layerId}-label`}
           source={'mapData'}
           type={'symbol'}
           layout={{
@@ -389,26 +347,22 @@ const MapBox = (props: MapBoxProps): JSX.Element => {
     });
 
     return {
-      borderLayers: _borderLayers,
-      fillLayers: _fillLayers,
-      textLayers: _textLayers,
+      borderLayers: _borderLayers ?? [],
+      fillLayers: _fillLayers ?? [],
+      textLayers: _textLayers ?? [],
     };
   }, [featureGroups, hoverFeatureId]);
 
   const highlightLayers = useMemo(() => {
-    const visibleGroups = highlightGroups?.filter((group) => !group.hidden);
-
     return (
-      visibleGroups?.flatMap((group) => {
-        return group.highlights.map((highlight) => {
-          const highlightFeatureIds = highlight.featureIds.map(
-            ({ featureGroupId, featureId }) => `${featureGroupId}/${featureId}`
-          );
+      highlightGroups?.flatMap((group) => {
+        return group.highlights.map((highlight, index) => {
+          const highlightFeatureIds = highlight.featureIds.map(({ layerId, featureId }) => `${layerId}/${featureId}`);
 
           return (
             <Layer
-              key={`highlight-${highlight.highlightId}`}
-              id={`highlight-${highlight.highlightId}`}
+              key={`highlight-${group.highlightId}-${index}`}
+              id={`highlight-${group.highlightId}-${index}`}
               source={'mapData'}
               type={'fill'}
               paint={
@@ -435,72 +389,70 @@ const MapBox = (props: MapBoxProps): JSX.Element => {
   }, [highlightGroups]);
 
   const markersComponents = useMemo(() => {
-    return markerGroups
-      ?.filter((markerGroup) => !markerGroup.hidden)
-      ?.flatMap((markerGroup) => {
-        // cluster markers here
-        const clusteredMarkers = clusterMarkers(mapRef.current, markerGroup.markers);
+    return markerGroups?.flatMap((markerGroup) => {
+      // cluster markers here
+      const clusteredMarkers = clusterMarkers(mapRef.current, markerGroup.markers);
 
-        return clusteredMarkers.map((markers, i) => {
-          if (markers.length === 1) {
-            const marker = markers[0];
+      return clusteredMarkers.map((markers, i) => {
+        if (markers.length === 1) {
+          const marker = markers[0];
 
-            return (
-              <Marker
-                className='map-marker'
-                key={`marker-${i}`}
-                longitude={marker.longitude}
-                latitude={marker.latitude}
-                anchor='center'
-                onClick={(event) => {
-                  marker.onClick?.();
-                  event.originalEvent.stopPropagation();
-                }}
-                style={{ backgroundColor: marker.selected ? markerGroup.style.iconColor : theme.palette.TwClrBg }}
-              >
-                <Icon
-                  fillColor={marker.selected ? theme.palette.TwClrBg : markerGroup.style.iconColor}
-                  name={markerGroup.style.iconName}
-                  size={'small'}
-                />
-              </Marker>
-            );
-          } else if (markers.length > 1) {
-            const latSum = markers.reduce((sum, marker) => sum + marker.latitude, 0);
-            const lngSum = markers.reduce((sum, marker) => sum + marker.longitude, 0);
-            const latAvg = latSum / markers.length;
-            const lngAvg = lngSum / markers.length;
+          return (
+            <Marker
+              className='map-marker'
+              key={`marker-${i}`}
+              longitude={marker.longitude}
+              latitude={marker.latitude}
+              anchor='center'
+              onClick={(event) => {
+                marker.onClick?.();
+                event.originalEvent.stopPropagation();
+              }}
+              style={{ backgroundColor: marker.selected ? markerGroup.style.iconColor : theme.palette.TwClrBg }}
+            >
+              <Icon
+                fillColor={marker.selected ? theme.palette.TwClrBg : markerGroup.style.iconColor}
+                name={markerGroup.style.iconName}
+                size={'small'}
+              />
+            </Marker>
+          );
+        } else if (markers.length > 1) {
+          const latSum = markers.reduce((sum, marker) => sum + marker.latitude, 0);
+          const lngSum = markers.reduce((sum, marker) => sum + marker.longitude, 0);
+          const latAvg = latSum / markers.length;
+          const lngAvg = lngSum / markers.length;
 
-            const selected = markers.some((marker) => marker.selected);
+          const selected = markers.some((marker) => marker.selected);
 
-            return (
-              <Marker
-                className='map-marker map-marker--cluster'
-                key={`marker-${i}`}
-                longitude={lngAvg}
-                latitude={latAvg}
-                anchor='center'
-                onClick={(event) => {
-                  mapRef.current?.easeTo({
-                    center: { lat: latAvg, lon: lngAvg },
-                    zoom: (zoom ?? 10) + 1,
-                    duration: 500,
-                  });
-                  event.originalEvent.stopPropagation();
-                }}
-                style={{ backgroundColor: selected ? markerGroup.style.iconColor : theme.palette.TwClrBg }}
-              >
-                <p className='title'>{markers.length}</p>
-                <Icon
-                  fillColor={selected ? theme.palette.TwClrBg : markerGroup.style.iconColor}
-                  name={markerGroup.style.iconName}
-                  size={'small'}
-                />
-              </Marker>
-            );
-          }
-        });
+          return (
+            <Marker
+              className='map-marker map-marker--cluster'
+              key={`marker-${i}`}
+              longitude={lngAvg}
+              latitude={latAvg}
+              anchor='center'
+              onClick={(event) => {
+                mapRef.current?.easeTo({
+                  center: { lat: latAvg, lon: lngAvg },
+                  zoom: (zoom ?? 10) + 1,
+                  duration: 500,
+                });
+                event.originalEvent.stopPropagation();
+              }}
+              style={{ backgroundColor: selected ? markerGroup.style.iconColor : theme.palette.TwClrBg }}
+            >
+              <p className='count'>{markers.length}</p>
+              <Icon
+                fillColor={selected ? theme.palette.TwClrBg : markerGroup.style.iconColor}
+                name={markerGroup.style.iconName}
+                size={'small'}
+              />
+            </Marker>
+          );
+        }
       });
+    });
   }, [markerGroups, theme, zoom]);
 
   const onMouseMove = useCallback((event: MapMouseEvent) => {
@@ -548,16 +500,7 @@ const MapBox = (props: MapBoxProps): JSX.Element => {
   }, [drawerOpen]);
 
   // Hovering interactive layers
-  const onMouseEnter = useCallback(
-    (event: MapMouseEvent) => {
-      if (event.features && event.features.some((feature) => feature.properties?.clickable)) {
-        setCursor(cursorInteract ?? 'auto');
-      } else {
-        setCursor('auto');
-      }
-    },
-    [cursorInteract]
-  );
+  const onMouseEnter = useCallback(() => setCursor(cursorInteract ?? 'pointer'), [cursorInteract]);
   const onMouseLeave = useCallback(() => setCursor('auto'), []);
 
   // Entering and exiting canvases
@@ -601,6 +544,17 @@ const MapBox = (props: MapBoxProps): JSX.Element => {
     },
     [featureGroups, onClickCanvas]
   );
+
+  const orderedLayerIds = useMemo(() => {
+    return [
+      ...fillLayers.map((layer) => layer.props.id),
+      ...highlightLayers.map((layer) => layer.props.id),
+      ...borderLayers.map((layer) => layer.props.id),
+      ...textLayers.map((layer) => layer.props.id),
+    ] as string[];
+  }, [borderLayers, fillLayers, highlightLayers, textLayers]);
+
+  useMaintainLayerOrder(mapRef, orderedLayerIds);
 
   return (
     <ReactMapGL
@@ -667,14 +621,13 @@ const MapBox = (props: MapBoxProps): JSX.Element => {
       )}
       {geojson && (
         <Source id='mapData' type='geojson' data={geojson}>
-          {borderLayers}
           {fillLayers}
           {highlightLayers}
+          {borderLayers}
           {textLayers}
         </Source>
       )}
       {markersComponents}
-      {children}
     </ReactMapGL>
   );
 };

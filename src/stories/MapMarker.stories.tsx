@@ -6,9 +6,9 @@ import { Story } from '@storybook/react';
 import { MapMouseEvent } from 'mapbox-gl';
 
 import Button from '../components/Button/Button';
-import MapBox, { MapMarker } from '../components/Map/MapBox';
+import MapBox from '../components/Map/MapBox';
 import MapContainer from '../components/Map/MapContainer';
-import { MapViewStyle } from '../components/Map/types';
+import { MapMarker, MapViewStyle } from '../components/Map/types';
 import TextField from '../components/Textfield/Textfield';
 import { useDeviceInfo } from '../utils';
 
@@ -83,7 +83,9 @@ const Template: Story<{ clusterRadius: number; token: string }> = (args) => {
           mapViewStyle={mapViewStyle}
           markerGroups={[
             {
+              label: 'plant',
               markers,
+              markerGroupId: 'plant',
               style: {
                 iconColor: 'green',
                 iconName: 'iconLivePlant',
