@@ -6,7 +6,7 @@ import { useDeviceInfo } from '../../utils';
 import Icon from '../Icon/Icon';
 import './styles.scss';
 
-type MapDrawerSize = 'small' | 'medium';
+export type MapDrawerSize = 'small' | 'medium';
 
 export type MapDrawerProp = {
   children?: ReactNode;

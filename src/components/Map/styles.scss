@@ -8,6 +8,7 @@
 
   &--desktop {
     flex-direction: row;
+    height: 700px;
     max-height: 700px;
 
     :fullscreen {
@@ -42,7 +43,7 @@
   background: $tw-clr-base-white;
 
   &--mobile {
-    width: fill;
+    width: stretch;
   }
 
   &--small {

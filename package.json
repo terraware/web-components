@@ -1,6 +1,6 @@
 {
   "name": "@terraware/web-components",
-  "version": "3.5.11",
+  "version": "3.5.12-rc.5",
   "author": "Terraformation Inc.",
   "license": "Apache-2.0",
   "repository": {
@@ -12,7 +12,13 @@
   },
   "homepage": "https://github.com/terraware/web-components#readme",
   "private": false,
+  "type": "module",
   "main": "dist/index.js",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js"
+    }
+  },
   "dependencies": {
     "@dnd-kit/core": "^6.0.7",
     "@dnd-kit/sortable": "^7.0.2",
@@ -25,11 +31,9 @@
     "classnames": "^2.3.2",
     "geojson": "^0.5.0",
     "luxon": "^3.3.0",
-    "mapbox-gl": "^3.13.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-intersection-observer": "^9.5.2",
-    "react-map-gl": "^8.0.4",
     "react-multi-carousel": "^2.8.2",
     "react-responsive": "^9.0.2",
     "react-sortable-hoc": "^2.0.0",
@@ -122,6 +126,8 @@
     "fs": "^0.0.1-security",
     "hex-rgb": "^5.0.0",
     "license-report": "^6.5.0",
+    "mapbox-gl": "^3.13.0",
+    "react-map-gl": "^8.0.4",
     "react-scripts": "^5.0.1",
     "storybook": "^7.0.7",
     "style-dictionary": "^3.9.1",
@@ -130,6 +136,12 @@
     "tslint-react": "^5.0.0",
     "tslint-react-hooks": "^2.2.2",
     "typescript": "^5.0.0"
+  },
+  "peerDependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-map-gl": "^8.0.4",
+    "mapbox-gl": "^3.13.0"
   },
   "resolutions": {
     "@babel/traverse": "7.24.1",
