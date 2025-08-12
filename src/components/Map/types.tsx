@@ -1,3 +1,5 @@
+import { MultiPolygon } from 'geojson';
+
 import { IconName } from '../Icon/icons';
 
 /**
@@ -26,6 +28,52 @@ export type MapFillComponentStyle = {
   fillPatternUrl?: string;
   opacity?: number;
   type: 'fill';
+};
+
+// Each layer item will become a feature, with a property of id.
+export type MapLayerFeature = {
+  featureId: string;
+  geometry: MultiPolygon;
+  label?: string;
+  onClick?: () => void;
+  priority?: number; // Items with higher priority will be clicked first
+  selected?: boolean;
+};
+
+// Each layer will become a set of features that have the same type.
+export type MapLayer = {
+  disabled?: boolean;
+  features: MapLayerFeature[];
+  label: string;
+  layerId: string;
+  style: MapFillComponentStyle;
+};
+
+export type MapHighlight = {
+  featureIds: { layerId: string; featureId: string }[];
+  style: MapFillComponentStyle;
+};
+
+// Additional shading/annotations for map entities
+export type MapHighlightGroup = {
+  highlightId: string;
+  highlights: MapHighlight[];
+};
+
+export type MapMarker = {
+  id: string; // Must be unique
+  longitude: number;
+  latitude: number;
+  onClick?: () => void;
+  selected?: boolean;
+};
+
+export type MapMarkerGroup = {
+  disabled?: boolean;
+  label: string;
+  markers: MapMarker[];
+  markerGroupId: string;
+  style: MapIconComponentStyle;
 };
 
 export type MapViewStyle = 'Outdoors' | 'Satellite' | 'Light' | 'Dark' | 'Streets';

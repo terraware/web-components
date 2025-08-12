@@ -18,6 +18,7 @@ import FormBottomBar from './components/FormBottomBar';
 import Icon from './components/Icon/Icon';
 import icons from './components/Icon/icons';
 import IconTooltip from './components/IconTooltip';
+import MapComponent from './components/Map';
 import Message from './components/Message/Message';
 import MultiSelect from './components/MultiSelect';
 import NavFooter from './components/Navbar/NavFooter';
@@ -90,6 +91,7 @@ export {
   icons,
   Icon,
   IconTooltip,
+  MapComponent,
   Message,
   MultiSelect,
   NavFooter,
