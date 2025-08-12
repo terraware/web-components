@@ -12,7 +12,7 @@ export default {
 };
 
 const Template: Story<MapLegendProps> = () => {
-  const [layer, setLayer] = useState<string>('forest');
+  const [layer, setLayer] = useState<string | undefined>('forest');
 
   const [houseVisible, setHouseVisible] = useState<boolean>(true);
   const [treeVisible, setTreeVisible] = useState<boolean>(true);

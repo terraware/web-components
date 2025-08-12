@@ -15,10 +15,13 @@ export type MapLayerLegendItem = {
 };
 
 export type MapLayerLegendGroup = {
+  disabled?: boolean;
+  tooltip?: string;
+  title: string;
   type: 'layer';
   items: MapLayerLegendItem[];
-  setSelectedLayer: (id: string) => void;
-  selectedLayer: string;
+  setSelectedLayer: (id: string | undefined) => void;
+  selectedLayer?: string;
 };
 
 export type MapMarkerLegendItem = {
@@ -31,27 +34,29 @@ export type MapMarkerLegendItem = {
 };
 
 export type MapMarkerLegendGroup = {
+  disabled?: boolean;
+  tooltip?: string;
+  title: string;
   type: 'marker';
   items: MapMarkerLegendItem[];
 };
 
 export type MapHighlightLegendItem = {
   label: string;
-  style: MapIconComponentStyle | MapFillComponentStyle;
+  style: MapFillComponentStyle;
 };
 
 export type MapHighlightLegendGroup = {
+  disabled?: boolean;
+  tooltip?: string;
+  title: string;
   type: 'highlight';
   items: MapHighlightLegendItem[];
   setVisible?: (visible: boolean) => void;
   visible: boolean;
 };
 
-export type MapLegendGroup = {
-  disabled?: boolean;
-  tooltip?: string;
-  title: string;
-} & (MapMarkerLegendGroup | MapLayerLegendGroup | MapHighlightLegendGroup);
+export type MapLegendGroup = MapMarkerLegendGroup | MapLayerLegendGroup | MapHighlightLegendGroup;
 
 export type MapLegendProps = {
   legends: MapLegendGroup[];
@@ -164,14 +169,10 @@ const MapLegend = ({ legends }: MapLegendProps): JSX.Element => {
 
             return <Box display='flex'>{visibleIcon}</Box>;
           case 'layer':
-            const layerLegend = legend as MapLayerLegendGroup;
             const layerItem = item as MapLayerLegendItem;
 
             return (
-              <Box
-                display='flex'
-                sx={{ visibility: layerItem.id === layerLegend.selectedLayer ? 'visible' : 'hidden' }}
-              >
+              <Box display='flex' sx={{ visibility: layerItem.id === legend.selectedLayer ? 'visible' : 'hidden' }}>
                 <Icon name='checkmark' style={{ marginRight: theme.spacing(1) }} />
               </Box>
             );
