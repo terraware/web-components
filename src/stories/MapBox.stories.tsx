@@ -158,7 +158,7 @@ const Template: Story<MapBoxProps> = (args) => {
         {
           featureIds: [{ layerId: 'Red', featureId: 'D' }],
           style: {
-            fillPatternUrl: '/assets/stripes-m.png',
+            fillPatternUrl: '/assets/stripes-50.png',
             opacity: 1.0,
             type: 'fill',
           },
@@ -184,7 +184,7 @@ const Template: Story<MapBoxProps> = (args) => {
             longitude: -157.8,
             zoom: 12,
           }}
-          mapImageUrls={['/assets/stripes-m.png']}
+          mapImageUrls={['/assets/stripes-50.png']}
           mapViewStyle={mapViewStyle}
           setMapViewStyle={setMapViewStyle}
           onClickCanvas={onMapClick}

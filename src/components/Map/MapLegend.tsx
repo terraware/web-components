@@ -144,7 +144,7 @@ const MapLegend = ({ legends }: MapLegendProps): JSX.Element => {
             <Box
               display={'flex'}
               sx={{
-                border: `2px solid ${item.style.borderColor ?? theme.palette.TwClrBrdr}`,
+                border: `2px solid ${item.style.borderColor ?? theme.palette.TwClrBaseGreen300}`,
                 opacity: disabled ? 0.7 : 1.0,
                 height: '16px',
                 width: '24px',
@@ -243,6 +243,7 @@ const MapLegend = ({ legends }: MapLegendProps): JSX.Element => {
       minWidth={isDesktop ? '160px' : undefined}
       width={isDesktop ? 'auto' : 'fill'}
       margin={0}
+      overflow={'scroll'}
     >
       {legendComponents}
     </Box>

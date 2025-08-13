@@ -226,6 +226,28 @@ const MapComponent = (props: MapComponentProps) => {
     }
   }, [initialViewState]);
 
+  const mapImageUrls = useMemo(() => {
+    const layerFeatures =
+      features?.filter((feature): feature is MapLayerFeatureSection => feature.type === 'layer') ?? [];
+    const highlightFeatures =
+      features?.filter((feature): feature is MapHighlightFeatureSection => feature.type === 'highlight') ?? [];
+
+    const layerImageUrls = layerFeatures
+      .flatMap((feature) => feature.layers)
+      .map((layer) => layer.style.fillPatternUrl)
+      .filter((url): url is string => url !== undefined);
+
+    const highlightImageUrls = highlightFeatures
+      .flatMap((feature) => feature.highlight.highlights)
+      .map((highlight) => highlight.style.fillPatternUrl)
+      .filter((url): url is string => url !== undefined);
+
+    const imageUrls = new Set(layerImageUrls);
+    highlightImageUrls.forEach((url) => imageUrls.add(url));
+
+    return Array.from(imageUrls);
+  }, [features]);
+
   return (
     <MapContainer
       containerId={'map-container'}
@@ -247,7 +269,7 @@ const MapComponent = (props: MapComponentProps) => {
           initialViewState={mapViewState}
           layers={layers}
           mapId={'mapId'}
-          mapImageUrls={['/assets/stripes-m.png']}
+          mapImageUrls={mapImageUrls}
           mapViewStyle={mapViewStyle}
           markerGroups={markerGroups}
           onClickCanvas={onClickCanvas}

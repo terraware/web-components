@@ -27,6 +27,7 @@ import {
   MapViewStyle,
   stylesUrl,
 } from './types';
+import { useMaintainLayerOrder } from './useMaintainLayerOrder';
 
 export type MapBoxProps = {
   clusterRadius?: number;
@@ -261,6 +262,7 @@ const MapBox = (props: MapBoxProps): JSX.Element => {
           <Layer
             key={`${group.layerId}-selected`}
             id={`${group.layerId}-selected`}
+            slot={'bottom'}
             source={'mapData'}
             type={'fill'}
             paint={
@@ -345,19 +347,17 @@ const MapBox = (props: MapBoxProps): JSX.Element => {
     });
 
     return {
-      borderLayers: _borderLayers,
-      fillLayers: _fillLayers,
-      textLayers: _textLayers,
+      borderLayers: _borderLayers ?? [],
+      fillLayers: _fillLayers ?? [],
+      textLayers: _textLayers ?? [],
     };
   }, [featureGroups, hoverFeatureId]);
 
   const highlightLayers = useMemo(() => {
     return (
-      highlightGroups?.flatMap((group, index) => {
-        return group.highlights.map((highlight) => {
-          const highlightFeatureIds = highlight.featureIds.map(
-            ({ layerId: featureGroupId, featureId: featureId }) => `${featureGroupId}/${featureId}`
-          );
+      highlightGroups?.flatMap((group) => {
+        return group.highlights.map((highlight, index) => {
+          const highlightFeatureIds = highlight.featureIds.map(({ layerId, featureId }) => `${layerId}/${featureId}`);
 
           return (
             <Layer
@@ -545,6 +545,17 @@ const MapBox = (props: MapBoxProps): JSX.Element => {
     [featureGroups, onClickCanvas]
   );
 
+  const orderedLayerIds = useMemo(() => {
+    return [
+      ...fillLayers.map((layer) => layer.props.id),
+      ...highlightLayers.map((layer) => layer.props.id),
+      ...borderLayers.map((layer) => layer.props.id),
+      ...textLayers.map((layer) => layer.props.id),
+    ] as string[];
+  }, [borderLayers, fillLayers, highlightLayers, textLayers]);
+
+  useMaintainLayerOrder(mapRef, orderedLayerIds);
+
   return (
     <ReactMapGL
       key={mapId}
@@ -610,9 +621,9 @@ const MapBox = (props: MapBoxProps): JSX.Element => {
       )}
       {geojson && (
         <Source id='mapData' type='geojson' data={geojson}>
-          {borderLayers}
           {fillLayers}
           {highlightLayers}
+          {borderLayers}
           {textLayers}
         </Source>
       )}

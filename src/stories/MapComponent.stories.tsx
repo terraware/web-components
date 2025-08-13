@@ -2,9 +2,9 @@ import React, { useCallback } from 'react';
 
 import { action } from '@storybook/addon-actions';
 import { Story } from '@storybook/react';
+import { MapMouseEvent } from 'mapbox-gl';
 
 import MapComponent, { MapComponentProps } from '../components/Map';
-import { MapMouseEvent } from 'mapbox-gl';
 
 export default {
   title: 'MapComponent',
@@ -12,9 +12,12 @@ export default {
 };
 
 const Template: Story<MapComponentProps> = (args) => {
-  const onMapClick = useCallback((event: MapMouseEvent) => {
-    action('Map canvas clicked')(event.lngLat);
-  }, [action]);
+  const onMapClick = useCallback(
+    (event: MapMouseEvent) => {
+      action('Map canvas clicked')(event.lngLat);
+    },
+    [action]
+  );
 
   return <MapComponent {...args} onClickCanvas={onMapClick} />;
 };
@@ -28,7 +31,7 @@ Default.args = {
         {
           features: [
             {
-              featureId: 'site-title',
+              featureId: 'site-id',
               label: 'Random Site',
               geometry: {
                 type: 'MultiPolygon',
@@ -52,7 +55,7 @@ Default.args = {
             },
           ],
           label: 'Site',
-          layerId: 'site',
+          layerId: 'sites',
           style: {
             borderColor: '#41C07F',
             fillColor: '#41C07F',
@@ -120,8 +123,8 @@ Default.args = {
               },
             },
           ],
-          label: 'Zone',
-          layerId: 'zone',
+          label: 'Zones',
+          layerId: 'zones',
           style: {
             borderColor: '#BD9FDA',
             fillColor: '#BD9FDA',
@@ -235,7 +238,7 @@ Default.args = {
             },
           ],
           label: 'Subzones',
-          layerId: 'subzone',
+          layerId: 'subzones',
           style: {
             borderColor: '#9EA9D7',
             fillColor: '#9EA9D7',
@@ -255,7 +258,7 @@ Default.args = {
           markers: [
             {
               id: 'photo-1',
-              latitude: 21.185250,
+              latitude: 21.18525,
               longitude: -73.459865,
             },
             {
@@ -265,16 +268,16 @@ Default.args = {
             },
             {
               id: 'photo-3',
-              latitude: 21.183400,
+              latitude: 21.1834,
               longitude: -73.471836,
             },
           ],
           style: {
             iconColor: '#CC79A7',
             iconName: 'iconPhoto',
-            type: 'icon'
-          }
-        }
+            type: 'icon',
+          },
+        },
       ],
       sectionTitle: 'Photos',
       type: 'marker',
@@ -304,8 +307,8 @@ Default.args = {
           style: {
             iconColor: '#40B0A6',
             iconName: 'iconLivePlant',
-            type: 'icon'
-          }
+            type: 'icon',
+          },
         },
         {
           label: 'Dead Plants',
@@ -330,15 +333,144 @@ Default.args = {
           style: {
             iconColor: '#E1BE6A',
             iconName: 'iconLivePlant',
-            type: 'icon'
-          }
+            type: 'icon',
+          },
         },
       ],
       sectionTitle: 'Photos',
       type: 'marker',
-    }
+    },
+    {
+      highlight: {
+        highlightId: 'observationEvents',
+        highlights: [
+          {
+            featureIds: [
+              {
+                layerId: 'subzones',
+                featureId: 'subzone-B2',
+              },
+              {
+                layerId: 'zones',
+                featureId: 'zone-B',
+              },
+              {
+                layerId: 'sites',
+                featureId: 'site-id',
+              },
+            ],
+            style: {
+              fillColor: '#E7B9CD',
+              opacity: 0.8,
+              type: 'fill',
+            },
+          },
+          {
+            featureIds: [
+              {
+                layerId: 'subzones',
+                featureId: 'subzone-B1',
+              },
+            ],
+            style: {
+              fillColor: '#E7B9CD',
+              opacity: 0.4,
+              type: 'fill',
+            },
+          },
+        ],
+      },
+      sectionTitle: 'Observation Events',
+      sectionTooltip: 'Previous observations are shown in decreasing opacity',
+      legendItems: [
+        {
+          label: 'Latest Observation',
+          style: {
+            fillColor: '#E7B9CD',
+            opacity: 1.0,
+            type: 'fill',
+          },
+        },
+      ],
+      type: 'highlight',
+    },
+    {
+      highlight: {
+        highlightId: 'mortalityRate',
+        highlights: [
+          {
+            featureIds: [
+              {
+                layerId: 'subzones',
+                featureId: 'subzone-B2',
+              },
+            ],
+            style: {
+              fillPatternUrl: '/assets/stripes-25.png',
+              type: 'fill',
+            },
+          },
+          {
+            featureIds: [
+              {
+                layerId: 'sites',
+                featureId: 'site-id',
+              },
+              {
+                layerId: 'zones',
+                featureId: 'zone-B',
+              },
+            ],
+            style: {
+              fillPatternUrl: '/assets/stripes-50.png',
+              type: 'fill',
+            },
+          },
+          {
+            featureIds: [
+              {
+                layerId: 'subzones',
+                featureId: 'subzone-B1',
+              },
+            ],
+            style: {
+              fillPatternUrl: '/assets/stripes-75.png',
+              type: 'fill',
+            },
+          },
+        ],
+      },
+      sectionTitle: 'Mortality Rate',
+      legendItems: [
+        {
+          label: '< 25%',
+          style: {
+            fillPatternUrl: '/assets/stripes-25.png',
+            opacity: 1.0,
+            type: 'fill',
+          },
+        },
+        {
+          label: '25% - 50%',
+          style: {
+            fillPatternUrl: '/assets/stripes-50.png',
+            opacity: 1.0,
+            type: 'fill',
+          },
+        },
+        {
+          label: '> 50%',
+          style: {
+            fillPatternUrl: '/assets/stripes-75.png',
+            opacity: 1.0,
+            type: 'fill',
+          },
+        },
+      ],
+      type: 'highlight',
+    },
   ],
   initialMapViewStyle: 'Streets',
-  initialSelectedLayerId: 'site',
+  initialSelectedLayerId: 'sites',
   token: process.env.TERRAWARE_MAPBOX_API_TOKEN,
 };

@@ -133,7 +133,7 @@ const Template: Story<MapLegendProps> = () => {
             style: {
               borderColor: '#FFFFFF',
               fillColor: 'transparent',
-              fillPatternUrl: '/assets/stripes-s.png',
+              fillPatternUrl: '/assets/stripes-25.png',
               opacity: 0.5,
               type: 'fill',
             },
@@ -143,7 +143,7 @@ const Template: Story<MapLegendProps> = () => {
             style: {
               borderColor: '#FFFFFF',
               fillColor: 'transparent',
-              fillPatternUrl: '/assets/stripes-m.png',
+              fillPatternUrl: '/assets/stripes-50.png',
               opacity: 0.5,
               type: 'fill',
             },
