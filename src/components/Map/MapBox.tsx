@@ -442,7 +442,7 @@ const MapBox = (props: MapBoxProps): JSX.Element => {
               }}
               style={{ backgroundColor: selected ? markerGroup.style.iconColor : theme.palette.TwClrBg }}
             >
-              <p className='title'>{markers.length}</p>
+              <p className='count'>{markers.length}</p>
               <Icon
                 fillColor={selected ? theme.palette.TwClrBg : markerGroup.style.iconColor}
                 name={markerGroup.style.iconName}

@@ -4,6 +4,7 @@ import { action } from '@storybook/addon-actions';
 import { Story } from '@storybook/react';
 
 import MapComponent, { MapComponentProps } from '../components/Map';
+import { MapMouseEvent } from 'mapbox-gl';
 
 export default {
   title: 'MapComponent',
@@ -11,8 +12,8 @@ export default {
 };
 
 const Template: Story<MapComponentProps> = (args) => {
-  const onMapClick = useCallback(() => {
-    action('Map canvas clicked')();
+  const onMapClick = useCallback((event: MapMouseEvent) => {
+    action('Map canvas clicked')(event.lngLat);
   }, [action]);
 
   return <MapComponent {...args} onClickCanvas={onMapClick} />;
@@ -47,9 +48,6 @@ Default.args = {
                     ],
                   ],
                 ],
-              },
-              onClick: () => {
-                action('Site clicked.')();
               },
             },
           ],
@@ -249,6 +247,96 @@ Default.args = {
       sectionTitle: 'Boundaries',
       type: 'layer',
     },
+    {
+      groups: [
+        {
+          label: 'Photos',
+          markerGroupId: 'photos',
+          markers: [
+            {
+              id: 'photo-1',
+              latitude: 21.185250,
+              longitude: -73.459865,
+            },
+            {
+              id: 'photo-2',
+              latitude: 21.184501,
+              longitude: -73.459374,
+            },
+            {
+              id: 'photo-3',
+              latitude: 21.183400,
+              longitude: -73.471836,
+            },
+          ],
+          style: {
+            iconColor: '#CC79A7',
+            iconName: 'iconPhoto',
+            type: 'icon'
+          }
+        }
+      ],
+      sectionTitle: 'Photos',
+      type: 'marker',
+    },
+    {
+      groups: [
+        {
+          label: 'Live Plants',
+          markerGroupId: 'live-plants',
+          markers: [
+            {
+              id: 'live-plant-1',
+              latitude: 21.184528,
+              longitude: -73.463146,
+            },
+            {
+              id: 'live-plant-2',
+              latitude: 21.177232,
+              longitude: -73.457216,
+            },
+            {
+              id: 'live-plant-3',
+              latitude: 21.175807,
+              longitude: -73.463329,
+            },
+          ],
+          style: {
+            iconColor: '#40B0A6',
+            iconName: 'iconLivePlant',
+            type: 'icon'
+          }
+        },
+        {
+          label: 'Dead Plants',
+          markerGroupId: 'dead-plants',
+          markers: [
+            {
+              id: 'dead-plant-1',
+              latitude: 21.180082,
+              longitude: -73.460456,
+            },
+            {
+              id: 'dead-plant-2',
+              latitude: 21.178657,
+              longitude: -73.466814,
+            },
+            {
+              id: 'dead-plant-3',
+              latitude: 21.175807,
+              longitude: -73.469198,
+            },
+          ],
+          style: {
+            iconColor: '#E1BE6A',
+            iconName: 'iconLivePlant',
+            type: 'icon'
+          }
+        },
+      ],
+      sectionTitle: 'Photos',
+      type: 'marker',
+    }
   ],
   initialMapViewStyle: 'Streets',
   initialSelectedLayerId: 'site',
