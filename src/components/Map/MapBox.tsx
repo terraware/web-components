@@ -500,7 +500,7 @@ const MapBox = (props: MapBoxProps): JSX.Element => {
   }, [drawerOpen]);
 
   // Hovering interactive layers
-  const onMouseEnter = useCallback(() => setCursor(cursorInteract ?? 'auto'), [cursorInteract]);
+  const onMouseEnter = useCallback(() => setCursor(cursorInteract ?? 'pointer'), [cursorInteract]);
   const onMouseLeave = useCallback(() => setCursor('auto'), []);
 
   // Entering and exiting canvases

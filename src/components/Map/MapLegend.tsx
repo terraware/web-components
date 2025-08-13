@@ -140,22 +140,29 @@ const MapLegend = ({ legends }: MapLegendProps): JSX.Element => {
             />
           );
         } else {
-          const opacity = item.style.opacity ?? 0.2;
-
           return (
             <Box
+              display={'flex'}
               sx={{
                 border: `2px solid ${item.style.borderColor ?? theme.palette.TwClrBrdr}`,
-                backgroundColor: item.style.fillColor,
-                backgroundImage: item.style.fillPatternUrl ? `url('${item.style.fillPatternUrl}')` : undefined,
-                backgroundRepeat: 'repeat',
-                opacity: disabled ? 0.7 * opacity : opacity,
+                opacity: disabled ? 0.7 : 1.0,
                 height: '16px',
                 width: '24px',
                 minWidth: '24px',
                 marginRight: theme.spacing(1),
               }}
-            />
+            >
+              <Box
+                height={'16px'}
+                width={'24px'}
+                sx={{
+                  backgroundColor: item.style.fillColor,
+                  backgroundImage: item.style.fillPatternUrl ? `url('${item.style.fillPatternUrl}')` : undefined,
+                  backgroundRepeat: 'repeat',
+                  opacity: item.style.opacity ?? 0.2,
+                }}
+              />
+            </Box>
           );
         }
       };
@@ -233,6 +240,7 @@ const MapLegend = ({ legends }: MapLegendProps): JSX.Element => {
       padding={theme.spacing(2, 1)}
       flexDirection={'column'}
       maxWidth={isDesktop ? '184px' : 'fill'}
+      minWidth={isDesktop ? '160px' : undefined}
       width={isDesktop ? 'auto' : 'fill'}
       margin={0}
     >

@@ -1,5 +1,8 @@
 import React, { ReactNode, useCallback, useMemo, useState } from 'react';
 
+import centroid from '@turf/centroid';
+import { featureCollection, multiPolygon } from '@turf/helpers';
+import union from '@turf/union';
 import { MapMouseEvent } from 'mapbox-gl';
 
 import MapBox from './MapBox';
@@ -11,24 +14,29 @@ import { MapCursor, MapHighlightGroup, MapLayer, MapMarkerGroup, MapViewStyle } 
 export type MapHighlightFeatureSection = {
   highlight: MapHighlightGroup;
   legendItems: MapHighlightLegendItem[];
+  sectionDisabled?: boolean;
+  sectionTitle: string;
+  sectionTooltip?: string;
   type: 'highlight';
 };
 
 export type MapLayerFeatureSection = {
   layers: MapLayer[];
+  sectionDisabled?: boolean;
+  sectionTitle: string;
+  sectionTooltip?: string;
   type: 'layer';
 };
 
 export type MapMarkerFeatureSection = {
   groups: MapMarkerGroup[];
-  type: 'marker';
-};
-
-export type MapFeatureSection = {
   sectionDisabled?: boolean;
   sectionTitle: string;
   sectionTooltip?: string;
-} & (MapHighlightFeatureSection | MapLayerFeatureSection | MapMarkerFeatureSection);
+  type: 'marker';
+};
+
+export type MapFeatureSection = MapHighlightFeatureSection | MapLayerFeatureSection | MapMarkerFeatureSection;
 
 export type MapComponentProps = {
   clusterRadius?: number;
@@ -79,6 +87,7 @@ const MapComponent = (props: MapComponentProps) => {
     hideZoomControl,
     initialSelectedLayerId,
     initialMapViewStyle,
+    initialViewState,
     onClickCanvas,
     setDrawerOpen,
     token,
@@ -163,27 +172,59 @@ const MapComponent = (props: MapComponentProps) => {
 
   const layers = useMemo(() => {
     return features
-      ?.filter((feature) => feature.type === 'layer')
-      ?.flatMap((feature) => {
-        return feature.layers;
-      });
-  }, [features]);
+      ?.filter((feature): feature is MapLayerFeatureSection => feature.type === 'layer')
+      ?.flatMap((feature) => feature.layers)
+      ?.filter((layer) => layer.layerId === selectedLayer);
+  }, [features, selectedLayer]);
 
   const highlightGroups = useMemo(() => {
     return features
-      ?.filter((feature) => feature.type === 'highlight')
-      ?.map((feature) => {
-        return feature.highlight;
-      });
-  }, [features]);
+      ?.filter((feature): feature is MapHighlightFeatureSection => feature.type === 'highlight')
+      ?.map((feature) => feature.highlight)
+      ?.filter(
+        (highlight) => visibleHighlights.findIndex((_highlightId) => _highlightId === highlight.highlightId) >= 0
+      );
+  }, [features, visibleHighlights]);
 
   const markerGroups = useMemo(() => {
     return features
-      ?.filter((feature) => feature.type === 'marker')
-      ?.flatMap((feature) => {
-        return feature.groups;
-      });
-  }, [features]);
+      ?.filter((feature): feature is MapMarkerFeatureSection => feature.type === 'marker')
+      ?.flatMap((feature) => feature.groups)
+      .filter((group) => visibleMarkers.findIndex((_markerId) => _markerId === group.markerGroupId) >= 0);
+  }, [features, visibleMarkers]);
+
+  const mapViewState = useMemo(() => {
+    if (initialViewState) {
+      return initialViewState;
+    } else if (features) {
+      const boundaries = features
+        .filter((feature): feature is MapLayerFeatureSection => feature.type === 'layer')
+        .flatMap((feature) => feature.layers)
+        .flatMap((layer) => layer.features)
+        .map((geoFeature) => multiPolygon(geoFeature.geometry.coordinates));
+
+      if (boundaries.length === 1) {
+        const center = centroid(boundaries[0]);
+
+        return {
+          latitude: center.geometry.coordinates[1],
+          longitude: center.geometry.coordinates[0],
+          zoom: 12,
+        };
+      } else if (boundaries.length > 1) {
+        const unionBoundaries = union(featureCollection(boundaries));
+        if (unionBoundaries) {
+          const center = centroid(unionBoundaries);
+
+          return {
+            latitude: center.geometry.coordinates[1],
+            longitude: center.geometry.coordinates[0],
+            zoom: 12, // TODO: Calculate default zoom level
+          };
+        }
+      }
+    }
+  }, [initialViewState]);
 
   return (
     <MapContainer
@@ -203,11 +244,7 @@ const MapComponent = (props: MapComponentProps) => {
           hideMapViewStyleControl={hideMapViewStyleControl}
           hideZoomControl={hideZoomControl}
           highlightGroups={highlightGroups}
-          initialViewState={{
-            latitude: 21.3,
-            longitude: -157.8,
-            zoom: 14,
-          }}
+          initialViewState={mapViewState}
           layers={layers}
           mapId={'mapId'}
           mapImageUrls={['/assets/stripes-m.png']}

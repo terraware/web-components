@@ -182,7 +182,7 @@ const Template: Story<MapBoxProps> = (args) => {
           initialViewState={{
             latitude: 21.3,
             longitude: -157.8,
-            zoom: 14,
+            zoom: 12,
           }}
           mapImageUrls={['/assets/stripes-m.png']}
           mapViewStyle={mapViewStyle}
