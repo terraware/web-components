@@ -8,30 +8,27 @@ import MapDrawer, { MapDrawerSize } from './MapDrawer';
 import MapLegend, { MapHighlightLegendItem, MapLegendGroup } from './MapLegend';
 import { MapCursor, MapHighlightGroup, MapLayer, MapMarkerGroup, MapViewStyle } from './types';
 
+type BaseMapFeatureSection = {
+  sectionDisabled?: boolean;
+  sectionTitle: string;
+  sectionTooltip?: string;
+};
+
 export type MapHighlightFeatureSection = {
   highlight: MapHighlightGroup;
   legendItems: MapHighlightLegendItem[];
-  sectionDisabled?: boolean;
-  sectionTitle: string;
-  sectionTooltip?: string;
   type: 'highlight';
-};
+} & BaseMapFeatureSection;
 
 export type MapLayerFeatureSection = {
   layers: MapLayer[];
-  sectionDisabled?: boolean;
-  sectionTitle: string;
-  sectionTooltip?: string;
   type: 'layer';
-};
+} & BaseMapFeatureSection;
 
 export type MapMarkerFeatureSection = {
   groups: MapMarkerGroup[];
-  sectionDisabled?: boolean;
-  sectionTitle: string;
-  sectionTooltip?: string;
   type: 'marker';
-};
+} & BaseMapFeatureSection;
 
 export type MapFeatureSection = MapHighlightFeatureSection | MapLayerFeatureSection | MapMarkerFeatureSection;
 

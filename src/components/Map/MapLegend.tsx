@@ -14,32 +14,32 @@ export type MapLayerLegendItem = {
   style: MapIconComponentStyle | MapFillComponentStyle;
 };
 
-export type MapLayerLegendGroup = {
+type BaseMapLegendGroup = {
   disabled?: boolean;
-  tooltip?: string;
   title: string;
+  tooltip?: string;
+};
+
+export type MapLayerLegendGroup = {
   type: 'layer';
   items: MapLayerLegendItem[];
-  setSelectedLayer: (id: string | undefined) => void;
   selectedLayer?: string;
-};
+  setSelectedLayer: (id: string | undefined) => void;
+} & BaseMapLegendGroup;
 
 export type MapMarkerLegendItem = {
   disabled?: boolean;
   id: string;
   label: string;
-  style: MapIconComponentStyle;
   setVisible?: (visible: boolean) => void;
+  style: MapIconComponentStyle;
   visible: boolean;
 };
 
 export type MapMarkerLegendGroup = {
-  disabled?: boolean;
-  tooltip?: string;
-  title: string;
-  type: 'marker';
   items: MapMarkerLegendItem[];
-};
+  type: 'marker';
+} & BaseMapLegendGroup;
 
 export type MapHighlightLegendItem = {
   label: string;
@@ -47,14 +47,11 @@ export type MapHighlightLegendItem = {
 };
 
 export type MapHighlightLegendGroup = {
-  disabled?: boolean;
-  tooltip?: string;
-  title: string;
-  type: 'highlight';
   items: MapHighlightLegendItem[];
   setVisible?: (visible: boolean) => void;
+  type: 'highlight';
   visible: boolean;
-};
+} & BaseMapLegendGroup;
 
 export type MapLegendGroup = MapMarkerLegendGroup | MapLayerLegendGroup | MapHighlightLegendGroup;
 
@@ -239,9 +236,9 @@ const MapLegend = ({ legends }: MapLegendProps): JSX.Element => {
       justifyItems='flex-start'
       padding={theme.spacing(2, 1)}
       flexDirection={'column'}
-      maxWidth={isDesktop ? '184px' : 'fill'}
+      maxWidth={isDesktop ? '184px' : 'stretch'}
       minWidth={isDesktop ? '160px' : undefined}
-      width={isDesktop ? 'auto' : 'fill'}
+      width={isDesktop ? 'auto' : 'stretch'}
       margin={0}
       overflow={'scroll'}
     >

@@ -1,13 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import ReactMapGL, {
-  FullscreenControl,
-  Layer,
-  MapRef,
-  Marker,
-  NavigationControl,
-  Source,
-  ViewStateChangeEvent,
-} from 'react-map-gl/mapbox';
+import * as ReactMapGL from 'react-map-gl/mapbox';
+import type { MapRef, ViewStateChangeEvent } from 'react-map-gl/mapbox';
 
 import { Box, useTheme } from '@mui/material';
 import { Feature, FeatureCollection } from 'geojson';
@@ -28,6 +21,9 @@ import {
   stylesUrl,
 } from './types';
 import { useMaintainLayerOrder } from './useMaintainLayerOrder';
+
+const Map = ReactMapGL.default || ReactMapGL;
+const { FullscreenControl, Layer, Marker, NavigationControl, Source } = ReactMapGL;
 
 export type MapBoxProps = {
   clusterRadius?: number;
@@ -557,7 +553,7 @@ const MapBox = (props: MapBoxProps): JSX.Element => {
   useMaintainLayerOrder(mapRef, orderedLayerIds);
 
   return (
-    <ReactMapGL
+    <Map
       key={mapId}
       attributionControl={false}
       cursor={cursor}
@@ -628,7 +624,7 @@ const MapBox = (props: MapBoxProps): JSX.Element => {
         </Source>
       )}
       {markersComponents}
-    </ReactMapGL>
+    </Map>
   );
 };
 
