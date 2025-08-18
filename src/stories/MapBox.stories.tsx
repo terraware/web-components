@@ -4,10 +4,10 @@ import { Box } from '@mui/material';
 import { action } from '@storybook/addon-actions';
 import { Story } from '@storybook/react';
 
-import MapBox, { MapBoxProps, MapFeatureGroup, MapHighlightGroup } from '../components/Map/MapBox';
+import MapBox, { MapBoxProps } from '../components/Map/MapBox';
 import MapContainer from '../components/Map/MapContainer';
 import MapDrawer from '../components/Map/MapDrawer';
-import { MapViewStyle } from '../components/Map/types';
+import { MapHighlightGroup, MapLayer, MapViewStyle } from '../components/Map/types';
 import { useDeviceInfo } from '../utils';
 
 export default {
@@ -29,14 +29,15 @@ const Template: Story<MapBoxProps> = (args) => {
     [action]
   );
 
-  const onMapCLick = useCallback(() => {
+  const onMapClick = useCallback(() => {
     action('Map canvas clicked')();
   }, []);
 
-  const mapFeautureGroups = useMemo((): MapFeatureGroup[] => {
+  const mapFeautureGroups = useMemo((): MapLayer[] => {
     return [
       {
-        groupId: 'Green',
+        layerId: 'Green',
+        label: 'Green',
         features: [
           {
             featureId: 'A',
@@ -91,7 +92,8 @@ const Template: Story<MapBoxProps> = (args) => {
         },
       },
       {
-        groupId: 'Red',
+        layerId: 'Red',
+        label: 'Red',
         features: [
           {
             featureId: 'C',
@@ -151,12 +153,12 @@ const Template: Story<MapBoxProps> = (args) => {
 
   const mapHighlightGroups: MapHighlightGroup[] = [
     {
+      highlightId: 'highlight',
       highlights: [
         {
-          featureIds: [{ featureGroupId: 'Red', featureId: 'D' }],
-          highlightId: 'highlight',
+          featureIds: [{ layerId: 'Red', featureId: 'D' }],
           style: {
-            fillPatternUrl: '/assets/stripes-m.png',
+            fillPatternUrl: '/assets/stripes-50.png',
             opacity: 1.0,
             type: 'fill',
           },
@@ -174,17 +176,18 @@ const Template: Story<MapBoxProps> = (args) => {
           containerId={'map-container'}
           cursorInteract={'pointer'}
           disableDoubleClickZoom
-          featureGroups={mapFeautureGroups}
+          drawerOpen={selectedFeatureId !== undefined}
+          layers={mapFeautureGroups}
           highlightGroups={mapHighlightGroups}
           initialViewState={{
             latitude: 21.3,
             longitude: -157.8,
-            zoom: 14,
+            zoom: 12,
           }}
-          mapImageUrls={['/assets/stripes-m.png']}
+          mapImageUrls={['/assets/stripes-50.png']}
           mapViewStyle={mapViewStyle}
           setMapViewStyle={setMapViewStyle}
-          onClickCanvas={onMapCLick}
+          onClickCanvas={onMapClick}
         />
       }
       drawer={

@@ -14,44 +14,46 @@ export type MapLayerLegendItem = {
   style: MapIconComponentStyle | MapFillComponentStyle;
 };
 
+type BaseMapLegendGroup = {
+  disabled?: boolean;
+  title: string;
+  tooltip?: string;
+};
+
 export type MapLayerLegendGroup = {
   type: 'layer';
   items: MapLayerLegendItem[];
-  setSelectedLayer: (id: string) => void;
-  selectedLayer: string;
-};
+  selectedLayer?: string;
+  setSelectedLayer: (id: string | undefined) => void;
+} & BaseMapLegendGroup;
 
 export type MapMarkerLegendItem = {
   disabled?: boolean;
   id: string;
   label: string;
-  style: MapIconComponentStyle;
   setVisible?: (visible: boolean) => void;
+  style: MapIconComponentStyle;
   visible: boolean;
 };
 
 export type MapMarkerLegendGroup = {
-  type: 'marker';
   items: MapMarkerLegendItem[];
-};
+  type: 'marker';
+} & BaseMapLegendGroup;
 
 export type MapHighlightLegendItem = {
   label: string;
-  style: MapIconComponentStyle | MapFillComponentStyle;
+  style: MapFillComponentStyle;
 };
 
 export type MapHighlightLegendGroup = {
-  type: 'highlight';
   items: MapHighlightLegendItem[];
   setVisible?: (visible: boolean) => void;
+  type: 'highlight';
   visible: boolean;
-};
+} & BaseMapLegendGroup;
 
-export type MapLegendGroup = {
-  disabled?: boolean;
-  tooltip?: string;
-  title: string;
-} & (MapMarkerLegendGroup | MapLayerLegendGroup | MapHighlightLegendGroup);
+export type MapLegendGroup = MapMarkerLegendGroup | MapLayerLegendGroup | MapHighlightLegendGroup;
 
 export type MapLegendProps = {
   legends: MapLegendGroup[];
@@ -135,22 +137,29 @@ const MapLegend = ({ legends }: MapLegendProps): JSX.Element => {
             />
           );
         } else {
-          const opacity = item.style.opacity ?? 0.2;
-
           return (
             <Box
+              display={'flex'}
               sx={{
-                border: `2px solid ${item.style.borderColor ?? theme.palette.TwClrBrdr}`,
-                backgroundColor: item.style.fillColor,
-                backgroundImage: item.style.fillPatternUrl ? `url('${item.style.fillPatternUrl}')` : undefined,
-                backgroundRepeat: 'repeat',
-                opacity: disabled ? 0.7 * opacity : opacity,
+                border: `2px solid ${item.style.borderColor ?? theme.palette.TwClrBaseGreen300}`,
+                opacity: disabled ? 0.7 : 1.0,
                 height: '16px',
                 width: '24px',
                 minWidth: '24px',
                 marginRight: theme.spacing(1),
               }}
-            />
+            >
+              <Box
+                height={'16px'}
+                width={'24px'}
+                sx={{
+                  backgroundColor: item.style.fillColor,
+                  backgroundImage: item.style.fillPatternUrl ? `url('${item.style.fillPatternUrl}')` : undefined,
+                  backgroundRepeat: 'repeat',
+                  opacity: item.style.opacity ?? 0.2,
+                }}
+              />
+            </Box>
           );
         }
       };
@@ -164,14 +173,10 @@ const MapLegend = ({ legends }: MapLegendProps): JSX.Element => {
 
             return <Box display='flex'>{visibleIcon}</Box>;
           case 'layer':
-            const layerLegend = legend as MapLayerLegendGroup;
             const layerItem = item as MapLayerLegendItem;
 
             return (
-              <Box
-                display='flex'
-                sx={{ visibility: layerItem.id === layerLegend.selectedLayer ? 'visible' : 'hidden' }}
-              >
+              <Box display='flex' sx={{ visibility: layerItem.id === legend.selectedLayer ? 'visible' : 'hidden' }}>
                 <Icon name='checkmark' style={{ marginRight: theme.spacing(1) }} />
               </Box>
             );
@@ -231,9 +236,11 @@ const MapLegend = ({ legends }: MapLegendProps): JSX.Element => {
       justifyItems='flex-start'
       padding={theme.spacing(2, 1)}
       flexDirection={'column'}
-      maxWidth={isDesktop ? '184px' : 'fill'}
-      width={isDesktop ? 'auto' : 'fill'}
+      maxWidth={isDesktop ? '184px' : 'stretch'}
+      minWidth={isDesktop ? '160px' : undefined}
+      width={isDesktop ? 'auto' : 'stretch'}
       margin={0}
+      overflow={'scroll'}
     >
       {legendComponents}
     </Box>
