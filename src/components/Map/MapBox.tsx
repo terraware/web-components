@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import Map, {
+import {
   FullscreenControl,
   Layer,
   MapRef,
@@ -17,6 +17,7 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 import { useDeviceInfo } from '../../utils';
 import Icon from '../Icon/Icon';
 import MapViewStyleControl from './MapViewStyleControl';
+import ReactMapbox from './ReactMapboxWrapper';
 import {
   MapCursor,
   MapHighlightGroup,
@@ -557,7 +558,7 @@ const MapBox = (props: MapBoxProps): JSX.Element => {
   useMaintainLayerOrder(mapRef, orderedLayerIds);
 
   return (
-    <Map
+    <ReactMapbox
       key={mapId}
       attributionControl={false}
       cursor={cursor}
@@ -628,7 +629,7 @@ const MapBox = (props: MapBoxProps): JSX.Element => {
         </Source>
       )}
       {markersComponents}
-    </Map>
+    </ReactMapbox>
   );
 };
 
