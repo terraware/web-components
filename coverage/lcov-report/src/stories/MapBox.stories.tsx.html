@@ -287,7 +287,10 @@
 <a name='L222'></a><a href='#L222'>222</a>
 <a name='L223'></a><a href='#L223'>223</a>
 <a name='L224'></a><a href='#L224'>224</a>
-<a name='L225'></a><a href='#L225'>225</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L225'></a><a href='#L225'>225</a>
+<a name='L226'></a><a href='#L226'>226</a>
+<a name='L227'></a><a href='#L227'>227</a>
+<a name='L228'></a><a href='#L228'>228</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -438,23 +441,26 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -517,10 +523,10 @@ import { Box } from '@mui/material';
 import { action } from '@storybook/addon-actions';
 import { Story } from '@storybook/react';
 &nbsp;
-import MapBox, { MapBoxProps, MapFeatureGroup, MapHighlightGroup } from '../components/Map/MapBox';
+import MapBox, { MapBoxProps } from '../components/Map/MapBox';
 import MapContainer from '../components/Map/MapContainer';
 import MapDrawer from '../components/Map/MapDrawer';
-import { MapViewStyle } from '../components/Map/types';
+import { MapHighlightGroup, MapLayer, MapViewStyle } from '../components/Map/types';
 import { useDeviceInfo } from '../utils';
 &nbsp;
 export default {
@@ -542,14 +548,15 @@ const Template: Story&lt;MapBoxProps&gt; = <span class="cstat-no" title="stateme
     [action]
   );
 &nbsp;
-  const onMapCLick = <span class="cstat-no" title="statement not covered" >useCallback(<span class="fstat-no" title="function not covered" >()</span> =&gt; {</span>
+  const onMapClick = <span class="cstat-no" title="statement not covered" >useCallback(<span class="fstat-no" title="function not covered" >()</span> =&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    action('Map canvas clicked')();</span>
   }, []);
 &nbsp;
-  const mapFeautureGroups = <span class="cstat-no" title="statement not covered" >useMemo(<span class="fstat-no" title="function not covered" >()</span>: MapFeatureGroup[] =&gt; {</span>
+  const mapFeautureGroups = <span class="cstat-no" title="statement not covered" >useMemo(<span class="fstat-no" title="function not covered" >()</span>: MapLayer[] =&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    return [</span>
       {
-        groupId: 'Green',
+        layerId: 'Green',
+        label: 'Green',
         features: [
           {
             featureId: 'A',
@@ -604,7 +611,8 @@ const Template: Story&lt;MapBoxProps&gt; = <span class="cstat-no" title="stateme
         },
       },
       {
-        groupId: 'Red',
+        layerId: 'Red',
+        label: 'Red',
         features: [
           {
             featureId: 'C',
@@ -664,12 +672,12 @@ const Template: Story&lt;MapBoxProps&gt; = <span class="cstat-no" title="stateme
 &nbsp;
   const mapHighlightGroups: MapHighlightGroup[] = <span class="cstat-no" title="statement not covered" >[</span>
     {
+      highlightId: 'highlight',
       highlights: [
         {
-          featureIds: [{ featureGroupId: 'Red', featureId: 'D' }],
-          highlightId: 'highlight',
+          featureIds: [{ layerId: 'Red', featureId: 'D' }],
           style: {
-            fillPatternUrl: '/assets/stripes-m.png',
+            fillPatternUrl: '/assets/stripes-50.png',
             opacity: 1.0,
             type: 'fill',
           },
@@ -687,17 +695,18 @@ const Template: Story&lt;MapBoxProps&gt; = <span class="cstat-no" title="stateme
           containerId={'map-container'}
           cursorInteract={'pointer'}
           disableDoubleClickZoom
-          featureGroups={mapFeautureGroups}
+          drawerOpen={selectedFeatureId !== undefined}
+          layers={mapFeautureGroups}
           highlightGroups={mapHighlightGroups}
           initialViewState={{
             latitude: 21.3,
             longitude: -157.8,
-            zoom: 14,
+            zoom: 12,
           }}
-          mapImageUrls={['/assets/stripes-m.png']}
+          mapImageUrls={['/assets/stripes-50.png']}
           mapViewStyle={mapViewStyle}
           setMapViewStyle={setMapViewStyle}
-          onClickCanvas={onMapCLick}
+          onClickCanvas={onMapClick}
         /&gt;
       }
       drawer={
@@ -742,7 +751,7 @@ export const Default = <span class="cstat-no" title="statement not covered" >Tem
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-08-08T18:46:34.893Z
+                at 2025-08-18T18:12:21.492Z
             </div>
         <script src="../../prettify.js"></script>
         <script>
