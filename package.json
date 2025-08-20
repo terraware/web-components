@@ -138,7 +138,7 @@
     "mapbox-gl": "^3.13.0"
   },
   "resolutions": {
-    "@babel/traverse": "7.24.1",
+    "@babel/traverse": "7.28.3",
     "@storybook/react/**/loader-utils": "^2.0.4",
     "babel-loader": "9.0.0",
     "wrap-ansi": "7.0.0",
