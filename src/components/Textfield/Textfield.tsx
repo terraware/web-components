@@ -2,6 +2,7 @@ import React, { useMemo } from 'react';
 
 import { Box, SxProps, TooltipProps } from '@mui/material';
 import classNames from 'classnames';
+import Markdown from 'markdown-to-jsx';
 
 import { isWhitespaces } from '../../utils';
 import Icon from '../Icon/Icon';
@@ -35,6 +36,7 @@ export interface Props {
   iconRight?: IconName;
   id: string;
   label: string;
+  markdown?: boolean;
   min?: number;
   max?: number;
   maxLength?: number;
@@ -71,6 +73,7 @@ export default function TextField(props: Props): JSX.Element {
     iconLeft,
     iconRight,
     id,
+    markdown,
     min,
     max,
     maxLength,
@@ -152,11 +155,22 @@ export default function TextField(props: Props): JSX.Element {
     }
 
     if (type === 'textarea' && truncateConfig) {
-      return <TruncatedTextArea preserveNewlines={preserveNewlines} truncateConfig={truncateConfig} value={value} />;
+      return (
+        <TruncatedTextArea
+          markdown={markdown}
+          preserveNewlines={preserveNewlines}
+          truncateConfig={truncateConfig}
+          value={value}
+        />
+      );
+    }
+
+    if (markdown) {
+      return value !== undefined && <Markdown>{value.toString()}</Markdown>;
     }
 
     return <p className={`textfield-value--display${preserveNewlines ? ' preserve-newlines' : ''}`}>{value}</p>;
-  }, [display, preserveNewlines, truncateConfig, type, value]);
+  }, [display, markdown, preserveNewlines, truncateConfig, type, value]);
 
   return (
     <Box className={`textfield ${className}`} sx={sx}>
