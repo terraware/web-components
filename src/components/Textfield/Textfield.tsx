@@ -166,7 +166,13 @@ export default function TextField(props: Props): JSX.Element {
     }
 
     if (markdown) {
-      return value !== undefined && <Markdown>{value.toString()}</Markdown>;
+      return (
+        value !== undefined && (
+          <div className='textfield-display-markdown'>
+            <Markdown>{value.toString()}</Markdown>
+          </div>
+        )
+      );
     }
 
     return <p className={`textfield-value--display${preserveNewlines ? ' preserve-newlines' : ''}`}>{value}</p>;

@@ -216,16 +216,6 @@ Block code "fences"
 Sample text here...
 \`\`\`
 
-Syntax highlighting
-
-\`\`\` js
-var foo = function (bar) {
-  return bar++;
-};
-
-console.log(foo(5));
-\`\`\`
-
 ## Tables
 
 | Option | Description |

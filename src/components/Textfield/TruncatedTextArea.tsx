@@ -4,6 +4,7 @@ import { Link, Typography, useTheme } from '@mui/material';
 import Markdown from 'markdown-to-jsx';
 
 import { TruncateConfig } from './Textfield';
+import './styles.scss';
 
 interface TruncatedTextAreaProps {
   markdown?: boolean;
@@ -44,7 +45,7 @@ const TruncatedTextArea = ({ markdown, preserveNewlines, truncateConfig, value }
 
   return (
     <>
-      <div ref={ref} style={divStyle}>
+      <div ref={ref} style={divStyle} className={markdown ? 'textfield-display-markdown' : undefined}>
         {markdown ? (
           value !== undefined && <Markdown>{value.toString()}</Markdown>
         ) : (
