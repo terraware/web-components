@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1756935711145" clover="3.2.0">
-  <project timestamp="1756935711145" name="All files">
+<coverage generated="1756937008795" clover="3.2.0">
+  <project timestamp="1756937008795" name="All files">
     <metrics statements="2083" coveredstatements="210" conditionals="1712" coveredconditionals="105" methods="754" coveredmethods="31" elements="4549" coveredelements="346" complexity="0" loc="2083" ncloc="2083" packages="43" files="242" classes="242"/>
     <package name="src">
       <metrics statements="1" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
@@ -1158,15 +1158,15 @@
       <metrics statements="9" coveredstatements="0" conditionals="10" coveredconditionals="0" methods="3" coveredmethods="0"/>
       <file name="Tooltip.tsx" path="/home/runner/work/web-components/web-components/src/components/Tooltip/Tooltip.tsx">
         <metrics statements="9" coveredstatements="0" conditionals="10" coveredconditionals="0" methods="3" coveredmethods="0"/>
-        <line num="12" count="0" type="stmt"/>
-        <line num="13" count="0" type="stmt"/>
         <line num="14" count="0" type="stmt"/>
+        <line num="15" count="0" type="stmt"/>
         <line num="16" count="0" type="stmt"/>
-        <line num="17" count="0" type="stmt"/>
-        <line num="20" count="0" type="stmt"/>
-        <line num="21" count="0" type="cond" truecount="0" falsecount="5"/>
+        <line num="18" count="0" type="stmt"/>
+        <line num="19" count="0" type="stmt"/>
         <line num="22" count="0" type="stmt"/>
-        <line num="26" count="0" type="stmt"/>
+        <line num="23" count="0" type="cond" truecount="0" falsecount="5"/>
+        <line num="24" count="0" type="stmt"/>
+        <line num="28" count="0" type="stmt"/>
       </file>
     </package>
     <package name="src.components.ViewPhotosDialog">
