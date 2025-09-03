@@ -2,12 +2,12 @@ import React, { useMemo } from 'react';
 
 import { Box, SxProps, TooltipProps } from '@mui/material';
 import classNames from 'classnames';
-import Markdown from 'markdown-to-jsx';
 
 import { isWhitespaces } from '../../utils';
 import Icon from '../Icon/Icon';
 import { IconName } from '../Icon/icons';
 import IconTooltip from '../IconTooltip';
+import Markdown from '../Markdown';
 import TruncatedTextArea from './TruncatedTextArea';
 import './styles.scss';
 
@@ -20,7 +20,6 @@ export interface TruncateConfig {
   showMoreText: string;
   showLessText: string;
   showTextStyle?: Record<string, any>;
-  valueTextStyle?: Record<string, any>;
   alignment?: 'left' | 'right';
 }
 
@@ -150,32 +149,21 @@ export default function TextField(props: Props): JSX.Element {
   }
 
   const displayComponent = useMemo(() => {
-    if (!display) {
+    if (!display || value === undefined) {
       return null;
     }
 
+    const component = markdown ? (
+      <Markdown value={value.toString()} />
+    ) : (
+      <p className={`textfield-value--display${preserveNewlines ? ' preserve-newlines' : ''}`}>{value}</p>
+    );
+
     if (type === 'textarea' && truncateConfig) {
-      return (
-        <TruncatedTextArea
-          markdown={markdown}
-          preserveNewlines={preserveNewlines}
-          truncateConfig={truncateConfig}
-          value={value}
-        />
-      );
+      return <TruncatedTextArea truncateConfig={truncateConfig}>{component}</TruncatedTextArea>;
+    } else {
+      return component;
     }
-
-    if (markdown) {
-      return (
-        value !== undefined && (
-          <div className='textfield-display-markdown'>
-            <Markdown>{value.toString()}</Markdown>
-          </div>
-        )
-      );
-    }
-
-    return <p className={`textfield-value--display${preserveNewlines ? ' preserve-newlines' : ''}`}>{value}</p>;
   }, [display, markdown, preserveNewlines, truncateConfig, type, value]);
 
   return (

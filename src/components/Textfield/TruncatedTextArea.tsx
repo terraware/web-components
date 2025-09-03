@@ -1,20 +1,17 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { ReactNode, useEffect, useRef, useState } from 'react';
 
 import { Link, Typography, useTheme } from '@mui/material';
-import Markdown from 'markdown-to-jsx';
 
 import { TruncateConfig } from './Textfield';
 import './styles.scss';
 
 interface TruncatedTextAreaProps {
-  markdown?: boolean;
-  preserveNewlines?: boolean;
   truncateConfig: TruncateConfig;
-  value?: string | number;
+  children: ReactNode;
 }
 
-const TruncatedTextArea = ({ markdown, preserveNewlines, truncateConfig, value }: TruncatedTextAreaProps) => {
-  const { maxHeight, showLessText, showMoreText, showTextStyle, valueTextStyle, alignment = 'left' } = truncateConfig;
+const TruncatedTextArea = ({ truncateConfig, children }: TruncatedTextAreaProps) => {
+  const { maxHeight, showLessText, showMoreText, showTextStyle, alignment = 'left' } = truncateConfig;
 
   const theme = useTheme();
   const [showAll, setShowAll] = useState(false);
@@ -45,17 +42,8 @@ const TruncatedTextArea = ({ markdown, preserveNewlines, truncateConfig, value }
 
   return (
     <>
-      <div ref={ref} style={divStyle} className={markdown ? 'textfield-display-markdown' : undefined}>
-        {markdown ? (
-          value !== undefined && <Markdown>{value.toString()}</Markdown>
-        ) : (
-          <p
-            className={`textfield-value--display${preserveNewlines ? ' preserve-newlines' : ''}`}
-            style={valueTextStyle}
-          >
-            {value}
-          </p>
-        )}
+      <div ref={ref} style={divStyle}>
+        {children}
       </div>
 
       {needsTruncating && (
