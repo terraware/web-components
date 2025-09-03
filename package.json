@@ -1,6 +1,6 @@
 {
   "name": "@terraware/web-components",
-  "version": "3.5.13",
+  "version": "3.5.14",
   "author": "Terraformation Inc.",
   "license": "Apache-2.0",
   "repository": {
@@ -25,6 +25,7 @@
     "classnames": "^2.3.2",
     "geojson": "^0.5.0",
     "luxon": "^3.3.0",
+    "markdown-to-jsx": "^7.7.13",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-intersection-observer": "^9.5.2",
@@ -132,10 +133,10 @@
     "typescript": "^5.0.0"
   },
   "peerDependencies": {
+    "mapbox-gl": "^3.13.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-map-gl": "^8.0.4",
-    "mapbox-gl": "^3.13.0"
+    "react-map-gl": "^8.0.4"
   },
   "resolutions": {
     "@babel/traverse": "7.24.1",
