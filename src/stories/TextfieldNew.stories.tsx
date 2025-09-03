@@ -142,13 +142,6 @@ ___
 ***
 
 
-## Typographic replacements
-
-"Double quotes"
-
-'single quotes'
-
-
 ## Emphasis
 
 **This is bold text**
@@ -224,14 +217,6 @@ Sample text here...
 | engine | engine to be used for processing templates. Handlebars is the default. |
 | ext    | extension to be used for dest files. |
 
-Right aligned columns
-
-| Option | Description |
-| ------:| -----------:|
-| data   | path to data files to supply the data that will be passed into templates. |
-| engine | engine to be used for processing templates. Handlebars is the default. |
-| ext    | extension to be used for dest files. |
-
 
 ## Links
 
@@ -255,10 +240,6 @@ TextAreaWithTruncate.args = {
   autoFocus: false,
   preserveNewlines: true,
   truncateConfig: {
-    valueTextStyle: {
-      fontSize: '12px',
-      lineHeight: '16px',
-    },
     maxHeight: 48,
     showLessText: 'Show less',
     showMoreText: 'Show more',
