@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for src/components/AntSwitch/index.tsx</title>
+    <title>Code coverage report for src/components/Markdown/index.tsx</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../../../prettify.css" />
     <link rel="stylesheet" href="../../../base.css" />
@@ -19,34 +19,34 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../../../index.html">All files</a> / <a href="index.html">src/components/AntSwitch</a> index.tsx</h1>
+        <h1><a href="../../../index.html">All files</a> / <a href="index.html">src/components/Markdown</a> index.tsx</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/5</span>
-            </div>
-        
-            
-            <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
-                <span class="quiet">Branches</span>
-                <span class='fraction'>0/0</span>
+                <span class='fraction'>0/8</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
-                <span class="quiet">Functions</span>
+                <span class="quiet">Branches</span>
                 <span class='fraction'>0/2</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
+                <span class="quiet">Functions</span>
+                <span class='fraction'>0/3</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/5</span>
+                <span class='fraction'>0/8</span>
             </div>
         
             
@@ -99,48 +99,48 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import React, { useCallback } from 'react';
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import React, { useCallback, useEffect, useState } from 'react';
 &nbsp;
-import { Switch } from '@mui/material';
+import { marked } from 'marked';
 &nbsp;
 import './styles.scss';
 &nbsp;
-export type AntSwitchProps = {
-  checked?: boolean;
-  disabled?: boolean;
-  onChange?: (checked: boolean) =&gt; void;
+export type MarkdownProps = {
+  value: string;
 };
 &nbsp;
-const AntSwitch = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >(p</span>rops: AntSwitchProps) =&gt; {</span>
-  const { checked, disabled, onChange } = <span class="cstat-no" title="statement not covered" >props;</span>
+const Markdown = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >({</span> value }: MarkdownProps): JSX.Element =&gt; {</span>
+  const [html, setHtml] = <span class="cstat-no" title="statement not covered" >useState&lt;string&gt;();</span>
 &nbsp;
-  const onChangeHandler = <span class="cstat-no" title="statement not covered" >useCallback(</span>
-<span class="fstat-no" title="function not covered" >    (e</span>vent: React.ChangeEvent&lt;HTMLInputElement&gt;, value: boolean) =&gt; {
-<span class="cstat-no" title="statement not covered" >      onChange?.(value);</span>
-    },
-    [onChange]
-  );
+  const parseValue = <span class="cstat-no" title="statement not covered" >useCallback(<span class="fstat-no" title="function not covered" >as</span>ync (_value: string) =&gt; {</span>
+    const _html = <span class="cstat-no" title="statement not covered" >await marked.parse(_value);</span>
+<span class="cstat-no" title="statement not covered" >    setHtml(_html);</span>
+  }, []);
 &nbsp;
-<span class="cstat-no" title="statement not covered" >  return &lt;Switch className='ant-switch' checked={checked} disabled={disabled} onChange={onChangeHandler} /&gt;;</span>
+<span class="cstat-no" title="statement not covered" >  useEffect(<span class="fstat-no" title="function not covered" >()</span> =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >    void parseValue(value);</span>
+  }, [value]);
+&nbsp;
+<span class="cstat-no" title="statement not covered" >  return &lt;div className='markdown' dangerouslySetInnerHTML={{ __html: html ?? '' }} /&gt;;</span>
 };
 &nbsp;
-export default AntSwitch;
+export default Markdown;
 &nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
