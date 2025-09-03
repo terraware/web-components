@@ -4,11 +4,13 @@ import { Tooltip as MUITooltip, SxProps, TooltipProps, useTheme } from '@mui/mat
 
 import { useDeviceInfo } from '../../utils';
 
-type CustomTooltipProps = TooltipProps & {
-  sx?: SxProps;
-};
-
-export default function Tooltip({ placement = 'top-start', sx, title, children }: CustomTooltipProps): JSX.Element {
+export default function Tooltip({
+  children,
+  placement = 'top-start',
+  slotProps,
+  sx,
+  title,
+}: TooltipProps): JSX.Element {
   const [open, setOpen] = React.useState(false);
   const { isMobile } = useDeviceInfo();
   const theme = useTheme();
@@ -30,6 +32,7 @@ export default function Tooltip({ placement = 'top-start', sx, title, children }
       onClose={handleTooltipClose}
       open={open}
       placement={placement}
+      slotProps={slotProps}
       sx={[
         {
           maxWidth: isMobile ? '342px' : '464px',
