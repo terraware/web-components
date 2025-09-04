@@ -40,6 +40,7 @@ export { default as IconArrowRight } from './IconArrowRight';
 export { default as IconBusinessNetwork } from './IconBusinessNetwork';
 export { default as IconCancel } from './IconCancel';
 export { default as IconChargingBattery } from './IconChargingBattery';
+export { default as IconChecklist } from './IconChecklist';
 export { default as IconCheckmark } from './IconCheckmark';
 export { default as IconCoinInHand } from './IconCoinInHand';
 export { default as IconColumns } from './IconColumns';
