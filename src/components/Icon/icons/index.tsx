@@ -43,6 +43,7 @@ import IconArrowRight from '../../svg/IconArrowRight';
 import IconBusinessNetwork from '../../svg/IconBusinessNetwork';
 import Cancel from '../../svg/IconCancel';
 import ChargingBattery from '../../svg/IconChargingBattery';
+import Checklist from '../../svg/IconChecklist';
 import Checkmark from '../../svg/IconCheckmark';
 import IconCoinInHand from '../../svg/IconCoinInHand';
 import IconColumns from '../../svg/IconColumns';
@@ -144,6 +145,7 @@ export type IconName =
   | 'caretRight'
   | 'caretUp'
   | 'chargingBattery'
+  | 'checklist'
   | 'checkmark'
   | 'chevronDown'
   | 'chevronUp'
@@ -267,6 +269,7 @@ const icons: Record<IconName, SVGComponent> = {
   caretRight: CaretRight,
   caretUp: CaretUp,
   chargingBattery: ChargingBattery,
+  checklist: Checklist,
   checkmark: Checkmark,
   chevronDown: ChevronDown,
   chevronUp: ChevronUp,
