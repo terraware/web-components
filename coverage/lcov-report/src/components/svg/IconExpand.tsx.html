@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for src/components/svg/IconChargingBattery.tsx</title>
+    <title>Code coverage report for src/components/svg/IconExpand.tsx</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../../../prettify.css" />
     <link rel="stylesheet" href="../../../base.css" />
@@ -19,13 +19,13 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../../../index.html">All files</a> / <a href="index.html">src/components/svg</a> IconChargingBattery.tsx</h1>
+        <h1><a href="../../../index.html">All files</a> / <a href="index.html">src/components/svg</a> IconExpand.tsx</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">50% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>1/2</span>
+                <span class='fraction'>0/2</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">50% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>1/2</span>
+                <span class='fraction'>0/2</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line medium'></div>
+    <div class='status-line low'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -76,14 +76,22 @@
 <a name='L11'></a><a href='#L11'>11</a>
 <a name='L12'></a><a href='#L12'>12</a>
 <a name='L13'></a><a href='#L13'>13</a>
-<a name='L14'></a><a href='#L14'>14</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L14'></a><a href='#L14'>14</a>
+<a name='L15'></a><a href='#L15'>15</a>
+<a name='L16'></a><a href='#L16'>16</a>
+<a name='L17'></a><a href='#L17'>17</a>
+<a name='L18'></a><a href='#L18'>18</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -91,17 +99,21 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import * as React from 'react';
 import { SVGProps } from 'react';
+&nbsp;
 interface SVGRProps {
   title?: string;
   titleId?: string;
 }
-const SvgIconChargingBattery = <span class="fstat-no" title="function not covered" >({</span> title, titleId, ...props }: SVGProps&lt;SVGSVGElement&gt; &amp; SVGRProps) =&gt; (
-<span class="cstat-no" title="statement not covered" >  &lt;svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' aria-labelledby={titleId} {...props}&gt;</span>
+const SvgIconExpand = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >({</span> title, titleId, ...props }: SVGProps&lt;SVGSVGElement&gt; &amp; SVGRProps) =&gt; (</span>
+<span class="cstat-no" title="statement not covered" >  &lt;svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 16 17' aria-labelledby={titleId} {...props}&gt;</span>
     {title ? &lt;title id={titleId}&gt;{title}&lt;/title&gt; : null}
-    &lt;path d='M4.75 6C3.24 6 2 7.24 2 8.75v6.5C2 16.76 3.24 18 4.75 18h12.5c1.51 0 2.75-1.24 2.75-2.75V14h1a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1h-1V8.75C20 7.24 18.76 6 17.25 6zm0 1.5h12.5c.7 0 1.25.55 1.25 1.25v6.5c0 .7-.55 1.25-1.25 1.25H4.75c-.7 0-1.25-.55-1.25-1.25v-6.5c0-.7.55-1.25 1.25-1.25m5.652 1.503a.356.356 0 0 0-.402.354V12l-3.055-.99a.357.357 0 0 0-.316.622l4.785 3.285a.357.357 0 0 0 .586-.274V12l3.055.99a.357.357 0 0 0 .316-.622l-4.785-3.285a.36.36 0 0 0-.184-.08' /&gt;
+    &lt;path
+      fill='#333025'
+      d='M2.495 2.495A.5.5 0 0 0 2 3.064V6a.5.5 0 1 0 1 0V4.207l3.146 3.146a.5.5 0 1 0 .707-.707L3.707 3.5H5.5a.5.5 0 1 0 0-1H2.563a1 1 0 0 0-.068-.005m10.995 0-.054.005H10.5a.5.5 0 1 0 0 1h1.793L9.146 6.646a.5.5 0 1 0 .707.707L13 4.207V6a.5.5 0 1 0 1 0V3.063a.5.5 0 0 0-.51-.568m-3.995 7a.5.5 0 0 0-.349.858l3.147 3.147H10.5a.5.5 0 1 0 0 1h2.937a.5.5 0 0 0 .563-.564V11a.501.501 0 1 0-1 0v1.793L9.853 9.646a.5.5 0 0 0-.358-.151m-3.005 0a.5.5 0 0 0-.344.151L3 12.793V11a.5.5 0 1 0-1 0v2.937a.5.5 0 0 0 .564.563H5.5a.499.499 0 1 0 0-1H3.707l3.146-3.147a.5.5 0 0 0-.363-.858'
+    /&gt;
   &lt;/svg&gt;
 );
-export default SvgIconChargingBattery;
+export default SvgIconExpand;
 &nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
