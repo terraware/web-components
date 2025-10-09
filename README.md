@@ -18,7 +18,7 @@ You may see references to some private repositories in the documentation. We're 
 
 ## Requirements
 
-**Make sure you're using Node 16**
+**Make sure you're using Node 20**
 
 With `nvm`:
 
