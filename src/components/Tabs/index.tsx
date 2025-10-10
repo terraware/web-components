@@ -21,9 +21,10 @@ export type TabsProps = {
   tabs: Tab[];
   tabStyle?: SxProps<Theme>;
   headerBorder?: boolean;
+  sx?: SxProps;
 };
 
-const Tabs = ({ activeTab, onChangeTab, tabs, tabStyle, headerBorder = false }: TabsProps): JSX.Element => {
+const Tabs = ({ activeTab, onChangeTab, tabs, tabStyle, headerBorder = false, sx }: TabsProps): JSX.Element => {
   const [selectedTab, setSelectedTab] = useState<string>(activeTab ?? tabs[0]?.id ?? '');
   const theme = useTheme();
   const { isMobile } = useDeviceInfo();
@@ -85,9 +86,9 @@ const Tabs = ({ activeTab, onChangeTab, tabs, tabStyle, headerBorder = false }: 
   }, [activeTab]);
 
   return (
-    <Box sx={{ width: '100%' }}>
+    <Box sx={{ width: '100%', ...sx }}>
       <TabContext value={selectedTab}>
-        <Box sx={tabHeaderProps}>
+        <Box sx={tabHeaderProps} className='tab-header'>
           <TabList
             onChange={(unused, value: string) => setTab(value)}
             sx={{ minHeight: theme.spacing(4.5) }}
