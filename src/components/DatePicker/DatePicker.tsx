@@ -70,7 +70,7 @@ export default function DatePicker(props: Props): JSX.Element {
 
   React.useEffect(() => {
     setTemporalValue((prev) => {
-      if (props.value !== prev && props.value) {
+      if (props.value !== prev) {
         return initializeDate(props.value, props.defaultTimeZone);
       } else {
         return prev;
