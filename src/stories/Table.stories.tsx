@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 
 import { Box } from '@mui/material';
 import { Story } from '@storybook/react';
@@ -28,19 +28,18 @@ function Renderer(props: RendererProps<any>): JSX.Element {
   return <CellRenderer {...props} />;
 }
 
-const Template: Story<Omit<TableProps<{ name: string; lastname: string }>, 'rows'> & { rowCount: number }> = (args) => {
+const TableWithState = (
+  args: Omit<TableProps<{ name: string; lastname: string }>, 'rows'> & { rowCount: number; currentPage?: number }
+) => {
   const [selectedRows, setSelectedRows] = useState<any>([]);
-  const [rows, setRows] = useState<any>([]);
 
-  args.columns[1].sx = { fontStyle: 'italic' };
-
-  useEffect(() => {
-    const nextRows = Array(args.rowCount)
+  const rows: any = useMemo(() => {
+    return Array(args.rowCount)
       .fill({ name: '', middlename: '', lastname: '', occupation: '' })
       .map((i, j) => {
         if (j % 2 === 0) {
           return {
-            name: `Constanza_${j}`,
+            name: `Constanza_${j}-${args.currentPage ?? ''}`,
             middlename: '',
             lastname: 'Uanini',
             occupation: 'Artist',
@@ -49,7 +48,7 @@ const Template: Story<Omit<TableProps<{ name: string; lastname: string }>, 'rows
           };
         } else if (j % 3 === 0) {
           return {
-            name: `Carlos_${j}`,
+            name: `Carlos_${j}-${args.currentPage ?? ''}`,
             middlename: '--',
             lastname: 'Thurber',
             occupation: 'Freelancer',
@@ -59,7 +58,7 @@ const Template: Story<Omit<TableProps<{ name: string; lastname: string }>, 'rows
           };
         } else {
           return {
-            name: `Jane${j}`,
+            name: `Jane${j}-${args.currentPage ?? ''}`,
             middlename: 'John',
             lastname: 'Doe',
             occupation: 'Business analyst',
@@ -70,9 +69,7 @@ const Template: Story<Omit<TableProps<{ name: string; lastname: string }>, 'rows
           };
         }
       });
-
-    setRows(nextRows);
-  }, [args.rowCount]);
+  }, [args.rowCount, args.currentPage]);
 
   return (
     <Box paddingTop={args.showTopBar ? '50px' : 0} display='flex' flexGrow={1} flexDirection='column'>
@@ -109,6 +106,24 @@ const Template: Story<Omit<TableProps<{ name: string; lastname: string }>, 'rows
   );
 };
 
+const Template: Story<Omit<TableProps<{ name: string; lastname: string }>, 'rows'> & { rowCount: number }> = (args) => (
+  <TableWithState {...args} />
+);
+
+export const PageChangeCallback: Story<
+  Omit<TableProps<{ name: string; lastname: string }>, 'rows'> & { rowCount: number }
+> = (args) => {
+  const [currentPage, setCurrentPage] = useState(1);
+  const onPageChange = useCallback((newPage: number) => {
+    // this is just showing off that that page number is being controlled outside the table component
+    const customizedPage = newPage * 2;
+    alert(`New Page: ${customizedPage}`);
+    setCurrentPage(customizedPage);
+  }, []);
+
+  return <TableWithState {...args} onPageChange={onPageChange} currentPage={currentPage} />;
+};
+
 export const Default = Template.bind({});
 export const Selectable = Template.bind({});
 export const Presorted = Template.bind({});
@@ -119,7 +134,13 @@ Default.args = {
   orderBy: 'name',
   columns: [
     { key: 'name', name: 'Name', type: 'string' },
-    { key: 'middlename', name: 'Middlename', type: 'string', tooltipTitle: 'Middle name is optional' },
+    {
+      key: 'middlename',
+      name: 'Middlename',
+      type: 'string',
+      tooltipTitle: 'Middle name is optional',
+      sx: { fontStyle: 'italic' },
+    },
     { key: 'lastname', name: 'Lastname', type: 'string' },
     { key: 'occupation', name: 'Occupation', type: 'string' },
     { key: 'available', name: 'Available', type: 'boolean' },
@@ -127,7 +148,7 @@ Default.args = {
     { key: 'date', name: 'Date', type: 'string', tooltipTitle: 'Right aligend with tooltip', alignment: 'right' },
     { key: 'pets', name: 'Pets', type: 'string', alignment: 'right' },
   ],
-  rowCount: 150,
+  rowCount: 201,
   showTopBar: false,
   booleanFalseText: 'No',
   booleanTrueText: 'Yes',
@@ -188,4 +209,10 @@ ShowTopBarV2.args = {
   controlledOnSelect: true,
   showTopBar: true,
   enhancedTopBarSelectionConfig,
+};
+
+PageChangeCallback.args = {
+  ...Default.args,
+  maxItemsPerPage: 10,
+  totalRowCount: 279,
 };
