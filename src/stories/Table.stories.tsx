@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 
 import { Box } from '@mui/material';
 import { Story } from '@storybook/react';
@@ -28,11 +28,9 @@ function Renderer(props: RendererProps<any>): JSX.Element {
   return <CellRenderer {...props} />;
 }
 
-const Template: Story<Omit<TableProps<{ name: string; lastname: string }>, 'rows'> & { rowCount: number }> = (args) => {
+const TableWithState = (args: Omit<TableProps<{ name: string; lastname: string }>, 'rows'> & { rowCount: number }) => {
   const [selectedRows, setSelectedRows] = useState<any>([]);
   const [rows, setRows] = useState<any>([]);
-
-  args.columns[1].sx = { fontStyle: 'italic' };
 
   useEffect(() => {
     const nextRows = Array(args.rowCount)
@@ -109,6 +107,10 @@ const Template: Story<Omit<TableProps<{ name: string; lastname: string }>, 'rows
   );
 };
 
+const Template: Story<Omit<TableProps<{ name: string; lastname: string }>, 'rows'> & { rowCount: number }> = (args) => (
+  <TableWithState {...args} />
+);
+
 export const Default = Template.bind({});
 export const Selectable = Template.bind({});
 export const Presorted = Template.bind({});
@@ -119,7 +121,13 @@ Default.args = {
   orderBy: 'name',
   columns: [
     { key: 'name', name: 'Name', type: 'string' },
-    { key: 'middlename', name: 'Middlename', type: 'string', tooltipTitle: 'Middle name is optional' },
+    {
+      key: 'middlename',
+      name: 'Middlename',
+      type: 'string',
+      tooltipTitle: 'Middle name is optional',
+      sx: { fontStyle: 'italic' },
+    },
     { key: 'lastname', name: 'Lastname', type: 'string' },
     { key: 'occupation', name: 'Occupation', type: 'string' },
     { key: 'available', name: 'Available', type: 'boolean' },
@@ -127,7 +135,7 @@ Default.args = {
     { key: 'date', name: 'Date', type: 'string', tooltipTitle: 'Right aligend with tooltip', alignment: 'right' },
     { key: 'pets', name: 'Pets', type: 'string', alignment: 'right' },
   ],
-  rowCount: 150,
+  rowCount: 201,
   showTopBar: false,
   booleanFalseText: 'No',
   booleanTrueText: 'Yes',
@@ -188,4 +196,18 @@ ShowTopBarV2.args = {
   controlledOnSelect: true,
   showTopBar: true,
   enhancedTopBarSelectionConfig,
+};
+
+export const ControlledPagination: Story<
+  Omit<TableProps<{ name: string; lastname: string }>, 'rows'> & { rowCount: number }
+> = (args) => {
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const onPageChange = useCallback((newPage: number) => setCurrentPage(newPage), []);
+
+  return <TableWithState {...args} currentPage={currentPage} onPageChange={onPageChange} />;
+};
+
+ControlledPagination.args = {
+  ...Default.args,
+  maxItemsPerPage: 10,
 };
