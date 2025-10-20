@@ -65,7 +65,6 @@ export interface Props<T> extends LocalizationProps {
   // this function can be called from the renderer using the onRowClick function and can receive
   // an optional "newValue" parameter from that call
   onSelect?: (value: T, fromColumn?: string, newValue?: string) => void;
-  currentPage?: number;
   onPageChange?: (newPage: number) => void;
   maxItemsPerPage: number;
   DetailsRenderer?: (props: DetailsRendererProps) => JSX.Element;
@@ -119,7 +118,6 @@ export default function EnhancedTable<T extends TableRowType>({
   orderBy: _orderBy,
   Renderer = TableCellRenderer,
   onSelect,
-  currentPage,
   onPageChange,
   maxItemsPerPage = 100,
   DetailsRenderer,
@@ -151,7 +149,7 @@ export default function EnhancedTable<T extends TableRowType>({
   const theme = useTheme();
   const [order, setOrder] = React.useState<SortOrder>(_order);
   const [orderBy, setOrderBy] = React.useState(_orderBy);
-  const [itemsToSkip, setItemsToSkip] = useState(0);
+  const [currentPage, setCurrentPage] = useState<number>(1);
   const { isMobile } = useDeviceInfo();
   const [displayColumnKeyNames, setDisplayColumnKeyNames] = useState<string[]>();
   const [displayColumnsIndexed, setDisplayColumnsIndexed] = useState<Record<string, DatabaseColumn>>();
@@ -192,13 +190,10 @@ export default function EnhancedTable<T extends TableRowType>({
 
   const handleChangePage = useCallback(
     (event: unknown, newPage: number) => {
-      if (onPageChange) {
-        onPageChange(newPage);
-      } else {
-        setItemsToSkip(maxItemsPerPage * (newPage - 1));
-      }
+      onPageChange?.(newPage);
+      setCurrentPage(newPage);
     },
-    [maxItemsPerPage, onPageChange]
+    [onPageChange]
   );
 
   useEffect(() => {
@@ -320,6 +315,8 @@ export default function EnhancedTable<T extends TableRowType>({
 
   const sortedPageRows = useMemo(() => {
     if (rows) {
+      const itemsToSkip = onPageChange ? 0 : maxItemsPerPage * (currentPage - 1);
+
       return (isPresorted ? rows : stableSort(rows, getComparator(order, orderBy, sortComparator))).slice(
         itemsToSkip,
         itemsToSkip + maxItemsPerPage
@@ -327,10 +324,8 @@ export default function EnhancedTable<T extends TableRowType>({
     } else {
       return [];
     }
-  }, [isPresorted, rows, order, orderBy, sortComparator, itemsToSkip, maxItemsPerPage]);
+  }, [rows, onPageChange, maxItemsPerPage, currentPage, isPresorted, order, orderBy, sortComparator]);
 
-  // TODO CONSIDER CHANGING THIS COMPONENT TO NOT SET itemsToSkip BUT TO INSTEAD JUST SET THE CURRENT PAGE
-  //  that way you wouldn't have to have all this weird logic
   /**
    *  Calculate pagination numbers to show.
    *  If the table is empty (rows.length === 0) override calculation and show '0 of 0'
@@ -342,18 +337,16 @@ export default function EnhancedTable<T extends TableRowType>({
       return 0;
     }
 
-    return currentPage ? (currentPage - 1) * maxItemsPerPage + 1 : itemsToSkip + 1;
-  }, [currentPage, itemsToSkip, maxItemsPerPage, sortedPageRows.length]);
+    return (currentPage - 1) * maxItemsPerPage + 1;
+  }, [currentPage, maxItemsPerPage, sortedPageRows.length]);
 
   const maxRowNumber = useMemo(() => {
     if (!sortedPageRows.length) {
       return 0;
     }
 
-    const calculatedMax = currentPage ? currentPage * maxItemsPerPage : itemsToSkip + maxItemsPerPage;
-
-    return Math.min(calculatedMax, paginationTotal);
-  }, [currentPage, itemsToSkip, maxItemsPerPage, paginationTotal, sortedPageRows.length]);
+    return Math.min(currentPage * maxItemsPerPage, paginationTotal);
+  }, [currentPage, maxItemsPerPage, paginationTotal, sortedPageRows.length]);
 
   return (
     <>
@@ -502,7 +495,7 @@ export default function EnhancedTable<T extends TableRowType>({
           </Typography>
           <Pagination
             count={pagesCount}
-            page={currentPage !== undefined ? currentPage : itemsToSkip / maxItemsPerPage + 1}
+            page={currentPage}
             shape='rounded'
             onChange={handleChangePage}
             siblingCount={isMobile ? 0 : 1}

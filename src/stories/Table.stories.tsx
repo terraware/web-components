@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 
 import { Box } from '@mui/material';
 import { Story } from '@storybook/react';
@@ -30,10 +30,9 @@ function Renderer(props: RendererProps<any>): JSX.Element {
 
 const TableWithState = (args: Omit<TableProps<{ name: string; lastname: string }>, 'rows'> & { rowCount: number }) => {
   const [selectedRows, setSelectedRows] = useState<any>([]);
-  const [rows, setRows] = useState<any>([]);
 
-  useEffect(() => {
-    const nextRows = Array(args.rowCount)
+  const rows: any = useMemo(() => {
+    return Array(args.rowCount)
       .fill({ name: '', middlename: '', lastname: '', occupation: '' })
       .map((i, j) => {
         if (j % 2 === 0) {
@@ -68,8 +67,6 @@ const TableWithState = (args: Omit<TableProps<{ name: string; lastname: string }
           };
         }
       });
-
-    setRows(nextRows);
   }, [args.rowCount]);
 
   return (
@@ -110,6 +107,14 @@ const TableWithState = (args: Omit<TableProps<{ name: string; lastname: string }
 const Template: Story<Omit<TableProps<{ name: string; lastname: string }>, 'rows'> & { rowCount: number }> = (args) => (
   <TableWithState {...args} />
 );
+
+export const PageChangeCallback: Story<
+  Omit<TableProps<{ name: string; lastname: string }>, 'rows'> & { rowCount: number }
+> = (args) => {
+  const onPageChange = useCallback((newPage: number) => alert(`New Page: ${newPage}`), []);
+
+  return <TableWithState {...args} onPageChange={onPageChange} />;
+};
 
 export const Default = Template.bind({});
 export const Selectable = Template.bind({});
@@ -198,16 +203,7 @@ ShowTopBarV2.args = {
   enhancedTopBarSelectionConfig,
 };
 
-export const ControlledPagination: Story<
-  Omit<TableProps<{ name: string; lastname: string }>, 'rows'> & { rowCount: number }
-> = (args) => {
-  const [currentPage, setCurrentPage] = useState<number>(1);
-  const onPageChange = useCallback((newPage: number) => setCurrentPage(newPage), []);
-
-  return <TableWithState {...args} currentPage={currentPage} onPageChange={onPageChange} />;
-};
-
-ControlledPagination.args = {
+PageChangeCallback.args = {
   ...Default.args,
   maxItemsPerPage: 10,
 };
