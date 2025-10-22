@@ -89,6 +89,7 @@ export { default as IconSubtract } from './IconSubtract';
 export { default as IconSynced } from './IconSynced';
 export { default as IconTrashCan } from './IconTrashCan';
 export { default as IconTreasureMap } from './IconTreasureMap';
+export { default as IconUnavailable } from './IconUnavailable';
 export { default as IconUndo } from './IconUndo';
 export { default as IconVariable } from './IconVariable';
 export { default as IconWifi } from './IconWifi';

@@ -95,6 +95,7 @@ import IconSubtract from '../../svg/IconSubtract';
 import IconSynced from '../../svg/IconSynced';
 import IconTrashCan from '../../svg/IconTrashCan';
 import IconTreasureMap from '../../svg/IconTreasureMap';
+import IconUnavailable from '../../svg/IconUnavailable';
 import IconUndo from '../../svg/IconUndo';
 import IconVariable from '../../svg/IconVariable';
 import Wifi from '../../svg/IconWifi';
@@ -206,6 +207,7 @@ export type IconName =
   | 'iconSynced'
   | 'iconTrashCan'
   | 'iconTreasureMap'
+  | 'iconUnavailable'
   | 'iconUndo'
   | 'iconVariable'
   | 'info'
@@ -332,6 +334,7 @@ const icons: Record<IconName, SVGComponent> = {
   iconSynced: IconSynced,
   iconTrashCan: IconTrashCan,
   iconTreasureMap: IconTreasureMap,
+  iconUnavailable: IconUnavailable,
   iconUndo: IconUndo,
   iconVariable: IconVariable,
   info: Info,
