@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1761165407337" clover="3.2.0">
-  <project timestamp="1761165407337" name="All files">
-    <metrics statements="2091" coveredstatements="214" conditionals="1718" coveredconditionals="105" methods="758" coveredmethods="31" elements="4567" coveredelements="350" complexity="0" loc="2091" ncloc="2091" packages="43" files="246" classes="246"/>
+<coverage generated="1761248066992" clover="3.2.0">
+  <project timestamp="1761248066992" name="All files">
+    <metrics statements="2093" coveredstatements="215" conditionals="1720" coveredconditionals="105" methods="759" coveredmethods="31" elements="4572" coveredelements="351" complexity="0" loc="2093" ncloc="2093" packages="43" files="247" classes="247"/>
     <package name="src">
       <metrics statements="1" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
       <file name="index.ts" path="/home/runner/work/web-components/web-components/src/index.ts">
@@ -281,7 +281,7 @@
       <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
       <file name="index.tsx" path="/home/runner/work/web-components/web-components/src/components/Icon/icons/index.tsx">
         <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
-        <line num="251" count="2" type="stmt"/>
+        <line num="253" count="2" type="stmt"/>
       </file>
     </package>
     <package name="src.components.IconTooltip">
@@ -1213,216 +1213,216 @@
       </file>
     </package>
     <package name="src.components.svg">
-      <metrics statements="246" coveredstatements="122" conditionals="246" coveredconditionals="3" methods="123" coveredmethods="3"/>
+      <metrics statements="248" coveredstatements="123" conditionals="248" coveredconditionals="3" methods="124" coveredmethods="3"/>
       <file name="BlobbyGrayIconImage.tsx" path="/home/runner/work/web-components/web-components/src/components/svg/BlobbyGrayIconImage.tsx">
         <metrics statements="2" coveredstatements="1" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="7" count="2" type="stmt"/>
-        <line num="8" count="0" type="stmt"/>
+        <line num="8" count="2" type="stmt"/>
+        <line num="9" count="0" type="stmt"/>
       </file>
       <file name="BlobbyGrayIconImport.tsx" path="/home/runner/work/web-components/web-components/src/components/svg/BlobbyGrayIconImport.tsx">
         <metrics statements="2" coveredstatements="1" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="7" count="2" type="stmt"/>
-        <line num="8" count="0" type="stmt"/>
+        <line num="8" count="2" type="stmt"/>
+        <line num="9" count="0" type="stmt"/>
       </file>
       <file name="BlobbyGrayIconUploadToTheCloud.tsx" path="/home/runner/work/web-components/web-components/src/components/svg/BlobbyGrayIconUploadToTheCloud.tsx">
         <metrics statements="2" coveredstatements="1" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="7" count="2" type="stmt"/>
-        <line num="8" count="0" type="stmt"/>
+        <line num="8" count="2" type="stmt"/>
+        <line num="9" count="0" type="stmt"/>
       </file>
       <file name="BlobbyIconCloudChecked.tsx" path="/home/runner/work/web-components/web-components/src/components/svg/BlobbyIconCloudChecked.tsx">
         <metrics statements="2" coveredstatements="1" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="7" count="2" type="stmt"/>
-        <line num="8" count="0" type="stmt"/>
+        <line num="8" count="2" type="stmt"/>
+        <line num="9" count="0" type="stmt"/>
       </file>
       <file name="BlobbyIconExportOrUploadPhoto.tsx" path="/home/runner/work/web-components/web-components/src/components/svg/BlobbyIconExportOrUploadPhoto.tsx">
         <metrics statements="2" coveredstatements="1" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="7" count="2" type="stmt"/>
-        <line num="8" count="0" type="stmt"/>
+        <line num="8" count="2" type="stmt"/>
+        <line num="9" count="0" type="stmt"/>
       </file>
       <file name="BlobbyIconFolder.tsx" path="/home/runner/work/web-components/web-components/src/components/svg/BlobbyIconFolder.tsx">
         <metrics statements="2" coveredstatements="1" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="7" count="2" type="stmt"/>
-        <line num="8" count="0" type="stmt"/>
+        <line num="8" count="2" type="stmt"/>
+        <line num="9" count="0" type="stmt"/>
       </file>
       <file name="BlobbyIconGraphReport.tsx" path="/home/runner/work/web-components/web-components/src/components/svg/BlobbyIconGraphReport.tsx">
         <metrics statements="2" coveredstatements="1" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="7" count="2" type="stmt"/>
-        <line num="8" count="0" type="stmt"/>
+        <line num="8" count="2" type="stmt"/>
+        <line num="9" count="0" type="stmt"/>
       </file>
       <file name="BlobbyIconHappy.tsx" path="/home/runner/work/web-components/web-components/src/components/svg/BlobbyIconHappy.tsx">
         <metrics statements="2" coveredstatements="1" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="7" count="2" type="stmt"/>
-        <line num="8" count="0" type="stmt"/>
+        <line num="8" count="2" type="stmt"/>
+        <line num="9" count="0" type="stmt"/>
       </file>
       <file name="BlobbyIconHeartMonitor.tsx" path="/home/runner/work/web-components/web-components/src/components/svg/BlobbyIconHeartMonitor.tsx">
         <metrics statements="2" coveredstatements="1" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="7" count="2" type="stmt"/>
-        <line num="8" count="0" type="stmt"/>
+        <line num="8" count="2" type="stmt"/>
+        <line num="9" count="0" type="stmt"/>
       </file>
       <file name="BlobbyIconLeaf.tsx" path="/home/runner/work/web-components/web-components/src/components/svg/BlobbyIconLeaf.tsx">
         <metrics statements="2" coveredstatements="1" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="7" count="2" type="stmt"/>
-        <line num="8" count="0" type="stmt"/>
+        <line num="8" count="2" type="stmt"/>
+        <line num="9" count="0" type="stmt"/>
       </file>
       <file name="BlobbyIconLibrary.tsx" path="/home/runner/work/web-components/web-components/src/components/svg/BlobbyIconLibrary.tsx">
         <metrics statements="2" coveredstatements="1" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="7" count="2" type="stmt"/>
-        <line num="8" count="0" type="stmt"/>
+        <line num="8" count="2" type="stmt"/>
+        <line num="9" count="0" type="stmt"/>
       </file>
       <file name="BlobbyIconNursery.tsx" path="/home/runner/work/web-components/web-components/src/components/svg/BlobbyIconNursery.tsx">
         <metrics statements="2" coveredstatements="1" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="7" count="2" type="stmt"/>
-        <line num="8" count="0" type="stmt"/>
+        <line num="8" count="2" type="stmt"/>
+        <line num="9" count="0" type="stmt"/>
       </file>
       <file name="BlobbyIconOrganization.tsx" path="/home/runner/work/web-components/web-components/src/components/svg/BlobbyIconOrganization.tsx">
         <metrics statements="2" coveredstatements="1" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="7" count="2" type="stmt"/>
-        <line num="8" count="0" type="stmt"/>
+        <line num="8" count="2" type="stmt"/>
+        <line num="9" count="0" type="stmt"/>
       </file>
       <file name="BlobbyIconParchment.tsx" path="/home/runner/work/web-components/web-components/src/components/svg/BlobbyIconParchment.tsx">
         <metrics statements="2" coveredstatements="1" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="7" count="2" type="stmt"/>
-        <line num="8" count="0" type="stmt"/>
+        <line num="8" count="2" type="stmt"/>
+        <line num="9" count="0" type="stmt"/>
       </file>
       <file name="BlobbyIconPeople.tsx" path="/home/runner/work/web-components/web-components/src/components/svg/BlobbyIconPeople.tsx">
         <metrics statements="2" coveredstatements="1" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="7" count="2" type="stmt"/>
-        <line num="8" count="0" type="stmt"/>
+        <line num="8" count="2" type="stmt"/>
+        <line num="9" count="0" type="stmt"/>
       </file>
       <file name="BlobbyIconSeedBank.tsx" path="/home/runner/work/web-components/web-components/src/components/svg/BlobbyIconSeedBank.tsx">
         <metrics statements="2" coveredstatements="1" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="7" count="2" type="stmt"/>
-        <line num="8" count="0" type="stmt"/>
+        <line num="8" count="2" type="stmt"/>
+        <line num="9" count="0" type="stmt"/>
       </file>
       <file name="BlobbyIconSeedling.tsx" path="/home/runner/work/web-components/web-components/src/components/svg/BlobbyIconSeedling.tsx">
         <metrics statements="2" coveredstatements="1" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="7" count="2" type="stmt"/>
-        <line num="8" count="0" type="stmt"/>
+        <line num="8" count="2" type="stmt"/>
+        <line num="9" count="0" type="stmt"/>
       </file>
       <file name="BlobbyIconSeeds.tsx" path="/home/runner/work/web-components/web-components/src/components/svg/BlobbyIconSeeds.tsx">
         <metrics statements="2" coveredstatements="1" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="7" count="2" type="stmt"/>
-        <line num="8" count="0" type="stmt"/>
+        <line num="8" count="2" type="stmt"/>
+        <line num="9" count="0" type="stmt"/>
       </file>
       <file name="BlobbyIconSite.tsx" path="/home/runner/work/web-components/web-components/src/components/svg/BlobbyIconSite.tsx">
         <metrics statements="2" coveredstatements="1" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="7" count="2" type="stmt"/>
-        <line num="8" count="0" type="stmt"/>
+        <line num="8" count="2" type="stmt"/>
+        <line num="9" count="0" type="stmt"/>
       </file>
       <file name="BlobbyIconSparkles.tsx" path="/home/runner/work/web-components/web-components/src/components/svg/BlobbyIconSparkles.tsx">
         <metrics statements="2" coveredstatements="1" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="7" count="2" type="stmt"/>
-        <line num="8" count="0" type="stmt"/>
+        <line num="8" count="2" type="stmt"/>
+        <line num="9" count="0" type="stmt"/>
       </file>
       <file name="BlobbyIconWrench.tsx" path="/home/runner/work/web-components/web-components/src/components/svg/BlobbyIconWrench.tsx">
         <metrics statements="2" coveredstatements="1" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="7" count="2" type="stmt"/>
-        <line num="8" count="0" type="stmt"/>
+        <line num="8" count="2" type="stmt"/>
+        <line num="9" count="0" type="stmt"/>
       </file>
       <file name="Bug.tsx" path="/home/runner/work/web-components/web-components/src/components/svg/Bug.tsx">
         <metrics statements="2" coveredstatements="1" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="7" count="2" type="stmt"/>
-        <line num="8" count="0" type="stmt"/>
+        <line num="8" count="2" type="stmt"/>
+        <line num="9" count="0" type="stmt"/>
       </file>
       <file name="Calendar.tsx" path="/home/runner/work/web-components/web-components/src/components/svg/Calendar.tsx">
         <metrics statements="2" coveredstatements="1" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="7" count="2" type="stmt"/>
-        <line num="8" count="0" type="stmt"/>
+        <line num="8" count="2" type="stmt"/>
+        <line num="9" count="0" type="stmt"/>
       </file>
       <file name="CaretDown.tsx" path="/home/runner/work/web-components/web-components/src/components/svg/CaretDown.tsx">
         <metrics statements="2" coveredstatements="1" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="7" count="2" type="stmt"/>
-        <line num="8" count="0" type="stmt"/>
+        <line num="8" count="2" type="stmt"/>
+        <line num="9" count="0" type="stmt"/>
       </file>
       <file name="CaretLeft.tsx" path="/home/runner/work/web-components/web-components/src/components/svg/CaretLeft.tsx">
         <metrics statements="2" coveredstatements="1" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="7" count="2" type="stmt"/>
-        <line num="8" count="0" type="stmt"/>
+        <line num="8" count="2" type="stmt"/>
+        <line num="9" count="0" type="stmt"/>
       </file>
       <file name="CaretRight.tsx" path="/home/runner/work/web-components/web-components/src/components/svg/CaretRight.tsx">
         <metrics statements="2" coveredstatements="1" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="7" count="2" type="stmt"/>
-        <line num="8" count="0" type="stmt"/>
+        <line num="8" count="2" type="stmt"/>
+        <line num="9" count="0" type="stmt"/>
       </file>
       <file name="CaretUp.tsx" path="/home/runner/work/web-components/web-components/src/components/svg/CaretUp.tsx">
         <metrics statements="2" coveredstatements="1" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="7" count="2" type="stmt"/>
-        <line num="8" count="0" type="stmt"/>
+        <line num="8" count="2" type="stmt"/>
+        <line num="9" count="0" type="stmt"/>
       </file>
       <file name="ChevronDown.tsx" path="/home/runner/work/web-components/web-components/src/components/svg/ChevronDown.tsx">
         <metrics statements="2" coveredstatements="2" conditionals="2" coveredconditionals="1" methods="1" coveredmethods="1"/>
-        <line num="7" count="2" type="stmt"/>
-        <line num="8" count="3" type="stmt"/>
+        <line num="8" count="2" type="stmt"/>
+        <line num="9" count="3" type="stmt"/>
       </file>
       <file name="ChevronUp.tsx" path="/home/runner/work/web-components/web-components/src/components/svg/ChevronUp.tsx">
         <metrics statements="2" coveredstatements="2" conditionals="2" coveredconditionals="1" methods="1" coveredmethods="1"/>
-        <line num="7" count="2" type="stmt"/>
         <line num="8" count="2" type="stmt"/>
+        <line num="9" count="2" type="stmt"/>
       </file>
       <file name="Close.tsx" path="/home/runner/work/web-components/web-components/src/components/svg/Close.tsx">
         <metrics statements="2" coveredstatements="2" conditionals="2" coveredconditionals="1" methods="1" coveredmethods="1"/>
-        <line num="7" count="2" type="stmt"/>
-        <line num="8" count="1" type="stmt"/>
+        <line num="8" count="2" type="stmt"/>
+        <line num="9" count="1" type="stmt"/>
       </file>
       <file name="Critical.tsx" path="/home/runner/work/web-components/web-components/src/components/svg/Critical.tsx">
         <metrics statements="2" coveredstatements="1" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="7" count="2" type="stmt"/>
-        <line num="8" count="0" type="stmt"/>
+        <line num="8" count="2" type="stmt"/>
+        <line num="9" count="0" type="stmt"/>
       </file>
       <file name="Edit.tsx" path="/home/runner/work/web-components/web-components/src/components/svg/Edit.tsx">
         <metrics statements="2" coveredstatements="1" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="7" count="2" type="stmt"/>
-        <line num="8" count="0" type="stmt"/>
+        <line num="8" count="2" type="stmt"/>
+        <line num="9" count="0" type="stmt"/>
       </file>
       <file name="Error.tsx" path="/home/runner/work/web-components/web-components/src/components/svg/Error.tsx">
         <metrics statements="2" coveredstatements="1" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="7" count="2" type="stmt"/>
-        <line num="8" count="0" type="stmt"/>
+        <line num="8" count="2" type="stmt"/>
+        <line num="9" count="0" type="stmt"/>
       </file>
       <file name="Filter.tsx" path="/home/runner/work/web-components/web-components/src/components/svg/Filter.tsx">
         <metrics statements="2" coveredstatements="1" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="7" count="2" type="stmt"/>
-        <line num="8" count="0" type="stmt"/>
+        <line num="8" count="2" type="stmt"/>
+        <line num="9" count="0" type="stmt"/>
       </file>
       <file name="Folder.tsx" path="/home/runner/work/web-components/web-components/src/components/svg/Folder.tsx">
         <metrics statements="2" coveredstatements="1" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="7" count="2" type="stmt"/>
-        <line num="8" count="0" type="stmt"/>
+        <line num="8" count="2" type="stmt"/>
+        <line num="9" count="0" type="stmt"/>
       </file>
       <file name="Help.tsx" path="/home/runner/work/web-components/web-components/src/components/svg/Help.tsx">
         <metrics statements="2" coveredstatements="1" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="7" count="2" type="stmt"/>
-        <line num="8" count="0" type="stmt"/>
+        <line num="8" count="2" type="stmt"/>
+        <line num="9" count="0" type="stmt"/>
       </file>
       <file name="Home.tsx" path="/home/runner/work/web-components/web-components/src/components/svg/Home.tsx">
         <metrics statements="2" coveredstatements="1" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="7" count="2" type="stmt"/>
-        <line num="8" count="0" type="stmt"/>
+        <line num="8" count="2" type="stmt"/>
+        <line num="9" count="0" type="stmt"/>
       </file>
       <file name="IconAdd.tsx" path="/home/runner/work/web-components/web-components/src/components/svg/IconAdd.tsx">
         <metrics statements="2" coveredstatements="1" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="7" count="2" type="stmt"/>
-        <line num="8" count="0" type="stmt"/>
+        <line num="8" count="2" type="stmt"/>
+        <line num="9" count="0" type="stmt"/>
       </file>
       <file name="IconArrowRight.tsx" path="/home/runner/work/web-components/web-components/src/components/svg/IconArrowRight.tsx">
         <metrics statements="2" coveredstatements="1" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="7" count="2" type="stmt"/>
-        <line num="8" count="0" type="stmt"/>
+        <line num="8" count="2" type="stmt"/>
+        <line num="9" count="0" type="stmt"/>
       </file>
       <file name="IconBusinessNetwork.tsx" path="/home/runner/work/web-components/web-components/src/components/svg/IconBusinessNetwork.tsx">
         <metrics statements="2" coveredstatements="1" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="7" count="2" type="stmt"/>
-        <line num="8" count="0" type="stmt"/>
+        <line num="8" count="2" type="stmt"/>
+        <line num="9" count="0" type="stmt"/>
       </file>
       <file name="IconCancel.tsx" path="/home/runner/work/web-components/web-components/src/components/svg/IconCancel.tsx">
         <metrics statements="2" coveredstatements="1" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="7" count="2" type="stmt"/>
-        <line num="8" count="0" type="stmt"/>
+        <line num="8" count="2" type="stmt"/>
+        <line num="9" count="0" type="stmt"/>
       </file>
       <file name="IconChargingBattery.tsx" path="/home/runner/work/web-components/web-components/src/components/svg/IconChargingBattery.tsx">
         <metrics statements="2" coveredstatements="1" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="7" count="2" type="stmt"/>
-        <line num="8" count="0" type="stmt"/>
+        <line num="8" count="2" type="stmt"/>
+        <line num="9" count="0" type="stmt"/>
       </file>
       <file name="IconChecklist.tsx" path="/home/runner/work/web-components/web-components/src/components/svg/IconChecklist.tsx">
         <metrics statements="2" coveredstatements="1" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
@@ -1431,33 +1431,33 @@
       </file>
       <file name="IconCheckmark.tsx" path="/home/runner/work/web-components/web-components/src/components/svg/IconCheckmark.tsx">
         <metrics statements="2" coveredstatements="1" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="7" count="2" type="stmt"/>
-        <line num="8" count="0" type="stmt"/>
+        <line num="8" count="2" type="stmt"/>
+        <line num="9" count="0" type="stmt"/>
       </file>
       <file name="IconCoinInHand.tsx" path="/home/runner/work/web-components/web-components/src/components/svg/IconCoinInHand.tsx">
         <metrics statements="2" coveredstatements="1" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="7" count="2" type="stmt"/>
-        <line num="8" count="0" type="stmt"/>
+        <line num="8" count="2" type="stmt"/>
+        <line num="9" count="0" type="stmt"/>
       </file>
       <file name="IconColumns.tsx" path="/home/runner/work/web-components/web-components/src/components/svg/IconColumns.tsx">
         <metrics statements="2" coveredstatements="1" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="7" count="2" type="stmt"/>
-        <line num="8" count="0" type="stmt"/>
+        <line num="8" count="2" type="stmt"/>
+        <line num="9" count="0" type="stmt"/>
       </file>
       <file name="IconComment.tsx" path="/home/runner/work/web-components/web-components/src/components/svg/IconComment.tsx">
         <metrics statements="2" coveredstatements="1" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="7" count="2" type="stmt"/>
-        <line num="8" count="0" type="stmt"/>
+        <line num="8" count="2" type="stmt"/>
+        <line num="9" count="0" type="stmt"/>
       </file>
       <file name="IconDashboard.tsx" path="/home/runner/work/web-components/web-components/src/components/svg/IconDashboard.tsx">
         <metrics statements="2" coveredstatements="1" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="7" count="2" type="stmt"/>
-        <line num="8" count="0" type="stmt"/>
+        <line num="8" count="2" type="stmt"/>
+        <line num="9" count="0" type="stmt"/>
       </file>
       <file name="IconDataMigration.tsx" path="/home/runner/work/web-components/web-components/src/components/svg/IconDataMigration.tsx">
         <metrics statements="2" coveredstatements="1" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="7" count="2" type="stmt"/>
-        <line num="8" count="0" type="stmt"/>
+        <line num="8" count="2" type="stmt"/>
+        <line num="9" count="0" type="stmt"/>
       </file>
       <file name="IconDownloadFromTheCloud.tsx" path="/home/runner/work/web-components/web-components/src/components/svg/IconDownloadFromTheCloud.tsx">
         <metrics statements="2" coveredstatements="1" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
@@ -1466,8 +1466,8 @@
       </file>
       <file name="IconEdit.tsx" path="/home/runner/work/web-components/web-components/src/components/svg/IconEdit.tsx">
         <metrics statements="2" coveredstatements="1" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="7" count="2" type="stmt"/>
-        <line num="8" count="0" type="stmt"/>
+        <line num="8" count="2" type="stmt"/>
+        <line num="9" count="0" type="stmt"/>
       </file>
       <file name="IconExpand.tsx" path="/home/runner/work/web-components/web-components/src/components/svg/IconExpand.tsx">
         <metrics statements="2" coveredstatements="1" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
@@ -1476,93 +1476,93 @@
       </file>
       <file name="IconExport.tsx" path="/home/runner/work/web-components/web-components/src/components/svg/IconExport.tsx">
         <metrics statements="2" coveredstatements="1" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="7" count="2" type="stmt"/>
-        <line num="8" count="0" type="stmt"/>
+        <line num="8" count="2" type="stmt"/>
+        <line num="9" count="0" type="stmt"/>
       </file>
       <file name="IconExternalLink.tsx" path="/home/runner/work/web-components/web-components/src/components/svg/IconExternalLink.tsx">
         <metrics statements="2" coveredstatements="1" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="7" count="2" type="stmt"/>
-        <line num="8" count="0" type="stmt"/>
+        <line num="8" count="2" type="stmt"/>
+        <line num="9" count="0" type="stmt"/>
       </file>
       <file name="IconEye.tsx" path="/home/runner/work/web-components/web-components/src/components/svg/IconEye.tsx">
         <metrics statements="2" coveredstatements="1" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="7" count="2" type="stmt"/>
-        <line num="8" count="0" type="stmt"/>
+        <line num="8" count="2" type="stmt"/>
+        <line num="9" count="0" type="stmt"/>
       </file>
       <file name="IconEyeOff.tsx" path="/home/runner/work/web-components/web-components/src/components/svg/IconEyeOff.tsx">
         <metrics statements="2" coveredstatements="1" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="7" count="2" type="stmt"/>
-        <line num="8" count="0" type="stmt"/>
+        <line num="8" count="2" type="stmt"/>
+        <line num="9" count="0" type="stmt"/>
       </file>
       <file name="IconFile.tsx" path="/home/runner/work/web-components/web-components/src/components/svg/IconFile.tsx">
         <metrics statements="2" coveredstatements="1" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="7" count="2" type="stmt"/>
-        <line num="8" count="0" type="stmt"/>
+        <line num="8" count="2" type="stmt"/>
+        <line num="9" count="0" type="stmt"/>
       </file>
       <file name="IconFolder.tsx" path="/home/runner/work/web-components/web-components/src/components/svg/IconFolder.tsx">
         <metrics statements="2" coveredstatements="1" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="7" count="2" type="stmt"/>
-        <line num="8" count="0" type="stmt"/>
+        <line num="8" count="2" type="stmt"/>
+        <line num="9" count="0" type="stmt"/>
       </file>
       <file name="IconFullScreen.tsx" path="/home/runner/work/web-components/web-components/src/components/svg/IconFullScreen.tsx">
         <metrics statements="2" coveredstatements="1" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="7" count="2" type="stmt"/>
-        <line num="8" count="0" type="stmt"/>
+        <line num="8" count="2" type="stmt"/>
+        <line num="9" count="0" type="stmt"/>
       </file>
       <file name="IconFutures.tsx" path="/home/runner/work/web-components/web-components/src/components/svg/IconFutures.tsx">
         <metrics statements="2" coveredstatements="1" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="7" count="2" type="stmt"/>
-        <line num="8" count="0" type="stmt"/>
+        <line num="8" count="2" type="stmt"/>
+        <line num="9" count="0" type="stmt"/>
       </file>
       <file name="IconGraphReport.tsx" path="/home/runner/work/web-components/web-components/src/components/svg/IconGraphReport.tsx">
         <metrics statements="2" coveredstatements="1" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="7" count="2" type="stmt"/>
-        <line num="8" count="0" type="stmt"/>
+        <line num="8" count="2" type="stmt"/>
+        <line num="9" count="0" type="stmt"/>
       </file>
       <file name="IconHeartMonitor.tsx" path="/home/runner/work/web-components/web-components/src/components/svg/IconHeartMonitor.tsx">
         <metrics statements="2" coveredstatements="1" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="7" count="2" type="stmt"/>
-        <line num="8" count="0" type="stmt"/>
+        <line num="8" count="2" type="stmt"/>
+        <line num="9" count="0" type="stmt"/>
       </file>
       <file name="IconHelp.tsx" path="/home/runner/work/web-components/web-components/src/components/svg/IconHelp.tsx">
         <metrics statements="2" coveredstatements="1" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="7" count="2" type="stmt"/>
-        <line num="8" count="0" type="stmt"/>
+        <line num="8" count="2" type="stmt"/>
+        <line num="9" count="0" type="stmt"/>
       </file>
       <file name="IconHistory.tsx" path="/home/runner/work/web-components/web-components/src/components/svg/IconHistory.tsx">
         <metrics statements="2" coveredstatements="1" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="7" count="2" type="stmt"/>
-        <line num="8" count="0" type="stmt"/>
+        <line num="8" count="2" type="stmt"/>
+        <line num="9" count="0" type="stmt"/>
       </file>
       <file name="IconImport.tsx" path="/home/runner/work/web-components/web-components/src/components/svg/IconImport.tsx">
         <metrics statements="2" coveredstatements="1" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="7" count="2" type="stmt"/>
-        <line num="8" count="0" type="stmt"/>
+        <line num="8" count="2" type="stmt"/>
+        <line num="9" count="0" type="stmt"/>
       </file>
       <file name="IconIndex.tsx" path="/home/runner/work/web-components/web-components/src/components/svg/IconIndex.tsx">
         <metrics statements="2" coveredstatements="1" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="7" count="2" type="stmt"/>
-        <line num="8" count="0" type="stmt"/>
+        <line num="8" count="2" type="stmt"/>
+        <line num="9" count="0" type="stmt"/>
       </file>
       <file name="IconLayers.tsx" path="/home/runner/work/web-components/web-components/src/components/svg/IconLayers.tsx">
         <metrics statements="2" coveredstatements="1" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="7" count="2" type="stmt"/>
-        <line num="8" count="0" type="stmt"/>
+        <line num="8" count="2" type="stmt"/>
+        <line num="9" count="0" type="stmt"/>
       </file>
       <file name="IconLibrary.tsx" path="/home/runner/work/web-components/web-components/src/components/svg/IconLibrary.tsx">
         <metrics statements="2" coveredstatements="1" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="7" count="2" type="stmt"/>
-        <line num="8" count="0" type="stmt"/>
+        <line num="8" count="2" type="stmt"/>
+        <line num="9" count="0" type="stmt"/>
       </file>
       <file name="IconList.tsx" path="/home/runner/work/web-components/web-components/src/components/svg/IconList.tsx">
         <metrics statements="2" coveredstatements="1" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="7" count="2" type="stmt"/>
-        <line num="8" count="0" type="stmt"/>
+        <line num="8" count="2" type="stmt"/>
+        <line num="9" count="0" type="stmt"/>
       </file>
       <file name="IconLivePlant.tsx" path="/home/runner/work/web-components/web-components/src/components/svg/IconLivePlant.tsx">
         <metrics statements="2" coveredstatements="1" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="7" count="2" type="stmt"/>
-        <line num="8" count="0" type="stmt"/>
+        <line num="8" count="2" type="stmt"/>
+        <line num="9" count="0" type="stmt"/>
       </file>
       <file name="IconLocations.tsx" path="/home/runner/work/web-components/web-components/src/components/svg/IconLocations.tsx">
         <metrics statements="2" coveredstatements="1" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
@@ -1571,118 +1571,118 @@
       </file>
       <file name="IconMail.tsx" path="/home/runner/work/web-components/web-components/src/components/svg/IconMail.tsx">
         <metrics statements="2" coveredstatements="1" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="7" count="2" type="stmt"/>
-        <line num="8" count="0" type="stmt"/>
+        <line num="8" count="2" type="stmt"/>
+        <line num="9" count="0" type="stmt"/>
       </file>
       <file name="IconManager.tsx" path="/home/runner/work/web-components/web-components/src/components/svg/IconManager.tsx">
         <metrics statements="2" coveredstatements="1" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="7" count="2" type="stmt"/>
-        <line num="8" count="0" type="stmt"/>
+        <line num="8" count="2" type="stmt"/>
+        <line num="9" count="0" type="stmt"/>
       </file>
       <file name="IconMarker.tsx" path="/home/runner/work/web-components/web-components/src/components/svg/IconMarker.tsx">
         <metrics statements="2" coveredstatements="1" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="7" count="2" type="stmt"/>
-        <line num="8" count="0" type="stmt"/>
+        <line num="8" count="2" type="stmt"/>
+        <line num="9" count="0" type="stmt"/>
       </file>
       <file name="IconMenu.tsx" path="/home/runner/work/web-components/web-components/src/components/svg/IconMenu.tsx">
         <metrics statements="2" coveredstatements="1" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="7" count="2" type="stmt"/>
-        <line num="8" count="0" type="stmt"/>
+        <line num="8" count="2" type="stmt"/>
+        <line num="9" count="0" type="stmt"/>
       </file>
       <file name="IconMenuHorizontal.tsx" path="/home/runner/work/web-components/web-components/src/components/svg/IconMenuHorizontal.tsx">
         <metrics statements="2" coveredstatements="1" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="7" count="2" type="stmt"/>
-        <line num="8" count="0" type="stmt"/>
+        <line num="8" count="2" type="stmt"/>
+        <line num="9" count="0" type="stmt"/>
       </file>
       <file name="IconModule.tsx" path="/home/runner/work/web-components/web-components/src/components/svg/IconModule.tsx">
         <metrics statements="2" coveredstatements="1" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="7" count="2" type="stmt"/>
-        <line num="8" count="0" type="stmt"/>
+        <line num="8" count="2" type="stmt"/>
+        <line num="9" count="0" type="stmt"/>
       </file>
       <file name="IconMyLocation.tsx" path="/home/runner/work/web-components/web-components/src/components/svg/IconMyLocation.tsx">
         <metrics statements="2" coveredstatements="1" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="7" count="2" type="stmt"/>
-        <line num="8" count="0" type="stmt"/>
+        <line num="8" count="2" type="stmt"/>
+        <line num="9" count="0" type="stmt"/>
       </file>
       <file name="IconNote.tsx" path="/home/runner/work/web-components/web-components/src/components/svg/IconNote.tsx">
         <metrics statements="2" coveredstatements="1" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="7" count="2" type="stmt"/>
-        <line num="8" count="0" type="stmt"/>
+        <line num="8" count="2" type="stmt"/>
+        <line num="9" count="0" type="stmt"/>
       </file>
       <file name="IconNursery.tsx" path="/home/runner/work/web-components/web-components/src/components/svg/IconNursery.tsx">
         <metrics statements="2" coveredstatements="1" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="7" count="2" type="stmt"/>
-        <line num="8" count="0" type="stmt"/>
+        <line num="8" count="2" type="stmt"/>
+        <line num="9" count="0" type="stmt"/>
       </file>
       <file name="IconOrg.tsx" path="/home/runner/work/web-components/web-components/src/components/svg/IconOrg.tsx">
         <metrics statements="2" coveredstatements="1" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="7" count="2" type="stmt"/>
-        <line num="8" count="0" type="stmt"/>
+        <line num="8" count="2" type="stmt"/>
+        <line num="9" count="0" type="stmt"/>
       </file>
       <file name="IconParchment.tsx" path="/home/runner/work/web-components/web-components/src/components/svg/IconParchment.tsx">
         <metrics statements="2" coveredstatements="1" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="7" count="2" type="stmt"/>
-        <line num="8" count="0" type="stmt"/>
+        <line num="8" count="2" type="stmt"/>
+        <line num="9" count="0" type="stmt"/>
       </file>
       <file name="IconPhoto.tsx" path="/home/runner/work/web-components/web-components/src/components/svg/IconPhoto.tsx">
         <metrics statements="2" coveredstatements="1" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="7" count="2" type="stmt"/>
-        <line num="8" count="0" type="stmt"/>
+        <line num="8" count="2" type="stmt"/>
+        <line num="9" count="0" type="stmt"/>
       </file>
       <file name="IconRedo.tsx" path="/home/runner/work/web-components/web-components/src/components/svg/IconRedo.tsx">
         <metrics statements="2" coveredstatements="1" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="7" count="2" type="stmt"/>
-        <line num="8" count="0" type="stmt"/>
+        <line num="8" count="2" type="stmt"/>
+        <line num="9" count="0" type="stmt"/>
       </file>
       <file name="IconRestorationSite.tsx" path="/home/runner/work/web-components/web-components/src/components/svg/IconRestorationSite.tsx">
         <metrics statements="2" coveredstatements="1" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="7" count="2" type="stmt"/>
-        <line num="8" count="0" type="stmt"/>
+        <line num="8" count="2" type="stmt"/>
+        <line num="9" count="0" type="stmt"/>
       </file>
       <file name="IconSeedBank.tsx" path="/home/runner/work/web-components/web-components/src/components/svg/IconSeedBank.tsx">
         <metrics statements="2" coveredstatements="1" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="7" count="2" type="stmt"/>
-        <line num="8" count="0" type="stmt"/>
+        <line num="8" count="2" type="stmt"/>
+        <line num="9" count="0" type="stmt"/>
       </file>
       <file name="IconSeedling.tsx" path="/home/runner/work/web-components/web-components/src/components/svg/IconSeedling.tsx">
         <metrics statements="2" coveredstatements="1" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="7" count="2" type="stmt"/>
-        <line num="8" count="0" type="stmt"/>
+        <line num="8" count="2" type="stmt"/>
+        <line num="9" count="0" type="stmt"/>
       </file>
       <file name="IconSettings.tsx" path="/home/runner/work/web-components/web-components/src/components/svg/IconSettings.tsx">
         <metrics statements="2" coveredstatements="1" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="7" count="2" type="stmt"/>
-        <line num="8" count="0" type="stmt"/>
+        <line num="8" count="2" type="stmt"/>
+        <line num="9" count="0" type="stmt"/>
       </file>
       <file name="IconSlice.tsx" path="/home/runner/work/web-components/web-components/src/components/svg/IconSlice.tsx">
         <metrics statements="2" coveredstatements="1" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="7" count="2" type="stmt"/>
-        <line num="8" count="0" type="stmt"/>
+        <line num="8" count="2" type="stmt"/>
+        <line num="9" count="0" type="stmt"/>
       </file>
       <file name="IconSubmit.tsx" path="/home/runner/work/web-components/web-components/src/components/svg/IconSubmit.tsx">
         <metrics statements="2" coveredstatements="1" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="7" count="2" type="stmt"/>
-        <line num="8" count="0" type="stmt"/>
+        <line num="8" count="2" type="stmt"/>
+        <line num="9" count="0" type="stmt"/>
       </file>
       <file name="IconSubtract.tsx" path="/home/runner/work/web-components/web-components/src/components/svg/IconSubtract.tsx">
         <metrics statements="2" coveredstatements="1" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="7" count="2" type="stmt"/>
-        <line num="8" count="0" type="stmt"/>
+        <line num="8" count="2" type="stmt"/>
+        <line num="9" count="0" type="stmt"/>
       </file>
       <file name="IconSynced.tsx" path="/home/runner/work/web-components/web-components/src/components/svg/IconSynced.tsx">
         <metrics statements="2" coveredstatements="1" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="7" count="2" type="stmt"/>
-        <line num="8" count="0" type="stmt"/>
+        <line num="8" count="2" type="stmt"/>
+        <line num="9" count="0" type="stmt"/>
       </file>
       <file name="IconTrashCan.tsx" path="/home/runner/work/web-components/web-components/src/components/svg/IconTrashCan.tsx">
         <metrics statements="2" coveredstatements="1" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="7" count="2" type="stmt"/>
-        <line num="8" count="0" type="stmt"/>
+        <line num="8" count="2" type="stmt"/>
+        <line num="9" count="0" type="stmt"/>
       </file>
       <file name="IconTreasureMap.tsx" path="/home/runner/work/web-components/web-components/src/components/svg/IconTreasureMap.tsx">
         <metrics statements="2" coveredstatements="1" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="7" count="2" type="stmt"/>
-        <line num="8" count="0" type="stmt"/>
+        <line num="8" count="2" type="stmt"/>
+        <line num="9" count="0" type="stmt"/>
       </file>
       <file name="IconUnavailable.tsx" path="/home/runner/work/web-components/web-components/src/components/svg/IconUnavailable.tsx">
         <metrics statements="2" coveredstatements="1" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
@@ -1691,143 +1691,148 @@
       </file>
       <file name="IconUndo.tsx" path="/home/runner/work/web-components/web-components/src/components/svg/IconUndo.tsx">
         <metrics statements="2" coveredstatements="1" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="7" count="2" type="stmt"/>
-        <line num="8" count="0" type="stmt"/>
+        <line num="8" count="2" type="stmt"/>
+        <line num="9" count="0" type="stmt"/>
       </file>
       <file name="IconVariable.tsx" path="/home/runner/work/web-components/web-components/src/components/svg/IconVariable.tsx">
         <metrics statements="2" coveredstatements="1" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="7" count="2" type="stmt"/>
-        <line num="8" count="0" type="stmt"/>
+        <line num="8" count="2" type="stmt"/>
+        <line num="9" count="0" type="stmt"/>
       </file>
       <file name="IconWifi.tsx" path="/home/runner/work/web-components/web-components/src/components/svg/IconWifi.tsx">
         <metrics statements="2" coveredstatements="1" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="7" count="2" type="stmt"/>
-        <line num="8" count="0" type="stmt"/>
+        <line num="8" count="2" type="stmt"/>
+        <line num="9" count="0" type="stmt"/>
       </file>
       <file name="Info.tsx" path="/home/runner/work/web-components/web-components/src/components/svg/Info.tsx">
         <metrics statements="2" coveredstatements="1" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="7" count="2" type="stmt"/>
-        <line num="8" count="0" type="stmt"/>
+        <line num="8" count="2" type="stmt"/>
+        <line num="9" count="0" type="stmt"/>
       </file>
       <file name="Key.tsx" path="/home/runner/work/web-components/web-components/src/components/svg/Key.tsx">
         <metrics statements="2" coveredstatements="1" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="7" count="2" type="stmt"/>
-        <line num="8" count="0" type="stmt"/>
+        <line num="8" count="2" type="stmt"/>
+        <line num="9" count="0" type="stmt"/>
       </file>
       <file name="Leaf.tsx" path="/home/runner/work/web-components/web-components/src/components/svg/Leaf.tsx">
         <metrics statements="2" coveredstatements="1" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="7" count="2" type="stmt"/>
-        <line num="8" count="0" type="stmt"/>
+        <line num="8" count="2" type="stmt"/>
+        <line num="9" count="0" type="stmt"/>
       </file>
       <file name="Lock.tsx" path="/home/runner/work/web-components/web-components/src/components/svg/Lock.tsx">
         <metrics statements="2" coveredstatements="1" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="7" count="2" type="stmt"/>
-        <line num="8" count="0" type="stmt"/>
+        <line num="8" count="2" type="stmt"/>
+        <line num="9" count="0" type="stmt"/>
       </file>
       <file name="Logo.tsx" path="/home/runner/work/web-components/web-components/src/components/svg/Logo.tsx">
         <metrics statements="2" coveredstatements="0" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="7" count="0" type="stmt"/>
         <line num="8" count="0" type="stmt"/>
+        <line num="9" count="0" type="stmt"/>
       </file>
       <file name="MenuVertical.tsx" path="/home/runner/work/web-components/web-components/src/components/svg/MenuVertical.tsx">
         <metrics statements="2" coveredstatements="1" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="7" count="2" type="stmt"/>
-        <line num="8" count="0" type="stmt"/>
+        <line num="8" count="2" type="stmt"/>
+        <line num="9" count="0" type="stmt"/>
       </file>
       <file name="Notification.tsx" path="/home/runner/work/web-components/web-components/src/components/svg/Notification.tsx">
         <metrics statements="2" coveredstatements="1" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="7" count="2" type="stmt"/>
-        <line num="8" count="0" type="stmt"/>
+        <line num="8" count="2" type="stmt"/>
+        <line num="9" count="0" type="stmt"/>
       </file>
       <file name="Person.tsx" path="/home/runner/work/web-components/web-components/src/components/svg/Person.tsx">
         <metrics statements="2" coveredstatements="1" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="7" count="2" type="stmt"/>
-        <line num="8" count="0" type="stmt"/>
+        <line num="8" count="2" type="stmt"/>
+        <line num="9" count="0" type="stmt"/>
       </file>
       <file name="Plus.tsx" path="/home/runner/work/web-components/web-components/src/components/svg/Plus.tsx">
         <metrics statements="2" coveredstatements="1" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="7" count="2" type="stmt"/>
-        <line num="8" count="0" type="stmt"/>
+        <line num="8" count="2" type="stmt"/>
+        <line num="9" count="0" type="stmt"/>
       </file>
       <file name="RestorationSite.tsx" path="/home/runner/work/web-components/web-components/src/components/svg/RestorationSite.tsx">
         <metrics statements="2" coveredstatements="1" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="7" count="2" type="stmt"/>
-        <line num="8" count="0" type="stmt"/>
+        <line num="8" count="2" type="stmt"/>
+        <line num="9" count="0" type="stmt"/>
       </file>
       <file name="Search.tsx" path="/home/runner/work/web-components/web-components/src/components/svg/Search.tsx">
         <metrics statements="2" coveredstatements="1" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="7" count="2" type="stmt"/>
-        <line num="8" count="0" type="stmt"/>
+        <line num="8" count="2" type="stmt"/>
+        <line num="9" count="0" type="stmt"/>
       </file>
       <file name="Seeds.tsx" path="/home/runner/work/web-components/web-components/src/components/svg/Seeds.tsx">
         <metrics statements="2" coveredstatements="1" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="7" count="2" type="stmt"/>
-        <line num="8" count="0" type="stmt"/>
+        <line num="8" count="2" type="stmt"/>
+        <line num="9" count="0" type="stmt"/>
       </file>
       <file name="Site.tsx" path="/home/runner/work/web-components/web-components/src/components/svg/Site.tsx">
         <metrics statements="2" coveredstatements="0" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="7" count="0" type="stmt"/>
         <line num="8" count="0" type="stmt"/>
+        <line num="9" count="0" type="stmt"/>
       </file>
       <file name="Sparkles.tsx" path="/home/runner/work/web-components/web-components/src/components/svg/Sparkles.tsx">
         <metrics statements="2" coveredstatements="1" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="7" count="2" type="stmt"/>
-        <line num="8" count="0" type="stmt"/>
+        <line num="8" count="2" type="stmt"/>
+        <line num="9" count="0" type="stmt"/>
       </file>
       <file name="Species.tsx" path="/home/runner/work/web-components/web-components/src/components/svg/Species.tsx">
         <metrics statements="2" coveredstatements="1" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="7" count="2" type="stmt"/>
-        <line num="8" count="0" type="stmt"/>
+        <line num="8" count="2" type="stmt"/>
+        <line num="9" count="0" type="stmt"/>
       </file>
       <file name="Species2.tsx" path="/home/runner/work/web-components/web-components/src/components/svg/Species2.tsx">
         <metrics statements="2" coveredstatements="1" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="7" count="2" type="stmt"/>
-        <line num="8" count="0" type="stmt"/>
+        <line num="8" count="2" type="stmt"/>
+        <line num="9" count="0" type="stmt"/>
       </file>
       <file name="Spinner.tsx" path="/home/runner/work/web-components/web-components/src/components/svg/Spinner.tsx">
         <metrics statements="2" coveredstatements="1" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="7" count="2" type="stmt"/>
-        <line num="8" count="0" type="stmt"/>
+        <line num="8" count="2" type="stmt"/>
+        <line num="9" count="0" type="stmt"/>
+      </file>
+      <file name="Star.tsx" path="/home/runner/work/web-components/web-components/src/components/svg/Star.tsx">
+        <metrics statements="2" coveredstatements="1" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
+        <line num="8" count="2" type="stmt"/>
+        <line num="9" count="0" type="stmt"/>
       </file>
       <file name="Success.tsx" path="/home/runner/work/web-components/web-components/src/components/svg/Success.tsx">
         <metrics statements="2" coveredstatements="1" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="7" count="2" type="stmt"/>
-        <line num="8" count="0" type="stmt"/>
+        <line num="8" count="2" type="stmt"/>
+        <line num="9" count="0" type="stmt"/>
       </file>
       <file name="SuccessFilled.tsx" path="/home/runner/work/web-components/web-components/src/components/svg/SuccessFilled.tsx">
         <metrics statements="2" coveredstatements="1" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="7" count="2" type="stmt"/>
-        <line num="8" count="0" type="stmt"/>
+        <line num="8" count="2" type="stmt"/>
+        <line num="9" count="0" type="stmt"/>
       </file>
       <file name="TerrawareLogoDesktop.tsx" path="/home/runner/work/web-components/web-components/src/components/svg/TerrawareLogoDesktop.tsx">
         <metrics statements="2" coveredstatements="0" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="7" count="0" type="stmt"/>
         <line num="8" count="0" type="stmt"/>
+        <line num="9" count="0" type="stmt"/>
       </file>
       <file name="TerrawareLogoMobile.tsx" path="/home/runner/work/web-components/web-components/src/components/svg/TerrawareLogoMobile.tsx">
         <metrics statements="2" coveredstatements="0" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="7" count="0" type="stmt"/>
         <line num="8" count="0" type="stmt"/>
+        <line num="9" count="0" type="stmt"/>
       </file>
       <file name="Touchscreen.tsx" path="/home/runner/work/web-components/web-components/src/components/svg/Touchscreen.tsx">
         <metrics statements="2" coveredstatements="1" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="7" count="2" type="stmt"/>
-        <line num="8" count="0" type="stmt"/>
+        <line num="8" count="2" type="stmt"/>
+        <line num="9" count="0" type="stmt"/>
       </file>
       <file name="UploadCloud.tsx" path="/home/runner/work/web-components/web-components/src/components/svg/UploadCloud.tsx">
         <metrics statements="2" coveredstatements="1" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="7" count="2" type="stmt"/>
-        <line num="8" count="0" type="stmt"/>
+        <line num="8" count="2" type="stmt"/>
+        <line num="9" count="0" type="stmt"/>
       </file>
       <file name="Warning.tsx" path="/home/runner/work/web-components/web-components/src/components/svg/Warning.tsx">
         <metrics statements="2" coveredstatements="1" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="7" count="2" type="stmt"/>
-        <line num="8" count="0" type="stmt"/>
+        <line num="8" count="2" type="stmt"/>
+        <line num="9" count="0" type="stmt"/>
       </file>
       <file name="WelcomeClipboard.tsx" path="/home/runner/work/web-components/web-components/src/components/svg/WelcomeClipboard.tsx">
         <metrics statements="2" coveredstatements="1" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="7" count="2" type="stmt"/>
-        <line num="8" count="0" type="stmt"/>
+        <line num="8" count="2" type="stmt"/>
+        <line num="9" count="0" type="stmt"/>
       </file>
       <file name="index.ts" path="/home/runner/work/web-components/web-components/src/components/svg/index.ts">
         <metrics statements="0" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
