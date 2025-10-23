@@ -114,6 +114,7 @@ import Sparkles from '../../svg/Sparkles';
 import Species from '../../svg/Species';
 import Species2 from '../../svg/Species2';
 import Spinner from '../../svg/Spinner';
+import Star from '../../svg/Star';
 import Success from '../../svg/Success';
 import SuccessFilled from '../../svg/SuccessFilled';
 import Touchscreen from '../../svg/Touchscreen';
@@ -236,6 +237,7 @@ export type IconName =
   | 'species'
   | 'species2'
   | 'spinner'
+  | 'star'
   | 'success'
   | 'successFilled'
   | 'touchscreen'
@@ -363,6 +365,7 @@ const icons: Record<IconName, SVGComponent> = {
   species: Species,
   species2: Species2,
   spinner: Spinner,
+  star: Star,
   success: Success,
   successFilled: SuccessFilled,
   touchscreen: Touchscreen,
