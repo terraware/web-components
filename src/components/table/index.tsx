@@ -66,7 +66,8 @@ export interface Props<T> extends LocalizationProps {
   // an optional "newValue" parameter from that call
   onSelect?: (value: T, fromColumn?: string, newValue?: string) => void;
   onPageChange?: (newPage: number) => void;
-  maxItemsPerPage: number;
+  maxItemsPerPage?: number;
+  totalRowCount?: number;
   DetailsRenderer?: (props: DetailsRendererProps) => JSX.Element;
   sortComparator?: (a: T, b: T, orderBy: keyof T, order: SortOrder) => number;
   sortHandler?: (order: SortOrder, orderBy: string) => void;
@@ -120,6 +121,7 @@ export default function EnhancedTable<T extends TableRowType>({
   onSelect,
   onPageChange,
   maxItemsPerPage = 100,
+  totalRowCount,
   DetailsRenderer,
   sortComparator = descendingComparator,
   sortHandler,
@@ -199,12 +201,12 @@ export default function EnhancedTable<T extends TableRowType>({
   useEffect(() => {
     // this is not most elegant but we want to do this if table was sorted by some column in a presorted table
     // but we don't know when the data changes, hence this useEffect on the data size
-    if (isPresorted) {
+    if (isPresorted && onPageChange === undefined) {
       // we want to set page back to 1 if the data changes on presorted lists,
       // this is because the data was reset due to some sort behavior refetching new data
       handleChangePage({}, 1);
     }
-  }, [handleChangePage, isPresorted, rows]);
+  }, [handleChangePage, isPresorted, onPageChange, rows]);
 
   const handleRequestSort = (event: React.MouseEvent<unknown>, property: string) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -311,8 +313,6 @@ export default function EnhancedTable<T extends TableRowType>({
     }
   };
 
-  const pagesCount = Math.ceil(rows.length / maxItemsPerPage);
-
   const sortedPageRows = useMemo(() => {
     if (rows) {
       const itemsToSkip = onPageChange ? 0 : maxItemsPerPage * (currentPage - 1);
@@ -329,8 +329,11 @@ export default function EnhancedTable<T extends TableRowType>({
   /**
    *  Calculate pagination numbers to show.
    *  If the table is empty (rows.length === 0) override calculation and show '0 of 0'
+   *  Pagination total is overridden by totalRowCount if provided.
    */
-  const paginationTotal = useMemo(() => rows.length, [rows.length]);
+  const paginationTotal = useMemo(() => totalRowCount || rows.length, [rows.length, totalRowCount]);
+
+  const pagesCount = useMemo(() => Math.ceil(paginationTotal / maxItemsPerPage), [maxItemsPerPage, paginationTotal]);
 
   const minRowNumber = useMemo(() => {
     if (!sortedPageRows.length) {

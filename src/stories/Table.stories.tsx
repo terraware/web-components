@@ -206,4 +206,5 @@ ShowTopBarV2.args = {
 PageChangeCallback.args = {
   ...Default.args,
   maxItemsPerPage: 10,
+  totalRowCount: 279,
 };
