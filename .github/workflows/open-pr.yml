@@ -23,7 +23,7 @@ jobs:
     steps:
       - uses: actions/checkout@v5
 
-      - uses: actions/github-script@v6
+      - uses: actions/github-script@v8
         # skip auto patch labeling for dependabot or renovate PRs
         if: ${{ github.actor != 'dependabot[bot]' && github.actor != 'renovate[bot]' }}
         with:
