@@ -95,6 +95,7 @@ import IconSubtract from '../../svg/IconSubtract';
 import IconSynced from '../../svg/IconSynced';
 import IconTrashCan from '../../svg/IconTrashCan';
 import IconTreasureMap from '../../svg/IconTreasureMap';
+import IconUnavailable from '../../svg/IconUnavailable';
 import IconUndo from '../../svg/IconUndo';
 import IconVariable from '../../svg/IconVariable';
 import Wifi from '../../svg/IconWifi';
@@ -113,6 +114,7 @@ import Sparkles from '../../svg/Sparkles';
 import Species from '../../svg/Species';
 import Species2 from '../../svg/Species2';
 import Spinner from '../../svg/Spinner';
+import Star from '../../svg/Star';
 import Success from '../../svg/Success';
 import SuccessFilled from '../../svg/SuccessFilled';
 import Touchscreen from '../../svg/Touchscreen';
@@ -206,6 +208,7 @@ export type IconName =
   | 'iconSynced'
   | 'iconTrashCan'
   | 'iconTreasureMap'
+  | 'iconUnavailable'
   | 'iconUndo'
   | 'iconVariable'
   | 'info'
@@ -234,6 +237,7 @@ export type IconName =
   | 'species'
   | 'species2'
   | 'spinner'
+  | 'star'
   | 'success'
   | 'successFilled'
   | 'touchscreen'
@@ -332,6 +336,7 @@ const icons: Record<IconName, SVGComponent> = {
   iconSynced: IconSynced,
   iconTrashCan: IconTrashCan,
   iconTreasureMap: IconTreasureMap,
+  iconUnavailable: IconUnavailable,
   iconUndo: IconUndo,
   iconVariable: IconVariable,
   info: Info,
@@ -360,6 +365,7 @@ const icons: Record<IconName, SVGComponent> = {
   species: Species,
   species2: Species2,
   spinner: Spinner,
+  star: Star,
   success: Success,
   successFilled: SuccessFilled,
   touchscreen: Touchscreen,
