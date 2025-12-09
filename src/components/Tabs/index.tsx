@@ -17,6 +17,7 @@ export type Tab = {
 
 export type TabsProps = {
   activeTab?: string;
+  children?: React.ReactNode;
   onChangeTab?: (tab: string) => void;
   tabs: Tab[];
   tabStyle?: SxProps<Theme>;
@@ -24,7 +25,15 @@ export type TabsProps = {
   sx?: SxProps;
 };
 
-const Tabs = ({ activeTab, onChangeTab, tabs, tabStyle, headerBorder = false, sx }: TabsProps): JSX.Element => {
+const Tabs = ({
+  activeTab,
+  children,
+  onChangeTab,
+  tabs,
+  tabStyle,
+  headerBorder = false,
+  sx,
+}: TabsProps): JSX.Element => {
   const [selectedTab, setSelectedTab] = useState<string>(activeTab ?? tabs[0]?.id ?? '');
   const theme = useTheme();
   const { isMobile } = useDeviceInfo();
@@ -112,6 +121,7 @@ const Tabs = ({ activeTab, onChangeTab, tabs, tabStyle, headerBorder = false, sx
             ))}
           </TabList>
         </Box>
+        {children}
         {tabs.map((tab, index) => (
           <TabPanel key={index} sx={tabPanelStyles} value={tab.id}>
             {tab.children}
