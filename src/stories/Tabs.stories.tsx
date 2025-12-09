@@ -22,7 +22,11 @@ const OverrideTemplate: Story<TabsProps> = (args) => {
     }
   };
 
-  return <Tabs {...args} activeTab={activeTab} onChangeTab={onChangeTab} />;
+  return (
+    <Tabs {...args} activeTab={activeTab} onChangeTab={onChangeTab}>
+      <h1>Tab container header</h1>
+    </Tabs>
+  );
 };
 
 export const Default = Template.bind({});
