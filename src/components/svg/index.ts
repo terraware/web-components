@@ -80,6 +80,7 @@ export { default as IconNursery } from './IconNursery';
 export { default as IconOrg } from './IconOrg';
 export { default as IconParchment } from './IconParchment';
 export { default as IconPhoto } from './IconPhoto';
+export { default as IconPlantsFilled } from './IconPlantsFilled';
 export { default as IconRedo } from './IconRedo';
 export { default as IconRestorationSite } from './IconRestorationSite';
 export { default as IconSeedBank } from './IconSeedBank';
