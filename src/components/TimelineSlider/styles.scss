@@ -14,6 +14,22 @@
   color: $tw-clr-txt-secondary;
 }
 
+.timeline-selected-label {
+  border-radius: 8px;
+  background: $tw-clr-bg-secondary;
+  width: 140px;
+  padding: 10px;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  margin-left: 12px;
+  font-family: $tw-fnt-btn-label-small-font-family;
+  font-size: $tw-fnt-btn-label-small-font-size;
+  font-weight: $tw-fnt-mssg-title-font-weight;
+  line-height: $tw-fnt-btn-label-small-line-height;
+  color: $tw-clr-base-black;
+}
+
 .timeline-container {
   width: 100%;
   max-width: 500px;

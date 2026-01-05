@@ -22,7 +22,7 @@ export type TimelineSliderProps = {
   marks: TimelineSliderMark[];
 };
 
-const TimelineSlider = ({ labelEnd, labelStart, marks }: TimelineSliderProps): JSX.Element => {
+const TimelineSlider = ({ labelEnd, labelSelected, labelStart, marks }: TimelineSliderProps): JSX.Element => {
   const theme = useTheme();
 
   const { minValue, maxValue } = useMemo(() => {
@@ -69,6 +69,7 @@ const TimelineSlider = ({ labelEnd, labelStart, marks }: TimelineSliderProps): J
       <div className={'timeline-label'} style={{ marginLeft: theme.spacing(2) }}>
         {labelEnd}
       </div>
+      {labelSelected && <div className={'timeline-selected-label'}>{labelSelected}</div>}
     </div>
   );
 };

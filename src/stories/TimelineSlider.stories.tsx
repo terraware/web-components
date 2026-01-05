@@ -45,6 +45,7 @@ const Template: Story<TimelineSliderProps> = (args) => <TimelineSlider {...args}
 export const Default = Template.bind({});
 Default.args = {
   labelEnd: 'Aug 2025',
+  labelSelected: 'April 2024',
   labelStart: 'Jul 2022',
   marks: marksSample,
 };
