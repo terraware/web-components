@@ -1,11 +1,11 @@
-@import '../../style-dictionary-dist/terraware.scss';
+@use '../../style-dictionary-dist/terraware.scss';
 
 .circle-container {
   position: relative;
   display: inline-flex;
 
   & .MuiCircularProgress-root {
-    color: $tw-clr-bg-brand;
+    color: terraware.$tw-clr-bg-brand;
   }
 }
 
@@ -15,10 +15,10 @@
 }
 
 .circle-track {
-  color: $tw-clr-bg-brand-tertiary !important;
+  color: terraware.$tw-clr-bg-brand-tertiary !important;
   &--small {
-    width: $tw-spc-base-x-large !important;
-    height: $tw-spc-base-x-large !important;
+    width: terraware.$tw-spc-base-x-large !important;
+    height: terraware.$tw-spc-base-x-large !important;
 
     & svg {
       & circle {
@@ -29,8 +29,8 @@
   }
 
   &--medium {
-    width: calc(#{$tw-spc-base-x-large} * 2) !important;
-    height: calc(#{$tw-spc-base-x-large} * 2) !important;
+    width: calc(#{terraware.$tw-spc-base-x-large} * 2) !important;
+    height: calc(#{terraware.$tw-spc-base-x-large} * 2) !important;
     & svg {
       & circle {
         stroke-width: 3.67;
@@ -40,8 +40,8 @@
   }
 
   &--large {
-    width: calc(#{$tw-spc-base-x-large} * 4) !important;
-    height: calc(#{$tw-spc-base-x-large} * 4) !important;
+    width: calc(#{terraware.$tw-spc-base-x-large} * 4) !important;
+    height: calc(#{terraware.$tw-spc-base-x-large} * 4) !important;
     & svg {
       & circle {
         stroke-width: 3.67;
@@ -64,24 +64,24 @@
 
 .progress-circle-label {
   &--small {
-    font-family: $tw-fnt-prgrss-circle-value-small-font-family;
-    font-size: $tw-fnt-prgrss-circle-value-small-font-size;
-    font-weight: $tw-fnt-prgrss-circle-value-small-font-weight;
-    line-height: $tw-fnt-prgrss-circle-value-small-line-height;
-    color: $tw-clr-txt;
+    font-family: terraware.$tw-fnt-prgrss-circle-value-small-font-family;
+    font-size: terraware.$tw-fnt-prgrss-circle-value-small-font-size;
+    font-weight: terraware.$tw-fnt-prgrss-circle-value-small-font-weight;
+    line-height: terraware.$tw-fnt-prgrss-circle-value-small-line-height;
+    color: terraware.$tw-clr-txt;
   }
   &--medium {
-    font-family: $tw-fnt-prgrss-circle-value-medium-font-family;
-    font-size: $tw-fnt-prgrss-circle-value-medium-font-size;
-    font-weight: $tw-fnt-prgrss-circle-value-medium-font-weight;
-    line-height: $tw-fnt-prgrss-circle-value-medium-line-height;
-    color: $tw-clr-txt;
+    font-family: terraware.$tw-fnt-prgrss-circle-value-medium-font-family;
+    font-size: terraware.$tw-fnt-prgrss-circle-value-medium-font-size;
+    font-weight: terraware.$tw-fnt-prgrss-circle-value-medium-font-weight;
+    line-height: terraware.$tw-fnt-prgrss-circle-value-medium-line-height;
+    color: terraware.$tw-clr-txt;
   }
   &--large {
-    font-family: $tw-fnt-prgrss-circle-value-large-font-family;
-    font-size: $tw-fnt-prgrss-circle-value-large-font-size;
-    font-weight: $tw-fnt-prgrss-circle-value-large-font-weight;
-    line-height: $tw-fnt-prgrss-circle-value-large-line-height;
-    color: $tw-clr-txt;
+    font-family: terraware.$tw-fnt-prgrss-circle-value-large-font-family;
+    font-size: terraware.$tw-fnt-prgrss-circle-value-large-font-size;
+    font-weight: terraware.$tw-fnt-prgrss-circle-value-large-font-weight;
+    line-height: terraware.$tw-fnt-prgrss-circle-value-large-line-height;
+    color: terraware.$tw-clr-txt;
   }
 }

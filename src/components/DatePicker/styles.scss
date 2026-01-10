@@ -1,4 +1,4 @@
-@import '../../style-dictionary-dist/terraware.scss';
+@use '../../style-dictionary-dist/terraware.scss';
 
 @font-face {
   font-family: 'Inter';
@@ -10,12 +10,12 @@
   flex-flow: column wrap;
 
   .textfield-label {
-    font-family: $tw-fnt-frm-fld-label-font-family;
-    font-size: $tw-fnt-frm-fld-label-font-size;
-    font-weight: $tw-fnt-frm-fld-label-font-weight;
-    line-height: $tw-fnt-frm-fld-label-line-height;
-    color: $tw-clr-txt-secondary;
-    margin-bottom: $tw-spc-base-xx-small;
+    font-family: terraware.$tw-fnt-frm-fld-label-font-family;
+    font-size: terraware.$tw-fnt-frm-fld-label-font-size;
+    font-weight: terraware.$tw-fnt-frm-fld-label-font-weight;
+    line-height: terraware.$tw-fnt-frm-fld-label-line-height;
+    color: terraware.$tw-clr-txt-secondary;
+    margin-bottom: terraware.$tw-spc-base-xx-small;
     display: block;
     width: 100%;
     max-width: 100%;
@@ -23,29 +23,29 @@
 
   .textfield-error-text-container {
     display: flex;
-    margin-top: $tw-spc-base-x-small;
+    margin-top: terraware.$tw-spc-base-x-small;
 
     .textfield-error-text {
-      font-family: $tw-fnt-frm-fld-error-text-font-family;
-      font-size: $tw-fnt-frm-fld-error-text-font-size;
-      font-weight: $tw-fnt-frm-fld-error-text-font-weight;
-      line-height: $tw-fnt-frm-fld-error-text-line-height;
-      color: $tw-clr-txt-danger;
+      font-family: terraware.$tw-fnt-frm-fld-error-text-font-family;
+      font-size: terraware.$tw-fnt-frm-fld-error-text-font-size;
+      font-weight: terraware.$tw-fnt-frm-fld-error-text-font-weight;
+      line-height: terraware.$tw-fnt-frm-fld-error-text-line-height;
+      color: terraware.$tw-clr-txt-danger;
       width: 100%;
       max-width: 100%;
 
       &--icon {
-        fill: $tw-clr-txt-danger;
-        width: $tw-fnt-frm-fld-error-text-line-height;
-        height: $tw-fnt-frm-fld-error-text-line-height;
-        margin-right: $tw-spc-base-x-small;
+        fill: terraware.$tw-clr-txt-danger;
+        width: terraware.$tw-fnt-frm-fld-error-text-line-height;
+        height: terraware.$tw-fnt-frm-fld-error-text-line-height;
+        margin-right: terraware.$tw-spc-base-x-small;
       }
     }
   }
 
   .MuiInputBase-root {
-    border: 1px solid $tw-clr-bg-info;
-    border-radius: $tw-sz-base-x-small;
+    border: 1px solid terraware.$tw-clr-bg-info;
+    border-radius: terraware.$tw-sz-base-x-small;
     position: unset;
   }
 
@@ -54,42 +54,42 @@
   }
 
   .MuiIconButton-root {
-    color: $tw-clr-icn-secondary;
+    color: terraware.$tw-clr-icn-secondary;
   }
 
   input {
-    padding: calc(#{$tw-spc-base-xx-small} * 2.5) calc(#{$tw-spc-base-xx-small} * 3);
-    background-color: $tw-clr-base-white;
-    border-radius: $tw-sz-base-x-small 0 0 $tw-sz-base-x-small;
+    padding: calc(#{terraware.$tw-spc-base-xx-small} * 2.5) calc(#{terraware.$tw-spc-base-xx-small} * 3);
+    background-color: terraware.$tw-clr-base-white;
+    border-radius: terraware.$tw-sz-base-x-small 0 0 terraware.$tw-sz-base-x-small;
   }
 
   .MuiOutlinedInput-root {
-    border-color: $tw-clr-brdr-secondary;
+    border-color: terraware.$tw-clr-brdr-secondary;
 
     &:hover {
-      border-color: $tw-clr-brdr-hover;
+      border-color: terraware.$tw-clr-brdr-hover;
     }
     &.Mui-focused {
-      border-color: $tw-clr-brdr-hover;
+      border-color: terraware.$tw-clr-brdr-hover;
     }
   }
 
   &--error {
     .MuiInputBase-root {
-      border: $tw-sz-frm-fld-text-input-stroke solid $tw-clr-brdr-danger;
-      background-color: $tw-clr-bg-danger-tertiary;
+      border: terraware.$tw-sz-frm-fld-text-input-stroke solid terraware.$tw-clr-brdr-danger;
+      background-color: terraware.$tw-clr-bg-danger-tertiary;
 
       &:hover {
-        border: $tw-sz-frm-fld-text-input-stroke solid $tw-clr-brdr-danger;
+        border: terraware.$tw-sz-frm-fld-text-input-stroke solid terraware.$tw-clr-brdr-danger;
       }
 
       &:active {
-        border: $tw-sz-frm-fld-text-input-stroke-active solid $tw-clr-brdr-danger;
+        border: terraware.$tw-sz-frm-fld-text-input-stroke-active solid terraware.$tw-clr-brdr-danger;
       }
     }
 
     input {
-      background-color: $tw-clr-bg-danger-tertiary;
+      background-color: terraware.$tw-clr-bg-danger-tertiary;
     }
   }
 }
