@@ -1,4 +1,4 @@
-@import '../../style-dictionary-dist/terraware.scss';
+@use '../../style-dictionary-dist/terraware.scss';
 
 @font-face {
   font-family: 'Inter';
@@ -8,11 +8,11 @@
 .error-box {
   display: flex;
   width: 60%;
-  margin-top: $tw-spc-base-xx-small;
-  background: $tw-clr-base-red-050;
+  margin-top: terraware.$tw-spc-base-xx-small;
+  background: terraware.$tw-clr-base-red-050;
   padding: 16px;
   margin: 0 auto;
-  border: 1px solid $tw-clr-icn-danger;
+  border: 1px solid terraware.$tw-clr-icn-danger;
   border-radius: 8px;
   flex-direction: column;
 
@@ -27,11 +27,11 @@
 }
 
 .error-text {
-  font-family: $tw-fnt-frm-fld-error-text-font-family;
-  font-size: $tw-fnt-base-font-size-body-02;
-  font-weight: $tw-fnt-frm-fld-error-text-font-weight;
-  line-height: $tw-fnt-frm-fld-error-text-line-height;
-  color: $tw-clr-txt;
+  font-family: terraware.$tw-fnt-frm-fld-error-text-font-family;
+  font-size: terraware.$tw-fnt-base-font-size-body-02;
+  font-weight: terraware.$tw-fnt-frm-fld-error-text-font-weight;
+  line-height: terraware.$tw-fnt-frm-fld-error-text-line-height;
+  color: terraware.$tw-clr-txt;
   display: block;
   width: 100%;
   max-width: 100%;
@@ -40,11 +40,11 @@
 }
 
 .error-title {
-  font-family: $tw-fnt-frm-fld-error-text-font-family;
-  font-size: $tw-fnt-base-font-size-body-02;
-  font-weight: $tw-fnt-base-headline-01-semi-bold-font-weight;
-  line-height: $tw-fnt-frm-fld-error-text-line-height;
-  color: $tw-clr-txt;
+  font-family: terraware.$tw-fnt-frm-fld-error-text-font-family;
+  font-size: terraware.$tw-fnt-base-font-size-body-02;
+  font-weight: terraware.$tw-fnt-base-headline-01-semi-bold-font-weight;
+  line-height: terraware.$tw-fnt-frm-fld-error-text-line-height;
+  color: terraware.$tw-clr-txt;
   display: block;
   width: 100%;
   max-width: 100%;
@@ -58,6 +58,6 @@
 }
 
 .error-icon {
-  fill: $tw-clr-txt-danger;
-  margin-right: $tw-spc-base-x-small;
+  fill: terraware.$tw-clr-txt-danger;
+  margin-right: terraware.$tw-spc-base-x-small;
 }

@@ -1,4 +1,4 @@
-@import '../../style-dictionary-dist/terraware.scss';
+@use '../../style-dictionary-dist/terraware.scss';
 
 @font-face {
   font-family: 'Inter';
@@ -9,12 +9,12 @@
   height: 100%;
   position: fixed;
   z-index: 1101;
-  width: $tw-sz-nvgtn-side-nav-width;
+  width: terraware.$tw-sz-nvgtn-side-nav-width;
   display: flex;
   flex-direction: column;
-  padding-left: $tw-sz-base-small;
-  padding-right: $tw-sz-base-small;
-  padding-top: $tw-sz-base-small;
+  padding-left: terraware.$tw-sz-base-small;
+  padding-right: terraware.$tw-sz-base-small;
+  padding-top: terraware.$tw-sz-base-small;
 
   &.transparent {
     background-color: transparent !important;
@@ -23,20 +23,20 @@
   }
 
   .nav-section {
-    padding: $tw-spc-base-x-small $tw-spc-base-small;
+    padding: terraware.$tw-spc-base-x-small terraware.$tw-spc-base-small;
     .divider {
-      border-top: 1px solid $tw-clr-brdr-tertiary;
+      border-top: 1px solid terraware.$tw-clr-brdr-tertiary;
     }
 
     &--title {
-      font-family: $tw-fnt-nvgtn-side-nav-section-title-font-family;
-      font-size: $tw-fnt-nvgtn-side-nav-section-title-font-size;
-      font-weight: $tw-fnt-nvgtn-side-nav-section-title-font-weight;
-      line-height: $tw-fnt-nvgtn-side-nav-section-title-line-height;
-      text-transform: $tw-fnt-nvgtn-side-nav-section-title-text-transform;
-      color: $tw-clr-txt;
+      font-family: terraware.$tw-fnt-nvgtn-side-nav-section-title-font-family;
+      font-size: terraware.$tw-fnt-nvgtn-side-nav-section-title-font-size;
+      font-weight: terraware.$tw-fnt-nvgtn-side-nav-section-title-font-weight;
+      line-height: terraware.$tw-fnt-nvgtn-side-nav-section-title-line-height;
+      text-transform: terraware.$tw-fnt-nvgtn-side-nav-section-title-text-transform;
+      color: terraware.$tw-clr-txt;
       display: block;
-      margin-top: $tw-spc-base-small;
+      margin-top: terraware.$tw-spc-base-small;
 
       &.no-separator {
         margin-top: 0;
@@ -50,11 +50,11 @@
   }
 
   .nav-item {
-    font-family: $tw-fnt-nvgtn-side-nav-item-label-font-family;
-    font-size: $tw-fnt-nvgtn-side-nav-item-label-font-size;
-    font-weight: $tw-fnt-nvgtn-side-nav-item-label-font-weight;
-    line-height: $tw-fnt-nvgtn-side-nav-item-label-line-height;
-    color: $tw-clr-txt;
+    font-family: terraware.$tw-fnt-nvgtn-side-nav-item-label-font-family;
+    font-size: terraware.$tw-fnt-nvgtn-side-nav-item-label-font-size;
+    font-weight: terraware.$tw-fnt-nvgtn-side-nav-item-label-font-weight;
+    line-height: terraware.$tw-fnt-nvgtn-side-nav-item-label-line-height;
+    color: terraware.$tw-clr-txt;
     border-radius: 16px;
     mix-blend-mode: multiply;
 
@@ -67,11 +67,11 @@
       padding: 12px 16px;
       display: flex;
       width: 100%;
-      font-weight: $tw-fnt-nvgtn-side-nav-item-label-font-weight;
+      font-weight: terraware.$tw-fnt-nvgtn-side-nav-item-label-font-weight;
 
       .nav-item--anchor {
         text-decoration: none;
-        color: $tw-clr-txt;
+        color: terraware.$tw-clr-txt;
       }
 
       .nav-item--label {
@@ -88,10 +88,10 @@
 
     &--has-children {
       > .nav-item-content:hover {
-        background-color: $tw-clr-bg-ghost-hover;
+        background-color: terraware.$tw-clr-bg-ghost-hover;
       }
       > .nav-item-content:active {
-        background-color: $tw-clr-bg-ghost-active;
+        background-color: terraware.$tw-clr-bg-ghost-active;
       }
       &.nav-item--children-selected > .nav-item-content:hover {
         background-color: transparent;
@@ -103,47 +103,47 @@
 
     &:not(.nav-item--has-children) {
       &:hover {
-        background-color: $tw-clr-bg-ghost-hover;
+        background-color: terraware.$tw-clr-bg-ghost-hover;
       }
       &.nav-item--selected,
       &.nav-item--selected:hover {
-        background-color: $tw-clr-bg-ghost-active;
+        background-color: terraware.$tw-clr-bg-ghost-active;
       }
     }
 
     button {
       background: none;
       border: none;
-      color: $tw-clr-txt;
+      color: terraware.$tw-clr-txt;
       font-family: 'Inter';
-      padding-right: $tw-spc-base-small;
+      padding-right: terraware.$tw-spc-base-small;
       padding-left: 16px;
     }
 
     &--icon {
-      margin-right: $tw-spc-base-x-small;
-      line-height: $tw-sz-icon-small;
-      height: $tw-sz-icon-small;
-      min-width: $tw-sz-icon-small;
-      width: $tw-sz-icon-small;
+      margin-right: terraware.$tw-spc-base-x-small;
+      line-height: terraware.$tw-sz-icon-small;
+      height: terraware.$tw-sz-icon-small;
+      min-width: terraware.$tw-sz-icon-small;
+      width: terraware.$tw-sz-icon-small;
     }
 
     &--arrow {
-      height: $tw-sz-icon-small;
-      width: $tw-sz-icon-small;
-      margin-left: $tw-spc-base-x-small;
+      height: terraware.$tw-sz-icon-small;
+      width: terraware.$tw-sz-icon-small;
+      margin-left: terraware.$tw-spc-base-x-small;
 
       path {
-        fill: $tw-clr-icn-secondary;
+        fill: terraware.$tw-clr-icn-secondary;
       }
     }
 
     .subnavbar .nav-item {
-      padding-left: $tw-spc-base-small;
-      padding-right: $tw-spc-base-small;
+      padding-left: terraware.$tw-spc-base-small;
+      padding-right: terraware.$tw-spc-base-small;
 
       &-content {
-        padding-left: $tw-spc-base-medium;
+        padding-left: terraware.$tw-spc-base-medium;
       }
     }
   }

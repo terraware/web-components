@@ -1,7 +1,7 @@
-@import '../../style-dictionary-dist/terraware.scss';
+@use '../../style-dictionary-dist/terraware.scss';
 
 .map-container {
-  border: 1px solid $tw-clr-brdr-tertiary;
+  border: 1px solid terraware.$tw-clr-brdr-tertiary;
   border-radius: 8px;
   display: flex;
   overflow: hidden;
@@ -40,7 +40,7 @@
 .map-drawer {
   display: flex;
   flex-direction: column;
-  background: $tw-clr-base-white;
+  background: terraware.$tw-clr-base-white;
 
   &--mobile {
     width: stretch;
@@ -56,16 +56,16 @@
   }
 
   &--header {
-    padding: $tw-spc-base-x-small;
+    padding: terraware.$tw-spc-base-x-small;
     display: flex;
     justify-content: space-between;
     align-items: center;
     .title {
-      font-family: $tw-fnt-mssg-title-font-family;
-      font-size: $tw-fnt-mssg-title-font-size;
-      font-weight: $tw-fnt-mssg-title-font-weight;
-      line-height: $tw-fnt-mssg-title-line-height;
-      color: $tw-clr-txt;
+      font-family: terraware.$tw-fnt-mssg-title-font-family;
+      font-size: terraware.$tw-fnt-mssg-title-font-size;
+      font-weight: terraware.$tw-fnt-mssg-title-font-weight;
+      line-height: terraware.$tw-fnt-mssg-title-line-height;
+      color: terraware.$tw-clr-txt;
       text-align: center;
       text-overflow: ellipsis;
       overflow: hidden;
@@ -75,26 +75,26 @@
     }
 
     .icon-close {
-      fill: $tw-clr-icn-secondary;
-      height: $tw-sz-base-medium;
-      width: $tw-sz-base-medium;
+      fill: terraware.$tw-clr-icn-secondary;
+      height: terraware.$tw-sz-base-medium;
+      width: terraware.$tw-sz-base-medium;
     }
   }
 
   &--body {
-    background: $tw-clr-base-white;
-    padding: $tw-spc-base-x-small $tw-spc-base-small;
+    background: terraware.$tw-clr-base-white;
+    padding: terraware.$tw-spc-base-x-small terraware.$tw-spc-base-small;
     text-align: start;
     overflow: auto;
     white-space: pre-wrap;
   }
 
   &--message {
-    font-family: $tw-fnt-dlg-bx-message-font-family;
-    font-size: $tw-fnt-dlg-bx-message-font-size;
-    font-weight: $tw-fnt-dlg-bx-message-font-weight;
-    line-height: $tw-fnt-dlg-bx-message-line-height;
-    color: $tw-clr-txt;
+    font-family: terraware.$tw-fnt-dlg-bx-message-font-family;
+    font-size: terraware.$tw-fnt-dlg-bx-message-font-size;
+    font-weight: terraware.$tw-fnt-dlg-bx-message-font-weight;
+    line-height: terraware.$tw-fnt-dlg-bx-message-line-height;
+    color: terraware.$tw-clr-txt;
     width: 100%;
     text-align: start;
   }
@@ -121,7 +121,7 @@
       font-size: 10px;
       font-weight: 600;
       line-height: 16px;
-      color: $tw-clr-txt;
+      color: terraware.$tw-clr-txt;
       text-align: center;
       margin: 0;
       width: 100%;

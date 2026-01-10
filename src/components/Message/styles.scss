@@ -1,4 +1,4 @@
-@import '../../style-dictionary-dist/terraware.scss';
+@use '../../style-dictionary-dist/terraware.scss';
 
 @font-face {
   font-family: 'Inter';
@@ -9,14 +9,14 @@
   &.tw-message--page {
     width: 100%;
     &.tw-message--container {
-      margin: $tw-spc-base-small 0;
+      margin: terraware.$tw-spc-base-small 0;
     }
     &.tw-message--title-container {
       display: flex;
     }
   }
 
-  border-radius: $tw-sz-base-small;
+  border-radius: terraware.$tw-sz-base-small;
   display: flex;
   width: 480px;
 
@@ -25,24 +25,24 @@
   }
 
   &.tw-message--toast {
-    box-shadow: 0 $tw-sz-base-x-small $tw-sz-base-small 0 rgba($tw-clr-base-gray-800, $tw-opcty-base-020);
+    box-shadow: 0 terraware.$tw-sz-base-x-small terraware.$tw-sz-base-small 0 rgba(terraware.$tw-clr-base-gray-800, terraware.$tw-opcty-base-020);
   }
 
   &--container {
-    margin: $tw-spc-base-small;
+    margin: terraware.$tw-spc-base-small;
     display: flex;
     justify-content: space-between;
     width: 100%;
   }
   &--title-container {
     h4 {
-      font-family: $tw-fnt-mssg-title-font-family;
-      font-size: $tw-fnt-mssg-title-font-size;
-      font-weight: $tw-fnt-mssg-title-font-weight;
-      line-height: $tw-fnt-mssg-title-line-height;
-      color: $tw-clr-txt;
+      font-family: terraware.$tw-fnt-mssg-title-font-family;
+      font-size: terraware.$tw-fnt-mssg-title-font-size;
+      font-weight: terraware.$tw-fnt-mssg-title-font-weight;
+      line-height: terraware.$tw-fnt-mssg-title-line-height;
+      color: terraware.$tw-clr-txt;
       padding: 0;
-      margin: 0 0 $tw-spc-base-x-small;
+      margin: 0 0 terraware.$tw-spc-base-x-small;
     }
   }
 
@@ -51,19 +51,19 @@
     width: 100%;
 
     p {
-      font-family: $tw-fnt-mssg-body-font-family;
-      font-size: $tw-fnt-mssg-body-font-size;
-      font-weight: $tw-fnt-mssg-body-font-weight;
-      line-height: $tw-fnt-mssg-body-line-height;
-      color: $tw-clr-txt;
+      font-family: terraware.$tw-fnt-mssg-body-font-family;
+      font-size: terraware.$tw-fnt-mssg-body-font-size;
+      font-weight: terraware.$tw-fnt-mssg-body-font-weight;
+      line-height: terraware.$tw-fnt-mssg-body-line-height;
+      color: terraware.$tw-clr-txt;
       padding: 0;
       margin: 0;
     }
 
     .main-content--icon {
-      width: $tw-sz-base-medium;
-      height: $tw-sz-base-medium;
-      margin-right: $tw-spc-base-small;
+      width: terraware.$tw-sz-base-medium;
+      height: terraware.$tw-sz-base-medium;
+      margin-right: terraware.$tw-spc-base-small;
     }
   }
 
@@ -77,17 +77,17 @@
     align-self: end;
 
     button:first-child {
-      margin-right: $tw-spc-base-x-small;
+      margin-right: terraware.$tw-spc-base-x-small;
     }
   }
 
   &--action-text {
-    font-family: $tw-fnt-mssg-body-font-family;
-    font-size: $tw-fnt-mssg-body-font-size;
-    font-weight: $tw-fnt-mssg-body-font-weight;
-    line-height: $tw-fnt-mssg-body-line-height;
-    color: $tw-clr-txt-brand;
-    margin-left: $tw-spc-base-x-small;
+    font-family: terraware.$tw-fnt-mssg-body-font-family;
+    font-size: terraware.$tw-fnt-mssg-body-font-size;
+    font-weight: terraware.$tw-fnt-mssg-body-font-weight;
+    line-height: terraware.$tw-fnt-mssg-body-line-height;
+    color: terraware.$tw-clr-txt-brand;
+    margin-left: terraware.$tw-spc-base-x-small;
     background: none;
     border: 0;
     cursor: pointer;
@@ -95,27 +95,27 @@
   }
 
   &--left-side {
-    border-radius: ($tw-sz-base-small - 1) 0 0 ($tw-sz-base-small - 1);
-    padding: $tw-spc-base-small $tw-spc-base-small 0 $tw-spc-base-small;
+    border-radius: (terraware.$tw-sz-base-small - 1) 0 0 (terraware.$tw-sz-base-small - 1);
+    padding: terraware.$tw-spc-base-small terraware.$tw-spc-base-small 0 terraware.$tw-spc-base-small;
     .left-side--icon {
-      fill: $tw-clr-icn-inverse;
-      width: $tw-sz-base-medium;
-      height: $tw-sz-base-medium;
+      fill: terraware.$tw-clr-icn-inverse;
+      width: terraware.$tw-sz-base-medium;
+      height: terraware.$tw-sz-base-medium;
     }
   }
 
   .toast-message--close-icon {
-    margin-left: $tw-spc-base-x-small;
-    fill: $tw-clr-icn-secondary;
-    width: $tw-sz-base-medium;
-    height: $tw-sz-base-medium;
+    margin-left: terraware.$tw-spc-base-x-small;
+    fill: terraware.$tw-clr-icn-secondary;
+    width: terraware.$tw-sz-base-medium;
+    height: terraware.$tw-sz-base-medium;
   }
 
   .page-message--close-icon {
-    margin-left: $tw-spc-base-x-small;
-    fill: $tw-clr-icn-secondary;
-    width: $tw-sz-base-medium;
-    height: $tw-sz-base-medium;
+    margin-left: terraware.$tw-spc-base-x-small;
+    fill: terraware.$tw-clr-icn-secondary;
+    width: terraware.$tw-sz-base-medium;
+    height: terraware.$tw-sz-base-medium;
   }
 
   .icon-container {
@@ -126,77 +126,77 @@
   }
 
   &--info {
-    border: 1px solid $tw-clr-brdr-info;
-    background-color: $tw-clr-bg-info-tertiary;
+    border: 1px solid terraware.$tw-clr-brdr-info;
+    background-color: terraware.$tw-clr-bg-info-tertiary;
 
     &.tw-message--page {
-      border: 1px solid $tw-clr-brdr-info;
+      border: 1px solid terraware.$tw-clr-brdr-info;
       .main-content--icon {
-        fill: $tw-clr-icn-info;
+        fill: terraware.$tw-clr-icn-info;
       }
     }
     .tw-message--left-side {
-      background-color: $tw-clr-bg-info;
+      background-color: terraware.$tw-clr-bg-info;
     }
     .left-side--icon {
-      fill: $tw-clr-icn-on-info;
+      fill: terraware.$tw-clr-icn-on-info;
     }
   }
 
   &--critical {
-    border: 1px solid $tw-clr-brdr-danger;
-    background-color: $tw-clr-bg-danger-tertiary;
+    border: 1px solid terraware.$tw-clr-brdr-danger;
+    background-color: terraware.$tw-clr-bg-danger-tertiary;
 
     &.tw-message--page {
-      border: 1px solid $tw-clr-brdr-danger;
+      border: 1px solid terraware.$tw-clr-brdr-danger;
 
       .main-content--icon {
-        fill: $tw-clr-icn-danger;
+        fill: terraware.$tw-clr-icn-danger;
       }
     }
     .tw-message--left-side {
-      background-color: $tw-clr-bg-danger;
+      background-color: terraware.$tw-clr-bg-danger;
     }
     .left-side--icon {
-      fill: $tw-clr-icn-on-danger;
+      fill: terraware.$tw-clr-icn-on-danger;
     }
   }
 
   &--warning {
-    border: 1px solid $tw-clr-brdr-warning;
-    background-color: $tw-clr-bg-warning-tertiary;
+    border: 1px solid terraware.$tw-clr-brdr-warning;
+    background-color: terraware.$tw-clr-bg-warning-tertiary;
 
     &.tw-message--page {
-      border: 1px solid $tw-clr-brdr-warning;
+      border: 1px solid terraware.$tw-clr-brdr-warning;
 
       .main-content--icon {
-        fill: $tw-clr-icn-warning;
+        fill: terraware.$tw-clr-icn-warning;
       }
     }
     .tw-message--left-side {
-      background-color: $tw-clr-bg-warning;
+      background-color: terraware.$tw-clr-bg-warning;
     }
     .left-side--icon {
-      fill: $tw-clr-icn-on-warning;
+      fill: terraware.$tw-clr-icn-on-warning;
     }
   }
 
   &--success {
-    border: 1px solid $tw-clr-brdr-success;
-    background-color: $tw-clr-bg-success-tertiary;
+    border: 1px solid terraware.$tw-clr-brdr-success;
+    background-color: terraware.$tw-clr-bg-success-tertiary;
 
     &.tw-message--page {
-      border: 1px solid $tw-clr-brdr-success;
+      border: 1px solid terraware.$tw-clr-brdr-success;
 
       .main-content--icon {
-        fill: $tw-clr-icn-success;
+        fill: terraware.$tw-clr-icn-success;
       }
     }
     .tw-message--left-side {
-      background-color: $tw-clr-bg-success;
+      background-color: terraware.$tw-clr-bg-success;
     }
     .left-side--icon {
-      fill: $tw-clr-icn-on-success;
+      fill: terraware.$tw-clr-icn-on-success;
     }
   }
 }

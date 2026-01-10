@@ -1,4 +1,4 @@
-@import '../../style-dictionary-dist/terraware.scss';
+@use '../../style-dictionary-dist/terraware.scss';
 
 @font-face {
   font-family: 'Inter';
@@ -8,5 +8,5 @@
 .pill-list {
   display: flex;
   flex-wrap: wrap;
-  gap: $tw-spc-base-x-small;
+  gap: terraware.$tw-spc-base-x-small;
 }
