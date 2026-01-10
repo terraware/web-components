@@ -1,4 +1,4 @@
-@import '../../style-dictionary-dist/terraware.scss';
+@use '../../style-dictionary-dist/terraware.scss';
 
 .timeline {
   align-items: center;
@@ -7,27 +7,27 @@
 }
 
 .timeline-label {
-  font-family: $tw-fnt-frm-fld-label-font-family;
-  font-size: $tw-fnt-frm-fld-label-font-size;
-  font-weight: $tw-fnt-frm-fld-label-font-weight;
-  line-height: $tw-fnt-frm-fld-label-line-height;
-  color: $tw-clr-txt-secondary;
+  font-family: terraware.$tw-fnt-frm-fld-label-font-family;
+  font-size: terraware.$tw-fnt-frm-fld-label-font-size;
+  font-weight: terraware.$tw-fnt-frm-fld-label-font-weight;
+  line-height: terraware.$tw-fnt-frm-fld-label-line-height;
+  color: terraware.$tw-clr-txt-secondary;
 }
 
 .timeline-selected-label {
   border-radius: 8px;
-  background: $tw-clr-bg-secondary;
+  background: terraware.$tw-clr-bg-secondary;
   width: 140px;
   padding: 10px;
   justify-content: center;
   align-items: center;
   text-align: center;
   margin-left: 12px;
-  font-family: $tw-fnt-btn-label-small-font-family;
-  font-size: $tw-fnt-btn-label-small-font-size;
-  font-weight: $tw-fnt-mssg-title-font-weight;
-  line-height: $tw-fnt-btn-label-small-line-height;
-  color: $tw-clr-base-black;
+  font-family: terraware.$tw-fnt-btn-label-small-font-family;
+  font-size: terraware.$tw-fnt-btn-label-small-font-size;
+  font-weight: terraware.$tw-fnt-mssg-title-font-weight;
+  line-height: terraware.$tw-fnt-btn-label-small-line-height;
+  color: terraware.$tw-clr-base-black;
 }
 
 .timeline-container {
@@ -68,11 +68,11 @@
     left: 50%;
     transform: translateX(-50%);
     white-space: nowrap;
-    font-family: $tw-fnt-frm-fld-label-font-family;
-    font-size: $tw-fnt-frm-fld-label-font-size;
-    font-weight: $tw-fnt-frm-fld-label-font-weight;
-    line-height: $tw-fnt-frm-fld-label-line-height;
-    color: $tw-clr-txt-secondary;
+    font-family: terraware.$tw-fnt-frm-fld-label-font-family;
+    font-size: terraware.$tw-fnt-frm-fld-label-font-size;
+    font-weight: terraware.$tw-fnt-frm-fld-label-font-weight;
+    line-height: terraware.$tw-fnt-frm-fld-label-line-height;
+    color: terraware.$tw-clr-txt-secondary;
 
     &--top {
       bottom: 100%;
@@ -92,6 +92,6 @@
   left: 0;
   right: 0;
   height: 5px;
-  background-color: $tw-clr-base-gray-200;
+  background-color: terraware.$tw-clr-base-gray-200;
   transform: translateY(-50%);
 }

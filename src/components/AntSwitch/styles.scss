@@ -1,4 +1,4 @@
-@import '../../style-dictionary-dist/terraware.scss';
+@use '../../style-dictionary-dist/terraware.scss';
 
 .ant-switch {
   width: 28px;
@@ -55,11 +55,11 @@
   }
 
   .Mui-disabled {
-    opacity: $tw-opcty-semantic-off;
+    opacity: terraware.$tw-opcty-semantic-off;
 
     &.Mui-checked {
       + .MuiSwitch-track {
-        opacity: $tw-opcty-semantic-off;
+        opacity: terraware.$tw-opcty-semantic-off;
       }
     }
   }
