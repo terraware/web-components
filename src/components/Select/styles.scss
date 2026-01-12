@@ -1,6 +1,6 @@
 @use 'sass:math';
 
-@import '../../style-dictionary-dist/terraware.scss';
+@use '../../style-dictionary-dist/terraware.scss';
 
 @font-face {
   font-family: 'Inter';
@@ -21,71 +21,71 @@
   }
 
   .textfield-label {
-    font-family: $tw-fnt-frm-fld-label-font-family;
-    font-size: $tw-fnt-frm-fld-label-font-size;
-    font-weight: $tw-fnt-frm-fld-label-font-weight;
-    line-height: $tw-fnt-frm-fld-label-line-height;
-    color: $tw-clr-txt-secondary;
-    margin-bottom: $tw-spc-base-xx-small;
+    font-family: terraware.$tw-fnt-frm-fld-label-font-family;
+    font-size: terraware.$tw-fnt-frm-fld-label-font-size;
+    font-weight: terraware.$tw-fnt-frm-fld-label-font-weight;
+    line-height: terraware.$tw-fnt-frm-fld-label-line-height;
+    color: terraware.$tw-clr-txt-secondary;
+    margin-bottom: terraware.$tw-spc-base-xx-small;
     display: block;
     width: 100%;
     max-width: 100%;
   }
 
   .textfield-help-text {
-    font-family: $tw-fnt-frm-fld-help-text-font-family;
-    font-size: $tw-fnt-frm-fld-help-text-font-size;
-    font-weight: $tw-fnt-frm-fld-help-text-font-weight;
-    line-height: $tw-fnt-frm-fld-help-text-line-height;
-    color: $tw-clr-txt-secondary;
+    font-family: terraware.$tw-fnt-frm-fld-help-text-font-family;
+    font-size: terraware.$tw-fnt-frm-fld-help-text-font-size;
+    font-weight: terraware.$tw-fnt-frm-fld-help-text-font-weight;
+    line-height: terraware.$tw-fnt-frm-fld-help-text-line-height;
+    color: terraware.$tw-clr-txt-secondary;
     display: block;
     width: 100%;
     max-width: 100%;
-    margin-top: $tw-spc-base-xx-small;
+    margin-top: terraware.$tw-spc-base-xx-small;
   }
 
   .textfield-value {
-    background-color: $tw-clr-bg;
-    border: $tw-sz-frm-fld-text-input-stroke solid $tw-clr-brdr-secondary;
-    padding: #{$tw-spc-base-x-small - $tw-sz-frm-fld-text-input-stroke};
-    border-radius: $tw-sz-base-x-small;
-    border-width: $tw-sz-frm-fld-text-input-stroke;
+    background-color: terraware.$tw-clr-bg;
+    border: terraware.$tw-sz-frm-fld-text-input-stroke solid terraware.$tw-clr-brdr-secondary;
+    padding: #{terraware.$tw-spc-base-x-small - terraware.$tw-sz-frm-fld-text-input-stroke};
+    border-radius: terraware.$tw-sz-base-x-small;
+    border-width: terraware.$tw-sz-frm-fld-text-input-stroke;
     display: flex;
 
     &:hover {
-      border: $tw-sz-frm-fld-text-input-stroke solid $tw-clr-brdr-hover;
+      border: terraware.$tw-sz-frm-fld-text-input-stroke solid terraware.$tw-clr-brdr-hover;
     }
 
     &:active {
-      border: $tw-sz-frm-fld-text-input-stroke solid $tw-clr-brdr-active;
-      outline: $tw-sz-frm-fld-text-input-stroke-active solid $tw-clr-brdr-active;
+      border: terraware.$tw-sz-frm-fld-text-input-stroke solid terraware.$tw-clr-brdr-active;
+      outline: terraware.$tw-sz-frm-fld-text-input-stroke-active solid terraware.$tw-clr-brdr-active;
     }
 
     &:focus-within {
-      border: $tw-sz-frm-fld-text-input-stroke solid $tw-clr-brdr-active;
-      outline: $tw-sz-frm-fld-text-input-stroke-active solid $tw-clr-brdr-active;
-      outline-offset: -$tw-sz-frm-fld-text-input-stroke;
+      border: terraware.$tw-sz-frm-fld-text-input-stroke solid terraware.$tw-clr-brdr-active;
+      outline: terraware.$tw-sz-frm-fld-text-input-stroke-active solid terraware.$tw-clr-brdr-active;
+      outline-offset: -(terraware.$tw-sz-frm-fld-text-input-stroke);
     }
 
     input {
       border: none;
       width: 100%;
-      font-family: $tw-fnt-frm-fld-text-value-font-family;
-      font-size: $tw-fnt-frm-fld-text-value-font-size;
-      font-weight: $tw-fnt-frm-fld-text-value-font-weight;
-      line-height: $tw-fnt-frm-fld-text-value-line-height;
-      color: $tw-clr-txt;
+      font-family: terraware.$tw-fnt-frm-fld-text-value-font-family;
+      font-size: terraware.$tw-fnt-frm-fld-text-value-font-size;
+      font-weight: terraware.$tw-fnt-frm-fld-text-value-font-weight;
+      line-height: terraware.$tw-fnt-frm-fld-text-value-line-height;
+      color: terraware.$tw-clr-txt;
       cursor: pointer;
       background: transparent;
       padding-top: 0;
       padding-bottom: 0;
 
       &::placeholder {
-        font-family: $tw-fnt-frm-fld-text-placeholder-font-family;
-        font-size: $tw-fnt-frm-fld-text-placeholder-font-size;
-        font-weight: $tw-fnt-frm-fld-text-placeholder-font-weight;
-        line-height: $tw-fnt-frm-fld-text-placeholder-line-height;
-        color: $tw-clr-txt-tertiary;
+        font-family: terraware.$tw-fnt-frm-fld-text-placeholder-font-family;
+        font-size: terraware.$tw-fnt-frm-fld-text-placeholder-font-size;
+        font-weight: terraware.$tw-fnt-frm-fld-text-placeholder-font-weight;
+        line-height: terraware.$tw-fnt-frm-fld-text-placeholder-line-height;
+        color: terraware.$tw-clr-txt-tertiary;
       }
 
       &:focus-visible {
@@ -94,102 +94,102 @@
     }
 
     &--display {
-      font-family: $tw-fnt-frm-fld-text-value-font-family;
-      font-size: $tw-fnt-frm-fld-text-value-font-size;
-      font-weight: $tw-fnt-frm-fld-text-value-font-weight;
-      line-height: $tw-fnt-frm-fld-text-value-line-height;
-      padding: $tw-spc-base-x-small 0;
+      font-family: terraware.$tw-fnt-frm-fld-text-value-font-family;
+      font-size: terraware.$tw-fnt-frm-fld-text-value-font-size;
+      font-weight: terraware.$tw-fnt-frm-fld-text-value-font-weight;
+      line-height: terraware.$tw-fnt-frm-fld-text-value-line-height;
+      padding: terraware.$tw-spc-base-x-small 0;
       margin: 0;
     }
 
     &--disabled {
-      opacity: $tw-opcty-semantic-off;
+      opacity: terraware.$tw-opcty-semantic-off;
       pointer-events: none;
 
       &:hover {
-        border: $tw-sz-frm-fld-text-input-stroke solid $tw-clr-brdr-secondary;
+        border: terraware.$tw-sz-frm-fld-text-input-stroke solid terraware.$tw-clr-brdr-secondary;
       }
 
       &:active {
-        border: $tw-sz-frm-fld-text-input-stroke solid $tw-clr-brdr-secondary;
+        border: terraware.$tw-sz-frm-fld-text-input-stroke solid terraware.$tw-clr-brdr-secondary;
         outline: 0;
       }
 
       &:focus-within {
-        border: $tw-sz-frm-fld-text-input-stroke solid $tw-clr-brdr-secondary;
+        border: terraware.$tw-sz-frm-fld-text-input-stroke solid terraware.$tw-clr-brdr-secondary;
         outline: 0;
       }
     }
 
     &--icon-right {
-      width: $tw-fnt-frm-fld-text-value-line-height;
-      height: $tw-fnt-frm-fld-text-value-line-height;
-      fill: $tw-clr-icn;
-      margin-left: $tw-spc-base-x-small;
+      width: terraware.$tw-fnt-frm-fld-text-value-line-height;
+      height: terraware.$tw-fnt-frm-fld-text-value-line-height;
+      fill: terraware.$tw-clr-icn;
+      margin-left: terraware.$tw-spc-base-x-small;
       flex-shrink: 0;
     }
 
     &--icon-left {
-      width: $tw-fnt-frm-fld-text-value-line-height;
-      height: $tw-fnt-frm-fld-text-value-line-height;
-      fill: $tw-clr-icn-secondary;
-      margin-right: $tw-spc-base-x-small;
+      width: terraware.$tw-fnt-frm-fld-text-value-line-height;
+      height: terraware.$tw-fnt-frm-fld-text-value-line-height;
+      fill: terraware.$tw-clr-icn-secondary;
+      margin-right: terraware.$tw-spc-base-x-small;
     }
 
     &--error {
-      border: $tw-sz-frm-fld-text-input-stroke solid $tw-clr-brdr-danger;
-      background-color: $tw-clr-bg-danger-tertiary;
+      border: terraware.$tw-sz-frm-fld-text-input-stroke solid terraware.$tw-clr-brdr-danger;
+      background-color: terraware.$tw-clr-bg-danger-tertiary;
 
       &:hover {
-        border: $tw-sz-frm-fld-text-input-stroke solid $tw-clr-brdr-danger-hover;
+        border: terraware.$tw-sz-frm-fld-text-input-stroke solid terraware.$tw-clr-brdr-danger-hover;
       }
 
       &:active {
-        border: $tw-sz-frm-fld-text-input-stroke solid $tw-clr-brdr-danger-active;
-        outline: $tw-sz-frm-fld-text-input-stroke-active solid $tw-clr-brdr-danger-active;
+        border: terraware.$tw-sz-frm-fld-text-input-stroke solid terraware.$tw-clr-brdr-danger-active;
+        outline: terraware.$tw-sz-frm-fld-text-input-stroke-active solid terraware.$tw-clr-brdr-danger-active;
       }
 
       &:focus-within {
-        border: $tw-sz-frm-fld-text-input-stroke solid $tw-clr-brdr-danger-active;
-        outline: $tw-sz-frm-fld-text-input-stroke-active solid $tw-clr-brdr-danger-active;
-        outline-offset: -$tw-sz-frm-fld-text-input-stroke;
+        border: terraware.$tw-sz-frm-fld-text-input-stroke solid terraware.$tw-clr-brdr-danger-active;
+        outline: terraware.$tw-sz-frm-fld-text-input-stroke-active solid terraware.$tw-clr-brdr-danger-active;
+        outline-offset: -(terraware.$tw-sz-frm-fld-text-input-stroke);
       }
     }
 
     &--warning {
-      border: $tw-sz-frm-fld-text-input-stroke solid $tw-clr-brdr-warning;
-      background-color: $tw-clr-bg-warning-tertiary;
+      border: terraware.$tw-sz-frm-fld-text-input-stroke solid terraware.$tw-clr-brdr-warning;
+      background-color: terraware.$tw-clr-bg-warning-tertiary;
 
       &:hover {
-        border: $tw-sz-frm-fld-text-input-stroke solid $tw-clr-brdr-warning-hover;
+        border: terraware.$tw-sz-frm-fld-text-input-stroke solid terraware.$tw-clr-brdr-warning-hover;
       }
 
       &:active {
-        border: $tw-sz-frm-fld-text-input-stroke solid $tw-clr-brdr-warning-active;
-        outline: $tw-sz-frm-fld-text-input-stroke-active solid $tw-clr-brdr-warning-active;
+        border: terraware.$tw-sz-frm-fld-text-input-stroke solid terraware.$tw-clr-brdr-warning-active;
+        outline: terraware.$tw-sz-frm-fld-text-input-stroke-active solid terraware.$tw-clr-brdr-warning-active;
       }
 
       &:focus-within {
-        border: $tw-sz-frm-fld-text-input-stroke solid $tw-clr-brdr-warning-active;
-        outline: $tw-sz-frm-fld-text-input-stroke-active solid $tw-clr-brdr-warning-active;
-        outline-offset: -$tw-sz-frm-fld-text-input-stroke;
+        border: terraware.$tw-sz-frm-fld-text-input-stroke solid terraware.$tw-clr-brdr-warning-active;
+        outline: terraware.$tw-sz-frm-fld-text-input-stroke-active solid terraware.$tw-clr-brdr-warning-active;
+        outline-offset: -(terraware.$tw-sz-frm-fld-text-input-stroke);
       }
     }
 
     &--readonly {
-      background-color: $tw-clr-bg-secondary;
+      background-color: terraware.$tw-clr-bg-secondary;
 
       &:hover {
-        border: $tw-sz-frm-fld-text-input-stroke solid $tw-clr-brdr-secondary;
+        border: terraware.$tw-sz-frm-fld-text-input-stroke solid terraware.$tw-clr-brdr-secondary;
       }
 
       &:active {
-        border: $tw-sz-frm-fld-text-input-stroke solid $tw-clr-brdr-secondary;
+        border: terraware.$tw-sz-frm-fld-text-input-stroke solid terraware.$tw-clr-brdr-secondary;
         outline: 0;
       }
 
       &:focus-within {
-        border: $tw-sz-frm-fld-text-input-stroke solid $tw-clr-brdr-secondary;
+        border: terraware.$tw-sz-frm-fld-text-input-stroke solid terraware.$tw-clr-brdr-secondary;
         outline: 0;
       }
     }
@@ -203,42 +203,42 @@
     position: relative;
     display: flex;
     width: 100%;
-    margin-top: $tw-spc-base-xx-small;
+    margin-top: terraware.$tw-spc-base-xx-small;
   }
 
   .textfield-error-text {
-    font-family: $tw-fnt-frm-fld-error-text-font-family;
-    font-size: $tw-fnt-frm-fld-error-text-font-size;
-    font-weight: $tw-fnt-frm-fld-error-text-font-weight;
-    line-height: $tw-fnt-frm-fld-error-text-line-height;
-    color: $tw-clr-txt-danger;
+    font-family: terraware.$tw-fnt-frm-fld-error-text-font-family;
+    font-size: terraware.$tw-fnt-frm-fld-error-text-font-size;
+    font-weight: terraware.$tw-fnt-frm-fld-error-text-font-weight;
+    line-height: terraware.$tw-fnt-frm-fld-error-text-line-height;
+    color: terraware.$tw-clr-txt-danger;
     display: block;
     width: 100%;
     max-width: 100%;
 
     &--icon {
-      fill: $tw-clr-icn-danger;
-      width: $tw-fnt-frm-fld-error-text-line-height;
-      height: $tw-fnt-frm-fld-error-text-line-height;
-      margin-right: $tw-spc-base-x-small;
+      fill: terraware.$tw-clr-icn-danger;
+      width: terraware.$tw-fnt-frm-fld-error-text-line-height;
+      height: terraware.$tw-fnt-frm-fld-error-text-line-height;
+      margin-right: terraware.$tw-spc-base-x-small;
     }
   }
 
   .textfield-warning-text {
-    font-family: $tw-fnt-frm-fld-warning-text-font-family;
-    font-size: $tw-fnt-frm-fld-warning-text-font-size;
-    font-weight: $tw-fnt-frm-fld-warning-text-font-weight;
-    line-height: $tw-fnt-frm-fld-warning-text-line-height;
-    color: $tw-clr-txt-warning;
+    font-family: terraware.$tw-fnt-frm-fld-warning-text-font-family;
+    font-size: terraware.$tw-fnt-frm-fld-warning-text-font-size;
+    font-weight: terraware.$tw-fnt-frm-fld-warning-text-font-weight;
+    line-height: terraware.$tw-fnt-frm-fld-warning-text-line-height;
+    color: terraware.$tw-clr-txt-warning;
     display: block;
     width: 100%;
     max-width: 100%;
 
     &--icon {
-      fill: $tw-clr-icn-warning;
-      width: $tw-fnt-frm-fld-error-text-line-height;
-      height: $tw-fnt-frm-fld-error-text-line-height;
-      margin-right: $tw-spc-base-x-small;
+      fill: terraware.$tw-clr-icn-warning;
+      width: terraware.$tw-fnt-frm-fld-error-text-line-height;
+      height: terraware.$tw-fnt-frm-fld-error-text-line-height;
+      margin-right: terraware.$tw-spc-base-x-small;
     }
   }
 
@@ -248,11 +248,11 @@
     position: absolute;
     top: 44px;
     list-style-type: none;
-    padding: $tw-spc-base-x-small 0;
-    background: $tw-clr-bg;
-    border: 1px solid $tw-clr-brdr-secondary;
-    margin: $tw-spc-base-xx-small 0 0;
-    border-radius: $tw-sz-base-x-small;
+    padding: terraware.$tw-spc-base-x-small 0;
+    background: terraware.$tw-clr-bg;
+    border: 1px solid terraware.$tw-clr-brdr-secondary;
+    margin: terraware.$tw-spc-base-xx-small 0 0;
+    border-radius: terraware.$tw-sz-base-x-small;
     max-height: 300px;
     overflow-y: auto;
 
@@ -267,31 +267,31 @@
     }
 
     .select-value {
-      font-family: $tw-fnt-frm-fld-select-value-font-family;
-      font-size: $tw-fnt-frm-fld-select-value-font-size;
-      font-weight: $tw-fnt-frm-fld-select-value-font-weight;
-      line-height: $tw-fnt-frm-fld-select-value-line-height;
-      padding: $tw-spc-base-x-small $tw-spc-base-small;
+      font-family: terraware.$tw-fnt-frm-fld-select-value-font-family;
+      font-size: terraware.$tw-fnt-frm-fld-select-value-font-size;
+      font-weight: terraware.$tw-fnt-frm-fld-select-value-font-weight;
+      line-height: terraware.$tw-fnt-frm-fld-select-value-line-height;
+      padding: terraware.$tw-spc-base-x-small terraware.$tw-spc-base-small;
       cursor: pointer;
 
       &:hover {
-        background-color: $tw-clr-bg-selected-ghost-hover;
-        color: $tw-clr-txt;
+        background-color: terraware.$tw-clr-bg-selected-ghost-hover;
+        color: terraware.$tw-clr-txt;
       }
 
       &:active {
-        background-color: $tw-clr-bg-selected-ghost-active;
-        color: $tw-clr-txt;
+        background-color: terraware.$tw-clr-bg-selected-ghost-active;
+        color: terraware.$tw-clr-txt;
       }
 
       &--selected,
       &--selected:hover {
-        background-color: $tw-clr-bg-selected;
-        color: $tw-clr-txt-on-selected;
+        background-color: terraware.$tw-clr-bg-selected;
+        color: terraware.$tw-clr-txt-on-selected;
       }
 
       &--disabled {
-        opacity: $tw-opcty-semantic-off;
+        opacity: terraware.$tw-opcty-semantic-off;
       }
     }
   }

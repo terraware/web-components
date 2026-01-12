@@ -1,4 +1,4 @@
-@import '../../style-dictionary-dist/terraware.scss';
+@use '../../style-dictionary-dist/terraware.scss';
 
 @font-face {
   font-family: 'Inter';
@@ -15,11 +15,11 @@
   inset: 0px;
 
   &--skrim {
-    background-color: rgba($tw-clr-base-gray-025, $tw-opcty-base-060);
+    background-color: rgba(terraware.$tw-clr-base-gray-025, terraware.$tw-opcty-base-060);
     background-image: linear-gradient(
       180deg,
-      rgba($tw-clr-base-green-050, $tw-opcty-base-000),
-      rgba($tw-clr-base-green-050, 0.24)
+      rgba(terraware.$tw-clr-base-green-050, terraware.$tw-opcty-base-000),
+      rgba(terraware.$tw-clr-base-green-050, 0.24)
     );
     height: 100%;
     display: flex;
@@ -31,11 +31,11 @@
   }
 
   &.mobile {
-    margin: 0 $tw-spc-base-small;
+    margin: 0 terraware.$tw-spc-base-small;
     .dialog-box {
       &--footer {
         button {
-          margin: 0 0 $tw-spc-base-x-small 0;
+          margin: 0 0 terraware.$tw-spc-base-x-small 0;
         }
         &-container {
           flex-direction: column;
@@ -54,11 +54,11 @@
 }
 
 .dialog-box {
-  box-shadow: $tw-elvtn-base-800;
-  border-radius: $tw-sz-base-small;
+  box-shadow: terraware.$tw-elvtn-base-800;
+  border-radius: terraware.$tw-sz-base-small;
   display: flex;
   flex-direction: column;
-  background: $tw-clr-base-white;
+  background: terraware.$tw-clr-base-white;
   max-height: calc(100vh - 128px); //64 from top and bottom
   max-width: calc(100vw - 32px);
   margin-top: auto;
@@ -85,42 +85,42 @@
   }
 
   &--header {
-    border-bottom: 1px solid $tw-clr-brdr-tertiary;
-    padding: $tw-spc-base-small $tw-spc-base-medium;
+    border-bottom: 1px solid terraware.$tw-clr-brdr-tertiary;
+    padding: terraware.$tw-spc-base-small terraware.$tw-spc-base-medium;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-radius: $tw-sz-base-small $tw-sz-base-small 0 0;
+    border-radius: terraware.$tw-sz-base-small terraware.$tw-sz-base-small 0 0;
     .title {
-      font-family: $tw-fnt-dlg-bx-title-font-family;
-      font-size: $tw-fnt-dlg-bx-title-font-size;
-      font-weight: $tw-fnt-dlg-bx-title-font-weight;
-      line-height: $tw-fnt-dlg-bx-title-line-height;
-      color: $tw-clr-txt;
+      font-family: terraware.$tw-fnt-dlg-bx-title-font-family;
+      font-size: terraware.$tw-fnt-dlg-bx-title-font-size;
+      font-weight: terraware.$tw-fnt-dlg-bx-title-font-weight;
+      line-height: terraware.$tw-fnt-dlg-bx-title-line-height;
+      color: terraware.$tw-clr-txt;
       text-align: center;
       margin: 0;
       width: 100%;
     }
 
     .icon-close {
-      fill: $tw-clr-icn-secondary;
-      height: $tw-sz-base-medium;
-      width: $tw-sz-base-medium;
+      fill: terraware.$tw-clr-icn-secondary;
+      height: terraware.$tw-sz-base-medium;
+      width: terraware.$tw-sz-base-medium;
     }
 
     .MuiButtonBase-root {
-      padding: $tw-spc-base-xx-small;
+      padding: terraware.$tw-spc-base-xx-small;
     }
 
     .close-icon-spacer {
-      height: calc(#{$tw-sz-base-medium} + 2 *#{$tw-spc-base-xx-small});
-      width: calc(#{$tw-sz-base-medium} + 2 *#{$tw-spc-base-xx-small});
+      height: calc(#{terraware.$tw-sz-base-medium} + 2 *#{terraware.$tw-spc-base-xx-small});
+      width: calc(#{terraware.$tw-sz-base-medium} + 2 *#{terraware.$tw-spc-base-xx-small});
     }
   }
 
   &--body {
-    background: $tw-clr-base-white;
-    padding: $tw-spc-base-medium;
+    background: terraware.$tw-clr-base-white;
+    padding: terraware.$tw-spc-base-medium;
     text-align: center;
     &.scrolled {
       overflow: auto;
@@ -128,28 +128,28 @@
   }
 
   &--body-no-footer {
-    padding: $tw-spc-base-medium;
+    padding: terraware.$tw-spc-base-medium;
     &.scrolled {
       overflow: auto;
     }
   }
 
   &--message {
-    font-family: $tw-fnt-dlg-bx-message-font-family;
-    font-size: $tw-fnt-dlg-bx-message-font-size;
-    font-weight: $tw-fnt-dlg-bx-message-font-weight;
-    line-height: $tw-fnt-dlg-bx-message-line-height;
-    color: $tw-clr-txt;
+    font-family: terraware.$tw-fnt-dlg-bx-message-font-family;
+    font-size: terraware.$tw-fnt-dlg-bx-message-font-size;
+    font-weight: terraware.$tw-fnt-dlg-bx-message-font-weight;
+    line-height: terraware.$tw-fnt-dlg-bx-message-line-height;
+    color: terraware.$tw-clr-txt;
     width: 100%;
     text-align: center;
   }
 
   &--footer {
-    border-radius: 0 0 $tw-sz-base-small $tw-sz-base-small;
-    background-color: $tw-clr-bg-secondary;
-    padding: $tw-spc-base-medium $tw-spc-base-medium;
+    border-radius: 0 0 terraware.$tw-sz-base-small terraware.$tw-sz-base-small;
+    background-color: terraware.$tw-clr-bg-secondary;
+    padding: terraware.$tw-spc-base-medium terraware.$tw-spc-base-medium;
     button + button {
-      margin-left: $tw-spc-base-x-small;
+      margin-left: terraware.$tw-spc-base-x-small;
     }
   }
 
