@@ -1,6 +1,6 @@
 @use 'sass:math';
 
-@import '../../style-dictionary-dist/terraware.scss';
+@use '../../style-dictionary-dist/terraware.scss';
 
 @font-face {
   font-family: 'Inter';
@@ -10,83 +10,83 @@
 .markdown {
   display: flex;
   flex-flow: column;
-  font-family: $tw-fnt-frm-fld-text-value-font-family;
-  color: $tw-clr-txt;
-  padding: $tw-spc-base-x-small 0;
+  font-family: terraware.$tw-fnt-frm-fld-text-value-font-family;
+  color: terraware.$tw-clr-txt;
+  padding: terraware.$tw-spc-base-x-small 0;
   margin: 0;
 
   h1 {
-    font-size: $tw-fnt-base-headline-01-semi-bold-font-size;
-    font-weight: $tw-fnt-base-headline-01-semi-bold-font-weight;
-    line-height: $tw-fnt-base-headline-01-semi-bold-line-height;
+    font-size: terraware.$tw-fnt-base-headline-01-semi-bold-font-size;
+    font-weight: terraware.$tw-fnt-base-headline-01-semi-bold-font-weight;
+    line-height: terraware.$tw-fnt-base-headline-01-semi-bold-line-height;
     padding: 0;
     margin: 0;
   }
   h2 {
-    font-size: $tw-fnt-base-headline-02-semi-bold-font-size;
-    font-weight: $tw-fnt-base-headline-02-semi-bold-font-weight;
-    line-height: $tw-fnt-base-headline-02-semi-bold-line-height;
+    font-size: terraware.$tw-fnt-base-headline-02-semi-bold-font-size;
+    font-weight: terraware.$tw-fnt-base-headline-02-semi-bold-font-weight;
+    line-height: terraware.$tw-fnt-base-headline-02-semi-bold-line-height;
     padding: 0;
     margin: 0;
   }
   h3 {
-    font-size: $tw-fnt-base-headline-03-semi-bold-font-size;
-    font-weight: $tw-fnt-base-headline-03-semi-bold-font-weight;
-    line-height: $tw-fnt-base-headline-03-semi-bold-line-height;
+    font-size: terraware.$tw-fnt-base-headline-03-semi-bold-font-size;
+    font-weight: terraware.$tw-fnt-base-headline-03-semi-bold-font-weight;
+    line-height: terraware.$tw-fnt-base-headline-03-semi-bold-line-height;
     padding: 0;
     margin: 0;
   }
   h4 {
-    font-size: $tw-fnt-base-headline-04-semi-bold-font-size;
-    font-weight: $tw-fnt-base-headline-04-semi-bold-font-weight;
-    line-height: $tw-fnt-base-headline-04-semi-bold-line-height;
+    font-size: terraware.$tw-fnt-base-headline-04-semi-bold-font-size;
+    font-weight: terraware.$tw-fnt-base-headline-04-semi-bold-font-weight;
+    line-height: terraware.$tw-fnt-base-headline-04-semi-bold-line-height;
     padding: 0;
     margin: 0;
   }
   h5 {
-    font-size: $tw-fnt-base-headline-05-semi-bold-font-size;
-    font-weight: $tw-fnt-base-headline-05-semi-bold-font-weight;
-    line-height: $tw-fnt-base-headline-05-semi-bold-line-height;
+    font-size: terraware.$tw-fnt-base-headline-05-semi-bold-font-size;
+    font-weight: terraware.$tw-fnt-base-headline-05-semi-bold-font-weight;
+    line-height: terraware.$tw-fnt-base-headline-05-semi-bold-line-height;
     padding: 0;
     margin: 0;
   }
   h6 {
-    font-size: $tw-fnt-base-headline-06-semi-bold-font-size;
-    font-weight: $tw-fnt-base-headline-06-semi-bold-font-weight;
-    line-height: $tw-fnt-base-headline-06-semi-bold-line-height;
+    font-size: terraware.$tw-fnt-base-headline-06-semi-bold-font-size;
+    font-weight: terraware.$tw-fnt-base-headline-06-semi-bold-font-weight;
+    line-height: terraware.$tw-fnt-base-headline-06-semi-bold-line-height;
     padding: 0;
     margin: 0;
   }
 
   p {
-    font-size: $tw-fnt-frm-fld-text-value-font-size;
-    font-weight: $tw-fnt-frm-fld-text-value-font-weight;
-    line-height: $tw-fnt-frm-fld-text-value-line-height;
+    font-size: terraware.$tw-fnt-frm-fld-text-value-font-size;
+    font-weight: terraware.$tw-fnt-frm-fld-text-value-font-weight;
+    line-height: terraware.$tw-fnt-frm-fld-text-value-line-height;
     padding: 0;
     margin: 0;
   }
 
   a {
-    color: $tw-clr-txt-brand;
+    color: terraware.$tw-clr-txt-brand;
     text-decoration: underline;
     &:hover {
-      color: $tw-clr-txt-brand;
+      color: terraware.$tw-clr-txt-brand;
     }
   }
 
   code {
     font-family: 'Fira Code', monospace;
-    background: $tw-clr-bg-secondary;
-    color: $tw-clr-txt-secondary;
+    background: terraware.$tw-clr-bg-secondary;
+    color: terraware.$tw-clr-txt-secondary;
   }
 
   pre code {
     display: block;
     padding: 4px;
     overflow-x: auto;
-    background: $tw-clr-bg-secondary;
-    color: $tw-clr-txt-secondary;
-    border-color: $tw-clr-brdr-secondary;
+    background: terraware.$tw-clr-bg-secondary;
+    color: terraware.$tw-clr-txt-secondary;
+    border-color: terraware.$tw-clr-brdr-secondary;
     border-radius: 8px;
   }
 
@@ -104,26 +104,26 @@
 
   thead {
     tr {
-      background-color: $tw-clr-base-gray-050;
+      background-color: terraware.$tw-clr-base-gray-050;
     }
   }
 
   tbody {
     tr {
       &:nth-child(odd) {
-        background-color: $tw-clr-base-white;
+        background-color: terraware.$tw-clr-base-white;
       }
 
       &:nth-child(even) {
-        background-color: $tw-clr-base-gray-050;
+        background-color: terraware.$tw-clr-base-gray-050;
       }
     }
   }
 
   blockquote {
-    border-left: 4px solid $tw-clr-brdr-brand;
+    border-left: 4px solid terraware.$tw-clr-brdr-brand;
     padding-left: 1em;
     margin: 1em 0;
-    color: $tw-clr-txt-secondary;
+    color: terraware.$tw-clr-txt-secondary;
   }
 }

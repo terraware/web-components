@@ -1,10 +1,10 @@
-@import '../../style-dictionary-dist/terraware';
+@use '../../style-dictionary-dist/terraware';
 
 .popover-multi-select__checkmark-selection {
-  margin-right: $tw-spc-base-x-small;
+  margin-right: terraware.$tw-spc-base-x-small;
 }
 
 .popover-multi-select__checkmark-spacer {
-  width: calc($tw-spc-base-x-small + $tw-sz-icon-small);
-  height: $tw-sz-icon-small;
+  width: calc(terraware.$tw-spc-base-x-small + terraware.$tw-sz-icon-small);
+  height: terraware.$tw-sz-icon-small;
 }
