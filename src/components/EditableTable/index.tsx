@@ -14,7 +14,7 @@ import {
 
 export type ColumnEditConfig<TData extends Record<string, any>> = {
   /** Function to call when a cell value is saved (on blur) */
-  onSave?: (row: TData, value: any) => void | Promise<void>;
+  onSave?: (row: TData, value: any, columnId: string) => void | Promise<void>;
   /** Edit variant: 'text' (default), 'select', or 'custom' */
   editVariant?: 'text' | 'select' | 'custom';
   /** Options for select variant */
@@ -38,8 +38,8 @@ export type EditableTableColumn<TData extends Record<string, any>> = {
   accessorFn?: (row: TData) => any;
   /** Width of the column in pixels */
   size?: number;
-  /** Whether the column is editable */
-  enableEditing?: boolean;
+  /** Whether the column is editable. Can be a boolean or a function that receives the row and returns a boolean */
+  enableEditing?: boolean | ((row: MRT_Row<TData>) => boolean);
   /** Whether the column can be hidden */
   enableHiding?: boolean;
   /** Edit configuration for this column */
@@ -141,7 +141,7 @@ export default function EditableTable<TData extends Record<string, any>>({
 
             const handleSave = useCallback(() => {
               if (onSave) {
-                onSave(row.original, value);
+                onSave(row.original, value, col.id);
               }
               table.setEditingCell(null);
             }, [value]);
@@ -176,7 +176,7 @@ export default function EditableTable<TData extends Record<string, any>>({
             onBlur: (event: React.FocusEvent<HTMLInputElement>) => {
               if (onSave) {
                 const value = event.target.value;
-                onSave(row.original, value);
+                onSave(row.original, value, col.id);
               }
             },
           });
