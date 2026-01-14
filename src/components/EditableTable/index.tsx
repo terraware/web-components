@@ -67,8 +67,10 @@ export type EditableTableProps<TData extends Record<string, any>> = {
   enableColumnPinning?: boolean;
   /** Whether to enable sorting (default: true) */
   enableSorting?: boolean;
-  /** Whether to enable filters (default: false) */
-  enableFilters?: boolean;
+  /** Whether to enable global filter/search (default: false) */
+  enableGlobalFilter?: boolean;
+  /** Whether to enable column filters (default: false) */
+  enableColumnFilters?: boolean;
   /** Whether to enable pagination (default: true) */
   enablePagination?: boolean;
   /** Whether to show the bottom toolbar (default: true) */
@@ -91,7 +93,8 @@ export default function EditableTable<TData extends Record<string, any>>({
   enableColumnOrdering = false,
   enableColumnPinning = false,
   enableSorting = true,
-  enableFilters = false,
+  enableGlobalFilter = false,
+  enableColumnFilters = false,
   enablePagination = true,
   enableBottomToolbar = true,
   enableTopToolbar = true,
@@ -117,6 +120,7 @@ export default function EditableTable<TData extends Record<string, any>>({
         filterVariant: col.filterVariant,
         filterSelectOptions: col.filterSelectOptions,
         filterFn: col.filterFn as any,
+        enableColumnFilter: col.filterVariant !== undefined,
       };
 
       // Handle edit configuration
@@ -128,10 +132,10 @@ export default function EditableTable<TData extends Record<string, any>>({
         } else if (editVariant === 'select' && selectOptions) {
           mrtCol.editVariant = 'select';
           mrtCol.editSelectOptions = selectOptions;
-          mrtCol.Edit = ({
+          const SelectEditComponent = ({
             cell,
             row,
-            table,
+            table: iTable,
           }: {
             cell: MRT_Cell<TData>;
             row: MRT_Row<TData>;
@@ -141,9 +145,9 @@ export default function EditableTable<TData extends Record<string, any>>({
 
             const handleSave = useCallback(() => {
               if (onSave) {
-                onSave(row.original, value, col.id);
+                void onSave(row.original, value, col.id);
               }
-              table.setEditingCell(null);
+              iTable.setEditingCell(null);
             }, [value]);
 
             return (
@@ -156,7 +160,7 @@ export default function EditableTable<TData extends Record<string, any>>({
                   if (e.key === 'Enter') {
                     handleSave();
                   } else if (e.key === 'Escape') {
-                    table.setEditingCell(null);
+                    iTable.setEditingCell(null);
                   }
                 }}
                 size='small'
@@ -170,13 +174,14 @@ export default function EditableTable<TData extends Record<string, any>>({
               </TextField>
             );
           };
+          mrtCol.Edit = SelectEditComponent;
         } else {
           // Default text input with onBlur save
           mrtCol.muiEditTextFieldProps = ({ row }: { row: MRT_Row<TData> }) => ({
             onBlur: (event: React.FocusEvent<HTMLInputElement>) => {
               if (onSave) {
                 const value = event.target.value;
-                onSave(row.original, value, col.id);
+                void onSave(row.original, value, col.id);
               }
             },
           });
@@ -187,6 +192,12 @@ export default function EditableTable<TData extends Record<string, any>>({
     });
   }, [columns, enableEditing]);
 
+  const initialStateConfig = {
+    ...(initialSorting ? { sorting: initialSorting } : {}),
+    ...(enableColumnFilters ? { showColumnFilters: true } : {}),
+    ...(enableGlobalFilter ? { showGlobalFilter: true } : {}),
+  };
+
   const table = useMaterialReactTable({
     columns: mrtColumns,
     data,
@@ -195,15 +206,14 @@ export default function EditableTable<TData extends Record<string, any>>({
     enableColumnPinning,
     enableEditing,
     enableSorting,
-    enableFilters,
+    enableGlobalFilter,
+    enableColumnFilters,
+    enableFilters: enableColumnFilters || enableGlobalFilter,
     enablePagination,
-    enableBottomToolbar,
+    enableBottomToolbar: enablePagination ? enableBottomToolbar : false,
     enableTopToolbar,
-    initialState: initialSorting
-      ? {
-          sorting: initialSorting,
-        }
-      : undefined,
+    positionGlobalFilter: enableGlobalFilter ? 'left' : undefined,
+    ...(Object.keys(initialStateConfig).length > 0 ? { initialState: initialStateConfig } : {}),
     renderToolbarInternalActions,
     muiTableBodyProps: {
       sx: {
