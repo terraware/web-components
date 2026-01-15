@@ -1,8 +1,8 @@
-@import '../../style-dictionary-dist/terraware.scss';
+@use '../../style-dictionary-dist/terraware.scss';
 
 .view-photos-dialog-container {
   min-height: 200px;
-  background: $tw-clr-bg;
+  background: terraware.$tw-clr-bg;
 }
 
 .view-photos-dialog-image {
@@ -14,5 +14,5 @@
 
 .photo-numbering {
   font-size: 12px;
-  color: $tw-clr-txt-info;
+  color: terraware.$tw-clr-txt-info;
 }

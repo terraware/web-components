@@ -1,4 +1,4 @@
-@import '../../style-dictionary-dist/terraware.scss';
+@use '../../style-dictionary-dist/terraware.scss';
 
 @font-face {
   font-family: 'Inter';
@@ -20,22 +20,22 @@
 
 .tw-icon {
   &--small {
-    width: $tw-sz-icon-small;
-    height: $tw-sz-icon-small;
+    width: terraware.$tw-sz-icon-small;
+    height: terraware.$tw-sz-icon-small;
   }
 
   &--medium {
-    width: $tw-sz-icon-medium;
-    height: $tw-sz-icon-medium;
+    width: terraware.$tw-sz-icon-medium;
+    height: terraware.$tw-sz-icon-medium;
   }
 
   &--large {
-    width: $tw-sz-icon-large;
-    height: $tw-sz-icon-large;
+    width: terraware.$tw-sz-icon-large;
+    height: terraware.$tw-sz-icon-large;
   }
 
   &--xlarge {
-    width: $tw-sz-icon-x-large;
-    height: $tw-sz-icon-x-large;
+    width: terraware.$tw-sz-icon-x-large;
+    height: terraware.$tw-sz-icon-x-large;
   }
 }

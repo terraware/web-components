@@ -84,6 +84,7 @@ import IconNursery from '../../svg/IconNursery';
 import OrganizationNav from '../../svg/IconOrg';
 import IconParchment from '../../svg/IconParchment';
 import IconPhoto from '../../svg/IconPhoto';
+import IconPlantsFilled from '../../svg/IconPlantsFilled';
 import IconRedo from '../../svg/IconRedo';
 import IconRestorationSite from '../../svg/IconRestorationSite';
 import SeedBankNav from '../../svg/IconSeedBank';
@@ -198,6 +199,7 @@ export type IconName =
   | 'iconNursery'
   | 'iconParchment'
   | 'iconPhoto'
+  | 'iconPlantsFilled'
   | 'iconRedo'
   | 'iconRestorationSite'
   | 'iconSeedling'
@@ -326,6 +328,7 @@ const icons: Record<IconName, SVGComponent> = {
   iconNursery: IconNursery,
   iconParchment: IconParchment,
   iconPhoto: IconPhoto,
+  iconPlantsFilled: IconPlantsFilled,
   iconRedo: IconRedo,
   iconRestorationSite: IconRestorationSite,
   iconSeedling: IconSeedling,
