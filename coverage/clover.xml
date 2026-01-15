@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1768257329109" clover="3.2.0">
-  <project timestamp="1768257329109" name="All files">
-    <metrics statements="2144" coveredstatements="216" conditionals="1753" coveredconditionals="105" methods="780" coveredmethods="31" elements="4677" coveredelements="352" complexity="0" loc="2144" ncloc="2144" packages="44" files="252" classes="252"/>
+<coverage generated="1768506884145" clover="3.2.0">
+  <project timestamp="1768506884145" name="All files">
+    <metrics statements="2248" coveredstatements="216" conditionals="1860" coveredconditionals="105" methods="860" coveredmethods="31" elements="4968" coveredelements="352" complexity="0" loc="2248" ncloc="2248" packages="45" files="254" classes="254"/>
     <package name="src">
       <metrics statements="1" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
       <file name="index.ts" path="/home/runner/work/web-components/web-components/src/index.ts">
@@ -212,6 +212,47 @@
         <line num="85" count="0" type="stmt"/>
         <line num="93" count="0" type="stmt"/>
         <line num="99" count="0" type="stmt"/>
+      </file>
+    </package>
+    <package name="src.components.EditableTable">
+      <metrics statements="35" coveredstatements="0" conditionals="55" coveredconditionals="0" methods="12" coveredmethods="0"/>
+      <file name="index.tsx" path="/home/runner/work/web-components/web-components/src/components/EditableTable/index.tsx">
+        <metrics statements="35" coveredstatements="0" conditionals="55" coveredconditionals="0" methods="12" coveredmethods="0"/>
+        <line num="106" count="0" type="stmt"/>
+        <line num="109" count="0" type="stmt"/>
+        <line num="110" count="0" type="stmt"/>
+        <line num="111" count="0" type="stmt"/>
+        <line num="127" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="128" count="0" type="cond" truecount="0" falsecount="1"/>
+        <line num="130" count="0" type="cond" truecount="0" falsecount="4"/>
+        <line num="131" count="0" type="stmt"/>
+        <line num="132" count="0" type="cond" truecount="0" falsecount="4"/>
+        <line num="133" count="0" type="stmt"/>
+        <line num="134" count="0" type="stmt"/>
+        <line num="135" count="0" type="stmt"/>
+        <line num="144" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="146" count="0" type="stmt"/>
+        <line num="147" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="148" count="0" type="stmt"/>
+        <line num="150" count="0" type="stmt"/>
+        <line num="153" count="0" type="stmt"/>
+        <line num="157" count="0" type="stmt"/>
+        <line num="160" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="161" count="0" type="stmt"/>
+        <line num="162" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="163" count="0" type="stmt"/>
+        <line num="170" count="0" type="stmt"/>
+        <line num="177" count="0" type="stmt"/>
+        <line num="180" count="0" type="stmt"/>
+        <line num="182" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="183" count="0" type="stmt"/>
+        <line num="184" count="0" type="stmt"/>
+        <line num="191" count="0" type="stmt"/>
+        <line num="195" count="0" type="stmt"/>
+        <line num="201" count="0" type="stmt"/>
+        <line num="228" count="0" type="stmt"/>
+        <line num="229" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="241" count="0" type="stmt"/>
       </file>
     </package>
     <package name="src.components.ErrorBox">
@@ -2140,7 +2181,7 @@
       </file>
     </package>
     <package name="src.stories">
-      <metrics statements="660" coveredstatements="0" conditionals="84" coveredconditionals="0" methods="233" coveredmethods="0"/>
+      <metrics statements="729" coveredstatements="0" conditionals="136" coveredconditionals="0" methods="301" coveredmethods="0"/>
       <file name="AntSwitch.stories.tsx" path="/home/runner/work/web-components/web-components/src/stories/AntSwitch.stories.tsx">
         <metrics statements="8" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="0"/>
         <line num="14" count="0" type="stmt"/>
@@ -2351,6 +2392,78 @@
         <line num="75" count="0" type="stmt"/>
         <line num="78" count="0" type="stmt"/>
         <line num="80" count="0" type="stmt"/>
+      </file>
+      <file name="EditableTable.stories.tsx" path="/home/runner/work/web-components/web-components/src/stories/EditableTable.stories.tsx">
+        <metrics statements="69" coveredstatements="0" conditionals="52" coveredconditionals="0" methods="68" coveredmethods="0"/>
+        <line num="24" count="0" type="stmt"/>
+        <line num="25" count="0" type="stmt"/>
+        <line num="26" count="0" type="stmt"/>
+        <line num="29" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="30" count="0" type="stmt"/>
+        <line num="40" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="41" count="0" type="stmt"/>
+        <line num="52" count="0" type="stmt"/>
+        <line num="67" count="0" type="stmt"/>
+        <line num="68" count="0" type="stmt"/>
+        <line num="76" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="87" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="98" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="117" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="133" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="144" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="155" count="0" type="stmt"/>
+        <line num="156" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="157" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="169" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="177" count="0" type="stmt"/>
+        <line num="189" count="0" type="stmt"/>
+        <line num="191" count="0" type="stmt"/>
+        <line num="193" count="0" type="stmt"/>
+        <line num="197" count="0" type="stmt"/>
+        <line num="198" count="0" type="stmt"/>
+        <line num="199" count="0" type="stmt"/>
+        <line num="200" count="0" type="stmt"/>
+        <line num="203" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="204" count="0" type="stmt"/>
+        <line num="214" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="215" count="0" type="stmt"/>
+        <line num="226" count="0" type="stmt"/>
+        <line num="241" count="0" type="stmt"/>
+        <line num="242" count="0" type="stmt"/>
+        <line num="251" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="272" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="290" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="298" count="0" type="stmt"/>
+        <line num="311" count="0" type="stmt"/>
+        <line num="312" count="0" type="stmt"/>
+        <line num="313" count="0" type="stmt"/>
+        <line num="314" count="0" type="stmt"/>
+        <line num="317" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="318" count="0" type="stmt"/>
+        <line num="328" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="329" count="0" type="stmt"/>
+        <line num="340" count="0" type="stmt"/>
+        <line num="355" count="0" type="stmt"/>
+        <line num="356" count="0" type="stmt"/>
+        <line num="364" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="385" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="401" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="409" count="0" type="stmt"/>
+        <line num="421" count="0" type="stmt"/>
+        <line num="422" count="0" type="stmt"/>
+        <line num="423" count="0" type="stmt"/>
+        <line num="424" count="0" type="stmt"/>
+        <line num="427" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="428" count="0" type="stmt"/>
+        <line num="438" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="439" count="0" type="stmt"/>
+        <line num="450" count="0" type="stmt"/>
+        <line num="465" count="0" type="stmt"/>
+        <line num="466" count="0" type="stmt"/>
+        <line num="474" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="485" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="502" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="510" count="0" type="stmt"/>
       </file>
       <file name="ErrorBox.stories.tsx" path="/home/runner/work/web-components/web-components/src/stories/ErrorBox.stories.tsx">
         <metrics statements="5" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="0"/>
