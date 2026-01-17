@@ -44,6 +44,7 @@ import SummaryBox from './components/SummaryBox';
 import Tabs from './components/Tabs';
 import TextTruncated from './components/TextTruncated';
 import Textfield from './components/Textfield/Textfield';
+import TimelineSlider from './components/TimelineSlider';
 import Tooltip from './components/Tooltip/Tooltip';
 import ViewPhotosDialog from './components/ViewPhotosDialog';
 import * as Svg from './components/svg';
@@ -120,6 +121,7 @@ export {
   Tabs,
   Textfield,
   TextTruncated,
+  TimelineSlider,
   theme,
   Tooltip,
   ViewPhotosDialog,
