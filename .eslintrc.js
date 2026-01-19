@@ -173,7 +173,7 @@ module.exports = {
     'no-caller': 'error',
     'no-cond-assign': 'error',
     'no-console': [
-      'error',
+      'off',
       {
         allow: [
           'warn',

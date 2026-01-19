@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, type JSX } from 'react';
 import React from 'react';
 
 import { Typography } from '@mui/material';

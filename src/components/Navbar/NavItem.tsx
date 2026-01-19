@@ -1,4 +1,4 @@
-import React, { ReactElement, useCallback } from 'react';
+import React, { ReactElement, useCallback, type JSX } from 'react';
 
 import theme from '../../theme';
 import Icon from '../Icon/Icon';

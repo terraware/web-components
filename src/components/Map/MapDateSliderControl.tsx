@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, type JSX } from 'react';
 
 import { Box, Card, Typography, useTheme } from '@mui/material';
 import { DateTime } from 'luxon';

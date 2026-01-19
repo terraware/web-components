@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { type JSX } from 'react';
 
 import Pill from '../Pill';
 import './styles.scss';

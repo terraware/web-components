@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, type JSX } from 'react';
 
 import { NavItemProps } from './NavItem';
 import './styles.scss';

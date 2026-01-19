@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, type JSX } from 'react';
 
 import { TabContext, TabList, TabPanel } from '@mui/lab';
 import { Box, Tab as MuiTab, SxProps, Theme, useTheme } from '@mui/material';

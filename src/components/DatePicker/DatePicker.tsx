@@ -1,4 +1,4 @@
-import React, { KeyboardEventHandler, useState } from 'react';
+import React, { KeyboardEventHandler, useState, type JSX } from 'react';
 
 import { Box, SxProps } from '@mui/material';
 import { DesktopDatePicker, DesktopDateTimePicker, LocalizationProvider } from '@mui/x-date-pickers';

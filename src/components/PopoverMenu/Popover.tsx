@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { type JSX } from 'react';
 
 import { Divider, MenuItem, MenuList, Popover, useTheme } from '@mui/material';
 
