@@ -92,6 +92,8 @@
     "@babel/preset-react": "^7.24.1",
     "@babel/preset-typescript": "^7.24.1",
     "@jsdevtools/version-bump-prompt": "^6.1.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
     "@storybook/addon-actions": "^7.0.7",
     "@storybook/addon-essentials": "^7.0.7",
     "@storybook/addon-links": "^7.0.7",
