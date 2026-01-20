@@ -1,4 +1,4 @@
-import React, { CSSProperties, ReactNode, type JSX } from 'react';
+import React, { CSSProperties, type JSX, ReactNode } from 'react';
 
 import { Edit, Notes } from '@mui/icons-material';
 import { Box, Link, SxProps, TableCell, Theme, Typography, useTheme } from '@mui/material';

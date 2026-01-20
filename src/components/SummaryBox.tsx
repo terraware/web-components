@@ -1,4 +1,4 @@
-import React, { useMemo, type JSX } from 'react';
+import React, { type JSX, useMemo } from 'react';
 
 import { Info } from '@mui/icons-material';
 import { Box, IconButton, SxProps, Typography, useTheme } from '@mui/material';

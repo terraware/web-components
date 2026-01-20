@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState, type JSX } from 'react';
+import React, { type JSX, useEffect, useMemo, useState } from 'react';
 
 import { Link, Tooltip, Typography, useTheme } from '@mui/material';
 

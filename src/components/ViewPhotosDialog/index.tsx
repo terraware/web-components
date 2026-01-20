@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState, type JSX } from 'react';
+import React, { type JSX, useCallback, useEffect, useRef, useState } from 'react';
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 

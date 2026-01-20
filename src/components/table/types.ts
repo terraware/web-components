@@ -1,4 +1,4 @@
-import { CSSProperties, ReactNode, type JSX } from 'react';
+import { CSSProperties, type JSX, ReactNode } from 'react';
 
 import { SxProps, TooltipProps } from '@mui/material';
 

@@ -1,4 +1,4 @@
-import React, { SyntheticEvent, type JSX } from 'react';
+import React, { type JSX, SyntheticEvent } from 'react';
 
 import { FormControlLabel, Checkbox as MUICheckbox, SxProps, Theme, useTheme } from '@mui/material';
 

@@ -1,4 +1,4 @@
-import React, { useState, type JSX } from 'react';
+import React, { type JSX, useState } from 'react';
 
 import { ListItemText } from '@mui/material';
 

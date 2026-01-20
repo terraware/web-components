@@ -1,4 +1,4 @@
-import React, { useEffect, useState, type JSX } from 'react';
+import React, { type JSX, useEffect, useState } from 'react';
 
 import { Box, SxProps, TooltipProps } from '@mui/material';
 

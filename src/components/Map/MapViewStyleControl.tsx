@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, type JSX } from 'react';
+import React, { type JSX, useCallback, useMemo } from 'react';
 
 import { Box, useTheme } from '@mui/material';
 

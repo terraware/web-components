@@ -30,8 +30,6 @@ export default {
   },
 };
 
-const Template: Story<PlacementWrapperProps> = (args) => <PlacementWrapper {...args} />;
-
 const WithElements: Story<PlacementWrapperProps> = (args) => (
   <PlacementWrapper {...args} placedObject={<Button icon={'iconComment'} onClick={() => null} />}>
     <Typography
