@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { type JSX } from 'react';
 
 import { Box, CircularProgress, useTheme } from '@mui/material';
 import hexRgb from 'hex-rgb';

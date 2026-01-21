@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { type JSX } from 'react';
 
 import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, SxProps, TooltipProps } from '@mui/material';
 

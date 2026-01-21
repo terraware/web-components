@@ -18,7 +18,7 @@ function build(source, destination) {
     },
   });
 
-  const PALETTE_TYPE_DEFINITION = `declare module '@mui/material/styles/createPalette' {
+  const PALETTE_TYPE_DEFINITION = `declare module '@mui/material/styles' {
   export interface Palette {
 <TERRAWARE_PALETTE_TYPE_DEFINITION>
   }
@@ -37,7 +37,7 @@ const TerrawareTheme: ThemeDictionary = <TERRAWARE_PALETTE>;
 export default TerrawareTheme;`;
 
   const paletteDefinition = (paletteTokenNames) => {
-    const terrawarePaletteDefinition =  paletteTokenNames.map(tokenName => `    ${tokenName}?: React.CSSProperties['color'];`)
+    const terrawarePaletteDefinition =  paletteTokenNames.map(tokenName => `    ${tokenName}?: string;`)
       .join('\n');
     return PALETTE_TYPE_DEFINITION.replaceAll('<TERRAWARE_PALETTE_TYPE_DEFINITION>', terrawarePaletteDefinition);
   };

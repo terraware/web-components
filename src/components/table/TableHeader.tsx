@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { type JSX } from 'react';
 
 import { SortableContext } from '@dnd-kit/sortable';
 import { Checkbox, TableCell, TableHead, TableRow, useTheme } from '@mui/material';

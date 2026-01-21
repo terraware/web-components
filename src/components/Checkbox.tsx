@@ -1,8 +1,8 @@
-import React, { SyntheticEvent } from 'react';
+import React, { type JSX, SyntheticEvent } from 'react';
 
 import { FormControlLabel, Checkbox as MUICheckbox, SxProps, Theme, useTheme } from '@mui/material';
 
-export const CheckboxStyle = (theme: Theme) => ({
+export const CheckboxStyle = (theme: Theme): SxProps<Theme> => ({
   padding: theme.spacing(0, 1, 0, 0),
   '& .MuiSvgIcon-root': {
     fill: theme.palette.TwClrBrdrSecondary,

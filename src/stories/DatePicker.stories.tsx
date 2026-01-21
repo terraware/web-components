@@ -11,7 +11,7 @@ export default {
   title: 'DatePicker',
   component: DatePicker,
   decorators: [
-    (Story: typeof React.Component): ReactElement => {
+    (Story: typeof React.Component): ReactElement<any> => {
       return <Story />;
     },
   ],

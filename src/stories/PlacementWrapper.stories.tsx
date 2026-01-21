@@ -30,10 +30,8 @@ export default {
   },
 };
 
-const Template: Story<PlacementWrapperProps> = (args) => <PlacementWrapper {...args} />;
-
 const WithElements: Story<PlacementWrapperProps> = (args) => (
-  <Template {...args} placedObject={<Button icon={'iconComment'} onClick={() => null} />}>
+  <PlacementWrapper {...args} placedObject={<Button icon={'iconComment'} onClick={() => null} />}>
     <Typography
       width={'100%'}
       height={'100px'}
@@ -47,7 +45,7 @@ const WithElements: Story<PlacementWrapperProps> = (args) => (
       Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
       magna aliqua.
     </Typography>
-  </Template>
+  </PlacementWrapper>
 );
 
 export const Default = WithElements.bind({});

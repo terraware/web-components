@@ -1,4 +1,4 @@
-import React, { SyntheticEvent } from 'react';
+import React, { type JSX, SyntheticEvent } from 'react';
 
 import { FormControlLabel, Radio } from '@mui/material';
 

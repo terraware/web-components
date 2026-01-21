@@ -25,7 +25,8 @@
   }
 
   &.tw-message--toast {
-    box-shadow: 0 terraware.$tw-sz-base-x-small terraware.$tw-sz-base-small 0 rgba(terraware.$tw-clr-base-gray-800, terraware.$tw-opcty-base-020);
+    box-shadow: 0 terraware.$tw-sz-base-x-small terraware.$tw-sz-base-small 0
+      rgba(terraware.$tw-clr-base-gray-800, terraware.$tw-opcty-base-020);
   }
 
   &--container {

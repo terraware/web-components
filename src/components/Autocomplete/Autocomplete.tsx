@@ -1,4 +1,4 @@
-import React, { ChangeEvent } from 'react';
+import React, { ChangeEvent, type JSX } from 'react';
 
 import { Box, Autocomplete as MUIAutocomplete, SxProps, TextField, TooltipProps } from '@mui/material';
 

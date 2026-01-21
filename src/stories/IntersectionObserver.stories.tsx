@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { type JSX, useState } from 'react';
 import { InView } from 'react-intersection-observer';
 import Carousel from 'react-multi-carousel';
 

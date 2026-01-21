@@ -1,4 +1,4 @@
-import React, { ChangeEvent, KeyboardEvent, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import React, { ChangeEvent, type JSX, KeyboardEvent, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import { Box, SxProps, TooltipProps } from '@mui/material';
 import classNames from 'classnames';

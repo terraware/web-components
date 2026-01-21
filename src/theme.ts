@@ -1,61 +1,60 @@
 import { createTheme } from '@mui/material/styles';
-import { deepmerge } from '@mui/utils';
 
 import TerrawareTheme from './style-dictionary-dist/TerrawareTheme';
 
-declare module '@mui/material/styles/createPalette' {
+declare module '@mui/material/styles' {
   interface Palette {
     neutral: Palette['grey'];
     state: {
-      5: React.CSSProperties['color'];
+      5: string;
     };
     accent: {
-      1: React.CSSProperties['color'];
-      2: React.CSSProperties['color'];
-      3: React.CSSProperties['color'];
-      4: React.CSSProperties['color'];
+      1: string;
+      2: string;
+      3: string;
+      4: string;
     };
     blue: {
-      600: React.CSSProperties['color'];
+      600: string;
     };
     red: {
-      50: React.CSSProperties['color'];
-      600: React.CSSProperties['color'];
+      50: string;
+      600: string;
     };
     green: {
-      50: React.CSSProperties['color'];
-      600: React.CSSProperties['color'];
+      50: string;
+      600: string;
     };
     gray: {
-      200: React.CSSProperties['color'];
-      800: React.CSSProperties['color'];
+      200: string;
+      800: string;
     };
   }
   interface PaletteOptions {
     neutral: PaletteOptions['grey'];
     state: {
-      5: React.CSSProperties['color'];
+      5: string;
     };
     accent: {
-      1: React.CSSProperties['color'];
-      2: React.CSSProperties['color'];
-      3: React.CSSProperties['color'];
-      4: React.CSSProperties['color'];
+      1: string;
+      2: string;
+      3: string;
+      4: string;
     };
     blue: {
-      600: React.CSSProperties['color'];
+      600: string;
     };
     red: {
-      50: React.CSSProperties['color'];
-      600: React.CSSProperties['color'];
+      50: string;
+      600: string;
     };
     green: {
-      50: React.CSSProperties['color'];
-      600: React.CSSProperties['color'];
+      50: string;
+      600: string;
     };
     gray: {
-      200: React.CSSProperties['color'];
-      800: React.CSSProperties['color'];
+      200: string;
+      800: string;
     };
   }
 }
@@ -133,7 +132,8 @@ const defaultTheme = {
       200: '#CAD2D3',
       800: '#3A4445',
     },
+    ...TerrawareTheme.palette,
   },
 };
 
-export default createTheme(deepmerge(defaultTheme, TerrawareTheme));
+export default createTheme(defaultTheme);

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { type JSX } from 'react';
 
 import { Slider as MuiSlider, useTheme } from '@mui/material';
 

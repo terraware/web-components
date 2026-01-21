@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { type JSX, useCallback, useEffect, useMemo, useState } from 'react';
 
 import { DndContext, KeyboardSensor, MouseSensor, TouchSensor, useSensor, useSensors } from '@dnd-kit/core';
 import { sortableKeyboardCoordinates } from '@dnd-kit/sortable';
@@ -410,8 +410,8 @@ export default function EnhancedTable<T extends TableRowType>({
               )}
               {sortedPageRows &&
                 sortedPageRows.map((row, index) => {
-                  const onClick = onSelect && !controlledOnSelect ? () => onSelect(row as T) : undefined;
-                  const isItemSelected = isSelected(row as T);
+                  const onClick = onSelect && !controlledOnSelect ? () => onSelect(row) : undefined;
+                  const isItemSelected = isSelected(row);
 
                   return (
                     <React.Fragment key={index}>
@@ -420,17 +420,17 @@ export default function EnhancedTable<T extends TableRowType>({
                         hover={true}
                         onClick={(e) => {
                           e.stopPropagation();
-                          if (onClick && !hasEditColumn && (isClickable ? isClickable(row as T) : true)) {
+                          if (onClick && !hasEditColumn && (isClickable ? isClickable(row) : true)) {
                             onClick();
                           }
-                          if (!onClick && !hasEditColumn && (isClickable ? isClickable(row as T) : true)) {
-                            handleClick(e, row as T);
+                          if (!onClick && !hasEditColumn && (isClickable ? isClickable(row) : true)) {
+                            handleClick(e, row);
                           }
                         }}
                         selected={isItemSelected}
                         aria-checked={isItemSelected}
                         sx={{
-                          ...(isInactive && isInactive(row as T) ? { backgroundColor: theme.palette.neutral[50] } : {}),
+                          ...(isInactive && isInactive(row) ? { backgroundColor: theme.palette.neutral[50] } : {}),
                           height: getTableRowHeight(density),
                           '&.MuiTableRow-root.Mui-selected': {
                             backgroundColor: theme.palette.TwClrBgSelectedTertiary,
@@ -458,7 +458,7 @@ export default function EnhancedTable<T extends TableRowType>({
                               color='primary'
                               checked={isItemSelected}
                               onClick={(e) =>
-                                !isClickable || !isClickable(row as T) ? handleClick(e, row as T) : null
+                                !isClickable || !isClickable(row) ? handleClick(e, row) : null
                               }
                             />
                           </TableCell>
@@ -468,12 +468,12 @@ export default function EnhancedTable<T extends TableRowType>({
                             <Renderer
                               index={index + 1}
                               key={c.key}
-                              row={row as T}
+                              row={row}
                               column={c}
                               value={row[c.key]}
                               onRowClick={
                                 onSelect && controlledOnSelect
-                                  ? (newValue?: string) => onSelect(row as T, c.key, newValue)
+                                  ? (newValue?: string) => onSelect(row, c.key, newValue)
                                   : onClick
                               }
                               reloadData={reloadData}

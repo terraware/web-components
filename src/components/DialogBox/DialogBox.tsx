@@ -1,4 +1,4 @@
-import React, { CSSProperties, ReactNode } from 'react';
+import React, { CSSProperties, type JSX, ReactNode } from 'react';
 
 import { IconButton } from '@mui/material';
 

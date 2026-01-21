@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { type JSX, useEffect, useMemo, useState } from 'react';
 
 import { Link, Tooltip, Typography, useTheme } from '@mui/material';
 
@@ -59,7 +59,7 @@ export interface Props {
   listSeparator: string;
   textStyle?: Record<string, any>;
   showAllStyle?: Record<string, any>;
-  placeHolder?: React.ReactElement;
+  placeHolder?: React.ReactElement<any>;
 }
 
 export default function TextTruncated(props: Props): JSX.Element | null {
