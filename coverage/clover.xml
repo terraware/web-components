@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1768968266693" clover="3.2.0">
-  <project timestamp="1768968266693" name="All files">
-    <metrics statements="2248" coveredstatements="216" conditionals="1860" coveredconditionals="105" methods="860" coveredmethods="31" elements="4968" coveredelements="352" complexity="0" loc="2248" ncloc="2248" packages="45" files="254" classes="254"/>
+<coverage generated="1768997978758" clover="3.2.0">
+  <project timestamp="1768997978758" name="All files">
+    <metrics statements="2247" coveredstatements="216" conditionals="1860" coveredconditionals="105" methods="859" coveredmethods="31" elements="4966" coveredelements="352" complexity="0" loc="2247" ncloc="2247" packages="45" files="254" classes="254"/>
     <package name="src">
       <metrics statements="1" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
       <file name="index.ts" path="/home/runner/work/web-components/web-components/src/index.ts">
@@ -9,7 +9,7 @@
       </file>
       <file name="theme.ts" path="/home/runner/work/web-components/web-components/src/theme.ts">
         <metrics statements="1" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
-        <line num="63" count="0" type="stmt"/>
+        <line num="62" count="0" type="stmt"/>
       </file>
     </package>
     <package name="src.components">
@@ -2181,7 +2181,7 @@
       </file>
     </package>
     <package name="src.stories">
-      <metrics statements="729" coveredstatements="0" conditionals="136" coveredconditionals="0" methods="301" coveredmethods="0"/>
+      <metrics statements="728" coveredstatements="0" conditionals="136" coveredconditionals="0" methods="300" coveredmethods="0"/>
       <file name="AntSwitch.stories.tsx" path="/home/runner/work/web-components/web-components/src/stories/AntSwitch.stories.tsx">
         <metrics statements="8" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="0"/>
         <line num="14" count="0" type="stmt"/>
@@ -2786,11 +2786,10 @@
         <line num="37" count="0" type="stmt"/>
       </file>
       <file name="PlacementWrapper.stories.tsx" path="/home/runner/work/web-components/web-components/src/stories/PlacementWrapper.stories.tsx">
-        <metrics statements="4" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="3" coveredmethods="0"/>
+        <metrics statements="3" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="0"/>
         <line num="33" count="0" type="stmt"/>
-        <line num="35" count="0" type="stmt"/>
-        <line num="36" count="0" type="stmt"/>
-        <line num="53" count="0" type="stmt"/>
+        <line num="34" count="0" type="stmt"/>
+        <line num="51" count="0" type="stmt"/>
       </file>
       <file name="PopoverMenu.stories.tsx" path="/home/runner/work/web-components/web-components/src/stories/PopoverMenu.stories.tsx">
         <metrics statements="10" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="5" coveredmethods="0"/>
