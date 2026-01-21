@@ -15,7 +15,7 @@ export interface Props {
   minHeight?: string | number;
 }
 
-export default function OverlayModal(props: Props): JSX.Element | null {
+const OverlayModal = (props: Props) => {
   const {
     children,
     belowComponent,
@@ -67,4 +67,6 @@ export default function OverlayModal(props: Props): JSX.Element | null {
       </div>
     </div>
   ) : null;
-}
+};
+
+export default OverlayModal;
