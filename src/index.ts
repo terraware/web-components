@@ -26,6 +26,7 @@ import NavItem from './components/Navbar/NavItem';
 import NavSection from './components/Navbar/NavSection';
 import Navbar from './components/Navbar/Navbar';
 import Note from './components/Note';
+import OverlayModal from './components/OverlayModal/OverlayModal';
 import PageForm from './components/PageForm';
 import PhotoChooser from './components/PhotoChooser';
 import Pill from './components/Pill';
@@ -100,6 +101,7 @@ export {
   NavSection,
   Navbar,
   Note,
+  OverlayModal,
   PageForm,
   Pill,
   PillList,
