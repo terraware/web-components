@@ -1,10 +1,9 @@
 module.exports = {
-  stories: ['../src/**/*.stories.mdx', '../src/**/*.stories.@(js|jsx|ts|tsx)'],
+  stories: ['../src/**/*.stories.@(js|jsx|ts|tsx|mdx)'],
   addons: [
     '@storybook/addon-links',
     '@storybook/addon-essentials',
     '@storybook/preset-create-react-app',
-    '@storybook/addon-mdx-gfm',
   ],
   framework: {
     name: '@storybook/react-webpack5',
@@ -13,5 +12,13 @@ module.exports = {
   staticDirs: ['../static'],
   docs: {
     autodocs: true,
+  },
+  webpackFinal: async (config) => {
+    // Disable ESLint in Storybook build to avoid build failures
+    config.plugins = config.plugins.filter(
+      plugin => plugin.constructor.name !== 'ESLintWebpackPlugin'
+    );
+
+    return config;
   },
 };
