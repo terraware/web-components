@@ -75,7 +75,7 @@ export const getDate = (date: DateType, timeZoneId?: string) => {
   }
 
   if (_.isDate(date) || typeof date === 'string' || typeof date === 'number') {
-    return DateTime.fromJSDate(new Date(date as string | number | Date), { zone: tz(timeZoneId) });
+    return DateTime.fromJSDate(new Date(date), { zone: tz(timeZoneId) });
   }
 
   return (date as DateTime).setZone(tz(timeZoneId));
