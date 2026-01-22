@@ -1,5 +1,12 @@
 {
   "include": ["src/**/*.tsx", "src/**/*.ts"],
+  "exclude": [
+    "src/**/*.stories.tsx",
+    "src/**/*.stories.ts",
+    "src/**/*.test.tsx",
+    "src/**/*.test.ts",
+    "src/stories"
+  ],
   "compilerOptions": {
     "target": "es2017",
     "lib": [
