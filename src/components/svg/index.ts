@@ -95,6 +95,7 @@ export { default as IconTreasureMap } from './IconTreasureMap';
 export { default as IconUnavailable } from './IconUnavailable';
 export { default as IconUndo } from './IconUndo';
 export { default as IconVariable } from './IconVariable';
+export { default as IconVideo } from './IconVideo';
 export { default as IconWifi } from './IconWifi';
 export { default as Info } from './Info';
 export { default as Key } from './Key';
