@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for src/components/TimelineSlider/TimelineMarker.tsx</title>
+    <title>Code coverage report for src/components/svg/IconVideo.tsx</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../../../prettify.css" />
     <link rel="stylesheet" href="../../../base.css" />
@@ -19,20 +19,20 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../../../index.html">All files</a> / <a href="index.html">src/components/TimelineSlider</a> TimelineMarker.tsx</h1>
+        <h1><a href="../../../index.html">All files</a> / <a href="index.html">src/components/svg</a> IconVideo.tsx</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">50% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/3</span>
+                <span class='fraction'>1/2</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/6</span>
+                <span class='fraction'>0/2</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">50% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/3</span>
+                <span class='fraction'>1/2</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line medium'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -90,27 +90,14 @@
 <a name='L25'></a><a href='#L25'>25</a>
 <a name='L26'></a><a href='#L26'>26</a>
 <a name='L27'></a><a href='#L27'>27</a>
-<a name='L28'></a><a href='#L28'>28</a>
-<a name='L29'></a><a href='#L29'>29</a>
-<a name='L30'></a><a href='#L30'>30</a>
-<a name='L31'></a><a href='#L31'>31</a>
-<a name='L32'></a><a href='#L32'>32</a>
-<a name='L33'></a><a href='#L33'>33</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L28'></a><a href='#L28'>28</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -127,38 +114,36 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import React, { type JSX } from 'react';
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import * as React from 'react';
+import { SVGProps } from 'react';
 &nbsp;
-import './styles.scss';
-&nbsp;
-type TimelineMarkerProps = {
-  color: string;
-  labelBottom?: string;
-  labelTop?: string;
-  onClick?: () =&gt; void;
-  size: 'small' | 'medium' | 'large';
-  value: number;
-};
-&nbsp;
-const TimelineMarker = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >({</span> color, labelBottom, labelTop, onClick, size, value }: TimelineMarkerProps): JSX.Element =&gt; {</span>
-  const clampedValue = <span class="cstat-no" title="statement not covered" >Math.min(1, Math.max(0, value));</span>
-&nbsp;
-<span class="cstat-no" title="statement not covered" >  return (</span>
-    &lt;div
-      className={`timeline-marker timeline-marker--${size} ${onClick ? 'timeline-marker--clickable' : ''}`}
-      style={{
-        left: `${clampedValue * 100}%`,
-        backgroundColor: color,
-      }}
-      onClick={onClick}
-    &gt;
-      {labelTop &amp;&amp; &lt;div className='timeline-marker__label timeline-marker__label--top'&gt;{labelTop}&lt;/div&gt;}
-      {labelBottom &amp;&amp; &lt;div className='timeline-marker__label timeline-marker__label--bottom'&gt;{labelBottom}&lt;/div&gt;}
-    &lt;/div&gt;
-  );
-};
-&nbsp;
-export default TimelineMarker;
+interface SVGRProps {
+  title?: string;
+  titleId?: string;
+}
+const SvgIconVideo = <span class="fstat-no" title="function not covered" >({</span> title, titleId, ...props }: SVGProps&lt;SVGSVGElement&gt; &amp; SVGRProps) =&gt; (
+<span class="cstat-no" title="statement not covered" >  &lt;svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' aria-labelledby={titleId} {...props}&gt;</span>
+    {title ? &lt;title id={titleId}&gt;{title}&lt;/title&gt; : null}
+    &lt;path
+      stroke='#fff'
+      strokeMiterlimit={10}
+      strokeWidth={0.797}
+      d='M9.167 12.5H3.5c-.92 0-1.667-.746-1.667-1.667V5.167c0-.92.747-1.667 1.667-1.667h5.667c.92 0 1.666.746 1.666 1.667v5.666c0 .92-.746 1.667-1.666 1.667Z'
+    /&gt;
+    &lt;path
+      stroke='#fff'
+      strokeLinecap='round'
+      strokeLinejoin='round'
+      strokeMiterlimit={10}
+      strokeWidth={0.797}
+      d='m10.833 9.5 3.334 2v-7l-3.334 2'
+    /&gt;
+  &lt;/svg&gt;
+);
+export default SvgIconVideo;
 &nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
