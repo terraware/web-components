@@ -99,6 +99,7 @@ import IconTreasureMap from '../../svg/IconTreasureMap';
 import IconUnavailable from '../../svg/IconUnavailable';
 import IconUndo from '../../svg/IconUndo';
 import IconVariable from '../../svg/IconVariable';
+import IconVideo from '../../svg/IconVideo';
 import Wifi from '../../svg/IconWifi';
 import Info from '../../svg/Info';
 import Key from '../../svg/Key';
@@ -213,6 +214,7 @@ export type IconName =
   | 'iconUnavailable'
   | 'iconUndo'
   | 'iconVariable'
+  | 'iconVideo'
   | 'info'
   | 'key'
   | 'leaf'
@@ -342,6 +344,7 @@ const icons: Record<IconName, SVGComponent> = {
   iconUnavailable: IconUnavailable,
   iconUndo: IconUndo,
   iconVariable: IconVariable,
+  iconVideo: IconVideo,
   info: Info,
   key: Key,
   leaf: Leaf,
