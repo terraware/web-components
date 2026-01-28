@@ -40,25 +40,26 @@
   flex: 1;
   max-width: 95vw;
   overflow: hidden;
+}
 
-  &-close {
-    position: absolute;
-    top: calc(-1 * (#{terraware.$tw-sz-base-medium} + 2 * #{terraware.$tw-spc-base-xx-small} + #{terraware.$tw-spc-base-small}));
-    right: 0;
-    z-index: 1;
+.overlay-modal-close {
+  position: absolute;
+  top: calc(-1 * (#{terraware.$tw-sz-base-medium} + 2 * #{terraware.$tw-spc-base-xx-small} + #{terraware.$tw-spc-base-small}));
+  right: 0;
+  z-index: 1;
 
-    .icon-close {
-      fill: terraware.$tw-clr-icn-inverse;
-      height: terraware.$tw-sz-base-medium;
-      width: terraware.$tw-sz-base-medium;
-    }
+  .icon-close {
+    fill: terraware.$tw-clr-icn-inverse;
+    height: terraware.$tw-sz-base-medium;
+    width: terraware.$tw-sz-base-medium;
   }
+}
 
-  &-content {
-    overflow: auto;
-    height: 100%;
-    width: 100%;
-  }
+.overlay-modal-content {
+  overflow: auto;
+  height: 100%;
+  width: 100%;
+  position: relative;
 }
 
 .overlay-modal-below {
