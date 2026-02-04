@@ -1,6 +1,6 @@
 import React, { type JSX, useCallback, useMemo } from 'react';
 
-import { Box, MenuItem, TextField, useTheme } from '@mui/material';
+import { Box, MenuItem, SxProps, TextField, useTheme } from '@mui/material';
 import {
   MaterialReactTable as MRTTable,
   MRT_Cell,
@@ -82,6 +82,7 @@ export type EditableTableProps<TData extends Record<string, any>> = {
   onRowClick?: (row: TData) => void;
   /** Custom toolbar actions */
   renderToolbarInternalActions?: (props: { table: MRT_TableInstance<TData> }) => JSX.Element;
+  sx?: SxProps;
   /** Additional MRT table options to override defaults */
   tableOptions?: Partial<MRT_TableOptions<TData>>;
 };
@@ -101,6 +102,7 @@ export default function EditableTable<TData extends Record<string, any>>({
   initialSorting,
   onRowClick,
   renderToolbarInternalActions,
+  sx,
   tableOptions = {},
 }: EditableTableProps<TData>): JSX.Element {
   const theme = useTheme();
@@ -239,7 +241,7 @@ export default function EditableTable<TData extends Record<string, any>>({
   });
 
   return (
-    <Box minHeight='160px' padding={2}>
+    <Box minHeight='160px' padding={2} sx={sx}>
       <MRTTable table={table} />
     </Box>
   );
