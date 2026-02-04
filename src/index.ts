@@ -12,6 +12,7 @@ import DatePicker from './components/DatePicker/DatePicker';
 import DialogBox from './components/DialogBox/DialogBox';
 import Divisor from './components/Divisor';
 import Dropdown, { DropdownV1 } from './components/Dropdown';
+import EditableTable from './components/EditableTable';
 import ErrorBox from './components/ErrorBox/ErrorBox';
 import FileChooser from './components/FileChooser';
 import FormBottomBar from './components/FormBottomBar';
@@ -59,6 +60,7 @@ export type { PillListItem } from './components/PillList';
 export type { IconName } from './components/Icon/icons/';
 export type { Size } from './components/Size';
 export type { DropdownItem } from './components/types';
+export type { EditableTableColumn, EditableTableProps } from './components/EditableTable';
 export type { EnhancedTableDetailsRow, RendererProps, TableColumnType, TableRowType, SortOrder };
 export type { FormButton } from './components/FormBottomBar';
 export type { PhotoChooserErrorType, PhotoChooserProps } from './components/PhotoChooser';
@@ -86,6 +88,7 @@ export {
   Divisor,
   Dropdown,
   DropdownV1,
+  EditableTable,
   ErrorBox,
   FileChooser,
   FormBottomBar,
