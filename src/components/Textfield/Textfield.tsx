@@ -112,6 +112,15 @@ export default function TextField(props: Props): JSX.Element {
     }
   };
 
+  const textfieldOnFocus = (event: React.FocusEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+    // for numeric fields with a value of zero, select all text on focus to make it easier for users to replace the value
+    if (type === 'number' && typeof value !== 'undefined' && String(value) === '0') {
+      event.currentTarget.select();
+    }
+
+    onFocus?.();
+  };
+
   const onKeyDownHandler = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (disabledCharacters && disabledCharacters.includes(e.key)) {
       e?.preventDefault();
@@ -183,7 +192,7 @@ export default function TextField(props: Props): JSX.Element {
               placeholder={placeholder}
               onChange={textfieldOnChange}
               onBlur={onBlur}
-              onFocus={onFocus}
+              onFocus={textfieldOnFocus}
               onKeyDown={onKeyDownHandler}
               onWheel={(e) => e.currentTarget.blur()}
               required={required}
@@ -201,7 +210,7 @@ export default function TextField(props: Props): JSX.Element {
             placeholder={placeholder}
             onChange={textfieldOnChange}
             onBlur={onBlur}
-            onFocus={onFocus}
+            onFocus={textfieldOnFocus}
             required={required}
             maxLength={maxLength}
             style={(styles || {}).textarea}
