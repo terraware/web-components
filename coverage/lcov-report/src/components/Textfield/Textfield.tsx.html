@@ -25,28 +25,28 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/33</span>
+                <span class='fraction'>0/37</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/66</span>
+                <span class='fraction'>0/71</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/6</span>
+                <span class='fraction'>0/7</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/33</span>
+                <span class='fraction'>0/37</span>
             </div>
         
             
@@ -297,7 +297,16 @@
 <a name='L232'></a><a href='#L232'>232</a>
 <a name='L233'></a><a href='#L233'>233</a>
 <a name='L234'></a><a href='#L234'>234</a>
-<a name='L235'></a><a href='#L235'>235</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L235'></a><a href='#L235'>235</a>
+<a name='L236'></a><a href='#L236'>236</a>
+<a name='L237'></a><a href='#L237'>237</a>
+<a name='L238'></a><a href='#L238'>238</a>
+<a name='L239'></a><a href='#L239'>239</a>
+<a name='L240'></a><a href='#L240'>240</a>
+<a name='L241'></a><a href='#L241'>241</a>
+<a name='L242'></a><a href='#L242'>242</a>
+<a name='L243'></a><a href='#L243'>243</a>
+<a name='L244'></a><a href='#L244'>244</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -409,6 +418,15 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -645,6 +663,15 @@ export default function <span class="fstat-no" title="function not covered" >Tex
     }
   };
 &nbsp;
+  const textfieldOnFocus = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >(e</span>vent: React.FocusEvent&lt;HTMLTextAreaElement | HTMLInputElement&gt;) =&gt; {</span>
+    // for numeric fields with a value of zero, select all text on focus to make it easier for users to replace the value
+<span class="cstat-no" title="statement not covered" >    if (type === 'number' &amp;&amp; typeof value !== 'undefined' &amp;&amp; String(value) === '0') {</span>
+<span class="cstat-no" title="statement not covered" >      event.currentTarget.select();</span>
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    onFocus?.();</span>
+  };
+&nbsp;
   const onKeyDownHandler = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >(e</span>: React.KeyboardEvent&lt;HTMLInputElement&gt;) =&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    if (disabledCharacters &amp;&amp; disabledCharacters.includes(e.key)) {</span>
 <span class="cstat-no" title="statement not covered" >      e?.preventDefault();</span>
@@ -716,7 +743,7 @@ export default function <span class="fstat-no" title="function not covered" >Tex
               placeholder={placeholder}
               onChange={textfieldOnChange}
               onBlur={onBlur}
-              onFocus={onFocus}
+              onFocus={textfieldOnFocus}
               onKeyDown={onKeyDownHandler}
               onWheel={<span class="fstat-no" title="function not covered" >(e</span>) =&gt; <span class="cstat-no" title="statement not covered" >e.currentTarget.blur()}</span>
               required={required}
@@ -734,7 +761,7 @@ export default function <span class="fstat-no" title="function not covered" >Tex
             placeholder={placeholder}
             onChange={textfieldOnChange}
             onBlur={onBlur}
-            onFocus={onFocus}
+            onFocus={textfieldOnFocus}
             required={required}
             maxLength={maxLength}
             style={(styles || {}).textarea}
@@ -772,7 +799,7 @@ export default function <span class="fstat-no" title="function not covered" >Tex
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-02-04T19:31:37.326Z
+                at 2026-02-10T00:42:48.007Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>
