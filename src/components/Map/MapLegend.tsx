@@ -101,30 +101,30 @@ const MapLegend = ({ legends }: MapLegendProps): JSX.Element => {
       const onClick = legend.disabled
         ? undefined
         : legend.type === 'layer'
-        ? (item as MapLayerLegendItem).disabled
-          ? undefined
-          : () => legend.setSelectedLayer((item as MapLayerLegendItem).id)
-        : legend.type === 'marker'
-        ? (item as MapMarkerLegendItem).disabled
-          ? undefined
-          : () => (item as MapMarkerLegendItem).setVisible?.(!(item as MapMarkerLegendItem).visible)
-        : undefined;
+          ? (item as MapLayerLegendItem).disabled
+            ? undefined
+            : () => legend.setSelectedLayer((item as MapLayerLegendItem).id)
+          : legend.type === 'marker'
+            ? (item as MapMarkerLegendItem).disabled
+              ? undefined
+              : () => (item as MapMarkerLegendItem).setVisible?.(!(item as MapMarkerLegendItem).visible)
+            : undefined;
 
       const disabled =
         legend.disabled ||
         (legend.type === 'layer'
           ? (item as MapLayerLegendItem).disabled
           : legend.type === 'marker'
-          ? (item as MapMarkerLegendItem).disabled
-          : false) ||
+            ? (item as MapMarkerLegendItem).disabled
+            : false) ||
         false;
 
       const selected =
         legend.type === 'layer'
           ? (item as MapLayerLegendItem).id === legend.selectedLayer
           : legend.type === 'marker'
-          ? (item as MapMarkerLegendItem).visible
-          : false;
+            ? (item as MapMarkerLegendItem).visible
+            : false;
 
       const logoComponent = () => {
         if (item.style.type === 'icon') {

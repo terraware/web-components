@@ -111,7 +111,7 @@ export default function Dropdown(props: DropdownProps): JSX.Element {
       selectedValue={selectedItem}
       isEqual={(A: DropdownItem, B: DropdownItem) => A.value === B.value}
       renderOption={renderOption}
-      toT={(str: string) => ({ label: str, value: str } as DropdownItem)}
+      toT={(str: string) => ({ label: str, value: str }) as DropdownItem}
       displayLabel={(option: DropdownItem) => option?.label || ''}
       onChange={(option: DropdownItem) => onChange(option.value)}
     />
