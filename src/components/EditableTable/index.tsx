@@ -1,4 +1,4 @@
-import React, { type JSX, useCallback, useMemo } from 'react';
+import React, { type JSX, useCallback, useEffect, useMemo, useState } from 'react';
 
 import { Box, MenuItem, SxProps, TextField, useTheme } from '@mui/material';
 import {
@@ -6,6 +6,7 @@ import {
   MRT_Cell,
   MRT_Column,
   MRT_ColumnDef,
+  MRT_ColumnFiltersState,
   MRT_Row,
   MRT_TableInstance,
   MRT_TableOptions,
@@ -71,6 +72,10 @@ export type EditableTableProps<TData extends Record<string, any>> = {
   enableGlobalFilter?: boolean;
   /** Whether to enable column filters (default: false) */
   enableColumnFilters?: boolean;
+  /** Whether to persist column filters in localStorage (default: false) */
+  stickyFilters?: boolean;
+  /** Unique storage key for persisting filters (required if stickyFilters is true) */
+  storageKey?: string;
   /** Whether to enable pagination (default: true) */
   enablePagination?: boolean;
   /** Whether to show the bottom toolbar (default: true) */
@@ -96,6 +101,8 @@ export default function EditableTable<TData extends Record<string, any>>({
   enableSorting = true,
   enableGlobalFilter = false,
   enableColumnFilters = false,
+  stickyFilters = false,
+  storageKey,
   enablePagination = true,
   enableBottomToolbar = true,
   enableTopToolbar = true,
@@ -106,6 +113,64 @@ export default function EditableTable<TData extends Record<string, any>>({
   tableOptions = {},
 }: EditableTableProps<TData>): JSX.Element {
   const theme = useTheme();
+
+  // Sticky column filters - load from localStorage (only if stickyFilters is enabled)
+  const [columnFilters, setColumnFilters] = useState<MRT_ColumnFiltersState>(() => {
+    if (!stickyFilters || !storageKey) {
+      return [];
+    }
+
+    try {
+      const saved = localStorage.getItem(`${storageKey}_columnFilters`);
+      if (saved) {
+        const parsed = JSON.parse(saved);
+
+        // Filter out any filters with null or empty values
+        return parsed.filter((filter: any) => {
+          if (!filter.value) {
+            return false;
+          }
+          // For range filters (arrays), check if at least one value exists
+          if (Array.isArray(filter.value)) {
+            return filter.value.some((v: any) => v !== null && v !== undefined && v !== '');
+          }
+
+          return filter.value !== null && filter.value !== undefined && filter.value !== '';
+        });
+      }
+
+      return [];
+    } catch (error) {
+      console.error('Error loading column filters:', error);
+
+      return [];
+    }
+  });
+
+  // Save column filters to localStorage when they change
+  useEffect(() => {
+    if (!stickyFilters || !storageKey) {
+      return;
+    }
+
+    try {
+      // Filter out any filters with null or empty values before saving
+      const validFilters = columnFilters.filter((filter) => {
+        if (!filter.value) {
+          return false;
+        }
+        // For range filters (arrays), check if at least one value exists
+        if (Array.isArray(filter.value)) {
+          return filter.value.some((v) => v !== null && v !== undefined && v !== '');
+        }
+
+        return filter.value !== null && filter.value !== undefined && filter.value !== '';
+      });
+      localStorage.setItem(`${storageKey}_columnFilters`, JSON.stringify(validFilters));
+    } catch (error) {
+      console.error('Error saving column filters:', error);
+    }
+  }, [columnFilters, stickyFilters, storageKey]);
 
   // Convert simplified column definitions to MRT column definitions
   const mrtColumns = useMemo<MRT_ColumnDef<TData>[]>(() => {
@@ -183,6 +248,7 @@ export default function EditableTable<TData extends Record<string, any>>({
             onBlur: (event: React.FocusEvent<HTMLInputElement>) => {
               if (onSave) {
                 const value = event.target.value;
+                // eslint-disable-next-line react/prop-types
                 void onSave(row.original, value, col.id);
               }
             },
@@ -228,6 +294,7 @@ export default function EditableTable<TData extends Record<string, any>>({
       elevation: 0,
     },
     muiTableBodyRowProps: ({ row }) => ({
+      // eslint-disable-next-line react/prop-types
       onClick: onRowClick ? () => onRowClick(row.original) : undefined,
       sx: {
         cursor: onRowClick ? 'pointer' : 'default',
@@ -238,6 +305,16 @@ export default function EditableTable<TData extends Record<string, any>>({
     }),
     // Merge any additional table options
     ...tableOptions,
+    // Add sticky filters state if enabled
+    ...(stickyFilters && storageKey
+      ? {
+          state: {
+            ...tableOptions?.state,
+            columnFilters,
+          },
+          onColumnFiltersChange: setColumnFilters,
+        }
+      : {}),
   });
 
   return (
