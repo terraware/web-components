@@ -457,9 +457,7 @@ export default function EnhancedTable<T extends TableRowType>({
                               sx={CheckboxStyle(theme)}
                               color='primary'
                               checked={isItemSelected}
-                              onClick={(e) =>
-                                !isClickable || !isClickable(row) ? handleClick(e, row) : null
-                              }
+                              onClick={(e) => (!isClickable || !isClickable(row) ? handleClick(e, row) : null)}
                             />
                           </TableCell>
                         )}

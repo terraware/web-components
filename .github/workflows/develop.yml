@@ -2,9 +2,11 @@ name: Deployment
 
 on:
   push:
-    branches: [main]
+    branches:
+      - main
   pull_request:
-    branches: [main]
+    branches:
+      - main
 
 concurrency:
   group: ${{ github.ref }}-${{ github.workflow }}
@@ -31,6 +33,10 @@ jobs:
         run: |
           yarn install --network-timeout 100000
           git checkout -- package.json
+
+      - name: Check that code is formatted
+        run: yarn prettier --check .
+
       - name: linter
         run: yarn lint
 

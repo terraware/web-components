@@ -8,9 +8,9 @@
 .overlay-modal-backdrop {
   background-color: rgba(terraware.$tw-clr-base-black, 0.8);
   background-image: linear-gradient(
-                  180deg,
-                  rgba(terraware.$tw-clr-base-green-050, terraware.$tw-opcty-base-000),
-                  rgba(terraware.$tw-clr-base-green-050, 0.3)
+    180deg,
+    rgba(terraware.$tw-clr-base-green-050, terraware.$tw-opcty-base-000),
+    rgba(terraware.$tw-clr-base-green-050, 0.3)
   );
   height: 100%;
   display: flex;
@@ -44,7 +44,9 @@
 
 .overlay-modal-close {
   position: absolute;
-  top: calc(-1 * (#{terraware.$tw-sz-base-medium} + 2 * #{terraware.$tw-spc-base-xx-small} + #{terraware.$tw-spc-base-small}));
+  top: calc(
+    -1 * (#{terraware.$tw-sz-base-medium} + 2 * #{terraware.$tw-spc-base-xx-small} + #{terraware.$tw-spc-base-small})
+  );
   right: 0;
   z-index: 1;
 
