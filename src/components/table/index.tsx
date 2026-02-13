@@ -161,11 +161,14 @@ export default function EnhancedTable<T extends TableRowType>({
 
   useEffect(() => {
     const columnsKeyNames = columns.map((col) => col.key);
-    const columnsIndexed = columns.reduce((acum, value) => {
-      acum[value.key] = value;
+    const columnsIndexed = columns.reduce(
+      (acum, value) => {
+        acum[value.key] = value;
 
-      return acum;
-    }, {} as Record<string, DatabaseColumn>);
+        return acum;
+      },
+      {} as Record<string, DatabaseColumn>
+    );
 
     setDisplayColumnKeyNames(columnsKeyNames);
     setDisplayColumnsIndexed(columnsIndexed);

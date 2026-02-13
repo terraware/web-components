@@ -2,7 +2,9 @@
 
 @font-face {
   font-family: 'Inter';
-  src: local('Inter'), url(../../fonts/Inter.ttf) format('truetype');
+  src:
+    local('Inter'),
+    url(../../fonts/Inter.ttf) format('truetype');
 }
 
 .button {
@@ -380,16 +382,17 @@
   &--small {
     padding: calc(
         (
-            #{terraware.$tw-sz-btn-small-height} - (2 * #{terraware.$tw-sz-btn-stroke}) - #{terraware.$tw-fnt-btn-label-small-line-height}
-          ) / 2
+            #{terraware.$tw-sz-btn-small-height} - (2 * #{terraware.$tw-sz-btn-stroke}) -
+              #{terraware.$tw-fnt-btn-label-small-line-height}
+          ) /
+          2
       )
       calc((#{terraware.$tw-sz-btn-small-height} - 2 * #{terraware.$tw-sz-btn-stroke}) / 2);
 
     &.button-with-icon {
       padding-left: calc(
-        (#{terraware.$tw-sz-btn-small-height} / 2) - #{terraware.$tw-sz-btn-stroke} - ((((
-                    #{terraware.$tw-sz-btn-small-height} - #{terraware.$tw-fnt-btn-label-small-line-height}
-                  ) / 2)))
+        (#{terraware.$tw-sz-btn-small-height} / 2) - #{terraware.$tw-sz-btn-stroke} -
+          ((((#{terraware.$tw-sz-btn-small-height} - #{terraware.$tw-fnt-btn-label-small-line-height}) / 2)))
       );
     }
     &.button-no-label.button-with-icon {
@@ -404,16 +407,17 @@
   &--medium {
     padding: calc(
         (
-            #{terraware.$tw-sz-btn-medium-height} - (2 * #{terraware.$tw-sz-btn-stroke}) - #{terraware.$tw-fnt-btn-label-medium-line-height}
-          ) / 2
+            #{terraware.$tw-sz-btn-medium-height} - (2 * #{terraware.$tw-sz-btn-stroke}) -
+              #{terraware.$tw-fnt-btn-label-medium-line-height}
+          ) /
+          2
       )
       calc((#{terraware.$tw-sz-btn-medium-height} - 2 * #{terraware.$tw-sz-btn-stroke}) / 2);
 
     &.button-with-icon {
       padding-left: calc(
-        (#{terraware.$tw-sz-btn-medium-height} / 2) - #{terraware.$tw-sz-btn-stroke} - ((((
-                    #{terraware.$tw-sz-btn-medium-height} - #{terraware.$tw-fnt-btn-label-medium-line-height}
-                  ) / 2)))
+        (#{terraware.$tw-sz-btn-medium-height} / 2) - #{terraware.$tw-sz-btn-stroke} -
+          ((((#{terraware.$tw-sz-btn-medium-height} - #{terraware.$tw-fnt-btn-label-medium-line-height}) / 2)))
       );
     }
     &.button-no-label.button-with-icon {
@@ -428,16 +432,17 @@
   &--large {
     padding: calc(
         (
-            #{terraware.$tw-sz-btn-large-height} - (2 * #{terraware.$tw-sz-btn-stroke}) - #{terraware.$tw-fnt-btn-label-large-line-height}
-          ) / 2
+            #{terraware.$tw-sz-btn-large-height} - (2 * #{terraware.$tw-sz-btn-stroke}) -
+              #{terraware.$tw-fnt-btn-label-large-line-height}
+          ) /
+          2
       )
       calc((#{terraware.$tw-sz-btn-large-height} - 2 * #{terraware.$tw-sz-btn-stroke}) / 2);
 
     &.button-with-icon {
       padding-left: calc(
-        (#{terraware.$tw-sz-btn-large-height} / 2) - #{terraware.$tw-sz-btn-stroke} - ((((
-                    #{terraware.$tw-sz-btn-large-height} - #{terraware.$tw-fnt-btn-label-large-line-height}
-                  ) / 2)))
+        (#{terraware.$tw-sz-btn-large-height} / 2) - #{terraware.$tw-sz-btn-stroke} -
+          ((((#{terraware.$tw-sz-btn-large-height} - #{terraware.$tw-fnt-btn-label-large-line-height}) / 2)))
       );
     }
     &.button-no-label.button-with-icon {
@@ -452,16 +457,17 @@
   &--xlarge {
     padding: calc(
         (
-            #{terraware.$tw-sz-btn-x-large-height} - (2 * #{terraware.$tw-sz-btn-stroke}) - #{terraware.$tw-fnt-btn-label-x-large-line-height}
-          ) / 2
+            #{terraware.$tw-sz-btn-x-large-height} - (2 * #{terraware.$tw-sz-btn-stroke}) -
+              #{terraware.$tw-fnt-btn-label-x-large-line-height}
+          ) /
+          2
       )
       calc((#{terraware.$tw-sz-btn-x-large-height} - 2 * #{terraware.$tw-sz-btn-stroke}) / 2);
 
     &.button-with-icon {
       padding-left: calc(
-        (#{terraware.$tw-sz-btn-x-large-height} / 2) - #{terraware.$tw-sz-btn-stroke} - ((((
-                    #{terraware.$tw-sz-btn-x-large-height} - #{terraware.$tw-fnt-btn-label-x-large-line-height}
-                  ) / 2)))
+        (#{terraware.$tw-sz-btn-x-large-height} / 2) - #{terraware.$tw-sz-btn-stroke} -
+          ((((#{terraware.$tw-sz-btn-x-large-height} - #{terraware.$tw-fnt-btn-label-x-large-line-height}) / 2)))
       );
     }
     &.button-no-label.button-with-icon {

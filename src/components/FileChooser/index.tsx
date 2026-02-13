@@ -125,8 +125,8 @@ export default function FileChooser(props: FileChooserProps): JSX.Element {
         {(editing || (files || []).length > 0) && !multipleSelection
           ? fileSelectedText
           : isMobile && uploadMobileDescription
-          ? uploadMobileDescription
-          : uploadDescription}
+            ? uploadMobileDescription
+            : uploadDescription}
       </Typography>
       <input
         type='file'
