@@ -155,7 +155,7 @@
     "@babel/plugin-transform-async-generator-functions": "^7.24.1",
     "@storybook/react/**/loader-utils": "^2.0.4",
     "babel-loader": "10.0.0",
-    "wrap-ansi": "7.0.0",
+    "wrap-ansi": "9.0.2",
     "string-width": "4.2.3"
   }
 }
