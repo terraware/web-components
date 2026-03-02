@@ -1,6 +1,7 @@
 import React, { type JSX, useCallback, useEffect, useMemo, useState } from 'react';
 
 import { Box, MenuItem, SxProps, TextField, useTheme } from '@mui/material';
+import { SortingFnOption } from '@tanstack/table-core';
 import {
   MaterialReactTable as MRTTable,
   MRT_Cell,
@@ -53,6 +54,8 @@ export type EditableTableColumn<TData extends Record<string, any>> = {
   filterSelectOptions?: string[];
   /** Custom filter function */
   filterFn?: 'fuzzy' | 'between' | 'arrIncludesSome' | ((row: TData, columnId: string, filterValue: any) => boolean);
+  /** Custom sorting function */
+  sortingFn?: SortingFnOption<TData>;
 };
 
 export type EditableTableProps<TData extends Record<string, any>> = {
@@ -189,6 +192,11 @@ export default function EditableTable<TData extends Record<string, any>>({
         filterFn: col.filterFn as any,
         enableColumnFilter: col.filterVariant !== undefined,
       };
+      if (col.sortingFn) {
+        // The underlying library must be checking for the existence of the `sortingFn` key, because even
+        // `sortingFn: undefined` doesn't work, so have to conditionally add it
+        mrtCol.sortingFn = col.sortingFn;
+      }
 
       // Handle edit configuration
       if (col.editConfig) {
