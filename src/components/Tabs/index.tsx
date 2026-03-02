@@ -1,4 +1,4 @@
-import React, { type JSX, useEffect, useState } from 'react';
+import React, { type JSX, useEffect, useMemo, useState } from 'react';
 
 import { TabContext, TabList, TabPanel } from '@mui/lab';
 import { Box, Tab as MuiTab, SxProps, Theme, Tooltip, useTheme } from '@mui/material';
@@ -95,6 +95,28 @@ const Tabs = ({
     }
   }, [activeTab]);
 
+  const renderedTabs = useMemo(
+    () =>
+      tabs.map((tab, index) => {
+        const muiTab = (
+          <MuiTab
+            disabled={tab.disabled}
+            icon={tab.icon ? <Icon name={tab.icon} /> : undefined}
+            label={tab.label}
+            sx={tab.disabled ? [...tabStyles, { pointerEvents: 'none' }] : tabStyles}
+            value={tab.id}
+          />
+        );
+
+        return (
+          <Tooltip title={tab.tooltip} key={index}>
+            {tab.disabled ? <span style={{ display: 'inline-flex' }}>{muiTab}</span> : muiTab}
+          </Tooltip>
+        );
+      }),
+    [tabs, tabStyles]
+  );
+
   return (
     <Box sx={{ width: '100%', ...sx }}>
       <TabContext value={selectedTab}>
@@ -110,25 +132,7 @@ const Tabs = ({
             }}
             variant={'scrollable'}
           >
-            {tabs.map((tab, index) => (
-              <Tooltip
-                title={tab.tooltip}
-                key={index}
-                sx={{
-                  display: 'inline-block',
-                  verticalAlign: 'text-top',
-                  marginLeft: theme.spacing(1),
-                }}
-              >
-                <MuiTab
-                  disabled={tab.disabled}
-                  icon={tab.icon ? <Icon name={tab.icon} /> : undefined}
-                  label={tab.label}
-                  sx={tabStyles}
-                  value={tab.id}
-                />
-              </Tooltip>
-            ))}
+            {renderedTabs}
           </TabList>
         </Box>
         {children}
