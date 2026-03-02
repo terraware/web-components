@@ -34,7 +34,7 @@ export const Default = Template.bind({});
 Default.args = {
   tabs: [
     { icon: 'iconParchment', id: 'tab1', label: 'Tab1', children: 'tab1 contents', disabled: false },
-    { id: 'tab2', label: 'Tab2', children: 'tab2 contents', disabled: false },
+    { id: 'tab2', label: 'Tab2', children: 'tab2 contents', disabled: false, tooltip: 'This is a tooltip' },
   ],
 };
 
@@ -43,7 +43,7 @@ export const OverrideActiveTab = OverrideTemplate.bind({});
 OverrideActiveTab.args = {
   tabs: [
     { id: 'tab1', label: 'Tab1', children: 'tab1 contents', disabled: false },
-    { id: 'tab2', label: 'Tab2', children: 'tab2 contents', disabled: false },
-    { id: 'tab3', label: 'Tab3', children: 'tab3 contents', disabled: false },
+    { id: 'tab2', label: 'Tab2', children: 'tab2 contents', disabled: true, tooltip: 'Tooltip on disabled tab' },
+    { id: 'tab3', label: 'Tab3', children: 'tab3 contents', disabled: false, tooltip: 'Another tooltip' },
   ],
 };
