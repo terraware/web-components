@@ -34,7 +34,7 @@ export const Default = Template.bind({});
 Default.args = {
   tabs: [
     { icon: 'iconParchment', id: 'tab1', label: 'Tab1', children: 'tab1 contents', disabled: false },
-    { id: 'tab2', label: 'Tab2', children: 'tab2 contents', disabled: false },
+    { id: 'tab2', label: 'Tab2', children: 'tab2 contents', disabled: false, tooltip: 'This is a tooltip' },
   ],
 };
 

@@ -1,7 +1,7 @@
 import React, { type JSX, useEffect, useState } from 'react';
 
 import { TabContext, TabList, TabPanel } from '@mui/lab';
-import { Box, Tab as MuiTab, SxProps, Theme, useTheme } from '@mui/material';
+import { Box, Tab as MuiTab, SxProps, Theme, Tooltip, useTheme } from '@mui/material';
 
 import { useDeviceInfo } from '../../utils';
 import Icon from '../Icon/Icon';
@@ -13,6 +13,7 @@ export type Tab = {
   icon?: IconName;
   id: string;
   label: string;
+  tooltip?: string;
 };
 
 export type TabsProps = {
@@ -110,14 +111,23 @@ const Tabs = ({
             variant={'scrollable'}
           >
             {tabs.map((tab, index) => (
-              <MuiTab
-                disabled={tab.disabled}
-                icon={tab.icon ? <Icon name={tab.icon} /> : undefined}
+              <Tooltip
+                title={tab.tooltip}
                 key={index}
-                label={tab.label}
-                sx={tabStyles}
-                value={tab.id}
-              />
+                sx={{
+                  display: 'inline-block',
+                  verticalAlign: 'text-top',
+                  marginLeft: theme.spacing(1),
+                }}
+              >
+                <MuiTab
+                  disabled={tab.disabled}
+                  icon={tab.icon ? <Icon name={tab.icon} /> : undefined}
+                  label={tab.label}
+                  sx={tabStyles}
+                  value={tab.id}
+                />
+              </Tooltip>
             ))}
           </TabList>
         </Box>
