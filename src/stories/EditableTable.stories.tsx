@@ -1,5 +1,6 @@
 import React, { useMemo, useState } from 'react';
 
+import { Link, Typography } from '@mui/material';
 import { Story } from '@storybook/react';
 
 import EditableTable, { EditableTableColumn } from '../components/EditableTable';
@@ -415,6 +416,52 @@ export const WithOccupationFilter: Story = () => {
       enableSorting={true}
       enablePagination={true}
     />
+  );
+};
+
+export const SortingFn: Story = () => {
+  type SimpleRow = { id: string; value: string };
+
+  const data: SimpleRow[] = [
+    { id: '1', value: '15372' },
+    { id: '2', value: '1467' },
+    { id: '3', value: '20' },
+    { id: '4', value: '113' },
+    { id: '5', value: '13770' },
+  ];
+
+  const columns = useMemo<EditableTableColumn<SimpleRow>[]>(
+    () => [
+      {
+        id: 'noSorting',
+        header: 'Without Sorting Function',
+        accessorKey: 'value',
+        size: 200,
+      },
+      {
+        id: 'withSorting',
+        header: 'With Alphanumeric Sorting Function',
+        accessorKey: 'value',
+        size: 200,
+        sortingFn: 'alphanumeric',
+      },
+    ],
+    []
+  );
+
+  return (
+    <>
+      <Typography>Clicking the headers to see the difference</Typography>
+      <EditableTable<SimpleRow> columns={columns} data={data} enableSorting={true} enablePagination={false} />
+      <Typography>
+        Note this only makes a difference if there are fewer than 10 rows. Otherwise it will determine the correct
+        function to use (see this{' '}
+        <Link target='_blank' href={'https://github.com/TanStack/table/issues/4908'}>
+          Github Issue
+        </Link>
+        )
+      </Typography>
+    </>
   );
 };
 
