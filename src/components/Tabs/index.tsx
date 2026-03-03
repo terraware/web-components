@@ -102,19 +102,25 @@ const Tabs = ({
           <MuiTab
             disabled={tab.disabled}
             icon={tab.icon ? <Icon name={tab.icon} /> : undefined}
-            label={tab.label}
-            sx={tab.disabled ? [...tabStyles, { pointerEvents: 'none' }] : tabStyles}
+            label={
+              <Tooltip title={tab.tooltip} key={index}>
+                <span>{tab.label}</span>
+              </Tooltip>
+            }
+            sx={tabStyles}
             value={tab.id}
           />
         );
 
-        return (
+        return tab.disabled ? (
           <Tooltip title={tab.tooltip} key={index}>
-            {tab.disabled ? <span style={{ display: 'inline-flex' }}>{muiTab}</span> : muiTab}
+            <span style={{ display: 'inline-flex' }}>{muiTab}</span>
           </Tooltip>
+        ) : (
+          muiTab
         );
       }),
-    [tabs, tabStyles]
+    [tabs]
   );
 
   return (
