@@ -100,21 +100,33 @@ const Tabs = ({
       tabs.map((tab, index) => {
         const muiTab = (
           <MuiTab
+            key={index}
             disabled={tab.disabled}
             icon={tab.icon ? <Icon name={tab.icon} /> : undefined}
-            label={tab.label}
-            sx={tab.disabled ? [...tabStyles, { pointerEvents: 'none' }] : tabStyles}
+            label={
+              <>
+                {tab.label}
+                {tab.tooltip && !tab.disabled && (
+                  <Tooltip title={tab.tooltip} arrow placement='top-start'>
+                    <span style={{ position: 'absolute', inset: 0 }} />
+                  </Tooltip>
+                )}
+              </>
+            }
+            sx={tabStyles}
             value={tab.id}
           />
         );
 
-        return (
-          <Tooltip title={tab.tooltip} key={index}>
-            {tab.disabled ? <span style={{ display: 'inline-flex' }}>{muiTab}</span> : muiTab}
+        return tab.disabled ? (
+          <Tooltip title={tab.tooltip} key={index} arrow placement='top-start'>
+            <span style={{ display: 'inline-flex' }}>{muiTab}</span>
           </Tooltip>
+        ) : (
+          muiTab
         );
       }),
-    [tabs, tabStyles]
+    [tabs]
   );
 
   return (
