@@ -309,6 +309,121 @@ export const WithFilters: Story = () => {
   );
 };
 
+export const WithClearAllFilters: Story = () => {
+  const rowCount = 50;
+  const [data, setData] = useState<RowData[]>(() => {
+    return Array(rowCount)
+      .fill(null)
+      .map((_, j) => {
+        if (j % 2 === 0) {
+          return {
+            id: `${j}`,
+            name: `Constanza_${j}`,
+            middlename: '',
+            lastname: 'Uanini',
+            occupation: 'Artist',
+            date: '2023-02-03',
+            pets: 5,
+            available: 'yes',
+          };
+        } else if (j % 3 === 0) {
+          return {
+            id: `${j}`,
+            name: `Carlos_${j}`,
+            middlename: '--',
+            lastname: 'Thurber',
+            occupation: 'Freelancer',
+            available: 'no',
+            date: '2023-04-12',
+            pets: 10,
+          };
+        } else {
+          return {
+            id: `${j}`,
+            name: `Jane${j}`,
+            middlename: 'John',
+            lastname: 'Doe',
+            occupation: 'Business analyst',
+            available: 'yes',
+            date: '2023-04-27',
+            pets: 12,
+            previousStudies: 'Natural Sciences, Social Sciences',
+          };
+        }
+      });
+  });
+
+  const columns = useMemo<EditableTableColumn<RowData>[]>(
+    () => [
+      {
+        id: 'name',
+        header: 'Name',
+        accessorKey: 'name',
+        size: 150,
+        filterVariant: 'text',
+        editConfig: {
+          onSave: (row, value, columnId) => {
+            setData((prev) => prev.map((item) => (item.id === row.id ? { ...item, [columnId]: value } : item)));
+          },
+        },
+      },
+      {
+        id: 'occupation',
+        header: 'Occupation',
+        accessorKey: 'occupation',
+        size: 180,
+        filterVariant: 'select',
+        filterSelectOptions: ['Artist', 'Freelancer', 'Business analyst', 'Developer', 'Designer'],
+        editConfig: {
+          editVariant: 'select',
+          selectOptions: [
+            { label: 'Artist', value: 'Artist' },
+            { label: 'Freelancer', value: 'Freelancer' },
+            { label: 'Business analyst', value: 'Business analyst' },
+            { label: 'Developer', value: 'Developer' },
+            { label: 'Designer', value: 'Designer' },
+          ],
+          onSave: (row, value, columnId) => {
+            setData((prev) => prev.map((item) => (item.id === row.id ? { ...item, [columnId]: value } : item)));
+          },
+        },
+      },
+      {
+        id: 'available',
+        header: 'Available',
+        accessorKey: 'available',
+        size: 120,
+        filterVariant: 'select',
+        filterSelectOptions: ['yes', 'no'],
+        editConfig: {
+          editVariant: 'select',
+          selectOptions: [
+            { label: 'Yes', value: 'yes' },
+            { label: 'No', value: 'no' },
+          ],
+          onSave: (row, value, columnId) => {
+            setData((prev) => prev.map((item) => (item.id === row.id ? { ...item, [columnId]: value } : item)));
+          },
+        },
+      },
+    ],
+    []
+  );
+
+  return (
+    <EditableTable<RowData>
+      clearAllFiltersLabel='Clear All Filters'
+      columns={columns}
+      data={data}
+      enableColumnFilters={true}
+      enableGlobalFilter={true}
+      enablePagination={true}
+      enableSorting={true}
+      onClearAllFilters={() => console.log('All filters cleared')}
+    />
+  );
+};
+
 export const WithOccupationFilter: Story = () => {
   const rowCount = 50;
   const [data, setData] = useState<RowData[]>(() => {
