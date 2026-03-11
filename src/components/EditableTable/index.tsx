@@ -14,6 +14,8 @@ import {
   useMaterialReactTable,
 } from 'material-react-table';
 
+import Button from '../Button/Button';
+
 export type ColumnEditConfig<TData extends Record<string, any>> = {
   /** Function to call when a cell value is saved (on blur) */
   onSave?: (row: TData, value: any, columnId: string) => void | Promise<void>;
@@ -59,10 +61,14 @@ export type EditableTableColumn<TData extends Record<string, any>> = {
 };
 
 export type EditableTableProps<TData extends Record<string, any>> = {
+  /** Label for the "Clear All Filters" button */
+  clearAllFiltersLabel?: string;
   /** Array of column definitions */
   columns: EditableTableColumn<TData>[];
   /** Array of data rows */
   data: TData[];
+  /** Whether to show a "Clear All Filters" button when filters are active (default: true) */
+  enableClearAllFilters?: boolean;
   /** Whether to enable editing (default: false) */
   enableEditing?: boolean;
   /** Whether to enable column ordering (default: false) */
@@ -86,6 +92,8 @@ export type EditableTableProps<TData extends Record<string, any>> = {
   /** Whether to show the top toolbar (default: true) */
   enableTopToolbar?: boolean;
   initialSorting?: { id: string; desc: boolean }[];
+  /** Callback fired after all filters are cleared */
+  onClearAllFilters?: () => void;
   /** Callback when a row is clicked */
   onRowClick?: (row: TData) => void;
   /** Custom toolbar actions */
@@ -96,8 +104,10 @@ export type EditableTableProps<TData extends Record<string, any>> = {
 };
 
 export default function EditableTable<TData extends Record<string, any>>({
+  clearAllFiltersLabel,
   columns,
   data,
+  enableClearAllFilters = true,
   enableEditing = false,
   enableColumnOrdering = false,
   enableColumnPinning = false,
@@ -110,12 +120,16 @@ export default function EditableTable<TData extends Record<string, any>>({
   enableBottomToolbar = true,
   enableTopToolbar = true,
   initialSorting,
+  onClearAllFilters,
   onRowClick,
   renderToolbarInternalActions,
   sx,
   tableOptions = {},
 }: EditableTableProps<TData>): JSX.Element {
   const theme = useTheme();
+
+  const filtersEnabled = enableColumnFilters || enableGlobalFilter;
+  const showClearAllFilters = enableClearAllFilters && clearAllFiltersLabel && filtersEnabled;
 
   // Sticky column filters - load from localStorage (only if stickyFilters is enabled)
   const [columnFilters, setColumnFilters] = useState<MRT_ColumnFiltersState>(() => {
@@ -274,6 +288,23 @@ export default function EditableTable<TData extends Record<string, any>>({
     ...(enableGlobalFilter ? { showGlobalFilter: true } : {}),
   };
 
+  const handleClearAllFilters = useCallback(
+    (tbl: MRT_TableInstance<TData>) => {
+      tbl.resetColumnFilters();
+      if (enableGlobalFilter) {
+        tbl.resetGlobalFilter();
+      }
+      if (stickyFilters && storageKey) {
+        setColumnFilters([]);
+        localStorage.removeItem(`${storageKey}_columnFilters`);
+      }
+      onClearAllFilters?.();
+    },
+    [enableGlobalFilter, stickyFilters, storageKey, onClearAllFilters]
+  );
+
+  const consumerRenderTopToolbarCustomActions = tableOptions?.renderTopToolbarCustomActions;
+
   const table = useMaterialReactTable({
     columns: mrtColumns,
     data,
@@ -313,6 +344,31 @@ export default function EditableTable<TData extends Record<string, any>>({
     }),
     // Merge any additional table options
     ...tableOptions,
+    // Compose renderTopToolbarCustomActions with clear-all button
+    ...(showClearAllFilters || consumerRenderTopToolbarCustomActions
+      ? {
+          renderTopToolbarCustomActions: ({ table: tbl }: { table: MRT_TableInstance<TData> }) => {
+            const state = tbl.getState();
+            const hasColumnFilters = state.columnFilters.length > 0;
+            const hasGlobalFilter = enableGlobalFilter && !!state.globalFilter;
+            const hasActiveFilters = hasColumnFilters || hasGlobalFilter;
+
+            return (
+              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                {consumerRenderTopToolbarCustomActions?.({ table: tbl })}
+                {showClearAllFilters && hasActiveFilters && (
+                  <Button
+                    onClick={() => handleClearAllFilters(tbl)}
+                    label={clearAllFiltersLabel}
+                    priority='ghost'
+                    size='small'
+                  />
+                )}
+              </Box>
+            );
+          },
+        }
+      : {}),
     // Add sticky filters state if enabled
     ...(stickyFilters && storageKey
       ? {
