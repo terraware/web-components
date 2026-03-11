@@ -90,7 +90,7 @@ yarn lint
 
 ## Generate Style Tokens
 
-Update the `style-dictionary/generate.sh` script to download the tokens json and then run
+Update the `style-dictionary/generate.sh` script to download the tokens json and then run:
 
 ```shell
 yarn build-dictionary
