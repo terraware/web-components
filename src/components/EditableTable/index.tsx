@@ -62,7 +62,7 @@ export type EditableTableColumn<TData extends Record<string, any>> = {
 
 export type EditableTableProps<TData extends Record<string, any>> = {
   /** Label for the "Clear All Filters" button */
-  clearAllFiltersLabel?: string;
+  clearAllFiltersLabel: string;
   /** Array of column definitions */
   columns: EditableTableColumn<TData>[];
   /** Array of data rows */
@@ -129,7 +129,7 @@ export default function EditableTable<TData extends Record<string, any>>({
   const theme = useTheme();
 
   const filtersEnabled = enableColumnFilters || enableGlobalFilter;
-  const showClearAllFilters = enableClearAllFilters && clearAllFiltersLabel && filtersEnabled;
+  const showClearAllFilters = enableClearAllFilters && filtersEnabled;
 
   // Sticky column filters - load from localStorage (only if stickyFilters is enabled)
   const [columnFilters, setColumnFilters] = useState<MRT_ColumnFiltersState>(() => {
