@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1773261952358" clover="3.2.0">
-  <project timestamp="1773261952358" name="All files">
-    <metrics statements="2364" coveredstatements="217" conditionals="1958" coveredconditionals="105" methods="900" coveredmethods="31" elements="5222" coveredelements="353" complexity="0" loc="2364" ncloc="2364" packages="46" files="257" classes="257"/>
+<coverage generated="1773344696295" clover="3.2.0">
+  <project timestamp="1773344696295" name="All files">
+    <metrics statements="2364" coveredstatements="217" conditionals="1957" coveredconditionals="105" methods="900" coveredmethods="31" elements="5221" coveredelements="353" complexity="0" loc="2364" ncloc="2364" packages="46" files="257" classes="257"/>
     <package name="src">
       <metrics statements="1" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
       <file name="index.ts" path="/home/runner/work/web-components/web-components/src/index.ts">
@@ -215,12 +215,12 @@
       </file>
     </package>
     <package name="src.components.EditableTable">
-      <metrics statements="82" coveredstatements="0" conditionals="115" coveredconditionals="0" methods="21" coveredmethods="0"/>
+      <metrics statements="82" coveredstatements="0" conditionals="114" coveredconditionals="0" methods="21" coveredmethods="0"/>
       <file name="index.tsx" path="/home/runner/work/web-components/web-components/src/components/EditableTable/index.tsx">
-        <metrics statements="82" coveredstatements="0" conditionals="115" coveredconditionals="0" methods="21" coveredmethods="0"/>
+        <metrics statements="82" coveredstatements="0" conditionals="114" coveredconditionals="0" methods="21" coveredmethods="0"/>
         <line num="129" count="0" type="stmt"/>
         <line num="131" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="132" count="0" type="cond" truecount="0" falsecount="3"/>
+        <line num="132" count="0" type="cond" truecount="0" falsecount="2"/>
         <line num="135" count="0" type="stmt"/>
         <line num="136" count="0" type="cond" truecount="0" falsecount="4"/>
         <line num="137" count="0" type="stmt"/>
