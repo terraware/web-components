@@ -271,6 +271,7 @@ export default function EnhancedTable<T extends TableRowType>({
         label: typeof c.name === 'string' ? c.name.toUpperCase() : c.name,
         sx: [{ paddingY: getTableCellPaddingY(density) }, ...(Array.isArray(c.sx) ? c.sx : [c.sx])],
         tooltipTitle: c.tooltipTitle,
+        alignment: c.alignment,
       }));
     },
     [density]
