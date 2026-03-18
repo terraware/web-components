@@ -305,6 +305,30 @@ export default function EditableTable<TData extends Record<string, any>>({
 
   const consumerRenderTopToolbarCustomActions = tableOptions?.renderTopToolbarCustomActions;
 
+  const composedRenderToolbarInternalActions = useCallback(
+    ({ table: tbl }: { table: MRT_TableInstance<TData> }) => {
+      const state = tbl.getState();
+      const hasColumnFilters = state.columnFilters.length > 0;
+      const hasGlobalFilter = enableGlobalFilter && !!state.globalFilter;
+      const hasActiveFilters = hasColumnFilters || hasGlobalFilter;
+
+      return (
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+          {showClearAllFilters && hasActiveFilters && (
+            <Button
+              onClick={() => handleClearAllFilters(tbl)}
+              label={clearAllFiltersLabel}
+              priority='ghost'
+              size='small'
+            />
+          )}
+          {renderToolbarInternalActions?.({ table: tbl })}
+        </Box>
+      );
+    },
+    [showClearAllFilters, renderToolbarInternalActions, enableGlobalFilter, handleClearAllFilters, clearAllFiltersLabel]
+  );
+
   const table = useMaterialReactTable({
     columns: mrtColumns,
     data,
@@ -321,7 +345,7 @@ export default function EditableTable<TData extends Record<string, any>>({
     enableTopToolbar,
     positionGlobalFilter: enableGlobalFilter ? 'left' : undefined,
     ...(Object.keys(initialStateConfig).length > 0 ? { initialState: initialStateConfig } : {}),
-    renderToolbarInternalActions,
+    renderToolbarInternalActions: composedRenderToolbarInternalActions,
     muiTableBodyProps: {
       sx: {
         '& tr:nth-of-type(odd) > td': {
@@ -344,29 +368,10 @@ export default function EditableTable<TData extends Record<string, any>>({
     }),
     // Merge any additional table options
     ...tableOptions,
-    // Compose renderTopToolbarCustomActions with clear-all button
-    ...(showClearAllFilters || consumerRenderTopToolbarCustomActions
+    // Compose renderTopToolbarCustomActions if consumer provided one
+    ...(consumerRenderTopToolbarCustomActions
       ? {
-          renderTopToolbarCustomActions: ({ table: tbl }: { table: MRT_TableInstance<TData> }) => {
-            const state = tbl.getState();
-            const hasColumnFilters = state.columnFilters.length > 0;
-            const hasGlobalFilter = enableGlobalFilter && !!state.globalFilter;
-            const hasActiveFilters = hasColumnFilters || hasGlobalFilter;
-
-            return (
-              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                {consumerRenderTopToolbarCustomActions?.({ table: tbl })}
-                {showClearAllFilters && hasActiveFilters && (
-                  <Button
-                    onClick={() => handleClearAllFilters(tbl)}
-                    label={clearAllFiltersLabel}
-                    priority='ghost'
-                    size='small'
-                  />
-                )}
-              </Box>
-            );
-          },
+          renderTopToolbarCustomActions: consumerRenderTopToolbarCustomActions,
         }
       : {}),
     // Add sticky filters state if enabled
