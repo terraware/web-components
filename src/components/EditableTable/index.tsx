@@ -294,13 +294,13 @@ export default function EditableTable<TData extends Record<string, any>>({
       if (enableGlobalFilter) {
         tbl.resetGlobalFilter();
       }
-      if (stickyFilters && storageKey) {
-        setColumnFilters([]);
+      setColumnFilters([]);
+      if (storageKey) {
         localStorage.removeItem(`${storageKey}_columnFilters`);
       }
       onClearAllFilters?.();
     },
-    [enableGlobalFilter, stickyFilters, storageKey, onClearAllFilters]
+    [enableGlobalFilter, storageKey, onClearAllFilters]
   );
 
   const consumerRenderTopToolbarCustomActions = tableOptions?.renderTopToolbarCustomActions;
