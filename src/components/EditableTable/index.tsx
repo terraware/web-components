@@ -11,6 +11,7 @@ import {
   MRT_Row,
   MRT_TableInstance,
   MRT_TableOptions,
+  MRT_ToolbarInternalButtons,
   useMaterialReactTable,
 } from 'material-react-table';
 
@@ -304,6 +305,8 @@ export default function EditableTable<TData extends Record<string, any>>({
   );
 
   const consumerRenderTopToolbarCustomActions = tableOptions?.renderTopToolbarCustomActions;
+  const consumerRenderToolbarInternalActions =
+    renderToolbarInternalActions ?? tableOptions?.renderToolbarInternalActions;
 
   const composedRenderToolbarInternalActions = useCallback(
     ({ table: tbl }: { table: MRT_TableInstance<TData> }) => {
@@ -322,11 +325,21 @@ export default function EditableTable<TData extends Record<string, any>>({
               size='small'
             />
           )}
-          {renderToolbarInternalActions?.({ table: tbl })}
+          {consumerRenderToolbarInternalActions ? (
+            consumerRenderToolbarInternalActions({ table: tbl })
+          ) : (
+            <MRT_ToolbarInternalButtons table={tbl} />
+          )}
         </Box>
       );
     },
-    [showClearAllFilters, renderToolbarInternalActions, enableGlobalFilter, handleClearAllFilters, clearAllFiltersLabel]
+    [
+      showClearAllFilters,
+      consumerRenderToolbarInternalActions,
+      enableGlobalFilter,
+      handleClearAllFilters,
+      clearAllFiltersLabel,
+    ]
   );
 
   const table = useMaterialReactTable({
