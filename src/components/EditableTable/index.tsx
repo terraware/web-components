@@ -17,6 +17,17 @@ import {
 
 import Button from '../Button/Button';
 
+const isActiveFilter = (filter: { id: string; value: unknown }): boolean => {
+  if (!filter.value) {
+    return false;
+  }
+  if (Array.isArray(filter.value)) {
+    return filter.value.some((v: unknown) => v !== null && v !== undefined && v !== '');
+  }
+
+  return filter.value !== null && filter.value !== undefined && filter.value !== '';
+};
+
 export type ColumnEditConfig<TData extends Record<string, any>> = {
   /** Function to call when a cell value is saved (on blur) */
   onSave?: (row: TData, value: any, columnId: string) => void | Promise<void>;
@@ -144,17 +155,7 @@ export default function EditableTable<TData extends Record<string, any>>({
         const parsed = JSON.parse(saved);
 
         // Filter out any filters with null or empty values
-        return parsed.filter((filter: any) => {
-          if (!filter.value) {
-            return false;
-          }
-          // For range filters (arrays), check if at least one value exists
-          if (Array.isArray(filter.value)) {
-            return filter.value.some((v: any) => v !== null && v !== undefined && v !== '');
-          }
-
-          return filter.value !== null && filter.value !== undefined && filter.value !== '';
-        });
+        return parsed.filter(isActiveFilter);
       }
 
       return [];
@@ -173,17 +174,7 @@ export default function EditableTable<TData extends Record<string, any>>({
 
     try {
       // Filter out any filters with null or empty values before saving
-      const validFilters = columnFilters.filter((filter) => {
-        if (!filter.value) {
-          return false;
-        }
-        // For range filters (arrays), check if at least one value exists
-        if (Array.isArray(filter.value)) {
-          return filter.value.some((v) => v !== null && v !== undefined && v !== '');
-        }
-
-        return filter.value !== null && filter.value !== undefined && filter.value !== '';
-      });
+      const validFilters = columnFilters.filter(isActiveFilter);
       localStorage.setItem(`${storageKey}_columnFilters`, JSON.stringify(validFilters));
     } catch (error) {
       console.error('Error saving column filters:', error);
@@ -311,7 +302,7 @@ export default function EditableTable<TData extends Record<string, any>>({
   const composedRenderToolbarInternalActions = useCallback(
     ({ table: tbl }: { table: MRT_TableInstance<TData> }) => {
       const state = tbl.getState();
-      const hasColumnFilters = state.columnFilters.length > 0;
+      const hasColumnFilters = state.columnFilters.some(isActiveFilter);
       const hasGlobalFilter = enableGlobalFilter && !!state.globalFilter;
       const hasActiveFilters = hasColumnFilters || hasGlobalFilter;
 
