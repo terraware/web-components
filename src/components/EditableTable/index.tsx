@@ -11,10 +11,22 @@ import {
   MRT_Row,
   MRT_TableInstance,
   MRT_TableOptions,
+  MRT_ToolbarInternalButtons,
   useMaterialReactTable,
 } from 'material-react-table';
 
 import Button from '../Button/Button';
+
+const isActiveFilter = (filter: { id: string; value: unknown }): boolean => {
+  if (!filter.value) {
+    return false;
+  }
+  if (Array.isArray(filter.value)) {
+    return filter.value.some((v: unknown) => v !== null && v !== undefined && v !== '');
+  }
+
+  return filter.value !== null && filter.value !== undefined && filter.value !== '';
+};
 
 export type ColumnEditConfig<TData extends Record<string, any>> = {
   /** Function to call when a cell value is saved (on blur) */
@@ -143,17 +155,7 @@ export default function EditableTable<TData extends Record<string, any>>({
         const parsed = JSON.parse(saved);
 
         // Filter out any filters with null or empty values
-        return parsed.filter((filter: any) => {
-          if (!filter.value) {
-            return false;
-          }
-          // For range filters (arrays), check if at least one value exists
-          if (Array.isArray(filter.value)) {
-            return filter.value.some((v: any) => v !== null && v !== undefined && v !== '');
-          }
-
-          return filter.value !== null && filter.value !== undefined && filter.value !== '';
-        });
+        return parsed.filter(isActiveFilter);
       }
 
       return [];
@@ -172,17 +174,7 @@ export default function EditableTable<TData extends Record<string, any>>({
 
     try {
       // Filter out any filters with null or empty values before saving
-      const validFilters = columnFilters.filter((filter) => {
-        if (!filter.value) {
-          return false;
-        }
-        // For range filters (arrays), check if at least one value exists
-        if (Array.isArray(filter.value)) {
-          return filter.value.some((v) => v !== null && v !== undefined && v !== '');
-        }
-
-        return filter.value !== null && filter.value !== undefined && filter.value !== '';
-      });
+      const validFilters = columnFilters.filter(isActiveFilter);
       localStorage.setItem(`${storageKey}_columnFilters`, JSON.stringify(validFilters));
     } catch (error) {
       console.error('Error saving column filters:', error);
@@ -294,16 +286,52 @@ export default function EditableTable<TData extends Record<string, any>>({
       if (enableGlobalFilter) {
         tbl.resetGlobalFilter();
       }
-      if (stickyFilters && storageKey) {
-        setColumnFilters([]);
+      setColumnFilters([]);
+      if (storageKey) {
         localStorage.removeItem(`${storageKey}_columnFilters`);
       }
       onClearAllFilters?.();
     },
-    [enableGlobalFilter, stickyFilters, storageKey, onClearAllFilters]
+    [enableGlobalFilter, storageKey, onClearAllFilters]
   );
 
   const consumerRenderTopToolbarCustomActions = tableOptions?.renderTopToolbarCustomActions;
+  const consumerRenderToolbarInternalActions =
+    renderToolbarInternalActions ?? tableOptions?.renderToolbarInternalActions;
+
+  const composedRenderToolbarInternalActions = useCallback(
+    ({ table: tbl }: { table: MRT_TableInstance<TData> }) => {
+      const state = tbl.getState();
+      const hasColumnFilters = state.columnFilters.some(isActiveFilter);
+      const hasGlobalFilter = enableGlobalFilter && !!state.globalFilter;
+      const hasActiveFilters = hasColumnFilters || hasGlobalFilter;
+
+      return (
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+          {showClearAllFilters && hasActiveFilters && (
+            <Button
+              onClick={() => handleClearAllFilters(tbl)}
+              label={clearAllFiltersLabel}
+              priority='ghost'
+              size='small'
+            />
+          )}
+          {consumerRenderToolbarInternalActions ? (
+            consumerRenderToolbarInternalActions({ table: tbl })
+          ) : (
+            <MRT_ToolbarInternalButtons table={tbl} />
+          )}
+        </Box>
+      );
+    },
+    [
+      showClearAllFilters,
+      consumerRenderToolbarInternalActions,
+      enableGlobalFilter,
+      handleClearAllFilters,
+      clearAllFiltersLabel,
+    ]
+  );
 
   const table = useMaterialReactTable({
     columns: mrtColumns,
@@ -321,7 +349,6 @@ export default function EditableTable<TData extends Record<string, any>>({
     enableTopToolbar,
     positionGlobalFilter: enableGlobalFilter ? 'left' : undefined,
     ...(Object.keys(initialStateConfig).length > 0 ? { initialState: initialStateConfig } : {}),
-    renderToolbarInternalActions,
     muiTableBodyProps: {
       sx: {
         '& tr:nth-of-type(odd) > td': {
@@ -344,29 +371,11 @@ export default function EditableTable<TData extends Record<string, any>>({
     }),
     // Merge any additional table options
     ...tableOptions,
-    // Compose renderTopToolbarCustomActions with clear-all button
-    ...(showClearAllFilters || consumerRenderTopToolbarCustomActions
+    // These must come after ...tableOptions to avoid being overridden
+    renderToolbarInternalActions: composedRenderToolbarInternalActions,
+    ...(consumerRenderTopToolbarCustomActions
       ? {
-          renderTopToolbarCustomActions: ({ table: tbl }: { table: MRT_TableInstance<TData> }) => {
-            const state = tbl.getState();
-            const hasColumnFilters = state.columnFilters.length > 0;
-            const hasGlobalFilter = enableGlobalFilter && !!state.globalFilter;
-            const hasActiveFilters = hasColumnFilters || hasGlobalFilter;
-
-            return (
-              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                {consumerRenderTopToolbarCustomActions?.({ table: tbl })}
-                {showClearAllFilters && hasActiveFilters && (
-                  <Button
-                    onClick={() => handleClearAllFilters(tbl)}
-                    label={clearAllFiltersLabel}
-                    priority='ghost'
-                    size='small'
-                  />
-                )}
-              </Box>
-            );
-          },
+          renderTopToolbarCustomActions: consumerRenderTopToolbarCustomActions,
         }
       : {}),
     // Add sticky filters state if enabled
