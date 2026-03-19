@@ -345,7 +345,6 @@ export default function EditableTable<TData extends Record<string, any>>({
     enableTopToolbar,
     positionGlobalFilter: enableGlobalFilter ? 'left' : undefined,
     ...(Object.keys(initialStateConfig).length > 0 ? { initialState: initialStateConfig } : {}),
-    renderToolbarInternalActions: composedRenderToolbarInternalActions,
     muiTableBodyProps: {
       sx: {
         '& tr:nth-of-type(odd) > td': {
@@ -368,7 +367,8 @@ export default function EditableTable<TData extends Record<string, any>>({
     }),
     // Merge any additional table options
     ...tableOptions,
-    // Compose renderTopToolbarCustomActions if consumer provided one
+    // These must come after ...tableOptions to avoid being overridden
+    renderToolbarInternalActions: composedRenderToolbarInternalActions,
     ...(consumerRenderTopToolbarCustomActions
       ? {
           renderTopToolbarCustomActions: consumerRenderTopToolbarCustomActions,
