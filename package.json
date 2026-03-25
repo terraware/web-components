@@ -131,7 +131,7 @@
     "react-map-gl": "^8.0.4",
     "react-scripts": "^5.0.1",
     "storybook": "^8.4.7",
-    "style-dictionary": "^3.9.1",
+    "style-dictionary": "^5.0.0",
     "tslint-config-prettier": "^1.18.0",
     "tslint-eslint-rules": "^5.4.0",
     "tslint-react": "^5.0.0",
