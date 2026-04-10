@@ -26,13 +26,7 @@ module.exports = {
     project: 'tsconfig.eslint.json',
     sourceType: 'module',
   },
-  plugins: [
-    'eslint-plugin-react',
-    'eslint-plugin-jsdoc',
-    'eslint-plugin-prefer-arrow',
-    '@typescript-eslint',
-    '@typescript-eslint/tslint',
-  ],
+  plugins: ['eslint-plugin-react', 'eslint-plugin-jsdoc', 'eslint-plugin-prefer-arrow', '@typescript-eslint'],
   root: true,
   rules: {
     '@typescript-eslint/no-unsafe-member-access': 'off',
@@ -283,13 +277,5 @@ module.exports = {
     ],
     'use-isnan': 'error',
     'valid-typeof': 'off',
-    '@typescript-eslint/tslint/config': [
-      'error',
-      {
-        rules: {
-          whitespace: true,
-        },
-      },
-    ],
   },
 };
