@@ -80,6 +80,15 @@ steps:
       - *load-secrets
     command: .buildkite/scripts/version-bump.sh
 
+  - label: ':slack: Release notes & Jira transitions'
+    key: 'release-notes'
+    depends_on: 'publish-npm'
+    if: "build.tag =~ /^v[0-9]+\\.[0-9]+/"
+    plugins:
+      - *shallow-clone
+      - *load-secrets
+    command: .buildkite/scripts/release-notes.sh
+
   - label: ':books: Deploy docs'
     key: 'deploy-docs'
     depends_on: 'publish-npm'
