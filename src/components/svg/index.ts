@@ -38,6 +38,7 @@ export { default as Home } from './Home';
 export { default as IconAdd } from './IconAdd';
 export { default as IconArrowRight } from './IconArrowRight';
 export { default as IconBusinessNetwork } from './IconBusinessNetwork';
+export { default as IconCalendar } from './IconCalendar';
 export { default as IconCancel } from './IconCancel';
 export { default as IconChargingBattery } from './IconChargingBattery';
 export { default as IconChecklist } from './IconChecklist';
