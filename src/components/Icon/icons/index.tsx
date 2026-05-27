@@ -41,6 +41,7 @@ import Home from '../../svg/Home';
 import IconAdd from '../../svg/IconAdd';
 import IconArrowRight from '../../svg/IconArrowRight';
 import IconBusinessNetwork from '../../svg/IconBusinessNetwork';
+import IconCalendar from '../../svg/IconCalendar';
 import Cancel from '../../svg/IconCancel';
 import ChargingBattery from '../../svg/IconChargingBattery';
 import Checklist from '../../svg/IconChecklist';
@@ -170,6 +171,7 @@ export type IconName =
   | 'iconAdd'
   | 'iconArrowRight'
   | 'iconBusinessNetwork'
+  | 'iconCalendar'
   | 'iconCoinInHand'
   | 'iconColumns'
   | 'iconComment'
@@ -300,6 +302,7 @@ const icons: Record<IconName, SVGComponent> = {
   iconAdd: IconAdd,
   iconArrowRight: IconArrowRight,
   iconBusinessNetwork: IconBusinessNetwork,
+  iconCalendar: IconCalendar,
   iconCoinInHand: IconCoinInHand,
   iconColumns: IconColumns,
   iconComment: IconComment,
