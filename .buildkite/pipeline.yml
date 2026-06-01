@@ -1,0 +1,91 @@
+# See .buildkite/README.md for details about this pipeline.
+
+common:
+  - &cache-common-args
+    backend: s3
+    compression: tgz
+    restore: pipeline
+
+  - &cache-node-modules-args
+    <<: *cache-common-args
+    path: 'node_modules'
+    manifest: 'yarn.lock'
+
+  - &cache-node-modules
+    cache#v1.10.0:
+      <<: *cache-node-modules-args
+
+  - &load-secrets
+    seek-oss/aws-sm#v2.4.1:
+      json-to-env:
+        - secret-id: 'buildkite_build_secrets'
+        - secret-id: 'web_components_build_secrets'
+
+  - &restore-dist
+    artifacts#v1.9.4:
+      download: 'dist'
+      compressed: 'dist.tgz'
+
+  - &shallow-clone
+    peakon/git-shallow-clone#v0.0.1:
+      depth: 1
+
+agents:
+  queue: 'x86-8core'
+
+steps:
+  - label: ':yarn: Build and test'
+    key: 'build-and-test'
+    plugins:
+      - *shallow-clone
+      - *load-secrets
+      - cache#v1.10.0:
+          <<: *cache-node-modules-args
+          save:
+            - file
+            - branch
+      - artifacts#v1.9.4:
+          upload: 'dist'
+          compressed: 'dist.tgz'
+    command: .buildkite/scripts/build-and-test.sh
+
+  - label: ':npm: Publish npm package'
+    key: 'publish-npm'
+    depends_on: 'build-and-test'
+    if: "build.branch == 'main' || build.tag =~ /^v[0-9]+\\.[0-9]+/"
+    plugins:
+      - *shallow-clone
+      - *load-secrets
+      - *cache-node-modules
+      - *restore-dist
+    command: .buildkite/scripts/publish-npm.sh
+
+  - label: ':buildkite: Promote branch-level caches to pipeline-level'
+    key: 'promote-caches'
+    depends_on: 'publish-npm'
+    branches: 'main'
+    plugins:
+      - *shallow-clone
+      - cache#v1.10.0:
+          <<: *cache-node-modules-args
+          save: 'pipeline'
+    command: 'echo --- :buildkite: Promoted caches to pipeline level'
+
+  - label: ':label: Auto version bump (merged PR)'
+    key: 'version-bump'
+    depends_on: 'publish-npm'
+    branches: 'main'
+    plugins:
+      - *shallow-clone
+      - *load-secrets
+    command: .buildkite/scripts/version-bump.sh
+
+  - label: ':books: Deploy docs'
+    key: 'deploy-docs'
+    depends_on: 'publish-npm'
+    branches: 'main'
+    plugins:
+      - *shallow-clone
+      - *load-secrets
+      - *cache-node-modules
+    command: .buildkite/scripts/deploy-docs.sh
