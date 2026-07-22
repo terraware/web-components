@@ -93,6 +93,7 @@ export default function SelectT<T>(props: SelectTProps<T>): JSX.Element {
   const [fixedMenuPositioned, setFixedMenuPositioned] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState<number>(-1);
   const inputRef = useRef<HTMLDivElement>(null);
+  const textFieldRef = useRef<HTMLInputElement>(null);
   const dropdownRef = useRef<HTMLUListElement>(null);
 
   const hasOptions = useMemo<boolean>(() => options !== undefined && options.length > 0, [options]);
@@ -177,6 +178,9 @@ export default function SelectT<T>(props: SelectTProps<T>): JSX.Element {
   }, [handleClick, handleResize, handleScroll]);
 
   const toggleOptions = () => {
+    if (!openedOptions) {
+      textFieldRef.current?.focus();
+    }
     setOpenedOptions((isOpen) => !isOpen);
   };
 
@@ -253,6 +257,7 @@ export default function SelectT<T>(props: SelectTProps<T>): JSX.Element {
           style={(selectStyles || {}).inputContainer}
         >
           <input
+            ref={textFieldRef}
             value={displayLabel(selectedValue)}
             readOnly={!editable || readonly}
             placeholder={placeholder}
