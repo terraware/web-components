@@ -25,14 +25,14 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/91</span>
+                <span class='fraction'>0/94</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/93</span>
+                <span class='fraction'>0/95</span>
             </div>
         
             
@@ -46,7 +46,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/89</span>
+                <span class='fraction'>0/92</span>
             </div>
         
             
@@ -384,7 +384,12 @@
 <a name='L319'></a><a href='#L319'>319</a>
 <a name='L320'></a><a href='#L320'>320</a>
 <a name='L321'></a><a href='#L321'>321</a>
-<a name='L322'></a><a href='#L322'>322</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L322'></a><a href='#L322'>322</a>
+<a name='L323'></a><a href='#L323'>323</a>
+<a name='L324'></a><a href='#L324'>324</a>
+<a name='L325'></a><a href='#L325'>325</a>
+<a name='L326'></a><a href='#L326'>326</a>
+<a name='L327'></a><a href='#L327'>327</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -480,6 +485,7 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -562,10 +568,13 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -624,6 +633,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -800,6 +810,7 @@ export default function <span class="fstat-no" title="function not covered" >Sel
   const [fixedMenuPositioned, setFixedMenuPositioned] = <span class="cstat-no" title="statement not covered" >useState(false);</span>
   const [selectedIndex, setSelectedIndex] = <span class="cstat-no" title="statement not covered" >useState&lt;number&gt;(-1);</span>
   const inputRef = <span class="cstat-no" title="statement not covered" >useRef&lt;HTMLDivElement&gt;(null);</span>
+  const textFieldRef = <span class="cstat-no" title="statement not covered" >useRef&lt;HTMLInputElement&gt;(null);</span>
   const dropdownRef = <span class="cstat-no" title="statement not covered" >useRef&lt;HTMLUListElement&gt;(null);</span>
 &nbsp;
   const hasOptions = <span class="cstat-no" title="statement not covered" >useMemo&lt;boolean&gt;(<span class="fstat-no" title="function not covered" >()</span> =&gt; <span class="cstat-no" title="statement not covered" >options !== undefined &amp;&amp; options.length &gt; 0,</span> [options]);</span>
@@ -884,6 +895,9 @@ export default function <span class="fstat-no" title="function not covered" >Sel
   }, [handleClick, handleResize, handleScroll]);
 &nbsp;
   const toggleOptions = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >()</span> =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >    if (!openedOptions) {</span>
+<span class="cstat-no" title="statement not covered" >      textFieldRef.current?.focus();</span>
+    }
 <span class="cstat-no" title="statement not covered" >    setOpenedOptions(<span class="fstat-no" title="function not covered" >(i</span>sOpen) =&gt; <span class="cstat-no" title="statement not covered" >!isOpen)</span>;</span>
   };
 &nbsp;
@@ -960,6 +974,7 @@ export default function <span class="fstat-no" title="function not covered" >Sel
           style={(selectStyles || {}).inputContainer}
         &gt;
           &lt;input
+            ref={textFieldRef}
             value={displayLabel(selectedValue)}
             readOnly={!editable || readonly}
             placeholder={placeholder}
@@ -1033,7 +1048,7 @@ export default function <span class="fstat-no" title="function not covered" >Sel
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-07-22T13:31:10.459Z
+                at 2026-07-22T14:13:55.105Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>
