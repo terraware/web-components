@@ -91,6 +91,7 @@ export { default as IconSlice } from './IconSlice';
 export { default as IconSubmit } from './IconSubmit';
 export { default as IconSubtract } from './IconSubtract';
 export { default as IconSynced } from './IconSynced';
+export { default as IconText } from './IconText';
 export { default as IconTrashCan } from './IconTrashCan';
 export { default as IconTreasureMap } from './IconTreasureMap';
 export { default as IconUnavailable } from './IconUnavailable';

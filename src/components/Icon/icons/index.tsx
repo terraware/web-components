@@ -95,6 +95,7 @@ import IconSlice from '../../svg/IconSlice';
 import IconSubmit from '../../svg/IconSubmit';
 import IconSubtract from '../../svg/IconSubtract';
 import IconSynced from '../../svg/IconSynced';
+import IconText from '../../svg/IconText';
 import IconTrashCan from '../../svg/IconTrashCan';
 import IconTreasureMap from '../../svg/IconTreasureMap';
 import IconUnavailable from '../../svg/IconUnavailable';
@@ -211,6 +212,7 @@ export type IconName =
   | 'iconSubmit'
   | 'iconSubtract'
   | 'iconSynced'
+  | 'iconText'
   | 'iconTrashCan'
   | 'iconTreasureMap'
   | 'iconUnavailable'
@@ -342,6 +344,7 @@ const icons: Record<IconName, SVGComponent> = {
   iconSubmit: IconSubmit,
   iconSubtract: IconSubtract,
   iconSynced: IconSynced,
+  iconText: IconText,
   iconTrashCan: IconTrashCan,
   iconTreasureMap: IconTreasureMap,
   iconUnavailable: IconUnavailable,
