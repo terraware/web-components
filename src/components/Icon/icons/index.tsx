@@ -51,6 +51,7 @@ import IconColumns from '../../svg/IconColumns';
 import IconComment from '../../svg/IconComment';
 import Dashboard from '../../svg/IconDashboard';
 import IconDataMigration from '../../svg/IconDataMigration';
+import IconDocument from '../../svg/IconDocument';
 import DownloadFromTheCloud from '../../svg/IconDownloadFromTheCloud';
 import IconEdit from '../../svg/IconEdit';
 import Expand from '../../svg/IconExpand';
@@ -95,7 +96,6 @@ import IconSlice from '../../svg/IconSlice';
 import IconSubmit from '../../svg/IconSubmit';
 import IconSubtract from '../../svg/IconSubtract';
 import IconSynced from '../../svg/IconSynced';
-import IconText from '../../svg/IconText';
 import IconTrashCan from '../../svg/IconTrashCan';
 import IconTreasureMap from '../../svg/IconTreasureMap';
 import IconUnavailable from '../../svg/IconUnavailable';
@@ -177,6 +177,7 @@ export type IconName =
   | 'iconColumns'
   | 'iconComment'
   | 'iconDataMigration'
+  | 'IconDocument'
   | 'iconEdit'
   | 'iconExport'
   | 'iconExternalLink'
@@ -212,7 +213,6 @@ export type IconName =
   | 'iconSubmit'
   | 'iconSubtract'
   | 'iconSynced'
-  | 'iconText'
   | 'iconTrashCan'
   | 'iconTreasureMap'
   | 'iconUnavailable'
@@ -309,6 +309,7 @@ const icons: Record<IconName, SVGComponent> = {
   iconColumns: IconColumns,
   iconComment: IconComment,
   iconDataMigration: IconDataMigration,
+  iconDocument: IconDocument,
   iconEdit: IconEdit,
   iconExport: IconExport,
   iconExternalLink: IconExternalLink,
@@ -344,7 +345,6 @@ const icons: Record<IconName, SVGComponent> = {
   iconSubmit: IconSubmit,
   iconSubtract: IconSubtract,
   iconSynced: IconSynced,
-  iconText: IconText,
   iconTrashCan: IconTrashCan,
   iconTreasureMap: IconTreasureMap,
   iconUnavailable: IconUnavailable,
