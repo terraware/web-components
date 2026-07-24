@@ -48,6 +48,7 @@ export { default as IconColumns } from './IconColumns';
 export { default as IconComment } from './IconComment';
 export { default as IconDashboard } from './IconDashboard';
 export { default as IconDataMigration } from './IconDataMigration';
+export { default as IconDocument } from './IconDocument';
 export { default as IconDownloadFromTheCloud } from './IconDownloadFromTheCloud';
 export { default as IconEdit } from './IconEdit';
 export { default as IconExpand } from './IconExpand';
