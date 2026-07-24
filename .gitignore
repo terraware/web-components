@@ -33,3 +33,6 @@ package-lock.json
 
 # IntelliJ
 .idea
+
+# Claude Superpowers Plugin
+docs/superpowers
