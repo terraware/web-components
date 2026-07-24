@@ -177,7 +177,7 @@ export type IconName =
   | 'iconColumns'
   | 'iconComment'
   | 'iconDataMigration'
-  | 'IconDocument'
+  | 'iconDocument'
   | 'iconEdit'
   | 'iconExport'
   | 'iconExternalLink'
