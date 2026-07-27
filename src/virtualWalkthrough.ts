@@ -8,9 +8,13 @@
 import Annotation from './components/VirtualWalkthrough/Annotation';
 import AnnotationEditPane from './components/VirtualWalkthrough/AnnotationEditPane';
 import AnnotationPanel from './components/VirtualWalkthrough/AnnotationPanel';
+import CameraInfo from './components/VirtualWalkthrough/CameraInfo';
+import ControlsInfoPane from './components/VirtualWalkthrough/ControlsInfoPane';
 import { TfAnnotationManager } from './components/VirtualWalkthrough/TfAnnotationManager';
 
 export type { AnnotationProps, AnnotationIconType } from './components/VirtualWalkthrough/Annotation';
 export type { AnnotationEditPaneStrings } from './components/VirtualWalkthrough/AnnotationEditPane';
+export type { CameraInfoStrings, CameraState } from './components/VirtualWalkthrough/CameraInfo';
+export type { ControlsInfoPaneStrings } from './components/VirtualWalkthrough/ControlsInfoPane';
 
-export { Annotation, AnnotationEditPane, AnnotationPanel, TfAnnotationManager };
+export { Annotation, AnnotationEditPane, AnnotationPanel, TfAnnotationManager, CameraInfo, ControlsInfoPane };
