@@ -8,9 +8,12 @@
 import Annotation from './components/VirtualWalkthrough/Annotation';
 import AnnotationEditPane from './components/VirtualWalkthrough/AnnotationEditPane';
 import AnnotationPanel from './components/VirtualWalkthrough/AnnotationPanel';
+import Application from './components/VirtualWalkthrough/Application';
 import { AutoRotator } from './components/VirtualWalkthrough/AutoRotator';
+import BoundaryRing from './components/VirtualWalkthrough/BoundaryRing';
 import CameraInfo from './components/VirtualWalkthrough/CameraInfo';
 import ControlsInfoPane from './components/VirtualWalkthrough/ControlsInfoPane';
+import GradientSky from './components/VirtualWalkthrough/GradientSky';
 import SplatControls from './components/VirtualWalkthrough/SplatControls';
 import SplatCrop from './components/VirtualWalkthrough/SplatCrop';
 import SplatFadeCrop from './components/VirtualWalkthrough/SplatFadeCrop';
@@ -28,17 +31,21 @@ export type { ControlsInfoPaneStrings } from './components/VirtualWalkthrough/Co
 export type { SplatControlsProps, SplatControlsStrings } from './components/VirtualWalkthrough/SplatControls';
 export type { BoundaryRingGeometry, BoundaryRingGeometryParams } from './components/VirtualWalkthrough/boundary-ring';
 export type { GroundPlane } from './components/VirtualWalkthrough/groundPlane';
+export type { BoundaryRingProps } from './components/VirtualWalkthrough/BoundaryRing';
 
 export {
   Annotation,
   AnnotationEditPane,
   AnnotationPanel,
+  Application,
   AutoRotator,
+  BoundaryRing,
   boundaryRingMesh,
   BoundaryRingScript,
   CameraInfo,
   computeGroundPlane,
   ControlsInfoPane,
+  GradientSky,
   SplatControls,
   SplatCrop,
   SplatFadeCrop,
