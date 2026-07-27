@@ -10,6 +10,7 @@ import AnnotationEditPane from './components/VirtualWalkthrough/AnnotationEditPa
 import AnnotationPanel from './components/VirtualWalkthrough/AnnotationPanel';
 import Application from './components/VirtualWalkthrough/Application';
 import { AutoRotator } from './components/VirtualWalkthrough/AutoRotator';
+import BlockingSpinner from './components/VirtualWalkthrough/BlockingSpinner';
 import BoundaryRing from './components/VirtualWalkthrough/BoundaryRing';
 import CameraInfo from './components/VirtualWalkthrough/CameraInfo';
 import ControlsInfoPane from './components/VirtualWalkthrough/ControlsInfoPane';
@@ -17,6 +18,7 @@ import GradientSky from './components/VirtualWalkthrough/GradientSky';
 import SplatControls from './components/VirtualWalkthrough/SplatControls';
 import SplatCrop from './components/VirtualWalkthrough/SplatCrop';
 import SplatFadeCrop from './components/VirtualWalkthrough/SplatFadeCrop';
+import SplatModel from './components/VirtualWalkthrough/SplatModel';
 import SplatRevealRain from './components/VirtualWalkthrough/SplatRevealRain';
 import { TfAnnotationManager } from './components/VirtualWalkthrough/TfAnnotationManager';
 import { TfXrNavigation } from './components/VirtualWalkthrough/TfXrNavigation';
@@ -32,6 +34,7 @@ export type { SplatControlsProps, SplatControlsStrings } from './components/Virt
 export type { BoundaryRingGeometry, BoundaryRingGeometryParams } from './components/VirtualWalkthrough/boundary-ring';
 export type { GroundPlane } from './components/VirtualWalkthrough/groundPlane';
 export type { BoundaryRingProps } from './components/VirtualWalkthrough/BoundaryRing';
+export type { SplatModelProps } from './components/VirtualWalkthrough/SplatModel';
 
 export {
   Annotation,
@@ -39,6 +42,7 @@ export {
   AnnotationPanel,
   Application,
   AutoRotator,
+  BlockingSpinner,
   BoundaryRing,
   boundaryRingMesh,
   BoundaryRingScript,
@@ -49,6 +53,7 @@ export {
   SplatControls,
   SplatCrop,
   SplatFadeCrop,
+  SplatModel,
   SplatRevealRain,
   TfAnnotationManager,
   TfXrNavigation,
