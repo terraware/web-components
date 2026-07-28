@@ -22,11 +22,13 @@
     "@mui/lab": "^6.0.1-beta.36",
     "@mui/material": "^6.0.0",
     "@mui/x-date-pickers": "^7.22.0",
+    "@playcanvas/react": "0.11.3",
     "classnames": "^2.3.2",
     "geojson": "^0.5.0",
     "luxon": "^3.3.0",
     "marked": "^16.2.1",
     "material-react-table": "^3.2.1",
+    "playcanvas": "2.15.1",
     "prettier": "^3.8.1",
     "react-intersection-observer": "^9.5.2",
     "react-multi-carousel": "^2.8.2",
@@ -47,7 +49,7 @@
     "storybook-legacy": "NODE_OPTIONS=--openssl-legacy-provider storybook dev",
     "build-storybook": "storybook build -s public",
     "build-dictionary": "./style-dictionary/generate.sh",
-    "transpile": "rm -rf dist && NODE_ENV=production babel src/ --extensions '.tsx,.ts' --out-dir dist --copy-files --no-copy-ignored && cp package.json dist/",
+    "transpile": "rm -rf dist && NODE_ENV=production babel src/ --extensions '.tsx,.ts' --out-dir dist --copy-files --no-copy-ignored --config-file ./babel.config.dist.json --no-babelrc && cp package.json dist/ && node ./scripts/patch-dist-package.mjs",
     "generate-assets": "yarn svgr --icon --title-prop --no-dimensions --typescript -d src/components/svg assets",
     "generate-types": "yarn -p typescript tsc",
     "build-dist": "yarn transpile && yarn generate-types",
@@ -133,7 +135,9 @@
     "typescript": "^5.0.0"
   },
   "peerDependencies": {
+    "@playcanvas/react": "0.11.3",
     "mapbox-gl": "^3.13.0",
+    "playcanvas": "2.15.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-map-gl": "^8.0.4"
