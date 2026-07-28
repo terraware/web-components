@@ -22,6 +22,7 @@ import SplatModel from './components/VirtualWalkthrough/SplatModel';
 import SplatRevealRain from './components/VirtualWalkthrough/SplatRevealRain';
 import { TfAnnotationManager } from './components/VirtualWalkthrough/TfAnnotationManager';
 import { TfXrNavigation } from './components/VirtualWalkthrough/TfXrNavigation';
+import VirtualWalkthroughViewer from './components/VirtualWalkthrough/VirtualWalkthroughViewer';
 import { BoundaryRingScript, boundaryRingMesh } from './components/VirtualWalkthrough/boundary-ring';
 import { computeGroundPlane, yOnPlane } from './components/VirtualWalkthrough/groundPlane';
 import { WalkthroughCamera } from './components/VirtualWalkthrough/walkthrough-camera';
@@ -36,6 +37,7 @@ export type { BoundaryRingGeometry, BoundaryRingGeometryParams } from './compone
 export type { GroundPlane } from './components/VirtualWalkthrough/groundPlane';
 export type { BoundaryRingProps } from './components/VirtualWalkthrough/BoundaryRing';
 export type { SplatModelProps } from './components/VirtualWalkthrough/SplatModel';
+export type { VirtualWalkthroughViewerProps } from './components/VirtualWalkthrough/VirtualWalkthroughViewer';
 
 export {
   Annotation,
@@ -59,6 +61,7 @@ export {
   TfAnnotationManager,
   TfXrNavigation,
   useDevicePerformance,
+  VirtualWalkthroughViewer,
   WalkthroughCamera,
   yOnPlane,
 };
