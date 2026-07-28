@@ -25,6 +25,7 @@ import { TfXrNavigation } from './components/VirtualWalkthrough/TfXrNavigation';
 import { BoundaryRingScript, boundaryRingMesh } from './components/VirtualWalkthrough/boundary-ring';
 import { computeGroundPlane, yOnPlane } from './components/VirtualWalkthrough/groundPlane';
 import { WalkthroughCamera } from './components/VirtualWalkthrough/walkthrough-camera';
+import { useDevicePerformance } from './hooks/useDevicePerformance';
 
 export type { AnnotationProps, AnnotationIconType } from './components/VirtualWalkthrough/Annotation';
 export type { AnnotationEditPaneStrings } from './components/VirtualWalkthrough/AnnotationEditPane';
@@ -57,6 +58,7 @@ export {
   SplatRevealRain,
   TfAnnotationManager,
   TfXrNavigation,
+  useDevicePerformance,
   WalkthroughCamera,
   yOnPlane,
 };
