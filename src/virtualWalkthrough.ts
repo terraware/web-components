@@ -12,6 +12,9 @@ import { AutoRotator } from './components/VirtualWalkthrough/AutoRotator';
 import CameraInfo from './components/VirtualWalkthrough/CameraInfo';
 import ControlsInfoPane from './components/VirtualWalkthrough/ControlsInfoPane';
 import SplatControls from './components/VirtualWalkthrough/SplatControls';
+import SplatCrop from './components/VirtualWalkthrough/SplatCrop';
+import SplatFadeCrop from './components/VirtualWalkthrough/SplatFadeCrop';
+import SplatRevealRain from './components/VirtualWalkthrough/SplatRevealRain';
 import { TfAnnotationManager } from './components/VirtualWalkthrough/TfAnnotationManager';
 import { TfXrNavigation } from './components/VirtualWalkthrough/TfXrNavigation';
 import { BoundaryRingScript, boundaryRingMesh } from './components/VirtualWalkthrough/boundary-ring';
@@ -37,6 +40,9 @@ export {
   computeGroundPlane,
   ControlsInfoPane,
   SplatControls,
+  SplatCrop,
+  SplatFadeCrop,
+  SplatRevealRain,
   TfAnnotationManager,
   TfXrNavigation,
   WalkthroughCamera,
