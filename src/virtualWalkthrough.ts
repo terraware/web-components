@@ -5,8 +5,12 @@
  * library does not pull in playcanvas. Import them from
  * `@terraware/web-components/virtualWalkthrough`.
  */
+import Annotation from './components/VirtualWalkthrough/Annotation';
+import AnnotationEditPane from './components/VirtualWalkthrough/AnnotationEditPane';
 import AnnotationPanel from './components/VirtualWalkthrough/AnnotationPanel';
+import { TfAnnotationManager } from './components/VirtualWalkthrough/TfAnnotationManager';
 
 export type { AnnotationProps, AnnotationIconType } from './components/VirtualWalkthrough/Annotation';
+export type { AnnotationEditPaneStrings } from './components/VirtualWalkthrough/AnnotationEditPane';
 
-export { AnnotationPanel };
+export { Annotation, AnnotationEditPane, AnnotationPanel, TfAnnotationManager };
