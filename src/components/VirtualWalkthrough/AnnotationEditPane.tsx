@@ -49,6 +49,8 @@ const AnnotationEditPane = ({
 
   const showImageUpload = !!onImagesChange && !!maxImages && maxImages > 0;
 
+  const remainingImageSlots = Math.max(0, (maxImages ?? 0) - (annotation?.imageUrls?.length ?? 0));
+
   // Recolor PhotoChooser's Terraware tokens to match the dark edit pane instead of its default light card.
   const photoChooserTheme = useMemo(
     () => ({
@@ -256,7 +258,7 @@ const AnnotationEditPane = ({
                     replaceFileText={strings.images?.replaceFileText}
                     photoSelectedText={strings.images?.photoSelectedText}
                     multipleSelection={(maxImages ?? 0) > 1}
-                    maxPhotos={maxImages}
+                    maxPhotos={remainingImageSlots}
                     onPhotosChanged={(files) => onImagesChange?.(files)}
                   />
                 </ThemeProvider>

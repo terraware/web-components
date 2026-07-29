@@ -47,3 +47,23 @@ test('clicking a thumbnail trash button removes that url via onUpdate', () => {
 
   expect(handleUpdate).toHaveBeenCalledWith({ imageUrls: ['https://example.test/b.jpg'] });
 });
+
+test('disables the chooser when existing images already fill maxImages', () => {
+  const annotation: AnnotationProps = {
+    ...baseAnnotation,
+    imageUrls: ['https://example.test/a.jpg'],
+  };
+
+  render(
+    <AnnotationEditPane
+      visible
+      annotation={annotation}
+      strings={{ ...strings, images: { chooseFileText: 'Choose images' } }}
+      onUpdate={() => undefined}
+      maxImages={1}
+      onImagesChange={() => undefined}
+    />
+  );
+
+  expect(screen.getByRole('button', { name: 'Choose images' })).toBeDisabled();
+});
