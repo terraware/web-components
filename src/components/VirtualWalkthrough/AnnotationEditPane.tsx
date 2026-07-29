@@ -31,6 +31,7 @@ interface AnnotationEditPaneProps {
   onUpdate: (updates: Partial<AnnotationProps>) => void;
   onTextFieldFocus?: (isFocused: boolean) => void;
   maxImages?: number;
+  /** Fires with the current selection on every add/remove, including an initial empty emission on mount. */
   onImagesChange?: (files: File[]) => void;
 }
 
