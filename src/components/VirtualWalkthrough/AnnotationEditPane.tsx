@@ -1,6 +1,6 @@
 import React, { useCallback, useMemo } from 'react';
 
-import { Box, Fade, Tooltip, Typography, useTheme } from '@mui/material';
+import { Box, Fade, ThemeProvider, Tooltip, Typography, useTheme } from '@mui/material';
 
 import PhotoChooser from '../PhotoChooser';
 import Textfield from '../Textfield/Textfield';
@@ -47,6 +47,20 @@ const AnnotationEditPane = ({
   const theme = useTheme();
 
   const showImageUpload = !!onImagesChange && !!maxImages && maxImages > 0;
+
+  // Recolor PhotoChooser's Terraware tokens to match the dark edit pane instead of its default light card.
+  const photoChooserTheme = useMemo(
+    () => ({
+      ...theme,
+      palette: {
+        ...theme.palette,
+        TwClrBg: 'transparent',
+        TwClrBrdrTertiary: theme.palette.grey[700],
+        TwClrTxt: theme.palette.grey[300],
+      },
+    }),
+    [theme]
+  );
 
   const textFieldSx = useMemo(
     () => ({
@@ -169,17 +183,34 @@ const AnnotationEditPane = ({
             </Tooltip>
 
             {showImageUpload && (
-              <PhotoChooser
-                title={strings.images?.uploadTitle}
-                uploadText={strings.images?.uploadText}
-                uploadDescription={strings.images?.uploadDescription}
-                chooseFileText={strings.images?.chooseFileText}
-                replaceFileText={strings.images?.replaceFileText}
-                photoSelectedText={strings.images?.photoSelectedText}
-                multipleSelection={(maxImages ?? 0) > 1}
-                maxPhotos={maxImages}
-                onPhotosChanged={(files) => onImagesChange?.(files)}
-              />
+              <Box>
+                {strings.images?.uploadTitle && (
+                  <Typography
+                    sx={{
+                      fontFamily: 'Inter',
+                      fontSize: '14px',
+                      fontWeight: 400,
+                      lineHeight: '20px',
+                      color: theme.palette.grey[400],
+                      marginBottom: 0.5,
+                    }}
+                  >
+                    {strings.images.uploadTitle}
+                  </Typography>
+                )}
+                <ThemeProvider theme={photoChooserTheme}>
+                  <PhotoChooser
+                    uploadText={strings.images?.uploadText}
+                    uploadDescription={strings.images?.uploadDescription}
+                    chooseFileText={strings.images?.chooseFileText}
+                    replaceFileText={strings.images?.replaceFileText}
+                    photoSelectedText={strings.images?.photoSelectedText}
+                    multipleSelection={(maxImages ?? 0) > 1}
+                    maxPhotos={maxImages}
+                    onPhotosChanged={(files) => onImagesChange?.(files)}
+                  />
+                </ThemeProvider>
+              </Box>
             )}
           </Box>
         </Box>

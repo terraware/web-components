@@ -30,24 +30,13 @@ const Template: Story<Partial<React.ComponentProps<typeof AnnotationEditPane>>> 
   });
 
   return (
-    <div
-      style={{
-        position: 'relative',
-        width: 900,
-        height: 600,
-        overflow: 'hidden',
-        background: 'linear-gradient(135deg, #1a202c 0%, #2d3748 100%)',
-        borderRadius: 8,
-      }}
-    >
-      <AnnotationEditPane
-        visible
-        strings={sampleStrings}
-        {...args}
-        annotation={annotation}
-        onUpdate={(updates) => setAnnotation((prev) => ({ ...prev, ...updates }))}
-      />
-    </div>
+    <AnnotationEditPane
+      visible
+      strings={sampleStrings}
+      {...args}
+      annotation={annotation}
+      onUpdate={(updates) => setAnnotation((prev) => ({ ...prev, ...updates }))}
+    />
   );
 };
 
