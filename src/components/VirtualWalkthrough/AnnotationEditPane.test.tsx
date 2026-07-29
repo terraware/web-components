@@ -5,6 +5,10 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import { AnnotationProps } from './Annotation';
 import AnnotationEditPane, { AnnotationEditPaneStrings } from './AnnotationEditPane';
 
+// Textfield transitively imports Markdown -> marked (pure ESM), which is
+// unrelated to this pane and is not transformed by react-scripts' jest config.
+jest.mock('marked', () => ({ marked: (value: string) => value }));
+
 jest.mock('../PhotoChooser', () => ({
   __esModule: true,
   default: (props: any) => (
