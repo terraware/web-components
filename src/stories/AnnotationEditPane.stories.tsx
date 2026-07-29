@@ -10,6 +10,9 @@ export default {
   component: AnnotationEditPane,
 };
 
+const SAMPLE_IMAGE =
+  'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="120" height="120"><rect width="120" height="120" fill="%234f8a5b"/></svg>';
+
 const sampleStrings: AnnotationEditPaneStrings = {
   editAnnotation: 'Edit annotation',
   title: 'Title',
@@ -27,6 +30,7 @@ const Template: Story<Partial<React.ComponentProps<typeof AnnotationEditPane>>> 
     title: 'Mangrove nursery',
     bodyText: 'Seedlings raised here are transplanted along the coastline.',
     label: 'Restoration site',
+    imageUrls: [SAMPLE_IMAGE],
   });
 
   return (
@@ -60,5 +64,14 @@ WithImageUpload.args = {
       replaceFileText: 'Replace image',
       photoSelectedText: 'Image selected',
     },
+  },
+};
+
+export const WithExistingImages = Template.bind({});
+WithExistingImages.args = {
+  maxImages: 3,
+  onImagesChange: (files: File[]) => {
+    // eslint-disable-next-line no-console
+    console.log('annotation images changed', files);
   },
 };

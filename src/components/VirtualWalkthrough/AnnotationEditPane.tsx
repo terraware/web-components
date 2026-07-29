@@ -2,6 +2,7 @@ import React, { useCallback, useMemo } from 'react';
 
 import { Box, Fade, ThemeProvider, Tooltip, Typography, useTheme } from '@mui/material';
 
+import Button from '../Button/Button';
 import PhotoChooser from '../PhotoChooser';
 import Textfield from '../Textfield/Textfield';
 import { AnnotationProps } from './Annotation';
@@ -99,6 +100,14 @@ const AnnotationEditPane = ({
     [onUpdate]
   );
 
+  const handleRemoveExistingImage = useCallback(
+    (index: number) => {
+      const remaining = (annotation?.imageUrls ?? []).filter((_, i) => i !== index);
+      onUpdate({ imageUrls: remaining });
+    },
+    [annotation, onUpdate]
+  );
+
   const handleFocus = useCallback(() => {
     onTextFieldFocus?.(true);
   }, [onTextFieldFocus]);
@@ -181,6 +190,47 @@ const AnnotationEditPane = ({
                 sx={textFieldSx}
               />
             </Tooltip>
+
+            {annotation.imageUrls && annotation.imageUrls.length > 0 && (
+              <Box sx={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', gap: 1 }}>
+                {annotation.imageUrls.map((url, index) => (
+                  <Box
+                    key={`${url}-${index}`}
+                    sx={{
+                      position: 'relative',
+                      height: 122,
+                      width: 122,
+                      border: `1px solid ${theme.palette.grey[700]}`,
+                    }}
+                  >
+                    <Button
+                      icon='iconTrashCan'
+                      id={`annotation-existing-image-remove-${index}`}
+                      onClick={() => handleRemoveExistingImage(index)}
+                      size='small'
+                      style={{
+                        position: 'absolute',
+                        top: -10,
+                        right: -10,
+                        backgroundColor: theme.palette.error.main,
+                      }}
+                    />
+                    <img
+                      height='120px'
+                      src={url}
+                      alt={annotation.title}
+                      style={{
+                        margin: 'auto auto',
+                        objectFit: 'contain',
+                        display: 'flex',
+                        maxWidth: '120px',
+                        maxHeight: '120px',
+                      }}
+                    />
+                  </Box>
+                ))}
+              </Box>
+            )}
 
             {showImageUpload && (
               <Box>
