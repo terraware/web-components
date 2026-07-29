@@ -2,6 +2,7 @@ import React, { useCallback, useMemo } from 'react';
 
 import { Box, Fade, Tooltip, Typography, useTheme } from '@mui/material';
 
+import PhotoChooser from '../PhotoChooser';
 import Textfield from '../Textfield/Textfield';
 import { AnnotationProps } from './Annotation';
 
@@ -13,6 +14,14 @@ export interface AnnotationEditPaneStrings {
   descriptionTooltip: string;
   label: string;
   labelTooltip: string;
+  images?: {
+    uploadTitle?: string;
+    uploadText?: string;
+    uploadDescription?: string;
+    chooseFileText?: string;
+    replaceFileText?: string;
+    photoSelectedText?: string;
+  };
 }
 
 interface AnnotationEditPaneProps {
@@ -21,10 +30,22 @@ interface AnnotationEditPaneProps {
   strings: AnnotationEditPaneStrings;
   onUpdate: (updates: Partial<AnnotationProps>) => void;
   onTextFieldFocus?: (isFocused: boolean) => void;
+  maxImages?: number;
+  onImagesChange?: (files: File[]) => void;
 }
 
-const AnnotationEditPane = ({ visible, annotation, strings, onUpdate, onTextFieldFocus }: AnnotationEditPaneProps) => {
+const AnnotationEditPane = ({
+  visible,
+  annotation,
+  strings,
+  onUpdate,
+  onTextFieldFocus,
+  maxImages,
+  onImagesChange,
+}: AnnotationEditPaneProps) => {
   const theme = useTheme();
+
+  const showImageUpload = !!onImagesChange && !!maxImages && maxImages > 0;
 
   const textFieldSx = useMemo(
     () => ({
@@ -145,6 +166,20 @@ const AnnotationEditPane = ({ visible, annotation, strings, onUpdate, onTextFiel
                 sx={textFieldSx}
               />
             </Tooltip>
+
+            {showImageUpload && (
+              <PhotoChooser
+                title={strings.images?.uploadTitle}
+                uploadText={strings.images?.uploadText}
+                uploadDescription={strings.images?.uploadDescription}
+                chooseFileText={strings.images?.chooseFileText}
+                replaceFileText={strings.images?.replaceFileText}
+                photoSelectedText={strings.images?.photoSelectedText}
+                multipleSelection={(maxImages ?? 0) > 1}
+                maxPhotos={maxImages}
+                onPhotosChanged={(files) => onImagesChange?.(files)}
+              />
+            )}
           </Box>
         </Box>
       </Fade>
