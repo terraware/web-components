@@ -53,3 +53,23 @@ const Template: Story<Partial<React.ComponentProps<typeof AnnotationEditPane>>> 
 
 export const Default = Template.bind({});
 Default.args = {};
+
+export const WithImageUpload = Template.bind({});
+WithImageUpload.args = {
+  maxImages: 3,
+  onImagesChange: (files: File[]) => {
+    // eslint-disable-next-line no-console
+    console.log('annotation images changed', files);
+  },
+  strings: {
+    ...sampleStrings,
+    images: {
+      uploadTitle: 'Images',
+      uploadText: 'Drag and drop images here',
+      uploadDescription: 'JPEG or PNG, up to 3 images',
+      chooseFileText: 'Choose images',
+      replaceFileText: 'Replace image',
+      photoSelectedText: 'Image selected',
+    },
+  },
+};
