@@ -25,7 +25,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/8</span>
+                <span class='fraction'>0/11</span>
             </div>
         
             
@@ -39,14 +39,14 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/3</span>
+                <span class='fraction'>0/4</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/7</span>
+                <span class='fraction'>0/10</span>
             </div>
         
             
@@ -118,7 +118,16 @@
 <a name='L53'></a><a href='#L53'>53</a>
 <a name='L54'></a><a href='#L54'>54</a>
 <a name='L55'></a><a href='#L55'>55</a>
-<a name='L56'></a><a href='#L56'>56</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L56'></a><a href='#L56'>56</a>
+<a name='L57'></a><a href='#L57'>57</a>
+<a name='L58'></a><a href='#L58'>58</a>
+<a name='L59'></a><a href='#L59'>59</a>
+<a name='L60'></a><a href='#L60'>60</a>
+<a name='L61'></a><a href='#L61'>61</a>
+<a name='L62'></a><a href='#L62'>62</a>
+<a name='L63'></a><a href='#L63'>63</a>
+<a name='L64'></a><a href='#L64'>64</a>
+<a name='L65'></a><a href='#L65'>65</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -155,13 +164,16 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -171,8 +183,14 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import React, { useState } from 'react';
 &nbsp;
 import { Story } from '@storybook/react';
@@ -205,29 +223,38 @@ const Template: Story&lt;Partial&lt;React.ComponentProps&lt;typeof AnnotationEdi
   });
 &nbsp;
 <span class="cstat-no" title="statement not covered" >  return (</span>
-    &lt;div
-      style={{
-        position: 'relative',
-        width: 900,
-        height: 600,
-        overflow: 'hidden',
-        background: 'linear-gradient(135deg, #1a202c 0%, #2d3748 100%)',
-        borderRadius: 8,
-      }}
-    &gt;
-      &lt;AnnotationEditPane
-        visible
-        strings={sampleStrings}
-        {...args}
-        annotation={annotation}
-        onUpdate={<span class="fstat-no" title="function not covered" >(u</span>pdates) =&gt; <span class="cstat-no" title="statement not covered" >setAnnotation(<span class="fstat-no" title="function not covered" >(p</span>rev) =&gt; (<span class="cstat-no" title="statement not covered" >{ ...prev, ...updates })</span>)}</span>
-      /&gt;
-    &lt;/div&gt;
+    &lt;AnnotationEditPane
+      visible
+      strings={sampleStrings}
+      {...args}
+      annotation={annotation}
+      onUpdate={<span class="fstat-no" title="function not covered" >(u</span>pdates) =&gt; <span class="cstat-no" title="statement not covered" >setAnnotation(<span class="fstat-no" title="function not covered" >(p</span>rev) =&gt; (<span class="cstat-no" title="statement not covered" >{ ...prev, ...updates })</span>)}</span>
+    /&gt;
   );
 };
 &nbsp;
 export const Default = <span class="cstat-no" title="statement not covered" >Template.bind({});</span>
 <span class="cstat-no" title="statement not covered" >Default.args = {};</span>
+&nbsp;
+export const WithImageUpload = <span class="cstat-no" title="statement not covered" >Template.bind({});</span>
+<span class="cstat-no" title="statement not covered" >WithImageUpload.args = {</span>
+  maxImages: 3,
+  onImagesChange: <span class="fstat-no" title="function not covered" >(f</span>iles: File[]) =&gt; {
+    // eslint-disable-next-line no-console
+<span class="cstat-no" title="statement not covered" >    console.log('annotation images changed', files);</span>
+  },
+  strings: {
+    ...sampleStrings,
+    images: {
+      uploadTitle: 'Images',
+      uploadText: 'Drag and drop images here',
+      uploadDescription: 'JPEG or PNG, up to 3 images',
+      chooseFileText: 'Choose images',
+      replaceFileText: 'Replace image',
+      photoSelectedText: 'Image selected',
+    },
+  },
+};
 &nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
@@ -235,7 +262,7 @@ export const Default = <span class="cstat-no" title="statement not covered" >Tem
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-07-28T19:55:18.277Z
+                at 2026-07-29T19:07:53.476Z
             </div>
         <script src="../../prettify.js"></script>
         <script>
