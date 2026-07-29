@@ -39,6 +39,7 @@ export interface VirtualWalkthroughViewerProps {
   showFreeFly?: boolean;
   isFullScreen?: boolean;
   onToggleFullScreen?: () => void;
+  maxImagesPerAnnotation?: number;
 }
 
 const VirtualWalkthroughViewer = ({
@@ -57,6 +58,7 @@ const VirtualWalkthroughViewer = ({
   showFreeFly = false,
   isFullScreen = false,
   onToggleFullScreen,
+  maxImagesPerAnnotation,
 }: VirtualWalkthroughViewerProps) => {
   const theme = useTheme();
   const { setCamera } = useCameraPosition();
@@ -226,6 +228,11 @@ const VirtualWalkthroughViewer = ({
     [selectedAnnotationIndex]
   );
 
+  const handleImagesChange = useCallback(
+    (files: File[]) => handleAnnotationUpdate({ images: files }),
+    [handleAnnotationUpdate]
+  );
+
   const canSave = useMemo(
     () => localAnnotations.every((annotation) => annotation.title && annotation.title.trim() !== ''),
     [localAnnotations]
@@ -318,7 +325,10 @@ const VirtualWalkthroughViewer = ({
         onDeselectAnnotation={handleDeselectAnnotation}
         hasSelectedAnnotation={selectedAnnotationIndex >= 0}
         selectedAnnotation={selectedAnnotationIndex >= 0 ? localAnnotations[selectedAnnotationIndex] : null}
+        selectedAnnotationIndex={selectedAnnotationIndex}
         onAnnotationUpdate={handleAnnotationUpdate}
+        onImagesChange={handleImagesChange}
+        maxImagesPerAnnotation={maxImagesPerAnnotation}
         onTextFieldFocus={setIsTextFieldFocused}
         canSave={canSave}
         editable={editable}

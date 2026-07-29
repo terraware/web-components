@@ -25,6 +25,7 @@ export interface AnnotationProps {
   bodyText?: string;
   label?: string;
   imageUrl?: string;
+  images?: File[];
   icon?: AnnotationIconType;
   cameraPosition?: [number, number, number];
   visible?: boolean;
