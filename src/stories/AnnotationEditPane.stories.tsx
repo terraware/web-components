@@ -30,26 +30,35 @@ const Template: Story<Partial<React.ComponentProps<typeof AnnotationEditPane>>> 
   });
 
   return (
-    <div
-      style={{
-        position: 'relative',
-        width: 900,
-        height: 600,
-        overflow: 'hidden',
-        background: 'linear-gradient(135deg, #1a202c 0%, #2d3748 100%)',
-        borderRadius: 8,
-      }}
-    >
-      <AnnotationEditPane
-        visible
-        strings={sampleStrings}
-        {...args}
-        annotation={annotation}
-        onUpdate={(updates) => setAnnotation((prev) => ({ ...prev, ...updates }))}
-      />
-    </div>
+    <AnnotationEditPane
+      visible
+      strings={sampleStrings}
+      {...args}
+      annotation={annotation}
+      onUpdate={(updates) => setAnnotation((prev) => ({ ...prev, ...updates }))}
+    />
   );
 };
 
 export const Default = Template.bind({});
 Default.args = {};
+
+export const WithImageUpload = Template.bind({});
+WithImageUpload.args = {
+  maxImages: 3,
+  onImagesChange: (files: File[]) => {
+    // eslint-disable-next-line no-console
+    console.log('annotation images changed', files);
+  },
+  strings: {
+    ...sampleStrings,
+    images: {
+      uploadTitle: 'Images',
+      uploadText: 'Drag and drop images here',
+      uploadDescription: 'JPEG or PNG, up to 3 images',
+      chooseFileText: 'Choose images',
+      replaceFileText: 'Replace image',
+      photoSelectedText: 'Image selected',
+    },
+  },
+};

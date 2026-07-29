@@ -1,7 +1,8 @@
 import React, { useCallback, useMemo } from 'react';
 
-import { Box, Fade, Tooltip, Typography, useTheme } from '@mui/material';
+import { Box, Fade, ThemeProvider, Tooltip, Typography, useTheme } from '@mui/material';
 
+import PhotoChooser from '../PhotoChooser';
 import Textfield from '../Textfield/Textfield';
 import { AnnotationProps } from './Annotation';
 
@@ -13,6 +14,14 @@ export interface AnnotationEditPaneStrings {
   descriptionTooltip: string;
   label: string;
   labelTooltip: string;
+  images?: {
+    uploadTitle?: string;
+    uploadText?: string;
+    uploadDescription?: string;
+    chooseFileText?: string;
+    replaceFileText?: string;
+    photoSelectedText?: string;
+  };
 }
 
 interface AnnotationEditPaneProps {
@@ -21,10 +30,37 @@ interface AnnotationEditPaneProps {
   strings: AnnotationEditPaneStrings;
   onUpdate: (updates: Partial<AnnotationProps>) => void;
   onTextFieldFocus?: (isFocused: boolean) => void;
+  maxImages?: number;
+  /** Fires with the current selection on every add/remove, including an initial empty emission on mount. */
+  onImagesChange?: (files: File[]) => void;
 }
 
-const AnnotationEditPane = ({ visible, annotation, strings, onUpdate, onTextFieldFocus }: AnnotationEditPaneProps) => {
+const AnnotationEditPane = ({
+  visible,
+  annotation,
+  strings,
+  onUpdate,
+  onTextFieldFocus,
+  maxImages,
+  onImagesChange,
+}: AnnotationEditPaneProps) => {
   const theme = useTheme();
+
+  const showImageUpload = !!onImagesChange && !!maxImages && maxImages > 0;
+
+  // Recolor PhotoChooser's Terraware tokens to match the dark edit pane instead of its default light card.
+  const photoChooserTheme = useMemo(
+    () => ({
+      ...theme,
+      palette: {
+        ...theme.palette,
+        TwClrBg: 'transparent',
+        TwClrBrdrTertiary: theme.palette.grey[700],
+        TwClrTxt: theme.palette.grey[300],
+      },
+    }),
+    [theme]
+  );
 
   const textFieldSx = useMemo(
     () => ({
@@ -145,6 +181,37 @@ const AnnotationEditPane = ({ visible, annotation, strings, onUpdate, onTextFiel
                 sx={textFieldSx}
               />
             </Tooltip>
+
+            {showImageUpload && (
+              <Box>
+                {strings.images?.uploadTitle && (
+                  <Typography
+                    sx={{
+                      fontFamily: 'Inter',
+                      fontSize: '14px',
+                      fontWeight: 400,
+                      lineHeight: '20px',
+                      color: theme.palette.grey[400],
+                      marginBottom: 0.5,
+                    }}
+                  >
+                    {strings.images.uploadTitle}
+                  </Typography>
+                )}
+                <ThemeProvider theme={photoChooserTheme}>
+                  <PhotoChooser
+                    uploadText={strings.images?.uploadText}
+                    uploadDescription={strings.images?.uploadDescription}
+                    chooseFileText={strings.images?.chooseFileText}
+                    replaceFileText={strings.images?.replaceFileText}
+                    photoSelectedText={strings.images?.photoSelectedText}
+                    multipleSelection={(maxImages ?? 0) > 1}
+                    maxPhotos={maxImages}
+                    onPhotosChanged={(files) => onImagesChange?.(files)}
+                  />
+                </ThemeProvider>
+              </Box>
+            )}
           </Box>
         </Box>
       </Fade>
