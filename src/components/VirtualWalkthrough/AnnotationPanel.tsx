@@ -127,7 +127,9 @@ const AnnotationPanel = ({ annotation, hotspotPosition, onClose }: AnnotationPan
 
   const panelStyle: React.CSSProperties = {
     ...PANEL_STYLE,
-    ...(annotation.imageUrl ? { width: 'fit-content', maxWidth: '60vw' } : { width: 'fit-content', maxWidth: '50vw' }),
+    ...(annotation.imageUrls?.[0]
+      ? { width: 'fit-content', maxWidth: '60vw' }
+      : { width: 'fit-content', maxWidth: '50vw' }),
     ...(panelLeft !== null ? { left: `${panelLeft}px` } : {}),
   };
 
@@ -150,7 +152,9 @@ const AnnotationPanel = ({ annotation, hotspotPosition, onClose }: AnnotationPan
         )}
       </svg>
       <div ref={panelRef} data-testid='annotation-panel' style={panelStyle}>
-        {annotation.imageUrl && <img src={annotation.imageUrl} alt={annotation.title} style={IMAGE_STYLE} />}
+        {annotation.imageUrls?.[0] && (
+          <img src={annotation.imageUrls[0]} alt={annotation.title} style={IMAGE_STYLE} />
+        )}
         <div style={TEXT_BLOCK_STYLE}>
           {annotation.label && (
             <span

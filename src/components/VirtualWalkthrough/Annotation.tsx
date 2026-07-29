@@ -24,7 +24,7 @@ export interface AnnotationProps {
   title: string;
   bodyText?: string;
   label?: string;
-  imageUrl?: string;
+  imageUrls?: string[];
   images?: File[];
   icon?: AnnotationIconType;
   cameraPosition?: [number, number, number];
@@ -60,7 +60,7 @@ const Annotation = (props: AnnotationProps & { index: number }) => {
     position,
     cameraPosition,
     bodyText,
-    imageUrl,
+    imageUrls,
     icon,
     title,
     label,
@@ -91,7 +91,7 @@ const Annotation = (props: AnnotationProps & { index: number }) => {
     title,
     label,
     bodyText,
-    imageUrl,
+    imageUrls,
     cameraPosition,
   });
 
@@ -102,8 +102,8 @@ const Annotation = (props: AnnotationProps & { index: number }) => {
     onScreenPositionUpdateRef.current = onScreenPositionUpdate;
     positionRef.current = position;
     cameraPositionRef.current = cameraPosition;
-    annotationForViewRef.current = { position, title, label, bodyText, imageUrl, cameraPosition };
-  }, [isEdit, onSelect, onView, onScreenPositionUpdate, position, cameraPosition, title, label, bodyText, imageUrl]);
+    annotationForViewRef.current = { position, title, label, bodyText, imageUrls, cameraPosition };
+  }, [isEdit, onSelect, onView, onScreenPositionUpdate, position, cameraPosition, title, label, bodyText, imageUrls]);
 
   // Create a stable callback that reads from refs, because this is read from TfAnnotationManager when the annotation is added to the scene
   const handleClick = useCallback(
