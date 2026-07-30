@@ -152,9 +152,7 @@ const AnnotationPanel = ({ annotation, hotspotPosition, onClose }: AnnotationPan
         )}
       </svg>
       <div ref={panelRef} data-testid='annotation-panel' style={panelStyle}>
-        {annotation.imageUrls?.[0] && (
-          <img src={annotation.imageUrls[0]} alt={annotation.title} style={IMAGE_STYLE} />
-        )}
+        {annotation.imageUrls?.[0] && <img src={annotation.imageUrls[0]} alt={annotation.title} style={IMAGE_STYLE} />}
         <div style={TEXT_BLOCK_STYLE}>
           {annotation.label && (
             <span
