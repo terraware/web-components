@@ -87,6 +87,8 @@ WithExistingImages.args = {
       chooseFileText: 'Choose images',
       replaceFileText: 'Replace image',
       photoSelectedText: 'Image selected',
+      existingImagesLabel: 'Existing',
+      newImagesLabel: 'New',
     },
   },
 };
