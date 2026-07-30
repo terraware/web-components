@@ -26,6 +26,10 @@ export type PhotoChooserProps = {
   chooseFileText?: string;
   replaceFileText?: string;
   maxPhotos?: number;
+  existingPhotos?: string[];
+  onExistingPhotoRemoved?: (index: number) => void;
+  existingImagesLabel?: string;
+  newImagesLabel?: string;
 };
 
 export default function PhotoChooser(props: PhotoChooserProps): JSX.Element {
@@ -43,6 +47,10 @@ export default function PhotoChooser(props: PhotoChooserProps): JSX.Element {
     chooseFileText,
     replaceFileText,
     maxPhotos,
+    existingPhotos,
+    onExistingPhotoRemoved,
+    existingImagesLabel,
+    newImagesLabel,
   } = props;
   const { isMobile } = useDeviceInfo();
   const [files, setFiles] = useState<File[]>([]);
@@ -71,6 +79,55 @@ export default function PhotoChooser(props: PhotoChooserProps): JSX.Element {
       filesDataList.forEach((fileData) => URL.revokeObjectURL(fileData));
     };
   }, [files]);
+
+  const renderThumbnail = ({
+    src,
+    alt,
+    onRemove,
+    id,
+  }: {
+    src: string;
+    alt?: string;
+    onRemove?: () => void;
+    id?: string;
+  }) => (
+    <Box
+      key={id ?? src}
+      position='relative'
+      height={122}
+      width={122}
+      marginRight={isMobile ? theme.spacing(2) : theme.spacing(3)}
+      marginTop={theme.spacing(1)}
+      border={`1px solid ${theme.palette.TwClrBrdrTertiary}`}
+    >
+      {onRemove && (
+        <Button
+          icon='iconTrashCan'
+          id={id}
+          onClick={onRemove}
+          size='small'
+          style={{
+            position: 'absolute',
+            top: -10,
+            right: -10,
+            backgroundColor: theme.palette.TwClrBgDanger,
+          }}
+        />
+      )}
+      <img
+        height='120px'
+        src={src}
+        alt={alt}
+        style={{
+          margin: 'auto auto',
+          objectFit: 'contain',
+          display: 'flex',
+          maxWidth: '120px',
+          maxHeight: '120px',
+        }}
+      />
+    </Box>
+  );
 
   return (
     <Box
@@ -106,43 +163,41 @@ export default function PhotoChooser(props: PhotoChooserProps): JSX.Element {
             }}
           />
         )}
+        {existingPhotos && existingPhotos.length > 0 && (
+          <Box marginBottom={theme.spacing(2)}>
+            {existingImagesLabel && (
+              <Typography fontSize={14} fontWeight={400} marginBottom={theme.spacing(1)}>
+                {existingImagesLabel}
+              </Typography>
+            )}
+            <Box display='flex' flexDirection='row' flexWrap='wrap'>
+              {existingPhotos.map((url, index) =>
+                renderThumbnail({
+                  src: url,
+                  alt: url,
+                  id: `existing-photo-remove-${index}`,
+                  onRemove: onExistingPhotoRemoved ? () => onExistingPhotoRemoved(index) : undefined,
+                })
+              )}
+            </Box>
+          </Box>
+        )}
         {filesData.length > 0 && multipleSelection && (
-          <Box display='flex' flexDirection='row' flexWrap='wrap' marginBottom={theme.spacing(2)}>
-            {filesData.map((fileData, index) => (
-              <Box
-                key={index}
-                position='relative'
-                height={122}
-                width={122}
-                marginRight={isMobile ? theme.spacing(2) : theme.spacing(3)}
-                marginTop={theme.spacing(1)}
-                border={`1px solid ${theme.palette.TwClrBrdrTertiary}`}
-              >
-                <Button
-                  icon='iconTrashCan'
-                  onClick={() => removeFileAtIndex(index)}
-                  size='small'
-                  style={{
-                    position: 'absolute',
-                    top: -10,
-                    right: -10,
-                    backgroundColor: theme.palette.TwClrBgDanger,
-                  }}
-                />
-                <img
-                  height='120px'
-                  src={fileData}
-                  alt={files[index]?.name}
-                  style={{
-                    margin: 'auto auto',
-                    objectFit: 'contain',
-                    display: 'flex',
-                    maxWidth: '120px',
-                    maxHeight: '120px',
-                  }}
-                />
-              </Box>
-            ))}
+          <Box marginBottom={theme.spacing(2)}>
+            {newImagesLabel && (
+              <Typography fontSize={14} fontWeight={400} marginBottom={theme.spacing(1)}>
+                {newImagesLabel}
+              </Typography>
+            )}
+            <Box display='flex' flexDirection='row' flexWrap='wrap'>
+              {filesData.map((fileData, index) =>
+                renderThumbnail({
+                  src: fileData,
+                  alt: files[index]?.name,
+                  onRemove: () => removeFileAtIndex(index),
+                })
+              )}
+            </Box>
           </Box>
         )}
       </Box>
