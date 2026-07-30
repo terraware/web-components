@@ -50,8 +50,11 @@ export interface SplatControlsProps {
   onDeselectAnnotation?: () => void;
   hasSelectedAnnotation?: boolean;
   selectedAnnotation?: AnnotationProps | null;
+  selectedAnnotationIndex?: number;
   onAnnotationUpdate: (updates: Partial<AnnotationProps>) => void;
   onTextFieldFocus?: (isFocused: boolean) => void;
+  maxImagesPerAnnotation?: number;
+  onImagesChange?: (files: File[]) => void;
   canSave?: boolean;
   isFullScreen?: boolean;
   onToggleFullScreen?: () => void;
@@ -79,8 +82,11 @@ const SplatControls = ({
   onDeselectAnnotation,
   hasSelectedAnnotation,
   selectedAnnotation,
+  selectedAnnotationIndex,
   onAnnotationUpdate,
   onTextFieldFocus,
+  maxImagesPerAnnotation,
+  onImagesChange,
   canSave = true,
   isFullScreen = false,
   onToggleFullScreen,
@@ -298,11 +304,14 @@ const SplatControls = ({
         isFullScreen={isFullScreen}
       />
       <AnnotationEditPane
+        key={selectedAnnotationIndex}
         visible={isEdit === true && hasSelectedAnnotation === true}
         annotation={selectedAnnotation ?? null}
         strings={strings.annotationEditPane}
         onUpdate={onAnnotationUpdate}
         onTextFieldFocus={onTextFieldFocus}
+        maxImages={maxImagesPerAnnotation}
+        onImagesChange={onImagesChange}
       />
       {isEdit && <CameraInfo strings={strings.cameraInfo} getCameraState={getCameraState} />}
     </Box>
