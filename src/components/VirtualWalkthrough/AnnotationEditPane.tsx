@@ -2,7 +2,6 @@ import React, { useCallback, useMemo } from 'react';
 
 import { Box, Fade, ThemeProvider, Tooltip, Typography, useTheme } from '@mui/material';
 
-import Button from '../Button/Button';
 import PhotoChooser from '../PhotoChooser';
 import Textfield from '../Textfield/Textfield';
 import { AnnotationProps } from './Annotation';
@@ -22,6 +21,8 @@ export interface AnnotationEditPaneStrings {
     chooseFileText?: string;
     replaceFileText?: string;
     photoSelectedText?: string;
+    existingImagesLabel?: string;
+    newImagesLabel?: string;
   };
 }
 
@@ -193,47 +194,6 @@ const AnnotationEditPane = ({
               />
             </Tooltip>
 
-            {annotation.imageUrls && annotation.imageUrls.length > 0 && (
-              <Box sx={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', gap: 1 }}>
-                {annotation.imageUrls.map((url, index) => (
-                  <Box
-                    key={`${url}-${index}`}
-                    sx={{
-                      position: 'relative',
-                      height: 122,
-                      width: 122,
-                      border: `1px solid ${theme.palette.grey[700]}`,
-                    }}
-                  >
-                    <Button
-                      icon='iconTrashCan'
-                      id={`annotation-existing-image-remove-${index}`}
-                      onClick={() => handleRemoveExistingImage(index)}
-                      size='small'
-                      style={{
-                        position: 'absolute',
-                        top: -10,
-                        right: -10,
-                        backgroundColor: theme.palette.error.main,
-                      }}
-                    />
-                    <img
-                      height='120px'
-                      src={url}
-                      alt={annotation.title}
-                      style={{
-                        margin: 'auto auto',
-                        objectFit: 'contain',
-                        display: 'flex',
-                        maxWidth: '120px',
-                        maxHeight: '120px',
-                      }}
-                    />
-                  </Box>
-                ))}
-              </Box>
-            )}
-
             {showImageUpload && (
               <Box>
                 {strings.images?.uploadTitle && (
@@ -260,6 +220,10 @@ const AnnotationEditPane = ({
                     multipleSelection={(maxImages ?? 0) > 1}
                     maxPhotos={remainingImageSlots}
                     onPhotosChanged={(files) => onImagesChange?.(files)}
+                    existingPhotos={annotation.imageUrls}
+                    onExistingPhotoRemoved={handleRemoveExistingImage}
+                    existingImagesLabel={strings.images?.existingImagesLabel}
+                    newImagesLabel={strings.images?.newImagesLabel}
                   />
                 </ThemeProvider>
               </Box>
