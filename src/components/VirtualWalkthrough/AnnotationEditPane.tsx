@@ -21,6 +21,8 @@ export interface AnnotationEditPaneStrings {
     chooseFileText?: string;
     replaceFileText?: string;
     photoSelectedText?: string;
+    existingImagesLabel?: string;
+    newImagesLabel?: string;
   };
 }
 
@@ -47,6 +49,8 @@ const AnnotationEditPane = ({
   const theme = useTheme();
 
   const showImageUpload = !!onImagesChange && !!maxImages && maxImages > 0;
+
+  const remainingImageSlots = Math.max(0, (maxImages ?? 0) - (annotation?.imageUrls?.length ?? 0));
 
   // Recolor PhotoChooser's Terraware tokens to match the dark edit pane instead of its default light card.
   const photoChooserTheme = useMemo(
@@ -97,6 +101,14 @@ const AnnotationEditPane = ({
       onUpdate({ label: value as string });
     },
     [onUpdate]
+  );
+
+  const handleRemoveExistingImage = useCallback(
+    (index: number) => {
+      const remaining = (annotation?.imageUrls ?? []).filter((_, i) => i !== index);
+      onUpdate({ imageUrls: remaining });
+    },
+    [annotation, onUpdate]
   );
 
   const handleFocus = useCallback(() => {
@@ -206,8 +218,12 @@ const AnnotationEditPane = ({
                     replaceFileText={strings.images?.replaceFileText}
                     photoSelectedText={strings.images?.photoSelectedText}
                     multipleSelection={(maxImages ?? 0) > 1}
-                    maxPhotos={maxImages}
+                    maxPhotos={remainingImageSlots}
                     onPhotosChanged={(files) => onImagesChange?.(files)}
+                    existingPhotos={annotation.imageUrls}
+                    onExistingPhotoRemoved={handleRemoveExistingImage}
+                    existingImagesLabel={strings.images?.existingImagesLabel}
+                    newImagesLabel={strings.images?.newImagesLabel}
                   />
                 </ThemeProvider>
               </Box>

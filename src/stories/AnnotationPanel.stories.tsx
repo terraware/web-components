@@ -64,6 +64,6 @@ WithLabel.args = {
 
 export const WithImage = Template.bind({});
 WithImage.args = {
-  annotation: { ...baseAnnotation, label: 'Restoration site', imageUrl: SAMPLE_IMAGE },
+  annotation: { ...baseAnnotation, label: 'Restoration site', imageUrls: [SAMPLE_IMAGE] },
   onClose: () => window.alert('Closed'),
 };
