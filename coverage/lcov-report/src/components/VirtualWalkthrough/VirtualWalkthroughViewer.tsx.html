@@ -25,7 +25,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/108</span>
+                <span class='fraction'>0/110</span>
             </div>
         
             
@@ -39,14 +39,14 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/33</span>
+                <span class='fraction'>0/34</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/103</span>
+                <span class='fraction'>0/105</span>
             </div>
         
             
@@ -405,7 +405,17 @@
 <a name='L340'></a><a href='#L340'>340</a>
 <a name='L341'></a><a href='#L341'>341</a>
 <a name='L342'></a><a href='#L342'>342</a>
-<a name='L343'></a><a href='#L343'>343</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L343'></a><a href='#L343'>343</a>
+<a name='L344'></a><a href='#L344'>344</a>
+<a name='L345'></a><a href='#L345'>345</a>
+<a name='L346'></a><a href='#L346'>346</a>
+<a name='L347'></a><a href='#L347'>347</a>
+<a name='L348'></a><a href='#L348'>348</a>
+<a name='L349'></a><a href='#L349'>349</a>
+<a name='L350'></a><a href='#L350'>350</a>
+<a name='L351'></a><a href='#L351'>351</a>
+<a name='L352'></a><a href='#L352'>352</a>
+<a name='L353'></a><a href='#L353'>353</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -448,7 +458,9 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -628,8 +640,13 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -703,6 +720,9 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -788,6 +808,7 @@ export interface VirtualWalkthroughViewerProps {
   showFreeFly?: boolean;
   isFullScreen?: boolean;
   onToggleFullScreen?: () =&gt; void;
+  maxImagesPerAnnotation?: number;
 }
 &nbsp;
 const VirtualWalkthroughViewer = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >({</span></span>
@@ -806,6 +827,7 @@ const VirtualWalkthroughViewer = <span class="cstat-no" title="statement not cov
   showFreeFly = <span class="branch-0 cbranch-no" title="branch not covered" >false,</span>
   isFullScreen = <span class="branch-0 cbranch-no" title="branch not covered" >false,</span>
   onToggleFullScreen,
+  maxImagesPerAnnotation,
 }: VirtualWalkthroughViewerProps) =&gt; {
   const theme = <span class="cstat-no" title="statement not covered" >useTheme();</span>
   const { setCamera } = <span class="cstat-no" title="statement not covered" >useCameraPosition();</span>
@@ -975,6 +997,11 @@ const VirtualWalkthroughViewer = <span class="cstat-no" title="statement not cov
     [selectedAnnotationIndex]
   );
 &nbsp;
+  const handleImagesChange = <span class="cstat-no" title="statement not covered" >useCallback(</span>
+<span class="fstat-no" title="function not covered" >    (f</span>iles: File[]) =&gt; <span class="cstat-no" title="statement not covered" >handleAnnotationUpdate({ images: files }),</span>
+    [handleAnnotationUpdate]
+  );
+&nbsp;
   const canSave = <span class="cstat-no" title="statement not covered" >useMemo(</span>
 <span class="fstat-no" title="function not covered" >    ()</span> =&gt; <span class="cstat-no" title="statement not covered" >localAnnotations.every(<span class="fstat-no" title="function not covered" >(a</span>nnotation) =&gt; <span class="cstat-no" title="statement not covered" >annotation.title &amp;&amp; annotation.title.trim() !== '')</span>,</span>
     [localAnnotations]
@@ -1067,7 +1094,10 @@ const VirtualWalkthroughViewer = <span class="cstat-no" title="statement not cov
         onDeselectAnnotation={handleDeselectAnnotation}
         hasSelectedAnnotation={selectedAnnotationIndex &gt;= 0}
         selectedAnnotation={selectedAnnotationIndex &gt;= 0 ? localAnnotations[selectedAnnotationIndex] : null}
+        selectedAnnotationIndex={selectedAnnotationIndex}
         onAnnotationUpdate={handleAnnotationUpdate}
+        onImagesChange={handleImagesChange}
+        maxImagesPerAnnotation={maxImagesPerAnnotation}
         onTextFieldFocus={setIsTextFieldFocused}
         canSave={canSave}
         editable={editable}
@@ -1096,7 +1126,7 @@ export default VirtualWalkthroughViewer;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-07-29T19:07:53.476Z
+                at 2026-07-30T15:27:58.407Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>
