@@ -34,6 +34,9 @@ export const raySphereIntersect = (origin: Vec3, direction: Vec3, center: Vec3, 
 
 const TEXTURE_SIZE = 256;
 
+/** xr-standard gamepad button indices for the face buttons: A/X (4) and B/Y (5). */
+const FACE_BUTTON_INDICES = [4, 5];
+
 export class XrExitButton extends Script {
   static scriptName = 'xrExitButton';
 
@@ -54,6 +57,7 @@ export class XrExitButton extends Script {
   private _headPosition = new Vec3();
   private _headRotation = new Quat();
   private _worldOffset = new Vec3();
+  private _faceButtonDown = new WeakMap<XrInputSource, boolean>();
 
   private _isVrActive = () => this.app.xr?.active === true && this.app.xr?.type === XRTYPE_VR;
 
@@ -87,6 +91,12 @@ export class XrExitButton extends Script {
       this.entity.getPosition(),
       this.hitRadius
     );
+  }
+
+  private _faceButtonPressed(inputSource: XrInputSource): boolean {
+    const buttons = inputSource.gamepad?.buttons;
+
+    return buttons ? FACE_BUTTON_INDICES.some((index) => buttons[index]?.pressed === true) : false;
   }
 
   private _createTexture(): Texture {
@@ -179,7 +189,23 @@ export class XrExitButton extends Script {
     this._trackHead();
 
     const sources = this.app.xr?.input?.inputSources ?? [];
-    const hovered = sources.some((source) => this._rayHitsButton(source));
+    let hovered = false;
+    for (const source of sources) {
+      const sourceHovers = this._rayHitsButton(source);
+      hovered = hovered || sourceHovers;
+
+      // A face-button press exits only while that controller is aimed at the button, matching the
+      // trigger. Edge-detected so holding a button and then aiming onto it doesn't fire.
+      const facePressed = this._faceButtonPressed(source);
+      const faceWasDown = this._faceButtonDown.get(source) ?? false;
+      this._faceButtonDown.set(source, facePressed);
+
+      if (sourceHovers && facePressed && !faceWasDown) {
+        this.app.xr?.end();
+
+        return;
+      }
+    }
 
     if (hovered !== this._hovered) {
       this._hovered = hovered;
