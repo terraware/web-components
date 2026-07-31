@@ -1,11 +1,11 @@
 @use '../../style-dictionary-dist/terraware.scss';
 
-.view-photos-dialog-container {
+.photos-carousel-container {
   min-height: 200px;
   background: terraware.$tw-clr-bg;
 }
 
-.view-photos-dialog-image {
+.photos-carousel-image {
   object-fit: contain;
   margin: auto;
   height: 400px;

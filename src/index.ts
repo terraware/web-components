@@ -30,6 +30,7 @@ import Note from './components/Note';
 import OverlayModal from './components/OverlayModal/OverlayModal';
 import PageForm from './components/PageForm';
 import PhotoChooser from './components/PhotoChooser';
+import PhotosCarousel from './components/PhotosCarousel';
 import Pill from './components/Pill';
 import PillList from './components/PillList';
 import PlacementWrapper from './components/PlacementWrapper';
@@ -65,7 +66,8 @@ export type { EnhancedTableDetailsRow, RendererProps, TableColumnType, TableRowT
 export type { FormButton } from './components/FormBottomBar';
 export type { PhotoChooserErrorType, PhotoChooserProps } from './components/PhotoChooser';
 export type { FileChooserProps } from './components/FileChooser';
-export type { PhotoItem } from './components/ViewPhotosDialog';
+export type { PhotoItem } from './components/PhotosCarousel';
+export type { PhotosCarouselProps } from './components/PhotosCarousel';
 export type { SliderMark } from './components/Slider';
 export type { Tab, TabsProps } from './components/Tabs';
 export type { ConfirmProps } from './components/Confirm';
@@ -109,6 +111,7 @@ export {
   Pill,
   PillList,
   PhotoChooser,
+  PhotosCarousel,
   PlacementWrapper,
   Popover,
   PopoverMenu,
