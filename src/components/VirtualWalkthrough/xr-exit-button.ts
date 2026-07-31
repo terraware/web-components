@@ -56,6 +56,11 @@ export class XrExitButton extends Script {
   private _onXrEnd = () => {
     this.entity.enabled = false;
     this._hovered = false;
+    this.entity.setLocalScale(1, 1, 1);
+    if (this._material) {
+      this._material.opacity = 0.9;
+      this._material.update();
+    }
   };
 
   private _onSelect = (inputSource: XrInputSource) => {
