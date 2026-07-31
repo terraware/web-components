@@ -65,7 +65,7 @@ export type { EnhancedTableDetailsRow, RendererProps, TableColumnType, TableRowT
 export type { FormButton } from './components/FormBottomBar';
 export type { PhotoChooserErrorType, PhotoChooserProps } from './components/PhotoChooser';
 export type { FileChooserProps } from './components/FileChooser';
-export type { PhotoItem } from './components/ViewPhotosDialog';
+export type { PhotoItem } from './components/PhotosCarousel';
 export type { SliderMark } from './components/Slider';
 export type { Tab, TabsProps } from './components/Tabs';
 export type { ConfirmProps } from './components/Confirm';
