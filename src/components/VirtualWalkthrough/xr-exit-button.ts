@@ -11,6 +11,7 @@ import {
   StandardMaterial,
   Texture,
   Vec3,
+  XrInputSource,
 } from 'playcanvas';
 
 /**
@@ -56,6 +57,24 @@ export class XrExitButton extends Script {
     this.entity.enabled = false;
     this._hovered = false;
   };
+
+  private _onSelect = (inputSource: XrInputSource) => {
+    if (!this.entity.enabled) {
+      return;
+    }
+    if (this._rayHitsButton(inputSource)) {
+      this.app.xr?.end();
+    }
+  };
+
+  private _rayHitsButton(inputSource: XrInputSource): boolean {
+    return raySphereIntersect(
+      inputSource.getOrigin(),
+      inputSource.getDirection(),
+      this.entity.getPosition(),
+      this.hitRadius
+    );
+  }
 
   private _createTexture(): Texture {
     const canvas = document.createElement('canvas');
@@ -137,11 +156,32 @@ export class XrExitButton extends Script {
     this.entity.enabled = !!this.app.xr?.active;
     this.app.xr?.on('start', this._onXrStart);
     this.app.xr?.on('end', this._onXrEnd);
+    this.app.xr?.input?.on('select', this._onSelect);
+  }
+
+  update() {
+    if (!this.entity.enabled) {
+      return;
+    }
+
+    const sources = this.app.xr?.input?.inputSources ?? [];
+    const hovered = sources.some((source) => this._rayHitsButton(source));
+
+    if (hovered !== this._hovered) {
+      this._hovered = hovered;
+      const scale = hovered ? 1.15 : 1;
+      this.entity.setLocalScale(scale, scale, scale);
+      if (this._material) {
+        this._material.opacity = hovered ? 1 : 0.9;
+        this._material.update();
+      }
+    }
   }
 
   destroy() {
     this.app.xr?.off('start', this._onXrStart);
     this.app.xr?.off('end', this._onXrEnd);
+    this.app.xr?.input?.off('select', this._onSelect);
     if (this.entity.render) {
       this.entity.render.meshInstances = [];
     }
