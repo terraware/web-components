@@ -262,8 +262,10 @@ const VirtualWalkthroughViewer = ({
             enableFly={!isTextFieldFocused}
             averageCameraHeight={averageCameraHeight}
           />
-          <XrExitButton />
         </Entity>
+        {/* Sibling of the camera (not a child): WalkthroughCamera rewrites the camera entity's
+            transform every frame, so the button drives its own world pose from the XR head pose. */}
+        <XrExitButton />
         <Script script={XrControllers} enabled={!isEdit} />
         <Script script={TfXrNavigation} enabled={!isEdit} enableTeleport={false} />
         <Script

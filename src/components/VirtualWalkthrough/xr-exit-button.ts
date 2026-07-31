@@ -7,10 +7,12 @@ import {
   LAYERID_IMMEDIATE,
   Mesh,
   MeshInstance,
+  Quat,
   Script,
   StandardMaterial,
   Texture,
   Vec3,
+  XRTYPE_VR,
   XrInputSource,
 } from 'playcanvas';
 
@@ -35,7 +37,7 @@ const TEXTURE_SIZE = 256;
 export class XrExitButton extends Script {
   static scriptName = 'xrExitButton';
 
-  /** Local offset from the camera: right, up, and forward (-z) into the upper-right of the view. */
+  /** Offset from the head, in head space: right, up, and forward (-z) into the upper-right of the view. */
   offset = new Vec3(0.45, 0.35, -1.2);
 
   /** Half-extent of the square button quad, in world units at the offset distance. */
@@ -49,8 +51,14 @@ export class XrExitButton extends Script {
   private _mesh?: Mesh;
   private _hovered = false;
 
+  private _headPosition = new Vec3();
+  private _headRotation = new Quat();
+  private _worldOffset = new Vec3();
+
+  private _isVrActive = () => this.app.xr?.active === true && this.app.xr?.type === XRTYPE_VR;
+
   private _onXrStart = () => {
-    this.entity.enabled = true;
+    this.entity.enabled = this._isVrActive();
   };
 
   private _onXrEnd = () => {
@@ -156,9 +164,8 @@ export class XrExitButton extends Script {
     // Immediate layer draws after the World layer (where the splats render) so the button is never
     // composited behind them; depthTest:false keeps it on top within the layer.
     this.entity.addComponent('render', { meshInstances: [meshInstance], layers: [LAYERID_IMMEDIATE] });
-    this.entity.setLocalPosition(this.offset.x, this.offset.y, this.offset.z);
 
-    this.entity.enabled = !!this.app.xr?.active;
+    this.entity.enabled = this._isVrActive();
     this.app.xr?.on('start', this._onXrStart);
     this.app.xr?.on('end', this._onXrEnd);
     this.app.xr?.input?.on('select', this._onSelect);
@@ -168,6 +175,8 @@ export class XrExitButton extends Script {
     if (!this.entity.enabled) {
       return;
     }
+
+    this._trackHead();
 
     const sources = this.app.xr?.input?.inputSources ?? [];
     const hovered = sources.some((source) => this._rayHitsButton(source));
@@ -181,6 +190,35 @@ export class XrExitButton extends Script {
         this._material.update();
       }
     }
+  }
+
+  /**
+   * Pin the button to the upper-right of the headset view. The camera entity's transform is
+   * overwritten every frame by WalkthroughCamera and is not the rendered head pose, so the head
+   * pose is read from the XR views (each view's inverse-view matrix is that eye's world transform)
+   * and the button places itself in world space, offset in head space.
+   */
+  private _trackHead() {
+    const views = this.app.xr?.views?.list;
+    if (!views || views.length === 0) {
+      return;
+    }
+
+    this._headPosition.set(0, 0, 0);
+    for (const view of views) {
+      view.viewInvOffMat.getTranslation(this._worldOffset);
+      this._headPosition.add(this._worldOffset);
+    }
+    this._headPosition.mulScalar(1 / views.length);
+    this._headRotation.setFromMat4(views[0].viewInvOffMat);
+
+    this._headRotation.transformVector(this.offset, this._worldOffset);
+    this.entity.setPosition(
+      this._headPosition.x + this._worldOffset.x,
+      this._headPosition.y + this._worldOffset.y,
+      this._headPosition.z + this._worldOffset.z
+    );
+    this.entity.setRotation(this._headRotation);
   }
 
   destroy() {
