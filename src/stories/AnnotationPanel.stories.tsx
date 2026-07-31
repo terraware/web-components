@@ -67,3 +67,9 @@ WithImage.args = {
   annotation: { ...baseAnnotation, label: 'Restoration site', imageUrls: [SAMPLE_IMAGE] },
   onClose: () => window.alert('Closed'),
 };
+
+export const MultipleImages = Template.bind({});
+MultipleImages.args = {
+  annotation: { ...baseAnnotation, label: 'Restoration site', imageUrls: [SAMPLE_IMAGE, SAMPLE_IMAGE, SAMPLE_IMAGE] },
+  onClose: () => window.alert('Closed'),
+};
