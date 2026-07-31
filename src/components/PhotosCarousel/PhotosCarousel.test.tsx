@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { fireEvent, render, screen } from '@testing-library/react';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 
 import PhotosCarousel, { PhotoItem } from '.';
 
@@ -72,4 +72,28 @@ test('renders built-in arrows only when showArrows is set', () => {
   // a boundary. Relaxed per the known jsdom/library-boundary risk noted in the brief:
   // assert arrows appear at all rather than pinning an exact count.
   expect(container.querySelectorAll('.react-multiple-carousel__arrow').length).toBeGreaterThan(0);
+});
+
+test('reflects the controlled selectedSlide prop in the numbered counter', () => {
+  const { rerender } = render(<PhotosCarousel photos={photos} numbered={true} selectedSlide={0} />);
+  expect(screen.getByText('1/3')).toBeInTheDocument();
+  rerender(<PhotosCarousel photos={photos} numbered={true} selectedSlide={2} />);
+  expect(screen.getByText('3/3')).toBeInTheDocument();
+});
+
+test('invokes onSlideChange when an uncontrolled next-arrow click advances the slide', async () => {
+  const onSlideChange = jest.fn();
+  const { container } = render(
+    <PhotosCarousel photos={photos} showArrows={true} numbered={true} onSlideChange={onSlideChange} />
+  );
+
+  const nextArrow = container.querySelector('.react-multiple-carousel__arrow--right');
+  expect(nextArrow).not.toBeNull();
+  fireEvent.click(nextArrow as Element);
+
+  // react-multi-carousel updates currentSlide synchronously but fires afterChange only
+  // after its internal transitionDuration timeout (400ms default), so onSlideChange and
+  // the counter text lag one tick behind the click.
+  await waitFor(() => expect(screen.getByText('2/3')).toBeInTheDocument());
+  expect(onSlideChange).toHaveBeenCalledWith(1);
 });
