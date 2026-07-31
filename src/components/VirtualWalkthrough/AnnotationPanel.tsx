@@ -2,7 +2,8 @@ import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 
 import { useTheme } from '@mui/material';
 
-import { AnnotationProps } from './Annotation';
+import PhotosCarousel, { PhotoItem } from '../PhotosCarousel';
+import type { AnnotationProps } from './Annotation';
 
 interface AnnotationPanelProps {
   annotation: AnnotationProps | null;
@@ -49,13 +50,10 @@ const PANEL_STYLE: React.CSSProperties = {
   flexDirection: 'column',
 };
 
-const IMAGE_STYLE: React.CSSProperties = {
-  width: 'auto',
-  height: 'auto',
-  maxWidth: '100%',
-  maxHeight: '60vh',
-  display: 'block',
+const CAROUSEL_STYLE: React.CSSProperties = {
+  width: 'min(60vw, 640px)',
   borderRadius: '12px 12px 0 0',
+  overflow: 'hidden',
   flexShrink: 0,
 };
 
@@ -128,7 +126,7 @@ const AnnotationPanel = ({ annotation, hotspotPosition, onClose }: AnnotationPan
   const panelStyle: React.CSSProperties = {
     ...PANEL_STYLE,
     ...(annotation.imageUrls?.[0]
-      ? { width: 'fit-content', maxWidth: '60vw' }
+      ? { width: 'min(60vw, 640px)', maxWidth: '60vw' }
       : { width: 'fit-content', maxWidth: '50vw' }),
     ...(panelLeft !== null ? { left: `${panelLeft}px` } : {}),
   };
@@ -152,7 +150,15 @@ const AnnotationPanel = ({ annotation, hotspotPosition, onClose }: AnnotationPan
         )}
       </svg>
       <div ref={panelRef} data-testid='annotation-panel' style={panelStyle}>
-        {annotation.imageUrls?.[0] && <img src={annotation.imageUrls[0]} alt={annotation.title} style={IMAGE_STYLE} />}
+        {annotation.imageUrls && annotation.imageUrls.length > 0 && (
+          <div style={CAROUSEL_STYLE}>
+            <PhotosCarousel
+              photos={annotation.imageUrls.map((url): PhotoItem => ({ url, alt: annotation.title }))}
+              showArrows={true}
+              dots={false}
+            />
+          </div>
+        )}
         <div style={TEXT_BLOCK_STYLE}>
           {annotation.label && (
             <span
