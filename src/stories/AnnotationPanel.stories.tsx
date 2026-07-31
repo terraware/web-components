@@ -2,6 +2,7 @@ import React from 'react';
 
 import { Story } from '@storybook/react';
 
+import { PhotoItem } from '../components/PhotosCarousel';
 import { AnnotationProps } from '../components/VirtualWalkthrough/Annotation';
 import AnnotationPanel from '../components/VirtualWalkthrough/AnnotationPanel';
 
@@ -9,22 +10,17 @@ export default {
   title: 'AnnotationPanel',
   component: AnnotationPanel,
 };
-
-// A stand-in for the annotation image so the story is self-contained.
-const SAMPLE_IMAGE =
-  'data:image/svg+xml;utf8,' +
-  encodeURIComponent(
-    `<svg xmlns='http://www.w3.org/2000/svg' width='480' height='300'>
-      <defs>
-        <linearGradient id='g' x1='0' y1='0' x2='1' y2='1'>
-          <stop offset='0' stop-color='#2f855a'/>
-          <stop offset='1' stop-color='#276749'/>
-        </linearGradient>
-      </defs>
-      <rect width='480' height='300' fill='url(#g)'/>
-      <text x='240' y='158' fill='#ffffff' font-family='sans-serif' font-size='24' text-anchor='middle'>Sample image</text>
-    </svg>`
-  );
+const SAMPLE_PHOTOS: PhotoItem[] = [
+  {
+    url: 'https://assets-global.website-files.com/600f0cac30d70b8364793d7c/62a17149aa7b1acd29fa1695_22_TF_Website_Homepage_Banner_5000x2500px_04%20(1).jpg',
+  },
+  {
+    url: 'https://assets-global.website-files.com/600f0cac30d70b8364793d7c/63447bf401a1314055b50708_Terraformation-25%20(1)-p-1600.jpg',
+  },
+  {
+    url: 'https://assets-global.website-files.com/600f0cac30d70b8364793d7c/63447cc759b9f238760b40b1_DSC_3921-II-EDIT.jpg',
+  },
+];
 
 const baseAnnotation: AnnotationProps = {
   position: [0, 0, 0],
@@ -35,20 +31,7 @@ const baseAnnotation: AnnotationProps = {
 
 // Renders the panel inside a positioned "viewer" so its absolute positioning
 // and the SVG connector line are visible in isolation.
-const Template: Story<React.ComponentProps<typeof AnnotationPanel>> = (args) => (
-  <div
-    style={{
-      position: 'relative',
-      width: 900,
-      height: 600,
-      overflow: 'hidden',
-      background: 'linear-gradient(135deg, #1a202c 0%, #2d3748 100%)',
-      borderRadius: 8,
-    }}
-  >
-    <AnnotationPanel {...args} />
-  </div>
-);
+const Template: Story<React.ComponentProps<typeof AnnotationPanel>> = (args) => <AnnotationPanel {...args} />;
 
 export const TextOnly = Template.bind({});
 TextOnly.args = {
@@ -64,12 +47,16 @@ WithLabel.args = {
 
 export const WithImage = Template.bind({});
 WithImage.args = {
-  annotation: { ...baseAnnotation, label: 'Restoration site', imageUrls: [SAMPLE_IMAGE] },
+  annotation: { ...baseAnnotation, label: 'Restoration site', imageUrls: [SAMPLE_PHOTOS[0].url] },
   onClose: () => window.alert('Closed'),
 };
 
 export const MultipleImages = Template.bind({});
 MultipleImages.args = {
-  annotation: { ...baseAnnotation, label: 'Restoration site', imageUrls: [SAMPLE_IMAGE, SAMPLE_IMAGE, SAMPLE_IMAGE] },
+  annotation: {
+    ...baseAnnotation,
+    label: 'Restoration site',
+    imageUrls: SAMPLE_PHOTOS.map((p) => p.url),
+  },
   onClose: () => window.alert('Closed'),
 };
