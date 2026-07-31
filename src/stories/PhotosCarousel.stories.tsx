@@ -7,7 +7,7 @@ import Button from '../components/Button/Button';
 import PhotosCarousel, { PhotoItem, PhotosCarouselProps } from '../components/PhotosCarousel';
 
 export default {
-  title: 'Photos Carousel',
+  title: 'PhotosCarousel',
   component: PhotosCarousel,
 };
 
