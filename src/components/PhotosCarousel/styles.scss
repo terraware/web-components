@@ -1,0 +1,18 @@
+@use '../../style-dictionary-dist/terraware.scss';
+
+.photos-carousel-container {
+  min-height: 200px;
+  background: terraware.$tw-clr-bg;
+}
+
+.photos-carousel-image {
+  object-fit: contain;
+  margin: auto;
+  height: 400px;
+  width: 100%;
+}
+
+.photo-numbering {
+  font-size: 12px;
+  color: terraware.$tw-clr-txt-info;
+}
