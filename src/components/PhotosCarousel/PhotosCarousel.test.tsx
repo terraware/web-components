@@ -1,16 +1,17 @@
 import React from 'react';
 
-import { render, screen } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 
 import PhotosCarousel, { PhotoItem } from '.';
 
 // BusySpinner transitively imports the ESM-only `hex-rgb` package, which CRA's default
 // Jest config (transformIgnorePatterns excludes node_modules) cannot parse. Mocked here
 // (scoped to this test file only) to work around that pre-existing, repo-wide
-// incompatibility; index.tsx/styles.scss remain unmodified from the brief.
+// incompatibility; index.tsx/styles.scss remain unmodified from the brief. Rendered as
+// an identifiable stub (rather than null) so tests can assert on its presence/absence.
 jest.mock('../BusySpinner', () => ({
   __esModule: true,
-  default: () => null,
+  default: () => <div data-testid='busy-spinner' />,
 }));
 
 // jsdom reports 0 for layout measurements like offsetWidth, but react-multi-carousel
@@ -44,6 +45,22 @@ test('renders the current slide decoration', () => {
   const decorated: PhotoItem[] = [{ url: 'https://example.com/a.jpg', decoration: <span>Caption A</span> }, ...photos];
   render(<PhotosCarousel photos={decorated} selectedSlide={0} />);
   expect(screen.getByText('Caption A')).toBeInTheDocument();
+});
+
+test('resets the loading state when the photo URLs change, even if the count stays the same', () => {
+  const { rerender } = render(<PhotosCarousel photos={photos} />);
+  // Simulate every image finishing its load so no spinners remain.
+  screen.getAllByRole('img', { hidden: true }).forEach((img) => fireEvent.load(img));
+  expect(screen.queryAllByTestId('busy-spinner')).toHaveLength(0);
+
+  const swappedPhotos: PhotoItem[] = [
+    { url: 'https://example.com/x.jpg', alt: 'Photo X' },
+    { url: 'https://example.com/y.jpg', alt: 'Photo Y' },
+    { url: 'https://example.com/z.jpg', alt: 'Photo Z' },
+  ];
+  rerender(<PhotosCarousel photos={swappedPhotos} />);
+  // Same length as before, but different URLs: loading state must reset, not stay stale.
+  expect(screen.getAllByTestId('busy-spinner')).toHaveLength(3);
 });
 
 test('renders built-in arrows only when showArrows is set', () => {

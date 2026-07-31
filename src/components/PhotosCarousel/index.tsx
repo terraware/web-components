@@ -37,12 +37,17 @@ export default function PhotosCarousel(props: PhotosCarouselProps): JSX.Element 
   const myCarousel = useRef<Carousel>(null);
   const currentSlide = isControlled ? selectedSlide : internalSlide;
 
+  // Keyed on the URLs (not just photos.length) so swapping in a same-length array of
+  // different photos still resets the loading state instead of leaving stale flags.
+  const photoKey = photos.map((p) => p.url).join('|');
   useEffect(() => {
     setIsLoading(new Array(photos.length).fill(true));
-  }, [photos.length]);
+  }, [photoKey]);
 
   useEffect(() => {
-    myCarousel.current?.goToSlide(currentSlide);
+    if (myCarousel.current && myCarousel.current.state.currentSlide !== currentSlide) {
+      myCarousel.current.goToSlide(currentSlide);
+    }
   }, [currentSlide]);
 
   const handleAfterChange = useCallback(() => {
@@ -82,7 +87,7 @@ export default function PhotosCarousel(props: PhotosCarouselProps): JSX.Element 
         {photos.map((p, i) => (
           <div key={`photo-${i}-container`} className='photos-carousel-container'>
             {isLoading[i] ? <BusySpinner noBackground={true} /> : undefined}
-            <a href={p.url} target='blank'>
+            <a href={p.url} target='_blank' rel='noopener noreferrer'>
               <img className='photos-carousel-image' src={p.url} alt={p.alt} onLoad={() => finishLoading(i)} />
             </a>
           </div>
