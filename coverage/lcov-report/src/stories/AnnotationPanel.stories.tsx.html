@@ -25,7 +25,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/13</span>
+                <span class='fraction'>0/17</span>
             </div>
         
             
@@ -39,14 +39,14 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/4</span>
+                <span class='fraction'>0/6</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/13</span>
+                <span class='fraction'>0/16</span>
             </div>
         
             
@@ -125,16 +125,7 @@
 <a name='L60'></a><a href='#L60'>60</a>
 <a name='L61'></a><a href='#L61'>61</a>
 <a name='L62'></a><a href='#L62'>62</a>
-<a name='L63'></a><a href='#L63'>63</a>
-<a name='L64'></a><a href='#L64'>64</a>
-<a name='L65'></a><a href='#L65'>65</a>
-<a name='L66'></a><a href='#L66'>66</a>
-<a name='L67'></a><a href='#L67'>67</a>
-<a name='L68'></a><a href='#L68'>68</a>
-<a name='L69'></a><a href='#L69'>69</a>
-<a name='L70'></a><a href='#L70'>70</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L63'></a><a href='#L63'>63</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -147,8 +138,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -170,18 +159,11 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -197,6 +179,10 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -205,6 +191,7 @@
 &nbsp;
 import { Story } from '@storybook/react';
 &nbsp;
+import { PhotoItem } from '../components/PhotosCarousel';
 import { AnnotationProps } from '../components/VirtualWalkthrough/Annotation';
 import AnnotationPanel from '../components/VirtualWalkthrough/AnnotationPanel';
 &nbsp;
@@ -212,22 +199,17 @@ export default {
   title: 'AnnotationPanel',
   component: AnnotationPanel,
 };
-&nbsp;
-// A stand-in for the annotation image so the story is self-contained.
-const SAMPLE_IMAGE =
-<span class="cstat-no" title="statement not covered" >  'data:image/svg+xml;utf8,' +</span>
-  encodeURIComponent(
-    `&lt;svg xmlns='http://www.w3.org/2000/svg' width='480' height='300'&gt;
-      &lt;defs&gt;
-        &lt;linearGradient id='g' x1='0' y1='0' x2='1' y2='1'&gt;
-          &lt;stop offset='0' stop-color='#2f855a'/&gt;
-          &lt;stop offset='1' stop-color='#276749'/&gt;
-        &lt;/linearGradient&gt;
-      &lt;/defs&gt;
-      &lt;rect width='480' height='300' fill='url(#g)'/&gt;
-      &lt;text x='240' y='158' fill='#ffffff' font-family='sans-serif' font-size='24' text-anchor='middle'&gt;Sample image&lt;/text&gt;
-    &lt;/svg&gt;`
-  );
+const SAMPLE_PHOTOS: PhotoItem[] = <span class="cstat-no" title="statement not covered" >[</span>
+  {
+    url: 'https://assets-global.website-files.com/600f0cac30d70b8364793d7c/62a17149aa7b1acd29fa1695_22_TF_Website_Homepage_Banner_5000x2500px_04%20(1).jpg',
+  },
+  {
+    url: 'https://assets-global.website-files.com/600f0cac30d70b8364793d7c/63447bf401a1314055b50708_Terraformation-25%20(1)-p-1600.jpg',
+  },
+  {
+    url: 'https://assets-global.website-files.com/600f0cac30d70b8364793d7c/63447cc759b9f238760b40b1_DSC_3921-II-EDIT.jpg',
+  },
+];
 &nbsp;
 const baseAnnotation: AnnotationProps = <span class="cstat-no" title="statement not covered" >{</span>
   position: [0, 0, 0],
@@ -238,20 +220,7 @@ const baseAnnotation: AnnotationProps = <span class="cstat-no" title="statement 
 &nbsp;
 // Renders the panel inside a positioned "viewer" so its absolute positioning
 // and the SVG connector line are visible in isolation.
-const Template: Story&lt;React.ComponentProps&lt;typeof AnnotationPanel&gt;&gt; = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >(a</span>rgs) =&gt; (</span>
-<span class="cstat-no" title="statement not covered" >  &lt;div</span>
-    style={{
-      position: 'relative',
-      width: 900,
-      height: 600,
-      overflow: 'hidden',
-      background: 'linear-gradient(135deg, #1a202c 0%, #2d3748 100%)',
-      borderRadius: 8,
-    }}
-  &gt;
-    &lt;AnnotationPanel {...args} /&gt;
-  &lt;/div&gt;
-);
+const Template: Story&lt;React.ComponentProps&lt;typeof AnnotationPanel&gt;&gt; = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >(a</span>rgs) =&gt; <span class="cstat-no" title="statement not covered" >&lt;AnnotationPanel {...args} /&gt;;</span></span>
 &nbsp;
 export const TextOnly = <span class="cstat-no" title="statement not covered" >Template.bind({});</span>
 <span class="cstat-no" title="statement not covered" >TextOnly.args = {</span>
@@ -267,7 +236,17 @@ export const WithLabel = <span class="cstat-no" title="statement not covered" >T
 &nbsp;
 export const WithImage = <span class="cstat-no" title="statement not covered" >Template.bind({});</span>
 <span class="cstat-no" title="statement not covered" >WithImage.args = {</span>
-  annotation: { ...baseAnnotation, label: 'Restoration site', imageUrls: [SAMPLE_IMAGE] },
+  annotation: { ...baseAnnotation, label: 'Restoration site', imageUrls: [SAMPLE_PHOTOS[0].url] },
+  onClose: <span class="fstat-no" title="function not covered" >()</span> =&gt; <span class="cstat-no" title="statement not covered" >window.alert('Closed'),</span>
+};
+&nbsp;
+export const MultipleImages = <span class="cstat-no" title="statement not covered" >Template.bind({});</span>
+<span class="cstat-no" title="statement not covered" >MultipleImages.args = {</span>
+  annotation: {
+    ...baseAnnotation,
+    label: 'Restoration site',
+    imageUrls: SAMPLE_PHOTOS.map(<span class="fstat-no" title="function not covered" >(p</span>) =&gt; <span class="cstat-no" title="statement not covered" >p.url)</span>,
+  },
   onClose: <span class="fstat-no" title="function not covered" >()</span> =&gt; <span class="cstat-no" title="statement not covered" >window.alert('Closed'),</span>
 };
 &nbsp;</pre></td></tr></table></pre>
@@ -277,7 +256,7 @@ export const WithImage = <span class="cstat-no" title="statement not covered" >T
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-07-30T20:06:05.315Z
+                at 2026-07-31T20:58:37.672Z
             </div>
         <script src="../../prettify.js"></script>
         <script>
