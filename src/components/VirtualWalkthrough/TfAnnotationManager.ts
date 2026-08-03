@@ -176,6 +176,15 @@ export class TfAnnotationManager extends PcAnnotationManager {
   _registerAnnotation(annotation: any) {
     super._registerAnnotation(annotation);
     this._applyAnnotationIcon(annotation);
+
+    // Keep the hotspot mesh hidden until the first scale pass clamps it. The annotation entity
+    // starts at unit local scale, so under a scaled content-root the plane would render many world
+    // units across for the frames before _updateAnnotationRotationAndScale runs.
+    const resources = (this as any)._annotationResources.get(annotation);
+    if (resources) {
+      resources.baseEntity.enabled = false;
+      resources.overlayEntity.enabled = false;
+    }
   }
 
   /**
@@ -292,6 +301,18 @@ export class TfAnnotationManager extends PcAnnotationManager {
   }
 
   /**
+   * Override to also disable the hotspot mesh (not just the DOM) when the annotation is behind the
+   * camera. The base implementation leaves the mesh enabled, so a not-yet-scaled plane under a
+   * scaled content-root would stay huge in view until the camera moves the anchor in front.
+   * @private
+   */
+  _hideAnnotationElements(annotation: any, resources: any) {
+    super._hideAnnotationElements(annotation, resources);
+    resources.baseEntity.enabled = false;
+    resources.overlayEntity.enabled = false;
+  }
+
+  /**
    * Override the scale update to clamp the world size to a maximum value.
    * Also scales the hotspot DOM element to match.
    * @private
@@ -330,6 +351,12 @@ export class TfAnnotationManager extends PcAnnotationManager {
     // size, so it uses the true _hotspotSize and the clamp ratio only (never the
     // parent scale, which the DOM overlay does not inherit).
     const resources = (this as any)._annotationResources.get(annotation);
+    if (resources) {
+      // This branch only runs for annotations in front of the camera, and the scale above is now
+      // clamped, so it is safe to reveal the mesh (hidden on register / when behind the camera).
+      resources.baseEntity.enabled = true;
+      resources.overlayEntity.enabled = true;
+    }
     if (resources && resources.hotspotDom) {
       const clampRatio = clampedScale / unclampedScale;
       const baseSize = (this as any)._hotspotSize + 5; // Match the +5 from the stylesheet
