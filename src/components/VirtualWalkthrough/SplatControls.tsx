@@ -1,12 +1,11 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef } from 'react';
 
 import { Fullscreen, FullscreenExit } from '@mui/icons-material';
 import { Box, IconButton, useTheme } from '@mui/material';
-import { useApp } from '@playcanvas/react/hooks';
-import { CameraComponent, XRSPACE_LOCAL, XRTYPE_AR, XRTYPE_VR } from 'playcanvas';
 
 import useBoolean from '../../hooks/useBoolean';
 import { useCameraPosition } from '../../hooks/useCameraPosition';
+import { useXr } from '../../hooks/useXr';
 import { getRgbaFromHex } from '../../utils/color';
 import useDeviceInfo from '../../utils/useDeviceInfo';
 import Button from '../Button/Button';
@@ -97,65 +96,11 @@ const SplatControls = ({
 }: SplatControlsProps) => {
   const theme = useTheme();
   const { isDesktop } = useDeviceInfo();
-  const app = useApp();
   const { setCamera, getCameraState } = useCameraPosition();
-  const [isArAvailable, setIsArAvailable] = useState(false);
-  const [isVrAvailable, setIsVrAvailable] = useState(false);
+  const { isXrAvailable, startXr } = useXr({ onError });
   const [isInfoVisible, setIsInfoVisible] = useBoolean(true);
   const paneRef = useRef<HTMLDivElement>(null);
   const infoButtonRef = useRef<HTMLButtonElement>(null);
-
-  const errorCallback = useCallback(
-    (err: Error | null) => {
-      if (err) {
-        onError?.(err);
-        app.xr?.end();
-      }
-    },
-    [app, onError]
-  );
-
-  const handleAr = useCallback(
-    () =>
-      app.xr?.start(app.root.findComponent('camera') as CameraComponent, XRTYPE_AR, XRSPACE_LOCAL, {
-        callback: errorCallback,
-      }),
-    [app, errorCallback]
-  );
-
-  const handleVr = useCallback(
-    () =>
-      app.xr?.start(app.root.findComponent('camera') as CameraComponent, XRTYPE_VR, XRSPACE_LOCAL, {
-        callback: errorCallback,
-      }),
-    [app, errorCallback]
-  );
-
-  useEffect(() => {
-    // this can't be changed to `useMemo(() => app.xr?.isAvailable(XRTYPE_AR), [app])` because `app` doesn't update when
-    // XR's availability is updated
-    const handleAvailable = (type: string, available: boolean) => {
-      if (type === XRTYPE_VR) {
-        setIsVrAvailable(available);
-      } else if (type === XRTYPE_AR) {
-        setIsArAvailable(available);
-      }
-    };
-
-    // Check current availability state on mount
-    if (app.xr?.isAvailable(XRTYPE_VR)) {
-      setIsVrAvailable(true);
-    }
-    if (app.xr?.isAvailable(XRTYPE_AR)) {
-      setIsArAvailable(true);
-    }
-
-    app.xr?.on('available', handleAvailable);
-
-    return () => {
-      app.xr?.off('available', handleAvailable);
-    };
-  }, [app]);
 
   useEffect(() => {
     const handleKeyPress = (event: KeyboardEvent) => {
@@ -250,8 +195,8 @@ const SplatControls = ({
           pointerEvents: 'auto',
         }}
       >
-        {isArAvailable && !isEdit && <Button label={strings.ar} onClick={handleAr} />}
-        {isVrAvailable && !isEdit && <Button label={strings.vr} onClick={handleVr} />}
+        {isXrAvailable('AR') && !isEdit && <Button label={strings.ar} onClick={() => startXr('AR')} />}
+        {isXrAvailable('VR') && !isEdit && <Button label={strings.vr} onClick={() => startXr('VR')} />}
         {isDesktop && editable && !isEdit && onToggleEdit && <Button label={strings.edit} onClick={handleEdit} />}
         {isDesktop && showFreeFly && !isEdit && onToggleFreeFly && (
           <Button label={isFreeFly ? strings.boundedFly : strings.freeFly} onClick={onToggleFreeFly} />
