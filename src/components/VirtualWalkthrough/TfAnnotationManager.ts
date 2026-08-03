@@ -1,7 +1,7 @@
 import { createElement } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 
-import { FILTER_LINEAR, PIXELFORMAT_RGBA8, Texture } from 'playcanvas';
+import { FILTER_LINEAR, PIXELFORMAT_RGBA8, Texture, Vec3 } from 'playcanvas';
 import { AnnotationManager as PcAnnotationManager } from 'playcanvas/scripts/esm/annotations.mjs';
 
 import Icon from '../Icon/Icon';
@@ -29,6 +29,7 @@ export class TfAnnotationManager extends PcAnnotationManager {
   static scriptName = 'tfAnnotationManager';
 
   private _maxWorldSize = 1.0;
+  private _scratchScale = new Vec3();
   private _customParentDom: HTMLElement | null = null;
   private _clickHandlersAttached = new Set<any>();
   private _hotspotBackgroundColor = '#2C8658';
@@ -306,28 +307,51 @@ export class TfAnnotationManager extends PcAnnotationManager {
     const screenHeight = canvas.clientHeight;
     const projMatrix = (this as any)._camera.camera.projectionMatrix;
 
-    // Calculate world size based on screen size and distance
-    const unclamped = ((this as any)._hotspotSize / screenHeight) * ((2 * distance) / projMatrix.data[5]);
+    // The world size that projects to _hotspotSize screen pixels at this distance.
+    const targetWorldSize = ((this as any)._hotspotSize / screenHeight) * ((2 * distance) / projMatrix.data[5]);
 
-    // Clamp to maximum world size
-    const worldSize = Math.min(unclamped, this._maxWorldSize);
+    // setLocalScale is applied on top of the parent's world scale (e.g. a scaled
+    // content-root), so divide it out to keep the on-screen size independent of it.
+    const parentScale = this._getParentWorldScale(annotation.entity);
+    const unclampedScale = targetWorldSize / parentScale;
+
+    // Clamp in the annotation's own (parent-local) space so maxWorldSize keeps the
+    // same size relative to the model regardless of the content-root scale.
+    const clampedScale = Math.min(unclampedScale, this._maxWorldSize);
 
     const hovered = (this as any)._hoverAnnotation === annotation;
     const hoverScale = hovered ? HOTSPOT_HOVER_SCALE : 1;
-    const entityScale = worldSize * hoverScale;
+    const entityScale = clampedScale * hoverScale;
 
     annotation.entity.setLocalScale(entityScale, entityScale, entityScale);
 
     // Scale the hotspot DOM element proportionally when clamped, including the
-    // hover growth so it tracks the visible circle.
+    // hover growth so it tracks the visible circle. This is a pure screen-space
+    // size, so it uses the true _hotspotSize and the clamp ratio only (never the
+    // parent scale, which the DOM overlay does not inherit).
     const resources = (this as any)._annotationResources.get(annotation);
     if (resources && resources.hotspotDom) {
-      const scaleFactor = worldSize / unclamped;
+      const clampRatio = clampedScale / unclampedScale;
       const baseSize = (this as any)._hotspotSize + 5; // Match the +5 from the stylesheet
-      const scaledSize = baseSize * scaleFactor * hoverScale;
+      const scaledSize = baseSize * clampRatio * hoverScale;
       resources.hotspotDom.style.width = `${scaledSize}px`;
       resources.hotspotDom.style.height = `${scaledSize}px`;
     }
+  }
+
+  /**
+   * World-space uniform scale of the annotation entity's parent (e.g. a scaled
+   * content-root). Returns 1 when there is no parent or it has no scale.
+   * @private
+   */
+  _getParentWorldScale(entity: any) {
+    const parent = entity.parent;
+    if (!parent) {
+      return 1;
+    }
+    parent.getWorldTransform().getScale(this._scratchScale);
+
+    return this._scratchScale.x || 1;
   }
 
   /**
