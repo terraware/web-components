@@ -9,6 +9,7 @@ import { XrControllers } from 'playcanvas/scripts/esm/xr-controllers.mjs';
 
 import { useCameraPosition } from '../../hooks/useCameraPosition';
 import { useDevicePerformance } from '../../hooks/useDevicePerformance';
+import { useXr } from '../../hooks/useXr';
 import Annotation, { AnnotationProps } from './Annotation';
 import AnnotationPanel from './AnnotationPanel';
 import { AutoRotator } from './AutoRotator';
@@ -78,6 +79,7 @@ const VirtualWalkthroughViewer = ({
   const [viewingAnnotation, setViewingAnnotation] = useState<AnnotationProps | null>(null);
   const [viewingAnnotationIndex, setViewingAnnotationIndex] = useState(-1);
   const [viewedScreenPos, setViewedScreenPos] = useState<{ x: number; y: number; size?: number } | null>(null);
+  const { isCurrentlyInXr } = useXr();
 
   const sceneBoundsRadius = useMemo(() => {
     if (sceneBounds?.m !== undefined) {
@@ -270,29 +272,33 @@ const VirtualWalkthroughViewer = ({
       <Entity name='camera-root'>
         <Entity name='camera'>
           <Camera clearColor='#EAF8FF' fov={60} />
-          <Script
-            script={WalkthroughCamera}
-            boundsCenter={cameraBoundsCenter}
-            boundsRadius={sceneBoundsRadius * scaleFactor}
-            enableFly={!isTextFieldFocused}
-            averageCameraHeight={scaleFactor * averageCameraHeight}
-            moveSpeed={0.3 * scaleFactor}
-            moveFastSpeed={0.5 * scaleFactor}
-            moveSlowSpeed={0.15 * scaleFactor}
-          />
+          {!isCurrentlyInXr && (
+            <Script
+              script={WalkthroughCamera}
+              boundsCenter={cameraBoundsCenter}
+              boundsRadius={sceneBoundsRadius * scaleFactor}
+              enableFly={!isTextFieldFocused}
+              averageCameraHeight={scaleFactor * averageCameraHeight}
+              moveSpeed={0.3 * scaleFactor}
+              moveFastSpeed={0.5 * scaleFactor}
+              moveSlowSpeed={0.15 * scaleFactor}
+            />
+          )}
         </Entity>
         {/* Sibling of the camera (not a child): WalkthroughCamera rewrites the camera entity's
             transform every frame, so the button drives its own world pose from the XR head pose. */}
         <XrExitButton />
         <Script script={XrControllers} enabled={!isEdit} />
-        <Script script={TfXrNavigation} enabled={!isEdit} enableTeleport={false} />
-        <Script
-          script={AutoRotator}
-          enabled={!isEdit && autoRotate && !viewingAnnotation}
-          startDelay={0.5}
-          restartDelay={3}
-          startFadeInTime={0.5}
-        />
+        <Script script={TfXrNavigation} enabled={!isEdit} enableTeleport={true} />
+        {!isCurrentlyInXr && (
+          <Script
+            script={AutoRotator}
+            enabled={!isEdit && autoRotate && !viewingAnnotation}
+            startDelay={0.5}
+            restartDelay={3}
+            startFadeInTime={0.5}
+          />
+        )}
       </Entity>
 
       <Entity name='content-root' scale={[scaleFactor, scaleFactor, scaleFactor]}>

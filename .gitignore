@@ -36,3 +36,6 @@ package-lock.json
 
 # Claude Superpowers Plugin
 docs/superpowers
+
+# certs
+certs/
