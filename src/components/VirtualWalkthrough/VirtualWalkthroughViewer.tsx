@@ -18,6 +18,7 @@ import SplatControls, { SplatControlsStrings } from './SplatControls';
 import SplatModel from './SplatModel';
 import { TfAnnotationManager } from './TfAnnotationManager';
 import { TfXrNavigation } from './TfXrNavigation';
+import XrExitButton from './XrExitButton';
 import { WalkthroughCamera } from './walkthrough-camera';
 
 const DEFAULT_FOCUS_POINT: [number, number, number] = [0, 0.1, 0];
@@ -262,6 +263,9 @@ const VirtualWalkthroughViewer = ({
             averageCameraHeight={averageCameraHeight}
           />
         </Entity>
+        {/* Sibling of the camera (not a child): WalkthroughCamera rewrites the camera entity's
+            transform every frame, so the button drives its own world pose from the XR head pose. */}
+        <XrExitButton />
         <Script script={XrControllers} enabled={!isEdit} />
         <Script script={TfXrNavigation} enabled={!isEdit} enableTeleport={false} />
         <Script

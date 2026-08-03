@@ -1,0 +1,264 @@
+import {
+  ADDRESS_CLAMP_TO_EDGE,
+  BLEND_NORMAL,
+  CULLFACE_NONE,
+  Color,
+  FILTER_LINEAR,
+  LAYERID_IMMEDIATE,
+  Mesh,
+  MeshInstance,
+  Quat,
+  Script,
+  StandardMaterial,
+  Texture,
+  Vec3,
+  XRTYPE_VR,
+  XrInputSource,
+} from 'playcanvas';
+
+/**
+ * Boolean ray-sphere hit test. Treats the ray as a half-line (t >= 0) and returns true when it
+ * intersects the sphere or starts inside it. `direction` is normalized internally.
+ */
+export const raySphereIntersect = (origin: Vec3, direction: Vec3, center: Vec3, radius: number): boolean => {
+  const dir = direction.clone().normalize();
+  const m = new Vec3().sub2(origin, center);
+  const b = m.dot(dir);
+  const c = m.dot(m) - radius * radius;
+  if (c > 0 && b > 0) {
+    return false;
+  }
+
+  return b * b - c >= 0;
+};
+
+const TEXTURE_SIZE = 256;
+
+/** xr-standard gamepad button indices for the face buttons: A/X (4) and B/Y (5). */
+const FACE_BUTTON_INDICES = [4, 5];
+
+export class XrExitButton extends Script {
+  static scriptName = 'xrExitButton';
+
+  /** Offset from the head, in head space: right, up, and forward (-z) into the upper-right of the view. */
+  offset = new Vec3(0.45, 0.35, -1.2);
+
+  /** Half-extent of the square button quad, in world units at the offset distance. */
+  halfSize = 0.12;
+
+  /** World-space radius of the hover/hit sphere. Slightly larger than halfSize for easier targeting. */
+  hitRadius = 0.15;
+
+  private _material?: StandardMaterial;
+  private _texture?: Texture;
+  private _mesh?: Mesh;
+  private _hovered = false;
+
+  private _headPosition = new Vec3();
+  private _headRotation = new Quat();
+  private _worldOffset = new Vec3();
+  private _faceButtonDown = new WeakMap<XrInputSource, boolean>();
+
+  private _isVrActive = () => this.app.xr?.active === true && this.app.xr?.type === XRTYPE_VR;
+
+  private _onXrStart = () => {
+    this.entity.enabled = this._isVrActive();
+  };
+
+  private _onXrEnd = () => {
+    this.entity.enabled = false;
+    this._hovered = false;
+    this.entity.setLocalScale(1, 1, 1);
+    if (this._material) {
+      this._material.opacity = 0.9;
+      this._material.update();
+    }
+  };
+
+  private _onSelect = (inputSource: XrInputSource) => {
+    if (!this.entity.enabled) {
+      return;
+    }
+    if (this._rayHitsButton(inputSource)) {
+      this.app.xr?.end();
+    }
+  };
+
+  private _rayHitsButton(inputSource: XrInputSource): boolean {
+    return raySphereIntersect(
+      inputSource.getOrigin(),
+      inputSource.getDirection(),
+      this.entity.getPosition(),
+      this.hitRadius
+    );
+  }
+
+  private _faceButtonPressed(inputSource: XrInputSource): boolean {
+    const buttons = inputSource.gamepad?.buttons;
+
+    return buttons ? FACE_BUTTON_INDICES.some((index) => buttons[index]?.pressed === true) : false;
+  }
+
+  private _createTexture(): Texture {
+    const canvas = document.createElement('canvas');
+    canvas.width = TEXTURE_SIZE;
+    canvas.height = TEXTURE_SIZE;
+    const ctx = canvas.getContext('2d');
+    const c = TEXTURE_SIZE / 2;
+
+    if (ctx) {
+      ctx.clearRect(0, 0, TEXTURE_SIZE, TEXTURE_SIZE);
+      ctx.fillStyle = 'rgba(20, 20, 20, 0.75)';
+      ctx.beginPath();
+      ctx.arc(c, c, c * 0.92, 0, Math.PI * 2);
+      ctx.fill();
+
+      const arm = TEXTURE_SIZE * 0.24;
+      ctx.strokeStyle = '#ffffff';
+      ctx.lineWidth = TEXTURE_SIZE * 0.09;
+      ctx.lineCap = 'round';
+      ctx.beginPath();
+      ctx.moveTo(c - arm, c - arm);
+      ctx.lineTo(c + arm, c + arm);
+      ctx.moveTo(c + arm, c - arm);
+      ctx.lineTo(c - arm, c + arm);
+      ctx.stroke();
+    }
+
+    const texture = new Texture(this.app.graphicsDevice, {
+      name: 'xr-exit-button',
+      width: TEXTURE_SIZE,
+      height: TEXTURE_SIZE,
+      addressU: ADDRESS_CLAMP_TO_EDGE,
+      addressV: ADDRESS_CLAMP_TO_EDGE,
+      minFilter: FILTER_LINEAR,
+      magFilter: FILTER_LINEAR,
+      mipmaps: true,
+    });
+    texture.setSource(canvas);
+
+    return texture;
+  }
+
+  private _createMesh(): Mesh {
+    const h = this.halfSize;
+    const mesh = new Mesh(this.app.graphicsDevice);
+    mesh.setPositions([-h, -h, 0, h, -h, 0, h, h, 0, -h, h, 0]);
+    mesh.setNormals([0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1]);
+    mesh.setUvs(0, [0, 1, 1, 1, 1, 0, 0, 0]);
+    mesh.setIndices([0, 1, 2, 0, 2, 3]);
+    mesh.update();
+
+    return mesh;
+  }
+
+  initialize() {
+    this._texture = this._createTexture();
+
+    const material = new StandardMaterial();
+    material.useLighting = false;
+    material.emissive = new Color(1, 1, 1);
+    material.emissiveMap = this._texture;
+    material.opacityMap = this._texture;
+    material.opacityMapChannel = 'a';
+    material.blendType = BLEND_NORMAL;
+    material.depthTest = false;
+    material.depthWrite = false;
+    material.cull = CULLFACE_NONE;
+    material.update();
+    this._material = material;
+
+    this._mesh = this._createMesh();
+    const meshInstance = new MeshInstance(this._mesh, material);
+
+    // Immediate layer draws after the World layer (where the splats render) so the button is never
+    // composited behind them; depthTest:false keeps it on top within the layer.
+    this.entity.addComponent('render', { meshInstances: [meshInstance], layers: [LAYERID_IMMEDIATE] });
+
+    this.entity.enabled = this._isVrActive();
+    this.app.xr?.on('start', this._onXrStart);
+    this.app.xr?.on('end', this._onXrEnd);
+    this.app.xr?.input?.on('select', this._onSelect);
+  }
+
+  update() {
+    if (!this.entity.enabled) {
+      return;
+    }
+
+    this._trackHead();
+
+    const sources = this.app.xr?.input?.inputSources ?? [];
+    let hovered = false;
+    for (const source of sources) {
+      const sourceHovers = this._rayHitsButton(source);
+      hovered = hovered || sourceHovers;
+
+      // A face-button press exits only while that controller is aimed at the button, matching the
+      // trigger. Edge-detected so holding a button and then aiming onto it doesn't fire.
+      const facePressed = this._faceButtonPressed(source);
+      const faceWasDown = this._faceButtonDown.get(source) ?? false;
+      this._faceButtonDown.set(source, facePressed);
+
+      if (sourceHovers && facePressed && !faceWasDown) {
+        this.app.xr?.end();
+
+        return;
+      }
+    }
+
+    if (hovered !== this._hovered) {
+      this._hovered = hovered;
+      const scale = hovered ? 1.15 : 1;
+      this.entity.setLocalScale(scale, scale, scale);
+      if (this._material) {
+        this._material.opacity = hovered ? 1 : 0.9;
+        this._material.update();
+      }
+    }
+  }
+
+  /**
+   * Pin the button to the upper-right of the headset view. The camera entity's transform is
+   * overwritten every frame by WalkthroughCamera and is not the rendered head pose, so the head
+   * pose is read from the XR views (each view's inverse-view matrix is that eye's world transform)
+   * and the button places itself in world space, offset in head space.
+   */
+  private _trackHead() {
+    const views = this.app.xr?.views?.list;
+    if (!views || views.length === 0) {
+      return;
+    }
+
+    this._headPosition.set(0, 0, 0);
+    for (const view of views) {
+      view.viewInvOffMat.getTranslation(this._worldOffset);
+      this._headPosition.add(this._worldOffset);
+    }
+    this._headPosition.mulScalar(1 / views.length);
+    this._headRotation.setFromMat4(views[0].viewInvOffMat);
+
+    this._headRotation.transformVector(this.offset, this._worldOffset);
+    this.entity.setPosition(
+      this._headPosition.x + this._worldOffset.x,
+      this._headPosition.y + this._worldOffset.y,
+      this._headPosition.z + this._worldOffset.z
+    );
+    this.entity.setRotation(this._headRotation);
+  }
+
+  destroy() {
+    this.app.xr?.off('start', this._onXrStart);
+    this.app.xr?.off('end', this._onXrEnd);
+    this.app.xr?.input?.off('select', this._onSelect);
+    if (this.entity.render) {
+      this.entity.render.meshInstances = [];
+    }
+    this._mesh?.destroy();
+    this._material?.destroy();
+    this._texture?.destroy();
+    this._mesh = undefined;
+    this._material = undefined;
+    this._texture = undefined;
+  }
+}
