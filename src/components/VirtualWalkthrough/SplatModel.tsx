@@ -19,7 +19,6 @@ export interface SplatModelProps {
   cropFadeDistance?: number;
   revealRain?: boolean;
   onError?: (error: Error) => void;
-  modelScale?: number;
 }
 
 const SplatModel = ({
