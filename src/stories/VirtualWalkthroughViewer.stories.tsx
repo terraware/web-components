@@ -113,7 +113,7 @@ const Template: Story<Partial<VirtualWalkthroughViewerProps>> = (args) => (
         ]}
         sceneBounds={{ x: 0, y: -0.1, z: -0.1, m: 1 }}
         averageCameraHeight={0.2}
-        scaleFactor={7}
+        scaleFactor={15}
         {...args}
       />
     </Application>
