@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import { useApp } from '@playcanvas/react/hooks';
-import { CameraComponent, XRSPACE_LOCAL, XRSPACE_LOCALFLOOR, XRTYPE_AR, XRTYPE_VR } from 'playcanvas';
+import { CameraComponent, XRSPACE_LOCALFLOOR, XRTYPE_AR, XRTYPE_VR } from 'playcanvas';
 
 export type XrType = 'VR' | 'AR';
 
@@ -16,7 +16,7 @@ const XR_TYPES: Record<XrType, string> = {
 
 const XR_SPACES: Record<XrType, string> = {
   VR: XRSPACE_LOCALFLOOR,
-  AR: XRSPACE_LOCAL,
+  AR: XRSPACE_LOCALFLOOR,
 };
 
 export const useXr = ({ onError }: UseXrOptions = {}) => {
