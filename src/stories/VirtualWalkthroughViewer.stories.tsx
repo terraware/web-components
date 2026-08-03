@@ -104,6 +104,15 @@ const Template: Story<Partial<VirtualWalkthroughViewerProps>> = (args) => (
         strings={sampleStrings}
         editable
         showFreeFly
+        skyColor={'#4286DC'}
+        groundColor={'#98932E'}
+        groundPlane={[
+          [-0.15, -0.1, 0],
+          [0.8, -0.1, -0.1],
+          [-0.3, -0.1, -1],
+        ]}
+        sceneBounds={{ x: 0, y: -0.1, z: -0.1, m: 1 }}
+        averageCameraHeight={0.2}
         {...args}
       />
     </Application>
