@@ -252,7 +252,7 @@ const VirtualWalkthroughViewer = ({
         groundColor={groundColor || '#C3BDB7'}
       />
 
-      <Entity name='camera-root'>
+      <Entity name='camera-root' scale={[0.1, 0.1, 0.1]}>
         <Entity name='camera'>
           <Camera clearColor='#EAF8FF' fov={60} />
           <Script
