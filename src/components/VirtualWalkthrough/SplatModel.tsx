@@ -32,7 +32,6 @@ const SplatModel = ({
   cropFadeDistance = 0.5,
   revealRain = false,
   onError,
-  modelScale = 1,
 }: SplatModelProps) => {
   // A filename is required for the file props to assist with the asset loading. Otherwise it assumes that the splatSrc is a ply file.
   const { asset, loading, error } = useSplat(splatSrc, { file: { filename: 'model.sog' } });
@@ -51,10 +50,8 @@ const SplatModel = ({
     return null;
   }
 
-  const scale = modelScale || 1;
-
   return (
-    <Entity name='splat' rotation={rotation} scale={[scale, scale, scale]}>
+    <Entity name='splat' rotation={rotation}>
       <GSplat asset={asset} />
       {(cropAabbMin || cropAabbMax) &&
         (cropFade ? (

@@ -81,21 +81,26 @@ const VirtualWalkthroughViewer = ({
 
   const sceneBoundsRadius = useMemo(() => {
     if (sceneBounds?.m !== undefined) {
-      return scaleFactor * sceneBounds.m;
+      return sceneBounds.m;
     }
     const dx = cameraPosition[0] - origin[0];
     const dy = cameraPosition[1] - origin[1];
     const dz = cameraPosition[2] - origin[2];
 
-    return scaleFactor * Math.sqrt(dx * dx + dy * dy + dz * dz) * 0.5;
+    return Math.sqrt(dx * dx + dy * dy + dz * dz) * 0.5;
   }, [cameraPosition, sceneBounds, origin]);
 
   const sceneBoundsCenter = useMemo(
     () =>
       sceneBounds
-        ? new Vec3(scaleFactor * sceneBounds.x, scaleFactor * sceneBounds.y, scaleFactor * sceneBounds.z)
-        : new Vec3(scaleFactor * origin[0], scaleFactor * cameraPosition[1], scaleFactor * origin[2]),
+        ? new Vec3(sceneBounds.x, sceneBounds.y, sceneBounds.z)
+        : new Vec3(origin[0], cameraPosition[1], origin[2]),
     [sceneBounds, origin, cameraPosition]
+  );
+
+  const cameraBoundsCenter = useMemo(
+    () => sceneBoundsCenter.clone().mulScalar(scaleFactor),
+    [sceneBoundsCenter, scaleFactor]
   );
 
   const groundPlane = useMemo<Vec3[]>(
@@ -103,21 +108,26 @@ const VirtualWalkthroughViewer = ({
     [groundPlaneProp]
   );
 
+  const cameraGroundPlane = useMemo<Vec3[]>(
+    () => groundPlane.map((p) => p.clone().mulScalar(scaleFactor)),
+    [groundPlane, scaleFactor]
+  );
+
   useEffect(() => {
     setCamera(origin, cameraPosition);
   }, [origin, cameraPosition, setCamera]);
 
   useEffect(() => {
-    if (!groundPlane.length) {
+    if (!cameraGroundPlane.length) {
       return;
     }
     // @ts-expect-error - scripts are added dynamically to the camera entity
     const walkthroughCam = app.root.findByName('camera')?.script?.walkthroughCamera;
     if (walkthroughCam) {
       // Should be changed to a react prop if shallowEquals in playcanvas/react is fixed (see https://github.com/playcanvas/react/pull/298)
-      walkthroughCam.groundPlane = groundPlane;
+      walkthroughCam.groundPlane = cameraGroundPlane;
     }
-  }, [groundPlane, app]);
+  }, [cameraGroundPlane, app]);
 
   const handleToggleFreeFly = useCallback(() => {
     const newFreeFly = !isFreeFly;
@@ -245,15 +255,7 @@ const VirtualWalkthroughViewer = ({
   );
 
   const splatModel = useMemo(
-    () => (
-      <SplatModel
-        key='splat'
-        splatSrc={splatSrc}
-        rotation={[-180, 0, 0]}
-        revealRain={isHighPerformance}
-        // modelScale={scaleFactor}
-      />
-    ),
+    () => <SplatModel key='splat' splatSrc={splatSrc} rotation={[-180, 0, 0]} revealRain={isHighPerformance} />,
     [isHighPerformance, splatSrc]
   );
 
@@ -270,8 +272,8 @@ const VirtualWalkthroughViewer = ({
           <Camera clearColor='#EAF8FF' fov={60} />
           <Script
             script={WalkthroughCamera}
-            boundsCenter={sceneBoundsCenter}
-            boundsRadius={sceneBoundsRadius}
+            boundsCenter={cameraBoundsCenter}
+            boundsRadius={sceneBoundsRadius * scaleFactor}
             enableFly={!isTextFieldFocused}
             averageCameraHeight={scaleFactor * averageCameraHeight}
             moveSpeed={0.3 * scaleFactor}
