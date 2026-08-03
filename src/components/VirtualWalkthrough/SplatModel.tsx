@@ -50,7 +50,7 @@ const SplatModel = ({
   }
 
   return (
-    <Entity name='splat' rotation={rotation} scale={[2, 2, 2]}>
+    <Entity name='splat' rotation={rotation} scale={[10, 10, 10]}>
       <GSplat asset={asset} />
       {(cropAabbMin || cropAabbMax) &&
         (cropFade ? (
