@@ -33,6 +33,7 @@ export interface VirtualWalkthroughViewerProps {
   skyColor?: string;
   groundColor?: string;
   averageCameraHeight?: number;
+  scaleFactor?: number;
   annotations: AnnotationProps[];
   onSaveAnnotations: (annotations: AnnotationProps[]) => void | Promise<void>;
   strings: SplatControlsStrings;
@@ -52,6 +53,7 @@ const VirtualWalkthroughViewer = ({
   skyColor,
   groundColor,
   averageCameraHeight = 0,
+  scaleFactor = 1,
   annotations,
   onSaveAnnotations,
   strings,
@@ -79,19 +81,20 @@ const VirtualWalkthroughViewer = ({
 
   const sceneBoundsRadius = useMemo(() => {
     if (sceneBounds?.m !== undefined) {
-      return sceneBounds.m;
+      return scaleFactor * sceneBounds.m;
     }
     const dx = cameraPosition[0] - origin[0];
     const dy = cameraPosition[1] - origin[1];
     const dz = cameraPosition[2] - origin[2];
-    return Math.sqrt(dx * dx + dy * dy + dz * dz) * 0.5;
+
+    return scaleFactor * Math.sqrt(dx * dx + dy * dy + dz * dz) * 0.5;
   }, [cameraPosition, sceneBounds, origin]);
 
   const sceneBoundsCenter = useMemo(
     () =>
       sceneBounds
-        ? new Vec3(sceneBounds.x, sceneBounds.y, sceneBounds.z)
-        : new Vec3(origin[0], cameraPosition[1], origin[2]),
+        ? new Vec3(scaleFactor * sceneBounds.x, scaleFactor * sceneBounds.y, scaleFactor * sceneBounds.z)
+        : new Vec3(scaleFactor * origin[0], scaleFactor * cameraPosition[1], scaleFactor * origin[2]),
     [sceneBounds, origin, cameraPosition]
   );
 
@@ -147,6 +150,7 @@ const VirtualWalkthroughViewer = ({
         }
         const updated = [...prev];
         updated[selectedAnnotationIndex] = { ...updated[selectedAnnotationIndex], position };
+
         return updated;
       });
     },
@@ -223,6 +227,7 @@ const VirtualWalkthroughViewer = ({
       setLocalAnnotations((prev) => {
         const updated = [...prev];
         updated[selectedAnnotationIndex] = { ...updated[selectedAnnotationIndex], ...updates };
+
         return updated;
       });
     },
@@ -240,7 +245,15 @@ const VirtualWalkthroughViewer = ({
   );
 
   const splatModel = useMemo(
-    () => <SplatModel key='splat' splatSrc={splatSrc} rotation={[-180, 0, 0]} revealRain={isHighPerformance} />,
+    () => (
+      <SplatModel
+        key='splat'
+        splatSrc={splatSrc}
+        rotation={[-180, 0, 0]}
+        revealRain={isHighPerformance}
+        // modelScale={scaleFactor}
+      />
+    ),
     [isHighPerformance, splatSrc]
   );
 
@@ -252,7 +265,7 @@ const VirtualWalkthroughViewer = ({
         groundColor={groundColor || '#C3BDB7'}
       />
 
-      <Entity name='camera-root' scale={[0.1, 0.1, 0.1]}>
+      <Entity name='camera-root'>
         <Entity name='camera'>
           <Camera clearColor='#EAF8FF' fov={60} />
           <Script
@@ -260,7 +273,10 @@ const VirtualWalkthroughViewer = ({
             boundsCenter={sceneBoundsCenter}
             boundsRadius={sceneBoundsRadius}
             enableFly={!isTextFieldFocused}
-            averageCameraHeight={averageCameraHeight}
+            averageCameraHeight={scaleFactor * averageCameraHeight}
+            moveSpeed={0.3 * scaleFactor}
+            moveFastSpeed={0.5 * scaleFactor}
+            moveSlowSpeed={0.15 * scaleFactor}
           />
         </Entity>
         {/* Sibling of the camera (not a child): WalkthroughCamera rewrites the camera entity's
@@ -277,41 +293,43 @@ const VirtualWalkthroughViewer = ({
         />
       </Entity>
 
-      {splatModel}
+      <Entity name='content-root' scale={[scaleFactor, scaleFactor, scaleFactor]}>
+        {splatModel}
 
-      {sceneBounds?.m !== undefined && groundPlane.length === 3 && (
-        <BoundaryRing center={sceneBoundsCenter} radius={sceneBoundsRadius} groundPlane={groundPlane} />
-      )}
+        {sceneBounds?.m !== undefined && groundPlane.length === 3 && (
+          <BoundaryRing center={sceneBoundsCenter} radius={sceneBoundsRadius} groundPlane={groundPlane} />
+        )}
 
-      {localAnnotations.length > 0 && (
-        <Entity name='annotations-root'>
-          <Script
-            script={TfAnnotationManager}
-            enabled={true}
-            hotspotSize={30}
-            maxWorldSize={0.05}
-            opacity={1}
-            hotspotColor={new Color().fromString(theme.palette.TwClrIcnBrand as string)}
-            hoverColor={new Color().fromString('#ffffff')}
-            hotspotBackgroundColor={theme.palette.TwClrBaseWhite as string}
-          />
-          {localAnnotations.map((annotation, index) => (
-            <Annotation
-              key={`annotation-${index}`}
-              {...annotation}
-              index={index}
-              visible={showAnnotations}
-              isEdit={isEdit}
-              isSelected={selectedAnnotationIndex === index}
-              isViewed={viewingAnnotationIndex === index}
-              onSelect={() => setSelectedAnnotationIndex(index)}
-              onPositionChange={handleAnnotationPositionChange}
-              onView={(anno, screenX, screenY) => handleAnnotationView(anno, index, screenX, screenY)}
-              onScreenPositionUpdate={handleAnnotationScreenPositionUpdate}
+        {localAnnotations.length > 0 && (
+          <Entity name='annotations-root'>
+            <Script
+              script={TfAnnotationManager}
+              enabled={true}
+              hotspotSize={30}
+              maxWorldSize={0.05}
+              opacity={1}
+              hotspotColor={new Color().fromString(theme.palette.TwClrIcnBrand as string)}
+              hoverColor={new Color().fromString('#ffffff')}
+              hotspotBackgroundColor={theme.palette.TwClrBaseWhite as string}
             />
-          ))}
-        </Entity>
-      )}
+            {localAnnotations.map((annotation, index) => (
+              <Annotation
+                key={`annotation-${index}`}
+                {...annotation}
+                index={index}
+                visible={showAnnotations}
+                isEdit={isEdit}
+                isSelected={selectedAnnotationIndex === index}
+                isViewed={viewingAnnotationIndex === index}
+                onSelect={() => setSelectedAnnotationIndex(index)}
+                onPositionChange={handleAnnotationPositionChange}
+                onView={(anno, screenX, screenY) => handleAnnotationView(anno, index, screenX, screenY)}
+                onScreenPositionUpdate={handleAnnotationScreenPositionUpdate}
+              />
+            ))}
+          </Entity>
+        )}
+      </Entity>
 
       <SplatControls
         defaultCameraFocus={origin}
