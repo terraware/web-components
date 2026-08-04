@@ -43,6 +43,10 @@ const LOCAL_FORWARD = new Vec3(0, 0, -1);
 export class XrGazeDwell extends Script {
   static scriptName = 'xrGazeDwell';
 
+  /** Index of the annotation whose panel is currently open, or -1. Excluded from gaze targets so
+   * dwell opens OTHER annotations while one is open (and never re-dwells the open one). */
+  activeIndex = -1;
+
   private _dwell: DwellState = INITIAL_DWELL_STATE;
 
   private _pieEntity?: Entity;
@@ -165,7 +169,10 @@ export class XrGazeDwell extends Script {
       return;
     }
 
-    const candidates = collectAnnotationHitCandidates(this.app, GAZE_HIT_RADIUS_PAD);
+    const activeName = `annotation-${this.activeIndex}`;
+    const candidates = collectAnnotationHitCandidates(this.app, GAZE_HIT_RADIUS_PAD).filter(
+      (candidate) => candidate.entity.name !== activeName
+    );
     this._headRot.transformVector(LOCAL_FORWARD, this._forward);
     const target = nearestAnnotationHit(this._headPos, this._forward, candidates);
 

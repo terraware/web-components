@@ -5,9 +5,13 @@ import { Script } from '@playcanvas/react/components';
 
 import { XrGazeDwell as XrGazeDwellScript } from './xr-gaze-dwell';
 
-const XrGazeDwell = () => (
+interface XrGazeDwellProps {
+  activeIndex: number;
+}
+
+const XrGazeDwell = ({ activeIndex }: XrGazeDwellProps) => (
   <Entity name='xr-gaze-dwell'>
-    <Script script={XrGazeDwellScript} />
+    <Script script={XrGazeDwellScript} activeIndex={activeIndex} />
   </Entity>
 );
 

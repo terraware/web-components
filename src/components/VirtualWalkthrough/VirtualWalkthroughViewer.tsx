@@ -313,7 +313,7 @@ const VirtualWalkthroughViewer = ({
             scaleFactor={scaleFactor}
           />
         )}
-        {isCurrentlyInXr && !viewingAnnotation && <XrGazeDwell />}
+        {isCurrentlyInXr && <XrGazeDwell activeIndex={viewingAnnotationIndex} />}
         {/* Disable teleport for AR as it can be disorienting */}
         <Script script={TfXrNavigation} enabled={!isEdit} enableTeleport={false} />
         {!isCurrentlyInXr && (
