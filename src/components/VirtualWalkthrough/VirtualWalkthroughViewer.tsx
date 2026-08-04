@@ -19,6 +19,7 @@ import SplatControls, { SplatControlsStrings } from './SplatControls';
 import SplatModel from './SplatModel';
 import { TfAnnotationManager } from './TfAnnotationManager';
 import { TfXrNavigation } from './TfXrNavigation';
+import VrAnnotationPanel from './VrAnnotationPanel';
 import XrAnnotationInteraction from './XrAnnotationInteraction';
 import XrExitButton from './XrExitButton';
 import XrPointerRay from './XrPointerRay';
@@ -291,8 +292,15 @@ const VirtualWalkthroughViewer = ({
             transform every frame, so the button drives its own world pose from the XR head pose. */}
         <XrExitButton />
         <Script script={XrControllers} enabled={!isEdit} />
-        <XrAnnotationInteraction />
+        <XrAnnotationInteraction onEmptySelect={handleCloseAnnotation} />
         <XrPointerRay />
+        {isCurrentlyInXr && viewingAnnotation && (
+          <VrAnnotationPanel
+            key={viewingAnnotationIndex}
+            annotation={viewingAnnotation}
+            annotationIndex={viewingAnnotationIndex}
+          />
+        )}
         {/* Disable teleport for AR as it can be disorienting */}
         <Script script={TfXrNavigation} enabled={!isEdit} enableTeleport={false} />
         {!isCurrentlyInXr && (

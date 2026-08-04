@@ -12,6 +12,8 @@ const HIT_RADIUS_PAD = 2.5;
 export class XrAnnotationInteraction extends Script {
   static scriptName = 'xrAnnotationInteraction';
 
+  onEmptySelectCallback?: () => void;
+
   private _scratchScale = new Vec3();
 
   private _isVrActive = () => this.app.xr?.active === true && this.app.xr?.type === XRTYPE_VR;
@@ -48,6 +50,10 @@ export class XrAnnotationInteraction extends Script {
 
     const index = nearestAnnotationHit(origin, direction, candidates);
     if (index === null) {
+      if (typeof this.onEmptySelectCallback === 'function') {
+        this.onEmptySelectCallback();
+      }
+
       return;
     }
 
