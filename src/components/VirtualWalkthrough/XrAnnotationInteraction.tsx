@@ -6,12 +6,12 @@ import { Script } from '@playcanvas/react/components';
 import { XrAnnotationInteraction as XrAnnotationInteractionScript } from './xr-annotation-interaction';
 
 interface XrAnnotationInteractionProps {
-  onEmptySelect?: () => void;
+  onDismiss?: () => void;
 }
 
-const XrAnnotationInteraction = ({ onEmptySelect }: XrAnnotationInteractionProps) => (
+const XrAnnotationInteraction = ({ onDismiss }: XrAnnotationInteractionProps) => (
   <Entity name='xr-annotation-interaction'>
-    <Script script={XrAnnotationInteractionScript} onEmptySelectCallback={onEmptySelect} />
+    <Script script={XrAnnotationInteractionScript} onDismissCallback={onDismiss} />
   </Entity>
 );
 

@@ -302,7 +302,7 @@ const VirtualWalkthroughViewer = ({
             transform every frame, so the button drives its own world pose from the XR head pose. */}
         <XrExitButton />
         <Script script={XrControllers} enabled={!isEdit} />
-        <XrAnnotationInteraction onEmptySelect={handleCloseAnnotation} />
+        <XrAnnotationInteraction onDismiss={handleCloseAnnotation} />
         <XrPointerRay />
         {/* VR only: the panel is driven by controller rays, which AR sessions don't have. */}
         {isCurrentlyInVr && viewingAnnotation && (
