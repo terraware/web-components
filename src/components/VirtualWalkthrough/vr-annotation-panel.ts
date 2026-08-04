@@ -12,9 +12,11 @@ import {
   StandardMaterial,
   Texture,
   Vec3,
+  XrInputSource,
 } from 'playcanvas';
 
 import { wrapText } from './vr-annotation-panel-layout';
+import { rayQuadHit } from './xr-ray-quad';
 
 const CANVAS_WIDTH = 1024;
 const CANVAS_HEIGHT = 768;
@@ -31,8 +33,18 @@ const PAD_X = 48;
 
 /** Local +z (the quad's front face) — used to derive the panel's yaw toward the viewer. */
 const FORWARD_Z = new Vec3(0, 0, 1);
+/** Quad in-plane axes in local space, transformed to world for ray hit-testing. */
+const RIGHT_AXIS = new Vec3(1, 0, 0);
+const UP_AXIS = new Vec3(0, 1, 0);
 
 const RAD_TO_DEG = 180 / Math.PI;
+
+/** Fixed image band (canvas px) so arrows/dots keep a stable position while images load. */
+const IMAGE_Y = 40;
+const IMAGE_H = 360;
+
+/** Width (canvas px) of the left/right arrow hit + draw zones over the image band. */
+const ARROW_ZONE_W = 170;
 
 export class VrAnnotationPanel extends Script {
   static scriptName = 'vrAnnotationPanel';
@@ -50,11 +62,40 @@ export class VrAnnotationPanel extends Script {
   private _mesh?: Mesh;
   private _canvas?: HTMLCanvasElement;
   private _drawnSignature: string | null = null;
+  private _currentImage = 0;
+  private _loadToken = 0;
 
   private _headRotation = new Quat();
   private _anchor = new Vec3();
   private _scratchDir = new Vec3();
   private _yawQuat = new Quat();
+  private _axisRight = new Vec3();
+  private _axisUp = new Vec3();
+  private _scratchScale = new Vec3();
+
+  private _onSelect = (inputSource: XrInputSource) => {
+    if (this.app.xr?.active !== true) {
+      return;
+    }
+    const images = this.imageUrls ?? [];
+    if (images.length <= 1) {
+      return;
+    }
+    const hit = this._rayQuadHit(inputSource.getOrigin(), inputSource.getDirection());
+    if (!hit) {
+      return;
+    }
+    const cx = ((hit.u + 1) / 2) * CANVAS_WIDTH;
+    const cy = ((1 - hit.v) / 2) * CANVAS_HEIGHT;
+    if (cy < IMAGE_Y || cy > IMAGE_Y + IMAGE_H) {
+      return;
+    }
+    if (cx <= ARROW_ZONE_W) {
+      this._setImage((this._currentImage - 1 + images.length) % images.length);
+    } else if (cx >= CANVAS_WIDTH - ARROW_ZONE_W) {
+      this._setImage((this._currentImage + 1) % images.length);
+    }
+  };
 
   initialize() {
     this._canvas = document.createElement('canvas');
@@ -89,6 +130,8 @@ export class VrAnnotationPanel extends Script {
     this._mesh = this._createMesh();
     const meshInstance = new MeshInstance(this._mesh, material);
     this.entity.addComponent('render', { meshInstances: [meshInstance], layers: [LAYERID_IMMEDIATE] });
+
+    this.app.xr?.input?.on('select', this._onSelect);
   }
 
   private _createMesh(): Mesh {
@@ -114,6 +157,35 @@ export class VrAnnotationPanel extends Script {
     ctx.closePath();
   }
 
+  private _drawArrow(ctx: CanvasRenderingContext2D, cx: number, cy: number, pointsLeft: boolean) {
+    ctx.beginPath();
+    ctx.arc(cx, cy, 40, 0, Math.PI * 2);
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.45)';
+    ctx.fill();
+
+    const s = 16;
+    const tip = pointsLeft ? cx - s * 0.6 : cx + s * 0.6;
+    const base = pointsLeft ? cx + s * 0.6 : cx - s * 0.6;
+    ctx.beginPath();
+    ctx.moveTo(base, cy - s);
+    ctx.lineTo(tip, cy);
+    ctx.lineTo(base, cy + s);
+    ctx.closePath();
+    ctx.fillStyle = '#ffffff';
+    ctx.fill();
+  }
+
+  private _drawDots(ctx: CanvasRenderingContext2D, count: number, dotY: number) {
+    const gap = 26;
+    const startX = CANVAS_WIDTH / 2 - ((count - 1) * gap) / 2;
+    for (let i = 0; i < count; i++) {
+      ctx.beginPath();
+      ctx.arc(startX + i * gap, dotY, 7, 0, Math.PI * 2);
+      ctx.fillStyle = i === this._currentImage ? 'rgba(0, 0, 0, 0.85)' : 'rgba(0, 0, 0, 0.25)';
+      ctx.fill();
+    }
+  }
+
   private _drawContent(image?: HTMLImageElement) {
     const ctx = this._canvas?.getContext('2d');
     if (!ctx) {
@@ -125,20 +197,36 @@ export class VrAnnotationPanel extends Script {
     this._roundRect(ctx, 0, 0, CANVAS_WIDTH, CANVAS_HEIGHT, 32);
     ctx.fill();
 
-    let y = 40;
+    let y = IMAGE_Y;
     const contentWidth = CANVAS_WIDTH - PAD_X * 2;
+    const images = this.imageUrls ?? [];
 
-    if (image) {
-      const imgH = 360;
-      const scale = Math.max(contentWidth / image.width, imgH / image.height);
-      const dw = image.width * scale;
-      const dh = image.height * scale;
+    if (images.length > 0) {
       ctx.save();
-      this._roundRect(ctx, PAD_X, y, contentWidth, imgH, 16);
+      this._roundRect(ctx, PAD_X, IMAGE_Y, contentWidth, IMAGE_H, 16);
       ctx.clip();
-      ctx.drawImage(image, PAD_X + (contentWidth - dw) / 2, y + (imgH - dh) / 2, dw, dh);
+      if (image) {
+        const scale = Math.max(contentWidth / image.width, IMAGE_H / image.height);
+        const dw = image.width * scale;
+        const dh = image.height * scale;
+        ctx.drawImage(image, PAD_X + (contentWidth - dw) / 2, IMAGE_Y + (IMAGE_H - dh) / 2, dw, dh);
+      } else {
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.06)';
+        ctx.fillRect(PAD_X, IMAGE_Y, contentWidth, IMAGE_H);
+      }
       ctx.restore();
-      y += imgH + 32;
+
+      y = IMAGE_Y + IMAGE_H + 16;
+
+      if (images.length > 1) {
+        const bandCenterY = IMAGE_Y + IMAGE_H / 2;
+        this._drawArrow(ctx, ARROW_ZONE_W / 2, bandCenterY, true);
+        this._drawArrow(ctx, CANVAS_WIDTH - ARROW_ZONE_W / 2, bandCenterY, false);
+        this._drawDots(ctx, images.length, y + 4);
+        y += 32;
+      }
+
+      y += 16;
     }
 
     if (this.label) {
@@ -183,16 +271,52 @@ export class VrAnnotationPanel extends Script {
     this._texture?.upload();
   }
 
-  private _loadFirstImage() {
-    const url = this.imageUrls?.[0];
+  private _setImage(index: number) {
+    this._currentImage = index;
+    this._drawContent();
+    this._loadCurrentImage();
+  }
+
+  private _loadCurrentImage() {
+    const url = this.imageUrls?.[this._currentImage];
     if (!url) {
       return;
     }
+    const token = ++this._loadToken;
     const img = new Image();
     img.crossOrigin = 'anonymous';
-    img.onload = () => this._drawContent(img);
-    // onerror (e.g. a host without CORS headers): keep the text-only panel already drawn.
+    img.onload = () => {
+      // Ignore a stale load that a newer navigation has superseded.
+      if (token === this._loadToken) {
+        this._drawContent(img);
+      }
+    };
+    // onerror (e.g. a host without CORS headers): keep the placeholder + text already drawn.
     img.src = url;
+  }
+
+  private _rayQuadHit(origin: Vec3, direction: Vec3) {
+    const rotation = this.entity.getRotation();
+    rotation.transformVector(RIGHT_AXIS, this._axisRight);
+    rotation.transformVector(UP_AXIS, this._axisUp);
+    this.entity.getWorldTransform().getScale(this._scratchScale);
+    const halfWidth = (PANEL_WIDTH / 2) * this._scratchScale.x;
+    const halfHeight = (PANEL_HEIGHT / 2) * this._scratchScale.y;
+
+    return rayQuadHit(
+      origin,
+      direction,
+      this.entity.getPosition(),
+      this._axisRight,
+      this._axisUp,
+      halfWidth,
+      halfHeight
+    );
+  }
+
+  /** True when the ray points at the panel quad (used to suppress the empty-select dismiss). */
+  rayHitsPanel(origin: Vec3, direction: Vec3): boolean {
+    return this._rayQuadHit(origin, direction) !== null;
   }
 
   update() {
@@ -203,8 +327,9 @@ export class VrAnnotationPanel extends Script {
     const signature = `${this.title}|${this.label ?? ''}|${this.bodyText ?? ''}|${(this.imageUrls ?? []).join(',')}`;
     if (signature !== this._drawnSignature) {
       this._drawnSignature = signature;
+      this._currentImage = 0;
       this._drawContent();
-      this._loadFirstImage();
+      this._loadCurrentImage();
     }
 
     this._trackHead();
@@ -241,6 +366,7 @@ export class VrAnnotationPanel extends Script {
   }
 
   destroy() {
+    this.app.xr?.input?.off('select', this._onSelect);
     if (this.entity.render) {
       this.entity.render.meshInstances = [];
     }
