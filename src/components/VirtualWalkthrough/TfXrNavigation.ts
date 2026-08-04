@@ -1,4 +1,4 @@
-import { XrNavigation as PcXrNavigation } from 'playcanvas/scripts/esm/xr-navigation.mjs';
+import { XrNavigation as PcXrNavigation } from 'playcanvas/scripts/esm/xr/xr-navigation.mjs';
 
 /**
  * Extended XrNavigation that fixes the bug where tryTeleport doesn't respect
