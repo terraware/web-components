@@ -1,6 +1,6 @@
 import { Vec3 } from 'playcanvas';
 
-import { nearestAnnotationHit } from './xr-annotation-interaction';
+import { nearestAnnotationHit } from './xr-annotation-targeting';
 
 describe('nearestAnnotationHit', () => {
   const origin = new Vec3(0, 0, 5);
