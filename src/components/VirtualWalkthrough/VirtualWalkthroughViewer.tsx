@@ -289,7 +289,8 @@ const VirtualWalkthroughViewer = ({
             transform every frame, so the button drives its own world pose from the XR head pose. */}
         <XrExitButton />
         <Script script={XrControllers} enabled={!isEdit} />
-        <Script script={TfXrNavigation} enabled={!isEdit} enableTeleport={true} />
+        {/* Disable teleport for AR as it can be disorienting */}
+        <Script script={TfXrNavigation} enabled={!isEdit} enableTeleport={false} />
         {!isCurrentlyInXr && (
           <Script
             script={AutoRotator}
