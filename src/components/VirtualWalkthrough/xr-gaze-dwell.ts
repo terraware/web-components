@@ -24,7 +24,7 @@ import { DwellState, INITIAL_DWELL_STATE, advanceDwell } from './xr-gaze-dwell-s
 const GAZE_HIT_RADIUS_PAD = 5;
 
 /** Seconds of continuous gaze required to open an annotation. */
-const DWELL_SECONDS = 1.5;
+const DWELL_SECONDS = 1.25;
 
 /** Local half-extent of the unit-plane hotspot quad. */
 const HOTSPOT_HALF_EXTENT = 0.5;
