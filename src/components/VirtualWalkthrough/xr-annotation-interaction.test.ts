@@ -36,4 +36,14 @@ describe('nearestAnnotationHit', () => {
     const candidates = [{ position: new Vec3(0, 0, 0), radius: 1 }];
     expect(nearestAnnotationHit(origin, new Vec3(0, 0, -4), candidates)).toBe(0);
   });
+
+  it('returns null when the only candidate is behind the ray origin', () => {
+    const candidates = [{ position: new Vec3(0, 0, 0), radius: 1 }];
+    expect(nearestAnnotationHit(origin, new Vec3(0, 0, 1), candidates)).toBeNull();
+  });
+
+  it('registers a tangent graze as a hit', () => {
+    const candidates = [{ position: new Vec3(0, 0, 0), radius: 1 }];
+    expect(nearestAnnotationHit(new Vec3(0, 1, 5), new Vec3(0, 0, -1), candidates)).toBe(0);
+  });
 });
