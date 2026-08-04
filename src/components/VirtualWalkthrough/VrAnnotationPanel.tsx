@@ -9,9 +9,10 @@ import { VrAnnotationPanel as VrAnnotationPanelScript } from './vr-annotation-pa
 interface VrAnnotationPanelProps {
   annotation: AnnotationProps;
   annotationIndex: number;
+  scaleFactor: number;
 }
 
-const VrAnnotationPanel = ({ annotation, annotationIndex }: VrAnnotationPanelProps) => (
+const VrAnnotationPanel = ({ annotation, annotationIndex, scaleFactor }: VrAnnotationPanelProps) => (
   <Entity name='vr-annotation-panel'>
     <Script
       script={VrAnnotationPanelScript}
@@ -20,6 +21,7 @@ const VrAnnotationPanel = ({ annotation, annotationIndex }: VrAnnotationPanelPro
       bodyText={annotation.bodyText}
       imageUrls={annotation.imageUrls}
       annotationIndex={annotationIndex}
+      scaleFactor={scaleFactor}
     />
   </Entity>
 );

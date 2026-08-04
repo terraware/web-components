@@ -308,6 +308,7 @@ const VirtualWalkthroughViewer = ({
             key={viewingAnnotationIndex}
             annotation={viewingAnnotation}
             annotationIndex={viewingAnnotationIndex}
+            scaleFactor={scaleFactor}
           />
         )}
         {/* Disable teleport for AR as it can be disorienting */}

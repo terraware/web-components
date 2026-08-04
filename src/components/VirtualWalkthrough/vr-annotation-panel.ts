@@ -29,6 +29,11 @@ const PANEL_OFFSET = new Vec3(0, PANEL_HEIGHT / 2 + 0.15, 0);
 
 const PAD_X = 48;
 
+/** Local +z (the quad's front face) — used to derive the panel's yaw toward the viewer. */
+const FORWARD_Z = new Vec3(0, 0, 1);
+
+const RAD_TO_DEG = 180 / Math.PI;
+
 export class VrAnnotationPanel extends Script {
   static scriptName = 'vrAnnotationPanel';
 
@@ -38,6 +43,7 @@ export class VrAnnotationPanel extends Script {
   bodyText?: string;
   imageUrls?: string[];
   annotationIndex = -1;
+  scaleFactor = 1;
 
   private _material?: StandardMaterial;
   private _texture?: Texture;
@@ -47,6 +53,8 @@ export class VrAnnotationPanel extends Script {
 
   private _headRotation = new Quat();
   private _anchor = new Vec3();
+  private _scratchDir = new Vec3();
+  private _yawQuat = new Quat();
 
   initialize() {
     this._canvas = document.createElement('canvas');
@@ -206,12 +214,22 @@ export class VrAnnotationPanel extends Script {
       return;
     }
     this._anchor.copy(anchor.getPosition());
+    // Panel size and its offset from the hotspot scale with the scene so the panel keeps its
+    // proportions relative to the (content-root-scaled) annotations across scenes.
+    this.entity.setLocalScale(this.scaleFactor, this.scaleFactor, this.scaleFactor);
     this.entity.setPosition(
-      this._anchor.x + PANEL_OFFSET.x,
-      this._anchor.y + PANEL_OFFSET.y,
-      this._anchor.z + PANEL_OFFSET.z
+      this._anchor.x + PANEL_OFFSET.x * this.scaleFactor,
+      this._anchor.y + PANEL_OFFSET.y * this.scaleFactor,
+      this._anchor.z + PANEL_OFFSET.z * this.scaleFactor
     );
-    this.entity.setRotation(this._headRotation);
+
+    // Billboard on yaw only: face the viewer horizontally but stay upright and level, so
+    // tilting/rolling the headset does not tilt the panel. Derived from the head's forward
+    // heading, so it matches the level head-rotation orientation but with pitch/roll removed.
+    this._headRotation.transformVector(FORWARD_Z, this._scratchDir);
+    const yaw = Math.atan2(this._scratchDir.x, this._scratchDir.z) * RAD_TO_DEG;
+    this._yawQuat.setFromEulerAngles(0, yaw, 0);
+    this.entity.setRotation(this._yawQuat);
   }
 
   private _trackHead() {
