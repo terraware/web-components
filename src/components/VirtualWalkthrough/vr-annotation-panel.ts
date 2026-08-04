@@ -42,11 +42,9 @@ export class VrAnnotationPanel extends Script {
   private _texture?: Texture;
   private _mesh?: Mesh;
   private _canvas?: HTMLCanvasElement;
-  private _contentDrawn = false;
+  private _drawnSignature: string | null = null;
 
-  private _headPosition = new Vec3();
   private _headRotation = new Quat();
-  private _scratch = new Vec3();
   private _anchor = new Vec3();
 
   initialize() {
@@ -150,10 +148,14 @@ export class VrAnnotationPanel extends Script {
     ctx.textBaseline = 'top';
     ctx.fillStyle = '#ffffff';
     ctx.font = '700 48px sans-serif';
-    wrapText(this.title, contentWidth, (s) => ctx.measureText(s).width).forEach((line) => {
+    const titleLines = wrapText(this.title, contentWidth, (s) => ctx.measureText(s).width);
+    for (const line of titleLines) {
+      if (y > CANVAS_HEIGHT - 40) {
+        break;
+      }
       ctx.fillText(line, PAD_X, y);
       y += 56;
-    });
+    }
     y += 16;
 
     if (this.bodyText) {
@@ -189,8 +191,9 @@ export class VrAnnotationPanel extends Script {
       return;
     }
 
-    if (!this._contentDrawn) {
-      this._contentDrawn = true;
+    const signature = `${this.title}|${this.label ?? ''}|${this.bodyText ?? ''}|${(this.imageUrls ?? []).join(',')}`;
+    if (signature !== this._drawnSignature) {
+      this._drawnSignature = signature;
       this._drawContent();
       this._loadFirstImage();
     }
@@ -215,12 +218,6 @@ export class VrAnnotationPanel extends Script {
     if (!views || views.length === 0) {
       return;
     }
-    this._headPosition.set(0, 0, 0);
-    for (const view of views) {
-      view.viewInvOffMat.getTranslation(this._scratch);
-      this._headPosition.add(this._scratch);
-    }
-    this._headPosition.mulScalar(1 / views.length);
     this._headRotation.setFromMat4(views[0].viewInvOffMat);
   }
 
