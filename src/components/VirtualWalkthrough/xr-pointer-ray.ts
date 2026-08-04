@@ -3,11 +3,13 @@ import { Color, Script, Vec3 } from 'playcanvas';
 /** Length of the drawn pointer ray, in world meters. */
 const RAY_LENGTH = 5;
 
-/** Ray colour (cyan) — bright enough to read against the scene. */
-const RAY_COLOR = new Color(0.25, 0.8, 1);
+/** Default ray colour (cyan) — bright enough to read against the scene. */
+export const DEFAULT_RAY_COLOR = new Color(0.25, 0.8, 1);
 
 export class XrPointerRay extends Script {
   static scriptName = 'xrPointerRay';
+
+  color = DEFAULT_RAY_COLOR.clone();
 
   private _end = new Vec3();
 
@@ -21,7 +23,7 @@ export class XrPointerRay extends Script {
       const origin = source.getOrigin();
       const direction = source.getDirection();
       this._end.copy(direction).mulScalar(RAY_LENGTH).add(origin);
-      this.app.drawLine(origin, this._end, RAY_COLOR, false);
+      this.app.drawLine(origin, this._end, this.color, false);
     }
   }
 }
