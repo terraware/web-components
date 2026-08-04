@@ -1,11 +1,8 @@
 import { Script, Vec3, XRTYPE_VR, XrInputSource } from 'playcanvas';
-import { Annotation as PcAnnotation } from 'playcanvas/scripts/esm/annotations.mjs';
 
 import { VrAnnotationPanel } from './vr-annotation-panel';
+import { collectAnnotationHitCandidates } from './xr-annotation-candidates';
 import { nearestAnnotationHit } from './xr-annotation-targeting';
-
-/** Local half-extent of the unit-plane hotspot quad. */
-const HOTSPOT_HALF_EXTENT = 0.5;
 
 /** Multiplier on the hotspot's world radius to make controller targeting forgiving. */
 const HIT_RADIUS_PAD = 2.5;
@@ -15,8 +12,6 @@ export class XrAnnotationInteraction extends Script {
 
   onEmptySelectCallback?: () => void;
 
-  private _scratchScale = new Vec3();
-
   private _isVrActive = () => this.app.xr?.active === true && this.app.xr?.type === XRTYPE_VR;
 
   private _onSelect = (inputSource: XrInputSource) => {
@@ -25,18 +20,6 @@ export class XrAnnotationInteraction extends Script {
     }
     this._openAnnotationUnderRay(inputSource.getOrigin(), inputSource.getDirection());
   };
-
-  private _collectAnnotationEntities() {
-    const root = this.app.root.findByName('annotations-root');
-
-    return root ? root.children : [];
-  }
-
-  private _hitRadius(entity: any): number {
-    entity.getWorldTransform().getScale(this._scratchScale);
-
-    return HOTSPOT_HALF_EXTENT * this._scratchScale.x * HIT_RADIUS_PAD;
-  }
 
   /** True when an open panel is under the ray; it draws in front of everything, so it wins. */
   private _rayHitsOpenPanel(origin: Vec3, direction: Vec3): boolean {
@@ -53,16 +36,7 @@ export class XrAnnotationInteraction extends Script {
       return;
     }
 
-    const entities = this._collectAnnotationEntities();
-    const openable = entities
-      .map((ent: any) => ({ entity: ent, script: ent.script?.get(PcAnnotation.scriptName) }))
-      .filter(({ script: scr }: any) => scr && scr.enabled !== false && typeof scr.onVrOpenCallback === 'function');
-
-    const candidates = openable.map(({ entity: ent }: any) => ({
-      position: ent.getPosition(),
-      radius: this._hitRadius(ent),
-    }));
-
+    const candidates = collectAnnotationHitCandidates(this.app, HIT_RADIUS_PAD);
     const index = nearestAnnotationHit(origin, direction, candidates);
     if (index === null) {
       if (typeof this.onEmptySelectCallback === 'function') {
@@ -72,7 +46,7 @@ export class XrAnnotationInteraction extends Script {
       return;
     }
 
-    const { entity, script } = openable[index];
+    const { entity, script } = candidates[index];
     const camera = this.app.root.findByName('camera') as any;
     const screen = camera?.camera?.worldToScreen(entity.getPosition());
     script.onVrOpenCallback(screen?.x ?? 0, screen?.y ?? 0);
