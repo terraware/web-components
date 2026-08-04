@@ -21,6 +21,7 @@ import { TfAnnotationManager } from './TfAnnotationManager';
 import { TfXrNavigation } from './TfXrNavigation';
 import XrAnnotationInteraction from './XrAnnotationInteraction';
 import XrExitButton from './XrExitButton';
+import XrPointerRay from './XrPointerRay';
 import { WalkthroughCamera } from './walkthrough-camera';
 
 const DEFAULT_FOCUS_POINT: [number, number, number] = [0, 0.1, 0];
@@ -291,6 +292,7 @@ const VirtualWalkthroughViewer = ({
         <XrExitButton />
         <Script script={XrControllers} enabled={!isEdit} />
         <XrAnnotationInteraction />
+        <XrPointerRay />
         {/* Disable teleport for AR as it can be disorienting */}
         <Script script={TfXrNavigation} enabled={!isEdit} enableTeleport={false} />
         {!isCurrentlyInXr && (
