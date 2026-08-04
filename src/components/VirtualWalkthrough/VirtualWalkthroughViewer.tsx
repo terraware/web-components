@@ -5,7 +5,7 @@ import { Entity } from '@playcanvas/react';
 import { Camera, Script } from '@playcanvas/react/components';
 import { useApp } from '@playcanvas/react/hooks';
 import { Color, Vec3 } from 'playcanvas';
-import { XrControllers } from 'playcanvas/scripts/esm/xr-controllers.mjs';
+import { XrControllers } from 'playcanvas/scripts/esm/xr/xr-controllers.mjs';
 
 import { useCameraPosition } from '../../hooks/useCameraPosition';
 import { useDevicePerformance } from '../../hooks/useDevicePerformance';
