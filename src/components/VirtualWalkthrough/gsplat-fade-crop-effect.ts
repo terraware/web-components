@@ -1,5 +1,5 @@
 import { Vec3 } from 'playcanvas';
-import { GsplatShaderEffect } from 'playcanvas/scripts/esm/gsplat/gsplat-shader-effect.mjs';
+import { GSplatShaderEffect } from 'playcanvas/scripts/esm/gsplat/gsplat-shader-effect.mjs';
 
 const shaderGLSL = /* glsl */ `
 uniform vec3 uAabbMin;
@@ -94,7 +94,7 @@ fn modifySplatColor(center: vec3f, color: ptr<function, vec4f>) {
  * Applies a smooth fade to splats outside the AABB based on distance.
  * Splats at the AABB edge are fully visible, and fade to invisible at fadeDistance away.
  */
-export class GsplatFadeCropShaderEffect extends GsplatShaderEffect {
+export class GsplatFadeCropShaderEffect extends GSplatShaderEffect {
   static scriptName = 'gsplatFadeCropShaderEffect';
 
   _aabbMinArray = [0, 0, 0];
