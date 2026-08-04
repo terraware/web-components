@@ -82,6 +82,10 @@ const sampleAnnotations: AnnotationProps[] = [
     title: 'Mangrove nursery',
     bodyText:
       'Seedlings raised here are transplanted along the coastline to restore the mangrove belt that protects the village from storm surge.',
+    // picsum.photos serves permissive CORS headers, so the image can be drawn to a
+    // canvas and uploaded as a WebGL texture in the VR panel without tainting it.
+    icon: 'image',
+    imageUrls: ['https://picsum.photos/seed/mangrove/800/600'],
   },
   {
     position: [-0.4, 0.1, -0.3],

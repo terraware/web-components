@@ -20,11 +20,12 @@ const CANVAS_WIDTH = 1024;
 const CANVAS_HEIGHT = 768;
 
 /** Panel width in world meters; height derived from the canvas aspect ratio. */
-const PANEL_WIDTH = 0.5;
+const PANEL_WIDTH = 2.5;
 const PANEL_HEIGHT = (PANEL_WIDTH * CANVAS_HEIGHT) / CANVAS_WIDTH;
 
-/** World-space offset from the anchored hotspot: raise the panel above it. */
-const PANEL_OFFSET = new Vec3(0, 0.25, 0);
+/** World-space offset from the anchored hotspot: raise the panel above it so the
+ * (tall) panel clears the hotspot rather than covering it. */
+const PANEL_OFFSET = new Vec3(0, PANEL_HEIGHT / 2 + 0.15, 0);
 
 const PAD_X = 48;
 
@@ -112,7 +113,7 @@ export class VrAnnotationPanel extends Script {
     }
     ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
 
-    ctx.fillStyle = 'rgba(20, 20, 20, 0.92)';
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.96)';
     this._roundRect(ctx, 0, 0, CANVAS_WIDTH, CANVAS_HEIGHT, 32);
     ctx.fill();
 
@@ -146,7 +147,7 @@ export class VrAnnotationPanel extends Script {
     }
 
     ctx.textBaseline = 'top';
-    ctx.fillStyle = '#ffffff';
+    ctx.fillStyle = '#000000';
     ctx.font = '700 48px sans-serif';
     const titleLines = wrapText(this.title, contentWidth, (s) => ctx.measureText(s).width);
     for (const line of titleLines) {
@@ -160,7 +161,7 @@ export class VrAnnotationPanel extends Script {
 
     if (this.bodyText) {
       ctx.font = '400 32px sans-serif';
-      ctx.fillStyle = 'rgba(255, 255, 255, 0.85)';
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.85)';
       const lines = wrapText(this.bodyText, contentWidth, (s) => ctx.measureText(s).width);
       for (const line of lines) {
         if (y > CANVAS_HEIGHT - 40) {
