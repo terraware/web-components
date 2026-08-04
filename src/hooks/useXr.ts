@@ -17,7 +17,8 @@ const XR_TYPES: Record<XrType, string> = {
 export const useXr = ({ onError }: UseXrOptions = {}) => {
   const app = useApp();
   const [available, setAvailable] = useState<Record<XrType, boolean>>({ VR: false, AR: false });
-  const [isCurrentlyInXr, setIsCurrentlyInXr] = useState(app.xr?.active ?? false);
+  // `type` is set as soon as a session is requested, so gate on `active` to ignore pending sessions.
+  const [currentXrType, setCurrentXrType] = useState<string | null>(app.xr?.active ? app.xr.type : null);
 
   useEffect(() => {
     // We subscribe to the manager directly because `app` doesn't update when XR's availability changes.
@@ -42,10 +43,11 @@ export const useXr = ({ onError }: UseXrOptions = {}) => {
   }, [app]);
 
   useEffect(() => {
-    const handleStart = () => setIsCurrentlyInXr(true);
-    const handleEnd = () => setIsCurrentlyInXr(false);
+    const handleStart = () => setCurrentXrType(app.xr?.type ?? null);
+    // `app.xr.type` isn't cleared until after the `end` event fires, so don't read it here.
+    const handleEnd = () => setCurrentXrType(null);
 
-    setIsCurrentlyInXr(app.xr?.active ?? false);
+    setCurrentXrType(app.xr?.active ? app.xr.type : null);
 
     app.xr?.on('start', handleStart);
     app.xr?.on('end', handleEnd);
@@ -78,8 +80,15 @@ export const useXr = ({ onError }: UseXrOptions = {}) => {
   }, [app]);
 
   return useMemo(
-    () => ({ isXrAvailable, startXr, endXr, isCurrentlyInXr }),
-    [isXrAvailable, startXr, endXr, isCurrentlyInXr]
+    () => ({
+      isXrAvailable,
+      startXr,
+      endXr,
+      isCurrentlyInXr: currentXrType !== null,
+      isCurrentlyInAr: currentXrType === XRTYPE_AR,
+      isCurrentlyInVr: currentXrType === XRTYPE_VR,
+    }),
+    [isXrAvailable, startXr, endXr, currentXrType]
   );
 };
 

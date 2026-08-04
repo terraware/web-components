@@ -82,7 +82,7 @@ const VirtualWalkthroughViewer = ({
   const [viewingAnnotation, setViewingAnnotation] = useState<AnnotationProps | null>(null);
   const [viewingAnnotationIndex, setViewingAnnotationIndex] = useState(-1);
   const [viewedScreenPos, setViewedScreenPos] = useState<{ x: number; y: number; size?: number } | null>(null);
-  const { isCurrentlyInXr } = useXr();
+  const { isCurrentlyInXr, isCurrentlyInVr } = useXr();
 
   const sceneBoundsRadius = useMemo(() => {
     if (sceneBounds?.m !== undefined) {
@@ -303,7 +303,8 @@ const VirtualWalkthroughViewer = ({
         <Script script={XrControllers} enabled={!isEdit} />
         <XrAnnotationInteraction onEmptySelect={handleCloseAnnotation} />
         <XrPointerRay />
-        {isCurrentlyInXr && viewingAnnotation && (
+        {/* VR only: the panel is driven by controller rays, which AR sessions don't have. */}
+        {isCurrentlyInVr && viewingAnnotation && (
           <VrAnnotationPanel
             key={viewingAnnotationIndex}
             annotation={viewingAnnotation}
