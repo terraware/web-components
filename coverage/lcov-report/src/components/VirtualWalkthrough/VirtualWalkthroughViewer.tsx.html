@@ -25,14 +25,14 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/115</span>
+                <span class='fraction'>0/116</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/53</span>
+                <span class='fraction'>0/57</span>
             </div>
         
             
@@ -46,7 +46,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/109</span>
+                <span class='fraction'>0/110</span>
             </div>
         
             
@@ -439,7 +439,14 @@
 <a name='L374'></a><a href='#L374'>374</a>
 <a name='L375'></a><a href='#L375'>375</a>
 <a name='L376'></a><a href='#L376'>376</a>
-<a name='L377'></a><a href='#L377'>377</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L377'></a><a href='#L377'>377</a>
+<a name='L378'></a><a href='#L378'>378</a>
+<a name='L379'></a><a href='#L379'>379</a>
+<a name='L380'></a><a href='#L380'>380</a>
+<a name='L381'></a><a href='#L381'>381</a>
+<a name='L382'></a><a href='#L382'>382</a>
+<a name='L383'></a><a href='#L383'>383</a>
+<a name='L384'></a><a href='#L384'>384</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -462,6 +469,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -519,6 +527,7 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -701,6 +710,11 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -822,10 +836,11 @@ import { Entity } from '@playcanvas/react';
 import { Camera, Script } from '@playcanvas/react/components';
 import { useApp } from '@playcanvas/react/hooks';
 import { Color, Vec3 } from 'playcanvas';
-import { XrControllers } from 'playcanvas/scripts/esm/xr-controllers.mjs';
+import { XrControllers } from 'playcanvas/scripts/esm/xr/xr-controllers.mjs';
 &nbsp;
 import { useCameraPosition } from '../../hooks/useCameraPosition';
 import { useDevicePerformance } from '../../hooks/useDevicePerformance';
+import { useXr } from '../../hooks/useXr';
 import Annotation, { AnnotationProps } from './Annotation';
 import AnnotationPanel from './AnnotationPanel';
 import { AutoRotator } from './AutoRotator';
@@ -895,6 +910,7 @@ const VirtualWalkthroughViewer = <span class="cstat-no" title="statement not cov
   const [viewingAnnotation, setViewingAnnotation] = <span class="cstat-no" title="statement not covered" >useState&lt;AnnotationProps | null&gt;(null);</span>
   const [viewingAnnotationIndex, setViewingAnnotationIndex] = <span class="cstat-no" title="statement not covered" >useState(-1);</span>
   const [viewedScreenPos, setViewedScreenPos] = <span class="cstat-no" title="statement not covered" >useState&lt;{ x: number; y: number; size?: number } | null&gt;(null);</span>
+  const { isCurrentlyInXr } = <span class="cstat-no" title="statement not covered" >useXr();</span>
 &nbsp;
   const sceneBoundsRadius = <span class="cstat-no" title="statement not covered" >useMemo(<span class="fstat-no" title="function not covered" >()</span> =&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    if (sceneBounds?.m !== undefined) {</span>
@@ -1087,29 +1103,34 @@ const VirtualWalkthroughViewer = <span class="cstat-no" title="statement not cov
       &lt;Entity name='camera-root'&gt;
         &lt;Entity name='camera'&gt;
           &lt;Camera clearColor='#EAF8FF' fov={60} /&gt;
-          &lt;Script
-            script={WalkthroughCamera}
-            boundsCenter={cameraBoundsCenter}
-            boundsRadius={sceneBoundsRadius * scaleFactor}
-            enableFly={!isTextFieldFocused}
-            averageCameraHeight={scaleFactor * averageCameraHeight}
-            moveSpeed={0.3 * scaleFactor}
-            moveFastSpeed={0.5 * scaleFactor}
-            moveSlowSpeed={0.15 * scaleFactor}
-          /&gt;
+          {!isCurrentlyInXr &amp;&amp; (
+            &lt;Script
+              script={WalkthroughCamera}
+              boundsCenter={cameraBoundsCenter}
+              boundsRadius={sceneBoundsRadius * scaleFactor}
+              enableFly={!isTextFieldFocused}
+              averageCameraHeight={scaleFactor * averageCameraHeight}
+              moveSpeed={0.3 * scaleFactor}
+              moveFastSpeed={0.5 * scaleFactor}
+              moveSlowSpeed={0.15 * scaleFactor}
+            /&gt;
+          )}
         &lt;/Entity&gt;
         {/* Sibling of the camera (not a child): WalkthroughCamera rewrites the camera entity's
             transform every frame, so the button drives its own world pose from the XR head pose. */}
         &lt;XrExitButton /&gt;
         &lt;Script script={XrControllers} enabled={!isEdit} /&gt;
+        {/* Disable teleport for AR as it can be disorienting */}
         &lt;Script script={TfXrNavigation} enabled={!isEdit} enableTeleport={false} /&gt;
-        &lt;Script
-          script={AutoRotator}
-          enabled={!isEdit &amp;&amp; autoRotate &amp;&amp; !viewingAnnotation}
-          startDelay={0.5}
-          restartDelay={3}
-          startFadeInTime={0.5}
-        /&gt;
+        {!isCurrentlyInXr &amp;&amp; (
+          &lt;Script
+            script={AutoRotator}
+            enabled={!isEdit &amp;&amp; autoRotate &amp;&amp; !viewingAnnotation}
+            startDelay={0.5}
+            restartDelay={3}
+            startFadeInTime={0.5}
+          /&gt;
+        )}
       &lt;/Entity&gt;
 &nbsp;
       &lt;Entity name='content-root' scale={[scaleFactor, scaleFactor, scaleFactor]}&gt;
@@ -1198,7 +1219,7 @@ export default VirtualWalkthroughViewer;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-08-03T22:35:21.687Z
+                at 2026-08-04T16:57:22.571Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>
