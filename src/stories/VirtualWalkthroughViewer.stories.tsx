@@ -91,6 +91,19 @@ const sampleAnnotations: AnnotationProps[] = [
     position: [-0.4, 0.1, -0.3],
     title: 'Monitoring station',
     bodyText: 'Sensors here track soil moisture and canopy growth over time.',
+    icon: 'image',
+    imageUrls: [
+      'https://picsum.photos/seed/sensors/800/600',
+      'https://picsum.photos/seed/canopy/800/600',
+      'https://picsum.photos/seed/soil/800/600',
+    ],
+  },
+  {
+    position: [0.45, 0.08, -0.7],
+    title: 'Community trail',
+    label: 'Trail',
+    bodyText:
+      'The boardwalk lets visitors cross the wetland without trampling seedlings, and doubles as the route rangers use for weekly surveys.',
   },
 ];
 
