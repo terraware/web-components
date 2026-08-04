@@ -219,13 +219,16 @@ const VirtualWalkthroughViewer = ({
 
   const handleAnnotationScreenPositionUpdate = useCallback(
     (_index: number, screenX: number, screenY: number, size?: number) => {
+      if (isCurrentlyInXr) {
+        return;
+      }
       // The scene is frozen while the panel is open, so guard against redundant
       // updates from the per-frame callback to avoid needless re-renders.
       setViewedScreenPos((prev) =>
         prev && prev.x === screenX && prev.y === screenY && prev.size === size ? prev : { x: screenX, y: screenY, size }
       );
     },
-    []
+    [isCurrentlyInXr]
   );
 
   const handleCloseAnnotation = useCallback(() => {
@@ -233,6 +236,12 @@ const VirtualWalkthroughViewer = ({
     setViewingAnnotationIndex(-1);
     setViewedScreenPos(null);
   }, []);
+
+  useEffect(() => {
+    if (!isCurrentlyInXr) {
+      handleCloseAnnotation();
+    }
+  }, [isCurrentlyInXr, handleCloseAnnotation]);
 
   const handleAnnotationUpdate = useCallback(
     (updates: Partial<AnnotationProps>) => {
