@@ -83,7 +83,7 @@ const VirtualWalkthroughViewer = ({
   const [viewingAnnotation, setViewingAnnotation] = useState<AnnotationProps | null>(null);
   const [viewingAnnotationIndex, setViewingAnnotationIndex] = useState(-1);
   const [viewedScreenPos, setViewedScreenPos] = useState<{ x: number; y: number; size?: number } | null>(null);
-  const { isCurrentlyInXr, isCurrentlyInVr } = useXr();
+  const { isCurrentlyInXr, isCurrentlyInVr, isCurrentlyInAr } = useXr();
 
   const sceneBoundsRadius = useMemo(() => {
     if (sceneBounds?.m !== undefined) {
@@ -315,7 +315,7 @@ const VirtualWalkthroughViewer = ({
         )}
         {isCurrentlyInXr && <XrGazeDwell activeIndex={viewingAnnotationIndex} />}
         {/* Disable teleport for AR as it can be disorienting */}
-        <Script script={TfXrNavigation} enabled={!isEdit} enableTeleport={false} />
+        <Script script={TfXrNavigation} enabled={!isEdit} enableTeleport={!isCurrentlyInAr} />
         {!isCurrentlyInXr && (
           <Script
             script={AutoRotator}
