@@ -78,18 +78,14 @@ export class XrExitButton extends Script {
     if (!this.entity.enabled) {
       return;
     }
-    if (this._rayHitsButton(inputSource)) {
+    if (this.rayHitsButton(inputSource.getOrigin(), inputSource.getDirection())) {
       this.app.xr?.end();
     }
   };
 
-  private _rayHitsButton(inputSource: XrInputSource): boolean {
-    return raySphereIntersect(
-      inputSource.getOrigin(),
-      inputSource.getDirection(),
-      this.entity.getPosition(),
-      this.hitRadius
-    );
+  /** True when the ray points at the button's hit sphere. */
+  rayHitsButton(origin: Vec3, direction: Vec3): boolean {
+    return raySphereIntersect(origin, direction, this.entity.getPosition(), this.hitRadius);
   }
 
   private _createTexture(): Texture {
@@ -184,7 +180,7 @@ export class XrExitButton extends Script {
     const sources = this.app.xr?.input?.inputSources ?? [];
     let hovered = false;
     for (const source of sources) {
-      const sourceHovers = this._rayHitsButton(source);
+      const sourceHovers = this.rayHitsButton(source.getOrigin(), source.getDirection());
       hovered = hovered || sourceHovers;
 
       // A face-button press exits only while that controller is aimed at the button, matching the

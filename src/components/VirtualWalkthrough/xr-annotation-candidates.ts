@@ -4,6 +4,9 @@ import { Annotation as PcAnnotation } from 'playcanvas/scripts/esm/annotations.m
 /** Local half-extent of the unit-plane hotspot quad. */
 export const HOTSPOT_HALF_EXTENT = 0.5;
 
+/** Multiplier on the hotspot's world radius to make controller targeting forgiving. */
+export const HIT_RADIUS_PAD = 2.5;
+
 export interface AnnotationCandidate {
   entity: any;
   script: any;
