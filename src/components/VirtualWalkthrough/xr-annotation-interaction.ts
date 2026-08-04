@@ -1,6 +1,7 @@
 import { Script, Vec3, XRTYPE_VR, XrInputSource } from 'playcanvas';
 import { Annotation as PcAnnotation } from 'playcanvas/scripts/esm/annotations.mjs';
 
+import { VrAnnotationPanel } from './vr-annotation-panel';
 import { nearestAnnotationHit } from './xr-annotation-targeting';
 
 /** Local half-extent of the unit-plane hotspot quad. */
@@ -50,6 +51,17 @@ export class XrAnnotationInteraction extends Script {
 
     const index = nearestAnnotationHit(origin, direction, candidates);
     if (index === null) {
+      // Aiming at the open panel (e.g. its carousel arrows) must not dismiss it.
+      const panel = this.app.root.findByName('vr-annotation-panel') as any;
+      const panelScript = panel?.script?.get(VrAnnotationPanel.scriptName);
+      if (
+        panelScript &&
+        typeof panelScript.rayHitsPanel === 'function' &&
+        panelScript.rayHitsPanel(origin, direction)
+      ) {
+        return;
+      }
+
       if (typeof this.onEmptySelectCallback === 'function') {
         this.onEmptySelectCallback();
       }
