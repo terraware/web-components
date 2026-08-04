@@ -20,12 +20,12 @@ const CANVAS_WIDTH = 1024;
 const CANVAS_HEIGHT = 768;
 
 /** Panel width in world meters; height derived from the canvas aspect ratio. */
-const PANEL_WIDTH = 2.5;
+const PANEL_WIDTH = 0.5;
 const PANEL_HEIGHT = (PANEL_WIDTH * CANVAS_HEIGHT) / CANVAS_WIDTH;
 
 /** World-space offset from the anchored hotspot: raise the panel above it so the
  * (tall) panel clears the hotspot rather than covering it. */
-const PANEL_OFFSET = new Vec3(0, PANEL_HEIGHT / 2 + 0.15, 0);
+const PANEL_OFFSET = new Vec3(0, PANEL_HEIGHT / 2 + 0.05, 0);
 
 const PAD_X = 48;
 
