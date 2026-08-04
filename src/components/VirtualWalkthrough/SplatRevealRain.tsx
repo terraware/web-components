@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Script } from '@playcanvas/react/components';
 import { Color, Vec3 } from 'playcanvas';
-import { GsplatRevealRain } from 'playcanvas/scripts/esm/gsplat/reveal-rain.mjs';
+import { GSplatRevealRain } from 'playcanvas/scripts/esm/gsplat/reveal-rain.mjs';
 
 interface SplatRevealRainProps {
   enabled?: boolean;
@@ -37,7 +37,7 @@ const SplatRevealRain = ({
 }: SplatRevealRainProps) => {
   return (
     <Script
-      script={GsplatRevealRain}
+      script={GSplatRevealRain}
       enabled={enabled}
       center={new Vec3(...center)}
       distance={distance}

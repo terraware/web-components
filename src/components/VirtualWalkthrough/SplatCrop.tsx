@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Script } from '@playcanvas/react/components';
 import { Vec3 } from 'playcanvas';
-import { GsplatCropShaderEffect } from 'playcanvas/scripts/esm/gsplat/shader-effect-crop.mjs';
+import { GSplatCropShaderEffect } from 'playcanvas/scripts/esm/gsplat/shader-effect-crop.mjs';
 
 interface SplatCropProps {
   aabbMin?: [number, number, number];
@@ -13,7 +13,7 @@ interface SplatCropProps {
 const SplatCrop = ({ aabbMin = [-1, -1, -1], aabbMax = [1, 1, 1], edgeScaleFactor = 0.5 }: SplatCropProps) => {
   return (
     <Script
-      script={GsplatCropShaderEffect}
+      script={GSplatCropShaderEffect}
       aabbMin={new Vec3(...aabbMin)}
       aabbMax={new Vec3(...aabbMax)}
       edgeScaleFactor={edgeScaleFactor}
