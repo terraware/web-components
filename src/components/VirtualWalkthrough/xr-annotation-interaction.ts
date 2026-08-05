@@ -38,7 +38,21 @@ export class XrAnnotationInteraction extends Script {
     return HOTSPOT_HALF_EXTENT * this._scratchScale.x * HIT_RADIUS_PAD;
   }
 
+  /** True when an open panel is under the ray; it draws in front of everything, so it wins. */
+  private _rayHitsOpenPanel(origin: Vec3, direction: Vec3): boolean {
+    const panel = this.app.root.findByName('vr-annotation-panel') as any;
+    const panelScript = panel?.script?.get(VrAnnotationPanel.scriptName);
+
+    return typeof panelScript?.rayHitsPanel === 'function' && panelScript.rayHitsPanel(origin, direction);
+  }
+
   private _openAnnotationUnderRay(origin: Vec3, direction: Vec3) {
+    // Checked before the hotspots so aiming at the panel (e.g. its carousel arrows) neither
+    // dismisses it nor opens an annotation whose padded hit sphere sits behind it.
+    if (this._rayHitsOpenPanel(origin, direction)) {
+      return;
+    }
+
     const entities = this._collectAnnotationEntities();
     const openable = entities
       .map((ent: any) => ({ entity: ent, script: ent.script?.get(PcAnnotation.scriptName) }))
@@ -51,17 +65,6 @@ export class XrAnnotationInteraction extends Script {
 
     const index = nearestAnnotationHit(origin, direction, candidates);
     if (index === null) {
-      // Aiming at the open panel (e.g. its carousel arrows) must not dismiss it.
-      const panel = this.app.root.findByName('vr-annotation-panel') as any;
-      const panelScript = panel?.script?.get(VrAnnotationPanel.scriptName);
-      if (
-        panelScript &&
-        typeof panelScript.rayHitsPanel === 'function' &&
-        panelScript.rayHitsPanel(origin, direction)
-      ) {
-        return;
-      }
-
       if (typeof this.onEmptySelectCallback === 'function') {
         this.onEmptySelectCallback();
       }
@@ -77,9 +80,6 @@ export class XrAnnotationInteraction extends Script {
 
   initialize() {
     this.app.xr?.input?.on('select', this._onSelect);
-  }
-
-  destroy() {
-    this.app.xr?.input?.off('select', this._onSelect);
+    this.once('destroy', () => this.app.xr?.input?.off('select', this._onSelect));
   }
 }

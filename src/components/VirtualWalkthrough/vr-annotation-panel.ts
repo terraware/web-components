@@ -132,6 +132,9 @@ export class VrAnnotationPanel extends Script {
     this.entity.addComponent('render', { meshInstances: [meshInstance], layers: [LAYERID_IMMEDIATE] });
 
     this.app.xr?.input?.on('select', this._onSelect);
+    // Script removal fires a 'destroy' event rather than calling a destroy() method, so the
+    // teardown has to be registered as a listener or the handler and GPU resources outlive us.
+    this.once('destroy', () => this._teardown());
   }
 
   private _createMesh(): Mesh {
@@ -365,7 +368,7 @@ export class VrAnnotationPanel extends Script {
     this._headRotation.setFromMat4(views[0].viewInvOffMat);
   }
 
-  destroy() {
+  private _teardown() {
     this.app.xr?.input?.off('select', this._onSelect);
     if (this.entity.render) {
       this.entity.render.meshInstances = [];
