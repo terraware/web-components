@@ -10,6 +10,7 @@ interface ArcVisual {
 interface XrNavigationInternals {
   _inputSources: Set<XrInputSource>;
   _arcVisuals: Map<XrInputSource, ArcVisual>;
+  _activePointers: Map<XrInputSource, boolean>;
 }
 
 /**
@@ -23,12 +24,20 @@ export class TfXrNavigation extends PcXrNavigation {
   /** Assigned by the React wrapper. True when this source's ray is over interactive UI. */
   isTeleportBlocked?: (inputSource: XrInputSource) => boolean;
 
+  /** Sources whose current press began or passed through a teleport-disabled frame. */
+  private _poisonedGestures = new WeakSet<XrInputSource>();
+
   private _isBlocked(inputSource: XrInputSource): boolean {
     return !this.enableTeleport || this.isTeleportBlocked?.(inputSource) === true;
   }
 
   tryTeleport(inputSource: XrInputSource) {
-    if (this._isBlocked(inputSource)) {
+    // Layer A is latched per press: React re-enables teleport as soon as the select dismisses the
+    // panel, and that can land before the selectend that gets us here.
+    const poisoned = this._poisonedGestures.has(inputSource);
+    this._poisonedGestures.delete(inputSource);
+
+    if (poisoned || this._isBlocked(inputSource)) {
       return;
     }
 
@@ -44,12 +53,26 @@ export class TfXrNavigation extends PcXrNavigation {
     // base re-enables the visuals itself on the first frame a source is unblocked.
     const internals = this as unknown as XrNavigationInternals;
     for (const inputSource of internals._inputSources) {
-      if (this._isBlocked(inputSource)) {
-        const visual = internals._arcVisuals.get(inputSource);
-        if (visual) {
-          visual.entity.enabled = false;
-          visual.ringEntity.enabled = false;
+      // Record (or clear) the layer-A latch before the arc-hiding work below, and unconditionally -
+      // a source that isn't currently pressed carries no gesture to poison, so any stale entry from
+      // a press that ended while teleport was disabled (skipping tryTeleport entirely) is dropped
+      // here rather than leaking into the source's next press.
+      if (internals._activePointers.get(inputSource)) {
+        if (!this.enableTeleport) {
+          this._poisonedGestures.add(inputSource);
         }
+      } else {
+        this._poisonedGestures.delete(inputSource);
+      }
+
+      const visual = internals._arcVisuals.get(inputSource);
+      if (!visual || (!visual.entity.enabled && !visual.ringEntity.enabled)) {
+        continue;
+      }
+
+      if (this._isBlocked(inputSource)) {
+        visual.entity.enabled = false;
+        visual.ringEntity.enabled = false;
       }
     }
   }

@@ -16,7 +16,7 @@ import {
   XRTYPE_VR,
 } from 'playcanvas';
 
-import { collectAnnotationHitCandidates } from './xr-annotation-candidates';
+import { HOTSPOT_HALF_EXTENT, collectAnnotationHitCandidates } from './xr-annotation-candidates';
 import { nearestAnnotationHit } from './xr-annotation-targeting';
 import { DwellState, INITIAL_DWELL_STATE, advanceDwell } from './xr-gaze-dwell-state';
 
@@ -25,9 +25,6 @@ const GAZE_HIT_RADIUS_PAD = 5;
 
 /** Seconds of continuous gaze required to open an annotation. */
 const DWELL_SECONDS = 1.25;
-
-/** Local half-extent of the unit-plane hotspot quad. */
-const HOTSPOT_HALF_EXTENT = 0.5;
 
 /** Progress-pie quad radius as a multiple of the hotspot's rendered half-extent (covers the hotspot). */
 const PIE_RADIUS_SCALE = 1.25;

@@ -1,5 +1,7 @@
 import { Vec3 } from 'playcanvas';
 
+import { VrAnnotationPanel } from './vr-annotation-panel';
+import { XrExitButton } from './xr-exit-button';
 import {
   rayHitsAnnotationHotspot,
   rayHitsAnnotationPanel,
@@ -28,8 +30,9 @@ interface FakeSceneOptions {
 }
 
 /**
- * Fake app whose `findByName` serves only the entities the helpers look up. The script stubs ignore the
- * requested script name, so these tests cover the ray plumbing, not the script-name wiring.
+ * Fake app whose `findByName` serves only the entities the helpers look up. Each script stub returns
+ * its fake only for the matching `scriptName`, so a lookup by the wrong name misses - the way a real
+ * `Script#get` would - instead of silently succeeding.
  */
 const fakeApp = ({ hotspots, panelHit, panelHasScript = true, exitHit }: FakeSceneOptions) => ({
   root: {
@@ -42,10 +45,26 @@ const fakeApp = ({ hotspots, panelHit, panelHasScript = true, exitHit }: FakeSce
           return null;
         }
 
-        return { script: { get: () => (panelHasScript ? { rayHitsPanel: () => panelHit } : {}) } };
+        return {
+          script: {
+            get: (scriptName: string) =>
+              scriptName === VrAnnotationPanel.scriptName
+                ? panelHasScript
+                  ? { rayHitsPanel: () => panelHit }
+                  : {}
+                : undefined,
+          },
+        };
       }
       if (name === 'xr-exit-button') {
-        return exitHit === undefined ? null : { script: { get: () => ({ rayHitsButton: () => exitHit }) } };
+        return exitHit === undefined
+          ? null
+          : {
+            script: {
+              get: (scriptName: string) =>
+                scriptName === XrExitButton.scriptName ? { rayHitsButton: () => exitHit } : undefined,
+            },
+          };
       }
 
       return null;
@@ -66,6 +85,18 @@ describe('rayHitsAnnotationHotspot', () => {
 
   it('is false when there is no annotations root', () => {
     expect(rayHitsAnnotationHotspot(fakeApp({}), ORIGIN, FORWARD)).toBe(false);
+  });
+
+  // Pins the derived radius (HOTSPOT_HALF_EXTENT 0.5 * scale 1 * HIT_RADIUS_PAD 2.5 = 1.25) against
+  // drift: a hotspot at (0,0,0) or (0,8,0) would pass the two tests above for nearly any radius.
+  it('is true just inside the derived hit radius', () => {
+    const app = fakeApp({ hotspots: [hotspot(new Vec3(0, 1.2, 0))] });
+    expect(rayHitsAnnotationHotspot(app, ORIGIN, FORWARD)).toBe(true);
+  });
+
+  it('is false just outside the derived hit radius', () => {
+    const app = fakeApp({ hotspots: [hotspot(new Vec3(0, 1.3, 0))] });
+    expect(rayHitsAnnotationHotspot(app, ORIGIN, FORWARD)).toBe(false);
   });
 });
 

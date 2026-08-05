@@ -83,8 +83,12 @@ export class XrExitButton extends Script {
     }
   };
 
-  /** True when the ray points at the button's hit sphere. */
+  /** True when the ray points at the button's hit sphere. False while the button entity is disabled. */
   rayHitsButton(origin: Vec3, direction: Vec3): boolean {
+    if (!this.entity.enabled) {
+      return false;
+    }
+
     return raySphereIntersect(origin, direction, this.entity.getPosition(), this.hitRadius);
   }
 

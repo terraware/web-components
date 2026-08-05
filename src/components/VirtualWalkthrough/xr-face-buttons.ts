@@ -1,7 +1,7 @@
 import { XrInputSource } from 'playcanvas';
 
 /** xr-standard gamepad button indices for the face buttons: A/X (4) and B/Y (5). */
-export const FACE_BUTTON_INDICES = [4, 5];
+const FACE_BUTTON_INDICES = [4, 5];
 
 /** True while either face button is held. False for hand-tracked sources, which have no gamepad. */
 export const faceButtonPressed = (inputSource: XrInputSource): boolean => {
