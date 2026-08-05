@@ -152,6 +152,13 @@ const wallFragmentGLSL = /* glsl */ `
 `;
 
 /**
+ * Structural shape of TfXrNavigation this script depends on, kept local so it does not have to
+ * import the navigation script. `enabled` is optional because a disabled script (e.g. while edit
+ * mode is on) stops receiving postUpdate and would otherwise latch a stale clampDistance.
+ */
+type BoundaryWallNavigation = { clampDistance: number; enabled?: boolean };
+
+/**
  * Draws a Quest-guardian-style boundary wall: an upright cylinder on the bounds circle whose grid
  * fades in and shifts toward a warning colour as the head approaches, and goes to full intensity
  * while XR navigation is actively holding the user back.
@@ -181,7 +188,8 @@ export class BoundaryWallScript extends Script {
   private _material?: ShaderMaterial;
   private _mesh?: Mesh;
   private _camera: Entity | null = null;
-  private _navigation: { clampDistance: number } | null = null;
+  private _navigation: BoundaryWallNavigation | null = null;
+  private _headParam = new Float32Array(3);
 
   initialize() {
     this._material = new ShaderMaterial({
@@ -197,6 +205,14 @@ export class BoundaryWallScript extends Script {
 
     this._resolveDependencies();
     this.rebuild();
+
+    this.once('destroy', () => {
+      this._clearMesh();
+      this._material?.destroy();
+      this._material = undefined;
+      this._camera = null;
+      this._navigation = null;
+    });
   }
 
   /**
@@ -211,7 +227,7 @@ export class BoundaryWallScript extends Script {
     if (!this._navigation) {
       const rig = this.app.root.findByName('camera-root');
       // @ts-expect-error - scripts are added dynamically to the entity
-      this._navigation = (rig?.script?.tfXrNavigation as { clampDistance: number } | undefined) ?? null;
+      this._navigation = (rig?.script?.tfXrNavigation as BoundaryWallNavigation | undefined) ?? null;
     }
   }
 
@@ -265,7 +281,10 @@ export class BoundaryWallScript extends Script {
       return;
     }
 
-    const blocked = (this._navigation?.clampDistance ?? 0) > 0 ? 1 : 0;
+    const navigation = this._navigation;
+    // A disabled navigation script (e.g. edit mode) stops receiving postUpdate, so its
+    // clampDistance would otherwise latch whatever value it last held.
+    const blocked = navigation?.enabled !== false && (navigation?.clampDistance ?? 0) > 0 ? 1 : 0;
     const reveal = this.fadeDistance * (blocked ? this.blockedFadeScale : 1);
     const head = camera.getPosition();
 
@@ -278,7 +297,10 @@ export class BoundaryWallScript extends Script {
       return;
     }
 
-    material.setParameter('uHeadPos', [head.x, head.y, head.z]);
+    this._headParam[0] = head.x;
+    this._headParam[1] = head.y;
+    this._headParam[2] = head.z;
+    material.setParameter('uHeadPos', this._headParam);
     material.setParameter('uBlocked', blocked);
   }
 
@@ -290,13 +312,5 @@ export class BoundaryWallScript extends Script {
       this._mesh.destroy();
       this._mesh = undefined;
     }
-  }
-
-  destroy() {
-    this._clearMesh();
-    this._material?.destroy();
-    this._material = undefined;
-    this._camera = null;
-    this._navigation = null;
   }
 }
