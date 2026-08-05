@@ -144,15 +144,22 @@ const wallFragmentGLSL = /* glsl */ `
     uniform float uRows;
     uniform vec3 uCalmColor;
     uniform vec3 uWarnColor;
+    uniform float uLineHalfWidth;
 
     varying vec2 uv0;
     varying vec3 vWorld;
 
     // Antialiased line mask: 1 at whole-number coordinates, 0 between them.
+    //
+    // The line has a solid core uLineHalfWidth cells wide either side of the coordinate, so its
+    // thickness is fixed in world space and holds up close to the wall. The smoothstep then feathers
+    // it over exactly one pixel (fwidth), which both antialiases the edge and keeps distant lines
+    // from aliasing into moire: once a cell shrinks below a pixel the feather swallows the core and
+    // the grid fades out instead of shimmering.
     float gridLine(float coord) {
         float w = fwidth(coord);
         float d = abs(fract(coord + 0.5) - 0.5);
-        return 1.0 - smoothstep(0.0, w * 1.5, d);
+        return 1.0 - smoothstep(uLineHalfWidth, uLineHalfWidth + w, d);
     }
 
     void main(void) {
@@ -207,6 +214,8 @@ export class BoundaryWallScript extends Script {
   topY = 2.5;
   segments = 96;
   gridSpacing = 0.5;
+  /** Grid line thickness in world metres. */
+  lineWidth = 0.025;
   /** Head distance, in world metres, at which the wall starts to appear. */
   fadeDistance = 1.5;
   /** Multiplier applied to fadeDistance while movement is being clamped. */
@@ -276,6 +285,10 @@ export class BoundaryWallScript extends Script {
       return;
     }
 
+    // The shader measures distance in grid cells, so convert. A cell is gridSpacing across only
+    // approximately - columns and rows are rounded to whole numbers - but that error is well under
+    // a line width, so it is not worth carrying the exact cell size through as a second uniform.
+    this._material.setParameter('uLineHalfWidth', (this.lineWidth / this.gridSpacing) * 0.5);
     this._material.setParameter('uFadeDistance', this.fadeDistance);
     this._material.setParameter('uBlockedFadeScale', this.blockedFadeScale);
     this._material.setParameter('uRows', geometry.rows);
