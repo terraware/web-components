@@ -3,7 +3,7 @@ import { XrInputSource } from 'playcanvas';
 /** xr-standard gamepad button indices for the face buttons: A/X (4) and B/Y (5). */
 const FACE_BUTTON_INDICES = [4, 5];
 
-/** xr-standard gamepad button index for the secondary face button: B on the right hand, Y on the left. */
+/** xr-standard gamepad button indices for the secondary face button: B on the right hand, Y on the left. */
 const SECONDARY_FACE_BUTTON_INDICES = [5];
 
 const anyButtonPressed = (inputSource: XrInputSource, indices: number[]): boolean => {

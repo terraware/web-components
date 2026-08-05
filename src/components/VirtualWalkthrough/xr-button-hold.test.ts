@@ -48,7 +48,10 @@ describe('advanceHold', () => {
   });
 
   it('clamps progress to the threshold', () => {
-    expect(advanceHold(released(), true, 99, THRESHOLD).progress).toBe(1);
+    const result = advanceHold(released(), true, 99, THRESHOLD);
+
+    expect(result.progress).toBe(1);
+    expect(result.justFired).toBe(true);
   });
 
   it('resets to zero on release', () => {

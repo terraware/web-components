@@ -9,6 +9,8 @@ const stubContext = () => {
   const fills: string[] = [];
   const ctx = {
     fillStyle: '',
+    save: () => undefined,
+    restore: () => undefined,
     beginPath: () => undefined,
     moveTo: () => undefined,
     closePath: () => undefined,

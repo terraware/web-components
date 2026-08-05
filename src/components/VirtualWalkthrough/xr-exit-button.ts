@@ -65,6 +65,7 @@ export class XrExitButton extends Script {
   private _faceButtons = new FaceButtonPressTracker();
 
   private _canvas?: HTMLCanvasElement;
+  private _context?: CanvasRenderingContext2D;
   private _drawnProgress = -1;
   private _hold: HoldState = INITIAL_HOLD_STATE;
   private _arming = new ButtonArmingLatch();
@@ -132,12 +133,13 @@ export class XrExitButton extends Script {
   /**
    * Repaints the button: dark disc, then the hold progress wedge, then the X arms on top so the
    * glyph stays legible over the fill. The pie is skipped entirely at zero progress so the idle
-   * button doesn't wear the pie's faint track.
+   * button doesn't wear the pie's faint track. Returns whether it painted, so callers can tell a
+   * missing context from a successful repaint.
    */
-  private _drawButton(progress: number) {
-    const ctx = this._canvas?.getContext('2d');
+  private _drawButton(progress: number): boolean {
+    const ctx = this._context;
     if (!ctx) {
-      return;
+      return false;
     }
     const c = TEXTURE_SIZE / 2;
 
@@ -163,16 +165,20 @@ export class XrExitButton extends Script {
     ctx.stroke();
 
     this._texture?.upload();
+
+    return true;
   }
 
-  /** Repaints only when the drawn wedge would visibly move. */
+  /** Repaints only when the drawn wedge would visibly move. Only records the paint on success, so a
+   * missing context doesn't fool the dedupe cache into thinking a repaint already happened. */
   private _setProgress(progress: number) {
     if (Math.abs(progress - this._drawnProgress) <= 0.001) {
       return;
     }
 
-    this._drawnProgress = progress;
-    this._drawButton(progress);
+    if (this._drawButton(progress)) {
+      this._drawnProgress = progress;
+    }
   }
 
   private _resetProgress() {
@@ -195,9 +201,9 @@ export class XrExitButton extends Script {
 
   initialize() {
     this._canvas = this._createCanvas();
+    this._context = this._canvas.getContext('2d') ?? undefined;
     this._texture = this._createTexture(this._canvas);
-    this._drawButton(0);
-    this._drawnProgress = 0;
+    this._resetProgress();
 
     const material = new StandardMaterial();
     material.useLighting = false;
@@ -319,5 +325,7 @@ export class XrExitButton extends Script {
     this._mesh = undefined;
     this._material = undefined;
     this._texture = undefined;
+    this._canvas = undefined;
+    this._context = undefined;
   }
 }
