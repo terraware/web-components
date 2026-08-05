@@ -14,6 +14,7 @@ import Annotation, { AnnotationProps } from './Annotation';
 import AnnotationPanel from './AnnotationPanel';
 import { AutoRotator } from './AutoRotator';
 import BoundaryRing from './BoundaryRing';
+import BoundaryWall from './BoundaryWall';
 import GradientSky from './GradientSky';
 import SplatControls, { SplatControlsStrings } from './SplatControls';
 import SplatModel from './SplatModel';
@@ -387,6 +388,15 @@ const VirtualWalkthroughViewer = ({
           </Entity>
         )}
       </Entity>
+
+      {isCurrentlyInXr && (
+        <BoundaryWall
+          center={cameraBoundsCenter}
+          radius={sceneBoundsRadius * scaleFactor}
+          groundPlane={cameraGroundPlane}
+          baseY={0}
+        />
+      )}
 
       <SplatControls
         defaultCameraFocus={origin}

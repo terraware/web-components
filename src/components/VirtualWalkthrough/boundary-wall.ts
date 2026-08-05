@@ -1,6 +1,20 @@
-import { Vec3 } from 'playcanvas';
+import {
+  BLEND_NORMAL,
+  CULLFACE_NONE,
+  Color,
+  Entity,
+  LAYERID_IMMEDIATE,
+  Mesh,
+  MeshInstance,
+  SEMANTIC_POSITION,
+  SEMANTIC_TEXCOORD0,
+  Script,
+  ShaderMaterial,
+  Vec3,
+} from 'playcanvas';
 
 import { computeGroundPlane, yOnPlane } from './groundPlane';
+import { distanceToCircleEdge } from './xr-scene-bounds';
 
 export type BoundaryWallGeometryParams = {
   center: Vec3;
@@ -80,3 +94,209 @@ export const boundaryWallMesh = ({
 
   return { positions, uvs, indices, columns, rows };
 };
+
+// GLSL only: @playcanvas/react's Application defaults to deviceTypes [DEVICETYPE_WEBGL2], so the
+// WGSL variants the engine's own shaders carry would never be compiled here.
+const wallVertexGLSL = /* glsl */ `
+    attribute vec3 vertex_position;
+    attribute vec2 aUv0;
+
+    uniform mat4 matrix_model;
+    uniform mat4 matrix_viewProjection;
+
+    varying vec2 uv0;
+    varying vec3 vWorld;
+
+    void main(void) {
+        vec4 world = matrix_model * vec4(vertex_position, 1.0);
+        vWorld = world.xyz;
+        uv0 = aUv0;
+        gl_Position = matrix_viewProjection * world;
+    }
+`;
+
+const wallFragmentGLSL = /* glsl */ `
+    uniform vec3 uHeadPos;
+    uniform float uFadeDistance;
+    uniform float uBlockedFadeScale;
+    uniform float uBlocked;
+    uniform float uRows;
+    uniform vec3 uCalmColor;
+    uniform vec3 uWarnColor;
+
+    varying vec2 uv0;
+    varying vec3 vWorld;
+
+    // Antialiased line mask: 1 at whole-number coordinates, 0 between them.
+    float gridLine(float coord) {
+        float w = fwidth(coord);
+        float d = abs(fract(coord + 0.5) - 0.5);
+        return 1.0 - smoothstep(0.0, w * 1.5, d);
+    }
+
+    void main(void) {
+        // Distance from this fragment to the head, so only the arc of wall near the user lights up.
+        float fade = uFadeDistance * mix(1.0, uBlockedFadeScale, uBlocked);
+        float proximity = 1.0 - clamp(distance(vWorld.xz, uHeadPos.xz) / fade, 0.0, 1.0);
+        if (proximity <= 0.0) discard;
+
+        // Soften the open top edge so the wall does not end in a hard rim.
+        float topFade = 1.0 - smoothstep(0.6, 1.0, uv0.y / uRows);
+        float grid = max(gridLine(uv0.x), gridLine(uv0.y));
+
+        float alpha = proximity * topFade * grid;
+        if (alpha <= 0.0) discard;
+
+        gl_FragColor = vec4(mix(uCalmColor, uWarnColor, max(proximity, uBlocked)), alpha);
+    }
+`;
+
+/**
+ * Draws a Quest-guardian-style boundary wall: an upright cylinder on the bounds circle whose grid
+ * fades in and shifts toward a warning colour as the head approaches, and goes to full intensity
+ * while XR navigation is actively holding the user back.
+ *
+ * center / radius / groundPlane / baseY are set imperatively by the BoundaryWall component (see
+ * BoundaryWall.tsx for why they are not reactive Script props), which calls `rebuild()` afterwards.
+ * All of them are world-space: this entity is deliberately mounted outside `content-root`, which
+ * carries the scene's scaleFactor.
+ */
+export class BoundaryWallScript extends Script {
+  static scriptName = 'boundaryWall';
+
+  center = new Vec3();
+  radius = 0;
+  groundPlane: Vec3[] = [];
+  baseY = 0;
+  height = 2.5;
+  segments = 96;
+  gridSpacing = 0.5;
+  /** Head distance, in world metres, at which the wall starts to appear. */
+  fadeDistance = 1.5;
+  /** Multiplier applied to fadeDistance while movement is being clamped. */
+  blockedFadeScale = 2.5;
+  calmColor = new Color(0.35, 0.7, 1);
+  warnColor = new Color(1, 0.45, 0.2);
+
+  private _material?: ShaderMaterial;
+  private _mesh?: Mesh;
+  private _camera: Entity | null = null;
+  private _navigation: { clampDistance: number } | null = null;
+
+  initialize() {
+    this._material = new ShaderMaterial({
+      uniqueName: 'boundary-wall',
+      vertexGLSL: wallVertexGLSL,
+      fragmentGLSL: wallFragmentGLSL,
+      attributes: { vertex_position: SEMANTIC_POSITION, aUv0: SEMANTIC_TEXCOORD0 },
+    });
+    this._material.blendType = BLEND_NORMAL;
+    this._material.cull = CULLFACE_NONE;
+    this._material.depthWrite = false;
+    this._material.update();
+
+    this._resolveDependencies();
+    this.rebuild();
+  }
+
+  /**
+   * The camera and the navigation script both live on entities this one does not own. They are
+   * resolved lazily rather than once, because script initialize order across sibling entities is not
+   * guaranteed and this entity mounts when an XR session starts.
+   */
+  private _resolveDependencies() {
+    if (!this._camera) {
+      this._camera = this.app.root.findByName('camera') as Entity | null;
+    }
+    if (!this._navigation) {
+      const rig = this.app.root.findByName('camera-root');
+      // @ts-expect-error - scripts are added dynamically to the entity
+      this._navigation = (rig?.script?.tfXrNavigation as { clampDistance: number } | undefined) ?? null;
+    }
+  }
+
+  rebuild() {
+    this._clearMesh();
+
+    const geometry = boundaryWallMesh({
+      center: this.center,
+      radius: this.radius,
+      groundPlane: this.groundPlane,
+      baseY: this.baseY,
+      height: this.height,
+      gridSpacing: this.gridSpacing,
+      segments: this.segments,
+    });
+    if (geometry.positions.length === 0 || !this._material) {
+      return;
+    }
+
+    this._material.setParameter('uFadeDistance', this.fadeDistance);
+    this._material.setParameter('uBlockedFadeScale', this.blockedFadeScale);
+    this._material.setParameter('uRows', geometry.rows);
+    this._material.setParameter('uCalmColor', [this.calmColor.r, this.calmColor.g, this.calmColor.b]);
+    this._material.setParameter('uWarnColor', [this.warnColor.r, this.warnColor.g, this.warnColor.b]);
+    this._material.setParameter('uBlocked', 0);
+    this._material.setParameter('uHeadPos', [0, 0, 0]);
+
+    const mesh = new Mesh(this.app.graphicsDevice);
+    mesh.setPositions(geometry.positions);
+    mesh.setUvs(0, geometry.uvs);
+    mesh.setIndices(geometry.indices);
+    mesh.update();
+    this._mesh = mesh;
+
+    const meshInstance = new MeshInstance(mesh, this._material);
+    if (this.entity.render) {
+      this.entity.render.meshInstances = [meshInstance];
+    } else {
+      // Immediate layer, drawn after the World layer where the splats render, so the wall is not
+      // composited behind them - same reason BoundaryRingScript uses it.
+      this.entity.addComponent('render', { meshInstances: [meshInstance], layers: [LAYERID_IMMEDIATE] });
+    }
+  }
+
+  update() {
+    this._resolveDependencies();
+
+    const material = this._material;
+    const camera = this._camera;
+    if (!material || !camera || !this.entity.render) {
+      return;
+    }
+
+    const blocked = (this._navigation?.clampDistance ?? 0) > 0 ? 1 : 0;
+    const reveal = this.fadeDistance * (blocked ? this.blockedFadeScale : 1);
+    const head = camera.getPosition();
+
+    // Skip the transparent draw entirely while the head is deeper inside than the widest reveal
+    // radius - every fragment would discard anyway. Toggling render.enabled rather than
+    // entity.enabled keeps this update running so the wall can come back.
+    const edgeDistance = distanceToCircleEdge(head.x, head.z, this.center.x, this.center.z, this.radius);
+    this.entity.render.enabled = this.radius > 0 && edgeDistance > -reveal;
+    if (!this.entity.render.enabled) {
+      return;
+    }
+
+    material.setParameter('uHeadPos', [head.x, head.y, head.z]);
+    material.setParameter('uBlocked', blocked);
+  }
+
+  private _clearMesh() {
+    if (this.entity.render) {
+      this.entity.render.meshInstances = [];
+    }
+    if (this._mesh) {
+      this._mesh.destroy();
+      this._mesh = undefined;
+    }
+  }
+
+  destroy() {
+    this._clearMesh();
+    this._material?.destroy();
+    this._material = undefined;
+    this._camera = null;
+    this._navigation = null;
+  }
+}
