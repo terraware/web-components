@@ -1,6 +1,6 @@
 import { XrInputSource } from 'playcanvas';
 
-import { FaceButtonPressTracker, faceButtonPressed } from './xr-face-buttons';
+import { FaceButtonPressTracker, faceButtonPressed, secondaryFaceButtonPressed } from './xr-face-buttons';
 
 /** Fake input source whose gamepad reports `pressedIndices` as held. */
 const source = (pressedIndices: number[], buttonCount = 6): XrInputSource =>
@@ -35,6 +35,24 @@ describe('faceButtonPressed', () => {
 
   it('is false when nothing is pressed', () => {
     expect(faceButtonPressed(source([]))).toBe(false);
+  });
+});
+
+describe('secondaryFaceButtonPressed', () => {
+  it('is true when B/Y is pressed', () => {
+    expect(secondaryFaceButtonPressed(source([5]))).toBe(true);
+  });
+
+  it('is false when only A/X is pressed', () => {
+    expect(secondaryFaceButtonPressed(source([4]))).toBe(false);
+  });
+
+  it('is false for an input source with no gamepad', () => {
+    expect(secondaryFaceButtonPressed(handTrackedSource())).toBe(false);
+  });
+
+  it('is false when the gamepad has fewer buttons than the face buttons', () => {
+    expect(secondaryFaceButtonPressed(source([0], 2))).toBe(false);
   });
 });
 
