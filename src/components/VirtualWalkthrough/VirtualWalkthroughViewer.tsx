@@ -4,7 +4,7 @@ import { useTheme } from '@mui/material';
 import { Entity } from '@playcanvas/react';
 import { Camera, Script } from '@playcanvas/react/components';
 import { useApp } from '@playcanvas/react/hooks';
-import { Color, Vec3 } from 'playcanvas';
+import { Color, Vec3, XrInputSource } from 'playcanvas';
 import { XrControllers } from 'playcanvas/scripts/esm/xr/xr-controllers.mjs';
 
 import { useCameraPosition } from '../../hooks/useCameraPosition';
@@ -25,6 +25,7 @@ import XrExitButton from './XrExitButton';
 import XrGazeDwell from './XrGazeDwell';
 import XrPointerRay from './XrPointerRay';
 import { WalkthroughCamera } from './walkthrough-camera';
+import { rayHitsInteractiveUi } from './xr-interactive-ui';
 
 const DEFAULT_FOCUS_POINT: [number, number, number] = [0, 0.1, 0];
 const DEFAULT_POSITION: [number, number, number] = [1, 0.1, 0];
@@ -238,6 +239,11 @@ const VirtualWalkthroughViewer = ({
     setViewedScreenPos(null);
   }, []);
 
+  const isTeleportBlocked = useCallback(
+    (inputSource: XrInputSource) => rayHitsInteractiveUi(app, inputSource.getOrigin(), inputSource.getDirection()),
+    [app]
+  );
+
   useEffect(() => {
     if (!isCurrentlyInXr) {
       handleCloseAnnotation();
@@ -314,8 +320,14 @@ const VirtualWalkthroughViewer = ({
           />
         )}
         {isCurrentlyInXr && <XrGazeDwell activeIndex={viewingAnnotationIndex} />}
-        {/* Disable teleport for AR as it can be disorienting */}
-        <Script script={TfXrNavigation} enabled={!isEdit} enableTeleport={!isCurrentlyInAr} />
+        {/* Teleport is off in AR, where it can be disorienting, and while an annotation panel is open,
+            so the trigger can operate the panel and click out to dismiss it. */}
+        <Script
+          script={TfXrNavigation}
+          enabled={!isEdit}
+          enableTeleport={!isCurrentlyInAr && !viewingAnnotation}
+          isTeleportBlocked={isTeleportBlocked}
+        />
         {!isCurrentlyInXr && (
           <Script
             script={AutoRotator}
