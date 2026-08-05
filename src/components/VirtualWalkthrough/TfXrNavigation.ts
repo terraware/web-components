@@ -99,10 +99,7 @@ export class TfXrNavigation extends PcXrNavigation {
    * the base script's locomotion, so one clamp covers every way the head can move: thumbstick
    * translation of the rig, room-scale walking within the rig, and snap turns pivoting the rig.
    *
-   * Gated on an active XR session because this script is mounted unconditionally (VirtualWalkthroughViewer
-   * doesn't wrap it in an `!isCurrentlyInXr` check the way it does WalkthroughCamera and AutoRotator), so
-   * postUpdate runs on desktop too. Desktop bounding — including deliberately skipping it in free-fly — is
-   * WalkthroughCamera's job; this script must stay a no-op outside XR regardless of how it's mounted.
+   * This script must stay a no-op outside XR regardless of how it's mounted.
    */
   postUpdate() {
     this.clampDistance = 0;
