@@ -16,6 +16,7 @@ import {
   XrInputSource,
 } from 'playcanvas';
 
+import { ButtonArmingLatch } from './xr-button-arming';
 import { HoldState, INITIAL_HOLD_STATE, advanceHold } from './xr-button-hold';
 import { FaceButtonPressTracker, secondaryFaceButtonPressed } from './xr-face-buttons';
 import { drawProgressPie } from './xr-progress-pie';
@@ -66,7 +67,7 @@ export class XrExitButton extends Script {
   private _canvas?: HTMLCanvasElement;
   private _drawnProgress = -1;
   private _hold: HoldState = INITIAL_HOLD_STATE;
-  private _armedSources = new WeakSet<XrInputSource>();
+  private _arming = new ButtonArmingLatch();
 
   private _isVrActive = () => this.app.xr?.active === true && this.app.xr?.type === XRTYPE_VR;
 
@@ -248,13 +249,11 @@ export class XrExitButton extends Script {
         return;
       }
 
-      // Arming is per source: a button already down when the session starts is ignored until it is
-      // released, and one controller held down can't stop the other from starting a hold.
-      if (secondaryFaceButtonPressed(source)) {
-        holdActive = holdActive || this._armedSources.has(source);
-      } else {
-        this._armedSources.add(source);
-      }
+      // Two statements, not `holdActive = holdActive || this._arming.trackPress(...)`: trackPress
+      // arms the source as a side effect and must run for every source every frame, but `||`
+      // short-circuits once holdActive is true and would skip arming later sources.
+      const armedPress = this._arming.trackPress(source, secondaryFaceButtonPressed(source));
+      holdActive = holdActive || armedPress;
     }
 
     const hold = advanceHold(this._hold, holdActive, dt, EXIT_HOLD_SECONDS);
