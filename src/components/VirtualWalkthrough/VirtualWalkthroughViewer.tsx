@@ -25,6 +25,7 @@ import XrAnnotationInteraction from './XrAnnotationInteraction';
 import XrExitButton from './XrExitButton';
 import XrGazeDwell from './XrGazeDwell';
 import XrPointerRay from './XrPointerRay';
+import { SplatFormat } from './splatFormat';
 import { WalkthroughCamera } from './walkthrough-camera';
 import { rayHitsInteractiveUi } from './xr-interactive-ui';
 
@@ -39,6 +40,7 @@ const WALL_INSET = 0.25;
 
 export interface VirtualWalkthroughViewerProps {
   splatSrc: string;
+  splatFormat?: SplatFormat;
   origin?: [number, number, number];
   cameraPosition?: [number, number, number];
   sceneBounds?: { x: number; y: number; z: number; m: number };
@@ -59,6 +61,7 @@ export interface VirtualWalkthroughViewerProps {
 
 const VirtualWalkthroughViewer = ({
   splatSrc,
+  splatFormat,
   origin = DEFAULT_FOCUS_POINT,
   cameraPosition = DEFAULT_POSITION,
   sceneBounds,
@@ -294,8 +297,16 @@ const VirtualWalkthroughViewer = ({
   );
 
   const splatModel = useMemo(
-    () => <SplatModel key='splat' splatSrc={splatSrc} rotation={[-180, 0, 0]} revealRain={isHighPerformance} />,
-    [isHighPerformance, splatSrc]
+    () => (
+      <SplatModel
+        key='splat'
+        splatSrc={splatSrc}
+        splatFormat={splatFormat}
+        rotation={[-180, 0, 0]}
+        revealRain={isHighPerformance}
+      />
+    ),
+    [isHighPerformance, splatSrc, splatFormat]
   );
 
   return (
