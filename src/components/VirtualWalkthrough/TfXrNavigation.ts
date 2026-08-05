@@ -1,6 +1,7 @@
-import { XrInputSource } from 'playcanvas';
+import { Entity, Vec3, XrInputSource } from 'playcanvas';
 import { XrNavigation as PcXrNavigation } from 'playcanvas/scripts/esm/xr/xr-navigation.mjs';
 
+import { clampToCircle } from './xr-scene-bounds';
 import { TeleportGestureLatch } from './xr-teleport-gesture';
 
 interface ArcVisual {
@@ -13,6 +14,7 @@ interface XrNavigationInternals {
   _inputSources: Set<XrInputSource>;
   _arcVisuals: Map<XrInputSource, ArcVisual>;
   _activePointers: Map<XrInputSource, boolean>;
+  _cameraEntity: Entity | null;
 }
 
 /**
@@ -25,6 +27,18 @@ export class TfXrNavigation extends PcXrNavigation {
 
   /** Assigned by the React wrapper. True when this source's ray is over interactive UI. */
   isTeleportBlocked?: (inputSource: XrInputSource) => boolean;
+
+  /**
+   * World-space bounds circle. Assigned by the React wrapper rather than passed as a Script prop:
+   * boundsCenter is a Vec3, and @playcanvas/react's memo() comparator stops at the first prop with
+   * an .equals() method, so any prop after it would never propagate.
+   * A boundsRadius of 0 disables clamping entirely.
+   */
+  boundsCenter = new Vec3();
+  boundsRadius = 0;
+
+  /** How far the rig was pulled back in the last postUpdate to keep the head inside the bounds. */
+  clampDistance = 0;
 
   private _gestures = new TeleportGestureLatch();
 
@@ -77,5 +91,61 @@ export class TfXrNavigation extends PcXrNavigation {
         visual.ringEntity.enabled = false;
       }
     }
+  }
+
+  /**
+   * Holds the head inside the bounds circle. Runs in postUpdate, after PlayCanvas has written this
+   * frame's head pose into the camera's local transform (xr.update runs before app.update) and after
+   * the base script's locomotion, so one clamp covers every way the head can move: thumbstick
+   * translation of the rig, room-scale walking within the rig, and snap turns pivoting the rig.
+   */
+  postUpdate() {
+    this.clampDistance = 0;
+
+    const camera = (this as unknown as XrNavigationInternals)._cameraEntity;
+    if (!camera || this.boundsRadius <= 0) {
+      return;
+    }
+
+    const head = camera.getPosition();
+    const clamped = clampToCircle(head.x, head.z, this.boundsCenter.x, this.boundsCenter.z, this.boundsRadius);
+    if (clamped.distance === 0) {
+      return;
+    }
+
+    // World-space translate, not translateLocal: a snap turn has yawed the rig, so a local-space
+    // correction would be rotated away from the direction the head actually overshot.
+    this.entity.translate(clamped.x - head.x, 0, clamped.z - head.z);
+    this.clampDistance = clamped.distance;
+  }
+
+  /**
+   * Clamps the teleport landing point to the bounds circle. Overriding here rather than in
+   * tryTeleport covers both paths that produce a landing point — the per-frame aim in
+   * _handleTeleportation and tryTeleport's own recompute when no hit is cached — and because
+   * _handleTeleportation positions the landing ring from this same record immediately afterwards,
+   * the ring previews the clamped destination without any extra work.
+   *
+   * Only valid hits are clamped: when the base finds no hit it leaves rec.point holding a stale
+   * value from an earlier frame, which must not be projected onto the circle and shown as a target.
+   * Clamping only ever shortens the throw, so a hit that passed the base's distance check still does.
+   */
+  _computeArcHit(origin: Vec3, direction: Vec3, rec: { point: Vec3; valid: boolean }) {
+    super._computeArcHit(origin, direction, rec);
+
+    if (!rec.valid || this.boundsRadius <= 0) {
+      return;
+    }
+
+    // Y is left alone: it is the navigation plane height, and bounds are XZ-only.
+    const clamped = clampToCircle(
+      rec.point.x,
+      rec.point.z,
+      this.boundsCenter.x,
+      this.boundsCenter.z,
+      this.boundsRadius
+    );
+    rec.point.x = clamped.x;
+    rec.point.z = clamped.z;
   }
 }

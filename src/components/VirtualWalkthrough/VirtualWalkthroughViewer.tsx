@@ -136,6 +136,17 @@ const VirtualWalkthroughViewer = ({
     }
   }, [cameraGroundPlane, app]);
 
+  useEffect(() => {
+    // Set imperatively for the same reason as BoundaryRing: boundsCenter is a Vec3, and the
+    // @playcanvas/react memo() comparator stops at the first prop with an .equals() method.
+    // @ts-expect-error - scripts are added dynamically to the entity
+    const navigation = app.root.findByName('camera-root')?.script?.tfXrNavigation;
+    if (navigation) {
+      navigation.boundsCenter = cameraBoundsCenter;
+      navigation.boundsRadius = sceneBoundsRadius * scaleFactor;
+    }
+  }, [app, cameraBoundsCenter, sceneBoundsRadius, scaleFactor]);
+
   const handleToggleFreeFly = useCallback(() => {
     const newFreeFly = !isFreeFly;
     // @ts-expect-error - scripts are added dynamically to the camera entity
