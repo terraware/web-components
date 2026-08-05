@@ -4,7 +4,7 @@ import { boundaryWallMesh } from './boundary-wall';
 
 const FLAT = [new Vec3(0, 0, 0), new Vec3(1, 0, 0), new Vec3(0, 0, 1)];
 
-const BASE = { center: new Vec3(0, 0, 0), radius: 5, groundPlane: FLAT, baseY: 0, height: 2.5, gridSpacing: 0.5 };
+const BASE = { center: new Vec3(0, 0, 0), radius: 5, groundPlane: FLAT, baseY: 0, topY: 2.5, gridSpacing: 0.5 };
 
 const toVertices = (positions: number[]): [number, number, number][] => {
   const out: [number, number, number][] = [];
@@ -31,19 +31,21 @@ describe('boundaryWallMesh', () => {
     }
   });
 
-  it('puts the top ring exactly `height` above the bottom ring', () => {
-    const geom = boundaryWallMesh({ ...BASE, height: 3, segments: 8 });
+  it('puts the top ring flat at topY for every column, even over tilted ground', () => {
+    // y = z, so the bottom sweeps -3..3 while the top has to stay pinned at 4.
+    const tilted = [new Vec3(0, 0, 0), new Vec3(1, 0, 0), new Vec3(0, 1, 1)];
+    const geom = boundaryWallMesh({ ...BASE, groundPlane: tilted, radius: 3, topY: 4, segments: 8 });
     const verts = toVertices(geom.positions);
     // Per segment the order is: bottom@a0, top@a0, bottom@a1, top@a1.
     for (let i = 0; i < verts.length; i += 4) {
-      expect(verts[i + 1][1] - verts[i][1]).toBeCloseTo(3);
-      expect(verts[i + 3][1] - verts[i + 2][1]).toBeCloseTo(3);
+      expect(verts[i + 1][1]).toBeCloseTo(4);
+      expect(verts[i + 3][1]).toBeCloseTo(4);
     }
   });
 
   it('sits the base on a tilted ground plane (y = z)', () => {
     const tilted = [new Vec3(0, 0, 0), new Vec3(1, 0, 0), new Vec3(0, 1, 1)];
-    const geom = boundaryWallMesh({ ...BASE, groundPlane: tilted, radius: 3, height: 2, segments: 8 });
+    const geom = boundaryWallMesh({ ...BASE, groundPlane: tilted, radius: 3, topY: 4, segments: 8 });
     const verts = toVertices(geom.positions);
     for (let i = 0; i < verts.length; i += 4) {
       expect(verts[i][1]).toBeCloseTo(verts[i][2]);
@@ -52,7 +54,7 @@ describe('boundaryWallMesh', () => {
   });
 
   it('falls back to a flat base at baseY when no ground plane is supplied', () => {
-    const geom = boundaryWallMesh({ ...BASE, groundPlane: [], baseY: 1.5, height: 2, segments: 8 });
+    const geom = boundaryWallMesh({ ...BASE, groundPlane: [], baseY: 1.5, topY: 3.5, segments: 8 });
     const verts = toVertices(geom.positions);
     expect(verts).not.toHaveLength(0);
     for (let i = 0; i < verts.length; i += 4) {
@@ -67,13 +69,31 @@ describe('boundaryWallMesh', () => {
     const verts = toVertices(geom.positions);
     expect(verts).not.toHaveLength(0);
     expect(verts[0][1]).toBeCloseTo(-2);
+    expect(verts[1][1]).toBeCloseTo(2.5);
   });
 
   it('reports whole-number grid cell counts derived from gridSpacing', () => {
     // Circumference 2*pi*5 = 31.4159; at 0.5 m spacing that rounds to 63 columns.
-    const geom = boundaryWallMesh({ ...BASE, radius: 5, height: 2.5, gridSpacing: 0.5, segments: 8 });
+    // The ground is flat at y = 0, so rows = round((2.5 - 0) / 0.5) = 5.
+    const geom = boundaryWallMesh({ ...BASE, radius: 5, topY: 2.5, gridSpacing: 0.5, segments: 8 });
     expect(geom.columns).toBe(63);
     expect(geom.rows).toBe(5);
+  });
+
+  it('derives rows from the average bottom, not from any single column', () => {
+    // Plane y = x - 1, sampled on a radius-3 circle at 6 columns (0, 60, 120, 180, 240, 300 deg):
+    // bottoms are 2, 0.5, -2.5, -4, -2.5, 0.5 -> average -1, which no column matches.
+    // rows = round((2.5 - -1) / 0.5) = round(7) = 7.
+    const tilted = [new Vec3(1, 0, 0), new Vec3(2, 1, 0), new Vec3(1, 0, 1)];
+    const geom = boundaryWallMesh({ ...BASE, groundPlane: tilted, radius: 3, topY: 2.5, segments: 6 });
+    const bottoms = toVertices(geom.positions)
+      .filter((_, index) => index % 2 === 0)
+      .map(([, y]) => y);
+    expect(bottoms).toHaveLength(12);
+    for (const y of bottoms) {
+      expect(Math.abs(y + 1)).toBeGreaterThan(1);
+    }
+    expect(geom.rows).toBe(7);
   });
 
   it('emits u in cell units that wrap exactly at `columns`', () => {
@@ -110,15 +130,21 @@ describe('boundaryWallMesh', () => {
     expect(geom.indices).toHaveLength(0);
   });
 
-  it('returns empty geometry for a non-positive height', () => {
-    expect(boundaryWallMesh({ ...BASE, height: 0 }).positions).toHaveLength(0);
-  });
-
   it('returns empty geometry for a non-positive segment count', () => {
     expect(boundaryWallMesh({ ...BASE, segments: 0 }).positions).toHaveLength(0);
   });
 
   it('returns empty geometry for a non-positive grid spacing', () => {
     expect(boundaryWallMesh({ ...BASE, gridSpacing: 0 }).positions).toHaveLength(0);
+  });
+
+  it('returns empty geometry when topY is level with the base', () => {
+    expect(boundaryWallMesh({ ...BASE, topY: 0 }).positions).toHaveLength(0);
+  });
+
+  it('returns empty geometry when topY clears only part of a tilted base', () => {
+    // y = z on a radius-3 circle reaches 3, so a top at 2 is below the far half of the wall.
+    const tilted = [new Vec3(0, 0, 0), new Vec3(1, 0, 0), new Vec3(0, 1, 1)];
+    expect(boundaryWallMesh({ ...BASE, groundPlane: tilted, radius: 3, topY: 2 }).positions).toHaveLength(0);
   });
 });

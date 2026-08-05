@@ -31,6 +31,12 @@ import { rayHitsInteractiveUi } from './xr-interactive-ui';
 const DEFAULT_FOCUS_POINT: [number, number, number] = [0, 0.1, 0];
 const DEFAULT_POSITION: [number, number, number] = [1, 0.1, 0];
 
+// How far outside the clamp radius the boundary wall stands. Without it the wall would be coplanar
+// with the surface the head is clamped to, so a pinned user would have it in their face and through
+// their near clip plane. Deliberately an absolute world-space distance rather than one scaled by
+// scaleFactor: it is about the size of the user's body, not about the size of the scene.
+const WALL_INSET = 0.25;
+
 export interface VirtualWalkthroughViewerProps {
   splatSrc: string;
   origin?: [number, number, number];
@@ -392,7 +398,7 @@ const VirtualWalkthroughViewer = ({
       {isCurrentlyInXr && (
         <BoundaryWall
           center={cameraBoundsCenter}
-          radius={sceneBoundsRadius * scaleFactor}
+          radius={sceneBoundsRadius * scaleFactor + WALL_INSET}
           groundPlane={cameraGroundPlane}
           baseY={0}
         />

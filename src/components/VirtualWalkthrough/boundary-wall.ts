@@ -23,8 +23,8 @@ export type BoundaryWallGeometryParams = {
   groundPlane: Vec3[];
   /** Flat base height used when no usable ground plane is supplied. */
   baseY: number;
-  /** Wall height in world units above the base. */
-  height: number;
+  /** Absolute world Y of the wall's top edge, giving a flat top ring however the ground below tilts. */
+  topY: number;
   /** Target grid cell size in world units. Rounded so cells divide the circumference and height evenly. */
   gridSpacing: number;
   segments?: number;
@@ -44,8 +44,10 @@ export type BoundaryWallGeometry = {
 
 /**
  * Triangle geometry for an upright cylinder standing on the boundary circle. Each segment is a quad
- * (two triangles) spanning from the ground up to `height`; the base is sampled on the ground plane so
- * the wall meets the dashed BoundaryRing exactly.
+ * (two triangles) spanning from the ground up to `topY`; the base is sampled on the ground plane so
+ * the wall meets the dashed BoundaryRing exactly, while the top is a flat ring at `topY` — the user
+ * stands on the rig floor, not on the splat's ground plane, so the top is positioned relative to the
+ * former and only the base follows the latter.
  *
  * UVs are emitted in **grid cell units** rather than metres — u runs 0..columns around the
  * circumference and v runs 0..rows up the wall — so the shader can draw a line at every whole number
@@ -56,31 +58,50 @@ export const boundaryWallMesh = ({
   radius,
   groundPlane,
   baseY,
-  height,
+  topY,
   gridSpacing,
   segments = 96,
 }: BoundaryWallGeometryParams): BoundaryWallGeometry => {
-  if (radius <= 0 || height <= 0 || segments <= 0 || gridSpacing <= 0) {
+  if (radius <= 0 || segments <= 0 || gridSpacing <= 0) {
     return { positions: [], uvs: [], indices: [], columns: 0, rows: 0 };
   }
 
   const plane = computeGroundPlane(groundPlane);
-  const columns = Math.max(1, Math.round((Math.PI * 2 * radius) / gridSpacing));
-  const rows = Math.max(1, Math.round(height / gridSpacing));
   const step = (Math.PI * 2) / segments;
+
+  // First pass: the bottom of every column, which the row count and the extent guard both need
+  // before any vertex can be emitted.
+  const bottoms = Array.from({ length: segments }, (_, index) => {
+    const angle = index * step;
+    const x = center.x + radius * Math.cos(angle);
+    const z = center.z + radius * Math.sin(angle);
+
+    return { x, z, y: plane ? yOnPlane(x, z, plane.normal, plane.point, baseY) : baseY };
+  });
+
+  if (bottoms.some((bottom) => bottom.y >= topY)) {
+    return { positions: [], uvs: [], indices: [], columns: 0, rows: 0 };
+  }
+
+  // Every column has its own world height once the ground tilts, but v still runs 0..rows uniformly
+  // for all of them, so a single row count has to stand for the whole wall. Deriving it from the
+  // average bottom is exact for a flat ground plane (the common case) and keeps the cells square on
+  // average when the plane is tilted.
+  const averageBottomY = bottoms.reduce((total, bottom) => total + bottom.y, 0) / bottoms.length;
+  const columns = Math.max(1, Math.round((Math.PI * 2 * radius) / gridSpacing));
+  const rows = Math.max(1, Math.round((topY - averageBottomY) / gridSpacing));
 
   const positions: number[] = [];
   const uvs: number[] = [];
   const indices: number[] = [];
 
   const pushColumn = (index: number) => {
-    const angle = index * step;
-    const x = center.x + radius * Math.cos(angle);
-    const z = center.z + radius * Math.sin(angle);
-    const y = plane ? yOnPlane(x, z, plane.normal, plane.point, baseY) : baseY;
+    // The closing column (index === segments) reuses column 0's position so the loop shuts exactly,
+    // while u keeps counting up to `columns` to place the seam.
+    const { x, z, y } = bottoms[index % segments];
     const u = (index / segments) * columns;
 
-    positions.push(x, y, z, x, y + height, z);
+    positions.push(x, y, z, x, topY, z);
     uvs.push(u, 0, u, rows);
   };
 
@@ -135,6 +156,10 @@ const wallFragmentGLSL = /* glsl */ `
     }
 
     void main(void) {
+        // gridLine takes derivatives, which are undefined in non-uniform control flow, so it has to
+        // run before any discard.
+        float grid = max(gridLine(uv0.x), gridLine(uv0.y));
+
         // Distance from this fragment to the head, so only the arc of wall near the user lights up.
         float fade = uFadeDistance * mix(1.0, uBlockedFadeScale, uBlocked);
         float proximity = 1.0 - clamp(distance(vWorld.xz, uHeadPos.xz) / fade, 0.0, 1.0);
@@ -142,7 +167,6 @@ const wallFragmentGLSL = /* glsl */ `
 
         // Soften the open top edge so the wall does not end in a hard rim.
         float topFade = 1.0 - smoothstep(0.6, 1.0, uv0.y / uRows);
-        float grid = max(gridLine(uv0.x), gridLine(uv0.y));
 
         float alpha = proximity * topFade * grid;
         if (alpha <= 0.0) discard;
@@ -174,8 +198,13 @@ export class BoundaryWallScript extends Script {
   center = new Vec3();
   radius = 0;
   groundPlane: Vec3[] = [];
+  /** Flat bottom height used when no usable ground plane is supplied. */
   baseY = 0;
-  height = 2.5;
+  /**
+   * Absolute world Y of the wall's top edge. The default puts it 2.5 m above a rig floor at y = 0,
+   * which is where the user actually stands - the splat's ground plane can be well below that.
+   */
+  topY = 2.5;
   segments = 96;
   gridSpacing = 0.5;
   /** Head distance, in world metres, at which the wall starts to appear. */
@@ -239,7 +268,7 @@ export class BoundaryWallScript extends Script {
       radius: this.radius,
       groundPlane: this.groundPlane,
       baseY: this.baseY,
-      height: this.height,
+      topY: this.topY,
       gridSpacing: this.gridSpacing,
       segments: this.segments,
     });
