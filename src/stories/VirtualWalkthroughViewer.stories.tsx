@@ -18,6 +18,12 @@ export default {
     // rebuilding. Defaults to a remote hosted .sog/.ply URL; paste your own to
     // swap scenes.
     splatSrc: { control: 'text' },
+    // The format is inferred from splatSrc, so leave this unset unless the URL
+    // hides the filename (signed download URLs) and the guess is wrong.
+    splatFormat: {
+      control: 'select',
+      options: [undefined, 'sog', 'sogUnbundled', 'sogStreamed', 'ply'],
+    },
   },
 };
 

@@ -20,6 +20,7 @@ import SplatModel from './SplatModel';
 import { TfAnnotationManager } from './TfAnnotationManager';
 import { TfXrNavigation } from './TfXrNavigation';
 import XrExitButton from './XrExitButton';
+import { SplatFormat } from './splatFormat';
 import { WalkthroughCamera } from './walkthrough-camera';
 
 const DEFAULT_FOCUS_POINT: [number, number, number] = [0, 0.1, 0];
@@ -27,6 +28,7 @@ const DEFAULT_POSITION: [number, number, number] = [1, 0.1, 0];
 
 export interface VirtualWalkthroughViewerProps {
   splatSrc: string;
+  splatFormat?: SplatFormat;
   origin?: [number, number, number];
   cameraPosition?: [number, number, number];
   sceneBounds?: { x: number; y: number; z: number; m: number };
@@ -47,6 +49,7 @@ export interface VirtualWalkthroughViewerProps {
 
 const VirtualWalkthroughViewer = ({
   splatSrc,
+  splatFormat,
   origin = DEFAULT_FOCUS_POINT,
   cameraPosition = DEFAULT_POSITION,
   sceneBounds,
@@ -257,8 +260,16 @@ const VirtualWalkthroughViewer = ({
   );
 
   const splatModel = useMemo(
-    () => <SplatModel key='splat' splatSrc={splatSrc} rotation={[-180, 0, 0]} revealRain={isHighPerformance} />,
-    [isHighPerformance, splatSrc]
+    () => (
+      <SplatModel
+        key='splat'
+        splatSrc={splatSrc}
+        splatFormat={splatFormat}
+        rotation={[-180, 0, 0]}
+        revealRain={isHighPerformance}
+      />
+    ),
+    [isHighPerformance, splatSrc, splatFormat]
   );
 
   return (

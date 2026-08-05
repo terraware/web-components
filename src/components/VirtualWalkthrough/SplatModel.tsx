@@ -8,9 +8,16 @@ import BlockingSpinner from './BlockingSpinner';
 import SplatCrop from './SplatCrop';
 import SplatFadeCrop from './SplatFadeCrop';
 import SplatRevealRain from './SplatRevealRain';
+import { SplatFormat, detectSplatFormat, splatLoaderFilename } from './splatFormat';
 
 export interface SplatModelProps {
   splatSrc: string;
+  /**
+   * Splat format of `splatSrc`. Inferred from the URL when omitted, which covers bundled `.sog`,
+   * unbundled sog (`meta.json`), streamed LOD sog (`lod-meta.json`) and `.ply` sources. Set this
+   * explicitly when the URL hides the filename.
+   */
+  splatFormat?: SplatFormat;
   rotation?: [number, number, number];
   cropAabbMin?: [number, number, number];
   cropAabbMax?: [number, number, number];
@@ -23,6 +30,7 @@ export interface SplatModelProps {
 
 const SplatModel = ({
   splatSrc,
+  splatFormat,
   rotation,
   cropAabbMin,
   cropAabbMax,
@@ -32,8 +40,10 @@ const SplatModel = ({
   revealRain = false,
   onError,
 }: SplatModelProps) => {
-  // A filename is required for the file props to assist with the asset loading. Otherwise it assumes that the splatSrc is a ply file.
-  const { asset, loading, error } = useSplat(splatSrc, { file: { filename: 'model.sog' } });
+  // The loader selects its parser from this filename rather than from splatSrc, so it has to name the
+  // format we are actually loading. See splatFormat.ts.
+  const filename = splatLoaderFilename(splatFormat ?? detectSplatFormat(splatSrc));
+  const { asset, loading, error } = useSplat(splatSrc, { file: { filename } });
 
   useEffect(() => {
     if (error) {
