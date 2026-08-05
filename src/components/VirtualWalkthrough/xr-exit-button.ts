@@ -16,7 +16,9 @@ import {
   XrInputSource,
 } from 'playcanvas';
 
-import { FaceButtonPressTracker } from './xr-face-buttons';
+import { HoldState, INITIAL_HOLD_STATE, advanceHold } from './xr-button-hold';
+import { FaceButtonPressTracker, secondaryFaceButtonPressed } from './xr-face-buttons';
+import { drawProgressPie } from './xr-progress-pie';
 
 /**
  * Boolean ray-sphere hit test. Treats the ray as a half-line (t >= 0) and returns true when it
@@ -35,6 +37,9 @@ export const raySphereIntersect = (origin: Vec3, direction: Vec3, center: Vec3, 
 };
 
 const TEXTURE_SIZE = 256;
+
+/** Seconds of continuous B/Y hold required to leave the session. Matches the gaze-dwell threshold. */
+const EXIT_HOLD_SECONDS = 1.25;
 
 export class XrExitButton extends Script {
   static scriptName = 'xrExitButton';
@@ -58,15 +63,22 @@ export class XrExitButton extends Script {
   private _worldOffset = new Vec3();
   private _faceButtons = new FaceButtonPressTracker();
 
+  private _canvas?: HTMLCanvasElement;
+  private _drawnProgress = -1;
+  private _hold: HoldState = INITIAL_HOLD_STATE;
+  private _armedSources = new WeakSet<XrInputSource>();
+
   private _isVrActive = () => this.app.xr?.active === true && this.app.xr?.type === XRTYPE_VR;
 
   private _onXrStart = () => {
     this.entity.enabled = this._isVrActive();
+    this._resetProgress();
   };
 
   private _onXrEnd = () => {
     this.entity.enabled = false;
     this._hovered = false;
+    this._resetProgress();
     this.entity.setLocalScale(1, 1, 1);
     if (this._material) {
       this._material.opacity = 0.9;
@@ -92,32 +104,15 @@ export class XrExitButton extends Script {
     return raySphereIntersect(origin, direction, this.entity.getPosition(), this.hitRadius);
   }
 
-  private _createTexture(): Texture {
+  private _createCanvas(): HTMLCanvasElement {
     const canvas = document.createElement('canvas');
     canvas.width = TEXTURE_SIZE;
     canvas.height = TEXTURE_SIZE;
-    const ctx = canvas.getContext('2d');
-    const c = TEXTURE_SIZE / 2;
 
-    if (ctx) {
-      ctx.clearRect(0, 0, TEXTURE_SIZE, TEXTURE_SIZE);
-      ctx.fillStyle = 'rgba(20, 20, 20, 0.75)';
-      ctx.beginPath();
-      ctx.arc(c, c, c * 0.92, 0, Math.PI * 2);
-      ctx.fill();
+    return canvas;
+  }
 
-      const arm = TEXTURE_SIZE * 0.24;
-      ctx.strokeStyle = '#ffffff';
-      ctx.lineWidth = TEXTURE_SIZE * 0.09;
-      ctx.lineCap = 'round';
-      ctx.beginPath();
-      ctx.moveTo(c - arm, c - arm);
-      ctx.lineTo(c + arm, c + arm);
-      ctx.moveTo(c + arm, c - arm);
-      ctx.lineTo(c - arm, c + arm);
-      ctx.stroke();
-    }
-
+  private _createTexture(canvas: HTMLCanvasElement): Texture {
     const texture = new Texture(this.app.graphicsDevice, {
       name: 'xr-exit-button',
       width: TEXTURE_SIZE,
@@ -133,6 +128,58 @@ export class XrExitButton extends Script {
     return texture;
   }
 
+  /**
+   * Repaints the button: dark disc, then the hold progress wedge, then the X arms on top so the
+   * glyph stays legible over the fill. The pie is skipped entirely at zero progress so the idle
+   * button doesn't wear the pie's faint track.
+   */
+  private _drawButton(progress: number) {
+    const ctx = this._canvas?.getContext('2d');
+    if (!ctx) {
+      return;
+    }
+    const c = TEXTURE_SIZE / 2;
+
+    ctx.clearRect(0, 0, TEXTURE_SIZE, TEXTURE_SIZE);
+    ctx.fillStyle = 'rgba(20, 20, 20, 0.75)';
+    ctx.beginPath();
+    ctx.arc(c, c, c * 0.92, 0, Math.PI * 2);
+    ctx.fill();
+
+    if (progress > 0) {
+      drawProgressPie(ctx, TEXTURE_SIZE, progress);
+    }
+
+    const arm = TEXTURE_SIZE * 0.24;
+    ctx.strokeStyle = '#ffffff';
+    ctx.lineWidth = TEXTURE_SIZE * 0.09;
+    ctx.lineCap = 'round';
+    ctx.beginPath();
+    ctx.moveTo(c - arm, c - arm);
+    ctx.lineTo(c + arm, c + arm);
+    ctx.moveTo(c + arm, c - arm);
+    ctx.lineTo(c - arm, c + arm);
+    ctx.stroke();
+
+    this._texture?.upload();
+  }
+
+  /** Repaints only when the drawn wedge would visibly move. */
+  private _setProgress(progress: number) {
+    if (Math.abs(progress - this._drawnProgress) <= 0.001) {
+      return;
+    }
+
+    this._drawnProgress = progress;
+    this._drawButton(progress);
+  }
+
+  private _resetProgress() {
+    this._hold = INITIAL_HOLD_STATE;
+    this._drawnProgress = -1;
+    this._setProgress(0);
+  }
+
   private _createMesh(): Mesh {
     const h = this.halfSize;
     const mesh = new Mesh(this.app.graphicsDevice);
@@ -146,7 +193,10 @@ export class XrExitButton extends Script {
   }
 
   initialize() {
-    this._texture = this._createTexture();
+    this._canvas = this._createCanvas();
+    this._texture = this._createTexture(this._canvas);
+    this._drawButton(0);
+    this._drawnProgress = 0;
 
     const material = new StandardMaterial();
     material.useLighting = false;
@@ -174,7 +224,7 @@ export class XrExitButton extends Script {
     this.app.xr?.input?.on('select', this._onSelect);
   }
 
-  update() {
+  update(dt: number) {
     if (!this.entity.enabled) {
       return;
     }
@@ -183,6 +233,7 @@ export class XrExitButton extends Script {
 
     const sources = this.app.xr?.input?.inputSources ?? [];
     let hovered = false;
+    let holdActive = false;
     for (const source of sources) {
       const sourceHovers = this.rayHitsButton(source.getOrigin(), source.getDirection());
       hovered = hovered || sourceHovers;
@@ -196,6 +247,24 @@ export class XrExitButton extends Script {
 
         return;
       }
+
+      // Arming is per source: a button already down when the session starts is ignored until it is
+      // released, and one controller held down can't stop the other from starting a hold.
+      if (secondaryFaceButtonPressed(source)) {
+        holdActive = holdActive || this._armedSources.has(source);
+      } else {
+        this._armedSources.add(source);
+      }
+    }
+
+    const hold = advanceHold(this._hold, holdActive, dt, EXIT_HOLD_SECONDS);
+    this._hold = hold.state;
+    this._setProgress(hold.progress);
+
+    if (hold.justFired) {
+      this.app.xr?.end();
+
+      return;
     }
 
     if (hovered !== this._hovered) {
