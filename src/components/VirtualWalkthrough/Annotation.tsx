@@ -120,6 +120,15 @@ const Annotation = (props: AnnotationProps & { index: number }) => {
     [setCamera]
   );
 
+  // VR open path: shows the annotation without moving the camera (roomscale head pose
+  // comes from the XR views, so a camera move would be disorienting or a no-op).
+  const handleVrOpen = useCallback((screenX: number, screenY: number) => {
+    if (isEditRef.current) {
+      return;
+    }
+    onViewRef.current?.(annotationForViewRef.current, screenX, screenY);
+  }, []);
+
   // Stable callback so its identity doesn't churn the underlying script prop each frame.
   const handleScreenPositionUpdate = useCallback(
     (screenX: number, screenY: number, size?: number) => {
@@ -228,6 +237,7 @@ const Annotation = (props: AnnotationProps & { index: number }) => {
         text={bodyText}
         enabled={visible}
         onClickCallback={handleClick}
+        onVrOpenCallback={handleVrOpen}
         onScreenPositionUpdateCallback={isViewed ? handleScreenPositionUpdate : undefined}
       />
     </Entity>
