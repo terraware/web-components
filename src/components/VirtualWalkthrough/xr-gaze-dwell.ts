@@ -19,6 +19,7 @@ import {
 import { HOTSPOT_HALF_EXTENT, collectAnnotationHitCandidates } from './xr-annotation-candidates';
 import { nearestAnnotationHit } from './xr-annotation-targeting';
 import { DwellState, INITIAL_DWELL_STATE, advanceDwell } from './xr-gaze-dwell-state';
+import { drawProgressPie } from './xr-progress-pie';
 
 /** Multiplier on the hotspot's world radius for gaze targeting. */
 const GAZE_HIT_RADIUS_PAD = 5;
@@ -31,9 +32,6 @@ const PIE_RADIUS_SCALE = 1.25;
 
 /** Progress-pie texture resolution. */
 const PIE_TEXTURE_SIZE = 128;
-
-/** Sweep starts at 12 o'clock. */
-const PIE_START_ANGLE = -Math.PI / 2;
 
 const LOCAL_FORWARD = new Vec3(0, 0, -1);
 
@@ -118,24 +116,9 @@ export class XrGazeDwell extends Script {
     if (!ctx) {
       return;
     }
-    const c = PIE_TEXTURE_SIZE / 2;
-    const r = c * 0.92;
+
     ctx.clearRect(0, 0, PIE_TEXTURE_SIZE, PIE_TEXTURE_SIZE);
-
-    // Faint full-circle track so the not-yet-filled portion still reads as a disc.
-    ctx.beginPath();
-    ctx.arc(c, c, r, 0, Math.PI * 2);
-    ctx.fillStyle = 'rgba(255, 255, 255, 0.18)';
-    ctx.fill();
-
-    // Filled progress wedge from the centre, sweeping from 12 o'clock.
-    ctx.beginPath();
-    ctx.moveTo(c, c);
-    ctx.arc(c, c, r, PIE_START_ANGLE, PIE_START_ANGLE + progress * Math.PI * 2);
-    ctx.closePath();
-    ctx.fillStyle = 'rgba(64, 200, 255, 0.85)';
-    ctx.fill();
-
+    drawProgressPie(ctx, PIE_TEXTURE_SIZE, progress);
     this._pieTexture?.upload();
   }
 
