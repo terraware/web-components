@@ -395,7 +395,7 @@ const VirtualWalkthroughViewer = ({
         )}
       </Entity>
 
-      {isCurrentlyInXr && (
+      {isCurrentlyInXr && sceneBoundsRadius > 0 && (
         <BoundaryWall
           center={cameraBoundsCenter}
           radius={sceneBoundsRadius * scaleFactor + WALL_INSET}
