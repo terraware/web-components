@@ -22,6 +22,7 @@ import { TfXrNavigation } from './TfXrNavigation';
 import VrAnnotationPanel from './VrAnnotationPanel';
 import XrAnnotationInteraction from './XrAnnotationInteraction';
 import XrExitButton from './XrExitButton';
+import XrGazeDwell from './XrGazeDwell';
 import XrPointerRay from './XrPointerRay';
 import { WalkthroughCamera } from './walkthrough-camera';
 
@@ -312,6 +313,7 @@ const VirtualWalkthroughViewer = ({
             scaleFactor={scaleFactor}
           />
         )}
+        {isCurrentlyInXr && <XrGazeDwell activeIndex={viewingAnnotationIndex} />}
         {/* Disable teleport for AR as it can be disorienting */}
         <Script script={TfXrNavigation} enabled={!isEdit} enableTeleport={false} />
         {!isCurrentlyInXr && (
