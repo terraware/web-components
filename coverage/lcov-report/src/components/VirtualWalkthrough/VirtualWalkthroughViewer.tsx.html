@@ -510,7 +510,18 @@
 <a name='L445'></a><a href='#L445'>445</a>
 <a name='L446'></a><a href='#L446'>446</a>
 <a name='L447'></a><a href='#L447'>447</a>
-<a name='L448'></a><a href='#L448'>448</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L448'></a><a href='#L448'>448</a>
+<a name='L449'></a><a href='#L449'>449</a>
+<a name='L450'></a><a href='#L450'>450</a>
+<a name='L451'></a><a href='#L451'>451</a>
+<a name='L452'></a><a href='#L452'>452</a>
+<a name='L453'></a><a href='#L453'>453</a>
+<a name='L454'></a><a href='#L454'>454</a>
+<a name='L455'></a><a href='#L455'>455</a>
+<a name='L456'></a><a href='#L456'>456</a>
+<a name='L457'></a><a href='#L457'>457</a>
+<a name='L458'></a><a href='#L458'>458</a>
+<a name='L459'></a><a href='#L459'>459</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -540,6 +551,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -548,6 +560,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -588,6 +601,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -806,7 +820,15 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -984,6 +1006,7 @@ import XrAnnotationInteraction from './XrAnnotationInteraction';
 import XrExitButton from './XrExitButton';
 import XrGazeDwell from './XrGazeDwell';
 import XrPointerRay from './XrPointerRay';
+import { SplatFormat } from './splatFormat';
 import { WalkthroughCamera } from './walkthrough-camera';
 import { rayHitsInteractiveUi } from './xr-interactive-ui';
 &nbsp;
@@ -998,6 +1021,7 @@ const WALL_INSET = <span class="cstat-no" title="statement not covered" >0.25;</
 &nbsp;
 export interface VirtualWalkthroughViewerProps {
   splatSrc: string;
+  splatFormat?: SplatFormat;
   origin?: [number, number, number];
   cameraPosition?: [number, number, number];
   sceneBounds?: { x: number; y: number; z: number; m: number };
@@ -1018,6 +1042,7 @@ export interface VirtualWalkthroughViewerProps {
 &nbsp;
 const VirtualWalkthroughViewer = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >({</span></span>
   splatSrc,
+  splatFormat,
   origin = <span class="branch-0 cbranch-no" title="branch not covered" >DEFAULT_FOCUS_POINT,</span>
   cameraPosition = <span class="branch-0 cbranch-no" title="branch not covered" >DEFAULT_POSITION,</span>
   sceneBounds,
@@ -1253,8 +1278,16 @@ const VirtualWalkthroughViewer = <span class="cstat-no" title="statement not cov
   );
 &nbsp;
   const splatModel = <span class="cstat-no" title="statement not covered" >useMemo(</span>
-<span class="fstat-no" title="function not covered" >    ()</span> =&gt; <span class="cstat-no" title="statement not covered" >&lt;SplatModel key='splat' splatSrc={splatSrc} rotation={[-180, 0, 0]} revealRain={isHighPerformance} /&gt;,</span>
-    [isHighPerformance, splatSrc]
+<span class="fstat-no" title="function not covered" >    ()</span> =&gt; (
+<span class="cstat-no" title="statement not covered" >      &lt;SplatModel</span>
+        key='splat'
+        splatSrc={splatSrc}
+        splatFormat={splatFormat}
+        rotation={[-180, 0, 0]}
+        revealRain={isHighPerformance}
+      /&gt;
+    ),
+    [isHighPerformance, splatSrc, splatFormat]
   );
 &nbsp;
 <span class="cstat-no" title="statement not covered" >  return (</span>
@@ -1411,7 +1444,7 @@ export default VirtualWalkthroughViewer;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-08-06T19:01:11.488Z
+                at 2026-08-06T19:47:12.278Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>
