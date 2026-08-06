@@ -1,0 +1,1159 @@
+
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Code coverage report for src/components/VirtualWalkthrough/boundary-wall.ts</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../../prettify.css" />
+    <link rel="stylesheet" href="../../../base.css" />
+    <link rel="shortcut icon" type="image/x-icon" href="../../../favicon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+    
+<body>
+<div class='wrapper'>
+    <div class='pad1'>
+        <h1><a href="../../../index.html">All files</a> / <a href="index.html">src/components/VirtualWalkthrough</a> boundary-wall.ts</h1>
+        <div class='clearfix'>
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">30.97% </span>
+                <span class="quiet">Statements</span>
+                <span class='fraction'>35/113</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">23.25% </span>
+                <span class="quiet">Branches</span>
+                <span class='fraction'>10/43</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">45.45% </span>
+                <span class="quiet">Functions</span>
+                <span class='fraction'>5/11</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">29.09% </span>
+                <span class="quiet">Lines</span>
+                <span class='fraction'>32/110</span>
+            </div>
+        
+            
+        </div>
+        <p class="quiet">
+            Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
+        </p>
+        <template id="filterTemplate">
+            <div class="quiet">
+                Filter:
+                <input type="search" id="fileSearch">
+            </div>
+        </template>
+    </div>
+    <div class='status-line low'></div>
+    <pre><table class="coverage">
+<tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
+<a name='L2'></a><a href='#L2'>2</a>
+<a name='L3'></a><a href='#L3'>3</a>
+<a name='L4'></a><a href='#L4'>4</a>
+<a name='L5'></a><a href='#L5'>5</a>
+<a name='L6'></a><a href='#L6'>6</a>
+<a name='L7'></a><a href='#L7'>7</a>
+<a name='L8'></a><a href='#L8'>8</a>
+<a name='L9'></a><a href='#L9'>9</a>
+<a name='L10'></a><a href='#L10'>10</a>
+<a name='L11'></a><a href='#L11'>11</a>
+<a name='L12'></a><a href='#L12'>12</a>
+<a name='L13'></a><a href='#L13'>13</a>
+<a name='L14'></a><a href='#L14'>14</a>
+<a name='L15'></a><a href='#L15'>15</a>
+<a name='L16'></a><a href='#L16'>16</a>
+<a name='L17'></a><a href='#L17'>17</a>
+<a name='L18'></a><a href='#L18'>18</a>
+<a name='L19'></a><a href='#L19'>19</a>
+<a name='L20'></a><a href='#L20'>20</a>
+<a name='L21'></a><a href='#L21'>21</a>
+<a name='L22'></a><a href='#L22'>22</a>
+<a name='L23'></a><a href='#L23'>23</a>
+<a name='L24'></a><a href='#L24'>24</a>
+<a name='L25'></a><a href='#L25'>25</a>
+<a name='L26'></a><a href='#L26'>26</a>
+<a name='L27'></a><a href='#L27'>27</a>
+<a name='L28'></a><a href='#L28'>28</a>
+<a name='L29'></a><a href='#L29'>29</a>
+<a name='L30'></a><a href='#L30'>30</a>
+<a name='L31'></a><a href='#L31'>31</a>
+<a name='L32'></a><a href='#L32'>32</a>
+<a name='L33'></a><a href='#L33'>33</a>
+<a name='L34'></a><a href='#L34'>34</a>
+<a name='L35'></a><a href='#L35'>35</a>
+<a name='L36'></a><a href='#L36'>36</a>
+<a name='L37'></a><a href='#L37'>37</a>
+<a name='L38'></a><a href='#L38'>38</a>
+<a name='L39'></a><a href='#L39'>39</a>
+<a name='L40'></a><a href='#L40'>40</a>
+<a name='L41'></a><a href='#L41'>41</a>
+<a name='L42'></a><a href='#L42'>42</a>
+<a name='L43'></a><a href='#L43'>43</a>
+<a name='L44'></a><a href='#L44'>44</a>
+<a name='L45'></a><a href='#L45'>45</a>
+<a name='L46'></a><a href='#L46'>46</a>
+<a name='L47'></a><a href='#L47'>47</a>
+<a name='L48'></a><a href='#L48'>48</a>
+<a name='L49'></a><a href='#L49'>49</a>
+<a name='L50'></a><a href='#L50'>50</a>
+<a name='L51'></a><a href='#L51'>51</a>
+<a name='L52'></a><a href='#L52'>52</a>
+<a name='L53'></a><a href='#L53'>53</a>
+<a name='L54'></a><a href='#L54'>54</a>
+<a name='L55'></a><a href='#L55'>55</a>
+<a name='L56'></a><a href='#L56'>56</a>
+<a name='L57'></a><a href='#L57'>57</a>
+<a name='L58'></a><a href='#L58'>58</a>
+<a name='L59'></a><a href='#L59'>59</a>
+<a name='L60'></a><a href='#L60'>60</a>
+<a name='L61'></a><a href='#L61'>61</a>
+<a name='L62'></a><a href='#L62'>62</a>
+<a name='L63'></a><a href='#L63'>63</a>
+<a name='L64'></a><a href='#L64'>64</a>
+<a name='L65'></a><a href='#L65'>65</a>
+<a name='L66'></a><a href='#L66'>66</a>
+<a name='L67'></a><a href='#L67'>67</a>
+<a name='L68'></a><a href='#L68'>68</a>
+<a name='L69'></a><a href='#L69'>69</a>
+<a name='L70'></a><a href='#L70'>70</a>
+<a name='L71'></a><a href='#L71'>71</a>
+<a name='L72'></a><a href='#L72'>72</a>
+<a name='L73'></a><a href='#L73'>73</a>
+<a name='L74'></a><a href='#L74'>74</a>
+<a name='L75'></a><a href='#L75'>75</a>
+<a name='L76'></a><a href='#L76'>76</a>
+<a name='L77'></a><a href='#L77'>77</a>
+<a name='L78'></a><a href='#L78'>78</a>
+<a name='L79'></a><a href='#L79'>79</a>
+<a name='L80'></a><a href='#L80'>80</a>
+<a name='L81'></a><a href='#L81'>81</a>
+<a name='L82'></a><a href='#L82'>82</a>
+<a name='L83'></a><a href='#L83'>83</a>
+<a name='L84'></a><a href='#L84'>84</a>
+<a name='L85'></a><a href='#L85'>85</a>
+<a name='L86'></a><a href='#L86'>86</a>
+<a name='L87'></a><a href='#L87'>87</a>
+<a name='L88'></a><a href='#L88'>88</a>
+<a name='L89'></a><a href='#L89'>89</a>
+<a name='L90'></a><a href='#L90'>90</a>
+<a name='L91'></a><a href='#L91'>91</a>
+<a name='L92'></a><a href='#L92'>92</a>
+<a name='L93'></a><a href='#L93'>93</a>
+<a name='L94'></a><a href='#L94'>94</a>
+<a name='L95'></a><a href='#L95'>95</a>
+<a name='L96'></a><a href='#L96'>96</a>
+<a name='L97'></a><a href='#L97'>97</a>
+<a name='L98'></a><a href='#L98'>98</a>
+<a name='L99'></a><a href='#L99'>99</a>
+<a name='L100'></a><a href='#L100'>100</a>
+<a name='L101'></a><a href='#L101'>101</a>
+<a name='L102'></a><a href='#L102'>102</a>
+<a name='L103'></a><a href='#L103'>103</a>
+<a name='L104'></a><a href='#L104'>104</a>
+<a name='L105'></a><a href='#L105'>105</a>
+<a name='L106'></a><a href='#L106'>106</a>
+<a name='L107'></a><a href='#L107'>107</a>
+<a name='L108'></a><a href='#L108'>108</a>
+<a name='L109'></a><a href='#L109'>109</a>
+<a name='L110'></a><a href='#L110'>110</a>
+<a name='L111'></a><a href='#L111'>111</a>
+<a name='L112'></a><a href='#L112'>112</a>
+<a name='L113'></a><a href='#L113'>113</a>
+<a name='L114'></a><a href='#L114'>114</a>
+<a name='L115'></a><a href='#L115'>115</a>
+<a name='L116'></a><a href='#L116'>116</a>
+<a name='L117'></a><a href='#L117'>117</a>
+<a name='L118'></a><a href='#L118'>118</a>
+<a name='L119'></a><a href='#L119'>119</a>
+<a name='L120'></a><a href='#L120'>120</a>
+<a name='L121'></a><a href='#L121'>121</a>
+<a name='L122'></a><a href='#L122'>122</a>
+<a name='L123'></a><a href='#L123'>123</a>
+<a name='L124'></a><a href='#L124'>124</a>
+<a name='L125'></a><a href='#L125'>125</a>
+<a name='L126'></a><a href='#L126'>126</a>
+<a name='L127'></a><a href='#L127'>127</a>
+<a name='L128'></a><a href='#L128'>128</a>
+<a name='L129'></a><a href='#L129'>129</a>
+<a name='L130'></a><a href='#L130'>130</a>
+<a name='L131'></a><a href='#L131'>131</a>
+<a name='L132'></a><a href='#L132'>132</a>
+<a name='L133'></a><a href='#L133'>133</a>
+<a name='L134'></a><a href='#L134'>134</a>
+<a name='L135'></a><a href='#L135'>135</a>
+<a name='L136'></a><a href='#L136'>136</a>
+<a name='L137'></a><a href='#L137'>137</a>
+<a name='L138'></a><a href='#L138'>138</a>
+<a name='L139'></a><a href='#L139'>139</a>
+<a name='L140'></a><a href='#L140'>140</a>
+<a name='L141'></a><a href='#L141'>141</a>
+<a name='L142'></a><a href='#L142'>142</a>
+<a name='L143'></a><a href='#L143'>143</a>
+<a name='L144'></a><a href='#L144'>144</a>
+<a name='L145'></a><a href='#L145'>145</a>
+<a name='L146'></a><a href='#L146'>146</a>
+<a name='L147'></a><a href='#L147'>147</a>
+<a name='L148'></a><a href='#L148'>148</a>
+<a name='L149'></a><a href='#L149'>149</a>
+<a name='L150'></a><a href='#L150'>150</a>
+<a name='L151'></a><a href='#L151'>151</a>
+<a name='L152'></a><a href='#L152'>152</a>
+<a name='L153'></a><a href='#L153'>153</a>
+<a name='L154'></a><a href='#L154'>154</a>
+<a name='L155'></a><a href='#L155'>155</a>
+<a name='L156'></a><a href='#L156'>156</a>
+<a name='L157'></a><a href='#L157'>157</a>
+<a name='L158'></a><a href='#L158'>158</a>
+<a name='L159'></a><a href='#L159'>159</a>
+<a name='L160'></a><a href='#L160'>160</a>
+<a name='L161'></a><a href='#L161'>161</a>
+<a name='L162'></a><a href='#L162'>162</a>
+<a name='L163'></a><a href='#L163'>163</a>
+<a name='L164'></a><a href='#L164'>164</a>
+<a name='L165'></a><a href='#L165'>165</a>
+<a name='L166'></a><a href='#L166'>166</a>
+<a name='L167'></a><a href='#L167'>167</a>
+<a name='L168'></a><a href='#L168'>168</a>
+<a name='L169'></a><a href='#L169'>169</a>
+<a name='L170'></a><a href='#L170'>170</a>
+<a name='L171'></a><a href='#L171'>171</a>
+<a name='L172'></a><a href='#L172'>172</a>
+<a name='L173'></a><a href='#L173'>173</a>
+<a name='L174'></a><a href='#L174'>174</a>
+<a name='L175'></a><a href='#L175'>175</a>
+<a name='L176'></a><a href='#L176'>176</a>
+<a name='L177'></a><a href='#L177'>177</a>
+<a name='L178'></a><a href='#L178'>178</a>
+<a name='L179'></a><a href='#L179'>179</a>
+<a name='L180'></a><a href='#L180'>180</a>
+<a name='L181'></a><a href='#L181'>181</a>
+<a name='L182'></a><a href='#L182'>182</a>
+<a name='L183'></a><a href='#L183'>183</a>
+<a name='L184'></a><a href='#L184'>184</a>
+<a name='L185'></a><a href='#L185'>185</a>
+<a name='L186'></a><a href='#L186'>186</a>
+<a name='L187'></a><a href='#L187'>187</a>
+<a name='L188'></a><a href='#L188'>188</a>
+<a name='L189'></a><a href='#L189'>189</a>
+<a name='L190'></a><a href='#L190'>190</a>
+<a name='L191'></a><a href='#L191'>191</a>
+<a name='L192'></a><a href='#L192'>192</a>
+<a name='L193'></a><a href='#L193'>193</a>
+<a name='L194'></a><a href='#L194'>194</a>
+<a name='L195'></a><a href='#L195'>195</a>
+<a name='L196'></a><a href='#L196'>196</a>
+<a name='L197'></a><a href='#L197'>197</a>
+<a name='L198'></a><a href='#L198'>198</a>
+<a name='L199'></a><a href='#L199'>199</a>
+<a name='L200'></a><a href='#L200'>200</a>
+<a name='L201'></a><a href='#L201'>201</a>
+<a name='L202'></a><a href='#L202'>202</a>
+<a name='L203'></a><a href='#L203'>203</a>
+<a name='L204'></a><a href='#L204'>204</a>
+<a name='L205'></a><a href='#L205'>205</a>
+<a name='L206'></a><a href='#L206'>206</a>
+<a name='L207'></a><a href='#L207'>207</a>
+<a name='L208'></a><a href='#L208'>208</a>
+<a name='L209'></a><a href='#L209'>209</a>
+<a name='L210'></a><a href='#L210'>210</a>
+<a name='L211'></a><a href='#L211'>211</a>
+<a name='L212'></a><a href='#L212'>212</a>
+<a name='L213'></a><a href='#L213'>213</a>
+<a name='L214'></a><a href='#L214'>214</a>
+<a name='L215'></a><a href='#L215'>215</a>
+<a name='L216'></a><a href='#L216'>216</a>
+<a name='L217'></a><a href='#L217'>217</a>
+<a name='L218'></a><a href='#L218'>218</a>
+<a name='L219'></a><a href='#L219'>219</a>
+<a name='L220'></a><a href='#L220'>220</a>
+<a name='L221'></a><a href='#L221'>221</a>
+<a name='L222'></a><a href='#L222'>222</a>
+<a name='L223'></a><a href='#L223'>223</a>
+<a name='L224'></a><a href='#L224'>224</a>
+<a name='L225'></a><a href='#L225'>225</a>
+<a name='L226'></a><a href='#L226'>226</a>
+<a name='L227'></a><a href='#L227'>227</a>
+<a name='L228'></a><a href='#L228'>228</a>
+<a name='L229'></a><a href='#L229'>229</a>
+<a name='L230'></a><a href='#L230'>230</a>
+<a name='L231'></a><a href='#L231'>231</a>
+<a name='L232'></a><a href='#L232'>232</a>
+<a name='L233'></a><a href='#L233'>233</a>
+<a name='L234'></a><a href='#L234'>234</a>
+<a name='L235'></a><a href='#L235'>235</a>
+<a name='L236'></a><a href='#L236'>236</a>
+<a name='L237'></a><a href='#L237'>237</a>
+<a name='L238'></a><a href='#L238'>238</a>
+<a name='L239'></a><a href='#L239'>239</a>
+<a name='L240'></a><a href='#L240'>240</a>
+<a name='L241'></a><a href='#L241'>241</a>
+<a name='L242'></a><a href='#L242'>242</a>
+<a name='L243'></a><a href='#L243'>243</a>
+<a name='L244'></a><a href='#L244'>244</a>
+<a name='L245'></a><a href='#L245'>245</a>
+<a name='L246'></a><a href='#L246'>246</a>
+<a name='L247'></a><a href='#L247'>247</a>
+<a name='L248'></a><a href='#L248'>248</a>
+<a name='L249'></a><a href='#L249'>249</a>
+<a name='L250'></a><a href='#L250'>250</a>
+<a name='L251'></a><a href='#L251'>251</a>
+<a name='L252'></a><a href='#L252'>252</a>
+<a name='L253'></a><a href='#L253'>253</a>
+<a name='L254'></a><a href='#L254'>254</a>
+<a name='L255'></a><a href='#L255'>255</a>
+<a name='L256'></a><a href='#L256'>256</a>
+<a name='L257'></a><a href='#L257'>257</a>
+<a name='L258'></a><a href='#L258'>258</a>
+<a name='L259'></a><a href='#L259'>259</a>
+<a name='L260'></a><a href='#L260'>260</a>
+<a name='L261'></a><a href='#L261'>261</a>
+<a name='L262'></a><a href='#L262'>262</a>
+<a name='L263'></a><a href='#L263'>263</a>
+<a name='L264'></a><a href='#L264'>264</a>
+<a name='L265'></a><a href='#L265'>265</a>
+<a name='L266'></a><a href='#L266'>266</a>
+<a name='L267'></a><a href='#L267'>267</a>
+<a name='L268'></a><a href='#L268'>268</a>
+<a name='L269'></a><a href='#L269'>269</a>
+<a name='L270'></a><a href='#L270'>270</a>
+<a name='L271'></a><a href='#L271'>271</a>
+<a name='L272'></a><a href='#L272'>272</a>
+<a name='L273'></a><a href='#L273'>273</a>
+<a name='L274'></a><a href='#L274'>274</a>
+<a name='L275'></a><a href='#L275'>275</a>
+<a name='L276'></a><a href='#L276'>276</a>
+<a name='L277'></a><a href='#L277'>277</a>
+<a name='L278'></a><a href='#L278'>278</a>
+<a name='L279'></a><a href='#L279'>279</a>
+<a name='L280'></a><a href='#L280'>280</a>
+<a name='L281'></a><a href='#L281'>281</a>
+<a name='L282'></a><a href='#L282'>282</a>
+<a name='L283'></a><a href='#L283'>283</a>
+<a name='L284'></a><a href='#L284'>284</a>
+<a name='L285'></a><a href='#L285'>285</a>
+<a name='L286'></a><a href='#L286'>286</a>
+<a name='L287'></a><a href='#L287'>287</a>
+<a name='L288'></a><a href='#L288'>288</a>
+<a name='L289'></a><a href='#L289'>289</a>
+<a name='L290'></a><a href='#L290'>290</a>
+<a name='L291'></a><a href='#L291'>291</a>
+<a name='L292'></a><a href='#L292'>292</a>
+<a name='L293'></a><a href='#L293'>293</a>
+<a name='L294'></a><a href='#L294'>294</a>
+<a name='L295'></a><a href='#L295'>295</a>
+<a name='L296'></a><a href='#L296'>296</a>
+<a name='L297'></a><a href='#L297'>297</a>
+<a name='L298'></a><a href='#L298'>298</a>
+<a name='L299'></a><a href='#L299'>299</a>
+<a name='L300'></a><a href='#L300'>300</a>
+<a name='L301'></a><a href='#L301'>301</a>
+<a name='L302'></a><a href='#L302'>302</a>
+<a name='L303'></a><a href='#L303'>303</a>
+<a name='L304'></a><a href='#L304'>304</a>
+<a name='L305'></a><a href='#L305'>305</a>
+<a name='L306'></a><a href='#L306'>306</a>
+<a name='L307'></a><a href='#L307'>307</a>
+<a name='L308'></a><a href='#L308'>308</a>
+<a name='L309'></a><a href='#L309'>309</a>
+<a name='L310'></a><a href='#L310'>310</a>
+<a name='L311'></a><a href='#L311'>311</a>
+<a name='L312'></a><a href='#L312'>312</a>
+<a name='L313'></a><a href='#L313'>313</a>
+<a name='L314'></a><a href='#L314'>314</a>
+<a name='L315'></a><a href='#L315'>315</a>
+<a name='L316'></a><a href='#L316'>316</a>
+<a name='L317'></a><a href='#L317'>317</a>
+<a name='L318'></a><a href='#L318'>318</a>
+<a name='L319'></a><a href='#L319'>319</a>
+<a name='L320'></a><a href='#L320'>320</a>
+<a name='L321'></a><a href='#L321'>321</a>
+<a name='L322'></a><a href='#L322'>322</a>
+<a name='L323'></a><a href='#L323'>323</a>
+<a name='L324'></a><a href='#L324'>324</a>
+<a name='L325'></a><a href='#L325'>325</a>
+<a name='L326'></a><a href='#L326'>326</a>
+<a name='L327'></a><a href='#L327'>327</a>
+<a name='L328'></a><a href='#L328'>328</a>
+<a name='L329'></a><a href='#L329'>329</a>
+<a name='L330'></a><a href='#L330'>330</a>
+<a name='L331'></a><a href='#L331'>331</a>
+<a name='L332'></a><a href='#L332'>332</a>
+<a name='L333'></a><a href='#L333'>333</a>
+<a name='L334'></a><a href='#L334'>334</a>
+<a name='L335'></a><a href='#L335'>335</a>
+<a name='L336'></a><a href='#L336'>336</a>
+<a name='L337'></a><a href='#L337'>337</a>
+<a name='L338'></a><a href='#L338'>338</a>
+<a name='L339'></a><a href='#L339'>339</a>
+<a name='L340'></a><a href='#L340'>340</a>
+<a name='L341'></a><a href='#L341'>341</a>
+<a name='L342'></a><a href='#L342'>342</a>
+<a name='L343'></a><a href='#L343'>343</a>
+<a name='L344'></a><a href='#L344'>344</a>
+<a name='L345'></a><a href='#L345'>345</a>
+<a name='L346'></a><a href='#L346'>346</a>
+<a name='L347'></a><a href='#L347'>347</a>
+<a name='L348'></a><a href='#L348'>348</a>
+<a name='L349'></a><a href='#L349'>349</a>
+<a name='L350'></a><a href='#L350'>350</a>
+<a name='L351'></a><a href='#L351'>351</a>
+<a name='L352'></a><a href='#L352'>352</a>
+<a name='L353'></a><a href='#L353'>353</a>
+<a name='L354'></a><a href='#L354'>354</a>
+<a name='L355'></a><a href='#L355'>355</a>
+<a name='L356'></a><a href='#L356'>356</a>
+<a name='L357'></a><a href='#L357'>357</a>
+<a name='L358'></a><a href='#L358'>358</a>
+<a name='L359'></a><a href='#L359'>359</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">16x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">13x</span>
+<span class="cline-any cline-yes">13x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">13x</span>
+<span class="cline-any cline-yes">310x</span>
+<span class="cline-any cline-yes">310x</span>
+<span class="cline-any cline-yes">310x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">310x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">132x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">118x</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">236x</span>
+<span class="cline-any cline-yes">236x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">236x</span>
+<span class="cline-any cline-yes">236x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-yes">118x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">118x</span>
+<span class="cline-any cline-yes">118x</span>
+<span class="cline-any cline-yes">118x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import {
+  BLEND_NORMAL,
+  CULLFACE_NONE,
+  Color,
+  Entity,
+  LAYERID_IMMEDIATE,
+  Mesh,
+  MeshInstance,
+  SEMANTIC_POSITION,
+  SEMANTIC_TEXCOORD0,
+  Script,
+  ShaderMaterial,
+  Vec3,
+} from 'playcanvas';
+&nbsp;
+import { computeGroundPlane, yOnPlane } from './groundPlane';
+import { distanceToCircleEdge } from './xr-scene-bounds';
+&nbsp;
+export type BoundaryWallGeometryParams = {
+  center: Vec3;
+  radius: number;
+  /** Three world-space points defining the ground the wall stands on. Empty or degenerate falls back to baseY. */
+  groundPlane: Vec3[];
+  /** Flat base height used when no usable ground plane is supplied. */
+  baseY: number;
+  /** Absolute world Y of the wall's top edge, giving a flat top ring however the ground below tilts. */
+  topY: number;
+  /** Target grid cell size in world units. Rounded so cells divide the circumference and height evenly. */
+  gridSpacing: number;
+  segments?: number;
+};
+&nbsp;
+/**
+ * Flat-array geometry ready for `Mesh.setPositions` / `Mesh.setUvs` / `Mesh.setIndices`, plus the
+ * grid cell counts the shader needs to know how far the UVs run.
+ */
+export type BoundaryWallGeometry = {
+  positions: number[];
+  uvs: number[];
+  indices: number[];
+  columns: number;
+  rows: number;
+};
+&nbsp;
+/**
+ * Triangle geometry for an upright cylinder standing on the boundary circle. Each segment is a quad
+ * (two triangles) spanning from the ground up to `topY`; the base is sampled on the ground plane so
+ * the wall meets the dashed BoundaryRing exactly, while the top is a flat ring at `topY` — the user
+ * stands on the rig floor, not on the splat's ground plane, so the top is positioned relative to the
+ * former and only the base follows the latter.
+ *
+ * UVs are emitted in **grid cell units** rather than metres — u runs 0..columns around the
+ * circumference and v runs 0..rows up the wall — so the shader can draw a line at every whole number
+ * and have the seam at u = columns line up perfectly with u = 0.
+ */
+export const boundaryWallMesh = ({
+  center,
+  radius,
+  groundPlane,
+  baseY,
+  topY,
+  gridSpacing,
+  segments = 96,
+}: BoundaryWallGeometryParams): BoundaryWallGeometry =&gt; {
+  if (radius &lt;= 0 || segments &lt;= 0 || gridSpacing &lt;= 0) {
+    return { positions: [], uvs: [], indices: [], columns: 0, rows: 0 };
+  }
+&nbsp;
+  const plane = computeGroundPlane(groundPlane);
+  const step = (Math.PI * 2) / segments;
+&nbsp;
+  // First pass: the bottom of every column, which the row count and the extent guard both need
+  // before any vertex can be emitted.
+  const bottoms = Array.from({ length: segments }, (_, index) =&gt; {
+    const angle = index * step;
+    const x = center.x + radius * Math.cos(angle);
+    const z = center.z + radius * Math.sin(angle);
+&nbsp;
+    return { x, z, y: plane ? yOnPlane(x, z, plane.normal, plane.point, baseY) : baseY };
+  });
+&nbsp;
+  if (bottoms.some((bottom) =&gt; bottom.y &gt;= topY)) {
+    return { positions: [], uvs: [], indices: [], columns: 0, rows: 0 };
+  }
+&nbsp;
+  // Every column has its own world height once the ground tilts, but v still runs 0..rows uniformly
+  // for all of them, so a single row count has to stand for the whole wall. Deriving it from the
+  // average bottom is exact for a flat ground plane (the common case) and keeps the cells square on
+  // average when the plane is tilted.
+  const averageBottomY = bottoms.reduce((total, bottom) =&gt; total + bottom.y, 0) / bottoms.length;
+  const columns = Math.max(1, Math.round((Math.PI * 2 * radius) / gridSpacing));
+  const rows = Math.max(1, Math.round((topY - averageBottomY) / gridSpacing));
+&nbsp;
+  const positions: number[] = [];
+  const uvs: number[] = [];
+  const indices: number[] = [];
+&nbsp;
+  const pushColumn = (index: number) =&gt; {
+    // The closing column (index === segments) reuses column 0's position so the loop shuts exactly,
+    // while u keeps counting up to `columns` to place the seam.
+    const { x, z, y } = bottoms[index % segments];
+    const u = (index / segments) * columns;
+&nbsp;
+    positions.push(x, y, z, x, topY, z);
+    uvs.push(u, 0, u, rows);
+  };
+&nbsp;
+  for (let i = 0; i &lt; segments; i++) {
+    const base = i * 4;
+    // Per segment: v0 bottom@a0, v1 top@a0, v2 bottom@a1, v3 top@a1.
+    pushColumn(i);
+    pushColumn(i + 1);
+    indices.push(base, base + 1, base + 3, base, base + 3, base + 2);
+  }
+&nbsp;
+  return { positions, uvs, indices, columns, rows };
+};
+&nbsp;
+// GLSL only: @playcanvas/react's Application defaults to deviceTypes [DEVICETYPE_WEBGL2], so the
+// WGSL variants the engine's own shaders carry would never be compiled here.
+const wallVertexGLSL = /* glsl */ `
+    attribute vec3 vertex_position;
+    attribute vec2 aUv0;
+&nbsp;
+    uniform mat4 matrix_model;
+    uniform mat4 matrix_viewProjection;
+&nbsp;
+    varying vec2 uv0;
+    varying vec3 vWorld;
+&nbsp;
+    void main(void) {
+        vec4 world = matrix_model * vec4(vertex_position, 1.0);
+        vWorld = world.xyz;
+        uv0 = aUv0;
+        gl_Position = matrix_viewProjection * world;
+    }
+`;
+&nbsp;
+const wallFragmentGLSL = /* glsl */ `
+    uniform vec3 uHeadPos;
+    uniform float uFadeDistance;
+    uniform float uBlockedFadeScale;
+    uniform float uBlocked;
+    uniform float uRows;
+    uniform vec3 uCalmColor;
+    uniform vec3 uWarnColor;
+    uniform float uLineHalfWidth;
+&nbsp;
+    varying vec2 uv0;
+    varying vec3 vWorld;
+&nbsp;
+    // Antialiased line mask: 1 at whole-number coordinates, 0 between them.
+    //
+    // The line has a solid core uLineHalfWidth cells wide either side of the coordinate, so its
+    // thickness is fixed in world space and holds up close to the wall. The smoothstep then feathers
+    // it over exactly one pixel (fwidth), which both antialiases the edge and keeps distant lines
+    // from aliasing into moire: once a cell shrinks below a pixel the feather swallows the core and
+    // the grid fades out instead of shimmering.
+    float gridLine(float coord) {
+        float w = fwidth(coord);
+        float d = abs(fract(coord + 0.5) - 0.5);
+        return 1.0 - smoothstep(uLineHalfWidth, uLineHalfWidth + w, d);
+    }
+&nbsp;
+    void main(void) {
+        // gridLine takes derivatives, which are undefined in non-uniform control flow, so it has to
+        // run before any discard.
+        float grid = max(gridLine(uv0.x), gridLine(uv0.y));
+&nbsp;
+        // Distance from this fragment to the head, so only the arc of wall near the user lights up.
+        float fade = uFadeDistance * mix(1.0, uBlockedFadeScale, uBlocked);
+        float proximity = 1.0 - clamp(distance(vWorld.xz, uHeadPos.xz) / fade, 0.0, 1.0);
+        if (proximity &lt;= 0.0) discard;
+&nbsp;
+        // Soften the open top edge so the wall does not end in a hard rim.
+        float topFade = 1.0 - smoothstep(0.6, 1.0, uv0.y / uRows);
+&nbsp;
+        float alpha = proximity * topFade * grid;
+        if (alpha &lt;= 0.0) discard;
+&nbsp;
+        gl_FragColor = vec4(mix(uCalmColor, uWarnColor, max(proximity, uBlocked)), alpha);
+    }
+`;
+&nbsp;
+/**
+ * Structural shape of TfXrNavigation this script depends on, kept local so it does not have to
+ * import the navigation script. `enabled` is optional because a disabled script (e.g. while edit
+ * mode is on) stops receiving postUpdate and would otherwise latch a stale clampDistance.
+ */
+type BoundaryWallNavigation = { clampDistance: number; enabled?: boolean };
+&nbsp;
+/**
+ * Draws a Quest-guardian-style boundary wall: an upright cylinder on the bounds circle whose grid
+ * fades in and shifts toward a warning colour as the head approaches, and goes to full intensity
+ * while XR navigation is actively holding the user back.
+ *
+ * center / radius / groundPlane / baseY are set imperatively by the BoundaryWall component (see
+ * BoundaryWall.tsx for why they are not reactive Script props), which calls `rebuild()` afterwards.
+ * All of them are world-space: this entity is deliberately mounted outside `content-root`, which
+ * carries the scene's scaleFactor.
+ */
+export class BoundaryWallScript extends Script {
+  static scriptName = 'boundaryWall';
+&nbsp;
+  center = <span class="cstat-no" title="statement not covered" >new Vec3();</span>
+  radius = <span class="cstat-no" title="statement not covered" >0;</span>
+  groundPlane: Vec3[] = <span class="cstat-no" title="statement not covered" >[];</span>
+  /** Flat bottom height used when no usable ground plane is supplied. */
+  baseY = <span class="cstat-no" title="statement not covered" >0;</span>
+  /**
+   * Absolute world Y of the wall's top edge. The default puts it 2.5 m above a rig floor at y = 0,
+   * which is where the user actually stands - the splat's ground plane can be well below that.
+   */
+  topY = <span class="cstat-no" title="statement not covered" >2.5;</span>
+  segments = <span class="cstat-no" title="statement not covered" >96;</span>
+  gridSpacing = <span class="cstat-no" title="statement not covered" >0.5;</span>
+  /** Grid line thickness in world metres. */
+  lineWidth = <span class="cstat-no" title="statement not covered" >0.025;</span>
+  /** Head distance, in world metres, at which the wall starts to appear. */
+  fadeDistance = <span class="cstat-no" title="statement not covered" >1.5;</span>
+  /** Multiplier applied to fadeDistance while movement is being clamped. */
+  blockedFadeScale = <span class="cstat-no" title="statement not covered" >2.5;</span>
+  calmColor = <span class="cstat-no" title="statement not covered" >new Color(0.35, 0.7, 1);</span>
+  warnColor = <span class="cstat-no" title="statement not covered" >new Color(1, 0.45, 0.2);</span>
+&nbsp;
+  private _material?: ShaderMaterial;
+  private _mesh?: Mesh;
+  private _camera: Entity | null = <span class="cstat-no" title="statement not covered" >null;</span>
+  private _navigation: BoundaryWallNavigation | null = <span class="cstat-no" title="statement not covered" >null;</span>
+  private _headParam = <span class="cstat-no" title="statement not covered" >new Float32Array(3);</span>
+&nbsp;
+<span class="fstat-no" title="function not covered" >  in</span>itialize() {
+<span class="cstat-no" title="statement not covered" >    this._material = new ShaderMaterial({</span>
+      uniqueName: 'boundary-wall',
+      vertexGLSL: wallVertexGLSL,
+      fragmentGLSL: wallFragmentGLSL,
+      attributes: { vertex_position: SEMANTIC_POSITION, aUv0: SEMANTIC_TEXCOORD0 },
+    });
+<span class="cstat-no" title="statement not covered" >    this._material.blendType = BLEND_NORMAL;</span>
+<span class="cstat-no" title="statement not covered" >    this._material.cull = CULLFACE_NONE;</span>
+<span class="cstat-no" title="statement not covered" >    this._material.depthWrite = false;</span>
+<span class="cstat-no" title="statement not covered" >    this._material.update();</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    this._resolveDependencies();</span>
+<span class="cstat-no" title="statement not covered" >    this.rebuild();</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    this.once('destroy', <span class="fstat-no" title="function not covered" >()</span> =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >      this._clearMesh();</span>
+<span class="cstat-no" title="statement not covered" >      this._material?.destroy();</span>
+<span class="cstat-no" title="statement not covered" >      this._material = undefined;</span>
+<span class="cstat-no" title="statement not covered" >      this._camera = null;</span>
+<span class="cstat-no" title="statement not covered" >      this._navigation = null;</span>
+    });
+  }
+&nbsp;
+  /**
+   * The camera and the navigation script both live on entities this one does not own. They are
+   * resolved lazily rather than once, because script initialize order across sibling entities is not
+   * guaranteed and this entity mounts when an XR session starts.
+   */
+<span class="fstat-no" title="function not covered" >  pr</span>ivate _resolveDependencies() {
+<span class="cstat-no" title="statement not covered" >    if (!this._camera) {</span>
+<span class="cstat-no" title="statement not covered" >      this._camera = this.app.root.findByName('camera') as Entity | null;</span>
+    }
+<span class="cstat-no" title="statement not covered" >    if (!this._navigation) {</span>
+      const rig = <span class="cstat-no" title="statement not covered" >this.app.root.findByName('camera-root');</span>
+      // @ts-expect-error - scripts are added dynamically to the entity
+<span class="cstat-no" title="statement not covered" >      this._navigation = (rig?.script?.tfXrNavigation as BoundaryWallNavigation | undefined) ?? null;</span>
+    }
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  re</span>build() {
+<span class="cstat-no" title="statement not covered" >    this._clearMesh();</span>
+&nbsp;
+    const geometry = <span class="cstat-no" title="statement not covered" >boundaryWallMesh({</span>
+      center: this.center,
+      radius: this.radius,
+      groundPlane: this.groundPlane,
+      baseY: this.baseY,
+      topY: this.topY,
+      gridSpacing: this.gridSpacing,
+      segments: this.segments,
+    });
+<span class="cstat-no" title="statement not covered" >    if (geometry.positions.length === 0 || !this._material) {</span>
+<span class="cstat-no" title="statement not covered" >      return;</span>
+    }
+&nbsp;
+    // The shader measures distance in grid cells, so convert. A cell is gridSpacing across only
+    // approximately - columns and rows are rounded to whole numbers - but that error is well under
+    // a line width, so it is not worth carrying the exact cell size through as a second uniform.
+<span class="cstat-no" title="statement not covered" >    this._material.setParameter('uLineHalfWidth', (this.lineWidth / this.gridSpacing) * 0.5);</span>
+<span class="cstat-no" title="statement not covered" >    this._material.setParameter('uFadeDistance', this.fadeDistance);</span>
+<span class="cstat-no" title="statement not covered" >    this._material.setParameter('uBlockedFadeScale', this.blockedFadeScale);</span>
+<span class="cstat-no" title="statement not covered" >    this._material.setParameter('uRows', geometry.rows);</span>
+<span class="cstat-no" title="statement not covered" >    this._material.setParameter('uCalmColor', [this.calmColor.r, this.calmColor.g, this.calmColor.b]);</span>
+<span class="cstat-no" title="statement not covered" >    this._material.setParameter('uWarnColor', [this.warnColor.r, this.warnColor.g, this.warnColor.b]);</span>
+<span class="cstat-no" title="statement not covered" >    this._material.setParameter('uBlocked', 0);</span>
+<span class="cstat-no" title="statement not covered" >    this._material.setParameter('uHeadPos', [0, 0, 0]);</span>
+&nbsp;
+    const mesh = <span class="cstat-no" title="statement not covered" >new Mesh(this.app.graphicsDevice);</span>
+<span class="cstat-no" title="statement not covered" >    mesh.setPositions(geometry.positions);</span>
+<span class="cstat-no" title="statement not covered" >    mesh.setUvs(0, geometry.uvs);</span>
+<span class="cstat-no" title="statement not covered" >    mesh.setIndices(geometry.indices);</span>
+<span class="cstat-no" title="statement not covered" >    mesh.update();</span>
+<span class="cstat-no" title="statement not covered" >    this._mesh = mesh;</span>
+&nbsp;
+    const meshInstance = <span class="cstat-no" title="statement not covered" >new MeshInstance(mesh, this._material);</span>
+<span class="cstat-no" title="statement not covered" >    if (this.entity.render) {</span>
+<span class="cstat-no" title="statement not covered" >      this.entity.render.meshInstances = [meshInstance];</span>
+    } else {
+      // Immediate layer, drawn after the World layer where the splats render, so the wall is not
+      // composited behind them - same reason BoundaryRingScript uses it.
+<span class="cstat-no" title="statement not covered" >      this.entity.addComponent('render', { meshInstances: [meshInstance], layers: [LAYERID_IMMEDIATE] });</span>
+    }
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  up</span>date() {
+<span class="cstat-no" title="statement not covered" >    this._resolveDependencies();</span>
+&nbsp;
+    const material = <span class="cstat-no" title="statement not covered" >this._material;</span>
+    const camera = <span class="cstat-no" title="statement not covered" >this._camera;</span>
+<span class="cstat-no" title="statement not covered" >    if (!material || !camera || !this.entity.render) {</span>
+<span class="cstat-no" title="statement not covered" >      return;</span>
+    }
+&nbsp;
+    const navigation = <span class="cstat-no" title="statement not covered" >this._navigation;</span>
+    // A disabled navigation script (e.g. edit mode) stops receiving postUpdate, so its
+    // clampDistance would otherwise latch whatever value it last held.
+    const blocked = <span class="cstat-no" title="statement not covered" >navigation?.enabled !== false &amp;&amp; (navigation?.clampDistance ?? 0) &gt; 0 ? 1 : 0;</span>
+    const reveal = <span class="cstat-no" title="statement not covered" >this.fadeDistance * (blocked ? this.blockedFadeScale : 1);</span>
+    const head = <span class="cstat-no" title="statement not covered" >camera.getPosition();</span>
+&nbsp;
+    // Skip the transparent draw entirely while the head is deeper inside than the widest reveal
+    // radius - every fragment would discard anyway. Toggling render.enabled rather than
+    // entity.enabled keeps this update running so the wall can come back.
+    const edgeDistance = <span class="cstat-no" title="statement not covered" >distanceToCircleEdge(head.x, head.z, this.center.x, this.center.z, this.radius);</span>
+<span class="cstat-no" title="statement not covered" >    this.entity.render.enabled = this.radius &gt; 0 &amp;&amp; edgeDistance &gt; -reveal;</span>
+<span class="cstat-no" title="statement not covered" >    if (!this.entity.render.enabled) {</span>
+<span class="cstat-no" title="statement not covered" >      return;</span>
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    this._headParam[0] = head.x;</span>
+<span class="cstat-no" title="statement not covered" >    this._headParam[1] = head.y;</span>
+<span class="cstat-no" title="statement not covered" >    this._headParam[2] = head.z;</span>
+<span class="cstat-no" title="statement not covered" >    material.setParameter('uHeadPos', this._headParam);</span>
+<span class="cstat-no" title="statement not covered" >    material.setParameter('uBlocked', blocked);</span>
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  pr</span>ivate _clearMesh() {
+<span class="cstat-no" title="statement not covered" >    if (this.entity.render) {</span>
+<span class="cstat-no" title="statement not covered" >      this.entity.render.meshInstances = [];</span>
+    }
+<span class="cstat-no" title="statement not covered" >    if (this._mesh) {</span>
+<span class="cstat-no" title="statement not covered" >      this._mesh.destroy();</span>
+<span class="cstat-no" title="statement not covered" >      this._mesh = undefined;</span>
+    }
+  }
+}
+&nbsp;</pre></td></tr></table></pre>
+
+                <div class='push'></div><!-- for sticky footer -->
+            </div><!-- /wrapper -->
+            <div class='footer quiet pad2 space-top1 center small'>
+                Code coverage generated by
+                <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
+                at 2026-08-06T18:56:25.444Z
+            </div>
+        <script src="../../../prettify.js"></script>
+        <script>
+            window.onload = function () {
+                prettyPrint();
+            };
+        </script>
+        <script src="../../../sorter.js"></script>
+        <script src="../../../block-navigation.js"></script>
+    </body>
+</html>
+    
