@@ -25,6 +25,7 @@ import { TfXrNavigation } from './components/VirtualWalkthrough/TfXrNavigation';
 import VirtualWalkthroughViewer from './components/VirtualWalkthrough/VirtualWalkthroughViewer';
 import { BoundaryRingScript, boundaryRingMesh } from './components/VirtualWalkthrough/boundary-ring';
 import { computeGroundPlane, yOnPlane } from './components/VirtualWalkthrough/groundPlane';
+import { detectSplatFormat, splatLoaderFilename } from './components/VirtualWalkthrough/splatFormat';
 import { WalkthroughCamera } from './components/VirtualWalkthrough/walkthrough-camera';
 import { useDevicePerformance } from './hooks/useDevicePerformance';
 
@@ -37,6 +38,7 @@ export type { BoundaryRingGeometry, BoundaryRingGeometryParams } from './compone
 export type { GroundPlane } from './components/VirtualWalkthrough/groundPlane';
 export type { BoundaryRingProps } from './components/VirtualWalkthrough/BoundaryRing';
 export type { SplatModelProps } from './components/VirtualWalkthrough/SplatModel';
+export type { SplatFormat } from './components/VirtualWalkthrough/splatFormat';
 export type { VirtualWalkthroughViewerProps } from './components/VirtualWalkthrough/VirtualWalkthroughViewer';
 
 export {
@@ -52,10 +54,12 @@ export {
   CameraInfo,
   computeGroundPlane,
   ControlsInfoPane,
+  detectSplatFormat,
   GradientSky,
   SplatControls,
   SplatCrop,
   SplatFadeCrop,
+  splatLoaderFilename,
   SplatModel,
   SplatRevealRain,
   TfAnnotationManager,
