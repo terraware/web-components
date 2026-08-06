@@ -19,6 +19,7 @@ import SplatControls, { SplatControlsStrings } from './SplatControls';
 import SplatModel from './SplatModel';
 import { TfAnnotationManager } from './TfAnnotationManager';
 import { TfXrNavigation } from './TfXrNavigation';
+import VrAnnotationPanel from './VrAnnotationPanel';
 import XrAnnotationInteraction from './XrAnnotationInteraction';
 import XrExitButton from './XrExitButton';
 import XrPointerRay from './XrPointerRay';
@@ -81,7 +82,7 @@ const VirtualWalkthroughViewer = ({
   const [viewingAnnotation, setViewingAnnotation] = useState<AnnotationProps | null>(null);
   const [viewingAnnotationIndex, setViewingAnnotationIndex] = useState(-1);
   const [viewedScreenPos, setViewedScreenPos] = useState<{ x: number; y: number; size?: number } | null>(null);
-  const { isCurrentlyInXr } = useXr();
+  const { isCurrentlyInXr, isCurrentlyInVr } = useXr();
 
   const sceneBoundsRadius = useMemo(() => {
     if (sceneBounds?.m !== undefined) {
@@ -218,13 +219,16 @@ const VirtualWalkthroughViewer = ({
 
   const handleAnnotationScreenPositionUpdate = useCallback(
     (_index: number, screenX: number, screenY: number, size?: number) => {
+      if (isCurrentlyInXr) {
+        return;
+      }
       // The scene is frozen while the panel is open, so guard against redundant
       // updates from the per-frame callback to avoid needless re-renders.
       setViewedScreenPos((prev) =>
         prev && prev.x === screenX && prev.y === screenY && prev.size === size ? prev : { x: screenX, y: screenY, size }
       );
     },
-    []
+    [isCurrentlyInXr]
   );
 
   const handleCloseAnnotation = useCallback(() => {
@@ -232,6 +236,12 @@ const VirtualWalkthroughViewer = ({
     setViewingAnnotationIndex(-1);
     setViewedScreenPos(null);
   }, []);
+
+  useEffect(() => {
+    if (!isCurrentlyInXr) {
+      handleCloseAnnotation();
+    }
+  }, [isCurrentlyInXr, handleCloseAnnotation]);
 
   const handleAnnotationUpdate = useCallback(
     (updates: Partial<AnnotationProps>) => {
@@ -291,8 +301,17 @@ const VirtualWalkthroughViewer = ({
             transform every frame, so the button drives its own world pose from the XR head pose. */}
         <XrExitButton />
         <Script script={XrControllers} enabled={!isEdit} />
-        <XrAnnotationInteraction />
+        <XrAnnotationInteraction onEmptySelect={handleCloseAnnotation} />
         <XrPointerRay />
+        {/* VR only: the panel is driven by controller rays, which AR sessions don't have. */}
+        {isCurrentlyInVr && viewingAnnotation && (
+          <VrAnnotationPanel
+            key={viewingAnnotationIndex}
+            annotation={viewingAnnotation}
+            annotationIndex={viewingAnnotationIndex}
+            scaleFactor={scaleFactor}
+          />
+        )}
         {/* Disable teleport for AR as it can be disorienting */}
         <Script script={TfXrNavigation} enabled={!isEdit} enableTeleport={false} />
         {!isCurrentlyInXr && (

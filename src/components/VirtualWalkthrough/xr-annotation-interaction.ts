@@ -1,6 +1,7 @@
 import { Script, Vec3, XRTYPE_VR, XrInputSource } from 'playcanvas';
 import { Annotation as PcAnnotation } from 'playcanvas/scripts/esm/annotations.mjs';
 
+import { VrAnnotationPanel } from './vr-annotation-panel';
 import { nearestAnnotationHit } from './xr-annotation-targeting';
 
 /** Local half-extent of the unit-plane hotspot quad. */
@@ -11,6 +12,8 @@ const HIT_RADIUS_PAD = 2.5;
 
 export class XrAnnotationInteraction extends Script {
   static scriptName = 'xrAnnotationInteraction';
+
+  onEmptySelectCallback?: () => void;
 
   private _scratchScale = new Vec3();
 
@@ -35,7 +38,21 @@ export class XrAnnotationInteraction extends Script {
     return HOTSPOT_HALF_EXTENT * this._scratchScale.x * HIT_RADIUS_PAD;
   }
 
+  /** True when an open panel is under the ray; it draws in front of everything, so it wins. */
+  private _rayHitsOpenPanel(origin: Vec3, direction: Vec3): boolean {
+    const panel = this.app.root.findByName('vr-annotation-panel') as any;
+    const panelScript = panel?.script?.get(VrAnnotationPanel.scriptName);
+
+    return typeof panelScript?.rayHitsPanel === 'function' && panelScript.rayHitsPanel(origin, direction);
+  }
+
   private _openAnnotationUnderRay(origin: Vec3, direction: Vec3) {
+    // Checked before the hotspots so aiming at the panel (e.g. its carousel arrows) neither
+    // dismisses it nor opens an annotation whose padded hit sphere sits behind it.
+    if (this._rayHitsOpenPanel(origin, direction)) {
+      return;
+    }
+
     const entities = this._collectAnnotationEntities();
     const openable = entities
       .map((ent: any) => ({ entity: ent, script: ent.script?.get(PcAnnotation.scriptName) }))
@@ -48,6 +65,10 @@ export class XrAnnotationInteraction extends Script {
 
     const index = nearestAnnotationHit(origin, direction, candidates);
     if (index === null) {
+      if (typeof this.onEmptySelectCallback === 'function') {
+        this.onEmptySelectCallback();
+      }
+
       return;
     }
 
@@ -59,9 +80,6 @@ export class XrAnnotationInteraction extends Script {
 
   initialize() {
     this.app.xr?.input?.on('select', this._onSelect);
-  }
-
-  destroy() {
-    this.app.xr?.input?.off('select', this._onSelect);
+    this.once('destroy', () => this.app.xr?.input?.off('select', this._onSelect));
   }
 }
