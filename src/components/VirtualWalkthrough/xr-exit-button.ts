@@ -16,6 +16,8 @@ import {
   XrInputSource,
 } from 'playcanvas';
 
+import { FaceButtonPressTracker } from './xr-face-buttons';
+
 /**
  * Boolean ray-sphere hit test. Treats the ray as a half-line (t >= 0) and returns true when it
  * intersects the sphere or starts inside it. `direction` is normalized internally.
@@ -33,9 +35,6 @@ export const raySphereIntersect = (origin: Vec3, direction: Vec3, center: Vec3, 
 };
 
 const TEXTURE_SIZE = 256;
-
-/** xr-standard gamepad button indices for the face buttons: A/X (4) and B/Y (5). */
-const FACE_BUTTON_INDICES = [4, 5];
 
 export class XrExitButton extends Script {
   static scriptName = 'xrExitButton';
@@ -57,7 +56,7 @@ export class XrExitButton extends Script {
   private _headPosition = new Vec3();
   private _headRotation = new Quat();
   private _worldOffset = new Vec3();
-  private _faceButtonDown = new WeakMap<XrInputSource, boolean>();
+  private _faceButtons = new FaceButtonPressTracker();
 
   private _isVrActive = () => this.app.xr?.active === true && this.app.xr?.type === XRTYPE_VR;
 
@@ -79,24 +78,18 @@ export class XrExitButton extends Script {
     if (!this.entity.enabled) {
       return;
     }
-    if (this._rayHitsButton(inputSource)) {
+    if (this.rayHitsButton(inputSource.getOrigin(), inputSource.getDirection())) {
       this.app.xr?.end();
     }
   };
 
-  private _rayHitsButton(inputSource: XrInputSource): boolean {
-    return raySphereIntersect(
-      inputSource.getOrigin(),
-      inputSource.getDirection(),
-      this.entity.getPosition(),
-      this.hitRadius
-    );
-  }
+  /** True when the ray points at the button's hit sphere. False while the button entity is disabled. */
+  rayHitsButton(origin: Vec3, direction: Vec3): boolean {
+    if (!this.entity.enabled) {
+      return false;
+    }
 
-  private _faceButtonPressed(inputSource: XrInputSource): boolean {
-    const buttons = inputSource.gamepad?.buttons;
-
-    return buttons ? FACE_BUTTON_INDICES.some((index) => buttons[index]?.pressed === true) : false;
+    return raySphereIntersect(origin, direction, this.entity.getPosition(), this.hitRadius);
   }
 
   private _createTexture(): Texture {
@@ -191,16 +184,14 @@ export class XrExitButton extends Script {
     const sources = this.app.xr?.input?.inputSources ?? [];
     let hovered = false;
     for (const source of sources) {
-      const sourceHovers = this._rayHitsButton(source);
+      const sourceHovers = this.rayHitsButton(source.getOrigin(), source.getDirection());
       hovered = hovered || sourceHovers;
 
       // A face-button press exits only while that controller is aimed at the button, matching the
       // trigger. Edge-detected so holding a button and then aiming onto it doesn't fire.
-      const facePressed = this._faceButtonPressed(source);
-      const faceWasDown = this._faceButtonDown.get(source) ?? false;
-      this._faceButtonDown.set(source, facePressed);
+      const facePressed = this._faceButtons.justPressed(source);
 
-      if (sourceHovers && facePressed && !faceWasDown) {
+      if (sourceHovers && facePressed) {
         this.app.xr?.end();
 
         return;

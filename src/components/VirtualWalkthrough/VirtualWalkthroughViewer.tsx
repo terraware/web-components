@@ -4,7 +4,7 @@ import { useTheme } from '@mui/material';
 import { Entity } from '@playcanvas/react';
 import { Camera, Script } from '@playcanvas/react/components';
 import { useApp } from '@playcanvas/react/hooks';
-import { Color, Vec3 } from 'playcanvas';
+import { Color, Vec3, XrInputSource } from 'playcanvas';
 import { XrControllers } from 'playcanvas/scripts/esm/xr/xr-controllers.mjs';
 
 import { useCameraPosition } from '../../hooks/useCameraPosition';
@@ -25,6 +25,7 @@ import XrExitButton from './XrExitButton';
 import XrGazeDwell from './XrGazeDwell';
 import XrPointerRay from './XrPointerRay';
 import { WalkthroughCamera } from './walkthrough-camera';
+import { rayHitsInteractiveUi } from './xr-interactive-ui';
 
 const DEFAULT_FOCUS_POINT: [number, number, number] = [0, 0.1, 0];
 const DEFAULT_POSITION: [number, number, number] = [1, 0.1, 0];
@@ -83,7 +84,7 @@ const VirtualWalkthroughViewer = ({
   const [viewingAnnotation, setViewingAnnotation] = useState<AnnotationProps | null>(null);
   const [viewingAnnotationIndex, setViewingAnnotationIndex] = useState(-1);
   const [viewedScreenPos, setViewedScreenPos] = useState<{ x: number; y: number; size?: number } | null>(null);
-  const { isCurrentlyInXr, isCurrentlyInVr } = useXr();
+  const { isCurrentlyInXr, isCurrentlyInVr, isCurrentlyInAr } = useXr();
 
   const sceneBoundsRadius = useMemo(() => {
     if (sceneBounds?.m !== undefined) {
@@ -238,6 +239,11 @@ const VirtualWalkthroughViewer = ({
     setViewedScreenPos(null);
   }, []);
 
+  const isTeleportBlocked = useCallback(
+    (inputSource: XrInputSource) => rayHitsInteractiveUi(app, inputSource.getOrigin(), inputSource.getDirection()),
+    [app]
+  );
+
   useEffect(() => {
     if (!isCurrentlyInXr) {
       handleCloseAnnotation();
@@ -302,7 +308,7 @@ const VirtualWalkthroughViewer = ({
             transform every frame, so the button drives its own world pose from the XR head pose. */}
         <XrExitButton />
         <Script script={XrControllers} enabled={!isEdit} />
-        <XrAnnotationInteraction onEmptySelect={handleCloseAnnotation} />
+        <XrAnnotationInteraction onDismiss={handleCloseAnnotation} />
         <XrPointerRay />
         {/* VR only: the panel is driven by controller rays, which AR sessions don't have. */}
         {isCurrentlyInVr && viewingAnnotation && (
@@ -314,8 +320,14 @@ const VirtualWalkthroughViewer = ({
           />
         )}
         {isCurrentlyInXr && <XrGazeDwell activeIndex={viewingAnnotationIndex} />}
-        {/* Disable teleport for AR as it can be disorienting */}
-        <Script script={TfXrNavigation} enabled={!isEdit} enableTeleport={false} />
+        {/* Teleport is off in AR, where it can be disorienting, and while an annotation panel is open,
+            so the trigger can operate the panel and click out to dismiss it. */}
+        <Script
+          script={TfXrNavigation}
+          enabled={!isEdit}
+          enableTeleport={!isCurrentlyInAr && !viewingAnnotation}
+          isTeleportBlocked={isTeleportBlocked}
+        />
         {!isCurrentlyInXr && (
           <Script
             script={AutoRotator}
