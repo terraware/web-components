@@ -25,28 +25,28 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/10</span>
+                <span class='fraction'>0/15</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/29</span>
+                <span class='fraction'>0/31</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/4</span>
+                <span class='fraction'>0/6</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/10</span>
+                <span class='fraction'>0/15</span>
             </div>
         
             
@@ -171,7 +171,18 @@
 <a name='L106'></a><a href='#L106'>106</a>
 <a name='L107'></a><a href='#L107'>107</a>
 <a name='L108'></a><a href='#L108'>108</a>
-<a name='L109'></a><a href='#L109'>109</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L109'></a><a href='#L109'>109</a>
+<a name='L110'></a><a href='#L110'>110</a>
+<a name='L111'></a><a href='#L111'>111</a>
+<a name='L112'></a><a href='#L112'>112</a>
+<a name='L113'></a><a href='#L113'>113</a>
+<a name='L114'></a><a href='#L114'>114</a>
+<a name='L115'></a><a href='#L115'>115</a>
+<a name='L116'></a><a href='#L116'>116</a>
+<a name='L117'></a><a href='#L117'>117</a>
+<a name='L118'></a><a href='#L118'>118</a>
+<a name='L119'></a><a href='#L119'>119</a>
+<a name='L120'></a><a href='#L120'>120</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -216,6 +227,13 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -223,8 +241,12 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -324,15 +346,26 @@ export default function <span class="fstat-no" title="function not covered" >Dia
 &nbsp;
   const { isMobile } = <span class="cstat-no" title="statement not covered" >useDeviceInfo();</span>
 &nbsp;
+  // Only close modal when the click starts and ends on the backdrop. On mobile, tapping an input opens the
+  // keyboard and shifts the layout, so the click can end on the backdrop even though it began on the input
+  const pressStartedOnBackdrop = <span class="cstat-no" title="statement not covered" >React.useRef(false);</span>
+&nbsp;
+  const targetIsBackdrop = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >(t</span>arget: EventTarget | null): boolean =&gt;</span>
+<span class="cstat-no" title="statement not covered" >    target instanceof HTMLElement &amp;&amp; target.classList.contains('dialog-box--opened');</span>
+&nbsp;
 <span class="cstat-no" title="statement not covered" >  return open ? (</span>
     &lt;div
       className={`dialog-box-container${skrim ? '--skrim' : ''} ${open ? 'dialog-box--opened' : 'dialog-box--closed'} ${
         isMobile ? 'mobile' : ''
       }`}
+      onMouseDown={<span class="fstat-no" title="function not covered" >(e</span>vent) =&gt; {
+<span class="cstat-no" title="statement not covered" >        pressStartedOnBackdrop.current = targetIsBackdrop(event.target);</span>
+      }}
       onClick={<span class="fstat-no" title="function not covered" >(e</span>vent) =&gt; {
-<span class="cstat-no" title="statement not covered" >        if (event.target instanceof HTMLElement &amp;&amp; event.target.classList.contains('dialog-box--opened')) {</span>
+<span class="cstat-no" title="statement not covered" >        if (pressStartedOnBackdrop.current &amp;&amp; targetIsBackdrop(event.target)) {</span>
 <span class="cstat-no" title="statement not covered" >          onClose?.();</span>
         }
+<span class="cstat-no" title="statement not covered" >        pressStartedOnBackdrop.current = false;</span>
       }}
       style={style}
     &gt;
@@ -394,7 +427,7 @@ export default function <span class="fstat-no" title="function not covered" >Dia
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-08-06T19:01:11.488Z
+                at 2026-08-07T15:40:19.501Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>
