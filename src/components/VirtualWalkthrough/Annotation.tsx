@@ -9,6 +9,7 @@ import { CameraControls } from 'playcanvas/scripts/esm/camera-controls.mjs';
 
 import { useCameraPosition } from '../../hooks/useCameraPosition';
 import './annotation-styles.css';
+import { toWorldScale } from './scene-scale';
 
 export type AnnotationIconType = 'text' | 'image' | 'video';
 
@@ -54,8 +55,10 @@ export interface AnnotationProps {
  * @param props.isSelected - Optional flag indicating if this annotation is selected. Defaults to false
  * @param props.onSelect - Optional callback when annotation is clicked in edit mode
  * @param props.onPositionChange - Optional callback when annotation position changes
+ * @param props.scaleFactor - Scale applied to the scene by content-root, used to convert this
+ *   annotation's scene-space coordinates to world space for the camera. Defaults to 1
  */
-const Annotation = (props: AnnotationProps & { index: number }) => {
+const Annotation = (props: AnnotationProps & { index: number; scaleFactor?: number }) => {
   const {
     position,
     cameraPosition,
@@ -73,6 +76,7 @@ const Annotation = (props: AnnotationProps & { index: number }) => {
     onView,
     onScreenPositionUpdate,
     index,
+    scaleFactor = 1,
   } = props;
   const app = useApp();
   const { setCamera } = useCameraPosition();
@@ -86,6 +90,7 @@ const Annotation = (props: AnnotationProps & { index: number }) => {
   const onScreenPositionUpdateRef = useRef(onScreenPositionUpdate);
   const positionRef = useRef(position);
   const cameraPositionRef = useRef(cameraPosition);
+  const scaleFactorRef = useRef(scaleFactor);
   const annotationForViewRef = useRef<AnnotationProps>({
     position,
     title,
@@ -102,8 +107,21 @@ const Annotation = (props: AnnotationProps & { index: number }) => {
     onScreenPositionUpdateRef.current = onScreenPositionUpdate;
     positionRef.current = position;
     cameraPositionRef.current = cameraPosition;
+    scaleFactorRef.current = scaleFactor;
     annotationForViewRef.current = { position, title, label, bodyText, imageUrls, cameraPosition };
-  }, [isEdit, onSelect, onView, onScreenPositionUpdate, position, cameraPosition, title, label, bodyText, imageUrls]);
+  }, [
+    isEdit,
+    onSelect,
+    onView,
+    onScreenPositionUpdate,
+    position,
+    cameraPosition,
+    scaleFactor,
+    title,
+    label,
+    bodyText,
+    imageUrls,
+  ]);
 
   // Create a stable callback that reads from refs, because this is read from TfAnnotationManager when the annotation is added to the scene
   const handleClick = useCallback(
@@ -111,7 +129,12 @@ const Annotation = (props: AnnotationProps & { index: number }) => {
       if (isEditRef.current) {
         onSelectRef.current?.();
       } else {
-        setCamera(positionRef.current, cameraPositionRef.current, VIEW_HORIZONTAL_NDC_BIAS);
+        const scale = scaleFactorRef.current;
+        setCamera(
+          toWorldScale(positionRef.current, scale),
+          cameraPositionRef.current && toWorldScale(cameraPositionRef.current, scale),
+          VIEW_HORIZONTAL_NDC_BIAS
+        );
         if (onViewRef.current && screenX !== undefined && screenY !== undefined) {
           onViewRef.current(annotationForViewRef.current, screenX, screenY);
         }

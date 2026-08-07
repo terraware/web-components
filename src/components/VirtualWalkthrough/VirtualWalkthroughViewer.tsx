@@ -25,6 +25,7 @@ import XrAnnotationInteraction from './XrAnnotationInteraction';
 import XrExitButton from './XrExitButton';
 import XrGazeDwell from './XrGazeDwell';
 import XrPointerRay from './XrPointerRay';
+import { toWorldScale } from './scene-scale';
 import { SplatFormat } from './splatFormat';
 import { WalkthroughCamera } from './walkthrough-camera';
 import { rayHitsInteractiveUi } from './xr-interactive-ui';
@@ -130,9 +131,14 @@ const VirtualWalkthroughViewer = ({
     [groundPlane, scaleFactor]
   );
 
+  // The camera rig lives outside the scaled content-root, so the scene-space focus and eye points
+  // have to be scaled to match the bounds, ground plane and camera height it is already given.
+  const cameraFocus = useMemo(() => toWorldScale(origin, scaleFactor), [origin, scaleFactor]);
+  const cameraEyePosition = useMemo(() => toWorldScale(cameraPosition, scaleFactor), [cameraPosition, scaleFactor]);
+
   useEffect(() => {
-    setCamera(origin, cameraPosition);
-  }, [origin, cameraPosition, setCamera]);
+    setCamera(cameraFocus, cameraEyePosition);
+  }, [cameraFocus, cameraEyePosition, setCamera]);
 
   useEffect(() => {
     if (!cameraGroundPlane.length) {
@@ -165,10 +171,10 @@ const VirtualWalkthroughViewer = ({
       walkthroughCam.freeFly = newFreeFly;
     }
     if (!newFreeFly) {
-      setCamera(origin, cameraPosition);
+      setCamera(cameraFocus, cameraEyePosition);
     }
     setIsFreeFly(newFreeFly);
-  }, [isFreeFly, app, setCamera, origin, cameraPosition]);
+  }, [isFreeFly, app, setCamera, cameraFocus, cameraEyePosition]);
 
   useEffect(() => {
     setLocalAnnotations(annotations);
@@ -392,6 +398,7 @@ const VirtualWalkthroughViewer = ({
                 key={`annotation-${index}`}
                 {...annotation}
                 index={index}
+                scaleFactor={scaleFactor}
                 visible={showAnnotations}
                 isEdit={isEdit}
                 isSelected={selectedAnnotationIndex === index}
@@ -416,8 +423,9 @@ const VirtualWalkthroughViewer = ({
       )}
 
       <SplatControls
-        defaultCameraFocus={origin}
-        defaultCameraPosition={cameraPosition}
+        defaultCameraFocus={cameraFocus}
+        defaultCameraPosition={cameraEyePosition}
+        scaleFactor={scaleFactor}
         showAnnotations={showAnnotations}
         onToggleAnnotations={setShowAnnotations}
         autoRotate={autoRotate}

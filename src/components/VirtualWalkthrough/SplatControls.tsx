@@ -14,6 +14,7 @@ import { AnnotationProps } from './Annotation';
 import AnnotationEditPane, { AnnotationEditPaneStrings } from './AnnotationEditPane';
 import CameraInfo, { CameraInfoStrings } from './CameraInfo';
 import ControlsInfoPane, { ControlsInfoPaneStrings } from './ControlsInfoPane';
+import { fromWorldScale } from './scene-scale';
 
 export interface SplatControlsStrings {
   addAnnotation: string;
@@ -33,8 +34,12 @@ export interface SplatControlsStrings {
 
 export interface SplatControlsProps {
   strings: SplatControlsStrings;
+  /** World-space, i.e. already multiplied by the scene scaleFactor. */
   defaultCameraPosition?: [number, number, number];
+  /** World-space, i.e. already multiplied by the scene scaleFactor. */
   defaultCameraFocus?: [number, number, number];
+  /** Scene scale, used to report the camera pose in the coordinates the viewer's props use. */
+  scaleFactor?: number;
   showAnnotations?: boolean;
   onToggleAnnotations?: (show: boolean) => void;
   autoRotate?: boolean;
@@ -67,6 +72,7 @@ const SplatControls = ({
   strings,
   defaultCameraPosition,
   defaultCameraFocus,
+  scaleFactor = 1,
   showAnnotations,
   onToggleAnnotations,
   autoRotate,
@@ -117,6 +123,19 @@ const SplatControls = ({
       window.removeEventListener('keydown', handleKeyPress);
     };
   }, [isEdit, defaultCameraFocus, defaultCameraPosition, setCamera, selectedAnnotation]);
+
+  // CameraInfo exists to author `cameraPosition` / annotation coordinates, so it has to report the
+  // pose in scene space — the camera itself lives in world space, outside the scaled content-root.
+  const getSceneCameraState = useCallback(() => {
+    const state = getCameraState();
+
+    return (
+      state && {
+        position: fromWorldScale(state.position, scaleFactor),
+        focus: fromWorldScale(state.focus, scaleFactor),
+      }
+    );
+  }, [getCameraState, scaleFactor]);
 
   const handleInfo = useCallback(() => {
     setIsInfoVisible((prev) => !prev);
@@ -258,7 +277,7 @@ const SplatControls = ({
         maxImages={maxImagesPerAnnotation}
         onImagesChange={onImagesChange}
       />
-      {isEdit && <CameraInfo strings={strings.cameraInfo} getCameraState={getCameraState} />}
+      {isEdit && <CameraInfo strings={strings.cameraInfo} getCameraState={getSceneCameraState} />}
     </Box>
   );
 };
