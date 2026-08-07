@@ -43,14 +43,41 @@ export class XrStartPose extends Script {
   /** Set when a session starts, cleared once the rig has been placed. */
   private _pending = false;
 
+  /**
+   * Whether the engine has written a head pose for this session yet.
+   *
+   * `app.xr.active` goes true the moment the session object exists, but the camera entity keeps
+   * whatever transform it had until a frame carrying a viewer pose arrives. In between, a
+   * `window.requestAnimationFrame` tick scheduled before the session started can still run scripts
+   * (AppBase.tick only skips the update for *XR* frames without a pose), and on that frame the
+   * camera still holds the desktop pose. Solving from it would place the rig as though the user
+   * were already standing at the desktop camera — which, since that is where the target usually is,
+   * lands them back at the world origin.
+   */
+  private _posed = false;
+
   private _onXrStart = () => {
     this._pending = true;
+  };
+
+  /** Fired from XrManager.update only after the head pose has been written to the camera. */
+  private _onXrUpdate = () => {
+    this._posed = true;
+  };
+
+  private _onXrEnd = () => {
+    this._posed = false;
   };
 
   initialize() {
     // Covers mounting into a session that is already running as well as the usual mount before one.
     this._pending = this._isVrActive();
     this.app.xr?.on('start', this._onXrStart);
+    this.app.xr?.on('update', this._onXrUpdate);
+    this.app.xr?.on('end', this._onXrEnd);
+    // Script removal fires a 'destroy' event rather than calling a destroy() method, so the
+    // teardown has to be registered as a listener or these handlers outlive the script.
+    this.once('destroy', () => this._teardown());
   }
 
   private _isVrActive = () => this.app.xr?.active === true && this.app.xr?.type === XRTYPE_VR;
@@ -71,13 +98,13 @@ export class XrStartPose extends Script {
   };
 
   /**
-   * Runs in update rather than on the 'start' event: the head pose for the frame is written before
-   * scripts update (and a frame with no pose skips the update entirely), so this is the first point
-   * at which there is a head to solve the rig pose from. Running before postUpdate also leaves
-   * TfXrNavigation's clamp to bring the head inside the bounds on this same frame.
+   * Runs in update rather than on the 'start' event: the engine writes the head pose during
+   * xr.update, which precedes the script update in the same tick, so a frame that has posed is the
+   * first point at which there is a real head to solve the rig pose from. Running before postUpdate
+   * also leaves TfXrNavigation's clamp free to act on the same frame if it needs to.
    */
   update() {
-    if (!this._pending || !this._isVrActive()) {
+    if (!this._pending || !this._posed || !this._isVrActive()) {
       return;
     }
 
@@ -103,7 +130,9 @@ export class XrStartPose extends Script {
     this._pending = false;
   }
 
-  destroy() {
+  private _teardown() {
     this.app.xr?.off('start', this._onXrStart);
+    this.app.xr?.off('update', this._onXrUpdate);
+    this.app.xr?.off('end', this._onXrEnd);
   }
 }

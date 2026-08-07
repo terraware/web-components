@@ -51,11 +51,22 @@ const buildApp = ({ active = false, type = XRTYPE_VR }: { active?: boolean; type
       on: (event: string, handler: () => void) => handlers.set(event, handler),
       off: (event: string) => handlers.delete(event),
     },
-    /** Starts a session the way the engine does: flip `active`, then fire the event. */
+    /**
+     * Starts a session the way the engine does: the session object exists (so `active` is already
+     * true) and 'start' fires once the reference space resolves — both before any head pose.
+     */
     startSession(sessionType: string = XRTYPE_VR) {
       this.xr.active = true;
       this.xr.type = sessionType;
       handlers.get('start')?.();
+    },
+    /** A frame carrying a viewer pose, after which the camera holds a real head transform. */
+    poseFrame() {
+      handlers.get('update')?.();
+    },
+    endSession() {
+      this.xr.active = false;
+      handlers.get('end')?.();
     },
   };
 };
@@ -110,6 +121,7 @@ describe('XrStartPose', () => {
     script.focusZ = 0;
 
     app.startSession();
+    app.poseFrame();
     script.update();
 
     const landed = headAfter(rig, head, rigPosition, entity.yaw);
@@ -119,6 +131,45 @@ describe('XrStartPose', () => {
     expect(entity.yaw).toBeCloseTo(headingYaw({ x: 12, z: -9 }, { x: 0, z: 0 }));
   });
 
+  it('ignores an update that runs before the session has posed', () => {
+    const app = buildApp();
+    // The camera still holds the desktop pose, which sits on the target it was reset to.
+    const head = { x: 5, y: 1.5, z: -3 };
+    const { entity } = buildRig({ head });
+    const script = mountScript(app, entity);
+    script.targetX = 5;
+    script.targetZ = -3;
+
+    // A window.requestAnimationFrame tick scheduled before the session started still runs scripts,
+    // and solving from the desktop pose here would put the rig — and so the head — on the origin.
+    app.startSession();
+    script.update();
+
+    expect(entity.setPosition).not.toHaveBeenCalled();
+
+    app.poseFrame();
+    script.update();
+
+    expect(entity.setPosition).toHaveBeenCalledTimes(1);
+  });
+
+  it('waits for a pose again in a second session', () => {
+    const app = buildApp();
+    const { entity } = buildRig();
+    const script = mountScript(app, entity);
+    script.targetX = 6;
+
+    app.startSession();
+    app.poseFrame();
+    script.update();
+    app.endSession();
+
+    app.startSession();
+    script.update();
+
+    expect(entity.setPosition).toHaveBeenCalledTimes(1);
+  });
+
   it('places the rig only once per session', () => {
     const app = buildApp();
     const { entity } = buildRig();
@@ -126,6 +177,7 @@ describe('XrStartPose', () => {
     script.targetX = 4;
 
     app.startSession();
+    app.poseFrame();
     script.update();
     script.update();
 
@@ -139,6 +191,7 @@ describe('XrStartPose', () => {
     script.targetX = 7;
     script.targetZ = 7;
 
+    app.poseFrame();
     script.update();
 
     expect(entity.setPosition).toHaveBeenCalledTimes(1);
@@ -151,6 +204,7 @@ describe('XrStartPose', () => {
     script.targetX = 5;
 
     app.startSession(XRTYPE_AR);
+    app.poseFrame();
     script.update();
 
     expect(entity.setPosition).not.toHaveBeenCalled();
@@ -169,6 +223,7 @@ describe('XrStartPose', () => {
     script.focusZ = 0;
 
     app.startSession();
+    app.poseFrame();
     script.update();
 
     const landed = headAfter(rig, head, rigPosition, entity.yaw);
@@ -189,6 +244,7 @@ describe('XrStartPose', () => {
     script.targetZ = -45;
 
     app.startSession();
+    app.poseFrame();
     script.update();
 
     const landed = headAfter(rig, head, rigPosition, entity.yaw);
