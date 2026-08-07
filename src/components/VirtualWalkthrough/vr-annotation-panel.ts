@@ -21,13 +21,15 @@ import { rayQuadHit } from './xr-ray-quad';
 const CANVAS_WIDTH = 1024;
 const CANVAS_HEIGHT = 768;
 
-/** Panel width in world meters; height derived from the canvas aspect ratio. */
-const PANEL_WIDTH = 0.5;
+const PANEL_WIDTH = 7.5;
 const PANEL_HEIGHT = (PANEL_WIDTH * CANVAS_HEIGHT) / CANVAS_WIDTH;
+
+/** Gap (m) between the top of the hotspot and the bottom edge of the panel. */
+const PANEL_GAP = 0.75;
 
 /** World-space offset from the anchored hotspot: raise the panel above it so the
  * (tall) panel clears the hotspot rather than covering it. */
-const PANEL_OFFSET = new Vec3(0, PANEL_HEIGHT / 2 + 0.05, 0);
+const PANEL_OFFSET = new Vec3(0, PANEL_HEIGHT / 2 + PANEL_GAP, 0);
 
 const PAD_X = 48;
 
@@ -55,7 +57,6 @@ export class VrAnnotationPanel extends Script {
   bodyText?: string;
   imageUrls?: string[];
   annotationIndex = -1;
-  scaleFactor = 1;
 
   private _material?: StandardMaterial;
   private _texture?: Texture;
@@ -342,13 +343,10 @@ export class VrAnnotationPanel extends Script {
       return;
     }
     this._anchor.copy(anchor.getPosition());
-    // Panel size and its offset from the hotspot scale with the scene so the panel keeps its
-    // proportions relative to the (content-root-scaled) annotations across scenes.
-    this.entity.setLocalScale(this.scaleFactor, this.scaleFactor, this.scaleFactor);
     this.entity.setPosition(
-      this._anchor.x + PANEL_OFFSET.x * this.scaleFactor,
-      this._anchor.y + PANEL_OFFSET.y * this.scaleFactor,
-      this._anchor.z + PANEL_OFFSET.z * this.scaleFactor
+      this._anchor.x + PANEL_OFFSET.x,
+      this._anchor.y + PANEL_OFFSET.y,
+      this._anchor.z + PANEL_OFFSET.z
     );
 
     // Billboard on yaw only: face the viewer horizontally but stay upright and level, so

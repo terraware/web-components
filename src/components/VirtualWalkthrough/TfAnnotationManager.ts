@@ -1,7 +1,7 @@
 import { createElement } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 
-import { FILTER_LINEAR, PIXELFORMAT_RGBA8, Texture, Vec3 } from 'playcanvas';
+import { FILTER_LINEAR, PIXELFORMAT_RGBA8, Texture } from 'playcanvas';
 import { AnnotationManager as PcAnnotationManager } from 'playcanvas/scripts/esm/annotations.mjs';
 
 import Icon from '../Icon/Icon';
@@ -29,7 +29,6 @@ export class TfAnnotationManager extends PcAnnotationManager {
   static scriptName = 'tfAnnotationManager';
 
   private _maxWorldSize = 1.0;
-  private _scratchScale = new Vec3();
   private _customParentDom: HTMLElement | null = null;
   private _clickHandlersAttached = new Set<any>();
   private _hotspotBackgroundColor = '#2C8658';
@@ -177,9 +176,9 @@ export class TfAnnotationManager extends PcAnnotationManager {
     super._registerAnnotation(annotation);
     this._applyAnnotationIcon(annotation);
 
-    // Keep the hotspot mesh hidden until the first scale pass clamps it. The annotation entity
-    // starts at unit local scale, so under a scaled content-root the plane would render many world
-    // units across for the frames before _updateAnnotationRotationAndScale runs.
+    // Keep the hotspot mesh hidden until the first scale pass sizes it. The annotation entity
+    // starts at unit scale, so the plane would render a metre across for the frames before
+    // _updateAnnotationRotationAndScale runs.
     const resources = (this as any)._annotationResources.get(annotation);
     if (resources) {
       resources.baseEntity.enabled = false;
@@ -302,8 +301,8 @@ export class TfAnnotationManager extends PcAnnotationManager {
 
   /**
    * Override to also disable the hotspot mesh (not just the DOM) when the annotation is behind the
-   * camera. The base implementation leaves the mesh enabled, so a not-yet-scaled plane under a
-   * scaled content-root would stay huge in view until the camera moves the anchor in front.
+   * camera. The base implementation leaves the mesh enabled, so a not-yet-scaled plane would stay
+   * in view at its full unit size until the camera moves the anchor in front.
    * @private
    */
   _hideAnnotationElements(annotation: any, resources: any) {
@@ -331,14 +330,9 @@ export class TfAnnotationManager extends PcAnnotationManager {
     // The world size that projects to _hotspotSize screen pixels at this distance.
     const targetWorldSize = ((this as any)._hotspotSize / screenHeight) * ((2 * distance) / projMatrix.data[5]);
 
-    // setLocalScale is applied on top of the parent's world scale (e.g. a scaled
-    // content-root), so divide it out to keep the on-screen size independent of it.
-    const parentScale = this._getParentWorldScale(annotation.entity);
-    const unclampedScale = targetWorldSize / parentScale;
-
-    // Clamp in the annotation's own (parent-local) space so maxWorldSize keeps the
-    // same size relative to the model regardless of the content-root scale.
-    const clampedScale = Math.min(unclampedScale, this._maxWorldSize);
+    // Annotations hang off an unscaled parent, so local scale is world scale and maxWorldSize
+    // clamps the hotspot at a size in metres.
+    const clampedScale = Math.min(targetWorldSize, this._maxWorldSize);
 
     const hovered = (this as any)._hoverAnnotation === annotation;
     const hoverScale = hovered ? HOTSPOT_HOVER_SCALE : 1;
@@ -348,8 +342,7 @@ export class TfAnnotationManager extends PcAnnotationManager {
 
     // Scale the hotspot DOM element proportionally when clamped, including the
     // hover growth so it tracks the visible circle. This is a pure screen-space
-    // size, so it uses the true _hotspotSize and the clamp ratio only (never the
-    // parent scale, which the DOM overlay does not inherit).
+    // size, so it uses the true _hotspotSize and the clamp ratio only.
     const resources = (this as any)._annotationResources.get(annotation);
     if (resources) {
       // This branch only runs for annotations in front of the camera, and the scale above is now
@@ -358,27 +351,12 @@ export class TfAnnotationManager extends PcAnnotationManager {
       resources.overlayEntity.enabled = true;
     }
     if (resources && resources.hotspotDom) {
-      const clampRatio = clampedScale / unclampedScale;
+      const clampRatio = clampedScale / targetWorldSize;
       const baseSize = (this as any)._hotspotSize + 5; // Match the +5 from the stylesheet
       const scaledSize = baseSize * clampRatio * hoverScale;
       resources.hotspotDom.style.width = `${scaledSize}px`;
       resources.hotspotDom.style.height = `${scaledSize}px`;
     }
-  }
-
-  /**
-   * World-space uniform scale of the annotation entity's parent (e.g. a scaled
-   * content-root). Returns 1 when there is no parent or it has no scale.
-   * @private
-   */
-  _getParentWorldScale(entity: any) {
-    const parent = entity.parent;
-    if (!parent) {
-      return 1;
-    }
-    parent.getWorldTransform().getScale(this._scratchScale);
-
-    return this._scratchScale.x || 1;
   }
 
   /**
