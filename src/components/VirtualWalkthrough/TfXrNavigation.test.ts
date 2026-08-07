@@ -1,4 +1,4 @@
-import { AppBase, Entity, Vec3 } from 'playcanvas';
+import { Vec3 } from 'playcanvas';
 
 // The real base script is an .mjs file that Jest's default CRA transform config never transforms
 // (node_modules is excluded), so importing it directly fails to parse. TfXrNavigation.postUpdate
@@ -19,8 +19,8 @@ const makeNavigation = (options: { xrActive: boolean; boundsRadius: number; head
   navigation.boundsCenter = BOUNDS_CENTER.clone();
   navigation.boundsRadius = options.boundsRadius;
   navigation.clampDistance = 0;
-  navigation.app = { xr: { active: options.xrActive } } as unknown as AppBase;
-  navigation.entity = { translate } as unknown as Entity;
+  navigation.app = { xr: { active: options.xrActive } };
+  navigation.entity = { translate };
   Object.assign(navigation, { _cameraEntity: { getPosition: () => options.head } });
 
   return { navigation, translate };
