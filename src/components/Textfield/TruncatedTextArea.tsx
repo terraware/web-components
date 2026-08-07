@@ -31,7 +31,15 @@ const TruncatedTextArea = ({ truncateConfig, children }: TruncatedTextAreaProps)
       return;
     }
 
-    const measure = () => setNeedsTruncating(node.getBoundingClientRect().height > maxHeight);
+    const measure = () => {
+      // offsetHeight is an untransformed layout value, so it is in the same units as maxHeight
+      const truncating = node.offsetHeight > maxHeight;
+      setNeedsTruncating(truncating);
+      if (!truncating) {
+        // Otherwise content that grows long again later would start out expanded
+        setShowAll(false);
+      }
+    };
     measure();
 
     const observer = new ResizeObserver(measure);
