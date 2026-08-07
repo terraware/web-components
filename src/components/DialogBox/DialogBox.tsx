@@ -43,15 +43,26 @@ export default function DialogBox(props: Props): JSX.Element | null {
 
   const { isMobile } = useDeviceInfo();
 
+  // Only close modal when the click starts and ends on the backdrop. On mobile, tapping an input opens the
+  // keyboard and shifts the layout, so the click can end on the backdrop even though it began on the input
+  const pressStartedOnBackdrop = React.useRef(false);
+
+  const targetIsBackdrop = (target: EventTarget | null): boolean =>
+    target instanceof HTMLElement && target.classList.contains('dialog-box--opened');
+
   return open ? (
     <div
       className={`dialog-box-container${skrim ? '--skrim' : ''} ${open ? 'dialog-box--opened' : 'dialog-box--closed'} ${
         isMobile ? 'mobile' : ''
       }`}
+      onMouseDown={(event) => {
+        pressStartedOnBackdrop.current = targetIsBackdrop(event.target);
+      }}
       onClick={(event) => {
-        if (event.target instanceof HTMLElement && event.target.classList.contains('dialog-box--opened')) {
+        if (pressStartedOnBackdrop.current && targetIsBackdrop(event.target)) {
           onClose?.();
         }
+        pressStartedOnBackdrop.current = false;
       }}
       style={style}
     >
