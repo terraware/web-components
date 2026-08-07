@@ -1,11 +1,11 @@
-import { Script, XRTYPE_VR } from 'playcanvas';
+import { Script, XRTYPE_AR, XRTYPE_VR } from 'playcanvas';
 
 import { XrStartBounds, xrStartRigPose, yawFromBasis } from './xr-start-pose';
 
 type XrStartPoseNavigation = { boundsCenter: { x: number; z: number }; boundsRadius: number };
 
 /**
- * Starts a VR session at the scene's camera position rather than at the world origin.
+ * Starts an immersive session at the scene's camera position rather than at the world origin.
  *
  * PlayCanvas overwrites the camera entity's local transform with the head pose every frame, so the
  * head lands wherever the headset's reference space puts it — near (0, 0) for a rig that has never
@@ -18,7 +18,9 @@ type XrStartPoseNavigation = { boundsCenter: { x: number; z: number }; boundsRad
  * Attach to the rig entity — the camera's parent, alongside TfXrNavigation, whose bounds clamp
  * pulls the start point back inside the scene bounds when the camera position sits outside them.
  *
- * VR only: an AR user is anchored to the room they can see, so moving them is disorienting.
+ * AR as well as VR: it is a one-off placement rather than the repeated movement teleport is kept
+ * off in AR to avoid, and with teleport off it is the only way an AR user reaches the scene.
+ * Inline sessions are left alone — a window onto the scene, not a rig the user stands in.
  */
 export class XrStartPose extends Script {
   static scriptName = 'xrStartPose';
@@ -58,7 +60,7 @@ export class XrStartPose extends Script {
 
   initialize() {
     // Covers mounting into a session that is already running as well as the usual mount before one.
-    this._pending = this._isVrActive();
+    this._pending = this._isXrActive();
     this.app.xr?.on('start', this._onXrStart);
     this.app.xr?.on('update', this._onXrUpdate);
     this.app.xr?.on('end', this._onXrEnd);
@@ -67,7 +69,8 @@ export class XrStartPose extends Script {
     this.once('destroy', () => this._teardown());
   }
 
-  private _isVrActive = () => this.app.xr?.active === true && this.app.xr?.type === XRTYPE_VR;
+  private _isXrActive = () =>
+    this.app.xr?.active === true && (this.app.xr?.type === XRTYPE_VR || this.app.xr?.type === XRTYPE_AR);
 
   /**
    * The bounds circle to place the start point in, or undefined when nothing is clamping the head.
@@ -90,7 +93,7 @@ export class XrStartPose extends Script {
    * first point at which there is a real head to solve the rig pose from.
    */
   update() {
-    if (!this._pending || !this._posed || !this._isVrActive()) {
+    if (!this._pending || !this._posed || !this._isXrActive()) {
       return;
     }
 

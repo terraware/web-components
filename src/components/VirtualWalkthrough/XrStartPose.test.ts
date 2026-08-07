@@ -1,4 +1,4 @@
-import { XRTYPE_AR, XRTYPE_VR } from 'playcanvas';
+import { XRTYPE_AR, XRTYPE_INLINE, XRTYPE_VR } from 'playcanvas';
 
 import { XrStartPose } from './XrStartPose';
 
@@ -197,13 +197,33 @@ describe('XrStartPose', () => {
     expect(entity.setPosition).toHaveBeenCalledTimes(1);
   });
 
-  it('leaves an AR session where it is', () => {
+  it('places the rig in an AR session too', () => {
+    const app = buildApp();
+    const head = { x: 1, y: 1.7, z: 2 };
+    const { entity, rig, rigPosition } = buildRig({ head });
+    const script = mountScript(app, entity);
+    script.targetX = 8;
+    script.targetZ = -4;
+    script.focusX = 0;
+    script.focusZ = 0;
+
+    app.startSession(XRTYPE_AR);
+    app.poseFrame();
+    script.update();
+
+    const landed = headAfter(rig, head, rigPosition, entity.yaw);
+    expect(landed.x).toBeCloseTo(8);
+    expect(landed.z).toBeCloseTo(-4);
+    expect(entity.yaw).toBeCloseTo(headingYaw({ x: 8, z: -4 }, { x: 0, z: 0 }));
+  });
+
+  it('leaves an inline session where it is', () => {
     const app = buildApp();
     const { entity } = buildRig();
     const script = mountScript(app, entity);
     script.targetX = 5;
 
-    app.startSession(XRTYPE_AR);
+    app.startSession(XRTYPE_INLINE);
     app.poseFrame();
     script.update();
 
