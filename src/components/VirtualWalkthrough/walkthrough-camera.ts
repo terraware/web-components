@@ -31,14 +31,13 @@ const POSITION_EPSILON = 1e-5;
 export class WalkthroughCamera extends Script {
   static scriptName = 'walkthroughCamera';
 
-  /** @attribute */
-  moveSpeed = 0.3;
+  moveSpeed = 4.5;
 
   /** @attribute */
-  moveFastSpeed = 0.5;
+  moveFastSpeed = 7.5;
 
   /** @attribute */
-  moveSlowSpeed = 0.15;
+  moveSlowSpeed = 2.25;
 
   /** @attribute */
   lookSensitivity = 0.1;

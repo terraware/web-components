@@ -8,7 +8,6 @@ import { Vec3 } from 'playcanvas';
 import { BoundaryWallScript } from './boundary-wall';
 
 export type BoundaryWallProps = {
-  /** World-space, i.e. already multiplied by the scene scaleFactor. */
   center: Vec3;
   radius: number;
   groundPlane: Vec3[];
