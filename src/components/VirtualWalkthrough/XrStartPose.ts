@@ -17,10 +17,6 @@ type XrStartPoseNavigation = { boundsCenter: { x: number; z: number }; boundsRad
  *
  * Attach to the rig entity — the camera's parent, alongside TfXrNavigation, whose bounds clamp
  * pulls the start point back inside the scene bounds when the camera position sits outside them.
- *
- * AR as well as VR: it is a one-off placement rather than the repeated movement teleport is kept
- * off in AR to avoid, and with teleport off it is the only way an AR user reaches the scene.
- * Inline sessions are left alone — a window onto the scene, not a rig the user stands in.
  */
 export class XrStartPose extends Script {
   static scriptName = 'xrStartPose';
