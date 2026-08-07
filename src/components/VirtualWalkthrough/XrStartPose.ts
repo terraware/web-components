@@ -2,11 +2,6 @@ import { Script, XRTYPE_VR } from 'playcanvas';
 
 import { XrStartBounds, xrStartRigPose, yawFromBasis } from './xr-start-pose';
 
-/**
- * Structural shape of the TfXrNavigation instance sharing this entity, kept local so this script
- * does not have to import the navigation script. Read rather than duplicated as props so the circle
- * the start point is placed in is always the one the head will actually be held inside.
- */
 type XrStartPoseNavigation = { boundsCenter: { x: number; z: number }; boundsRadius: number };
 
 /**
@@ -45,14 +40,6 @@ export class XrStartPose extends Script {
 
   /**
    * Whether the engine has written a head pose for this session yet.
-   *
-   * `app.xr.active` goes true the moment the session object exists, but the camera entity keeps
-   * whatever transform it had until a frame carrying a viewer pose arrives. In between, a
-   * `window.requestAnimationFrame` tick scheduled before the session started can still run scripts
-   * (AppBase.tick only skips the update for *XR* frames without a pose), and on that frame the
-   * camera still holds the desktop pose. Solving from it would place the rig as though the user
-   * were already standing at the desktop camera — which, since that is where the target usually is,
-   * lands them back at the world origin.
    */
   private _posed = false;
 
@@ -100,8 +87,7 @@ export class XrStartPose extends Script {
   /**
    * Runs in update rather than on the 'start' event: the engine writes the head pose during
    * xr.update, which precedes the script update in the same tick, so a frame that has posed is the
-   * first point at which there is a real head to solve the rig pose from. Running before postUpdate
-   * also leaves TfXrNavigation's clamp free to act on the same frame if it needs to.
+   * first point at which there is a real head to solve the rig pose from.
    */
   update() {
     if (!this._pending || !this._posed || !this._isVrActive()) {
