@@ -124,7 +124,10 @@ const VirtualWalkthroughViewer = ({
     const dy = cameraPosition[1] - origin[1];
     const dz = cameraPosition[2] - origin[2];
 
-    return Math.sqrt(dx * dx + dy * dy + dz * dz) * 0.5;
+    // The whole origin-to-camera distance, not half of it: the camera position is a place the user
+    // is meant to be able to stand, so a circle that stopped short of it would clamp them off their
+    // own starting point.
+    return Math.sqrt(dx * dx + dy * dy + dz * dz);
   }, [cameraPosition, sceneBounds, origin]);
 
   const sceneBoundsCenter = useMemo(
