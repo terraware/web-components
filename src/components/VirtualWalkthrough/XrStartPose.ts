@@ -1,6 +1,13 @@
 import { Script, XRTYPE_VR } from 'playcanvas';
 
-import { xrStartRigPose, yawFromBasis } from './xr-start-pose';
+import { XrStartBounds, xrStartRigPose, yawFromBasis } from './xr-start-pose';
+
+/**
+ * Structural shape of the TfXrNavigation instance sharing this entity, kept local so this script
+ * does not have to import the navigation script. Read rather than duplicated as props so the circle
+ * the start point is placed in is always the one the head will actually be held inside.
+ */
+type XrStartPoseNavigation = { boundsCenter: { x: number; z: number }; boundsRadius: number };
 
 /**
  * Starts a VR session at the scene's camera position rather than at the world origin.
@@ -49,6 +56,21 @@ export class XrStartPose extends Script {
   private _isVrActive = () => this.app.xr?.active === true && this.app.xr?.type === XRTYPE_VR;
 
   /**
+   * The bounds circle to place the start point in, or undefined when nothing is clamping the head.
+   * Resolved per call rather than cached: the React wrapper assigns the bounds to the navigation
+   * script imperatively, so they can land after this script initializes.
+   */
+  private _bounds = (): XrStartBounds | undefined => {
+    // @ts-expect-error - scripts are added dynamically to the entity
+    const navigation = this.entity.script?.tfXrNavigation as XrStartPoseNavigation | undefined;
+    if (!navigation || navigation.boundsRadius <= 0) {
+      return undefined;
+    }
+
+    return { x: navigation.boundsCenter.x, z: navigation.boundsCenter.z, radius: navigation.boundsRadius };
+  };
+
+  /**
    * Runs in update rather than on the 'start' event: the head pose for the frame is written before
    * scripts update (and a frame with no pose skips the update entirely), so this is the first point
    * at which there is a head to solve the rig pose from. Running before postUpdate also leaves
@@ -73,6 +95,7 @@ export class XrStartPose extends Script {
       rig: { x: rig.x, z: rig.z },
       target: { x: this.targetX, z: this.targetZ },
       focus: { x: this.focusX, z: this.focusZ },
+      bounds: this._bounds(),
     });
 
     this.entity.rotate(0, pose.yawDelta, 0);

@@ -10,8 +10,12 @@
  * All angles are degrees and all coordinates world-space XZ; Y is left to the caller, since the
  * user stands on the rig floor rather than on the scene's ground plane.
  */
+import { clampToCircle } from './xr-scene-bounds';
 
 export type Point2 = { x: number; z: number };
+
+/** The circle the head is held inside, i.e. XR navigation's bounds. */
+export type XrStartBounds = Point2 & { radius: number };
 
 export type XrStartPoseInput = {
   /** Where the head is now. */
@@ -24,6 +28,11 @@ export type XrStartPoseInput = {
   target: Point2;
   /** What the head should face from there. */
   focus: Point2;
+  /**
+   * Circle to keep the target inside. Omit (or pass a non-positive radius) to place the head on the
+   * target as given.
+   */
+  bounds?: XrStartBounds;
 };
 
 export type XrStartPose = {
@@ -77,11 +86,17 @@ const rotateXz = (point: Point2, degrees: number): Point2 => {
  * Turning the rig swings the head around the rig's origin, so the turn is applied to the head's
  * offset within the rig first and the rig is then placed so that swung offset lands on the target.
  * A focus point on top of the target gives no heading, so the rig is only moved, not turned.
+ *
+ * The target is clamped into `bounds` here rather than left to XR navigation, which clamps the head
+ * on the same frame anyway: the heading has to be solved from where the head actually ends up, or a
+ * target outside the circle leaves the user facing beside the focus point by the angle the clamp
+ * moved them through.
  */
-export const xrStartRigPose = ({ head, headYaw, rig, target, focus }: XrStartPoseInput): XrStartPose => {
-  const facingYaw = yawFromDirection(focus.x - target.x, focus.z - target.z);
+export const xrStartRigPose = ({ head, headYaw, rig, target, focus, bounds }: XrStartPoseInput): XrStartPose => {
+  const landing = bounds ? clampToCircle(target.x, target.z, bounds.x, bounds.z, bounds.radius) : target;
+  const facingYaw = yawFromDirection(focus.x - landing.x, focus.z - landing.z);
   const yawDelta = facingYaw === null ? 0 : normalizeAngle(facingYaw - headYaw);
   const offset = rotateXz({ x: head.x - rig.x, z: head.z - rig.z }, yawDelta);
 
-  return { yawDelta, x: target.x - offset.x, z: target.z - offset.z };
+  return { yawDelta, x: landing.x - offset.x, z: landing.z - offset.z };
 };
