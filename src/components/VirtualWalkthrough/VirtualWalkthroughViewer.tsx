@@ -34,20 +34,39 @@ const DEFAULT_POSITION: [number, number, number] = [1, 0.1, 0];
 
 // How far outside the clamp radius the boundary wall stands. Without it the wall would be coplanar
 // with the surface the head is clamped to, so a pinned user would have it in their face and through
-// their near clip plane. Deliberately an absolute world-space distance rather than one scaled by
-// scaleFactor: it is about the size of the user's body, not about the size of the scene.
+// their near clip plane.
 const WALL_INSET = 0.25;
 
+/**
+ * Largest world size (metres) a hotspot is allowed to reach as the camera approaches it, so it
+ * stops growing rather than filling the view from close up.
+ */
+const MAX_HOTSPOT_WORLD_SIZE = 0.75;
+
+/**
+ * Every coordinate, distance and size in this component is world-space, in the metres an XR
+ * headset imposes on the scene: `scaleFactor` converts the splat's own arbitrary units to them,
+ * and is applied to nothing but the splat itself.
+ */
 export interface VirtualWalkthroughViewerProps {
   splatSrc: string;
   splatFormat?: SplatFormat;
+  /** World-space point the camera looks at. */
   origin?: [number, number, number];
+  /** World-space point the camera starts at. */
   cameraPosition?: [number, number, number];
+  /** World-space centre (x, y, z) and radius (m) of the circle the camera is held inside. */
   sceneBounds?: { x: number; y: number; z: number; m: number };
+  /** Three world-space points defining the plane the camera walks on. */
   groundPlane?: [number, number, number][];
   skyColor?: string;
   groundColor?: string;
+  /** Eye height (m) above the ground plane. */
   averageCameraHeight?: number;
+  /**
+   * Scale that converts the splat model's units to the world's metres. Applied to the splat
+   * entity alone — every other coordinate this component takes is already world-space.
+   */
   scaleFactor?: number;
   annotations: AnnotationProps[];
   onSaveAnnotations: (annotations: AnnotationProps[]) => void | Promise<void>;
@@ -115,19 +134,9 @@ const VirtualWalkthroughViewer = ({
     [sceneBounds, origin, cameraPosition]
   );
 
-  const cameraBoundsCenter = useMemo(
-    () => sceneBoundsCenter.clone().mulScalar(scaleFactor),
-    [sceneBoundsCenter, scaleFactor]
-  );
-
   const groundPlane = useMemo<Vec3[]>(
     () => (groundPlaneProp?.length === 3 ? groundPlaneProp.map((p) => new Vec3(p[0], p[1], p[2])) : []),
     [groundPlaneProp]
-  );
-
-  const cameraGroundPlane = useMemo<Vec3[]>(
-    () => groundPlane.map((p) => p.clone().mulScalar(scaleFactor)),
-    [groundPlane, scaleFactor]
   );
 
   useEffect(() => {
@@ -135,16 +144,16 @@ const VirtualWalkthroughViewer = ({
   }, [origin, cameraPosition, setCamera]);
 
   useEffect(() => {
-    if (!cameraGroundPlane.length) {
+    if (!groundPlane.length) {
       return;
     }
     // @ts-expect-error - scripts are added dynamically to the camera entity
     const walkthroughCam = app.root.findByName('camera')?.script?.walkthroughCamera;
     if (walkthroughCam) {
       // Should be changed to a react prop if shallowEquals in playcanvas/react is fixed (see https://github.com/playcanvas/react/pull/298)
-      walkthroughCam.groundPlane = cameraGroundPlane;
+      walkthroughCam.groundPlane = groundPlane;
     }
-  }, [cameraGroundPlane, app]);
+  }, [groundPlane, app]);
 
   useEffect(() => {
     // Set imperatively for the same reason as BoundaryRing: boundsCenter is a Vec3, and the
@@ -152,10 +161,10 @@ const VirtualWalkthroughViewer = ({
     // @ts-expect-error - scripts are added dynamically to the entity
     const navigation = app.root.findByName('camera-root')?.script?.tfXrNavigation;
     if (navigation) {
-      navigation.boundsCenter = cameraBoundsCenter;
-      navigation.boundsRadius = sceneBoundsRadius * scaleFactor;
+      navigation.boundsCenter = sceneBoundsCenter;
+      navigation.boundsRadius = sceneBoundsRadius;
     }
-  }, [app, cameraBoundsCenter, sceneBoundsRadius, scaleFactor]);
+  }, [app, sceneBoundsCenter, sceneBoundsRadius]);
 
   const handleToggleFreeFly = useCallback(() => {
     const newFreeFly = !isFreeFly;
@@ -303,10 +312,11 @@ const VirtualWalkthroughViewer = ({
         splatSrc={splatSrc}
         splatFormat={splatFormat}
         rotation={[-180, 0, 0]}
+        scaleFactor={scaleFactor}
         revealRain={isHighPerformance}
       />
     ),
-    [isHighPerformance, splatSrc, splatFormat]
+    [isHighPerformance, splatSrc, splatFormat, scaleFactor]
   );
 
   return (
@@ -323,13 +333,10 @@ const VirtualWalkthroughViewer = ({
           {!isCurrentlyInXr && (
             <Script
               script={WalkthroughCamera}
-              boundsCenter={cameraBoundsCenter}
-              boundsRadius={sceneBoundsRadius * scaleFactor}
+              boundsCenter={sceneBoundsCenter}
+              boundsRadius={sceneBoundsRadius}
               enableFly={!isTextFieldFocused}
-              averageCameraHeight={scaleFactor * averageCameraHeight}
-              moveSpeed={0.3 * scaleFactor}
-              moveFastSpeed={0.5 * scaleFactor}
-              moveSlowSpeed={0.15 * scaleFactor}
+              averageCameraHeight={averageCameraHeight}
             />
           )}
         </Entity>
@@ -345,7 +352,6 @@ const VirtualWalkthroughViewer = ({
             key={viewingAnnotationIndex}
             annotation={viewingAnnotation}
             annotationIndex={viewingAnnotationIndex}
-            scaleFactor={scaleFactor}
           />
         )}
         {isCurrentlyInXr && <XrGazeDwell activeIndex={viewingAnnotationIndex} />}
@@ -368,7 +374,9 @@ const VirtualWalkthroughViewer = ({
         )}
       </Entity>
 
-      <Entity name='content-root' scale={[scaleFactor, scaleFactor, scaleFactor]}>
+      {/* Deliberately unscaled: the splat carries scaleFactor itself, so everything mounted here
+          shares the one world space the camera rig and the XR head pose already live in. */}
+      <Entity name='content-root'>
         {splatModel}
 
         {sceneBounds?.m !== undefined && groundPlane.length === 3 && (
@@ -381,7 +389,7 @@ const VirtualWalkthroughViewer = ({
               script={TfAnnotationManager}
               enabled={true}
               hotspotSize={30}
-              maxWorldSize={0.05}
+              maxWorldSize={MAX_HOTSPOT_WORLD_SIZE}
               opacity={1}
               hotspotColor={new Color().fromString(theme.palette.TwClrIcnBrand as string)}
               hoverColor={new Color().fromString('#ffffff')}
@@ -408,9 +416,9 @@ const VirtualWalkthroughViewer = ({
 
       {isCurrentlyInXr && sceneBoundsRadius > 0 && (
         <BoundaryWall
-          center={cameraBoundsCenter}
-          radius={sceneBoundsRadius * scaleFactor + WALL_INSET}
-          groundPlane={cameraGroundPlane}
+          center={sceneBoundsCenter}
+          radius={sceneBoundsRadius + WALL_INSET}
+          groundPlane={groundPlane}
           baseY={0}
         />
       )}

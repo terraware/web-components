@@ -84,7 +84,7 @@ const sampleStrings: SplatControlsStrings = {
 
 const sampleAnnotations: AnnotationProps[] = [
   {
-    position: [0.1, 0.05, 0],
+    position: [1.5, 0.75, 0],
     title: 'Mangrove nursery',
     bodyText:
       'Seedlings raised here are transplanted along the coastline to restore the mangrove belt that protects the village from storm surge.',
@@ -94,7 +94,7 @@ const sampleAnnotations: AnnotationProps[] = [
     imageUrls: ['https://picsum.photos/seed/mangrove/800/600'],
   },
   {
-    position: [-0.4, 0.1, -0.3],
+    position: [-6, 1.5, -4.5],
     title: 'Monitoring station',
     bodyText: 'Sensors here track soil moisture and canopy growth over time.',
     icon: 'image',
@@ -105,7 +105,7 @@ const sampleAnnotations: AnnotationProps[] = [
     ],
   },
   {
-    position: [0.45, 0.08, -0.7],
+    position: [6.75, 1.2, -10.5],
     title: 'Community trail',
     label: 'Trail',
     bodyText:
@@ -130,12 +130,13 @@ const Template: Story<Partial<VirtualWalkthroughViewerProps>> = (args) => (
         skyColor={'#4286DC'}
         groundColor={'#98932E'}
         groundPlane={[
-          [-0.15, -0.1, 0],
-          [0.8, -0.1, -0.1],
-          [-0.3, -0.1, -1],
+          [-2.25, -1.5, 0],
+          [12, -1.5, -1.5],
+          [-4.5, -1.5, -15],
         ]}
-        sceneBounds={{ x: 0, y: -0.1, z: -0.1, m: 1 }}
-        averageCameraHeight={0.2}
+        sceneBounds={{ x: 0, y: -1.5, z: -1.5, m: 15 }}
+        averageCameraHeight={3}
+        cameraPosition={[5, 0.1, -3]}
         scaleFactor={15}
         {...args}
       />
@@ -144,6 +145,3 @@ const Template: Story<Partial<VirtualWalkthroughViewerProps>> = (args) => (
 );
 
 export const Default = Template.bind({});
-Default.args = {
-  splatSrc: DEFAULT_SPLAT_SRC,
-};
