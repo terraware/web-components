@@ -63,6 +63,8 @@ export const TextAreaWithMarkdown = Template.bind({});
 
 export const TextAreaWithTruncate = Template.bind({});
 
+export const TextAreaWithMarkdownAndTruncate = Template.bind({});
+
 export const NumberField = NumberTemplate.bind({});
 
 Default.args = {
@@ -244,6 +246,44 @@ TextAreaWithTruncate.args = {
     showLessText: 'Show less',
     showMoreText: 'Show more',
   },
+};
+
+// Edit the `value` control to swap the content in place: the show more/less control should appear
+// and disappear to match the new content, without the story remounting.
+TextAreaWithMarkdownAndTruncate.args = {
+  label: 'Field Label',
+  disabled: false,
+  helperText: 'Help text.',
+  placeholder: 'Placeholder...',
+  errorText: '',
+  warningText: '',
+  readonly: false,
+  display: true,
+  markdown: true,
+  type: 'textarea',
+  autoFocus: false,
+  preserveNewlines: true,
+  styles: {
+    markdown: {
+      fontSize: '14px',
+      fontWeight: 400,
+      lineHeight: '20px',
+    },
+  },
+  truncateConfig: {
+    maxHeight: 60,
+    showLessText: 'Show less',
+    showMoreText: 'Show more',
+    collapseOnBlur: false,
+  },
+  value: `\
+This is the first paragraph of the highlights. It is authored as its own paragraph and should be
+separated from the next one by a visible gap.
+
+This is the second paragraph. Together the two paragraphs are taller than the 60px \`maxHeight\`, so
+the show more control appears.
+
+This third paragraph only becomes visible once the text is expanded.`,
 };
 
 NumberField.args = {

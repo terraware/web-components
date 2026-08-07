@@ -21,6 +21,9 @@ export interface TruncateConfig {
   showLessText: string;
   showTextStyle?: Record<string, any>;
   alignment?: 'left' | 'right';
+  // When true, expanded text re-collapses as soon as the show more/less control loses focus.
+  // Defaults to false, which keeps the text expanded until the reader collapses it.
+  collapseOnBlur?: boolean;
 }
 
 export interface Props {
@@ -49,7 +52,7 @@ export interface Props {
   readonly?: boolean;
   required?: boolean;
   // Since useStyles is deprecated, we can start passing in element specific styles in here
-  // For now only the `textarea` has styles passed into it
+  // Supported keys: `textarea`, and `markdown` for the markdown display branch
   styles?: Record<string, Record<string, unknown>>;
   sx?: SxProps;
   tooltipTitle?: TooltipProps['title'];
@@ -163,7 +166,7 @@ export default function TextField(props: Props): JSX.Element {
     }
 
     const component = markdown ? (
-      <Markdown value={value.toString()} />
+      <Markdown value={value.toString()} style={styles?.markdown} />
     ) : (
       <p className={`textfield-value--display${preserveNewlines ? ' preserve-newlines' : ''}`}>{value}</p>
     );
@@ -173,7 +176,7 @@ export default function TextField(props: Props): JSX.Element {
     } else {
       return component;
     }
-  }, [display, markdown, preserveNewlines, truncateConfig, type, value]);
+  }, [display, markdown, preserveNewlines, styles, truncateConfig, type, value]);
 
   return (
     <Box className={`textfield ${className}`} sx={sx}>
