@@ -1,4 +1,4 @@
-import React, { ReactNode, useEffect, useRef, useState } from 'react';
+import React, { CSSProperties, ReactNode, useEffect, useRef, useState } from 'react';
 
 import { Link, Typography, useTheme } from '@mui/material';
 
@@ -11,25 +11,46 @@ interface TruncatedTextAreaProps {
 }
 
 const TruncatedTextArea = ({ truncateConfig, children }: TruncatedTextAreaProps) => {
-  const { maxHeight, showLessText, showMoreText, showTextStyle, alignment = 'left' } = truncateConfig;
+  const {
+    maxHeight,
+    showLessText,
+    showMoreText,
+    showTextStyle,
+    alignment = 'left',
+    collapseOnBlur = false,
+  } = truncateConfig;
 
   const theme = useTheme();
   const [showAll, setShowAll] = useState(false);
   const [needsTruncating, setNeedsTruncating] = useState(false);
-  const [totalHeight, setTotalHeight] = useState(0);
-  const ref = useRef<HTMLParagraphElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (ref && ref.current && !totalHeight) {
-      const height = ref.current.clientHeight;
-      setTotalHeight(height);
-      setNeedsTruncating(height > maxHeight);
+    const node = contentRef.current;
+    if (!node) {
+      return;
     }
-  }, [maxHeight, ref, totalHeight]);
+
+    const measure = () => {
+      // offsetHeight is an untransformed layout value, so it is in the same units as maxHeight
+      const truncating = node.offsetHeight > maxHeight;
+      setNeedsTruncating(truncating);
+      if (!truncating) {
+        // Otherwise content that grows long again later would start out expanded
+        setShowAll(false);
+      }
+    };
+    measure();
+
+    const observer = new ResizeObserver(measure);
+    observer.observe(node);
+
+    return () => observer.disconnect();
+  }, [maxHeight]);
 
   const toggleShowAll = () => setShowAll((prev) => !prev);
 
-  const divStyle: Record<string, any> = {
+  const containerStyle: CSSProperties = {
     margin: 0,
     padding: 0,
     overflow: 'hidden',
@@ -37,13 +58,16 @@ const TruncatedTextArea = ({ truncateConfig, children }: TruncatedTextAreaProps)
   };
 
   if (needsTruncating && !showAll) {
-    divStyle.maxHeight = `${maxHeight}px`;
+    containerStyle.maxHeight = `${maxHeight}px`;
   }
 
   return (
     <>
-      <div ref={ref} style={divStyle}>
-        {children}
+      <div style={containerStyle}>
+        {/* Measured separately from the container above, which clips to maxHeight when truncating */}
+        <div ref={contentRef} style={{ display: 'flow-root' }}>
+          {children}
+        </div>
       </div>
 
       {needsTruncating && (
@@ -51,7 +75,7 @@ const TruncatedTextArea = ({ truncateConfig, children }: TruncatedTextAreaProps)
           <Link
             component='button'
             onClick={toggleShowAll}
-            onBlur={() => setShowAll(false)}
+            onBlur={collapseOnBlur ? () => setShowAll(false) : undefined}
             sx={{ color: theme.palette.TwClrTxtBrand, textDecorationColor: `${theme.palette.TwClrTxtBrand}80` }}
           >
             <Typography sx={{ ...showTextStyle, marginTop: '-3px' }}>
