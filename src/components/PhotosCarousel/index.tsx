@@ -1,11 +1,19 @@
 import React, { type JSX, useCallback, useEffect, useRef, useState } from 'react';
-import Carousel from 'react-multi-carousel';
+import CarouselImport from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 
 import { Box, Typography } from '@mui/material';
 
 import BusySpinner from '../BusySpinner';
 import './styles.scss';
+
+// react-multi-carousel is CommonJS compiled by TypeScript, so it exports the component as
+// `exports.default` alongside an `__esModule` flag. We publish native ES modules, where the
+// default import of a CommonJS module is the whole `module.exports` object and no bundler
+// unwraps `.default` for us. Unwrap it here; the `??` keeps this correct under bundlers that
+// do apply the legacy interop.
+type CarouselInstance = InstanceType<typeof CarouselImport>;
+const Carousel = (CarouselImport as unknown as { default?: typeof CarouselImport }).default ?? CarouselImport;
 
 export type PhotoItem = {
   url: string;
@@ -34,7 +42,7 @@ export default function PhotosCarousel(props: PhotosCarouselProps): JSX.Element 
   const isControlled = selectedSlide !== undefined;
   const [internalSlide, setInternalSlide] = useState(0);
   const [isLoading, setIsLoading] = useState<boolean[]>([]);
-  const myCarousel = useRef<Carousel>(null);
+  const myCarousel = useRef<CarouselInstance>(null);
   const currentSlide = isControlled ? selectedSlide : internalSlide;
 
   // Keyed on the URLs (not just photos.length) so swapping in a same-length array of
