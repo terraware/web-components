@@ -140,12 +140,21 @@ const VirtualWalkthroughViewer = ({
     [groundPlaneProp]
   );
 
+  // Also runs when a session ends. WalkthroughCamera is unmounted for the duration of a session, so
+  // the camera entity is left holding the last head pose — an eye height above wherever in the rig
+  // the user was standing — which is neither where nor how high the walkthrough left off.
   useEffect(() => {
+    if (isCurrentlyInXr) {
+      return;
+    }
     setCamera(origin, cameraPosition);
-  }, [origin, cameraPosition, setCamera]);
+  }, [origin, cameraPosition, setCamera, isCurrentlyInXr]);
 
+  // Re-applied when a session ends for the same reason: the script that comes back is a new
+  // instance, and without the ground plane it walks the camera at the bounds centre's height
+  // instead of an eye height above the ground.
   useEffect(() => {
-    if (!groundPlane.length) {
+    if (!groundPlane.length || isCurrentlyInXr) {
       return;
     }
     // @ts-expect-error - scripts are added dynamically to the camera entity
@@ -154,7 +163,7 @@ const VirtualWalkthroughViewer = ({
       // Should be changed to a react prop if shallowEquals in playcanvas/react is fixed (see https://github.com/playcanvas/react/pull/298)
       walkthroughCam.groundPlane = groundPlane;
     }
-  }, [groundPlane, app]);
+  }, [groundPlane, app, isCurrentlyInXr]);
 
   useEffect(() => {
     // Set imperatively for the same reason as BoundaryRing: boundsCenter is a Vec3, and the
