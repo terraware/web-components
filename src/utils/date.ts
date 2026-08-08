@@ -78,7 +78,7 @@ export const getDate = (date: DateType, timeZoneId?: string) => {
     return DateTime.fromJSDate(new Date(date), { zone: tz(timeZoneId) });
   }
 
-  return (date as DateTime).setZone(tz(timeZoneId));
+  return date.setZone(tz(timeZoneId));
 };
 
 /**
