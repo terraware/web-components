@@ -94,7 +94,7 @@ shouldn't be relied upon.
 
 The "Deploy Vercel preview" step builds and deploys the Storybook preview using the Vercel CLI,
 the same way terraware-web does it. Previews are opt-in: add the "Vercel preview" label to the
-pull request, then start a new build to get one.
+pull request, then re-run the step to get one.
 
 Vercel's GitHub integration used to deploy a preview on every push. It's now switched off for
 every branch except `main` via `deploymentEnabled` in vercel.json, so the two don't both deploy.

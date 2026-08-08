@@ -5,7 +5,37 @@
 
 set -euo pipefail
 
-.buildkite/scripts/install-deps.sh --node --tools
+# jq is needed for the label check below. Node is only needed if we actually deploy,
+# so it's installed after the check rather than before it.
+.buildkite/scripts/install-deps.sh --tools
+
+echo "--- :github: Check for the \"Vercel preview\" label"
+
+# Previews are opt-in. Look the pull request up by branch instead of reading
+# BUILDKITE_PULL_REQUEST: branch builds and builds started from the Buildkite UI carry
+# no pull request metadata at all, and the labels Buildkite does expose are a snapshot
+# taken when the build was created, so a label added afterwards wouldn't be seen.
+pr_json=$(curl -sf \
+    -H "Authorization: token ${GITHUB_TOKEN}" \
+    -H "Accept: application/vnd.github+json" \
+    "https://api.github.com/repos/terraware/web-components/pulls?head=terraware:${BUILDKITE_BRANCH}&state=open")
+
+pr_number=$(jq -r '.[0].number // empty' <<< "$pr_json")
+
+if [ -z "$pr_number" ]; then
+    echo "No open pull request for ${BUILDKITE_BRANCH}; skipping the Vercel preview."
+    exit 0
+fi
+
+if ! jq -e '.[0].labels | any(.name == "Vercel preview")' <<< "$pr_json" > /dev/null; then
+    echo "PR #${pr_number} isn't labeled \"Vercel preview\"; skipping the Vercel preview."
+    echo "Add the label and re-run this step to get a preview."
+    exit 0
+fi
+
+echo "PR #${pr_number} is labeled \"Vercel preview\"."
+
+.buildkite/scripts/install-deps.sh --node
 
 echo "--- :vercel: Configure Vercel project"
 mkdir -p .vercel
