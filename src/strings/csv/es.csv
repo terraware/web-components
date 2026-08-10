@@ -1,0 +1,50 @@
+Key,Text,Hash
+ADD_ANNOTATION,Agregar anotación,91742a0f
+ANNOTATION_DESCRIPTION_TOOLTIP,Detalles o contexto adicional sobre esta anotación,8cb997d2
+ANNOTATION_LABEL_TOOLTIP,Identificador breve que se muestra en el punto destacado de la anotación,adbb02a1
+ANNOTATION_TITLE_TOOLTIP,Título principal de la anotación,b3f5b753
+ANNOTATIONS,Anotaciones,c15a3aa4
+AR,RA,25a8e55a
+ARROW_KEYS,Flechas del teclado,5cefb475
+AUTO_ROTATE,Rotación automática,15ce1a40
+BOUNDED_FLY,Vuelo delimitado,9e3c46ae
+CAMERA_FOCUS_POINT,Punto de enfoque,350a921b
+CAMERA_INFO,Información de la cámara,4283d43c
+CAMERA_POSITION,Posición,3eb30313
+CANCEL,Cancelar,e73dc4d4
+CHOOSE_FILE,Seleccione archivo...,967c4c38
+CONTROLS,Controles,f7c1294f
+CTRL,Ctrl,f485607a
+DELETE_ANNOTATION,Eliminar anotación,10fcdc4e
+DESCRIPTION,Descripción,9cb0cc64
+DESELECT_ANNOTATION,Deseleccionar anotación,32c46edd
+EDIT,Editar,9d1278d8
+EDIT_ANNOTATION,Editar anotación,82bcb054
+EXISTING,Existente,fa67ac1d
+FILE_SELECTED,Archivo seleccionado,23a60a8d
+FLY,Volar,0747d35f
+FLY_FASTER,Volar más rápido,e24d00c8
+FLY_SLOWER,Volar más lento,0271712f
+FREE_FLY,Vuelo libre,3eb18bf0
+IMAGES,Imágenes,2041d3b6
+LABEL,Etiqueta,85def946
+LEFT_MOUSE,Botón izquierdo del ratón,b034e4dc
+LOOK,Mirar,e006bd6f
+MIDDLE_MOUSE,Botón central del ratón,18763653
+MOUSE_WHEEL,Rueda del ratón,8e3d3d78
+NEW,Nuevo,b8096e3b
+ORBIT,Orbitar,8e3af3cb
+PAN,Desplazar,34177007
+PINCH,Pellizcar,3c1f1f79
+REPLACE_FILE,Reemplazar archivo...,14c3cc45
+RESET_CAMERA,Restablecer cámara,ee37fbd5
+RIGHT_MOUSE,Botón derecho del ratón,d551c809
+SAVE,Guardar,526a3e42
+SHIFT,Shift,4d173d2a
+SWIPE,Deslizar,bc0962fa
+TITLE,Título,a5f8fc0b
+TOUCH_DRAG,Tocar y arrastrar,ff6d48d2
+UPLOAD_FILES,Subir archivos,b98547be
+UPLOAD_FILES_DESCRIPTION,Buscar o arrastrar y soltar archivos.,7c4a7822
+VR,RV,98fd7fc5
+ZOOM,Acercar/alejar,07b636df

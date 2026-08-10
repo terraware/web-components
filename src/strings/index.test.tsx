@@ -4,7 +4,7 @@ import { act, render, screen } from '@testing-library/react';
 
 import { getLocale, getStrings, setLocale, useStrings } from '.';
 import { strings as en } from './strings-en';
-import { strings as gx } from './strings-gx';
+import { strings as es } from './strings-es';
 
 afterEach(() => setLocale('en'));
 
@@ -14,10 +14,17 @@ test('the locale defaults to English', () => {
 });
 
 test('setLocale switches the table', () => {
-  setLocale('gx');
+  setLocale('es');
 
-  expect(getLocale()).toBe('gx');
-  expect(getStrings()).toBe(gx);
+  expect(getLocale()).toBe('es');
+  expect(getStrings()).toBe(es);
+});
+
+test('setLocale resolves a locale that carries a region', () => {
+  setLocale('es-MX');
+
+  expect(getLocale()).toBe('es');
+  expect(getStrings()).toBe(es);
 });
 
 test('setLocale ignores a locale with no bundled table', () => {
@@ -28,7 +35,12 @@ test('setLocale ignores a locale with no bundled table', () => {
 });
 
 test('every locale table covers the English key set', () => {
-  expect(Object.keys(gx).sort()).toEqual(Object.keys(en).sort());
+  const keys = Object.keys(en).sort();
+
+  for (const locale of ['es', 'fr', 'gx']) {
+    setLocale(locale);
+    expect(Object.keys(getStrings()).sort()).toEqual(keys);
+  }
 });
 
 test('useStrings renders the current table', () => {
@@ -43,7 +55,7 @@ test('useStrings re-renders a mounted component when the locale changes', () => 
   const Label = () => <span>{useStrings().CANCEL}</span>;
 
   render(<Label />);
-  act(() => setLocale('gx'));
+  act(() => setLocale('es'));
 
-  expect(screen.getByText(gx.CANCEL)).toBeInTheDocument();
+  expect(screen.getByText('Cancelar')).toBeInTheDocument();
 });

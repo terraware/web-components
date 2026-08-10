@@ -1,0 +1,13 @@
+Some notes about language style:
+
+- The words "Terraformation" and "Terraware" should not be translated and should be capitalized.
+- The tone of the translations should be formal but not stuffy. Address the user as if they're a
+  customer or business associate, not as if they're a friend.
+- These strings label controls in a shared component library, mostly the 3D virtual walkthrough
+  viewer. Many are short button labels or tooltips, so prefer concise translations that will fit in
+  a small control; a translation two or three times longer than the English will overflow its
+  button.
+- Input device names ("Left Mouse", "Mouse Wheel", "Arrow Keys") and gestures ("Pinch", "Swipe")
+  should use whatever terms the platform conventionally uses in that language.
+- Modifier key names ("Shift", "Ctrl") should match the labels printed on keyboards sold for that
+  language, which often means leaving them untranslated.
