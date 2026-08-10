@@ -16,7 +16,7 @@ import { AutoRotator } from './AutoRotator';
 import BoundaryRing from './BoundaryRing';
 import BoundaryWall from './BoundaryWall';
 import GradientSky from './GradientSky';
-import SplatControls, { SplatControlsStrings } from './SplatControls';
+import SplatControls from './SplatControls';
 import SplatModel from './SplatModel';
 import { TfAnnotationManager } from './TfAnnotationManager';
 import { TfXrNavigation } from './TfXrNavigation';
@@ -51,7 +51,6 @@ export interface VirtualWalkthroughViewerProps {
   scaleFactor?: number;
   annotations: AnnotationProps[];
   onSaveAnnotations: (annotations: AnnotationProps[]) => void | Promise<void>;
-  strings: SplatControlsStrings;
   editable?: boolean;
   showFreeFly?: boolean;
   isFullScreen?: boolean;
@@ -72,7 +71,6 @@ const VirtualWalkthroughViewer = ({
   scaleFactor = 1,
   annotations,
   onSaveAnnotations,
-  strings,
   editable = false,
   showFreeFly = false,
   isFullScreen = false,
@@ -443,7 +441,6 @@ const VirtualWalkthroughViewer = ({
         isFreeFly={isFreeFly}
         onToggleFreeFly={handleToggleFreeFly}
         showFreeFly={showFreeFly}
-        strings={strings}
       />
 
       <AnnotationPanel

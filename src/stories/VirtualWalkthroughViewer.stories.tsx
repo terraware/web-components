@@ -5,7 +5,6 @@ import { Story } from '@storybook/react';
 
 import { AnnotationProps } from '../components/VirtualWalkthrough/Annotation';
 import Application from '../components/VirtualWalkthrough/Application';
-import { SplatControlsStrings } from '../components/VirtualWalkthrough/SplatControls';
 import VirtualWalkthroughViewer, {
   VirtualWalkthroughViewerProps,
 } from '../components/VirtualWalkthrough/VirtualWalkthroughViewer';
@@ -31,56 +30,6 @@ export default {
 // so the viewer fetches one over the network at story-view time.
 const DEFAULT_SPLAT_SRC =
   'https://dl.dropboxusercontent.com/scl/fi/qc98eudfcnsdvmfgtjryf/7154.sog?rlkey=170i5e1hdwi7iu3i0cnm0afbu&st=9bqpkpph&raw=1';
-
-const sampleStrings: SplatControlsStrings = {
-  addAnnotation: 'Add annotation',
-  deselectAnnotation: 'Deselect annotation',
-  deleteAnnotation: 'Delete annotation',
-  ar: 'AR',
-  vr: 'VR',
-  edit: 'Edit',
-  freeFly: 'Free fly',
-  boundedFly: 'Bounded fly',
-  cancel: 'Cancel',
-  save: 'Save',
-  controlsInfoPane: {
-    controls: 'Controls',
-    annotations: 'Annotations',
-    autoRotate: 'Auto rotate',
-    orbit: 'Orbit',
-    leftMouse: 'Left mouse',
-    touchDrag: 'Touch drag',
-    pan: 'Pan',
-    middleMouse: 'Middle mouse',
-    swipe: 'Swipe',
-    look: 'Look',
-    rightMouse: 'Right mouse',
-    zoom: 'Zoom',
-    mouseWheel: 'Mouse wheel',
-    pinch: 'Pinch',
-    fly: 'Fly',
-    arrowKeys: 'Arrow keys',
-    flyFaster: 'Fly faster',
-    shift: 'Shift',
-    flySlower: 'Fly slower',
-    ctrl: 'Ctrl',
-    resetCamera: 'Reset camera',
-  },
-  cameraInfo: {
-    cameraInfo: 'Camera info',
-    cameraPosition: 'Position',
-    cameraFocusPoint: 'Focus point',
-  },
-  annotationEditPane: {
-    editAnnotation: 'Edit annotation',
-    title: 'Title',
-    titleTooltip: 'A short name for this annotation',
-    description: 'Description',
-    descriptionTooltip: 'Details shown when the annotation is opened',
-    label: 'Label',
-    labelTooltip: 'Optional short label shown on the hotspot',
-  },
-};
 
 const sampleAnnotations: AnnotationProps[] = [
   {
@@ -124,7 +73,6 @@ const Template: Story<Partial<VirtualWalkthroughViewerProps>> = (args) => (
         splatSrc={DEFAULT_SPLAT_SRC}
         annotations={sampleAnnotations}
         onSaveAnnotations={action('onSaveAnnotations')}
-        strings={sampleStrings}
         editable
         showFreeFly
         skyColor={'#4286DC'}

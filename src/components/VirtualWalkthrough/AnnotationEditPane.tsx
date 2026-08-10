@@ -2,34 +2,14 @@ import React, { useCallback, useMemo } from 'react';
 
 import { Box, Fade, ThemeProvider, Tooltip, Typography, useTheme } from '@mui/material';
 
+import { useStrings } from '../../strings';
 import PhotoChooser from '../PhotoChooser';
 import Textfield from '../Textfield/Textfield';
 import { AnnotationProps } from './Annotation';
 
-export interface AnnotationEditPaneStrings {
-  editAnnotation: string;
-  title: string;
-  titleTooltip: string;
-  description: string;
-  descriptionTooltip: string;
-  label: string;
-  labelTooltip: string;
-  images?: {
-    uploadTitle?: string;
-    uploadText?: string;
-    uploadDescription?: string;
-    chooseFileText?: string;
-    replaceFileText?: string;
-    photoSelectedText?: string;
-    existingImagesLabel?: string;
-    newImagesLabel?: string;
-  };
-}
-
 interface AnnotationEditPaneProps {
   visible: boolean;
   annotation: AnnotationProps | null;
-  strings: AnnotationEditPaneStrings;
   onUpdate: (updates: Partial<AnnotationProps>) => void;
   onTextFieldFocus?: (isFocused: boolean) => void;
   maxImages?: number;
@@ -40,13 +20,13 @@ interface AnnotationEditPaneProps {
 const AnnotationEditPane = ({
   visible,
   annotation,
-  strings,
   onUpdate,
   onTextFieldFocus,
   maxImages,
   onImagesChange,
 }: AnnotationEditPaneProps) => {
   const theme = useTheme();
+  const strings = useStrings();
 
   const showImageUpload = !!onImagesChange && !!maxImages && maxImages > 0;
 
@@ -152,12 +132,12 @@ const AnnotationEditPane = ({
           }}
         >
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-            <Typography sx={{ fontWeight: 600 }}>{strings.editAnnotation}</Typography>
+            <Typography sx={{ fontWeight: 600 }}>{strings.EDIT_ANNOTATION}</Typography>
 
-            <Tooltip title={strings.titleTooltip} placement='top' disableFocusListener>
+            <Tooltip title={strings.ANNOTATION_TITLE_TOOLTIP} placement='top' disableFocusListener>
               <Textfield
                 id='annotation-title'
-                label={strings.title}
+                label={strings.TITLE}
                 type='text'
                 value={annotation.title}
                 onChange={handleTitleChange}
@@ -168,10 +148,10 @@ const AnnotationEditPane = ({
               />
             </Tooltip>
 
-            <Tooltip title={strings.descriptionTooltip} placement='top' disableFocusListener>
+            <Tooltip title={strings.ANNOTATION_DESCRIPTION_TOOLTIP} placement='top' disableFocusListener>
               <Textfield
                 id='annotation-body'
-                label={strings.description}
+                label={strings.DESCRIPTION}
                 type='text'
                 value={annotation.bodyText ?? ''}
                 onChange={handleBodyTextChange}
@@ -181,10 +161,10 @@ const AnnotationEditPane = ({
               />
             </Tooltip>
 
-            <Tooltip title={strings.labelTooltip} placement='top' disableFocusListener>
+            <Tooltip title={strings.ANNOTATION_LABEL_TOOLTIP} placement='top' disableFocusListener>
               <Textfield
                 id='annotation-label'
-                label={strings.label}
+                label={strings.LABEL}
                 type='text'
                 value={annotation.label ?? ''}
                 onChange={handleLabelChange}
@@ -196,34 +176,32 @@ const AnnotationEditPane = ({
 
             {showImageUpload && (
               <Box>
-                {strings.images?.uploadTitle && (
-                  <Typography
-                    sx={{
-                      fontFamily: 'Inter',
-                      fontSize: '14px',
-                      fontWeight: 400,
-                      lineHeight: '20px',
-                      color: theme.palette.grey[400],
-                      marginBottom: 0.5,
-                    }}
-                  >
-                    {strings.images.uploadTitle}
-                  </Typography>
-                )}
+                <Typography
+                  sx={{
+                    fontFamily: 'Inter',
+                    fontSize: '14px',
+                    fontWeight: 400,
+                    lineHeight: '20px',
+                    color: theme.palette.grey[400],
+                    marginBottom: 0.5,
+                  }}
+                >
+                  {strings.IMAGES}
+                </Typography>
                 <ThemeProvider theme={photoChooserTheme}>
                   <PhotoChooser
-                    uploadText={strings.images?.uploadText}
-                    uploadDescription={strings.images?.uploadDescription}
-                    chooseFileText={strings.images?.chooseFileText}
-                    replaceFileText={strings.images?.replaceFileText}
-                    photoSelectedText={strings.images?.photoSelectedText}
+                    uploadText={strings.UPLOAD_FILES}
+                    uploadDescription={strings.UPLOAD_FILES_DESCRIPTION}
+                    chooseFileText={strings.CHOOSE_FILE}
+                    replaceFileText={strings.REPLACE_FILE}
+                    photoSelectedText={strings.FILE_SELECTED}
                     multipleSelection={(maxImages ?? 0) > 1}
                     maxPhotos={remainingImageSlots}
                     onPhotosChanged={(files) => onImagesChange?.(files)}
                     existingPhotos={annotation.imageUrls}
                     onExistingPhotoRemoved={handleRemoveExistingImage}
-                    existingImagesLabel={strings.images?.existingImagesLabel}
-                    newImagesLabel={strings.images?.newImagesLabel}
+                    existingImagesLabel={strings.EXISTING}
+                    newImagesLabel={strings.NEW}
                   />
                 </ThemeProvider>
               </Box>

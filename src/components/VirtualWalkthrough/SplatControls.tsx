@@ -6,33 +6,17 @@ import { Box, IconButton, useTheme } from '@mui/material';
 import useBoolean from '../../hooks/useBoolean';
 import { useCameraPosition } from '../../hooks/useCameraPosition';
 import { useXr } from '../../hooks/useXr';
+import { useStrings } from '../../strings';
 import { getRgbaFromHex } from '../../utils/color';
 import useDeviceInfo from '../../utils/useDeviceInfo';
 import Button from '../Button/Button';
 import Icon from '../Icon/Icon';
 import { AnnotationProps } from './Annotation';
-import AnnotationEditPane, { AnnotationEditPaneStrings } from './AnnotationEditPane';
-import CameraInfo, { CameraInfoStrings } from './CameraInfo';
-import ControlsInfoPane, { ControlsInfoPaneStrings } from './ControlsInfoPane';
-
-export interface SplatControlsStrings {
-  addAnnotation: string;
-  deselectAnnotation: string;
-  deleteAnnotation: string;
-  ar: string;
-  vr: string;
-  edit: string;
-  freeFly: string;
-  boundedFly: string;
-  cancel: string;
-  save: string;
-  controlsInfoPane: ControlsInfoPaneStrings;
-  cameraInfo: CameraInfoStrings;
-  annotationEditPane: AnnotationEditPaneStrings;
-}
+import AnnotationEditPane from './AnnotationEditPane';
+import CameraInfo from './CameraInfo';
+import ControlsInfoPane from './ControlsInfoPane';
 
 export interface SplatControlsProps {
-  strings: SplatControlsStrings;
   defaultCameraPosition?: [number, number, number];
   defaultCameraFocus?: [number, number, number];
   showAnnotations?: boolean;
@@ -64,7 +48,6 @@ export interface SplatControlsProps {
 }
 
 const SplatControls = ({
-  strings,
   defaultCameraPosition,
   defaultCameraFocus,
   showAnnotations,
@@ -95,6 +78,7 @@ const SplatControls = ({
   onError,
 }: SplatControlsProps) => {
   const theme = useTheme();
+  const strings = useStrings();
   const { isDesktop } = useDeviceInfo();
   const { setCamera, getCameraState } = useCameraPosition();
   const { isXrAvailable, startXr } = useXr({ onError });
@@ -174,13 +158,13 @@ const SplatControls = ({
           }}
         >
           {!hasSelectedAnnotation && onAddAnnotation && (
-            <Button label={strings.addAnnotation} onClick={onAddAnnotation} />
+            <Button label={strings.ADD_ANNOTATION} onClick={onAddAnnotation} />
           )}
           {hasSelectedAnnotation && onDeselectAnnotation && (
-            <Button label={strings.deselectAnnotation} onClick={onDeselectAnnotation} />
+            <Button label={strings.DESELECT_ANNOTATION} onClick={onDeselectAnnotation} />
           )}
           {hasSelectedAnnotation && onDeleteAnnotation && (
-            <Button label={strings.deleteAnnotation} onClick={onDeleteAnnotation} />
+            <Button label={strings.DELETE_ANNOTATION} onClick={onDeleteAnnotation} />
           )}
         </Box>
       )}
@@ -195,14 +179,14 @@ const SplatControls = ({
           pointerEvents: 'auto',
         }}
       >
-        {isXrAvailable('AR') && !isEdit && <Button label={strings.ar} onClick={() => startXr('AR')} />}
-        {isXrAvailable('VR') && !isEdit && <Button label={strings.vr} onClick={() => startXr('VR')} />}
-        {isDesktop && editable && !isEdit && onToggleEdit && <Button label={strings.edit} onClick={handleEdit} />}
+        {isXrAvailable('AR') && !isEdit && <Button label={strings.AR} onClick={() => startXr('AR')} />}
+        {isXrAvailable('VR') && !isEdit && <Button label={strings.VR} onClick={() => startXr('VR')} />}
+        {isDesktop && editable && !isEdit && onToggleEdit && <Button label={strings.EDIT} onClick={handleEdit} />}
         {isDesktop && showFreeFly && !isEdit && onToggleFreeFly && (
-          <Button label={isFreeFly ? strings.boundedFly : strings.freeFly} onClick={onToggleFreeFly} />
+          <Button label={isFreeFly ? strings.BOUNDED_FLY : strings.FREE_FLY} onClick={onToggleFreeFly} />
         )}
-        {isEdit && onCancel && <Button label={strings.cancel} onClick={onCancel} />}
-        {isEdit && onSave && <Button label={strings.save} onClick={onSave} disabled={!canSave} />}
+        {isEdit && onCancel && <Button label={strings.CANCEL} onClick={onCancel} />}
+        {isEdit && onSave && <Button label={strings.SAVE} onClick={onSave} disabled={!canSave} />}
       </Box>
       {onToggleFullScreen && (
         <IconButton
@@ -241,7 +225,6 @@ const SplatControls = ({
       <ControlsInfoPane
         visible={isInfoVisible}
         paneRef={paneRef}
-        strings={strings.controlsInfoPane}
         showAnnotations={showAnnotations}
         onToggleAnnotations={onToggleAnnotations}
         autoRotate={autoRotate}
@@ -252,13 +235,12 @@ const SplatControls = ({
         key={selectedAnnotationIndex}
         visible={isEdit === true && hasSelectedAnnotation === true}
         annotation={selectedAnnotation ?? null}
-        strings={strings.annotationEditPane}
         onUpdate={onAnnotationUpdate}
         onTextFieldFocus={onTextFieldFocus}
         maxImages={maxImagesPerAnnotation}
         onImagesChange={onImagesChange}
       />
-      {isEdit && <CameraInfo strings={strings.cameraInfo} getCameraState={getCameraState} />}
+      {isEdit && <CameraInfo getCameraState={getCameraState} />}
     </Box>
   );
 };

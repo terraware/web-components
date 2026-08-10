@@ -2,18 +2,13 @@ import React, { useEffect, useState } from 'react';
 
 import { Box, Typography, useTheme } from '@mui/material';
 
+import { useStrings } from '../../strings';
 import { getRgbaFromHex } from '../../utils/color';
 
 const UPDATE_FREQUENCY_MS = 200;
 const COORDINATE_LABELS = ['X', 'Y', 'Z'] as const;
 
 const formatNumber = (num: number) => num.toFixed(6);
-
-export interface CameraInfoStrings {
-  cameraInfo: string;
-  cameraPosition: string;
-  cameraFocusPoint: string;
-}
 
 export interface CameraState {
   position: [number, number, number];
@@ -44,12 +39,12 @@ const CoordinateDisplay = ({ label, coordinates, textColor }: CoordinateDisplayP
 );
 
 interface CameraInfoProps {
-  strings: CameraInfoStrings;
   getCameraState: () => CameraState | null;
 }
 
-const CameraInfo = ({ strings, getCameraState }: CameraInfoProps) => {
+const CameraInfo = ({ getCameraState }: CameraInfoProps) => {
   const theme = useTheme();
+  const strings = useStrings();
   const [cameraState, setCameraState] = useState<CameraState | null>(null);
 
   useEffect(() => {
@@ -86,11 +81,11 @@ const CameraInfo = ({ strings, getCameraState }: CameraInfoProps) => {
       }}
     >
       <Typography variant='body2' sx={{ color: textColor, fontWeight: 'bold', marginBottom: 1 }}>
-        {strings.cameraInfo}
+        {strings.CAMERA_INFO}
       </Typography>
       <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
-        <CoordinateDisplay label={strings.cameraPosition} coordinates={cameraState.position} textColor={textColor} />
-        <CoordinateDisplay label={strings.cameraFocusPoint} coordinates={cameraState.focus} textColor={textColor} />
+        <CoordinateDisplay label={strings.CAMERA_POSITION} coordinates={cameraState.position} textColor={textColor} />
+        <CoordinateDisplay label={strings.CAMERA_FOCUS_POINT} coordinates={cameraState.focus} textColor={textColor} />
       </Box>
     </Box>
   );
