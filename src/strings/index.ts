@@ -2,6 +2,8 @@ import { useSyncExternalStore } from 'react';
 
 import { LocaleDetails, findLocaleDetails, supportedLocales } from './locales';
 import { strings as en } from './strings-en';
+import { strings as es } from './strings-es';
+import { strings as fr } from './strings-fr';
 import { strings as gx } from './strings-gx';
 
 /**
@@ -10,7 +12,7 @@ import { strings as gx } from './strings-gx';
  */
 export type ComponentStrings = typeof en;
 
-const tables: Partial<Record<string, ComponentStrings>> = { en, gx };
+const tables: Partial<Record<string, ComponentStrings>> = { en, es, fr, gx };
 
 /**
  * Locales we have a bundled string table for. A locale can be supported -- listed in a locale

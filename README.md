@@ -124,6 +124,21 @@ yarn generate-strings
 `yarn install` does this for you, which is also how CI gets the tables. If you see TypeScript
 complaining that `./strings-en` doesn't exist, that's the step you're missing.
 
+### Translations
+
+Translations are generated with OpenAI, so you need an API key — get one from your OpenAI account
+administrator or the [OpenAI console](https://platform.openai.com/api-keys), and put it in `.env` as
+`OPENAI_API_KEY`. Then, after editing `en.csv`:
+
+```shell
+yarn translate
+```
+
+That translates the new or changed strings and regenerates the tables. If you'd rather not do it by
+hand each time, `yarn translate:start` watches `en.csv` in the background instead. Editing a
+translation directly in `es.csv` or `fr.csv` is fine too; autotranslate only touches strings whose
+English text has changed.
+
 ## Generating assets from svgs
 
 - Copy svgs to `./assets`
