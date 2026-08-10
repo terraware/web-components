@@ -49,6 +49,18 @@ steps:
           compressed: 'dist.tgz'
     command: .buildkite/scripts/build-and-test.sh
 
+  # Previews are opt-in; deploy-vercel.sh checks the PR for the "Vercel preview" label.
+  - label: ':vercel: Deploy Vercel preview'
+    key: 'vercel-preview'
+    depends_on: 'build-and-test'
+    if: "build.branch != 'main' && build.tag == null"
+    soft_fail: true
+    plugins:
+      - *shallow-clone
+      - *load-secrets
+      - *cache-node-modules
+    command: .buildkite/scripts/deploy-vercel.sh
+
   - label: ':npm: Publish npm package'
     key: 'publish-npm'
     depends_on: 'build-and-test'
