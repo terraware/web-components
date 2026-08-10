@@ -45,8 +45,8 @@ function isEmptyValue(value?: string): boolean {
 }
 
 function descendingNumComparator<T>(a: T, b: T, orderBy: keyof T): number | null {
-  const aNumValue = Number((a[orderBy] ?? '0.0') as string);
-  const bNumValue = Number((b[orderBy] ?? '0.0') as string);
+  const aNumValue = Number(a[orderBy] ?? '0.0');
+  const bNumValue = Number(b[orderBy] ?? '0.0');
 
   if (!isNaN(aNumValue) && !isNaN(bNumValue)) {
     return bNumValue - aNumValue;

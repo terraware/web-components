@@ -1,8 +1,10 @@
 # Web components
 
-This is the web app components package library for the [Terraware](https://terraware.io/) application from [Terraformation](https://terraformation.com/).
+This is the web app components package library for the [Terraware](https://terraware.io/) application
+from [Terraformation](https://terraformation.com/).
 
-This package primarily provides UI components for reuse in the [web app repo](https://github.com/terraware/terraware-web).
+This package primarily provides UI components for reuse in
+the [web app repo](https://github.com/terraware/terraware-web).
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
@@ -10,15 +12,19 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 If you're not a Terraformation employee, thanks for checking this repo out!
 
-We're offering this project as Apache-licensed open source in the interest of sharing our technology with the world and being transparent about our work. Our mission is to accelerate global native forest restoration, and we believe we'll get there faster by sharing what we do.
+We're offering this project as Apache-licensed open source in the interest of sharing our technology with the world and
+being transparent about our work. Our mission is to accelerate global native forest restoration, and we believe we'll
+get there faster by sharing what we do.
 
-For the moment, we're not asking for code contributions from the community. (Check our [careers page](https://www.terraformation.com/about/careers) if you're itching to work on this code!)
+For the moment, we're not asking for code contributions from the community. (Check
+our [careers page](https://www.terraformation.com/about/careers) if you're itching to work on this code!)
 
-You may see references to some private repositories in the documentation. We're working toward opening more of our code, but not everything is ready yet.
+You may see references to some private repositories in the documentation. We're working toward opening more of our code,
+but not everything is ready yet.
 
 ## Requirements
 
-**Make sure you're using Node 20**
+**Make sure you're using Node 24**
 
 With `nvm`:
 
@@ -56,7 +62,8 @@ In the project directory, you can run:
 
 Launches the test runner in the interactive watch mode.
 
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more
+information.
 
 ### `yarn build`
 
@@ -74,11 +81,16 @@ See the section about [deployment](https://facebook.github.io/create-react-app/d
 
 **Note: this is a one-way operation. Once you `eject`, you can’t go back!**
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will
+remove the single build dependency from your project.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right
+into your project so you have full control over them. All of the commands except `eject` will still work, but they will
+point to the copied scripts so you can tweak them. At this point you’re on your own.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you
+shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t
+customize it when you are ready for it.
 
 ## Run Linter
 

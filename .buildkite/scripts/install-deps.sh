@@ -5,7 +5,7 @@
 
 set -euo pipefail
 
-NODE_VERSION=20
+NODE_VERSION=24
 YQ_VERSION=4.45.4
 
 install_node() {
