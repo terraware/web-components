@@ -2,17 +2,11 @@ import React from 'react';
 
 import { Story } from '@storybook/react';
 
-import CameraInfo, { CameraInfoStrings, CameraState } from '../components/VirtualWalkthrough/CameraInfo';
+import CameraInfo, { CameraState } from '../components/VirtualWalkthrough/CameraInfo';
 
 export default {
   title: 'CameraInfo',
   component: CameraInfo,
-};
-
-const sampleStrings: CameraInfoStrings = {
-  cameraInfo: 'Camera info',
-  cameraPosition: 'Position',
-  cameraFocusPoint: 'Focus point',
 };
 
 // A static camera state stands in for the live PlayCanvas state that
@@ -35,7 +29,7 @@ const Template: Story<Partial<React.ComponentProps<typeof CameraInfo>>> = (args)
       borderRadius: 8,
     }}
   >
-    <CameraInfo strings={sampleStrings} getCameraState={() => sampleCameraState} {...args} />
+    <CameraInfo getCameraState={() => sampleCameraState} {...args} />
   </div>
 );
 

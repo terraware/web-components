@@ -2,34 +2,11 @@ import React, { useCallback } from 'react';
 
 import { Box, Checkbox, Divider, Fade, Typography, useTheme } from '@mui/material';
 
-export interface ControlsInfoPaneStrings {
-  controls: string;
-  annotations: string;
-  autoRotate: string;
-  orbit: string;
-  leftMouse: string;
-  touchDrag: string;
-  pan: string;
-  middleMouse: string;
-  swipe: string;
-  look: string;
-  rightMouse: string;
-  zoom: string;
-  mouseWheel: string;
-  pinch: string;
-  fly: string;
-  arrowKeys: string;
-  flyFaster: string;
-  shift: string;
-  flySlower: string;
-  ctrl: string;
-  resetCamera: string;
-}
+import { useStrings } from '../../strings';
 
 interface ControlsInfoPaneProps {
   visible: boolean;
   paneRef: React.RefObject<HTMLDivElement | null>;
-  strings: ControlsInfoPaneStrings;
   showAnnotations?: boolean;
   onToggleAnnotations?: (show: boolean) => void;
   autoRotate?: boolean;
@@ -40,7 +17,6 @@ interface ControlsInfoPaneProps {
 const ControlsInfoPane = ({
   visible,
   paneRef,
-  strings,
   showAnnotations,
   onToggleAnnotations,
   autoRotate,
@@ -48,6 +24,7 @@ const ControlsInfoPane = ({
   isFullScreen = false,
 }: ControlsInfoPaneProps) => {
   const theme = useTheme();
+  const strings = useStrings();
 
   const handleAnnotationsChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -108,10 +85,10 @@ const ControlsInfoPane = ({
           }}
         >
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
-            <Typography sx={{ fontWeight: 600 }}>{strings.controls}</Typography>
+            <Typography sx={{ fontWeight: 600 }}>{strings.CONTROLS}</Typography>
 
             <Box sx={controlRowSx}>
-              <Typography>{strings.annotations}</Typography>
+              <Typography>{strings.ANNOTATIONS}</Typography>
               <Checkbox
                 checked={showAnnotations ?? true}
                 onChange={handleAnnotationsChange}
@@ -122,7 +99,7 @@ const ControlsInfoPane = ({
             <Divider sx={dividerSx} />
 
             <Box sx={controlRowSx}>
-              <Typography>{strings.autoRotate}</Typography>
+              <Typography>{strings.AUTO_ROTATE}</Typography>
               <Checkbox
                 checked={autoRotate ?? true}
                 onChange={handleAutoRotateChange}
@@ -133,68 +110,68 @@ const ControlsInfoPane = ({
             <Divider sx={dividerSx} />
 
             <Box sx={controlRowSx}>
-              <Typography>{strings.orbit}</Typography>
+              <Typography>{strings.ORBIT}</Typography>
               <Box sx={rightAlignedTextSx}>
-                <Typography>{strings.leftMouse}</Typography>
-                <Typography>{strings.touchDrag}</Typography>
+                <Typography>{strings.LEFT_MOUSE}</Typography>
+                <Typography>{strings.TOUCH_DRAG}</Typography>
               </Box>
             </Box>
 
             <Divider sx={dividerSx} />
 
             <Box sx={controlRowSx}>
-              <Typography>{strings.pan}</Typography>
+              <Typography>{strings.PAN}</Typography>
               <Box sx={rightAlignedTextSx}>
-                <Typography>{strings.middleMouse}</Typography>
-                <Typography>{strings.swipe}</Typography>
+                <Typography>{strings.MIDDLE_MOUSE}</Typography>
+                <Typography>{strings.SWIPE}</Typography>
               </Box>
             </Box>
 
             <Divider sx={dividerSx} />
 
             <Box sx={controlRowSx}>
-              <Typography>{strings.look}</Typography>
-              <Typography>{strings.rightMouse}</Typography>
+              <Typography>{strings.LOOK}</Typography>
+              <Typography>{strings.RIGHT_MOUSE}</Typography>
             </Box>
 
             <Divider sx={dividerSx} />
 
             <Box sx={controlRowSx}>
-              <Typography>{strings.zoom}</Typography>
+              <Typography>{strings.ZOOM}</Typography>
               <Box sx={rightAlignedTextSx}>
-                <Typography>{strings.mouseWheel}</Typography>
-                <Typography>{strings.pinch}</Typography>
+                <Typography>{strings.MOUSE_WHEEL}</Typography>
+                <Typography>{strings.PINCH}</Typography>
               </Box>
             </Box>
 
             <Divider sx={dividerSx} />
 
             <Box sx={controlRowSx}>
-              <Typography>{strings.fly}</Typography>
+              <Typography>{strings.FLY}</Typography>
               <Box sx={rightAlignedTextSx}>
                 <Typography>WASD</Typography>
-                <Typography>{strings.arrowKeys}</Typography>
+                <Typography>{strings.ARROW_KEYS}</Typography>
               </Box>
             </Box>
 
             <Divider sx={dividerSx} />
 
             <Box sx={controlRowSx}>
-              <Typography>{strings.flyFaster}</Typography>
-              <Typography>{strings.shift}</Typography>
+              <Typography>{strings.FLY_FASTER}</Typography>
+              <Typography>{strings.SHIFT}</Typography>
             </Box>
 
             <Divider sx={dividerSx} />
 
             <Box sx={controlRowSx}>
-              <Typography>{strings.flySlower}</Typography>
-              <Typography>{strings.ctrl}</Typography>
+              <Typography>{strings.FLY_SLOWER}</Typography>
+              <Typography>{strings.CTRL}</Typography>
             </Box>
 
             <Divider sx={dividerSx} />
 
             <Box sx={controlRowSx}>
-              <Typography>{strings.resetCamera}</Typography>
+              <Typography>{strings.RESET_CAMERA}</Typography>
               <Typography>R</Typography>
             </Box>
 
