@@ -24,6 +24,7 @@
     "@mui/x-date-pickers": "^7.22.0",
     "@playcanvas/react": "0.11.5",
     "classnames": "^2.3.2",
+    "csv-parse": "^5.5.5",
     "geojson": "^0.5.0",
     "luxon": "^3.3.0",
     "marked": "^16.2.1",
@@ -52,12 +53,14 @@
     "build-dictionary": "./style-dictionary/generate.sh",
     "bundle": "rm -rf dist && NODE_ENV=production rollup -c",
     "generate-assets": "yarn svgr --icon --title-prop --no-dimensions --typescript -d src/components/svg assets",
+    "generate-strings": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON ./scripts/generate-strings.mjs",
     "generate-types": "yarn -p typescript tsc",
     "build-dist": "yarn bundle && yarn generate-types && cp package.json dist/ && node ./scripts/patch-dist-package.mjs",
     "lint": "eslint src/",
     "license-report": "license-report --only=prod --department.value=terraware --relatedTo.value=web-components --output=html > docs/license-report.html",
     "license-report-dist": "license-report --only=prod --department.value=terraware --relatedTo.value=web-components --output=html > dist/license-report.html",
     "check-updates": "yarn build-dictionary && yarn storybook",
+    "prepare": "yarn generate-strings",
     "ts": "tsc --project ./tsconfig.json"
   },
   "eslintConfig": {

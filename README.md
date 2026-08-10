@@ -108,6 +108,22 @@ Update the `style-dictionary/generate.sh` script to download the tokens json and
 yarn build-dictionary
 ```
 
+## Strings
+
+Components read their text from the string tables in `src/strings` rather than taking it as props.
+Use `useStrings()` in a component, or `getStrings()` in code that can't hold a hook. Applications
+pick the language by calling `setLocale('es')` — until they do, everything renders in English.
+
+`src/strings/csv/en.csv` is the only file you edit by hand. The `src/strings/strings-*.ts` tables are
+generated from it and aren't checked in, so run this after editing the CSV:
+
+```shell
+yarn generate-strings
+```
+
+`yarn install` does this for you, which is also how CI gets the tables. If you see TypeScript
+complaining that `./strings-en` doesn't exist, that's the step you're missing.
+
 ## Generating assets from svgs
 
 - Copy svgs to `./assets`
