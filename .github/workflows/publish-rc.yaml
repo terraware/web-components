@@ -80,6 +80,6 @@ jobs:
 
       - name: Publish npm package
         if: env.UPDATE_NPM_PACKAGE == 'true'
-        run: cd dist && npm publish --scope @terraware
+        run: cd dist && npm publish --scope @terraware --tag rc
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_REGISTRY_AUTH_TOKEN }}
