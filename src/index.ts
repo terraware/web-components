@@ -55,6 +55,8 @@ import Table from './components/table';
 import CellRenderer, { CellDateRenderer, TableRowType } from './components/table/TableCellRenderer';
 import { SortOrder, descendingComparator, getComparator, stableSort } from './components/table/sort';
 import { EnhancedTableDetailsRow, RendererProps, TableColumnType } from './components/table/types';
+import { getLocale, getStrings, setLocale, useStrings } from './strings';
+import { findLocaleDetails, getSupportedLocales, supportedLocales } from './strings/locales';
 import theme from './theme';
 
 export type { PillListItem } from './components/PillList';
@@ -73,6 +75,8 @@ export type { Tab, TabsProps } from './components/Tabs';
 export type { ConfirmProps } from './components/Confirm';
 export type { DatePickerDateType, Props as DatePickerProps } from './components/DatePicker/DatePicker';
 export type { DateType } from './utils/date';
+export type { ComponentStrings } from './strings';
+export type { LocaleDetails } from './strings/locales';
 
 export {
   AntSwitch,
@@ -93,8 +97,12 @@ export {
   EditableTable,
   ErrorBox,
   FileChooser,
+  findLocaleDetails,
   FormBottomBar,
   getComparator,
+  getLocale,
+  getStrings,
+  getSupportedLocales,
   icons,
   Icon,
   IconTooltip,
@@ -121,9 +129,11 @@ export {
   Select,
   SelectT,
   Separator,
+  setLocale,
   Slider,
   stableSort,
   SummaryBox,
+  supportedLocales,
   Svg,
   Table,
   Tabs,
@@ -132,5 +142,6 @@ export {
   TimelineSlider,
   theme,
   Tooltip,
+  useStrings,
   ViewPhotosDialog,
 };

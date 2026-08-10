@@ -26,6 +26,9 @@ yarn-error.log*
 
 dist/*
 
+# generated strings files
+src/strings/strings-*.ts
+
 # avoid checking in creds
 .npmrc
 
