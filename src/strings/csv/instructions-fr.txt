@@ -1,0 +1,14 @@
+Here's a list of translations to use for specific terminology. Use these translations consistently.
+It is okay to change these terms to different parts of speech if needed to maintain grammatical
+correctness, but don't choose totally different words.
+
+annotation: annotation
+augmented reality (AR): réalité augmentée (RA)
+camera: caméra
+focus point: point de mise au point
+fly: voler
+hotspot: point d'annotation
+mouse: souris
+orbit: orbiter
+pan: déplacer
+virtual reality (VR): réalité virtuelle (RV)

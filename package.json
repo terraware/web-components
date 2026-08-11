@@ -61,6 +61,8 @@
     "license-report-dist": "license-report --only=prod --department.value=terraware --relatedTo.value=web-components --output=html > dist/license-report.html",
     "check-updates": "yarn build-dictionary && yarn storybook",
     "prepare": "yarn generate-strings",
+    "translate": "yarn run autotranslate && yarn generate-strings",
+    "translate:start": "yarn run autotranslate --watch",
     "ts": "tsc --project ./tsconfig.json"
   },
   "eslintConfig": {
@@ -130,6 +132,7 @@
     "globals": "^17.9.0",
     "hex-rgb": "^5.0.0",
     "license-report": "^6.5.0",
+    "llm-autotranslate": "^1.0.0",
     "mapbox-gl": "^3.13.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
