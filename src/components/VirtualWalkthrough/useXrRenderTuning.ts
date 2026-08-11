@@ -30,7 +30,11 @@ export const useXrRenderTuning = () => {
     };
 
     const handleStart = () => {
-      previous = applyGsplatTuning(app.scene.gsplat);
+      // Guards against capturing already-tuned values as the restore target if `start` ever
+      // fires again before a matching `end`.
+      if (!previous) {
+        previous = applyGsplatTuning(app.scene.gsplat);
+      }
       // Only settable on an active session, so it cannot go in the start options alongside
       // framebufferScaleFactor. A no-op when the presentation layer doesn't support it.
       xr.fixedFoveation = XR_FIXED_FOVEATION;
