@@ -15,8 +15,10 @@ const XR_TYPES: Record<XrType, string> = {
 };
 
 /**
- * Resolution the headset's framebuffer is rendered at, relative to its native scale. Splat
- * rendering in stereo is fill-rate bound, so this is the largest single lever on XR framerate.
+ * Factor PlayCanvas applies on top of the device pixel ratio to compute the headset's
+ * framebuffer resolution: `app.graphicsDevice.maxPixelRatio / window.devicePixelRatio *
+ * XR_FRAMEBUFFER_SCALE_FACTOR`. Splat rendering in stereo is fill-rate bound, so this (and
+ * `maxPixelRatio`, which also multiplies XR resolution) is the largest lever on XR framerate.
  * Read once when the session starts and fixed for its lifetime.
  */
 const XR_FRAMEBUFFER_SCALE_FACTOR = 0.7;
