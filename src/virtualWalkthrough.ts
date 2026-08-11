@@ -30,10 +30,8 @@ import { WalkthroughCamera } from './components/VirtualWalkthrough/walkthrough-c
 import { useDevicePerformance } from './hooks/useDevicePerformance';
 
 export type { AnnotationProps, AnnotationIconType } from './components/VirtualWalkthrough/Annotation';
-export type { AnnotationEditPaneStrings } from './components/VirtualWalkthrough/AnnotationEditPane';
-export type { CameraInfoStrings, CameraState } from './components/VirtualWalkthrough/CameraInfo';
-export type { ControlsInfoPaneStrings } from './components/VirtualWalkthrough/ControlsInfoPane';
-export type { SplatControlsProps, SplatControlsStrings } from './components/VirtualWalkthrough/SplatControls';
+export type { CameraState } from './components/VirtualWalkthrough/CameraInfo';
+export type { SplatControlsProps } from './components/VirtualWalkthrough/SplatControls';
 export type { BoundaryRingGeometry, BoundaryRingGeometryParams } from './components/VirtualWalkthrough/boundary-ring';
 export type { GroundPlane } from './components/VirtualWalkthrough/groundPlane';
 export type { BoundaryRingProps } from './components/VirtualWalkthrough/BoundaryRing';

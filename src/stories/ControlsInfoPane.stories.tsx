@@ -2,35 +2,11 @@ import React, { useRef } from 'react';
 
 import { Story } from '@storybook/react';
 
-import ControlsInfoPane, { ControlsInfoPaneStrings } from '../components/VirtualWalkthrough/ControlsInfoPane';
+import ControlsInfoPane from '../components/VirtualWalkthrough/ControlsInfoPane';
 
 export default {
   title: 'ControlsInfoPane',
   component: ControlsInfoPane,
-};
-
-const sampleStrings: ControlsInfoPaneStrings = {
-  controls: 'Controls',
-  annotations: 'Annotations',
-  autoRotate: 'Auto rotate',
-  orbit: 'Orbit',
-  leftMouse: 'Left mouse',
-  touchDrag: 'Touch drag',
-  pan: 'Pan',
-  middleMouse: 'Middle mouse',
-  swipe: 'Swipe',
-  look: 'Look',
-  rightMouse: 'Right mouse',
-  zoom: 'Zoom',
-  mouseWheel: 'Mouse wheel',
-  pinch: 'Pinch',
-  fly: 'Fly',
-  arrowKeys: 'Arrow keys',
-  flyFaster: 'Fly faster',
-  shift: 'Shift',
-  flySlower: 'Fly slower',
-  ctrl: 'Ctrl',
-  resetCamera: 'Reset camera',
 };
 
 // Renders the pane inside a positioned "viewer" so its absolute positioning is
@@ -50,7 +26,7 @@ const Template: Story<Partial<React.ComponentProps<typeof ControlsInfoPane>>> = 
         borderRadius: 8,
       }}
     >
-      <ControlsInfoPane visible strings={sampleStrings} paneRef={paneRef} {...args} />
+      <ControlsInfoPane visible paneRef={paneRef} {...args} />
     </div>
   );
 };
