@@ -14,6 +14,13 @@ const XR_TYPES: Record<XrType, string> = {
   AR: XRTYPE_AR,
 };
 
+/**
+ * Resolution the headset's framebuffer is rendered at, relative to its native scale. Splat
+ * rendering in stereo is fill-rate bound, so this is the largest single lever on XR framerate.
+ * Read once when the session starts and fixed for its lifetime.
+ */
+const XR_FRAMEBUFFER_SCALE_FACTOR = 0.7;
+
 export const useXr = ({ onError }: UseXrOptions = {}) => {
   const app = useApp();
   const [available, setAvailable] = useState<Record<XrType, boolean>>({ VR: false, AR: false });
@@ -64,6 +71,7 @@ export const useXr = ({ onError }: UseXrOptions = {}) => {
     (type: XrType) => {
       const camera = app.root.findComponent('camera') as CameraComponent;
       app.xr?.start(camera, XR_TYPES[type], XRSPACE_LOCALFLOOR, {
+        framebufferScaleFactor: XR_FRAMEBUFFER_SCALE_FACTOR,
         callback: (err: Error | null) => {
           if (err) {
             onError?.(err);
