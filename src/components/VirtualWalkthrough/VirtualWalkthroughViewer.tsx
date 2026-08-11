@@ -27,6 +27,7 @@ import XrGazeDwell from './XrGazeDwell';
 import XrPointerRay from './XrPointerRay';
 import { XrStartPose } from './XrStartPose';
 import { SplatFormat } from './splatFormat';
+import { useXrRenderTuning } from './useXrRenderTuning';
 import { WalkthroughCamera } from './walkthrough-camera';
 import { rayHitsInteractiveUi } from './xr-interactive-ui';
 
@@ -113,6 +114,7 @@ const VirtualWalkthroughViewer = ({
   const [viewingAnnotationIndex, setViewingAnnotationIndex] = useState(-1);
   const [viewedScreenPos, setViewedScreenPos] = useState<{ x: number; y: number; size?: number } | null>(null);
   const { isCurrentlyInXr, isCurrentlyInVr, isCurrentlyInAr } = useXr();
+  useXrRenderTuning();
 
   const sceneBoundsRadius = useMemo(() => {
     if (sceneBounds?.m !== undefined) {
