@@ -25,7 +25,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/39</span>
+                <span class='fraction'>0/40</span>
             </div>
         
             
@@ -46,7 +46,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/37</span>
+                <span class='fraction'>0/38</span>
             </div>
         
             
@@ -311,41 +311,7 @@
 <a name='L246'></a><a href='#L246'>246</a>
 <a name='L247'></a><a href='#L247'>247</a>
 <a name='L248'></a><a href='#L248'>248</a>
-<a name='L249'></a><a href='#L249'>249</a>
-<a name='L250'></a><a href='#L250'>250</a>
-<a name='L251'></a><a href='#L251'>251</a>
-<a name='L252'></a><a href='#L252'>252</a>
-<a name='L253'></a><a href='#L253'>253</a>
-<a name='L254'></a><a href='#L254'>254</a>
-<a name='L255'></a><a href='#L255'>255</a>
-<a name='L256'></a><a href='#L256'>256</a>
-<a name='L257'></a><a href='#L257'>257</a>
-<a name='L258'></a><a href='#L258'>258</a>
-<a name='L259'></a><a href='#L259'>259</a>
-<a name='L260'></a><a href='#L260'>260</a>
-<a name='L261'></a><a href='#L261'>261</a>
-<a name='L262'></a><a href='#L262'>262</a>
-<a name='L263'></a><a href='#L263'>263</a>
-<a name='L264'></a><a href='#L264'>264</a>
-<a name='L265'></a><a href='#L265'>265</a>
-<a name='L266'></a><a href='#L266'>266</a>
-<a name='L267'></a><a href='#L267'>267</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L249'></a><a href='#L249'>249</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -424,7 +390,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -528,8 +494,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -603,33 +567,17 @@ import { Box, IconButton, useTheme } from '@mui/material';
 import useBoolean from '../../hooks/useBoolean';
 import { useCameraPosition } from '../../hooks/useCameraPosition';
 import { useXr } from '../../hooks/useXr';
+import { useStrings } from '../../strings';
 import { getRgbaFromHex } from '../../utils/color';
 import useDeviceInfo from '../../utils/useDeviceInfo';
 import Button from '../Button/Button';
 import Icon from '../Icon/Icon';
 import { AnnotationProps } from './Annotation';
-import AnnotationEditPane, { AnnotationEditPaneStrings } from './AnnotationEditPane';
-import CameraInfo, { CameraInfoStrings } from './CameraInfo';
-import ControlsInfoPane, { ControlsInfoPaneStrings } from './ControlsInfoPane';
-&nbsp;
-export interface SplatControlsStrings {
-  addAnnotation: string;
-  deselectAnnotation: string;
-  deleteAnnotation: string;
-  ar: string;
-  vr: string;
-  edit: string;
-  freeFly: string;
-  boundedFly: string;
-  cancel: string;
-  save: string;
-  controlsInfoPane: ControlsInfoPaneStrings;
-  cameraInfo: CameraInfoStrings;
-  annotationEditPane: AnnotationEditPaneStrings;
-}
+import AnnotationEditPane from './AnnotationEditPane';
+import CameraInfo from './CameraInfo';
+import ControlsInfoPane from './ControlsInfoPane';
 &nbsp;
 export interface SplatControlsProps {
-  strings: SplatControlsStrings;
   defaultCameraPosition?: [number, number, number];
   defaultCameraFocus?: [number, number, number];
   showAnnotations?: boolean;
@@ -661,7 +609,6 @@ export interface SplatControlsProps {
 }
 &nbsp;
 const SplatControls = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >({</span></span>
-  strings,
   defaultCameraPosition,
   defaultCameraFocus,
   showAnnotations,
@@ -692,6 +639,7 @@ const SplatControls = <span class="cstat-no" title="statement not covered" ><spa
   onError,
 }: SplatControlsProps) =&gt; {
   const theme = <span class="cstat-no" title="statement not covered" >useTheme();</span>
+  const strings = <span class="cstat-no" title="statement not covered" >useStrings();</span>
   const { isDesktop } = <span class="cstat-no" title="statement not covered" >useDeviceInfo();</span>
   const { setCamera, getCameraState } = <span class="cstat-no" title="statement not covered" >useCameraPosition();</span>
   const { isXrAvailable, startXr } = <span class="cstat-no" title="statement not covered" >useXr({ onError });</span>
@@ -771,13 +719,13 @@ const SplatControls = <span class="cstat-no" title="statement not covered" ><spa
           }}
         &gt;
           {!hasSelectedAnnotation &amp;&amp; onAddAnnotation &amp;&amp; (
-            &lt;Button label={strings.addAnnotation} onClick={onAddAnnotation} /&gt;
+            &lt;Button label={strings.ADD_ANNOTATION} onClick={onAddAnnotation} /&gt;
           )}
           {hasSelectedAnnotation &amp;&amp; onDeselectAnnotation &amp;&amp; (
-            &lt;Button label={strings.deselectAnnotation} onClick={onDeselectAnnotation} /&gt;
+            &lt;Button label={strings.DESELECT_ANNOTATION} onClick={onDeselectAnnotation} /&gt;
           )}
           {hasSelectedAnnotation &amp;&amp; onDeleteAnnotation &amp;&amp; (
-            &lt;Button label={strings.deleteAnnotation} onClick={onDeleteAnnotation} /&gt;
+            &lt;Button label={strings.DELETE_ANNOTATION} onClick={onDeleteAnnotation} /&gt;
           )}
         &lt;/Box&gt;
       )}
@@ -792,14 +740,14 @@ const SplatControls = <span class="cstat-no" title="statement not covered" ><spa
           pointerEvents: 'auto',
         }}
       &gt;
-        {isXrAvailable('AR') &amp;&amp; !isEdit &amp;&amp; &lt;Button label={strings.ar} onClick={<span class="fstat-no" title="function not covered" >()</span> =&gt; <span class="cstat-no" title="statement not covered" >startXr('AR')}</span> /&gt;}
-        {isXrAvailable('VR') &amp;&amp; !isEdit &amp;&amp; &lt;Button label={strings.vr} onClick={<span class="fstat-no" title="function not covered" >()</span> =&gt; <span class="cstat-no" title="statement not covered" >startXr('VR')}</span> /&gt;}
-        {isDesktop &amp;&amp; editable &amp;&amp; !isEdit &amp;&amp; onToggleEdit &amp;&amp; &lt;Button label={strings.edit} onClick={handleEdit} /&gt;}
+        {isXrAvailable('AR') &amp;&amp; !isEdit &amp;&amp; &lt;Button label={strings.AR} onClick={<span class="fstat-no" title="function not covered" >()</span> =&gt; <span class="cstat-no" title="statement not covered" >startXr('AR')}</span> /&gt;}
+        {isXrAvailable('VR') &amp;&amp; !isEdit &amp;&amp; &lt;Button label={strings.VR} onClick={<span class="fstat-no" title="function not covered" >()</span> =&gt; <span class="cstat-no" title="statement not covered" >startXr('VR')}</span> /&gt;}
+        {isDesktop &amp;&amp; editable &amp;&amp; !isEdit &amp;&amp; onToggleEdit &amp;&amp; &lt;Button label={strings.EDIT} onClick={handleEdit} /&gt;}
         {isDesktop &amp;&amp; showFreeFly &amp;&amp; !isEdit &amp;&amp; onToggleFreeFly &amp;&amp; (
-          &lt;Button label={isFreeFly ? strings.boundedFly : strings.freeFly} onClick={onToggleFreeFly} /&gt;
+          &lt;Button label={isFreeFly ? strings.BOUNDED_FLY : strings.FREE_FLY} onClick={onToggleFreeFly} /&gt;
         )}
-        {isEdit &amp;&amp; onCancel &amp;&amp; &lt;Button label={strings.cancel} onClick={onCancel} /&gt;}
-        {isEdit &amp;&amp; onSave &amp;&amp; &lt;Button label={strings.save} onClick={onSave} disabled={!canSave} /&gt;}
+        {isEdit &amp;&amp; onCancel &amp;&amp; &lt;Button label={strings.CANCEL} onClick={onCancel} /&gt;}
+        {isEdit &amp;&amp; onSave &amp;&amp; &lt;Button label={strings.SAVE} onClick={onSave} disabled={!canSave} /&gt;}
       &lt;/Box&gt;
       {onToggleFullScreen &amp;&amp; (
         &lt;IconButton
@@ -838,7 +786,6 @@ const SplatControls = <span class="cstat-no" title="statement not covered" ><spa
       &lt;ControlsInfoPane
         visible={isInfoVisible}
         paneRef={paneRef}
-        strings={strings.controlsInfoPane}
         showAnnotations={showAnnotations}
         onToggleAnnotations={onToggleAnnotations}
         autoRotate={autoRotate}
@@ -849,13 +796,12 @@ const SplatControls = <span class="cstat-no" title="statement not covered" ><spa
         key={selectedAnnotationIndex}
         visible={isEdit === true &amp;&amp; hasSelectedAnnotation === true}
         annotation={selectedAnnotation ?? null}
-        strings={strings.annotationEditPane}
         onUpdate={onAnnotationUpdate}
         onTextFieldFocus={onTextFieldFocus}
         maxImages={maxImagesPerAnnotation}
         onImagesChange={onImagesChange}
       /&gt;
-      {isEdit &amp;&amp; &lt;CameraInfo strings={strings.cameraInfo} getCameraState={getCameraState} /&gt;}
+      {isEdit &amp;&amp; &lt;CameraInfo getCameraState={getCameraState} /&gt;}
     &lt;/Box&gt;
   );
 };
@@ -868,7 +814,7 @@ export default SplatControls;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-08-10T23:46:15.330Z
+                at 2026-08-11T20:50:37.994Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>

@@ -25,7 +25,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/10</span>
+                <span class='fraction'>0/11</span>
             </div>
         
             
@@ -46,7 +46,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/10</span>
+                <span class='fraction'>0/11</span>
             </div>
         
             
@@ -249,53 +249,7 @@
 <a name='L184'></a><a href='#L184'>184</a>
 <a name='L185'></a><a href='#L185'>185</a>
 <a name='L186'></a><a href='#L186'>186</a>
-<a name='L187'></a><a href='#L187'>187</a>
-<a name='L188'></a><a href='#L188'>188</a>
-<a name='L189'></a><a href='#L189'>189</a>
-<a name='L190'></a><a href='#L190'>190</a>
-<a name='L191'></a><a href='#L191'>191</a>
-<a name='L192'></a><a href='#L192'>192</a>
-<a name='L193'></a><a href='#L193'>193</a>
-<a name='L194'></a><a href='#L194'>194</a>
-<a name='L195'></a><a href='#L195'>195</a>
-<a name='L196'></a><a href='#L196'>196</a>
-<a name='L197'></a><a href='#L197'>197</a>
-<a name='L198'></a><a href='#L198'>198</a>
-<a name='L199'></a><a href='#L199'>199</a>
-<a name='L200'></a><a href='#L200'>200</a>
-<a name='L201'></a><a href='#L201'>201</a>
-<a name='L202'></a><a href='#L202'>202</a>
-<a name='L203'></a><a href='#L203'>203</a>
-<a name='L204'></a><a href='#L204'>204</a>
-<a name='L205'></a><a href='#L205'>205</a>
-<a name='L206'></a><a href='#L206'>206</a>
-<a name='L207'></a><a href='#L207'>207</a>
-<a name='L208'></a><a href='#L208'>208</a>
-<a name='L209'></a><a href='#L209'>209</a>
-<a name='L210'></a><a href='#L210'>210</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L187'></a><a href='#L187'>187</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -320,7 +274,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -485,34 +439,11 @@
 &nbsp;
 import { Box, Checkbox, Divider, Fade, Typography, useTheme } from '@mui/material';
 &nbsp;
-export interface ControlsInfoPaneStrings {
-  controls: string;
-  annotations: string;
-  autoRotate: string;
-  orbit: string;
-  leftMouse: string;
-  touchDrag: string;
-  pan: string;
-  middleMouse: string;
-  swipe: string;
-  look: string;
-  rightMouse: string;
-  zoom: string;
-  mouseWheel: string;
-  pinch: string;
-  fly: string;
-  arrowKeys: string;
-  flyFaster: string;
-  shift: string;
-  flySlower: string;
-  ctrl: string;
-  resetCamera: string;
-}
+import { useStrings } from '../../strings';
 &nbsp;
 interface ControlsInfoPaneProps {
   visible: boolean;
   paneRef: React.RefObject&lt;HTMLDivElement | null&gt;;
-  strings: ControlsInfoPaneStrings;
   showAnnotations?: boolean;
   onToggleAnnotations?: (show: boolean) =&gt; void;
   autoRotate?: boolean;
@@ -523,7 +454,6 @@ interface ControlsInfoPaneProps {
 const ControlsInfoPane = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >({</span></span>
   visible,
   paneRef,
-  strings,
   showAnnotations,
   onToggleAnnotations,
   autoRotate,
@@ -531,6 +461,7 @@ const ControlsInfoPane = <span class="cstat-no" title="statement not covered" ><
   isFullScreen = <span class="branch-0 cbranch-no" title="branch not covered" >false,</span>
 }: ControlsInfoPaneProps) =&gt; {
   const theme = <span class="cstat-no" title="statement not covered" >useTheme();</span>
+  const strings = <span class="cstat-no" title="statement not covered" >useStrings();</span>
 &nbsp;
   const handleAnnotationsChange = <span class="cstat-no" title="statement not covered" >useCallback(</span>
 <span class="fstat-no" title="function not covered" >    (e</span>: React.ChangeEvent&lt;HTMLInputElement&gt;) =&gt; {
@@ -591,10 +522,10 @@ const ControlsInfoPane = <span class="cstat-no" title="statement not covered" ><
           }}
         &gt;
           &lt;Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}&gt;
-            &lt;Typography sx={{ fontWeight: 600 }}&gt;{strings.controls}&lt;/Typography&gt;
+            &lt;Typography sx={{ fontWeight: 600 }}&gt;{strings.CONTROLS}&lt;/Typography&gt;
 &nbsp;
             &lt;Box sx={controlRowSx}&gt;
-              &lt;Typography&gt;{strings.annotations}&lt;/Typography&gt;
+              &lt;Typography&gt;{strings.ANNOTATIONS}&lt;/Typography&gt;
               &lt;Checkbox
                 checked={showAnnotations ?? true}
                 onChange={handleAnnotationsChange}
@@ -605,7 +536,7 @@ const ControlsInfoPane = <span class="cstat-no" title="statement not covered" ><
             &lt;Divider sx={dividerSx} /&gt;
 &nbsp;
             &lt;Box sx={controlRowSx}&gt;
-              &lt;Typography&gt;{strings.autoRotate}&lt;/Typography&gt;
+              &lt;Typography&gt;{strings.AUTO_ROTATE}&lt;/Typography&gt;
               &lt;Checkbox
                 checked={autoRotate ?? true}
                 onChange={handleAutoRotateChange}
@@ -616,68 +547,68 @@ const ControlsInfoPane = <span class="cstat-no" title="statement not covered" ><
             &lt;Divider sx={dividerSx} /&gt;
 &nbsp;
             &lt;Box sx={controlRowSx}&gt;
-              &lt;Typography&gt;{strings.orbit}&lt;/Typography&gt;
+              &lt;Typography&gt;{strings.ORBIT}&lt;/Typography&gt;
               &lt;Box sx={rightAlignedTextSx}&gt;
-                &lt;Typography&gt;{strings.leftMouse}&lt;/Typography&gt;
-                &lt;Typography&gt;{strings.touchDrag}&lt;/Typography&gt;
+                &lt;Typography&gt;{strings.LEFT_MOUSE}&lt;/Typography&gt;
+                &lt;Typography&gt;{strings.TOUCH_DRAG}&lt;/Typography&gt;
               &lt;/Box&gt;
             &lt;/Box&gt;
 &nbsp;
             &lt;Divider sx={dividerSx} /&gt;
 &nbsp;
             &lt;Box sx={controlRowSx}&gt;
-              &lt;Typography&gt;{strings.pan}&lt;/Typography&gt;
+              &lt;Typography&gt;{strings.PAN}&lt;/Typography&gt;
               &lt;Box sx={rightAlignedTextSx}&gt;
-                &lt;Typography&gt;{strings.middleMouse}&lt;/Typography&gt;
-                &lt;Typography&gt;{strings.swipe}&lt;/Typography&gt;
+                &lt;Typography&gt;{strings.MIDDLE_MOUSE}&lt;/Typography&gt;
+                &lt;Typography&gt;{strings.SWIPE}&lt;/Typography&gt;
               &lt;/Box&gt;
             &lt;/Box&gt;
 &nbsp;
             &lt;Divider sx={dividerSx} /&gt;
 &nbsp;
             &lt;Box sx={controlRowSx}&gt;
-              &lt;Typography&gt;{strings.look}&lt;/Typography&gt;
-              &lt;Typography&gt;{strings.rightMouse}&lt;/Typography&gt;
+              &lt;Typography&gt;{strings.LOOK}&lt;/Typography&gt;
+              &lt;Typography&gt;{strings.RIGHT_MOUSE}&lt;/Typography&gt;
             &lt;/Box&gt;
 &nbsp;
             &lt;Divider sx={dividerSx} /&gt;
 &nbsp;
             &lt;Box sx={controlRowSx}&gt;
-              &lt;Typography&gt;{strings.zoom}&lt;/Typography&gt;
+              &lt;Typography&gt;{strings.ZOOM}&lt;/Typography&gt;
               &lt;Box sx={rightAlignedTextSx}&gt;
-                &lt;Typography&gt;{strings.mouseWheel}&lt;/Typography&gt;
-                &lt;Typography&gt;{strings.pinch}&lt;/Typography&gt;
+                &lt;Typography&gt;{strings.MOUSE_WHEEL}&lt;/Typography&gt;
+                &lt;Typography&gt;{strings.PINCH}&lt;/Typography&gt;
               &lt;/Box&gt;
             &lt;/Box&gt;
 &nbsp;
             &lt;Divider sx={dividerSx} /&gt;
 &nbsp;
             &lt;Box sx={controlRowSx}&gt;
-              &lt;Typography&gt;{strings.fly}&lt;/Typography&gt;
+              &lt;Typography&gt;{strings.FLY}&lt;/Typography&gt;
               &lt;Box sx={rightAlignedTextSx}&gt;
                 &lt;Typography&gt;WASD&lt;/Typography&gt;
-                &lt;Typography&gt;{strings.arrowKeys}&lt;/Typography&gt;
+                &lt;Typography&gt;{strings.ARROW_KEYS}&lt;/Typography&gt;
               &lt;/Box&gt;
             &lt;/Box&gt;
 &nbsp;
             &lt;Divider sx={dividerSx} /&gt;
 &nbsp;
             &lt;Box sx={controlRowSx}&gt;
-              &lt;Typography&gt;{strings.flyFaster}&lt;/Typography&gt;
-              &lt;Typography&gt;{strings.shift}&lt;/Typography&gt;
+              &lt;Typography&gt;{strings.FLY_FASTER}&lt;/Typography&gt;
+              &lt;Typography&gt;{strings.SHIFT}&lt;/Typography&gt;
             &lt;/Box&gt;
 &nbsp;
             &lt;Divider sx={dividerSx} /&gt;
 &nbsp;
             &lt;Box sx={controlRowSx}&gt;
-              &lt;Typography&gt;{strings.flySlower}&lt;/Typography&gt;
-              &lt;Typography&gt;{strings.ctrl}&lt;/Typography&gt;
+              &lt;Typography&gt;{strings.FLY_SLOWER}&lt;/Typography&gt;
+              &lt;Typography&gt;{strings.CTRL}&lt;/Typography&gt;
             &lt;/Box&gt;
 &nbsp;
             &lt;Divider sx={dividerSx} /&gt;
 &nbsp;
             &lt;Box sx={controlRowSx}&gt;
-              &lt;Typography&gt;{strings.resetCamera}&lt;/Typography&gt;
+              &lt;Typography&gt;{strings.RESET_CAMERA}&lt;/Typography&gt;
               &lt;Typography&gt;R&lt;/Typography&gt;
             &lt;/Box&gt;
 &nbsp;
@@ -697,7 +628,7 @@ export default ControlsInfoPane;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-08-10T23:46:15.330Z
+                at 2026-08-11T20:50:37.994Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>

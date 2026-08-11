@@ -25,7 +25,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/23</span>
+                <span class='fraction'>0/24</span>
             </div>
         
             
@@ -46,7 +46,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/21</span>
+                <span class='fraction'>0/22</span>
             </div>
         
             
@@ -157,12 +157,8 @@
 <a name='L92'></a><a href='#L92'>92</a>
 <a name='L93'></a><a href='#L93'>93</a>
 <a name='L94'></a><a href='#L94'>94</a>
-<a name='L95'></a><a href='#L95'>95</a>
-<a name='L96'></a><a href='#L96'>96</a>
-<a name='L97'></a><a href='#L97'>97</a>
-<a name='L98'></a><a href='#L98'>98</a>
-<a name='L99'></a><a href='#L99'>99</a>
-<a name='L100'></a><a href='#L100'>100</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L95'></a><a href='#L95'>95</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -172,12 +168,6 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -211,7 +201,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -265,18 +255,13 @@
 &nbsp;
 import { Box, Typography, useTheme } from '@mui/material';
 &nbsp;
+import { useStrings } from '../../strings';
 import { getRgbaFromHex } from '../../utils/color';
 &nbsp;
 const UPDATE_FREQUENCY_MS = <span class="cstat-no" title="statement not covered" >200;</span>
 const COORDINATE_LABELS = <span class="cstat-no" title="statement not covered" >['X', 'Y', 'Z'] as const;</span>
 &nbsp;
 const formatNumber = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >(n</span>um: number) =&gt; <span class="cstat-no" title="statement not covered" >num.toFixed(6);</span></span>
-&nbsp;
-export interface CameraInfoStrings {
-  cameraInfo: string;
-  cameraPosition: string;
-  cameraFocusPoint: string;
-}
 &nbsp;
 export interface CameraState {
   position: [number, number, number];
@@ -307,12 +292,12 @@ const CoordinateDisplay = <span class="cstat-no" title="statement not covered" >
 );
 &nbsp;
 interface CameraInfoProps {
-  strings: CameraInfoStrings;
   getCameraState: () =&gt; CameraState | null;
 }
 &nbsp;
-const CameraInfo = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >({</span> strings, getCameraState }: CameraInfoProps) =&gt; {</span>
+const CameraInfo = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >({</span> getCameraState }: CameraInfoProps) =&gt; {</span>
   const theme = <span class="cstat-no" title="statement not covered" >useTheme();</span>
+  const strings = <span class="cstat-no" title="statement not covered" >useStrings();</span>
   const [cameraState, setCameraState] = <span class="cstat-no" title="statement not covered" >useState&lt;CameraState | null&gt;(null);</span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >  useEffect(<span class="fstat-no" title="function not covered" >()</span> =&gt; {</span>
@@ -349,11 +334,11 @@ const CameraInfo = <span class="cstat-no" title="statement not covered" ><span c
       }}
     &gt;
       &lt;Typography variant='body2' sx={{ color: textColor, fontWeight: 'bold', marginBottom: 1 }}&gt;
-        {strings.cameraInfo}
+        {strings.CAMERA_INFO}
       &lt;/Typography&gt;
       &lt;Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}&gt;
-        &lt;CoordinateDisplay label={strings.cameraPosition} coordinates={cameraState.position} textColor={textColor} /&gt;
-        &lt;CoordinateDisplay label={strings.cameraFocusPoint} coordinates={cameraState.focus} textColor={textColor} /&gt;
+        &lt;CoordinateDisplay label={strings.CAMERA_POSITION} coordinates={cameraState.position} textColor={textColor} /&gt;
+        &lt;CoordinateDisplay label={strings.CAMERA_FOCUS_POINT} coordinates={cameraState.focus} textColor={textColor} /&gt;
       &lt;/Box&gt;
     &lt;/Box&gt;
   );
@@ -367,7 +352,7 @@ export default CameraInfo;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-08-10T23:46:15.330Z
+                at 2026-08-11T20:50:37.994Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>
