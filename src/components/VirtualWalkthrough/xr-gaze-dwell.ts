@@ -11,7 +11,7 @@ import {
   XRTYPE_VR,
 } from 'playcanvas';
 
-import { HOTSPOT_HALF_EXTENT, collectAnnotationHitCandidates } from './xr-annotation-candidates';
+import { HOTSPOT_HALF_EXTENT, createAnnotationCandidateBuffer } from './xr-annotation-candidates';
 import { nearestAnnotationHit } from './xr-annotation-targeting';
 import { DwellState, INITIAL_DWELL_STATE, advanceDwell } from './xr-gaze-dwell-state';
 import { pieShaderProgress } from './xr-progress-pie';
@@ -36,6 +36,7 @@ export class XrGazeDwell extends Script {
   activeIndex = -1;
 
   private _dwell: DwellState = INITIAL_DWELL_STATE;
+  private _candidates = createAnnotationCandidateBuffer();
 
   private _pieEntity?: Entity;
   private _pieMaterial?: ShaderMaterial;
@@ -112,10 +113,7 @@ export class XrGazeDwell extends Script {
       return;
     }
 
-    const activeName = `annotation-${this.activeIndex}`;
-    const candidates = collectAnnotationHitCandidates(this.app, GAZE_HIT_RADIUS_PAD).filter(
-      (candidate) => candidate.entity.name !== activeName
-    );
+    const candidates = this._candidates.collect(this.app, GAZE_HIT_RADIUS_PAD, `annotation-${this.activeIndex}`);
     this._headRot.transformVector(LOCAL_FORWARD, this._forward);
     const target = nearestAnnotationHit(this._headPos, this._forward, candidates);
 
