@@ -196,8 +196,6 @@ type BoundaryWallNavigation = { clampDistance: number; enabled?: boolean };
  *
  * center / radius / groundPlane / baseY are set imperatively by the BoundaryWall component (see
  * BoundaryWall.tsx for why they are not reactive Script props), which calls `rebuild()` afterwards.
- * All of them are world-space: this entity is deliberately mounted outside `content-root`, which
- * carries the scene's scaleFactor.
  */
 export class BoundaryWallScript extends Script {
   static scriptName = 'boundaryWall';

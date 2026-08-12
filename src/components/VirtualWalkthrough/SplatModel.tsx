@@ -19,6 +19,11 @@ export interface SplatModelProps {
    */
   splatFormat?: SplatFormat;
   rotation?: [number, number, number];
+  /**
+   * Scale applied to the splat entity. Splat models come out of reconstruction in their own
+   * arbitrary units, so this is what converts them world units.
+   */
+  scaleFactor?: number;
   cropAabbMin?: [number, number, number];
   cropAabbMax?: [number, number, number];
   cropEdgeScaleFactor?: number;
@@ -32,6 +37,7 @@ const SplatModel = ({
   splatSrc,
   splatFormat,
   rotation,
+  scaleFactor = 1,
   cropAabbMin,
   cropAabbMax,
   cropEdgeScaleFactor,
@@ -60,7 +66,7 @@ const SplatModel = ({
   }
 
   return (
-    <Entity name='splat' rotation={rotation}>
+    <Entity name='splat' rotation={rotation} scale={[scaleFactor, scaleFactor, scaleFactor]}>
       <GSplat asset={asset} unified />
       {(cropAabbMin || cropAabbMax) &&
         (cropFade ? (
