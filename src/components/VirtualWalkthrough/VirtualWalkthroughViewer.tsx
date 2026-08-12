@@ -530,6 +530,7 @@ const VirtualWalkthroughViewer = ({
         isFreeFly={isFreeFly}
         onToggleFreeFly={handleToggleFreeFly}
         showFreeFly={showFreeFly}
+        onError={reportXrError}
       />
 
       <AnnotationPanel
