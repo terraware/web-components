@@ -1,16 +1,11 @@
 import {
-  ADDRESS_CLAMP_TO_EDGE,
-  BLEND_NORMAL,
-  CULLFACE_NONE,
-  Color,
   Entity,
-  FILTER_LINEAR,
   LAYERID_IMMEDIATE,
   Mesh,
   MeshInstance,
   Quat,
   Script,
-  StandardMaterial,
+  ShaderMaterial,
   Texture,
   Vec3,
   XRTYPE_VR,
@@ -19,7 +14,8 @@ import {
 import { HOTSPOT_HALF_EXTENT, collectAnnotationHitCandidates } from './xr-annotation-candidates';
 import { nearestAnnotationHit } from './xr-annotation-targeting';
 import { DwellState, INITIAL_DWELL_STATE, advanceDwell } from './xr-gaze-dwell-state';
-import { drawProgressPie } from './xr-progress-pie';
+import { pieShaderProgress } from './xr-progress-pie';
+import { createProgressPieMaterial, emptyMaskTexture, progressPieQuadMesh } from './xr-progress-pie-material';
 
 /** Multiplier on the hotspot's world radius for gaze targeting. */
 const GAZE_HIT_RADIUS_PAD = 5;
@@ -29,9 +25,6 @@ const DWELL_SECONDS = 1.25;
 
 /** Progress-pie quad radius as a multiple of the hotspot's rendered half-extent (covers the hotspot). */
 const PIE_RADIUS_SCALE = 1.25;
-
-/** Progress-pie texture resolution. */
-const PIE_TEXTURE_SIZE = 128;
 
 const LOCAL_FORWARD = new Vec3(0, 0, -1);
 
@@ -45,11 +38,9 @@ export class XrGazeDwell extends Script {
   private _dwell: DwellState = INITIAL_DWELL_STATE;
 
   private _pieEntity?: Entity;
-  private _pieCanvas?: HTMLCanvasElement;
-  private _pieTexture?: Texture;
-  private _pieMaterial?: StandardMaterial;
+  private _pieMaterial?: ShaderMaterial;
   private _pieMesh?: Mesh;
-  private _drawnProgress = -1;
+  private _pieMask?: Texture;
 
   private _headPos = new Vec3();
   private _headRot = new Quat();
@@ -60,37 +51,14 @@ export class XrGazeDwell extends Script {
   private _isVrActive = () => this.app.xr?.active === true && this.app.xr?.type === XRTYPE_VR;
 
   initialize() {
-    this._pieCanvas = document.createElement('canvas');
-    this._pieCanvas.width = PIE_TEXTURE_SIZE;
-    this._pieCanvas.height = PIE_TEXTURE_SIZE;
-
-    this._pieTexture = new Texture(this.app.graphicsDevice, {
-      name: 'xr-gaze-dwell-pie',
-      width: PIE_TEXTURE_SIZE,
-      height: PIE_TEXTURE_SIZE,
-      addressU: ADDRESS_CLAMP_TO_EDGE,
-      addressV: ADDRESS_CLAMP_TO_EDGE,
-      minFilter: FILTER_LINEAR,
-      magFilter: FILTER_LINEAR,
-      mipmaps: true,
+    this._pieMask = emptyMaskTexture(this.app.graphicsDevice);
+    this._pieMaterial = createProgressPieMaterial({
+      uniqueName: 'xr-gaze-dwell-pie',
+      maskMap: this._pieMask,
     });
-    this._pieTexture.setSource(this._pieCanvas);
 
-    const material = new StandardMaterial();
-    material.useLighting = false;
-    material.emissive = new Color(1, 1, 1);
-    material.emissiveMap = this._pieTexture;
-    material.opacityMap = this._pieTexture;
-    material.opacityMapChannel = 'a';
-    material.blendType = BLEND_NORMAL;
-    material.depthTest = false;
-    material.depthWrite = false;
-    material.cull = CULLFACE_NONE;
-    material.update();
-    this._pieMaterial = material;
-
-    this._pieMesh = this._createQuad();
-    const meshInstance = new MeshInstance(this._pieMesh, material);
+    this._pieMesh = progressPieQuadMesh(this.app.graphicsDevice, HOTSPOT_HALF_EXTENT);
+    const meshInstance = new MeshInstance(this._pieMesh, this._pieMaterial);
 
     this._pieEntity = new Entity('xr-gaze-dwell-pie');
     this._pieEntity.addComponent('render', { meshInstances: [meshInstance], layers: [LAYERID_IMMEDIATE] });
@@ -98,28 +66,47 @@ export class XrGazeDwell extends Script {
     this.entity.addChild(this._pieEntity);
   }
 
-  private _createQuad(): Mesh {
-    const h = HOTSPOT_HALF_EXTENT;
-    const mesh = new Mesh(this.app.graphicsDevice);
-    mesh.setPositions([-h, -h, 0, h, -h, 0, h, h, 0, -h, h, 0]);
-    mesh.setNormals([0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1]);
-    mesh.setUvs(0, [0, 1, 1, 1, 1, 0, 0, 0]);
-    mesh.setIndices([0, 1, 2, 0, 2, 3]);
-    mesh.update();
+  update(dt: number) {
+    if (!this._pieEntity || !this._pieMaterial) {
+      return;
+    }
+    if (!this._isVrActive() || !this._trackHead()) {
+      this._dwell = INITIAL_DWELL_STATE;
+      this._pieEntity.enabled = false;
 
-    return mesh;
-  }
-
-  /** Redraws the pie fill for the given dwell progress (0..1) onto the texture canvas. */
-  private _drawPie(progress: number) {
-    const ctx = this._pieCanvas?.getContext('2d');
-    if (!ctx) {
       return;
     }
 
-    ctx.clearRect(0, 0, PIE_TEXTURE_SIZE, PIE_TEXTURE_SIZE);
-    drawProgressPie(ctx, PIE_TEXTURE_SIZE, progress);
-    this._pieTexture?.upload();
+    // Enabled for the whole session rather than only while a sweep runs. A mesh instance compiles
+    // its shader variant the first time it is drawn, and that variant is cached against the camera
+    // it was drawn for, so the quad has to be drawn by the XR camera to be of any use. Holding it
+    // enabled from the first XR frame puts the compile in the session-start transition instead of on
+    // the frame a pie first appears. At zero progress every fragment discards, so it costs nothing
+    // visible in between.
+    this._pieEntity.enabled = true;
+
+    const activeName = `annotation-${this.activeIndex}`;
+    const candidates = collectAnnotationHitCandidates(this.app, GAZE_HIT_RADIUS_PAD).filter(
+      (candidate) => candidate.entity.name !== activeName
+    );
+    this._headRot.transformVector(LOCAL_FORWARD, this._forward);
+    const target = nearestAnnotationHit(this._headPos, this._forward, candidates);
+
+    const result = advanceDwell(this._dwell, target, dt, DWELL_SECONDS);
+    this._dwell = result.state;
+
+    const progress = pieShaderProgress(result.progress);
+    this._pieMaterial.setParameter('uProgress', progress);
+    if (progress > 0 && target !== null) {
+      this._placePie(candidates[target].entity);
+    }
+
+    if (result.justOpened && target !== null) {
+      const { entity, script } = candidates[target];
+      const camera = this.app.root.findByName('camera') as any;
+      const screen = camera?.camera?.worldToScreen(entity.getPosition());
+      script.onVrOpenCallback(screen?.x ?? 0, screen?.y ?? 0);
+    }
   }
 
   private _trackHead(): boolean {
@@ -138,65 +125,19 @@ export class XrGazeDwell extends Script {
     return true;
   }
 
-  update(dt: number) {
+  /** Sits the pie on the hotspot, square to the head. */
+  private _placePie(entity: any) {
     if (!this._pieEntity) {
       return;
-    }
-    if (!this._isVrActive() || !this._trackHead()) {
-      this._dwell = INITIAL_DWELL_STATE;
-      this._hidePie();
-
-      return;
-    }
-
-    const activeName = `annotation-${this.activeIndex}`;
-    const candidates = collectAnnotationHitCandidates(this.app, GAZE_HIT_RADIUS_PAD).filter(
-      (candidate) => candidate.entity.name !== activeName
-    );
-    this._headRot.transformVector(LOCAL_FORWARD, this._forward);
-    const target = nearestAnnotationHit(this._headPos, this._forward, candidates);
-
-    const result = advanceDwell(this._dwell, target, dt, DWELL_SECONDS);
-    this._dwell = result.state;
-
-    if (target !== null && result.progress > 0 && result.progress < 1) {
-      this._showPie(candidates[target].entity, result.progress);
-    } else {
-      this._hidePie();
-    }
-
-    if (result.justOpened && target !== null) {
-      const { entity, script } = candidates[target];
-      const camera = this.app.root.findByName('camera') as any;
-      const screen = camera?.camera?.worldToScreen(entity.getPosition());
-      script.onVrOpenCallback(screen?.x ?? 0, screen?.y ?? 0);
-    }
-  }
-
-  private _showPie(entity: any, progress: number) {
-    if (!this._pieEntity) {
-      return;
-    }
-    if (Math.abs(progress - this._drawnProgress) > 0.001) {
-      this._drawnProgress = progress;
-      this._drawPie(progress);
     }
 
     // The unit quad has half-extent HOTSPOT_HALF_EXTENT, so scale it to reach the desired world size.
     entity.getWorldTransform().getScale(this._scratchScale);
     const scale = this._scratchScale.x * PIE_RADIUS_SCALE;
 
-    this._pieEntity.enabled = true;
     this._pieEntity.setLocalScale(scale, scale, scale);
     this._pieEntity.setPosition(entity.getPosition());
     this._pieEntity.setRotation(this._headRot);
-  }
-
-  private _hidePie() {
-    if (this._pieEntity && this._pieEntity.enabled) {
-      this._pieEntity.enabled = false;
-      this._drawnProgress = -1;
-    }
   }
 
   destroy() {
@@ -209,9 +150,9 @@ export class XrGazeDwell extends Script {
     }
     this._pieMesh?.destroy();
     this._pieMaterial?.destroy();
-    this._pieTexture?.destroy();
+    this._pieMask?.destroy();
     this._pieMesh = undefined;
     this._pieMaterial = undefined;
-    this._pieTexture = undefined;
+    this._pieMask = undefined;
   }
 }

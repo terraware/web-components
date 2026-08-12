@@ -1,4 +1,4 @@
-import { drawProgressPie } from './xr-progress-pie';
+import { drawProgressPie, pieShaderProgress } from './xr-progress-pie';
 
 const TRACK_FILL = 'rgba(255, 255, 255, 0.18)';
 const WEDGE_FILL = 'rgba(64, 200, 255, 0.85)';
@@ -63,5 +63,19 @@ describe('drawProgressPie', () => {
     drawProgressPie(ctx, 256, 0);
 
     expect(arcs[0].radius).toBeCloseTo(128 * 0.92);
+  });
+});
+
+describe('pieShaderProgress', () => {
+  it('passes an in-flight progress through unchanged', () => {
+    expect(pieShaderProgress(0.4)).toBeCloseTo(0.4);
+  });
+
+  it('hides the pie before any progress has accumulated', () => {
+    expect(pieShaderProgress(0)).toBe(0);
+  });
+
+  it('hides the pie once progress completes', () => {
+    expect(pieShaderProgress(1)).toBe(0);
   });
 });
