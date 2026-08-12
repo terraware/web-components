@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 
 import { action } from '@storybook/addon-actions';
 import { Story } from '@storybook/react';
@@ -9,6 +9,7 @@ import Application from '../components/VirtualWalkthrough/Application';
 import VirtualWalkthroughViewer, {
   VirtualWalkthroughViewerProps,
 } from '../components/VirtualWalkthrough/VirtualWalkthroughViewer';
+import { useXr } from '../hooks/useXr';
 
 export default {
   title: 'VirtualWalkthroughViewer',
@@ -104,36 +105,61 @@ const Template: Story<Partial<VirtualWalkthroughViewerProps>> = (args) => (
 
 export const Default = Template.bind({});
 
+// The XR manager is only reachable from inside the PlayCanvas <Application>, which
+// the story itself sits outside of. This sibling of the viewer reports the session
+// ending so the story can take the viewer back down.
+const XrExitReporter = ({ onExit }: { onExit: () => void }) => {
+  const { isCurrentlyInXr } = useXr();
+  const wasInXr = useRef(false);
+
+  useEffect(() => {
+    if (wasInXr.current && !isCurrentlyInXr) {
+      onExit();
+    }
+    wasInXr.current = isCurrentlyInXr;
+  }, [isCurrentlyInXr, onExit]);
+
+  return null;
+};
+
 // The scene starts empty: the button mounts the viewer with autoStartVr already
 // set, so this exercises the mount-time path rather than a prop change on a
-// viewer that is already running. Clicking again remounts it, which re-arms the
-// rising edge without tearing down the WebGL canvas around it.
+// viewer that is already running. Leaving the session unmounts it again, so the
+// story returns to the button rather than to a viewer running on the desktop.
 //
 // The click is also what makes the session possible at all — browsers only grant
 // one inside a user gesture, and selecting a story is a click in Storybook's
 // manager frame, which leaves the preview iframe without one.
 const AutoStartVrTemplate: Story<Partial<VirtualWalkthroughViewerProps>> = (args) => {
+  // Counted rather than a flag so that a click after a session failed to start
+  // remounts the viewer and tries again, instead of leaving the story stuck with
+  // a mounted viewer and a button that does nothing.
   const [mountCount, setMountCount] = useState(0);
+
+  const handleXrExit = useCallback(() => setMountCount(0), []);
 
   return (
     <div style={containerStyle}>
       <div style={{ position: 'absolute', top: 16, left: 16, zIndex: 1001 }}>
         <Button
-          label={mountCount === 0 ? 'Start in VR' : 'Restart in VR'}
+          label={mountCount === 0 ? 'Start in VR' : 'Retry in VR'}
           onClick={() => setMountCount((count) => count + 1)}
         />
       </div>
       <Application style={{ width: '100%', height: '100%' }}>
         {mountCount > 0 && (
-          <VirtualWalkthroughViewer
-            key={mountCount}
-            {...sceneArgs}
-            autoStartVr
-            // Alerted rather than logged: the console isn't reachable from inside a headset.
-            // eslint-disable-next-line no-alert
-            onXrError={(error) => window.alert(error.message)}
-            {...args}
-          />
+          <>
+            <XrExitReporter onExit={handleXrExit} />
+            <VirtualWalkthroughViewer
+              key={mountCount}
+              {...sceneArgs}
+              autoStartVr
+              // Alerted rather than logged: the console isn't reachable from inside a headset.
+              // eslint-disable-next-line no-alert
+              onXrError={(error) => window.alert(error.message)}
+              {...args}
+            />
+          </>
         )}
       </Application>
     </div>
