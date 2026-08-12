@@ -423,7 +423,11 @@ const VirtualWalkthroughViewer = ({
             annotationIndex={viewingAnnotationIndex}
           />
         )}
-        {isCurrentlyInXr && <XrGazeDwell activeIndex={viewingAnnotationIndex} />}
+        {/* Mounted for every session rather than only inside one, like the exit button above. Its
+            pie registers with a render layer when the session starts, and an entity that only comes
+            into existence once a session is already running misses that point entirely. The script
+            idles on its own while there is no session. */}
+        <XrGazeDwell activeIndex={viewingAnnotationIndex} />
         {/* Teleport is off in AR, where it can be disorienting, and while an annotation panel is open,
             so the trigger can operate the panel and click out to dismiss it. */}
         {/* Number props rather than a Vec3: @playcanvas/react's memo() comparator stops at the
