@@ -5,7 +5,7 @@ export interface AnnotationHitCandidate {
   radius: number;
 }
 
-// Reused across calls: this runs per candidate per frame, and the allocations showed up as GC churn.
+// Reused across calls: this runs per candidate per frame, where fresh vectors would be steady GC churn.
 const scratchDir = new Vec3();
 const scratchToCenter = new Vec3();
 

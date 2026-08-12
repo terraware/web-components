@@ -21,8 +21,8 @@ const scratchScale = new Vec3();
  * objects inside it are overwritten by the next `collect`, which is why each caller holds its own
  * buffer rather than sharing one.
  *
- * Positions and radii are re-read on every call rather than cached, so hotspots that move or resize
- * stay targetable. That read is cheap; it was the array and object churn around it that cost.
+ * Positions and radii are re-read on every call, so hotspots that move or resize stay targetable.
+ * That read is cheap; it is the allocation around it that a per-frame caller cannot afford.
  */
 export class AnnotationCandidateBuffer {
   private readonly _candidates: AnnotationCandidate[] = [];
