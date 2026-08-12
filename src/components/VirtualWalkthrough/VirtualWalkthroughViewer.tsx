@@ -84,6 +84,8 @@ export interface VirtualWalkthroughViewerProps {
   autoStartVr?: boolean;
   /** Called when a session can't be started, which is otherwise only visible in the console. */
   onXrError?: (error: Error) => void;
+  /** Called when an XR session ends, whether the user left it or the headset did. */
+  onXrExit?: () => void;
   annotations: AnnotationProps[];
   onSaveAnnotations: (annotations: AnnotationProps[]) => void | Promise<void>;
   editable?: boolean;
@@ -107,6 +109,7 @@ const VirtualWalkthroughViewer = ({
   splatModelProps,
   autoStartVr = false,
   onXrError,
+  onXrExit,
   annotations,
   onSaveAnnotations,
   editable = false,
@@ -159,6 +162,17 @@ const VirtualWalkthroughViewer = ({
     }
     startXr('VR');
   }, [autoStartVr, isCurrentlyInXr, isXrAvailable, startXr, reportXrError]);
+
+  const wasInXr = useRef(false);
+
+  // Edge-detected rather than reported whenever the viewer is out of XR, which would fire on mount
+  // and tell a caller a session had ended before one ever began.
+  useEffect(() => {
+    if (wasInXr.current && !isCurrentlyInXr) {
+      onXrExit?.();
+    }
+    wasInXr.current = isCurrentlyInXr;
+  }, [isCurrentlyInXr, onXrExit]);
 
   const sceneBoundsRadius = useMemo(() => {
     if (sceneBounds?.m !== undefined) {

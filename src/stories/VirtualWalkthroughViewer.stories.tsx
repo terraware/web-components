@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 
 import { action } from '@storybook/addon-actions';
 import { Story } from '@storybook/react';
@@ -9,7 +9,6 @@ import Application from '../components/VirtualWalkthrough/Application';
 import VirtualWalkthroughViewer, {
   VirtualWalkthroughViewerProps,
 } from '../components/VirtualWalkthrough/VirtualWalkthroughViewer';
-import { useXr } from '../hooks/useXr';
 
 export default {
   title: 'VirtualWalkthroughViewer',
@@ -105,23 +104,6 @@ const Template: Story<Partial<VirtualWalkthroughViewerProps>> = (args) => (
 
 export const Default = Template.bind({});
 
-// The XR manager is only reachable from inside the PlayCanvas <Application>, which
-// the story itself sits outside of. This sibling of the viewer reports the session
-// ending so the story can take the viewer back down.
-const XrExitReporter = ({ onExit }: { onExit: () => void }) => {
-  const { isCurrentlyInXr } = useXr();
-  const wasInXr = useRef(false);
-
-  useEffect(() => {
-    if (wasInXr.current && !isCurrentlyInXr) {
-      onExit();
-    }
-    wasInXr.current = isCurrentlyInXr;
-  }, [isCurrentlyInXr, onExit]);
-
-  return null;
-};
-
 // The scene starts empty: the button mounts the viewer with autoStartVr already
 // set, so this exercises the mount-time path rather than a prop change on a
 // viewer that is already running. Leaving the session unmounts it again, so the
@@ -148,18 +130,16 @@ const AutoStartVrTemplate: Story<Partial<VirtualWalkthroughViewerProps>> = (args
       </div>
       <Application style={{ width: '100%', height: '100%' }}>
         {mountCount > 0 && (
-          <>
-            <XrExitReporter onExit={handleXrExit} />
-            <VirtualWalkthroughViewer
-              key={mountCount}
-              {...sceneArgs}
-              autoStartVr
-              // Alerted rather than logged: the console isn't reachable from inside a headset.
-              // eslint-disable-next-line no-alert
-              onXrError={(error) => window.alert(error.message)}
-              {...args}
-            />
-          </>
+          <VirtualWalkthroughViewer
+            key={mountCount}
+            {...sceneArgs}
+            autoStartVr
+            // Alerted rather than logged: the console isn't reachable from inside a headset.
+            // eslint-disable-next-line no-alert
+            onXrError={(error) => window.alert(error.message)}
+            onXrExit={handleXrExit}
+            {...args}
+          />
         )}
       </Application>
     </div>
