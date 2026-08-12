@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { action } from '@storybook/addon-actions';
 import { Story } from '@storybook/react';
 
+import Button from '../components/Button/Button';
 import { AnnotationProps } from '../components/VirtualWalkthrough/Annotation';
 import Application from '../components/VirtualWalkthrough/Application';
 import VirtualWalkthroughViewer, {
@@ -62,34 +63,71 @@ const sampleAnnotations: AnnotationProps[] = [
   },
 ];
 
+const sceneArgs: VirtualWalkthroughViewerProps = {
+  splatSrc: DEFAULT_SPLAT_SRC,
+  annotations: sampleAnnotations,
+  onSaveAnnotations: action('onSaveAnnotations'),
+  editable: true,
+  showFreeFly: true,
+  skyColor: '#4286DC',
+  groundColor: '#98932E',
+  groundPlane: [
+    [-2.25, -1.5, 0],
+    [12, -1.5, -1.5],
+    [-4.5, -1.5, -15],
+  ],
+  sceneBounds: { x: 0, y: -1.5, z: -1.5, m: 15 },
+  averageCameraHeight: 3,
+  cameraPosition: [5, 0.1, -3],
+  scaleFactor: 15,
+};
+
+const containerStyle = {
+  position: 'relative' as const,
+  width: '95%',
+  height: '100%',
+  overflow: 'hidden',
+  borderRadius: 8,
+};
+
 // The viewer renders PlayCanvas scene-graph elements and calls useApp(), so it
 // must be mounted inside the PlayCanvas <Application> (which provides the WebGL
 // canvas). The story runs in Storybook's real browser, so WebGL works as it
 // does in the consuming app.
 const Template: Story<Partial<VirtualWalkthroughViewerProps>> = (args) => (
-  <div style={{ position: 'relative', width: '95%', height: '100%', overflow: 'hidden', borderRadius: 8 }}>
+  <div style={containerStyle}>
     <Application style={{ width: '100%', height: '100%' }}>
-      <VirtualWalkthroughViewer
-        splatSrc={DEFAULT_SPLAT_SRC}
-        annotations={sampleAnnotations}
-        onSaveAnnotations={action('onSaveAnnotations')}
-        editable
-        showFreeFly
-        skyColor={'#4286DC'}
-        groundColor={'#98932E'}
-        groundPlane={[
-          [-2.25, -1.5, 0],
-          [12, -1.5, -1.5],
-          [-4.5, -1.5, -15],
-        ]}
-        sceneBounds={{ x: 0, y: -1.5, z: -1.5, m: 15 }}
-        averageCameraHeight={3}
-        cameraPosition={[5, 0.1, -3]}
-        scaleFactor={15}
-        {...args}
-      />
+      <VirtualWalkthroughViewer {...sceneArgs} {...args} />
     </Application>
   </div>
 );
 
 export const Default = Template.bind({});
+
+// The scene starts empty: the button mounts the viewer with autoStartVr already
+// set, so this exercises the mount-time path rather than a prop change on a
+// viewer that is already running. Clicking again remounts it, which re-arms the
+// rising edge without tearing down the WebGL canvas around it.
+//
+// The click is also what makes the session possible at all — browsers only grant
+// one inside a user gesture, and selecting a story is a click in Storybook's
+// manager frame, which leaves the preview iframe without one.
+const AutoStartVrTemplate: Story<Partial<VirtualWalkthroughViewerProps>> = (args) => {
+  const [mountCount, setMountCount] = useState(0);
+
+  return (
+    <div style={containerStyle}>
+      <div style={{ position: 'absolute', top: 16, left: 16, zIndex: 1001 }}>
+        <Button
+          label={mountCount === 0 ? 'Start in VR' : 'Restart in VR'}
+          onClick={() => setMountCount((count) => count + 1)}
+        />
+      </div>
+      <Application style={{ width: '100%', height: '100%' }}>
+        {mountCount > 0 && <VirtualWalkthroughViewer key={mountCount} {...sceneArgs} autoStartVr {...args} />}
+      </Application>
+    </div>
+  );
+};
+
+export const AutoStartVr = AutoStartVrTemplate.bind({});

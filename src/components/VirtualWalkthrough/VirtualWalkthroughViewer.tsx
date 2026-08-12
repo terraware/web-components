@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import { useTheme } from '@mui/material';
 import { Entity } from '@playcanvas/react';
@@ -76,6 +76,12 @@ export interface VirtualWalkthroughViewerProps {
    * `rotation`, `scaleFactor` and `revealRain` — take precedence over anything set here.
    */
   splatModelProps?: Partial<SplatModelProps>;
+  /**
+   * Requests a VR session when this goes from false to true, and when the viewer mounts with it
+   * already true. Never re-requests on its own, so exiting VR leaves the user out. Browsers only
+   * grant an immersive session inside a user gesture, so the caller must raise this from a click.
+   */
+  autoStartVr?: boolean;
   annotations: AnnotationProps[];
   onSaveAnnotations: (annotations: AnnotationProps[]) => void | Promise<void>;
   editable?: boolean;
@@ -97,6 +103,7 @@ const VirtualWalkthroughViewer = ({
   averageCameraHeight = 0,
   scaleFactor = 1,
   splatModelProps,
+  autoStartVr = false,
   annotations,
   onSaveAnnotations,
   editable = false,
@@ -120,8 +127,31 @@ const VirtualWalkthroughViewer = ({
   const [viewingAnnotation, setViewingAnnotation] = useState<AnnotationProps | null>(null);
   const [viewingAnnotationIndex, setViewingAnnotationIndex] = useState(-1);
   const [viewedScreenPos, setViewedScreenPos] = useState<{ x: number; y: number; size?: number } | null>(null);
-  const { isCurrentlyInXr, isCurrentlyInVr, isCurrentlyInAr } = useXr();
+  const handleXrError = useCallback((error: Error) => {
+    console.warn('Failed to start the requested VR session', error);
+  }, []);
+  const { isCurrentlyInXr, isCurrentlyInVr, isCurrentlyInAr, isXrAvailable, startXr } = useXr({
+    onError: handleXrError,
+  });
   useXrRenderTuning();
+
+  const autoStartRequested = useRef(false);
+
+  // Edge-triggered so that ending a session doesn't pull the user straight back into one. The ref
+  // is written before the early returns, so lowering the prop re-arms the next rising edge.
+  useEffect(() => {
+    const isRisingEdge = autoStartVr && !autoStartRequested.current;
+    autoStartRequested.current = autoStartVr;
+    if (!isRisingEdge || isCurrentlyInXr) {
+      return;
+    }
+    if (!isXrAvailable('VR')) {
+      console.warn('A VR session was requested, but this device reports no immersive VR support');
+
+      return;
+    }
+    startXr('VR');
+  }, [autoStartVr, isCurrentlyInXr, isXrAvailable, startXr]);
 
   const sceneBoundsRadius = useMemo(() => {
     if (sceneBounds?.m !== undefined) {
