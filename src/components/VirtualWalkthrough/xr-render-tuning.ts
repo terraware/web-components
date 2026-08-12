@@ -31,8 +31,8 @@ export interface GsplatTuningParams {
  */
 export const XR_GSPLAT_TUNING: GsplatTuningParams = {
   radialSorting: true,
-  alphaClipForward: 0.05,
-  minPixelSize: 3,
+  alphaClipForward: 0.1,
+  minPixelSize: 1,
 };
 
 /**
