@@ -17,7 +17,7 @@ import BoundaryRing from './BoundaryRing';
 import BoundaryWall from './BoundaryWall';
 import GradientSky from './GradientSky';
 import SplatControls from './SplatControls';
-import SplatModel from './SplatModel';
+import SplatModel, { SplatModelProps } from './SplatModel';
 import { TfAnnotationManager } from './TfAnnotationManager';
 import { TfXrNavigation } from './TfXrNavigation';
 import VrAnnotationPanel from './VrAnnotationPanel';
@@ -27,6 +27,7 @@ import XrGazeDwell from './XrGazeDwell';
 import XrPointerRay from './XrPointerRay';
 import { XrStartPose } from './XrStartPose';
 import { SplatFormat } from './splatFormat';
+import { useXrRenderTuning } from './useXrRenderTuning';
 import { WalkthroughCamera } from './walkthrough-camera';
 import { rayHitsInteractiveUi } from './xr-interactive-ui';
 
@@ -69,6 +70,12 @@ export interface VirtualWalkthroughViewerProps {
    * entity alone — every other coordinate this component takes is already world-space.
    */
   scaleFactor?: number;
+  /**
+   * Overrides passed through to the splat model, for tuning things like `splatBudget` and
+   * `maxPixelRatio`. The props this component drives itself — `splatSrc`, `splatFormat`,
+   * `rotation`, `scaleFactor` and `revealRain` — take precedence over anything set here.
+   */
+  splatModelProps?: Partial<SplatModelProps>;
   annotations: AnnotationProps[];
   onSaveAnnotations: (annotations: AnnotationProps[]) => void | Promise<void>;
   editable?: boolean;
@@ -89,6 +96,7 @@ const VirtualWalkthroughViewer = ({
   groundColor,
   averageCameraHeight = 0,
   scaleFactor = 1,
+  splatModelProps,
   annotations,
   onSaveAnnotations,
   editable = false,
@@ -113,6 +121,7 @@ const VirtualWalkthroughViewer = ({
   const [viewingAnnotationIndex, setViewingAnnotationIndex] = useState(-1);
   const [viewedScreenPos, setViewedScreenPos] = useState<{ x: number; y: number; size?: number } | null>(null);
   const { isCurrentlyInXr, isCurrentlyInVr, isCurrentlyInAr } = useXr();
+  useXrRenderTuning();
 
   const sceneBoundsRadius = useMemo(() => {
     if (sceneBounds?.m !== undefined) {
@@ -317,6 +326,7 @@ const VirtualWalkthroughViewer = ({
     () => (
       <SplatModel
         key='splat'
+        {...splatModelProps}
         splatSrc={splatSrc}
         splatFormat={splatFormat}
         rotation={[-180, 0, 0]}
@@ -324,7 +334,7 @@ const VirtualWalkthroughViewer = ({
         revealRain={isHighPerformance}
       />
     ),
-    [isHighPerformance, splatSrc, splatFormat, scaleFactor]
+    [isHighPerformance, splatSrc, splatFormat, scaleFactor, splatModelProps]
   );
 
   return (
