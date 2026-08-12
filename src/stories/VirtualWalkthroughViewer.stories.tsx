@@ -106,41 +106,34 @@ export const Default = Template.bind({});
 
 // The scene starts empty: the button mounts the viewer with autoStartVr already
 // set, so this exercises the mount-time path rather than a prop change on a
-// viewer that is already running. Leaving the session unmounts it again, so the
-// story returns to the button rather than to a viewer running on the desktop.
+// viewer that is already running. Leaving the session takes the viewer back down,
+// as does failing to start one, so the story always returns to the button rather
+// than to a viewer running on the desktop.
 //
 // The click is also what makes the session possible at all — browsers only grant
 // one inside a user gesture, and selecting a story is a click in Storybook's
 // manager frame, which leaves the preview iframe without one.
 const AutoStartVrTemplate: Story<Partial<VirtualWalkthroughViewerProps>> = (args) => {
-  // Counted rather than a flag so that a click after a session failed to start
-  // remounts the viewer and tries again, instead of leaving the story stuck with
-  // a mounted viewer and a button that does nothing.
-  const [mountCount, setMountCount] = useState(0);
+  const [isMounted, setIsMounted] = useState(false);
 
-  const handleXrExit = useCallback(() => setMountCount(0), []);
+  const handleXrExit = useCallback((error?: Error) => {
+    setIsMounted(false);
+    if (error) {
+      // Alerted rather than logged: a headset gives no view of the console.
+      // eslint-disable-next-line no-alert
+      window.alert(error.message);
+    }
+  }, []);
 
   return (
     <div style={containerStyle}>
       <div style={{ position: 'absolute', top: 16, left: 16, zIndex: 1001 }}>
-        <Button
-          label={mountCount === 0 ? 'Start in VR' : 'Retry in VR'}
-          onClick={() => setMountCount((count) => count + 1)}
-        />
+        <Button label='Start in VR' onClick={() => setIsMounted(true)} />
       </div>
       <Application style={{ width: '100%', height: '100%' }}>
-        {mountCount > 0 && (
-          <VirtualWalkthroughViewer
-            key={mountCount}
-            {...sceneArgs}
-            autoStartVr
-            // Alerted rather than logged: the console isn't reachable from inside a headset.
-            // eslint-disable-next-line no-alert
-            onXrError={(error) => window.alert(error.message)}
-            onXrExit={handleXrExit}
-            {...args}
-          />
-        )}
+        {/* args first: the preview config turns every on[A-Z] prop into an action
+            spy and passes it in, which would otherwise replace the wiring below. */}
+        {isMounted && <VirtualWalkthroughViewer {...sceneArgs} {...args} autoStartVr onXrExit={handleXrExit} />}
       </Application>
     </div>
   );

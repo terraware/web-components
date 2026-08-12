@@ -82,10 +82,12 @@ export interface VirtualWalkthroughViewerProps {
    * grant an immersive session inside a user gesture, so the caller must raise this from a click.
    */
   autoStartVr?: boolean;
-  /** Called when a session can't be started, which is otherwise only visible in the console. */
-  onXrError?: (error: Error) => void;
-  /** Called when an XR session ends, whether the user left it or the headset did. */
-  onXrExit?: () => void;
+  /**
+   * Called whenever the viewer ends up out of XR: when a session ends, and when one was requested
+   * but couldn't be started, in which case the error says why. A headset gives no view of the
+   * console, so this is a caller's only account of a failure.
+   */
+  onXrExit?: (error?: Error) => void;
   annotations: AnnotationProps[];
   onSaveAnnotations: (annotations: AnnotationProps[]) => void | Promise<void>;
   editable?: boolean;
@@ -108,7 +110,6 @@ const VirtualWalkthroughViewer = ({
   scaleFactor = 1,
   splatModelProps,
   autoStartVr = false,
-  onXrError,
   onXrExit,
   annotations,
   onSaveAnnotations,
@@ -136,9 +137,9 @@ const VirtualWalkthroughViewer = ({
   const reportXrError = useCallback(
     (error: Error) => {
       console.warn(error.message, error);
-      onXrError?.(error);
+      onXrExit?.(error);
     },
-    [onXrError]
+    [onXrExit]
   );
   const { isCurrentlyInXr, isCurrentlyInVr, isCurrentlyInAr, isXrAvailable, startXr } = useXr({
     onError: reportXrError,
