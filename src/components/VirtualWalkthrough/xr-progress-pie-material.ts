@@ -1,6 +1,8 @@
 import {
+  ADDRESS_CLAMP_TO_EDGE,
   BLEND_NORMAL,
   CULLFACE_NONE,
+  FILTER_NEAREST,
   GraphicsDevice,
   Mesh,
   PIXELFORMAT_RGBA8,
@@ -119,7 +121,13 @@ export const progressPieQuadMesh = (device: GraphicsDevice, halfExtent: number):
   return mesh;
 };
 
-/** A single transparent texel, for pies that carry no static artwork of their own. */
+/**
+ * A single transparent texel, for pies that carry no static artwork of their own.
+ *
+ * The filters are set explicitly because the default minification filter samples a mipmap chain,
+ * which a single-level texture does not have. That combination is incomplete in WebGL, and what a
+ * shader reads from an incomplete texture is not something to rely on.
+ */
 export const emptyMaskTexture = (device: GraphicsDevice): Texture => {
   const texture = new Texture(device, {
     name: 'xr-progress-pie-empty-mask',
@@ -127,6 +135,10 @@ export const emptyMaskTexture = (device: GraphicsDevice): Texture => {
     height: 1,
     format: PIXELFORMAT_RGBA8,
     mipmaps: false,
+    minFilter: FILTER_NEAREST,
+    magFilter: FILTER_NEAREST,
+    addressU: ADDRESS_CLAMP_TO_EDGE,
+    addressV: ADDRESS_CLAMP_TO_EDGE,
   });
   const pixels = texture.lock();
   pixels.set([0, 0, 0, 0]);

@@ -50,6 +50,31 @@ export class XrGazeDwell extends Script {
 
   private _isVrActive = () => this.app.xr?.active === true && this.app.xr?.type === XRTYPE_VR;
 
+  /**
+   * The pie's visibility is driven from the session events rather than from `update`, because a
+   * render component only registers its mesh instances with a layer on a false-to-true transition.
+   * Flipping it opportunistically mid-frame can land that registration while the session is still
+   * assembling its layers, and because the flag then stays true the component never retries, leaving
+   * the pie silently absent for the rest of the session. Session start is a defined point where the
+   * layers exist, and the matching end event restores the transition for the next session.
+   */
+  private _onXrStart = () => {
+    this._dwell = INITIAL_DWELL_STATE;
+    this._setPieEnabled(this._isVrActive());
+  };
+
+  private _onXrEnd = () => {
+    this._dwell = INITIAL_DWELL_STATE;
+    this._pieMaterial?.setParameter('uProgress', 0);
+    this._setPieEnabled(false);
+  };
+
+  private _setPieEnabled(enabled: boolean) {
+    if (this._pieEntity) {
+      this._pieEntity.enabled = enabled;
+    }
+  }
+
   initialize() {
     this._pieMask = emptyMaskTexture(this.app.graphicsDevice);
     this._pieMaterial = createProgressPieMaterial({
@@ -70,6 +95,12 @@ export class XrGazeDwell extends Script {
     this._pieEntity.addComponent('render', { meshInstances: [meshInstance], layers: [LAYERID_IMMEDIATE] });
     this._pieEntity.enabled = false;
     this.entity.addChild(this._pieEntity);
+
+    // Both orders happen: the walkthrough can mount into a session that has already started (as it
+    // does when VR is entered from outside the canvas), or mount first and wait for one.
+    this._setPieEnabled(this._isVrActive());
+    this.app.xr?.on('start', this._onXrStart);
+    this.app.xr?.on('end', this._onXrEnd);
   }
 
   update(dt: number) {
@@ -78,18 +109,10 @@ export class XrGazeDwell extends Script {
     }
     if (!this._isVrActive() || !this._trackHead()) {
       this._dwell = INITIAL_DWELL_STATE;
-      this._pieEntity.enabled = false;
+      this._pieMaterial.setParameter('uProgress', 0);
 
       return;
     }
-
-    // Enabled for the whole session rather than only while a sweep runs. A mesh instance compiles
-    // its shader variant the first time it is drawn, and that variant is cached against the camera
-    // it was drawn for, so the quad has to be drawn by the XR camera to be of any use. Holding it
-    // enabled from the first XR frame puts the compile in the session-start transition instead of on
-    // the frame a pie first appears. At zero progress every fragment discards, so it costs nothing
-    // visible in between.
-    this._pieEntity.enabled = true;
 
     const activeName = `annotation-${this.activeIndex}`;
     const candidates = collectAnnotationHitCandidates(this.app, GAZE_HIT_RADIUS_PAD).filter(
@@ -147,6 +170,8 @@ export class XrGazeDwell extends Script {
   }
 
   destroy() {
+    this.app.xr?.off('start', this._onXrStart);
+    this.app.xr?.off('end', this._onXrEnd);
     if (this._pieEntity) {
       if (this._pieEntity.render) {
         this._pieEntity.render.meshInstances = [];
