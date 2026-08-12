@@ -124,7 +124,17 @@ const AutoStartVrTemplate: Story<Partial<VirtualWalkthroughViewerProps>> = (args
         />
       </div>
       <Application style={{ width: '100%', height: '100%' }}>
-        {mountCount > 0 && <VirtualWalkthroughViewer key={mountCount} {...sceneArgs} autoStartVr {...args} />}
+        {mountCount > 0 && (
+          <VirtualWalkthroughViewer
+            key={mountCount}
+            {...sceneArgs}
+            autoStartVr
+            // Alerted rather than logged: the console isn't reachable from inside a headset.
+            // eslint-disable-next-line no-alert
+            onXrError={(error) => window.alert(error.message)}
+            {...args}
+          />
+        )}
       </Application>
     </div>
   );

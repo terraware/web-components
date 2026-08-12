@@ -82,6 +82,8 @@ export interface VirtualWalkthroughViewerProps {
    * grant an immersive session inside a user gesture, so the caller must raise this from a click.
    */
   autoStartVr?: boolean;
+  /** Called when a session can't be started, which is otherwise only visible in the console. */
+  onXrError?: (error: Error) => void;
   annotations: AnnotationProps[];
   onSaveAnnotations: (annotations: AnnotationProps[]) => void | Promise<void>;
   editable?: boolean;
@@ -104,6 +106,7 @@ const VirtualWalkthroughViewer = ({
   scaleFactor = 1,
   splatModelProps,
   autoStartVr = false,
+  onXrError,
   annotations,
   onSaveAnnotations,
   editable = false,
@@ -127,11 +130,15 @@ const VirtualWalkthroughViewer = ({
   const [viewingAnnotation, setViewingAnnotation] = useState<AnnotationProps | null>(null);
   const [viewingAnnotationIndex, setViewingAnnotationIndex] = useState(-1);
   const [viewedScreenPos, setViewedScreenPos] = useState<{ x: number; y: number; size?: number } | null>(null);
-  const handleXrError = useCallback((error: Error) => {
-    console.warn('Failed to start the requested VR session', error);
-  }, []);
+  const reportXrError = useCallback(
+    (error: Error) => {
+      console.warn(error.message, error);
+      onXrError?.(error);
+    },
+    [onXrError]
+  );
   const { isCurrentlyInXr, isCurrentlyInVr, isCurrentlyInAr, isXrAvailable, startXr } = useXr({
-    onError: handleXrError,
+    onError: reportXrError,
   });
   useXrRenderTuning();
 
@@ -146,12 +153,12 @@ const VirtualWalkthroughViewer = ({
       return;
     }
     if (!isXrAvailable('VR')) {
-      console.warn('A VR session was requested, but this device reports no immersive VR support');
+      reportXrError(new Error('A VR session was requested, but this device reports no immersive VR support'));
 
       return;
     }
     startXr('VR');
-  }, [autoStartVr, isCurrentlyInXr, isXrAvailable, startXr]);
+  }, [autoStartVr, isCurrentlyInXr, isXrAvailable, startXr, reportXrError]);
 
   const sceneBoundsRadius = useMemo(() => {
     if (sceneBounds?.m !== undefined) {
