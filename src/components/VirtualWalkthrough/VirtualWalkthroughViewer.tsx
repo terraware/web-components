@@ -369,6 +369,7 @@ const VirtualWalkthroughViewer = ({
           script={TfXrNavigation}
           enabled={!isEdit}
           enableTeleport={!isCurrentlyInAr && !viewingAnnotation}
+          enableSnapVertical={false}
           isTeleportBlocked={isTeleportBlocked}
         />
         {!isCurrentlyInXr && (
