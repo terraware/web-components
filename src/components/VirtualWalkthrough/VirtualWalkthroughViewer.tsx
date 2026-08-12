@@ -17,7 +17,7 @@ import BoundaryRing from './BoundaryRing';
 import BoundaryWall from './BoundaryWall';
 import GradientSky from './GradientSky';
 import SplatControls from './SplatControls';
-import SplatModel from './SplatModel';
+import SplatModel, { SplatModelProps } from './SplatModel';
 import { TfAnnotationManager } from './TfAnnotationManager';
 import { TfXrNavigation } from './TfXrNavigation';
 import VrAnnotationPanel from './VrAnnotationPanel';
@@ -70,6 +70,12 @@ export interface VirtualWalkthroughViewerProps {
    * entity alone — every other coordinate this component takes is already world-space.
    */
   scaleFactor?: number;
+  /**
+   * Overrides passed through to the splat model, for tuning things like `splatBudget` and
+   * `maxPixelRatio`. The props this component drives itself — `splatSrc`, `splatFormat`,
+   * `rotation`, `scaleFactor` and `revealRain` — take precedence over anything set here.
+   */
+  splatModelProps?: Partial<SplatModelProps>;
   annotations: AnnotationProps[];
   onSaveAnnotations: (annotations: AnnotationProps[]) => void | Promise<void>;
   editable?: boolean;
@@ -90,6 +96,7 @@ const VirtualWalkthroughViewer = ({
   groundColor,
   averageCameraHeight = 0,
   scaleFactor = 1,
+  splatModelProps,
   annotations,
   onSaveAnnotations,
   editable = false,
@@ -319,6 +326,7 @@ const VirtualWalkthroughViewer = ({
     () => (
       <SplatModel
         key='splat'
+        {...splatModelProps}
         splatSrc={splatSrc}
         splatFormat={splatFormat}
         rotation={[-180, 0, 0]}
@@ -326,7 +334,7 @@ const VirtualWalkthroughViewer = ({
         revealRain={isHighPerformance}
       />
     ),
-    [isHighPerformance, splatSrc, splatFormat, scaleFactor]
+    [isHighPerformance, splatSrc, splatFormat, scaleFactor, splatModelProps]
   );
 
   return (
