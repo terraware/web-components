@@ -1,15 +1,12 @@
 import {
   ADDRESS_CLAMP_TO_EDGE,
-  BLEND_NORMAL,
-  CULLFACE_NONE,
-  Color,
   FILTER_LINEAR,
   LAYERID_IMMEDIATE,
   Mesh,
   MeshInstance,
   Quat,
   Script,
-  StandardMaterial,
+  ShaderMaterial,
   Texture,
   Vec3,
   XRTYPE_VR,
@@ -18,8 +15,10 @@ import {
 
 import { ButtonArmingLatch } from './xr-button-arming';
 import { HoldState, INITIAL_HOLD_STATE, advanceHold } from './xr-button-hold';
+import { drawExitButtonMask } from './xr-exit-button-mask';
 import { FaceButtonPressTracker, secondaryFaceButtonPressed } from './xr-face-buttons';
-import { drawProgressPie } from './xr-progress-pie';
+import { pieShaderProgress } from './xr-progress-pie';
+import { createProgressPieMaterial, progressPieQuadMesh } from './xr-progress-pie-material';
 
 /**
  * Boolean ray-sphere hit test. Treats the ray as a half-line (t >= 0) and returns true when it
@@ -39,6 +38,9 @@ export const raySphereIntersect = (origin: Vec3, direction: Vec3, center: Vec3, 
 
 const TEXTURE_SIZE = 256;
 
+/** Opacity of the button while it is not being aimed at. */
+const IDLE_OPACITY = 0.9;
+
 /** Seconds of continuous B/Y hold required to leave the session. Matches the gaze-dwell threshold. */
 const EXIT_HOLD_SECONDS = 1.25;
 
@@ -54,7 +56,7 @@ export class XrExitButton extends Script {
   /** World-space radius of the hover/hit sphere. Slightly larger than halfSize for easier targeting. */
   hitRadius = 0.15;
 
-  private _material?: StandardMaterial;
+  private _material?: ShaderMaterial;
   private _texture?: Texture;
   private _mesh?: Mesh;
   private _hovered = false;
@@ -64,9 +66,6 @@ export class XrExitButton extends Script {
   private _worldOffset = new Vec3();
   private _faceButtons = new FaceButtonPressTracker();
 
-  private _canvas?: HTMLCanvasElement;
-  private _context?: CanvasRenderingContext2D;
-  private _drawnProgress = -1;
   private _hold: HoldState = INITIAL_HOLD_STATE;
   private _arming = new ButtonArmingLatch();
 
@@ -82,10 +81,7 @@ export class XrExitButton extends Script {
     this._hovered = false;
     this._resetProgress();
     this.entity.setLocalScale(1, 1, 1);
-    if (this._material) {
-      this._material.opacity = 0.9;
-      this._material.update();
-    }
+    this._material?.setParameter('uOpacity', IDLE_OPACITY);
   };
 
   private _onSelect = (inputSource: XrInputSource) => {
@@ -106,17 +102,20 @@ export class XrExitButton extends Script {
     return raySphereIntersect(origin, direction, this.entity.getPosition(), this.hitRadius);
   }
 
-  private _createCanvas(): HTMLCanvasElement {
+  /** The button's static artwork, painted once. Only the sweep changes per frame, and that lives in
+   * the shader. */
+  private _createMaskTexture(): Texture {
     const canvas = document.createElement('canvas');
     canvas.width = TEXTURE_SIZE;
     canvas.height = TEXTURE_SIZE;
 
-    return canvas;
-  }
+    const ctx = canvas.getContext('2d');
+    if (ctx) {
+      drawExitButtonMask(ctx, TEXTURE_SIZE);
+    }
 
-  private _createTexture(canvas: HTMLCanvasElement): Texture {
     const texture = new Texture(this.app.graphicsDevice, {
-      name: 'xr-exit-button',
+      name: 'xr-exit-button-mask',
       width: TEXTURE_SIZE,
       height: TEXTURE_SIZE,
       addressU: ADDRESS_CLAMP_TO_EDGE,
@@ -130,96 +129,24 @@ export class XrExitButton extends Script {
     return texture;
   }
 
-  /**
-   * Repaints the button: dark disc, then the hold progress wedge, then the X arms on top so the
-   * glyph stays legible over the fill. The pie is skipped entirely at zero progress so the idle
-   * button doesn't wear the pie's faint track. Returns whether it painted, so callers can tell a
-   * missing context from a successful repaint.
-   */
-  private _drawButton(progress: number): boolean {
-    const ctx = this._context;
-    if (!ctx) {
-      return false;
-    }
-    const c = TEXTURE_SIZE / 2;
-
-    ctx.clearRect(0, 0, TEXTURE_SIZE, TEXTURE_SIZE);
-    ctx.fillStyle = 'rgba(20, 20, 20, 0.75)';
-    ctx.beginPath();
-    ctx.arc(c, c, c * 0.92, 0, Math.PI * 2);
-    ctx.fill();
-
-    if (progress > 0) {
-      drawProgressPie(ctx, TEXTURE_SIZE, progress);
-    }
-
-    const arm = TEXTURE_SIZE * 0.24;
-    ctx.strokeStyle = '#ffffff';
-    ctx.lineWidth = TEXTURE_SIZE * 0.09;
-    ctx.lineCap = 'round';
-    ctx.beginPath();
-    ctx.moveTo(c - arm, c - arm);
-    ctx.lineTo(c + arm, c + arm);
-    ctx.moveTo(c + arm, c - arm);
-    ctx.lineTo(c - arm, c + arm);
-    ctx.stroke();
-
-    this._texture?.upload();
-
-    return true;
-  }
-
-  /** Repaints only when the drawn wedge would visibly move. Only records the paint on success, so a
-   * missing context doesn't fool the dedupe cache into thinking a repaint already happened. */
-  private _setProgress(progress: number) {
-    if (Math.abs(progress - this._drawnProgress) <= 0.001) {
-      return;
-    }
-
-    if (this._drawButton(progress)) {
-      this._drawnProgress = progress;
-    }
-  }
-
   private _resetProgress() {
     this._hold = INITIAL_HOLD_STATE;
-    this._drawnProgress = -1;
-    this._setProgress(0);
-  }
-
-  private _createMesh(): Mesh {
-    const h = this.halfSize;
-    const mesh = new Mesh(this.app.graphicsDevice);
-    mesh.setPositions([-h, -h, 0, h, -h, 0, h, h, 0, -h, h, 0]);
-    mesh.setNormals([0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1]);
-    mesh.setUvs(0, [0, 1, 1, 1, 1, 0, 0, 0]);
-    mesh.setIndices([0, 1, 2, 0, 2, 3]);
-    mesh.update();
-
-    return mesh;
+    this._material?.setParameter('uProgress', 0);
   }
 
   initialize() {
-    this._canvas = this._createCanvas();
-    this._context = this._canvas.getContext('2d') ?? undefined;
-    this._texture = this._createTexture(this._canvas);
+    this._texture = this._createMaskTexture();
+    this._material = createProgressPieMaterial({
+      uniqueName: 'xr-exit-button',
+      maskMap: this._texture,
+      discColor: [20 / 255, 20 / 255, 20 / 255],
+      discAlpha: 0.75,
+    });
+    this._material.setParameter('uOpacity', IDLE_OPACITY);
     this._resetProgress();
 
-    const material = new StandardMaterial();
-    material.useLighting = false;
-    material.emissive = new Color(1, 1, 1);
-    material.emissiveMap = this._texture;
-    material.opacityMap = this._texture;
-    material.opacityMapChannel = 'a';
-    material.blendType = BLEND_NORMAL;
-    material.depthTest = false;
-    material.depthWrite = false;
-    material.cull = CULLFACE_NONE;
-    material.update();
-    this._material = material;
-
-    this._mesh = this._createMesh();
-    const meshInstance = new MeshInstance(this._mesh, material);
+    this._mesh = progressPieQuadMesh(this.app.graphicsDevice, this.halfSize);
+    const meshInstance = new MeshInstance(this._mesh, this._material);
 
     // Immediate layer draws after the World layer (where the splats render) so the button is never
     // composited behind them; depthTest:false keeps it on top within the layer.
@@ -264,7 +191,7 @@ export class XrExitButton extends Script {
 
     const hold = advanceHold(this._hold, holdActive, dt, EXIT_HOLD_SECONDS);
     this._hold = hold.state;
-    this._setProgress(hold.progress);
+    this._material?.setParameter('uProgress', pieShaderProgress(hold.progress));
 
     if (hold.justFired) {
       this.app.xr?.end();
@@ -276,10 +203,7 @@ export class XrExitButton extends Script {
       this._hovered = hovered;
       const scale = hovered ? 1.15 : 1;
       this.entity.setLocalScale(scale, scale, scale);
-      if (this._material) {
-        this._material.opacity = hovered ? 1 : 0.9;
-        this._material.update();
-      }
+      this._material?.setParameter('uOpacity', hovered ? 1 : IDLE_OPACITY);
     }
   }
 
@@ -325,7 +249,5 @@ export class XrExitButton extends Script {
     this._mesh = undefined;
     this._material = undefined;
     this._texture = undefined;
-    this._canvas = undefined;
-    this._context = undefined;
   }
 }
