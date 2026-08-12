@@ -12,7 +12,7 @@ import {
   Texture,
 } from 'playcanvas';
 
-/** Pie radius as a fraction of the quad's half-extent. Matches the canvas-drawn artwork it replaces. */
+/** Pie radius as a fraction of the quad's half-extent. */
 const PIE_RADIUS = 0.92;
 
 // GLSL only, for the same reason as BoundaryWallScript: @playcanvas/react's Application defaults to
@@ -33,8 +33,8 @@ const pieVertexGLSL = /* glsl */ `
 `;
 
 /**
- * Draws the progress sweep analytically from a uniform, so animating it costs one uniform write per
- * frame rather than repainting a canvas and re-uploading a texture.
+ * Draws the progress sweep analytically from `uProgress`, so animating it costs one uniform write
+ * per frame.
  *
  * `uMaskMap` carries whatever static artwork sits around the pie, baked once by the caller: red is
  * a mask for a backing disc drawn under the sweep, green a mask for a glyph drawn over it. Callers
@@ -70,7 +70,7 @@ const pieFragmentGLSL = /* glsl */ `
 
     void main(void) {
         // The quad's UVs run y-down (v = 0 along the top edge), so centring them gives a coordinate
-        // system matching the 2D canvas this replaces: +y downward, angles increasing clockwise.
+        // system with +y downward and angles increasing clockwise.
         vec2 p = uv0 * 2.0 - 1.0;
         float d = length(p);
 
@@ -157,7 +157,7 @@ export interface ProgressPieMaterialOptions {
 
 /**
  * Material for a progress pie. Everything that animates rides on the `uProgress` uniform, so a
- * running sweep never touches the canvas or the texture upload path.
+ * running sweep costs one uniform write per frame and no texture work at all.
  */
 export const createProgressPieMaterial = ({
   uniqueName,

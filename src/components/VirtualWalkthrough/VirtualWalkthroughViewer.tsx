@@ -423,10 +423,9 @@ const VirtualWalkthroughViewer = ({
             annotationIndex={viewingAnnotationIndex}
           />
         )}
-        {/* Mounted for every session rather than only inside one, like the exit button above. Its
-            pie registers with a render layer when the session starts, and an entity that only comes
-            into existence once a session is already running misses that point entirely. The script
-            idles on its own while there is no session. */}
+        {/* Mounted outside any session, like the exit button above: its pie registers with a render
+            layer on the transition into a session, which an entity created mid-session never gets.
+            The script idles on its own while there is no session. */}
         <XrGazeDwell activeIndex={viewingAnnotationIndex} />
         {/* Teleport is off in AR, where it can be disorienting, and while an annotation panel is open,
             so the trigger can operate the panel and click out to dismiss it. */}

@@ -51,12 +51,10 @@ export class XrGazeDwell extends Script {
   private _isVrActive = () => this.app.xr?.active === true && this.app.xr?.type === XRTYPE_VR;
 
   /**
-   * The pie's visibility is driven from the session events rather than from `update`, because a
-   * render component only registers its mesh instances with a layer on a false-to-true transition.
-   * Flipping it opportunistically mid-frame can land that registration while the session is still
-   * assembling its layers, and because the flag then stays true the component never retries, leaving
-   * the pie silently absent for the rest of the session. Session start is a defined point where the
-   * layers exist, and the matching end event restores the transition for the next session.
+   * A render component hands its mesh instances to a layer only when it flips from disabled to
+   * enabled, and hands over nothing if the layer cannot be resolved yet. The session events are the
+   * points where the layers are known to exist, so the pie flips there: start registers it, and end
+   * restores the transition for the next session.
    */
   private _onXrStart = () => {
     this._dwell = INITIAL_DWELL_STATE;
@@ -85,10 +83,10 @@ export class XrGazeDwell extends Script {
     this._pieMesh = progressPieQuadMesh(this.app.graphicsDevice, HOTSPOT_HALF_EXTENT);
     const meshInstance = new MeshInstance(this._pieMesh, this._pieMaterial);
 
-    // Never frustum-culled. The quad is not positioned until a sweep actually starts, so until then
-    // it sits unplaced at the origin, where culling would drop it from the render list entirely and
-    // the shader compile it is being kept enabled for would never happen. One always-submitted quad
-    // that discards every fragment is cheaper than that compile landing mid-gaze.
+    // Never frustum-culled. The quad only takes a position once a sweep starts, and until then sits
+    // at the origin where culling would drop it from the render list - taking the shader compile it
+    // stays enabled for along with it. An always-submitted quad that discards every fragment costs
+    // less than that compile landing mid-gaze.
     meshInstance.cull = false;
 
     this._pieEntity = new Entity('xr-gaze-dwell-pie');
