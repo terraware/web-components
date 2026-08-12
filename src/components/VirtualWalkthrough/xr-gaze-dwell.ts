@@ -60,6 +60,12 @@ export class XrGazeDwell extends Script {
     this._pieMesh = progressPieQuadMesh(this.app.graphicsDevice, HOTSPOT_HALF_EXTENT);
     const meshInstance = new MeshInstance(this._pieMesh, this._pieMaterial);
 
+    // Never frustum-culled. The quad is not positioned until a sweep actually starts, so until then
+    // it sits unplaced at the origin, where culling would drop it from the render list entirely and
+    // the shader compile it is being kept enabled for would never happen. One always-submitted quad
+    // that discards every fragment is cheaper than that compile landing mid-gaze.
+    meshInstance.cull = false;
+
     this._pieEntity = new Entity('xr-gaze-dwell-pie');
     this._pieEntity.addComponent('render', { meshInstances: [meshInstance], layers: [LAYERID_IMMEDIATE] });
     this._pieEntity.enabled = false;
