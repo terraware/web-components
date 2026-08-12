@@ -84,8 +84,7 @@ export interface VirtualWalkthroughViewerProps {
   autoStartVr?: boolean;
   /**
    * Called whenever the viewer ends up out of XR: when a session ends, and when one was requested
-   * but couldn't be started, in which case the error says why. A headset gives no view of the
-   * console, so this is a caller's only account of a failure.
+   * but couldn't be started, in which case the error says why.
    */
   onXrExit?: (error?: Error) => void;
   annotations: AnnotationProps[];

@@ -104,14 +104,7 @@ const Template: Story<Partial<VirtualWalkthroughViewerProps>> = (args) => (
 
 export const Default = Template.bind({});
 
-// The scene starts empty: the button mounts the viewer with autoStartVr already
-// set, so this exercises the mount-time path rather than a prop change on a
-// viewer that is already running. Leaving the session takes the viewer back down,
-// as does failing to start one, so the story always returns to the button rather
-// than to a viewer running on the desktop.
-//
-// The click is also what makes the session possible at all — browsers only grant
-// one inside a user gesture, and selecting a story is a click in Storybook's
+// Browsers only grant a session from a user gesture, and selecting a story is a click in Storybook's
 // manager frame, which leaves the preview iframe without one.
 const AutoStartVrTemplate: Story<Partial<VirtualWalkthroughViewerProps>> = (args) => {
   const [isMounted, setIsMounted] = useState(false);
@@ -119,7 +112,6 @@ const AutoStartVrTemplate: Story<Partial<VirtualWalkthroughViewerProps>> = (args
   const handleXrExit = useCallback((error?: Error) => {
     setIsMounted(false);
     if (error) {
-      // Alerted rather than logged: a headset gives no view of the console.
       // eslint-disable-next-line no-alert
       window.alert(error.message);
     }
@@ -131,8 +123,6 @@ const AutoStartVrTemplate: Story<Partial<VirtualWalkthroughViewerProps>> = (args
         <Button label='Start in VR' onClick={() => setIsMounted(true)} />
       </div>
       <Application style={{ width: '100%', height: '100%' }}>
-        {/* args first: the preview config turns every on[A-Z] prop into an action
-            spy and passes it in, which would otherwise replace the wiring below. */}
         {isMounted && <VirtualWalkthroughViewer {...sceneArgs} {...args} autoStartVr onXrExit={handleXrExit} />}
       </Application>
     </div>
