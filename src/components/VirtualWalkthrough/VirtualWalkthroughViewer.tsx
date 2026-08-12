@@ -25,6 +25,7 @@ import XrAnnotationInteraction from './XrAnnotationInteraction';
 import XrExitButton from './XrExitButton';
 import XrGazeDwell from './XrGazeDwell';
 import XrPointerRay from './XrPointerRay';
+import { XrStartPose } from './XrStartPose';
 import { SplatFormat } from './splatFormat';
 import { WalkthroughCamera } from './walkthrough-camera';
 import { rayHitsInteractiveUi } from './xr-interactive-ui';
@@ -121,7 +122,7 @@ const VirtualWalkthroughViewer = ({
     const dy = cameraPosition[1] - origin[1];
     const dz = cameraPosition[2] - origin[2];
 
-    return Math.sqrt(dx * dx + dy * dy + dz * dz) * 0.5;
+    return Math.sqrt(dx * dx + dy * dy + dz * dz);
   }, [cameraPosition, sceneBounds, origin]);
 
   const sceneBoundsCenter = useMemo(
@@ -355,10 +356,20 @@ const VirtualWalkthroughViewer = ({
         {isCurrentlyInXr && <XrGazeDwell activeIndex={viewingAnnotationIndex} />}
         {/* Teleport is off in AR, where it can be disorienting, and while an annotation panel is open,
             so the trigger can operate the panel and click out to dismiss it. */}
+        {/* Number props rather than a Vec3: @playcanvas/react's memo() comparator stops at the
+            first prop with an .equals() method, so a Vec3 would stop the ones after it updating. */}
+        <Script
+          script={XrStartPose}
+          targetX={cameraPosition[0]}
+          targetZ={cameraPosition[2]}
+          focusX={origin[0]}
+          focusZ={origin[2]}
+        />
         <Script
           script={TfXrNavigation}
           enabled={!isEdit}
           enableTeleport={!isCurrentlyInAr && !viewingAnnotation}
+          enableSnapVertical={false}
           isTeleportBlocked={isTeleportBlocked}
         />
         {!isCurrentlyInXr && (
