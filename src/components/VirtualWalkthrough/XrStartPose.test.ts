@@ -61,6 +61,7 @@ const buildApp = ({ active = false, type = XRTYPE_VR }: { active?: boolean; type
       handlers.get('start')?.();
     },
     /** A frame carrying a viewer pose, after which the camera holds a real head transform. */
+    // eslint-disable-next-line prefer-arrow/prefer-arrow-functions
     poseFrame() {
       handlers.get('update')?.();
     },
@@ -71,14 +72,12 @@ const buildApp = ({ active = false, type = XRTYPE_VR }: { active?: boolean; type
   };
 };
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
 const mountScript = (app: any, entity: any) => {
-  const script = new XrStartPose({ app, entity } as any);
+  const script = new XrStartPose({ app, entity });
   script.initialize();
 
   return script;
 };
-/* eslint-enable @typescript-eslint/no-explicit-any */
 
 /** Where the head ends up once the rig has been turned about its own origin and moved. */
 const headAfter = (rigBefore: Point3, headBefore: Point3, rigAfter: Point3, yawDelta: number) => {
