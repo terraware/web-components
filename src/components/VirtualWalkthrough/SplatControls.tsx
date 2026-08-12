@@ -79,7 +79,7 @@ const SplatControls = ({
 }: SplatControlsProps) => {
   const theme = useTheme();
   const strings = useStrings();
-  const { isDesktop } = useDeviceInfo();
+  const { isDesktop, isMobile } = useDeviceInfo();
   const { setCamera, getCameraState } = useCameraPosition();
   const { isXrAvailable, startXr } = useXr({ onError });
   const [isInfoVisible, setIsInfoVisible] = useBoolean(true);
@@ -179,8 +179,8 @@ const SplatControls = ({
           pointerEvents: 'auto',
         }}
       >
-        {isXrAvailable('AR') && !isEdit && <Button label={strings.AR} onClick={() => startXr('AR')} />}
-        {isXrAvailable('VR') && !isEdit && <Button label={strings.VR} onClick={() => startXr('VR')} />}
+        {isMobile && isXrAvailable('AR') && !isEdit && <Button label={strings.AR} onClick={() => startXr('AR')} />}
+        {!isMobile && isXrAvailable('VR') && !isEdit && <Button label={strings.VR} onClick={() => startXr('VR')} />}
         {isDesktop && editable && !isEdit && onToggleEdit && <Button label={strings.EDIT} onClick={handleEdit} />}
         {isDesktop && showFreeFly && !isEdit && onToggleFreeFly && (
           <Button label={isFreeFly ? strings.BOUNDED_FLY : strings.FREE_FLY} onClick={onToggleFreeFly} />
