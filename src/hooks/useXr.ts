@@ -21,7 +21,7 @@ const XR_TYPES: Record<XrType, string> = {
  * `maxPixelRatio`, which also multiplies XR resolution) is the largest lever on XR framerate.
  * Read once when the session starts and fixed for its lifetime.
  */
-const XR_FRAMEBUFFER_SCALE_FACTOR = 0.7;
+const XR_FRAMEBUFFER_SCALE_FACTOR = 1;
 
 export const useXr = ({ onError }: UseXrOptions = {}) => {
   const app = useApp();
