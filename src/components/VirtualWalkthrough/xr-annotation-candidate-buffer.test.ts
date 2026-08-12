@@ -40,9 +40,42 @@ const fakeAnnotation = ({
 
 type FakeAnnotation = ReturnType<typeof fakeAnnotation>;
 
-const fakeApp = (children: FakeAnnotation[]) => ({
-  root: { findByName: (name: string) => (name === 'annotations-root' ? { children } : null) },
-});
+/**
+ * App whose `annotations-root` hangs off the scene root the way a mounted one does. `detach` stands
+ * in for the teardown React does when the annotation list empties: the root leaves the scene but,
+ * like a destroyed PlayCanvas entity, keeps an emptied `children` array behind.
+ */
+const fakeApp = (children: FakeAnnotation[]) => {
+  const sceneRoot: any = {
+    findByName: (name: string) => (name === 'annotations-root' ? sceneRoot.annotationsRoot : null),
+    annotationsRoot: null as any,
+    lookups: 0,
+  };
+
+  const mount = (mounted: FakeAnnotation[]) => {
+    sceneRoot.annotationsRoot = { children: mounted, parent: sceneRoot };
+  };
+
+  mount(children);
+
+  const findByName = sceneRoot.findByName;
+  sceneRoot.findByName = (name: string) => {
+    sceneRoot.lookups++;
+
+    return findByName(name);
+  };
+
+  return {
+    root: sceneRoot,
+    lookups: () => sceneRoot.lookups,
+    mount,
+    detach: () => {
+      sceneRoot.annotationsRoot.children.length = 0;
+      sceneRoot.annotationsRoot.parent = null;
+      sceneRoot.annotationsRoot = null;
+    },
+  };
+};
 
 const newBuffer = () => new AnnotationCandidateBuffer((entity: any) => entity.annotationScript);
 
@@ -136,6 +169,32 @@ describe('AnnotationCandidateBuffer', () => {
 
     expect(candidates).toHaveLength(1);
     expect(candidates[0].entity.name).toBe('annotation-2');
+  });
+
+  it('holds onto the annotations root instead of looking it up again every collect', () => {
+    const buffer = newBuffer();
+    const app = fakeApp([fakeAnnotation({ name: 'annotation-0' })]);
+
+    buffer.collect(app, 1);
+    buffer.collect(app, 1);
+
+    expect(app.lookups()).toBe(1);
+  });
+
+  it('finds the annotations root again after it is torn down and rebuilt', () => {
+    const buffer = newBuffer();
+    const app = fakeApp([fakeAnnotation({ name: 'annotation-0' })]);
+
+    buffer.collect(app, 1);
+    app.detach();
+
+    expect(buffer.collect(app, 1)).toHaveLength(0);
+
+    app.mount([fakeAnnotation({ name: 'annotation-1' })]);
+    const candidates = buffer.collect(app, 1);
+
+    expect(candidates).toHaveLength(1);
+    expect(candidates[0].entity.name).toBe('annotation-1');
   });
 
   it('is empty when the annotations root is missing', () => {

@@ -16,6 +16,21 @@ export type AnnotationScriptLookup = (entity: any) => any;
 const scratchScale = new Vec3();
 
 /**
+ * Whether `node` still hangs beneath `sceneRoot`. An entity that has been removed from the scene
+ * keeps its own `children` array - a destroyed one keeps it as an empty array - so only a walk back
+ * up the parent chain tells a live root apart from a detached one.
+ */
+const isInScene = (node: any, sceneRoot: any): boolean => {
+  for (let current = node; current; current = current.parent) {
+    if (current === sceneRoot) {
+      return true;
+    }
+  }
+
+  return false;
+};
+
+/**
  * Collects world-space hit candidates for the openable annotation hotspots into a buffer it owns and
  * reuses, so a caller running every frame allocates nothing. The returned array and the candidate
  * objects inside it are overwritten by the next `collect`, which is why each caller holds its own
@@ -36,8 +51,9 @@ export class AnnotationCandidateBuffer {
    */
   collect(app: any, radiusPad: number, excludeName?: string): AnnotationCandidate[] {
     // The root is looked up by a walk of the whole scene graph, so it is held onto between frames.
-    // It is re-resolved whenever it goes missing, since annotations mount after the scene does.
-    if (!this._root || this._root.children === undefined) {
+    // It is re-resolved whenever it leaves the scene: annotations mount after the scene does, and
+    // the root is torn down and built afresh every time the annotation list empties and refills.
+    if (!isInScene(this._root, app.root)) {
       this._root = app.root.findByName('annotations-root');
     }
 
