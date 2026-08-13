@@ -25,7 +25,12 @@ const XR_FRAMEBUFFER_SCALE_FACTOR = 1;
 
 export const useXr = ({ onError }: UseXrOptions = {}) => {
   const app = useApp();
-  const [available, setAvailable] = useState<Record<XrType, boolean>>({ VR: false, AR: false });
+  // Seeded from the manager rather than defaulting to unavailable, so a caller acting in a mount
+  // effect isn't told VR is unsupported while the effect below is still waiting to run.
+  const [available, setAvailable] = useState<Record<XrType, boolean>>(() => ({
+    VR: app.xr?.isAvailable(XRTYPE_VR) ?? false,
+    AR: app.xr?.isAvailable(XRTYPE_AR) ?? false,
+  }));
   // `type` is set as soon as a session is requested, so gate on `active` to ignore pending sessions.
   const [currentXrType, setCurrentXrType] = useState<string | null>(app.xr?.active ? app.xr.type : null);
 
