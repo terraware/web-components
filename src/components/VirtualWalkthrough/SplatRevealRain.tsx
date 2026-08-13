@@ -27,7 +27,7 @@ interface SplatRevealRainProps {
 const SplatRevealRain = ({
   enabled = true,
   restartOnVr = true,
-  scaleFactor = 15,
+  scaleFactor = 1,
   center = [0, 0, 0],
   distance = 3,
   speed = 1,
