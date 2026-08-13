@@ -49,6 +49,7 @@ const pieFragmentGLSL = /* glsl */ `
     uniform vec3 uDiscColor;
     uniform float uDiscAlpha;
     uniform vec3 uGlyphColor;
+    uniform float uOpacity;
     uniform sampler2D uMaskMap;
 
     varying vec2 uv0;
@@ -99,6 +100,7 @@ const pieFragmentGLSL = /* glsl */ `
         color = over(color, vec4(uTrackColor, uTrackAlpha * pie));
         color = over(color, vec4(uWedgeColor, uWedgeAlpha * pie * swept));
         color = over(color, vec4(uGlyphColor, mask.g));
+        color.a *= uOpacity;
 
         if (color.a <= 0.0) {
             discard;
@@ -185,6 +187,7 @@ export const createProgressPieMaterial = ({
   material.setParameter('uDiscColor', discColor);
   material.setParameter('uDiscAlpha', discAlpha);
   material.setParameter('uGlyphColor', [1, 1, 1]);
+  material.setParameter('uOpacity', 1);
   material.setParameter('uMaskMap', maskMap);
   material.update();
 
