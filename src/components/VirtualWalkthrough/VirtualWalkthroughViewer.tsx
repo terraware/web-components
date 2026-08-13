@@ -423,9 +423,7 @@ const VirtualWalkthroughViewer = ({
             annotationIndex={viewingAnnotationIndex}
           />
         )}
-        {isCurrentlyInXr && <XrGazeDwell activeIndex={viewingAnnotationIndex} />}
-        {/* Teleport is off in AR, where it can be disorienting, and while an annotation panel is open,
-            so the trigger can operate the panel and click out to dismiss it. */}
+        <XrGazeDwell activeIndex={viewingAnnotationIndex} />
         {/* Number props rather than a Vec3: @playcanvas/react's memo() comparator stops at the
             first prop with an .equals() method, so a Vec3 would stop the ones after it updating. */}
         <Script
