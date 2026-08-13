@@ -1,43 +1,23 @@
-import { Vec3 } from 'playcanvas';
 import { Annotation as PcAnnotation } from 'playcanvas/scripts/esm/annotations.mjs';
 
-/** Local half-extent of the unit-plane hotspot quad. */
-export const HOTSPOT_HALF_EXTENT = 0.5;
+import { AnnotationCandidate, AnnotationCandidateBuffer, HOTSPOT_HALF_EXTENT } from './xr-annotation-candidate-buffer';
+
+export { HOTSPOT_HALF_EXTENT };
+export type { AnnotationCandidate };
 
 /** Multiplier on the hotspot's world radius to make controller targeting forgiving. */
 export const HIT_RADIUS_PAD = 2.5;
 
-export interface AnnotationCandidate {
-  entity: any;
-  script: any;
-  position: Vec3;
-  radius: number;
-}
+const annotationScriptOf = (entity: any) => entity.script?.get(PcAnnotation.scriptName);
 
-const scratchScale = new Vec3();
+/** A buffer wired to the stock annotation script. Callers that collect every frame hold one of
+ * these; its results are overwritten on the next collect, so one buffer cannot be shared. */
+export const createAnnotationCandidateBuffer = (): AnnotationCandidateBuffer =>
+  new AnnotationCandidateBuffer(annotationScriptOf);
 
 /**
- * World-space hit candidates for every openable annotation hotspot: its entity, its stock
- * annotation script (which carries `onVrOpenCallback`), its world position, and a hit-sphere
- * radius derived from the hotspot's rendered world size, padded by `radiusPad` for easier aiming.
+ * One-shot collection for callers that run on an input event rather than every frame, and so have no
+ * reason to hold a buffer of their own.
  */
-export const collectAnnotationHitCandidates = (app: any, radiusPad: number): AnnotationCandidate[] => {
-  const root = app.root.findByName('annotations-root');
-  if (!root) {
-    return [];
-  }
-
-  return root.children
-    .map((entity: any) => ({ entity, script: entity.script?.get(PcAnnotation.scriptName) }))
-    .filter(({ script }: any) => script && script.enabled !== false && typeof script.onVrOpenCallback === 'function')
-    .map(({ entity, script }: any) => {
-      entity.getWorldTransform().getScale(scratchScale);
-
-      return {
-        entity,
-        script,
-        position: entity.getPosition(),
-        radius: HOTSPOT_HALF_EXTENT * scratchScale.x * radiusPad,
-      };
-    });
-};
+export const collectAnnotationHitCandidates = (app: any, radiusPad: number): AnnotationCandidate[] =>
+  createAnnotationCandidateBuffer().collect(app, radiusPad);
