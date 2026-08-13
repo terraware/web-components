@@ -1,11 +1,15 @@
-import React from 'react';
+import React, { useRef } from 'react';
 
 import { Script } from '@playcanvas/react/components';
-import { Color, Vec3 } from 'playcanvas';
+import { Color, Script as PcScript, Vec3 } from 'playcanvas';
 import { GSplatRevealRain } from 'playcanvas/scripts/esm/gsplat/reveal-rain.mjs';
+
+import { useRestartOnVr } from './useRestartOnVr';
 
 interface SplatRevealRainProps {
   enabled?: boolean;
+  restartOnVr?: boolean;
+  scaleFactor?: number;
   center?: [number, number, number];
   distance?: number;
   speed?: number;
@@ -22,9 +26,11 @@ interface SplatRevealRainProps {
 
 const SplatRevealRain = ({
   enabled = true,
+  restartOnVr = true,
+  scaleFactor = 1,
   center = [0, 0, 0],
   distance = 3,
-  speed = 10,
+  speed = 1,
   acceleration = 5,
   flightTime = 0.25,
   rainSize = 0.0,
@@ -35,22 +41,28 @@ const SplatRevealRain = ({
   hitDuration = 0,
   endRadius = 5,
 }: SplatRevealRainProps) => {
+  const scale = (value: number) => value * scaleFactor;
+  const scriptRef = useRef<PcScript | null>(null);
+
+  useRestartOnVr(scriptRef, enabled && restartOnVr);
+
   return (
     <Script
+      ref={scriptRef}
       script={GSplatRevealRain}
       enabled={enabled}
-      center={new Vec3(...center)}
-      distance={distance}
-      speed={speed}
-      acceleration={acceleration}
+      center={new Vec3(...center).mulScalar(scaleFactor)}
+      distance={scale(distance)}
+      speed={scale(speed)}
+      acceleration={scale(acceleration)}
       flightTime={flightTime}
-      rainSize={rainSize}
+      rainSize={scale(rainSize)}
       rotation={rotation}
       fallTint={new Color(...fallTint)}
       fallTintIntensity={fallTintIntensity}
       hitTint={new Color(...hitTint)}
       hitDuration={hitDuration}
-      endRadius={endRadius}
+      endRadius={scale(endRadius)}
     />
   );
 };
