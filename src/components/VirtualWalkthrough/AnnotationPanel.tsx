@@ -57,8 +57,6 @@ const CAROUSEL_STYLE: React.CSSProperties = {
   flexShrink: 0,
 };
 
-// The image, label and title stay put; only the body scrolls, so the panel keeps
-// its heading visible however long the text is.
 const TEXT_BLOCK_STYLE: React.CSSProperties = {
   padding: '24px',
   display: 'flex',
