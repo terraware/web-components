@@ -5,6 +5,7 @@ import {
   PANEL_MAX_HEIGHT,
   PANEL_MIN_HEIGHT,
   PANEL_PAD_Y,
+  TEXT_CANVAS_MAX_HEIGHT,
   TITLE_LINE_HEIGHT,
   layoutPanel,
   wrapText,
@@ -91,13 +92,40 @@ describe('layoutPanel', () => {
     expect(result.title.y).toBeGreaterThanOrEqual(PANEL_PAD_Y + CHIP_HEIGHT);
   });
 
-  it('drops body lines that would overflow the maximum height and clamps to it', () => {
+  it('shows a body that fits in full without scrolling', () => {
+    const body = Array.from({ length: 4 }, () => 'body').join(' ');
+    const result = layout({ bodyText: body, contentWidth: 4 });
+
+    expect(result.body.contentHeight).toBe(4 * BODY_LINE_HEIGHT);
+    expect(result.body.viewportHeight).toBe(result.body.contentHeight);
+    expect(result.body.scrollable).toBe(false);
+  });
+
+  it('keeps body lines that overflow the panel and caps the viewport so they can be scrolled to', () => {
+    const body = Array.from({ length: 40 }, () => 'body').join(' ');
+    const result = layout({ bodyText: body, contentWidth: 4 });
+
+    expect(result.body.lines).toHaveLength(40);
+    expect(result.body.scrollable).toBe(true);
+    expect(result.height).toBe(PANEL_MAX_HEIGHT);
+    expect(result.body.viewportHeight).toBe(PANEL_MAX_HEIGHT - PANEL_PAD_Y - result.body.y);
+    expect(result.body.contentHeight).toBeGreaterThan(result.body.viewportHeight);
+  });
+
+  it('is not scrollable when a tall header leaves the body no room at all', () => {
+    const title = Array.from({ length: 200 }, () => 'title').join(' ');
+    const result = layout({ title, bodyText: 'body', contentWidth: 5 });
+
+    expect(result.body.viewportHeight).toBe(0);
+    expect(result.body.scrollable).toBe(false);
+  });
+
+  it('drops body lines beyond what the text canvas can hold', () => {
     const body = Array.from({ length: 200 }, () => 'body').join(' ');
     const result = layout({ bodyText: body, contentWidth: 4 });
 
-    expect(result.height).toBe(PANEL_MAX_HEIGHT);
-    expect(result.body.y + result.body.lines.length * BODY_LINE_HEIGHT).toBeLessThanOrEqual(PANEL_MAX_HEIGHT);
     expect(result.body.lines.length).toBeLessThan(200);
+    expect(result.body.contentHeight).toBeLessThanOrEqual(TEXT_CANVAS_MAX_HEIGHT);
   });
 
   it('drops title lines that would overflow the maximum height', () => {
