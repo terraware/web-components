@@ -1,6 +1,6 @@
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 
-import { useTheme } from '@mui/material';
+import { Box, type SxProps, useTheme } from '@mui/material';
 
 import PhotosCarousel, { PhotoItem } from '../PhotosCarousel';
 import type { AnnotationProps } from './Annotation';
@@ -50,11 +50,13 @@ const PANEL_STYLE: React.CSSProperties = {
   flexDirection: 'column',
 };
 
-const CAROUSEL_STYLE: React.CSSProperties = {
+const CAROUSEL_SX: SxProps = {
   width: 'min(60vw, 640px)',
   borderRadius: '12px 12px 0 0',
   overflow: 'hidden',
   flexShrink: 0,
+  '& .photos-carousel-image': { height: 'min(400px, 40vh)' },
+  '& .photos-carousel-container': { minHeight: 'min(200px, 20vh)' },
 };
 
 const TEXT_BLOCK_STYLE: React.CSSProperties = {
@@ -62,6 +64,17 @@ const TEXT_BLOCK_STYLE: React.CSSProperties = {
   display: 'flex',
   flexDirection: 'column',
   gap: 8,
+  minHeight: 0,
+};
+
+const BODY_STYLE: React.CSSProperties = {
+  fontSize: 16,
+  lineHeight: '24px',
+  margin: 0,
+  minHeight: 0,
+  overflowY: 'auto',
+  overscrollBehavior: 'contain',
+  scrollbarWidth: 'thin',
 };
 
 const AnnotationPanel = ({ annotation, hotspotPosition, onClose }: AnnotationPanelProps) => {
@@ -151,13 +164,13 @@ const AnnotationPanel = ({ annotation, hotspotPosition, onClose }: AnnotationPan
       </svg>
       <div ref={panelRef} data-testid='annotation-panel' style={panelStyle}>
         {annotation.imageUrls && annotation.imageUrls.length > 0 && (
-          <div style={CAROUSEL_STYLE}>
+          <Box sx={CAROUSEL_SX}>
             <PhotosCarousel
               photos={annotation.imageUrls.map((url): PhotoItem => ({ url, alt: annotation.title }))}
               showArrows={true}
               dots={false}
             />
-          </div>
+          </Box>
         )}
         <div style={TEXT_BLOCK_STYLE}>
           {annotation.label && (
@@ -190,15 +203,7 @@ const AnnotationPanel = ({ annotation, hotspotPosition, onClose }: AnnotationPan
             {annotation.title}
           </h2>
           {annotation.bodyText && (
-            <p
-              data-testid='annotation-panel-description'
-              style={{
-                fontSize: 16,
-                color: theme.palette.TwClrTxt,
-                lineHeight: '24px',
-                margin: 0,
-              }}
-            >
+            <p data-testid='annotation-panel-description' style={{ ...BODY_STYLE, color: theme.palette.TwClrTxt }}>
               {annotation.bodyText}
             </p>
           )}
