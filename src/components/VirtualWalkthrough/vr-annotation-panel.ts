@@ -354,7 +354,6 @@ export class VrAnnotationPanel extends Script {
     if (!anchor) {
       return;
     }
-    // Raise the panel above the hotspot so it clears the hotspot rather than covering it.
     this._anchor.copy(anchor.getPosition());
     this.entity.setPosition(this._anchor.x, this._anchor.y + this._panelHeight / 2 + PANEL_GAP, this._anchor.z);
 
