@@ -25,12 +25,25 @@ import {
   TITLE_LINE_HEIGHT,
   layoutPanel,
 } from './vr-annotation-panel-layout';
+import { nextScrollY, readScrollAxis } from './vr-annotation-scroll';
 import { rayQuadHit } from './xr-ray-quad';
 
 const PANEL_WIDTH = 7.5;
 
 /** Gap (m) between the top of the hotspot and the bottom edge of the panel. */
 const PANEL_GAP = 0.75;
+
+const PX_TO_M = PANEL_WIDTH / PANEL_CANVAS_WIDTH;
+
+/** Local +z faces the viewer, so the overlay quads sit just in front of the chrome quad. Their
+ * draw order would otherwise depend on how the transparent sort breaks a tie between coplanar
+ * quads, all of which have depth testing off. */
+const TEXT_Z = 0.001;
+const THUMB_Z = 0.002;
+
+const SCROLLBAR_WIDTH = 10;
+const SCROLLBAR_INSET = 18;
+const SCROLLBAR_MIN_HEIGHT = 48;
 
 /** Local +z (the quad's front face) — used to derive the panel's yaw toward the viewer. */
 const FORWARD_Z = new Vec3(0, 0, 1);
@@ -53,17 +66,31 @@ export class VrAnnotationPanel extends Script {
   imageUrls?: string[];
   annotationIndex = -1;
 
-  private _material?: StandardMaterial;
-  private _texture?: Texture;
-  private _mesh?: Mesh;
-  private _canvas?: HTMLCanvasElement;
+  private _chromeMaterial?: StandardMaterial;
+  private _chromeTexture?: Texture;
+  private _chromeMesh?: Mesh;
+  private _chromeCanvas?: HTMLCanvasElement;
+
+  private _textMaterial?: StandardMaterial;
+  private _textTexture?: Texture;
+  private _textMesh?: Mesh;
+  private _textCanvas?: HTMLCanvasElement;
+  private _textInstance?: MeshInstance;
+
+  private _thumbMaterial?: StandardMaterial;
+  private _thumbMesh?: Mesh;
+  private _thumbInstance?: MeshInstance;
+
   private _drawnSignature: string | null = null;
   private _currentImage = 0;
   private _loadToken = 0;
+  private _loadedImage?: HTMLImageElement;
   private _layout?: PanelLayout;
-  /** Height (canvas px) the content currently occupies; the rest of the canvas is unused. */
+  private _scrollY = 0;
+  private _maxScroll = 0;
+  /** Height (canvas px) the chrome occupies; the rest of its canvas is unused. */
   private _canvasHeight = PANEL_MAX_HEIGHT;
-  private _panelHeight = (PANEL_WIDTH * PANEL_MAX_HEIGHT) / PANEL_CANVAS_WIDTH;
+  private _panelHeight = PANEL_MAX_HEIGHT * PX_TO_M;
 
   private _headRotation = new Quat();
   private _anchor = new Vec3();
@@ -87,6 +114,7 @@ export class VrAnnotationPanel extends Script {
       return;
     }
     const cx = ((hit.u + 1) / 2) * PANEL_CANVAS_WIDTH;
+    // The image sits on the chrome quad, which doesn't scroll, so this needs no scroll offset.
     const cy = ((1 - hit.v) / 2) * this._canvasHeight;
     if (cy < band.y || cy > band.y + band.height) {
       return;
@@ -99,38 +127,40 @@ export class VrAnnotationPanel extends Script {
   };
 
   initialize() {
-    this._canvas = document.createElement('canvas');
-    this._canvas.width = PANEL_CANVAS_WIDTH;
-    this._canvas.height = PANEL_MAX_HEIGHT;
+    this._chromeCanvas = document.createElement('canvas');
+    this._chromeCanvas.width = PANEL_CANVAS_WIDTH;
+    this._chromeCanvas.height = PANEL_MAX_HEIGHT;
+    this._chromeTexture = this._createTexture('vr-annotation-panel', this._chromeCanvas);
+    this._chromeMaterial = this._createTexturedMaterial(this._chromeTexture);
+    this._chromeMesh = this._createQuadMesh();
 
-    this._texture = new Texture(this.app.graphicsDevice, {
-      name: 'vr-annotation-panel',
-      width: PANEL_CANVAS_WIDTH,
-      height: PANEL_MAX_HEIGHT,
-      addressU: ADDRESS_CLAMP_TO_EDGE,
-      addressV: ADDRESS_CLAMP_TO_EDGE,
-      minFilter: FILTER_LINEAR,
-      magFilter: FILTER_LINEAR,
-      mipmaps: true,
+    // Sized once the first layout runs; until then it has nothing to show.
+    this._textMesh = this._createQuadMesh();
+    this._textMaterial = new StandardMaterial();
+    this._textInstance = new MeshInstance(this._textMesh, this._textMaterial);
+    this._textInstance.visible = false;
+
+    this._thumbMaterial = new StandardMaterial();
+    this._thumbMaterial.useLighting = false;
+    this._thumbMaterial.emissive = new Color(0, 0, 0);
+    this._thumbMaterial.opacity = 0.3;
+    this._thumbMaterial.blendType = BLEND_NORMAL;
+    this._thumbMaterial.depthTest = false;
+    this._thumbMaterial.depthWrite = false;
+    this._thumbMaterial.cull = CULLFACE_NONE;
+    this._thumbMaterial.update();
+    this._thumbMesh = this._createQuadMesh();
+    this._thumbInstance = new MeshInstance(this._thumbMesh, this._thumbMaterial);
+    this._thumbInstance.visible = false;
+
+    this.entity.addComponent('render', {
+      meshInstances: [
+        new MeshInstance(this._chromeMesh, this._chromeMaterial),
+        this._textInstance,
+        this._thumbInstance,
+      ],
+      layers: [LAYERID_IMMEDIATE],
     });
-    this._texture.setSource(this._canvas);
-
-    const material = new StandardMaterial();
-    material.useLighting = false;
-    material.emissive = new Color(1, 1, 1);
-    material.emissiveMap = this._texture;
-    material.opacityMap = this._texture;
-    material.opacityMapChannel = 'a';
-    material.blendType = BLEND_NORMAL;
-    material.depthTest = false;
-    material.depthWrite = false;
-    material.cull = CULLFACE_NONE;
-    material.update();
-    this._material = material;
-
-    this._mesh = this._createMesh();
-    const meshInstance = new MeshInstance(this._mesh, material);
-    this.entity.addComponent('render', { meshInstances: [meshInstance], layers: [LAYERID_IMMEDIATE] });
 
     this.app.xr?.input?.on('select', this._onSelect);
     // Script removal fires a 'destroy' event rather than calling a destroy() method, so the
@@ -138,35 +168,119 @@ export class VrAnnotationPanel extends Script {
     this.once('destroy', () => this._teardown());
   }
 
-  private _createMesh(): Mesh {
+  private _createTexture(name: string, source: HTMLCanvasElement): Texture {
+    const texture = new Texture(this.app.graphicsDevice, {
+      name,
+      width: source.width,
+      height: source.height,
+      addressU: ADDRESS_CLAMP_TO_EDGE,
+      addressV: ADDRESS_CLAMP_TO_EDGE,
+      minFilter: FILTER_LINEAR,
+      magFilter: FILTER_LINEAR,
+      mipmaps: true,
+    });
+    texture.setSource(source);
+
+    return texture;
+  }
+
+  private _createTexturedMaterial(texture: Texture): StandardMaterial {
+    const material = new StandardMaterial();
+    material.useLighting = false;
+    material.emissive = new Color(1, 1, 1);
+    material.emissiveMap = texture;
+    material.opacityMap = texture;
+    material.opacityMapChannel = 'a';
+    material.blendType = BLEND_NORMAL;
+    material.depthTest = false;
+    material.depthWrite = false;
+    material.cull = CULLFACE_NONE;
+    material.update();
+
+    return material;
+  }
+
+  private _createQuadMesh(): Mesh {
     const mesh = new Mesh(this.app.graphicsDevice);
     mesh.setNormals([0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1]);
     mesh.setIndices([0, 1, 2, 0, 2, 3]);
-    this._writeQuad(mesh);
+    this._writeQuad(mesh, -PANEL_WIDTH / 2, PANEL_WIDTH / 2, 0, 0, 0, 0, 1);
 
     return mesh;
   }
 
-  /** Positions the quad for the current panel height and maps it onto the used slice of the
-   * canvas, leaving the unused remainder of the (fixed-size) texture off the mesh. */
-  private _writeQuad(mesh: Mesh) {
-    const hw = PANEL_WIDTH / 2;
-    const hh = this._panelHeight / 2;
-    const vBottom = this._canvasHeight / PANEL_MAX_HEIGHT;
-    mesh.setPositions([-hw, -hh, 0, hw, -hh, 0, hw, hh, 0, -hw, hh, 0]);
-    mesh.setUvs(0, [0, vBottom, 1, vBottom, 1, 0, 0, 0]);
+  /** Rewrites the quad's four corners and the slice of its texture they map to. */
+  private _writeQuad(
+    mesh: Mesh,
+    left: number,
+    right: number,
+    top: number,
+    bottom: number,
+    z: number,
+    vTop: number,
+    vBottom: number
+  ) {
+    mesh.setPositions([left, bottom, z, right, bottom, z, right, top, z, left, top, z]);
+    mesh.setUvs(0, [0, vBottom, 1, vBottom, 1, vTop, 0, vTop]);
     mesh.update();
   }
 
-  private _setPanelHeight(canvasHeight: number) {
-    if (canvasHeight === this._canvasHeight) {
+  /** Converts a y in panel canvas coordinates to the entity's local space. */
+  private _localY(canvasY: number): number {
+    return this._panelHeight / 2 - canvasY * PX_TO_M;
+  }
+
+  private _writeChromeQuad() {
+    if (!this._chromeMesh) {
       return;
     }
-    this._canvasHeight = canvasHeight;
-    this._panelHeight = (PANEL_WIDTH * canvasHeight) / PANEL_CANVAS_WIDTH;
-    if (this._mesh) {
-      this._writeQuad(this._mesh);
+    const hw = PANEL_WIDTH / 2;
+    const hh = this._panelHeight / 2;
+    this._writeQuad(this._chromeMesh, -hw, hw, hh, -hh, 0, 0, this._canvasHeight / PANEL_MAX_HEIGHT);
+  }
+
+  /** Maps the visible window of the (much taller) text texture onto the body quad. */
+  private _writeTextQuad() {
+    const body = this._layout?.body;
+    if (!this._textMesh || !this._textInstance || !body || body.contentHeight === 0) {
+      return;
     }
+    this._writeQuad(
+      this._textMesh,
+      -PANEL_WIDTH / 2,
+      PANEL_WIDTH / 2,
+      this._localY(body.y),
+      this._localY(body.y + body.viewportHeight),
+      TEXT_Z,
+      this._scrollY / body.contentHeight,
+      (this._scrollY + body.viewportHeight) / body.contentHeight
+    );
+  }
+
+  private _writeThumbQuad() {
+    const body = this._layout?.body;
+    if (!this._thumbMesh || !body?.scrollable) {
+      return;
+    }
+    // The minimum keeps the thumb grabbable on very long text, but never past the track itself.
+    const height = Math.min(
+      body.viewportHeight,
+      Math.max(SCROLLBAR_MIN_HEIGHT, (body.viewportHeight * body.viewportHeight) / body.contentHeight)
+    );
+    const travel = body.viewportHeight - height;
+    const top = body.y + (this._maxScroll > 0 ? (this._scrollY / this._maxScroll) * travel : 0);
+    const right = PANEL_CANVAS_WIDTH - SCROLLBAR_INSET;
+
+    this._writeQuad(
+      this._thumbMesh,
+      (right - SCROLLBAR_WIDTH) * PX_TO_M - PANEL_WIDTH / 2,
+      right * PX_TO_M - PANEL_WIDTH / 2,
+      this._localY(top),
+      this._localY(top + height),
+      THUMB_Z,
+      0,
+      1
+    );
   }
 
   private _roundRect(ctx: CanvasRenderingContext2D, x: number, y: number, w: number, h: number, r: number) {
@@ -208,28 +322,55 @@ export class VrAnnotationPanel extends Script {
     }
   }
 
-  private _drawContent(image?: HTMLImageElement) {
-    const ctx = this._canvas?.getContext('2d');
+  /** Re-measures the content, resizes the panel, and repaints both canvases. */
+  private _rebuild() {
+    const ctx = this._chromeCanvas?.getContext('2d');
     if (!ctx) {
       return;
     }
 
-    const contentWidth = PANEL_CANVAS_WIDTH - PANEL_PAD_X * 2;
     const images = this.imageUrls ?? [];
-    const layout = layoutPanel({
+    this._layout = layoutPanel({
       title: this.title,
       label: this.label,
       bodyText: this.bodyText,
       imageCount: images.length,
-      contentWidth,
+      contentWidth: PANEL_CANVAS_WIDTH - PANEL_PAD_X * 2,
       measure: (text, style) => {
         ctx.font = PANEL_FONTS[style];
 
         return ctx.measureText(text).width;
       },
     });
-    this._layout = layout;
-    this._setPanelHeight(layout.height);
+
+    const { body } = this._layout;
+    this._maxScroll = body.contentHeight - body.viewportHeight;
+    this._canvasHeight = this._layout.height;
+    this._panelHeight = this._layout.height * PX_TO_M;
+
+    this._drawChrome();
+    this._drawText();
+
+    this._writeChromeQuad();
+    this._writeTextQuad();
+    this._writeThumbQuad();
+    if (this._textInstance) {
+      this._textInstance.visible = body.contentHeight > 0;
+    }
+    if (this._thumbInstance) {
+      this._thumbInstance.visible = body.scrollable;
+    }
+  }
+
+  private _drawChrome() {
+    const ctx = this._chromeCanvas?.getContext('2d');
+    const layout = this._layout;
+    if (!ctx || !layout) {
+      return;
+    }
+
+    const contentWidth = PANEL_CANVAS_WIDTH - PANEL_PAD_X * 2;
+    const images = this.imageUrls ?? [];
 
     ctx.clearRect(0, 0, PANEL_CANVAS_WIDTH, PANEL_MAX_HEIGHT);
 
@@ -242,6 +383,7 @@ export class VrAnnotationPanel extends Script {
       ctx.save();
       this._roundRect(ctx, PANEL_PAD_X, bandY, contentWidth, bandH, 16);
       ctx.clip();
+      const image = this._loadedImage;
       if (image) {
         const scale = Math.max(contentWidth / image.width, bandH / image.height);
         const dw = image.width * scale;
@@ -278,18 +420,59 @@ export class VrAnnotationPanel extends Script {
       ctx.fillText(line, PANEL_PAD_X, layout.title.y + index * TITLE_LINE_HEIGHT);
     });
 
+    if (layout.body.scrollable) {
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.08)';
+      const trackX = PANEL_CANVAS_WIDTH - SCROLLBAR_INSET - SCROLLBAR_WIDTH;
+      this._roundRect(ctx, trackX, layout.body.y, SCROLLBAR_WIDTH, layout.body.viewportHeight, SCROLLBAR_WIDTH / 2);
+      ctx.fill();
+    }
+
+    this._chromeTexture?.upload();
+  }
+
+  /**
+   * Paints every body line onto its own canvas, tall enough to hold all of them. Scrolling then
+   * only moves the quad's UV window over this texture, so no repaint or upload happens per frame.
+   */
+  private _drawText() {
+    const body = this._layout?.body;
+    if (!body) {
+      return;
+    }
+
+    const height = Math.max(1, body.contentHeight);
+    if (!this._textCanvas || this._textCanvas.height !== height) {
+      this._textCanvas = document.createElement('canvas');
+      this._textCanvas.width = PANEL_CANVAS_WIDTH;
+      this._textCanvas.height = height;
+      this._textTexture?.destroy();
+      this._textTexture = this._createTexture('vr-annotation-panel-text', this._textCanvas);
+      this._textMaterial?.destroy();
+      this._textMaterial = this._createTexturedMaterial(this._textTexture);
+      if (this._textInstance) {
+        this._textInstance.material = this._textMaterial;
+      }
+    }
+
+    const ctx = this._textCanvas.getContext('2d');
+    if (!ctx) {
+      return;
+    }
+    ctx.clearRect(0, 0, PANEL_CANVAS_WIDTH, height);
+    ctx.textBaseline = 'top';
     ctx.font = PANEL_FONTS.body;
     ctx.fillStyle = 'rgba(0, 0, 0, 0.85)';
-    layout.body.lines.forEach((line, index) => {
-      ctx.fillText(line, PANEL_PAD_X, layout.body.y + index * BODY_LINE_HEIGHT);
+    body.lines.forEach((line, index) => {
+      ctx.fillText(line, PANEL_PAD_X, index * BODY_LINE_HEIGHT);
     });
 
-    this._texture?.upload();
+    this._textTexture?.upload();
   }
 
   private _setImage(index: number) {
     this._currentImage = index;
-    this._drawContent();
+    this._loadedImage = undefined;
+    this._drawChrome();
     this._loadCurrentImage();
   }
 
@@ -304,7 +487,8 @@ export class VrAnnotationPanel extends Script {
     img.onload = () => {
       // Ignore a stale load that a newer navigation has superseded.
       if (token === this._loadToken) {
-        this._drawContent(img);
+        this._loadedImage = img;
+        this._drawChrome();
       }
     };
     // onerror (e.g. a host without CORS headers): keep the placeholder + text already drawn.
@@ -335,7 +519,7 @@ export class VrAnnotationPanel extends Script {
     return this._rayQuadHit(origin, direction) !== null;
   }
 
-  update() {
+  update(dt: number) {
     if (this.app.xr?.active !== true) {
       return;
     }
@@ -344,10 +528,13 @@ export class VrAnnotationPanel extends Script {
     if (signature !== this._drawnSignature) {
       this._drawnSignature = signature;
       this._currentImage = 0;
-      this._drawContent();
+      this._scrollY = 0;
+      this._loadedImage = undefined;
+      this._rebuild();
       this._loadCurrentImage();
     }
 
+    this._scroll(dt);
     this._trackHead();
 
     const anchor = this.app.root.findByName(`annotation-${this.annotationIndex}`);
@@ -366,6 +553,28 @@ export class VrAnnotationPanel extends Script {
     this.entity.setRotation(this._yawQuat);
   }
 
+  private _scroll(dt: number) {
+    if (this._maxScroll <= 0) {
+      return;
+    }
+
+    let axis = 0;
+    for (const inputSource of this.app.xr?.input?.inputSources ?? []) {
+      const sourceAxis = readScrollAxis(inputSource);
+      if (Math.abs(sourceAxis) > Math.abs(axis)) {
+        axis = sourceAxis;
+      }
+    }
+
+    const scrollY = nextScrollY(this._scrollY, axis, dt, this._maxScroll);
+    if (scrollY === this._scrollY) {
+      return;
+    }
+    this._scrollY = scrollY;
+    this._writeTextQuad();
+    this._writeThumbQuad();
+  }
+
   private _trackHead() {
     const views = this.app.xr?.views?.list;
     if (!views || views.length === 0) {
@@ -379,11 +588,21 @@ export class VrAnnotationPanel extends Script {
     if (this.entity.render) {
       this.entity.render.meshInstances = [];
     }
-    this._mesh?.destroy();
-    this._material?.destroy();
-    this._texture?.destroy();
-    this._mesh = undefined;
-    this._material = undefined;
-    this._texture = undefined;
+    this._chromeMesh?.destroy();
+    this._textMesh?.destroy();
+    this._thumbMesh?.destroy();
+    this._chromeMaterial?.destroy();
+    this._textMaterial?.destroy();
+    this._thumbMaterial?.destroy();
+    this._chromeTexture?.destroy();
+    this._textTexture?.destroy();
+    this._chromeMesh = undefined;
+    this._textMesh = undefined;
+    this._thumbMesh = undefined;
+    this._chromeMaterial = undefined;
+    this._textMaterial = undefined;
+    this._thumbMaterial = undefined;
+    this._chromeTexture = undefined;
+    this._textTexture = undefined;
   }
 }

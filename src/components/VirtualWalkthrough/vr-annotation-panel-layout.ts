@@ -46,6 +46,12 @@ export const TITLE_LINE_HEIGHT = 56;
 const TITLE_GAP = 16;
 export const BODY_LINE_HEIGHT = 40;
 
+/**
+ * Tallest canvas the body text is rasterised into. The body scrolls as a window onto this canvas,
+ * so it bounds how much text an annotation can show — far more than the panel itself holds.
+ */
+export const TEXT_CANVAS_MAX_HEIGHT = 2048;
+
 export const PANEL_FONTS = {
   label: '600 28px sans-serif',
   title: '700 48px sans-serif',
@@ -70,7 +76,16 @@ export interface PanelLayout {
   dotsY: number | null;
   chip: { y: number; width: number; height: number } | null;
   title: { y: number; lines: string[] };
-  body: { y: number; lines: string[] };
+  body: {
+    /** Top of the body viewport, in panel coordinates. */
+    y: number;
+    lines: string[];
+    /** Height of all the lines together, which is also the text canvas height. */
+    contentHeight: number;
+    /** Height of the visible window onto that canvas. */
+    viewportHeight: number;
+    scrollable: boolean;
+  };
 }
 
 /** Keeps the lines whose full line box fits above the bottom padding. */
@@ -82,8 +97,9 @@ const fitLines = (lines: string[], y: number, lineHeight: number): string[] => {
 
 /**
  * Lays the panel's blocks out top-to-bottom and reports the height they need, so the quad
- * can be sized to the content instead of a fixed aspect. Content that cannot fit within
- * `PANEL_MAX_HEIGHT` is dropped and the panel is drawn at full height.
+ * can be sized to the content instead of a fixed aspect. Everything above the body is a header
+ * that has to fit within `PANEL_MAX_HEIGHT`; the body instead scrolls within whatever height
+ * the header leaves it.
  */
 export const layoutPanel = ({
   title,
@@ -117,13 +133,12 @@ export const layoutPanel = ({
   y += fittedTitle.length * TITLE_LINE_HEIGHT + TITLE_GAP;
 
   const bodyLines = bodyText ? wrapText(bodyText, contentWidth, (segment) => measure(segment, 'body')) : [];
-  const fittedBody = fitLines(bodyLines, y, BODY_LINE_HEIGHT);
+  const fittedBody = bodyLines.slice(0, Math.floor(TEXT_CANVAS_MAX_HEIGHT / BODY_LINE_HEIGHT));
   const bodyY = y;
-  y += fittedBody.length * BODY_LINE_HEIGHT;
+  const contentHeight = fittedBody.length * BODY_LINE_HEIGHT;
+  const viewportHeight = Math.min(contentHeight, Math.max(0, PANEL_MAX_HEIGHT - PANEL_PAD_Y - bodyY));
 
-  const truncated = fittedTitle.length < titleLines.length || fittedBody.length < bodyLines.length;
-  const contentHeight = y + PANEL_PAD_Y;
-  const height = truncated ? PANEL_MAX_HEIGHT : Math.max(PANEL_MIN_HEIGHT, Math.min(PANEL_MAX_HEIGHT, contentHeight));
+  const height = Math.max(PANEL_MIN_HEIGHT, Math.min(PANEL_MAX_HEIGHT, bodyY + viewportHeight + PANEL_PAD_Y));
 
   return {
     height,
@@ -131,6 +146,12 @@ export const layoutPanel = ({
     dotsY,
     chip,
     title: { y: titleY, lines: fittedTitle },
-    body: { y: bodyY, lines: fittedBody },
+    body: {
+      y: bodyY,
+      lines: fittedBody,
+      contentHeight,
+      viewportHeight,
+      scrollable: viewportHeight > 0 && contentHeight > viewportHeight,
+    },
   };
 };
