@@ -1,6 +1,6 @@
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 
-import { useTheme } from '@mui/material';
+import { Box, type SxProps, useTheme } from '@mui/material';
 
 import PhotosCarousel, { PhotoItem } from '../PhotosCarousel';
 import type { AnnotationProps } from './Annotation';
@@ -45,16 +45,18 @@ const PANEL_STYLE: React.CSSProperties = {
   backgroundColor: '#ffffff',
   borderRadius: 12,
   boxShadow: '0 8px 32px rgba(0,0,0,0.32)',
-  overflow: 'hidden',
+  overflowY: 'auto',
   display: 'flex',
   flexDirection: 'column',
 };
 
-const CAROUSEL_STYLE: React.CSSProperties = {
+const CAROUSEL_SX: SxProps = {
   width: 'min(60vw, 640px)',
   borderRadius: '12px 12px 0 0',
   overflow: 'hidden',
   flexShrink: 0,
+  '& .photos-carousel-image': { height: 'min(400px, 40vh)' },
+  '& .photos-carousel-container': { minHeight: 'min(200px, 20vh)' },
 };
 
 const TEXT_BLOCK_STYLE: React.CSSProperties = {
@@ -162,13 +164,13 @@ const AnnotationPanel = ({ annotation, hotspotPosition, onClose }: AnnotationPan
       </svg>
       <div ref={panelRef} data-testid='annotation-panel' style={panelStyle}>
         {annotation.imageUrls && annotation.imageUrls.length > 0 && (
-          <div style={CAROUSEL_STYLE}>
+          <Box sx={CAROUSEL_SX}>
             <PhotosCarousel
               photos={annotation.imageUrls.map((url): PhotoItem => ({ url, alt: annotation.title }))}
               showArrows={true}
               dots={false}
             />
-          </div>
+          </Box>
         )}
         <div style={TEXT_BLOCK_STYLE}>
           {annotation.label && (

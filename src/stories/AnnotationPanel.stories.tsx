@@ -62,6 +62,20 @@ LongText.args = {
   onClose: () => window.alert('Closed'),
 };
 
+// A viewport short enough that the image alone would crowd out the panel's 80vh
+// budget. The label, title and a readable slice of the description all have to stay
+// on screen, with the description scrolling for the rest.
+export const ShortViewport = Template.bind({});
+ShortViewport.args = LongText.args;
+ShortViewport.parameters = {
+  viewport: {
+    viewports: {
+      short: { name: 'Short (600px tall)', styles: { width: '1200px', height: '600px' } },
+    },
+    defaultViewport: 'short',
+  },
+};
+
 export const MultipleImages = Template.bind({});
 MultipleImages.args = {
   annotation: {
