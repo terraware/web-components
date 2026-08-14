@@ -45,7 +45,7 @@ const PANEL_STYLE: React.CSSProperties = {
   backgroundColor: '#ffffff',
   borderRadius: 12,
   boxShadow: '0 8px 32px rgba(0,0,0,0.32)',
-  overflowY: 'auto',
+  overflow: 'hidden',
   display: 'flex',
   flexDirection: 'column',
 };
@@ -57,11 +57,24 @@ const CAROUSEL_STYLE: React.CSSProperties = {
   flexShrink: 0,
 };
 
+// The image, label and title stay put; only the body scrolls, so the panel keeps
+// its heading visible however long the text is.
 const TEXT_BLOCK_STYLE: React.CSSProperties = {
   padding: '24px',
   display: 'flex',
   flexDirection: 'column',
   gap: 8,
+  minHeight: 0,
+};
+
+const BODY_STYLE: React.CSSProperties = {
+  fontSize: 16,
+  lineHeight: '24px',
+  margin: 0,
+  minHeight: 0,
+  overflowY: 'auto',
+  overscrollBehavior: 'contain',
+  scrollbarWidth: 'thin',
 };
 
 const AnnotationPanel = ({ annotation, hotspotPosition, onClose }: AnnotationPanelProps) => {
@@ -190,15 +203,7 @@ const AnnotationPanel = ({ annotation, hotspotPosition, onClose }: AnnotationPan
             {annotation.title}
           </h2>
           {annotation.bodyText && (
-            <p
-              data-testid='annotation-panel-description'
-              style={{
-                fontSize: 16,
-                color: theme.palette.TwClrTxt,
-                lineHeight: '24px',
-                margin: 0,
-              }}
-            >
+            <p data-testid='annotation-panel-description' style={{ ...BODY_STYLE, color: theme.palette.TwClrTxt }}>
               {annotation.bodyText}
             </p>
           )}

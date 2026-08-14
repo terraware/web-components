@@ -51,6 +51,17 @@ WithImage.args = {
   onClose: () => window.alert('Closed'),
 };
 
+export const LongText = Template.bind({});
+LongText.args = {
+  annotation: {
+    ...baseAnnotation,
+    label: 'Restoration site',
+    imageUrls: [SAMPLE_PHOTOS[0].url],
+    bodyText: Array(8).fill(baseAnnotation.bodyText).join(' '),
+  },
+  onClose: () => window.alert('Closed'),
+};
+
 export const MultipleImages = Template.bind({});
 MultipleImages.args = {
   annotation: {
