@@ -15,23 +15,22 @@ import {
   XrInputSource,
 } from 'playcanvas';
 
-import { wrapText } from './vr-annotation-panel-layout';
+import {
+  BODY_LINE_HEIGHT,
+  PANEL_CANVAS_WIDTH,
+  PANEL_FONTS,
+  PANEL_MAX_HEIGHT,
+  PANEL_PAD_X,
+  type PanelLayout,
+  TITLE_LINE_HEIGHT,
+  layoutPanel,
+} from './vr-annotation-panel-layout';
 import { rayQuadHit } from './xr-ray-quad';
 
-const CANVAS_WIDTH = 1024;
-const CANVAS_HEIGHT = 768;
-
 const PANEL_WIDTH = 7.5;
-const PANEL_HEIGHT = (PANEL_WIDTH * CANVAS_HEIGHT) / CANVAS_WIDTH;
 
 /** Gap (m) between the top of the hotspot and the bottom edge of the panel. */
 const PANEL_GAP = 0.75;
-
-/** World-space offset from the anchored hotspot: raise the panel above it so the
- * (tall) panel clears the hotspot rather than covering it. */
-const PANEL_OFFSET = new Vec3(0, PANEL_HEIGHT / 2 + PANEL_GAP, 0);
-
-const PAD_X = 48;
 
 /** Local +z (the quad's front face) — used to derive the panel's yaw toward the viewer. */
 const FORWARD_Z = new Vec3(0, 0, 1);
@@ -40,10 +39,6 @@ const RIGHT_AXIS = new Vec3(1, 0, 0);
 const UP_AXIS = new Vec3(0, 1, 0);
 
 const RAD_TO_DEG = 180 / Math.PI;
-
-/** Fixed image band (canvas px) so arrows/dots keep a stable position while images load. */
-const IMAGE_Y = 40;
-const IMAGE_H = 360;
 
 /** Width (canvas px) of the left/right arrow hit + draw zones over the image band. */
 const ARROW_ZONE_W = 170;
@@ -65,6 +60,10 @@ export class VrAnnotationPanel extends Script {
   private _drawnSignature: string | null = null;
   private _currentImage = 0;
   private _loadToken = 0;
+  private _layout?: PanelLayout;
+  /** Height (canvas px) the content currently occupies; the rest of the canvas is unused. */
+  private _canvasHeight = PANEL_MAX_HEIGHT;
+  private _panelHeight = (PANEL_WIDTH * PANEL_MAX_HEIGHT) / PANEL_CANVAS_WIDTH;
 
   private _headRotation = new Quat();
   private _anchor = new Vec3();
@@ -79,34 +78,35 @@ export class VrAnnotationPanel extends Script {
       return;
     }
     const images = this.imageUrls ?? [];
-    if (images.length <= 1) {
+    const band = this._layout?.image;
+    if (images.length <= 1 || !band) {
       return;
     }
     const hit = this._rayQuadHit(inputSource.getOrigin(), inputSource.getDirection());
     if (!hit) {
       return;
     }
-    const cx = ((hit.u + 1) / 2) * CANVAS_WIDTH;
-    const cy = ((1 - hit.v) / 2) * CANVAS_HEIGHT;
-    if (cy < IMAGE_Y || cy > IMAGE_Y + IMAGE_H) {
+    const cx = ((hit.u + 1) / 2) * PANEL_CANVAS_WIDTH;
+    const cy = ((1 - hit.v) / 2) * this._canvasHeight;
+    if (cy < band.y || cy > band.y + band.height) {
       return;
     }
     if (cx <= ARROW_ZONE_W) {
       this._setImage((this._currentImage - 1 + images.length) % images.length);
-    } else if (cx >= CANVAS_WIDTH - ARROW_ZONE_W) {
+    } else if (cx >= PANEL_CANVAS_WIDTH - ARROW_ZONE_W) {
       this._setImage((this._currentImage + 1) % images.length);
     }
   };
 
   initialize() {
     this._canvas = document.createElement('canvas');
-    this._canvas.width = CANVAS_WIDTH;
-    this._canvas.height = CANVAS_HEIGHT;
+    this._canvas.width = PANEL_CANVAS_WIDTH;
+    this._canvas.height = PANEL_MAX_HEIGHT;
 
     this._texture = new Texture(this.app.graphicsDevice, {
       name: 'vr-annotation-panel',
-      width: CANVAS_WIDTH,
-      height: CANVAS_HEIGHT,
+      width: PANEL_CANVAS_WIDTH,
+      height: PANEL_MAX_HEIGHT,
       addressU: ADDRESS_CLAMP_TO_EDGE,
       addressV: ADDRESS_CLAMP_TO_EDGE,
       minFilter: FILTER_LINEAR,
@@ -139,16 +139,34 @@ export class VrAnnotationPanel extends Script {
   }
 
   private _createMesh(): Mesh {
-    const hw = PANEL_WIDTH / 2;
-    const hh = PANEL_HEIGHT / 2;
     const mesh = new Mesh(this.app.graphicsDevice);
-    mesh.setPositions([-hw, -hh, 0, hw, -hh, 0, hw, hh, 0, -hw, hh, 0]);
     mesh.setNormals([0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1]);
-    mesh.setUvs(0, [0, 1, 1, 1, 1, 0, 0, 0]);
     mesh.setIndices([0, 1, 2, 0, 2, 3]);
-    mesh.update();
+    this._writeQuad(mesh);
 
     return mesh;
+  }
+
+  /** Positions the quad for the current panel height and maps it onto the used slice of the
+   * canvas, leaving the unused remainder of the (fixed-size) texture off the mesh. */
+  private _writeQuad(mesh: Mesh) {
+    const hw = PANEL_WIDTH / 2;
+    const hh = this._panelHeight / 2;
+    const vBottom = this._canvasHeight / PANEL_MAX_HEIGHT;
+    mesh.setPositions([-hw, -hh, 0, hw, -hh, 0, hw, hh, 0, -hw, hh, 0]);
+    mesh.setUvs(0, [0, vBottom, 1, vBottom, 1, 0, 0, 0]);
+    mesh.update();
+  }
+
+  private _setPanelHeight(canvasHeight: number) {
+    if (canvasHeight === this._canvasHeight) {
+      return;
+    }
+    this._canvasHeight = canvasHeight;
+    this._panelHeight = (PANEL_WIDTH * canvasHeight) / PANEL_CANVAS_WIDTH;
+    if (this._mesh) {
+      this._writeQuad(this._mesh);
+    }
   }
 
   private _roundRect(ctx: CanvasRenderingContext2D, x: number, y: number, w: number, h: number, r: number) {
@@ -181,7 +199,7 @@ export class VrAnnotationPanel extends Script {
 
   private _drawDots(ctx: CanvasRenderingContext2D, count: number, dotY: number) {
     const gap = 26;
-    const startX = CANVAS_WIDTH / 2 - ((count - 1) * gap) / 2;
+    const startX = PANEL_CANVAS_WIDTH / 2 - ((count - 1) * gap) / 2;
     for (let i = 0; i < count; i++) {
       ctx.beginPath();
       ctx.arc(startX + i * gap, dotY, 7, 0, Math.PI * 2);
@@ -195,82 +213,76 @@ export class VrAnnotationPanel extends Script {
     if (!ctx) {
       return;
     }
-    ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+
+    const contentWidth = PANEL_CANVAS_WIDTH - PANEL_PAD_X * 2;
+    const images = this.imageUrls ?? [];
+    const layout = layoutPanel({
+      title: this.title,
+      label: this.label,
+      bodyText: this.bodyText,
+      imageCount: images.length,
+      contentWidth,
+      measure: (text, style) => {
+        ctx.font = PANEL_FONTS[style];
+
+        return ctx.measureText(text).width;
+      },
+    });
+    this._layout = layout;
+    this._setPanelHeight(layout.height);
+
+    ctx.clearRect(0, 0, PANEL_CANVAS_WIDTH, PANEL_MAX_HEIGHT);
 
     ctx.fillStyle = 'rgba(255, 255, 255, 0.96)';
-    this._roundRect(ctx, 0, 0, CANVAS_WIDTH, CANVAS_HEIGHT, 32);
+    this._roundRect(ctx, 0, 0, PANEL_CANVAS_WIDTH, layout.height, 32);
     ctx.fill();
 
-    let y = IMAGE_Y;
-    const contentWidth = CANVAS_WIDTH - PAD_X * 2;
-    const images = this.imageUrls ?? [];
-
-    if (images.length > 0) {
+    if (layout.image) {
+      const { y: bandY, height: bandH } = layout.image;
       ctx.save();
-      this._roundRect(ctx, PAD_X, IMAGE_Y, contentWidth, IMAGE_H, 16);
+      this._roundRect(ctx, PANEL_PAD_X, bandY, contentWidth, bandH, 16);
       ctx.clip();
       if (image) {
-        const scale = Math.max(contentWidth / image.width, IMAGE_H / image.height);
+        const scale = Math.max(contentWidth / image.width, bandH / image.height);
         const dw = image.width * scale;
         const dh = image.height * scale;
-        ctx.drawImage(image, PAD_X + (contentWidth - dw) / 2, IMAGE_Y + (IMAGE_H - dh) / 2, dw, dh);
+        ctx.drawImage(image, PANEL_PAD_X + (contentWidth - dw) / 2, bandY + (bandH - dh) / 2, dw, dh);
       } else {
         ctx.fillStyle = 'rgba(0, 0, 0, 0.06)';
-        ctx.fillRect(PAD_X, IMAGE_Y, contentWidth, IMAGE_H);
+        ctx.fillRect(PANEL_PAD_X, bandY, contentWidth, bandH);
       }
       ctx.restore();
 
-      y = IMAGE_Y + IMAGE_H + 16;
-
-      if (images.length > 1) {
-        const bandCenterY = IMAGE_Y + IMAGE_H / 2;
+      if (layout.dotsY !== null) {
+        const bandCenterY = bandY + bandH / 2;
         this._drawArrow(ctx, ARROW_ZONE_W / 2, bandCenterY, true);
-        this._drawArrow(ctx, CANVAS_WIDTH - ARROW_ZONE_W / 2, bandCenterY, false);
-        this._drawDots(ctx, images.length, y + 4);
-        y += 32;
+        this._drawArrow(ctx, PANEL_CANVAS_WIDTH - ARROW_ZONE_W / 2, bandCenterY, false);
+        this._drawDots(ctx, images.length, layout.dotsY);
       }
-
-      y += 16;
     }
 
-    if (this.label) {
-      ctx.font = '600 28px sans-serif';
+    if (layout.chip && this.label) {
+      ctx.font = PANEL_FONTS.label;
       ctx.textBaseline = 'middle';
-      const chipW = ctx.measureText(this.label).width + 32;
-      const chipH = 44;
       ctx.fillStyle = 'rgba(44, 134, 88, 0.95)';
-      this._roundRect(ctx, PAD_X, y, chipW, chipH, 12);
+      this._roundRect(ctx, PANEL_PAD_X, layout.chip.y, layout.chip.width, layout.chip.height, 12);
       ctx.fill();
       ctx.fillStyle = '#ffffff';
-      ctx.fillText(this.label, PAD_X + 16, y + chipH / 2);
-      y += chipH + 24;
+      ctx.fillText(this.label, PANEL_PAD_X + 16, layout.chip.y + layout.chip.height / 2);
     }
 
     ctx.textBaseline = 'top';
     ctx.fillStyle = '#000000';
-    ctx.font = '700 48px sans-serif';
-    const titleLines = wrapText(this.title, contentWidth, (s) => ctx.measureText(s).width);
-    for (const line of titleLines) {
-      if (y > CANVAS_HEIGHT - 40) {
-        break;
-      }
-      ctx.fillText(line, PAD_X, y);
-      y += 56;
-    }
-    y += 16;
+    ctx.font = PANEL_FONTS.title;
+    layout.title.lines.forEach((line, index) => {
+      ctx.fillText(line, PANEL_PAD_X, layout.title.y + index * TITLE_LINE_HEIGHT);
+    });
 
-    if (this.bodyText) {
-      ctx.font = '400 32px sans-serif';
-      ctx.fillStyle = 'rgba(0, 0, 0, 0.85)';
-      const lines = wrapText(this.bodyText, contentWidth, (s) => ctx.measureText(s).width);
-      for (const line of lines) {
-        if (y > CANVAS_HEIGHT - 40) {
-          break;
-        }
-        ctx.fillText(line, PAD_X, y);
-        y += 40;
-      }
-    }
+    ctx.font = PANEL_FONTS.body;
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.85)';
+    layout.body.lines.forEach((line, index) => {
+      ctx.fillText(line, PANEL_PAD_X, layout.body.y + index * BODY_LINE_HEIGHT);
+    });
 
     this._texture?.upload();
   }
@@ -305,7 +317,7 @@ export class VrAnnotationPanel extends Script {
     rotation.transformVector(UP_AXIS, this._axisUp);
     this.entity.getWorldTransform().getScale(this._scratchScale);
     const halfWidth = (PANEL_WIDTH / 2) * this._scratchScale.x;
-    const halfHeight = (PANEL_HEIGHT / 2) * this._scratchScale.y;
+    const halfHeight = (this._panelHeight / 2) * this._scratchScale.y;
 
     return rayQuadHit(
       origin,
@@ -343,11 +355,7 @@ export class VrAnnotationPanel extends Script {
       return;
     }
     this._anchor.copy(anchor.getPosition());
-    this.entity.setPosition(
-      this._anchor.x + PANEL_OFFSET.x,
-      this._anchor.y + PANEL_OFFSET.y,
-      this._anchor.z + PANEL_OFFSET.z
-    );
+    this.entity.setPosition(this._anchor.x, this._anchor.y + this._panelHeight / 2 + PANEL_GAP, this._anchor.z);
 
     // Billboard on yaw only: face the viewer horizontally but stay upright and level, so
     // tilting/rolling the headset does not tilt the panel. Derived from the head's forward
