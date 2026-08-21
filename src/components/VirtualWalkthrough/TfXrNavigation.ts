@@ -46,6 +46,18 @@ export class TfXrNavigation extends PcXrNavigation {
     return !this.enableTeleport || this.isTeleportBlocked?.(inputSource) === true;
   }
 
+  /**
+   * The base script resolves the camera once in initialize() and every locomotion path is gated on
+   * having found one, so a rig handed its camera any later than that stays inert for the whole
+   * session. An adopted scene camera lands in an effect, a commit after this script mounts.
+   */
+  private _resolveCamera() {
+    const internals = this as unknown as XrNavigationInternals;
+    if (!internals._cameraEntity) {
+      internals._cameraEntity = this.entity.findComponent('camera')?.entity ?? null;
+    }
+  }
+
   tryTeleport(inputSource: XrInputSource) {
     // The latch decides on the frames the press actually aimed through, because super.tryTeleport
     // commits the arc hit cached back then rather than re-tracing the release-time ray. The live
@@ -59,6 +71,7 @@ export class TfXrNavigation extends PcXrNavigation {
   }
 
   update(dt: number) {
+    this._resolveCamera();
     super.update(dt);
 
     const internals = this as unknown as XrNavigationInternals;
