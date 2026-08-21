@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import React, { ReactNode, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import { useTheme } from '@mui/material';
 import { Entity } from '@playcanvas/react';
@@ -53,6 +53,11 @@ const MAX_HOTSPOT_WORLD_SIZE = 0.75;
 export interface VirtualWalkthroughViewerProps {
   splatSrc: string;
   splatFormat?: SplatFormat;
+  /**
+   * Camera component mounted on the camera entity. Defaults to a 60 degree camera clearing to the
+   * horizon color.
+   */
+  camera?: ReactNode;
   /** World-space point the camera looks at. */
   origin?: [number, number, number];
   /** World-space point the camera starts at. */
@@ -99,6 +104,7 @@ export interface VirtualWalkthroughViewerProps {
 const VirtualWalkthroughViewer = ({
   splatSrc,
   splatFormat,
+  camera = <Camera clearColor='#EAF8FF' fov={60} />,
   origin = DEFAULT_FOCUS_POINT,
   cameraPosition = DEFAULT_POSITION,
   sceneBounds,
@@ -398,7 +404,7 @@ const VirtualWalkthroughViewer = ({
 
       <Entity name='camera-root'>
         <Entity name='camera'>
-          <Camera clearColor='#EAF8FF' fov={60} />
+          {camera}
           {!isCurrentlyInXr && (
             <Script
               script={WalkthroughCamera}

@@ -1,5 +1,6 @@
 import React, { useCallback, useState } from 'react';
 
+import { Camera } from '@playcanvas/react/components';
 import { action } from '@storybook/addon-actions';
 import { Story } from '@storybook/react';
 
@@ -110,6 +111,12 @@ const Template: Story<Partial<VirtualWalkthroughViewerProps>> = (args) => (
 );
 
 export const Default = Template.bind({});
+
+// Exercises a camera being passed into the viewer
+export const WideFieldOfView = Template.bind({});
+WideFieldOfView.args = {
+  camera: <Camera clearColor='#EAF8FF' fov={120} />,
+};
 
 // Browsers only grant a session from a user gesture, and selecting a story is a click in Storybook's
 // manager frame, which leaves the preview iframe without one.
