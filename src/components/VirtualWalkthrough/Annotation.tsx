@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useRef } from 'react';
+import React, { useCallback, useContext, useEffect, useMemo, useRef } from 'react';
 
 import { Entity } from '@playcanvas/react';
 import { Script } from '@playcanvas/react/components';
@@ -7,6 +7,7 @@ import { Gizmo, Entity as PcEntity, TranslateGizmo } from 'playcanvas';
 import { Annotation as PcAnnotation } from 'playcanvas/scripts/esm/annotations.mjs';
 import { CameraControls } from 'playcanvas/scripts/esm/camera-controls.mjs';
 
+import { CameraEntityContext } from '../../hooks/cameraEntityContext';
 import { useCameraPosition } from '../../hooks/useCameraPosition';
 import './annotation-styles.css';
 
@@ -75,6 +76,7 @@ const Annotation = (props: AnnotationProps & { index: number }) => {
     index,
   } = props;
   const app = useApp();
+  const walkthroughCamera = useContext(CameraEntityContext);
   const { setCamera } = useCameraPosition();
   const gizmoRef = useRef<TranslateGizmo | null>(null);
   const layerRef = useRef<any>(null);
@@ -173,7 +175,9 @@ const Annotation = (props: AnnotationProps & { index: number }) => {
 
     const setupGizmo = () => {
       const annotationEntity = app.root.findByName(entityName) as PcEntity | null;
-      const cameraEntity = app.root.findByName('camera') as PcEntity | null;
+      // The walkthrough's own camera, not whichever entity in the scene is named `camera`: the
+      // gizmo drags against the view the walkthrough's controls drive.
+      const cameraEntity = walkthroughCamera;
       const cameraComponent = cameraEntity?.camera;
       const cameraControls = cameraEntity?.script?.get(CameraControls.scriptName) as any;
 
@@ -225,7 +229,7 @@ const Annotation = (props: AnnotationProps & { index: number }) => {
       clearInterval(intervalId);
       cleanupGizmo();
     };
-  }, [app, isEdit, isSelected, visible, onPositionChange, entityName]);
+  }, [app, isEdit, isSelected, visible, onPositionChange, entityName, walkthroughCamera]);
 
   return (
     <Entity name={entityName} position={position}>

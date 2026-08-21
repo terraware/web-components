@@ -1,6 +1,7 @@
 import {
   BLEND_NORMAL,
   CULLFACE_NONE,
+  CameraComponent,
   Color,
   Entity,
   LAYERID_IMMEDIATE,
@@ -258,7 +259,9 @@ export class BoundaryWallScript extends Script {
    */
   private _resolveDependencies() {
     if (!this._camera) {
-      this._camera = this.app.root.findByName('camera') as Entity | null;
+      // The head is wherever the camera component is, which is not necessarily an entity named
+      // `camera`: a host scene the walkthrough is mounted into may own the only camera there is.
+      this._camera = (this.app.root.findComponent('camera') as CameraComponent | null)?.entity ?? null;
     }
     if (!this._navigation) {
       const rig = this.app.root.findByName('camera-root');

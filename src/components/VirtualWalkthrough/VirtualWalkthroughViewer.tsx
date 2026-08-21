@@ -4,9 +4,10 @@ import { useTheme } from '@mui/material';
 import { Entity } from '@playcanvas/react';
 import { Camera, Script } from '@playcanvas/react/components';
 import { useApp } from '@playcanvas/react/hooks';
-import { Color, Vec3, XrInputSource } from 'playcanvas';
+import { Color, Entity as PcEntity, Vec3, XrInputSource } from 'playcanvas';
 import { XrControllers } from 'playcanvas/scripts/esm/xr/xr-controllers.mjs';
 
+import { CameraEntityContext } from '../../hooks/cameraEntityContext';
 import { useCameraPosition } from '../../hooks/useCameraPosition';
 import { useDevicePerformance } from '../../hooks/useDevicePerformance';
 import { useXr } from '../../hooks/useXr';
@@ -132,7 +133,12 @@ const VirtualWalkthroughViewer = ({
   maxImagesPerAnnotation,
 }: VirtualWalkthroughViewerProps) => {
   const theme = useTheme();
-  const { setCamera } = useCameraPosition();
+  // Held as state rather than refs so the effects and hooks that address these entities re-run once
+  // they exist. Addressed directly rather than by name: a viewer mounted into a host's scene shares
+  // the graph with the host's entities, and findByName returns whichever was added first.
+  const [cameraRoot, setCameraRoot] = useState<PcEntity | null>(null);
+  const [cameraEntity, setCameraEntity] = useState<PcEntity | null>(null);
+  const { setCamera } = useCameraPosition(cameraEntity);
   const { isHighPerformance } = useDevicePerformance();
   const app = useApp();
 
@@ -229,28 +235,28 @@ const VirtualWalkthroughViewer = ({
       return;
     }
     // @ts-expect-error - scripts are added dynamically to the camera entity
-    const walkthroughCam = app.root.findByName('camera')?.script?.walkthroughCamera;
+    const walkthroughCam = cameraEntity?.script?.walkthroughCamera;
     if (walkthroughCam) {
       // Should be changed to a react prop if shallowEquals in playcanvas/react is fixed (see https://github.com/playcanvas/react/pull/298)
       walkthroughCam.groundPlane = groundPlane;
     }
-  }, [groundPlane, app, isCurrentlyInXr]);
+  }, [groundPlane, cameraEntity, isCurrentlyInXr]);
 
   useEffect(() => {
     // Set imperatively for the same reason as BoundaryRing: boundsCenter is a Vec3, and the
     // @playcanvas/react memo() comparator stops at the first prop with an .equals() method.
     // @ts-expect-error - scripts are added dynamically to the entity
-    const navigation = app.root.findByName('camera-root')?.script?.tfXrNavigation;
+    const navigation = cameraRoot?.script?.tfXrNavigation;
     if (navigation) {
       navigation.boundsCenter = sceneBoundsCenter;
       navigation.boundsRadius = sceneBoundsRadius;
     }
-  }, [app, sceneBoundsCenter, sceneBoundsRadius]);
+  }, [cameraRoot, sceneBoundsCenter, sceneBoundsRadius]);
 
   const handleToggleFreeFly = useCallback(() => {
     const newFreeFly = !isFreeFly;
     // @ts-expect-error - scripts are added dynamically to the camera entity
-    const walkthroughCam = app.root.findByName('camera')?.script?.walkthroughCamera;
+    const walkthroughCam = cameraEntity?.script?.walkthroughCamera;
     if (walkthroughCam) {
       walkthroughCam.freeFly = newFreeFly;
     }
@@ -258,7 +264,7 @@ const VirtualWalkthroughViewer = ({
       setCamera(origin, cameraPosition);
     }
     setIsFreeFly(newFreeFly);
-  }, [isFreeFly, app, setCamera, origin, cameraPosition]);
+  }, [isFreeFly, cameraEntity, setCamera, origin, cameraPosition]);
 
   useEffect(() => {
     setLocalAnnotations(annotations);
@@ -402,15 +408,15 @@ const VirtualWalkthroughViewer = ({
   );
 
   return (
-    <>
+    <CameraEntityContext.Provider value={cameraEntity}>
       <GradientSky
         topColor={skyColor || '#FFFFFF'}
         horizonColor={skyColor || '#EAF8FF'}
         groundColor={groundColor || '#C3BDB7'}
       />
 
-      <Entity name='camera-root'>
-        <Entity name='camera'>
+      <Entity name='camera-root' ref={setCameraRoot}>
+        <Entity name='camera' ref={setCameraEntity}>
           {camera}
           {!isCurrentlyInXr && (
             <Script
@@ -549,7 +555,7 @@ const VirtualWalkthroughViewer = ({
         hotspotPosition={viewedScreenPos}
         onClose={handleCloseAnnotation}
       />
-    </>
+    </CameraEntityContext.Provider>
   );
 };
 
