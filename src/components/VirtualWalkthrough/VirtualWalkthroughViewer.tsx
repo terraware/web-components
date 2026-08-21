@@ -92,6 +92,12 @@ export interface VirtualWalkthroughViewerProps {
    * but couldn't be started, in which case the error says why.
    */
   onXrExit?: (error?: Error) => void;
+  /**
+   * Runs instead of ending the XR session when the user activates the in-headset exit button.
+   * Without it the button ends the session, which in turn reports `onXrExit`; with it the session
+   * stays running and neither happens, leaving the handler to decide what closing means.
+   */
+  onXrClose?: () => void;
   annotations: AnnotationProps[];
   onSaveAnnotations: (annotations: AnnotationProps[]) => void | Promise<void>;
   editable?: boolean;
@@ -116,6 +122,7 @@ const VirtualWalkthroughViewer = ({
   splatModelProps,
   autoStartVr = false,
   onXrExit,
+  onXrClose,
   annotations,
   onSaveAnnotations,
   editable = false,
@@ -417,7 +424,7 @@ const VirtualWalkthroughViewer = ({
         </Entity>
         {/* Sibling of the camera (not a child): WalkthroughCamera rewrites the camera entity's
             transform every frame, so the button drives its own world pose from the XR head pose. */}
-        <XrExitButton />
+        <XrExitButton onClose={onXrClose} />
         <Script script={XrControllers} enabled={!isEdit} />
         <XrAnnotationInteraction onDismiss={handleCloseAnnotation} />
         <XrPointerRay />
