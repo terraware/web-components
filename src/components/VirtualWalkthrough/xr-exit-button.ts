@@ -56,6 +56,12 @@ export class XrExitButton extends Script {
   /** World-space radius of the hover/hit sphere. Slightly larger than halfSize for easier targeting. */
   hitRadius = 0.15;
 
+  /**
+   * Called in place of ending the XR session when the user activates the button, leaving the
+   * session running so the handler decides what happens next.
+   */
+  onClose?: () => void;
+
   private _material?: ShaderMaterial;
   private _texture?: Texture;
   private _mesh?: Mesh;
@@ -89,7 +95,7 @@ export class XrExitButton extends Script {
       return;
     }
     if (this.rayHitsButton(inputSource.getOrigin(), inputSource.getDirection())) {
-      this.app.xr?.end();
+      this.close();
     }
   };
 
@@ -100,6 +106,16 @@ export class XrExitButton extends Script {
     }
 
     return raySphereIntersect(origin, direction, this.entity.getPosition(), this.hitRadius);
+  }
+
+  /** The button's exit action: the `onClose` handler when one is set, otherwise ending the session. */
+  close() {
+    if (this.onClose) {
+      this.onClose();
+
+      return;
+    }
+    this.app.xr?.end();
   }
 
   /** The button's static artwork, painted once. Only the sweep changes per frame, and that lives in
@@ -177,7 +193,7 @@ export class XrExitButton extends Script {
       const facePressed = this._faceButtons.justPressed(source);
 
       if (sourceHovers && facePressed) {
-        this.app.xr?.end();
+        this.close();
 
         return;
       }
@@ -194,7 +210,7 @@ export class XrExitButton extends Script {
     this._material?.setParameter('uProgress', pieShaderProgress(hold.progress));
 
     if (hold.justFired) {
-      this.app.xr?.end();
+      this.close();
 
       return;
     }
