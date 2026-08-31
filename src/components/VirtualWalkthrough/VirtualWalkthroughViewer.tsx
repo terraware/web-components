@@ -133,9 +133,9 @@ const VirtualWalkthroughViewer = ({
   maxImagesPerAnnotation,
 }: VirtualWalkthroughViewerProps) => {
   const theme = useTheme();
-  // Held as state rather than refs so the effects and hooks that address these entities re-run once
-  // they exist. Addressed directly rather than by name: a viewer mounted into a host's scene shares
-  // the graph with the host's entities, and findByName returns whichever was added first.
+  // Held as state so the effects and hooks that address these entities re-run once they
+  // exist. Addressed directly: a viewer mounted into a host's scene shares the graph
+  // with the host's entities, so the camera can be found by component type.
   const [cameraRoot, setCameraRoot] = useState<PcEntity | null>(null);
   const [cameraEntity, setCameraEntity] = useState<PcEntity | null>(null);
   const { setCamera } = useCameraPosition(cameraEntity);

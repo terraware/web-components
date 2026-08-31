@@ -175,11 +175,8 @@ const Annotation = (props: AnnotationProps & { index: number }) => {
 
     const setupGizmo = () => {
       const annotationEntity = app.root.findByName(entityName) as PcEntity | null;
-      // The walkthrough's own camera, not whichever entity in the scene is named `camera`: the
-      // gizmo drags against the view the walkthrough's controls drive.
-      const cameraEntity = walkthroughCamera;
-      const cameraComponent = cameraEntity?.camera;
-      const cameraControls = cameraEntity?.script?.get(CameraControls.scriptName) as any;
+      const cameraComponent = walkthroughCamera?.camera;
+      const cameraControls = walkthroughCamera?.script?.get(CameraControls.scriptName) as any;
 
       if (!annotationEntity || !cameraComponent) {
         return false;

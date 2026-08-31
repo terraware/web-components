@@ -8,7 +8,7 @@ import { CameraEntityContext } from './cameraEntityContext';
 /**
  * @param cameraEntity - The camera to drive. Callers above {@link CameraEntityContext} pass it
  * directly; the ones beneath take it from the context, and anything with neither falls back to
- * looking an entity named `camera` up in the scene graph.
+ * looking an entity named `camera` in the scene graph.
  */
 export const useCameraPosition = (cameraEntity?: Entity | null) => {
   const app = useApp();

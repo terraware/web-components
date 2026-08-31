@@ -129,8 +129,6 @@ export class XrGazeDwell extends Script {
 
     if (result.justOpened && target !== null) {
       const { entity, script } = candidates[target];
-      // Resolved by component rather than by entity name: the walkthrough can be mounted into a
-      // host scene whose own camera entity is also called `camera`.
       const camera = this.app.root.findComponent('camera') as CameraComponent | null;
       const screen = camera?.worldToScreen(entity.getPosition());
       script.onVrOpenCallback(screen?.x ?? 0, screen?.y ?? 0);

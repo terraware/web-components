@@ -43,8 +43,6 @@ export class XrAnnotationInteraction extends Script {
     }
 
     const { entity, script } = candidates[index];
-    // Resolved by component rather than by entity name: the walkthrough can be mounted into a host
-    // scene whose own camera entity is also called `camera`, and can be handed no camera of its own.
     const camera = this.app.root.findComponent('camera') as CameraComponent | null;
     const screen = camera?.worldToScreen(entity.getPosition());
     script.onVrOpenCallback(screen?.x ?? 0, screen?.y ?? 0);
