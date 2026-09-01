@@ -10,6 +10,15 @@ interface AdoptedPose {
 }
 
 /**
+ * A camera the walkthrough took over, and the call that hands it back.
+ */
+export interface AdoptedCamera {
+  /** The entity now carrying the live camera component, which the rig poses and projects from. */
+  camera: Entity;
+  release: () => void;
+}
+
+/**
  * Hands the scene's existing camera to a walkthrough rig that hasn't been given one.
  *
  * A caller mounting the viewer into a scene it doesn't own passes `camera={null}`, because an XR
@@ -17,10 +26,11 @@ interface AdoptedPose {
  * `start` refuses while a session is running — so a walkthrough that brought a camera of its own
  * could only become the session's camera by ending it, which drops the user out of the headset.
  *
- * That leaves the rig with no camera under it, and everything that solves against the head resolves
- * it with `findComponent('camera')` on the rig: `XrStartPose`, `XrNavigation`'s thumbstick movement
- * and turning, and the bounds clamp all go inert, so the head is never placed at the walkthrough's
- * start point and can never be moved from wherever the host scene left it. Splat LOD is chosen from
+ * That leaves the rig with no camera under it, and everything that poses or solves against the head
+ * resolves it with `findComponent('camera')` on the rig: `WalkthroughCamera`'s pointer and keyboard
+ * walk, `XrStartPose`, `XrNavigation`'s thumbstick movement and turning, and the bounds clamp all go
+ * inert, so the head is never placed at the walkthrough's start point and can never be moved from
+ * wherever the host scene left it. Splat LOD is chosen from
  * the camera's distance to each octree node, so the far side of the model stays coarse for the whole
  * session no matter which way the headset turns.
  *
@@ -33,9 +43,10 @@ interface AdoptedPose {
  * @param rig - The entity the walkthrough's XR scripts move, `camera-root`.
  * @param ownCamera - The entity the viewer mounts its own camera on. Nothing is adopted when it
  * already carries one.
- * @returns A function that puts the camera back, or null when there was nothing to adopt.
+ * @returns The adopted camera and the call that puts it back, or null when there was nothing to
+ * adopt.
  */
-export const adoptSceneCamera = (root: Entity, rig: Entity, ownCamera: Entity): (() => void) | null => {
+export const adoptSceneCamera = (root: Entity, rig: Entity, ownCamera: Entity): AdoptedCamera | null => {
   if (ownCamera.camera) {
     return null;
   }
@@ -57,9 +68,12 @@ export const adoptSceneCamera = (root: Entity, rig: Entity, ownCamera: Entity): 
   // only has to be restored because a session overwrites it with the head pose every frame.
   rig.addChild(camera);
 
-  return () => {
-    previous.parent.addChild(camera);
-    camera.setLocalPosition(previous.position);
-    camera.setLocalRotation(previous.rotation);
+  return {
+    camera,
+    release: () => {
+      previous.parent.addChild(camera);
+      camera.setLocalPosition(previous.position);
+      camera.setLocalRotation(previous.rotation);
+    },
   };
 };

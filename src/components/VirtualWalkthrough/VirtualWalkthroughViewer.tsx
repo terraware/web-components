@@ -145,7 +145,12 @@ const VirtualWalkthroughViewer = ({
   // with the host's entities, so the camera can be found by component type.
   const [cameraRoot, setCameraRoot] = useState<PcEntity | null>(null);
   const [cameraEntity, setCameraEntity] = useState<PcEntity | null>(null);
-  const { setCamera } = useCameraPosition(cameraEntity);
+  const adoptedCamera = useAdoptedCamera(cameraRoot, cameraEntity);
+  // The entity carrying the live camera component: the viewer's own, or the host's while adopted.
+  // Everything that poses the camera or projects through it addresses this rather than the entity
+  // the viewer mounts a camera of its own on, which holds nothing while a camera is adopted.
+  const activeCamera = adoptedCamera ?? cameraEntity;
+  const { setCamera } = useCameraPosition(activeCamera);
   const { isHighPerformance } = useDevicePerformance();
   const app = useApp();
 
@@ -170,7 +175,6 @@ const VirtualWalkthroughViewer = ({
     onError: reportXrError,
   });
   useXrRenderTuning();
-  useAdoptedCamera(cameraRoot, cameraEntity);
 
   const autoStartRequested = useRef(false);
 
@@ -242,13 +246,13 @@ const VirtualWalkthroughViewer = ({
     if (!groundPlane.length || isCurrentlyInXr) {
       return;
     }
-    // @ts-expect-error - scripts are added dynamically to the camera entity
-    const walkthroughCam = cameraEntity?.script?.walkthroughCamera;
+    // @ts-expect-error - scripts are added dynamically to the entity
+    const walkthroughCam = cameraRoot?.script?.walkthroughCamera;
     if (walkthroughCam) {
       // Should be changed to a react prop if shallowEquals in playcanvas/react is fixed (see https://github.com/playcanvas/react/pull/298)
       walkthroughCam.groundPlane = groundPlane;
     }
-  }, [groundPlane, cameraEntity, isCurrentlyInXr]);
+  }, [groundPlane, cameraRoot, isCurrentlyInXr]);
 
   useEffect(() => {
     // Set imperatively for the same reason as BoundaryRing: boundsCenter is a Vec3, and the
@@ -263,8 +267,8 @@ const VirtualWalkthroughViewer = ({
 
   const handleToggleFreeFly = useCallback(() => {
     const newFreeFly = !isFreeFly;
-    // @ts-expect-error - scripts are added dynamically to the camera entity
-    const walkthroughCam = cameraEntity?.script?.walkthroughCamera;
+    // @ts-expect-error - scripts are added dynamically to the entity
+    const walkthroughCam = cameraRoot?.script?.walkthroughCamera;
     if (walkthroughCam) {
       walkthroughCam.freeFly = newFreeFly;
     }
@@ -272,7 +276,7 @@ const VirtualWalkthroughViewer = ({
       setCamera(origin, cameraPosition);
     }
     setIsFreeFly(newFreeFly);
-  }, [isFreeFly, cameraEntity, setCamera, origin, cameraPosition]);
+  }, [isFreeFly, cameraRoot, setCamera, origin, cameraPosition]);
 
   useEffect(() => {
     setLocalAnnotations(annotations);
@@ -416,7 +420,7 @@ const VirtualWalkthroughViewer = ({
   );
 
   return (
-    <CameraEntityContext.Provider value={cameraEntity}>
+    <CameraEntityContext.Provider value={activeCamera}>
       <GradientSky
         topColor={skyColor || '#FFFFFF'}
         horizonColor={skyColor || '#EAF8FF'}
@@ -426,16 +430,19 @@ const VirtualWalkthroughViewer = ({
       <Entity name='camera-root' ref={setCameraRoot}>
         <Entity name='camera' ref={setCameraEntity}>
           {camera}
-          {!isCurrentlyInXr && (
-            <Script
-              script={WalkthroughCamera}
-              boundsCenter={sceneBoundsCenter}
-              boundsRadius={sceneBoundsRadius}
-              enableFly={!isTextFieldFocused}
-              averageCameraHeight={averageCameraHeight}
-            />
-          )}
         </Entity>
+        {/* Mounted on the rig rather than on the camera entity, so it poses whichever camera the rig
+            is holding — the viewer's own, or one adopted from the host scene, which hangs off the rig
+            beside the entity the viewer mounts its own on. */}
+        {!isCurrentlyInXr && (
+          <Script
+            script={WalkthroughCamera}
+            boundsCenter={sceneBoundsCenter}
+            boundsRadius={sceneBoundsRadius}
+            enableFly={!isTextFieldFocused}
+            averageCameraHeight={averageCameraHeight}
+          />
+        )}
         {/* Sibling of the camera (not a child): WalkthroughCamera rewrites the camera entity's
             transform every frame, so the button drives its own world pose from the XR head pose. */}
         <XrExitButton onClose={onXrClose} />

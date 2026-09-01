@@ -116,11 +116,24 @@ export class AutoRotator extends Script {
     }
     window.addEventListener('keydown', this.onKeyDown);
 
-    this.cameraEntity = this.entity.findByName('camera');
-    if (this.cameraEntity) {
-      this.cameraControls = this.cameraEntity.script?.cameraControls ?? null;
-      this.walkthroughCamera = this.cameraEntity.script?.walkthroughCamera ?? null;
-    }
+    this.resolveCamera();
+  }
+
+  /**
+   * Finds the camera and the script posing it. WalkthroughCamera is mounted on this entity, the rig,
+   * so that it poses a camera the walkthrough adopted from a host scene as readily as one of its own;
+   * CameraControls sits on the camera entity itself.
+   *
+   * Called again while nothing has been found, because an adopted camera is reparented into the rig
+   * by an effect that runs after the scripts are mounted.
+   * @private
+   */
+  private resolveCamera() {
+    this.cameraEntity = this.entity.findComponent('camera')?.entity ?? null;
+    this.cameraControls = this.cameraEntity?.script?.cameraControls ?? null;
+    // @ts-expect-error - scripts are added dynamically to the entity
+    const rigWalkthroughCamera = this.entity.script?.walkthroughCamera;
+    this.walkthroughCamera = rigWalkthroughCamera ?? this.cameraEntity?.script?.walkthroughCamera ?? null;
   }
 
   /**
@@ -128,6 +141,10 @@ export class AutoRotator extends Script {
    * Runs after CameraControls updates.
    */
   postUpdate(dt: number) {
+    if (!this.cameraControls && !this.walkthroughCamera) {
+      this.resolveCamera();
+    }
+
     const hasControls = this.cameraControls && this.cameraControls._pose;
     const hasWalkthrough = !!this.walkthroughCamera;
 

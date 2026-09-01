@@ -1,6 +1,6 @@
 {
   "name": "@terraware/web-components",
-  "version": "5.0.6",
+  "version": "5.0.7",
   "author": "Terraformation Inc.",
   "license": "Apache-2.0",
   "repository": {
@@ -60,7 +60,6 @@
     "license-report": "license-report --only=prod --department.value=terraware --relatedTo.value=web-components --output=html > docs/license-report.html",
     "license-report-dist": "license-report --only=prod --department.value=terraware --relatedTo.value=web-components --output=html > dist/license-report.html",
     "check-updates": "yarn build-dictionary && yarn storybook",
-    "prepare": "yarn generate-strings",
     "translate": "yarn run autotranslate && yarn generate-strings",
     "translate:start": "yarn run autotranslate --watch",
     "ts": "tsc --project ./tsconfig.json"

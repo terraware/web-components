@@ -190,3 +190,21 @@ const HostCameraTemplate: Story<Partial<VirtualWalkthroughViewerProps>> = (args)
 };
 
 export const HostOwnedCamera = HostCameraTemplate.bind({});
+
+/**
+ * The same adoption with no session running, which is what a host page shows before anyone puts a
+ * headset on. Pointer drag, WASD, the wheel, auto-rotation and the annotation fly-to all have to
+ * move the host's camera, because it is the only one the scene renders through.
+ */
+const HostCameraDesktopTemplate: Story<Partial<VirtualWalkthroughViewerProps>> = (args) => (
+  <div style={containerStyle}>
+    <Application style={{ width: '100%', height: '100%' }}>
+      <Entity name='camera' position={[0, 1.3, 0.5]}>
+        <Camera clearColor='#01030A' fov={70} nearClip={0.05} farClip={60000} />
+      </Entity>
+      <VirtualWalkthroughViewer {...sceneArgs} {...args} camera={null} />
+    </Application>
+  </div>
+);
+
+export const HostOwnedCameraOutOfXr = HostCameraDesktopTemplate.bind({});
