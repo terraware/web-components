@@ -95,12 +95,18 @@ describe('adoptSceneCamera', () => {
   it('moves the scene camera under the rig', () => {
     const { root, hostCamera, rig, ownCamera } = buildHostScene();
 
-    const release = adopt(root, rig, ownCamera);
+    const adopted = adopt(root, rig, ownCamera);
 
-    expect(release).not.toBeNull();
+    expect(adopted).not.toBeNull();
     expect(hostCamera.parent).toBe(rig);
     // The rig's XR scripts resolve the head with findComponent on the rig itself.
     expect(rig.findComponent('camera')?.entity).toBe(hostCamera);
+  });
+
+  it('reports the camera it adopted, which is the one the viewer has to drive and project from', () => {
+    const { root, hostCamera, rig, ownCamera } = buildHostScene();
+
+    expect(adopt(root, rig, ownCamera)?.camera).toBe(hostCamera as unknown as Entity);
   });
 
   it('keeps the camera where it is when the viewer owns one', () => {
@@ -140,11 +146,11 @@ describe('adoptSceneCamera', () => {
   it('puts the camera back where it was when released', () => {
     const { root, hostCamera, rig, ownCamera } = buildHostScene();
 
-    const release = adopt(root, rig, ownCamera);
+    const adopted = adopt(root, rig, ownCamera);
     // A session overwrites the camera's local pose with the head pose every frame, so by the time
     // the walkthrough closes it holds a head pose rather than the host's authored one.
     hostCamera.setLocalPosition(new Vec3(4, 1.6, -7));
-    release?.();
+    adopted?.release();
 
     expect(hostCamera.parent).toBe(root);
     expect(hostCamera.getLocalPosition()).toEqual(new Vec3(0, 1.3, 0.5));
