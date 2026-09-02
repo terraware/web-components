@@ -29,7 +29,7 @@ interface AdoptedPose {
  * changes. The camera becomes a direct child of the rig, which is exactly where a camera the viewer
  * owns sits, so the rig means the same thing either way.
  *
- * @param root - The scene root to look for a camera in.
+ * @param root - The scene root to look for a camera in, expected to hold exactly one camera.
  * @param rig - The entity the walkthrough's XR scripts move, `camera-root`.
  * @param ownCamera - The entity the viewer mounts its own camera on. Nothing is adopted when it
  * already carries one.

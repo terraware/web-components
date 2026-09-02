@@ -64,6 +64,12 @@ export interface VirtualWalkthroughViewerProps {
    * walkthrough that brought its own could only take over by ending the session and dropping the
    * user out of the headset. The walkthrough adopts the scene's existing camera into its rig
    * instead, for as long as it is mounted.
+   *
+   * A scene shared this way is expected to hold exactly one camera. The adoption takes the first
+   * camera in graph traversal order, which is only certain to be the one the headset renders
+   * through while it is the only one there: a scene that also carries a spectator or overlay camera
+   * can hand the rig the wrong entity, and locomotion then goes inert with nothing reported. Prefer
+   * the session's own camera, `app.xr.camera`, over the traversal if that ever needs to hold.
    */
   camera?: ReactNode;
   /** World-space point the camera looks at. */
