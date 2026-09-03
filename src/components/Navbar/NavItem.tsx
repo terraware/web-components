@@ -49,10 +49,13 @@ export default function NavItem(props: NavItemProps): JSX.Element {
     return false;
   }, [children]);
 
+  const wasChildrenSelected = React.useRef(hasChildrenSelected());
   React.useEffect(() => {
-    if (hasChildrenSelected()) {
+    const childrenSelected = hasChildrenSelected();
+    if (childrenSelected && !wasChildrenSelected.current) {
       setOpen(true);
     }
+    wasChildrenSelected.current = childrenSelected;
   }, [children, hasChildrenSelected, selected]);
 
   const [open, setOpen] = React.useState(defaultOpen ?? hasChildrenSelected());
