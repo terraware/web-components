@@ -1,4 +1,5 @@
 import {
+  CameraComponent,
   Entity,
   LAYERID_IMMEDIATE,
   Mesh,
@@ -128,8 +129,8 @@ export class XrGazeDwell extends Script {
 
     if (result.justOpened && target !== null) {
       const { entity, script } = candidates[target];
-      const camera = this.app.root.findByName('camera') as any;
-      const screen = camera?.camera?.worldToScreen(entity.getPosition());
+      const camera = this.app.root.findComponent('camera') as CameraComponent | null;
+      const screen = camera?.worldToScreen(entity.getPosition());
       script.onVrOpenCallback(screen?.x ?? 0, screen?.y ?? 0);
     }
   }

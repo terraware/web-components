@@ -1,4 +1,4 @@
-import { Script, Vec3, XRTYPE_VR, XrInputSource } from 'playcanvas';
+import { CameraComponent, Script, Vec3, XRTYPE_VR, XrInputSource } from 'playcanvas';
 
 import { HIT_RADIUS_PAD, collectAnnotationHitCandidates } from './xr-annotation-candidates';
 import { nearestAnnotationHit } from './xr-annotation-targeting';
@@ -43,8 +43,8 @@ export class XrAnnotationInteraction extends Script {
     }
 
     const { entity, script } = candidates[index];
-    const camera = this.app.root.findByName('camera') as any;
-    const screen = camera?.camera?.worldToScreen(entity.getPosition());
+    const camera = this.app.root.findComponent('camera') as CameraComponent | null;
+    const screen = camera?.worldToScreen(entity.getPosition());
     script.onVrOpenCallback(screen?.x ?? 0, screen?.y ?? 0);
   }
 

@@ -1,6 +1,7 @@
 import {
   BLEND_NORMAL,
   CULLFACE_NONE,
+  CameraComponent,
   Color,
   Entity,
   LAYERID_IMMEDIATE,
@@ -258,7 +259,7 @@ export class BoundaryWallScript extends Script {
    */
   private _resolveDependencies() {
     if (!this._camera) {
-      this._camera = this.app.root.findByName('camera') as Entity | null;
+      this._camera = (this.app.root.findComponent('camera') as CameraComponent | null)?.entity ?? null;
     }
     if (!this._navigation) {
       const rig = this.app.root.findByName('camera-root');

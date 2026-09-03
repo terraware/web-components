@@ -1,14 +1,24 @@
-import { useCallback, useMemo } from 'react';
+import { useCallback, useContext, useMemo } from 'react';
 
 import { useApp } from '@playcanvas/react/hooks';
-import { Vec3 } from 'playcanvas';
+import { Entity, Vec3 } from 'playcanvas';
 
-export const useCameraPosition = () => {
+import { CameraEntityContext } from './cameraEntityContext';
+
+/**
+ * @param cameraEntity - The camera to drive. Callers above {@link CameraEntityContext} pass it
+ * directly; the ones beneath take it from the context, and anything with neither falls back to
+ * looking an entity named `camera` in the scene graph.
+ */
+export const useCameraPosition = (cameraEntity?: Entity | null) => {
   const app = useApp();
+  const contextCamera = useContext(CameraEntityContext);
+  const resolvedCamera = cameraEntity ?? contextCamera;
+  const findCamera = useCallback(() => resolvedCamera ?? app.root.findByName('camera'), [app, resolvedCamera]);
 
   const setCamera = useCallback(
     (focus: [number, number, number], position?: [number, number, number], horizontalNdcBias = 0) => {
-      const camera = app.root.findByName('camera');
+      const camera = findCamera();
       // @ts-expect-error - scripts are added dynamically to the camera entity
       const controls = camera?.script?.cameraControls ?? camera?.script?.walkthroughCamera;
       if (controls && camera) {
@@ -16,11 +26,11 @@ export const useCameraPosition = () => {
         controls.reset(new Vec3(focus), position ? new Vec3(position) : camera.getPosition(), horizontalNdcBias);
       }
     },
-    [app]
+    [findCamera]
   );
 
   const getCameraState = useCallback(() => {
-    const camera = app.root.findByName('camera');
+    const camera = findCamera();
     // @ts-expect-error - scripts are added dynamically to the camera entity
     const controls = camera?.script?.cameraControls ?? camera?.script?.walkthroughCamera;
     if (camera && controls) {
@@ -34,7 +44,7 @@ export const useCameraPosition = () => {
     }
 
     return null;
-  }, [app]);
+  }, [findCamera]);
 
   return useMemo(() => ({ setCamera, getCameraState }), [setCamera, getCameraState]);
 };
