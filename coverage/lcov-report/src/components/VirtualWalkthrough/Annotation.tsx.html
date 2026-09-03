@@ -310,7 +310,8 @@
 <a name='L245'></a><a href='#L245'>245</a>
 <a name='L246'></a><a href='#L246'>246</a>
 <a name='L247'></a><a href='#L247'>247</a>
-<a name='L248'></a><a href='#L248'>248</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L248'></a><a href='#L248'>248</a>
+<a name='L249'></a><a href='#L249'>249</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -329,6 +330,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -390,6 +392,7 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -483,7 +486,6 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -557,7 +559,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import React, { useCallback, useEffect, useMemo, useRef } from 'react';
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import React, { useCallback, useContext, useEffect, useMemo, useRef } from 'react';
 &nbsp;
 import { Entity } from '@playcanvas/react';
 import { Script } from '@playcanvas/react/components';
@@ -566,6 +568,7 @@ import { Gizmo, Entity as PcEntity, TranslateGizmo } from 'playcanvas';
 import { Annotation as PcAnnotation } from 'playcanvas/scripts/esm/annotations.mjs';
 import { CameraControls } from 'playcanvas/scripts/esm/camera-controls.mjs';
 &nbsp;
+import { CameraEntityContext } from '../../hooks/cameraEntityContext';
 import { useCameraPosition } from '../../hooks/useCameraPosition';
 import './annotation-styles.css';
 &nbsp;
@@ -634,6 +637,7 @@ const Annotation = <span class="cstat-no" title="statement not covered" ><span c
     index,
   } = <span class="cstat-no" title="statement not covered" >props;</span>
   const app = <span class="cstat-no" title="statement not covered" >useApp();</span>
+  const walkthroughCamera = <span class="cstat-no" title="statement not covered" >useContext(CameraEntityContext);</span>
   const { setCamera } = <span class="cstat-no" title="statement not covered" >useCameraPosition();</span>
   const gizmoRef = <span class="cstat-no" title="statement not covered" >useRef&lt;TranslateGizmo | null&gt;(null);</span>
   const layerRef = <span class="cstat-no" title="statement not covered" >useRef&lt;any&gt;(null);</span>
@@ -732,9 +736,8 @@ const Annotation = <span class="cstat-no" title="statement not covered" ><span c
 &nbsp;
     const setupGizmo = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >()</span> =&gt; {</span>
       const annotationEntity = <span class="cstat-no" title="statement not covered" >app.root.findByName(entityName) as PcEntity | null;</span>
-      const cameraEntity = <span class="cstat-no" title="statement not covered" >app.root.findByName('camera') as PcEntity | null;</span>
-      const cameraComponent = <span class="cstat-no" title="statement not covered" >cameraEntity?.camera;</span>
-      const cameraControls = <span class="cstat-no" title="statement not covered" >cameraEntity?.script?.get(CameraControls.scriptName) as any;</span>
+      const cameraComponent = <span class="cstat-no" title="statement not covered" >walkthroughCamera?.camera;</span>
+      const cameraControls = <span class="cstat-no" title="statement not covered" >walkthroughCamera?.script?.get(CameraControls.scriptName) as any;</span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >      if (!annotationEntity || !cameraComponent) {</span>
 <span class="cstat-no" title="statement not covered" >        return false;</span>
@@ -784,7 +787,7 @@ const Annotation = <span class="cstat-no" title="statement not covered" ><span c
 <span class="cstat-no" title="statement not covered" >      clearInterval(intervalId);</span>
 <span class="cstat-no" title="statement not covered" >      cleanupGizmo();</span>
     };
-  }, [app, isEdit, isSelected, visible, onPositionChange, entityName]);
+  }, [app, isEdit, isSelected, visible, onPositionChange, entityName, walkthroughCamera]);
 &nbsp;
 <span class="cstat-no" title="statement not covered" >  return (</span>
     &lt;Entity name={entityName} position={position}&gt;
@@ -811,7 +814,7 @@ export default Annotation;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-08-21T17:34:37.328Z
+                at 2026-09-03T23:03:18.670Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>
