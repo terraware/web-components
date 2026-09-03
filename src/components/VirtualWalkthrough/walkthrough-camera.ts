@@ -1,4 +1,4 @@
-import { Quat, Script, Vec3, math } from 'playcanvas';
+import { CameraComponent, Entity, Quat, Script, Vec3, math } from 'playcanvas';
 
 import { computeGroundPlane, yOnPlane } from './groundPlane';
 
@@ -13,6 +13,11 @@ import { computeGroundPlane, yOnPlane } from './groundPlane';
  * - Y position is clamped between boundsMin.y and boundsMax.y; set them equal
  *   to lock vertical position entirely.
  * - Exposes reset() and focusPoint to stay compatible with useCameraPosition.
+ *
+ * The pose is written to the camera under this script's entity rather than to the entity itself, so
+ * mounting it on the walkthrough's rig drives whichever camera the rig is holding — one the viewer
+ * brought, or one it adopted from the host scene. Mounted straight onto a camera entity it still
+ * drives that entity, which `findComponent` resolves to itself.
  */
 
 const _quat = new Quat();
@@ -77,7 +82,7 @@ export class WalkthroughCamera extends Script {
    * Script component is wrapped in memo() whose shallowEquals comparator returns early on the first prop
    * with a .equals() method (Vec3), so any prop listed after boundsCenter is never compared and the
    * component won't re-render when it changes. Set via:
-   *   app.root.findByName('camera')?.script?.walkthroughCamera.groundPlane = points
+   *   cameraRoot.script.walkthroughCamera.groundPlane = points
    * Should be updated if shallowEquals is fixed (see https://github.com/playcanvas/react/pull/298)
    */
   groundPlane: Vec3[] = [];
@@ -97,10 +102,25 @@ export class WalkthroughCamera extends Script {
   private _keys: Partial<Record<string, boolean>> = {};
   private _removeListeners: (() => void)[] = [];
 
+  // The camera being posed, resolved lazily. Held until it exists: a camera adopted from the host
+  // scene is reparented into the rig by an effect that runs after the scripts are mounted.
+  private _camera: Entity | null = null;
+
   // Cached plane derived from groundPlane attribute. Computed once when 3 points become available.
   private _planeNormal = new Vec3(0, 1, 0);
   private _planePoint = new Vec3(0, 0, 0);
   private _hasGroundPlane = false;
+
+  /**
+   * The camera to pose, or null while there is none to pose. The entity this script is mounted on is
+   * never posed in its place: on the walkthrough that is the rig, which is the frame an XR session
+   * is measured from and whose height the session's floor is taken from.
+   */
+  private _posedCamera(): Entity | null {
+    this._camera ??= (this.entity.findComponent('camera') as CameraComponent | null)?.entity ?? null;
+
+    return this._camera;
+  }
 
   private _syncGroundPlane() {
     if (this._hasGroundPlane || this.groundPlane.length < 3) {
@@ -202,7 +222,8 @@ export class WalkthroughCamera extends Script {
    * Compatible with the useCameraPosition hook's reset() call.
    */
   reset(focus: Vec3, position: Vec3) {
-    this.entity.setPosition(position);
+    const camera = this._posedCamera();
+    camera?.setPosition(position);
 
     const dx = focus.x - position.x;
     const dy = focus.y - position.y;
@@ -220,7 +241,7 @@ export class WalkthroughCamera extends Script {
     this._targetPitch = this._pitch;
     this._targetYaw = this._yaw;
 
-    this.entity.setEulerAngles(this._pitch, this._yaw, 0);
+    camera?.setEulerAngles(this._pitch, this._yaw, 0);
   }
 
   get currentYaw(): number {
@@ -237,7 +258,11 @@ export class WalkthroughCamera extends Script {
    */
   orbitStep(yawDelta: number) {
     this._syncGroundPlane();
-    const pos = this.entity.getPosition();
+    const camera = this._posedCamera();
+    if (!camera) {
+      return;
+    }
+    const pos = camera.getPosition();
     const dx = pos.x - this.boundsCenter.x;
     const dz = pos.z - this.boundsCenter.z;
     const radius = Math.sqrt(dx * dx + dz * dz) || this.boundsRadius * 0.5;
@@ -248,13 +273,13 @@ export class WalkthroughCamera extends Script {
     const ny = this._hasGroundPlane
       ? yOnPlane(nx, nz, this._planeNormal, this._planePoint, this.boundsCenter.y) + this.averageCameraHeight
       : this.boundsCenter.y;
-    this.entity.setPosition(nx, ny, nz);
+    camera.setPosition(nx, ny, nz);
 
     const faceDx = this.boundsCenter.x - nx;
     const faceDz = this.boundsCenter.z - nz;
     this._yaw = Math.atan2(-faceDx, -faceDz) * (180 / Math.PI);
     this._targetYaw = this._yaw;
-    this.entity.setEulerAngles(this._pitch, this._yaw, 0);
+    camera.setEulerAngles(this._pitch, this._yaw, 0);
   }
 
   /**
@@ -262,7 +287,7 @@ export class WalkthroughCamera extends Script {
    * Compatible with the useCameraPosition hook's focusPoint read.
    */
   get focusPoint(): Vec3 {
-    const pos = this.entity.getPosition();
+    const pos = (this._posedCamera() ?? this.entity).getPosition();
     _quat.setFromEulerAngles(this._pitch, this._yaw, 0);
     _quat.transformVector(Vec3.FORWARD, _flatForward);
 
@@ -271,6 +296,10 @@ export class WalkthroughCamera extends Script {
 
   update(dt: number) {
     this._syncGroundPlane();
+    const camera = this._posedCamera();
+    if (!camera) {
+      return;
+    }
 
     // Lerp current angles toward targets using the same damping as CameraControls.
     // Snap to the target once within ANGLE_EPSILON so the asymptotic lerp actually
@@ -294,10 +323,10 @@ export class WalkthroughCamera extends Script {
     this._pitch = nextPitch;
     this._yaw = nextYaw;
     if (anglesChanged) {
-      this.entity.setEulerAngles(this._pitch, this._yaw, 0);
+      camera.setEulerAngles(this._pitch, this._yaw, 0);
     }
 
-    const pos = this.entity.getPosition();
+    const pos = camera.getPosition();
     let nx = pos.x;
     let ny = pos.y;
     let nz = pos.z;
@@ -357,7 +386,7 @@ export class WalkthroughCamera extends Script {
       Math.abs(targetY - pos.y) > POSITION_EPSILON ||
       Math.abs(nz - pos.z) > POSITION_EPSILON
     ) {
-      this.entity.setPosition(nx, targetY, nz);
+      camera.setPosition(nx, targetY, nz);
     }
   }
 
