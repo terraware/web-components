@@ -14,6 +14,8 @@ interface XrNavigationInternals {
   _inputSources: Set<XrInputSource>;
   _arcVisuals: Map<XrInputSource, ArcVisual>;
   _activePointers: Map<XrInputSource, boolean>;
+  _arcHits: Map<XrInputSource, unknown>;
+  _inputHandlers: Map<XrInputSource, { handleSelectStart: () => void; handleSelectEnd: () => void }>;
   _cameraEntity: Entity | null;
 }
 
@@ -46,6 +48,52 @@ export class TfXrNavigation extends PcXrNavigation {
     return !this.enableTeleport || this.isTeleportBlocked?.(inputSource) === true;
   }
 
+  /**
+   * Tracks controllers the base script never heard about.
+   *
+   * Movement, turning and teleport all iterate `_inputSources`, which the base fills from the XR
+   * input `add` event it subscribes to in initialize. A walkthrough that adopts the host's camera is
+   * mounted into a session that is already running, so the controllers present at session start
+   * fired `add` before this script existed and every control is inert for the whole session.
+   *
+   * The sources are picked up by hand rather than by re-firing `add` on the input manager, which
+   * would also reach the host's own listeners and have them handle controllers they already know
+   * about. The handlers mirror the base's and are stored in its map, so its teardown detaches them.
+   */
+  private _syncInputSources() {
+    const internals = this as unknown as XrNavigationInternals;
+
+    for (const inputSource of this.app.xr?.input?.inputSources ?? []) {
+      if (internals._inputSources.has(inputSource)) {
+        continue;
+      }
+
+      const handleSelectStart = () => {
+        internals._activePointers.set(inputSource, true);
+        internals._arcHits.delete(inputSource);
+      };
+
+      const handleSelectEnd = () => {
+        internals._activePointers.set(inputSource, false);
+        if (this.enableTeleport) {
+          this.tryTeleport(inputSource);
+        }
+      };
+
+      inputSource.on('selectstart', handleSelectStart);
+      inputSource.on('selectend', handleSelectEnd);
+      internals._inputHandlers.set(inputSource, { handleSelectStart, handleSelectEnd });
+      internals._inputSources.add(inputSource);
+    }
+  }
+
+  private _resolveCamera() {
+    const internals = this as unknown as XrNavigationInternals;
+    if (!internals._cameraEntity) {
+      internals._cameraEntity = this.entity.findComponent('camera')?.entity ?? null;
+    }
+  }
+
   tryTeleport(inputSource: XrInputSource) {
     // The latch decides on the frames the press actually aimed through, because super.tryTeleport
     // commits the arc hit cached back then rather than re-tracing the release-time ray. The live
@@ -59,6 +107,8 @@ export class TfXrNavigation extends PcXrNavigation {
   }
 
   update(dt: number) {
+    this._resolveCamera();
+    this._syncInputSources();
     super.update(dt);
 
     const internals = this as unknown as XrNavigationInternals;

@@ -5,7 +5,8 @@ import { useApp } from '@playcanvas/react/hooks';
 import { GsplatTuningParams, XR_FIXED_FOVEATION, applyGsplatTuning, restoreGsplatTuning } from './xr-render-tuning';
 
 /**
- * Holds the XR render settings in place for the duration of a session.
+ * Holds the XR render settings in place for the duration of a session, including one that is
+ * already running when this mounts.
  *
  * Call this once per application. The gsplat settings it writes are scene-global, so a second
  * caller would capture the first caller's tuned values as the state to restore, and the scene would
@@ -42,6 +43,14 @@ export const useXrRenderTuning = () => {
 
     xr.on('start', handleStart);
     xr.on('end', restore);
+
+    // A viewer can be mounted into a scene that is already in a headset, in which case `start`
+    // fired before this hook existed and waiting for it would leave the whole session rendering
+    // with the desktop settings. `handleStart` is idempotent, so a session that goes on to fire
+    // `start` anyway does not capture the tuned values as the ones to restore.
+    if (xr.active) {
+      handleStart();
+    }
 
     return () => {
       xr.off('start', handleStart);

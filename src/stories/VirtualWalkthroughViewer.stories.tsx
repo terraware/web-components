@@ -1,5 +1,6 @@
-import React, { useCallback, useState } from 'react';
+import React, { ReactNode, useCallback, useEffect, useState } from 'react';
 
+import { Entity } from '@playcanvas/react';
 import { Camera } from '@playcanvas/react/components';
 import { action } from '@storybook/addon-actions';
 import { Story } from '@storybook/react';
@@ -10,6 +11,7 @@ import Application from '../components/VirtualWalkthrough/Application';
 import VirtualWalkthroughViewer, {
   VirtualWalkthroughViewerProps,
 } from '../components/VirtualWalkthrough/VirtualWalkthroughViewer';
+import { useXr } from '../hooks/useXr';
 
 export default {
   title: 'VirtualWalkthroughViewer',
@@ -144,3 +146,65 @@ const AutoStartVrTemplate: Story<Partial<VirtualWalkthroughViewerProps>> = (args
 };
 
 export const AutoStartVr = AutoStartVrTemplate.bind({});
+
+/**
+ * Starts a session on the scene's own camera, then mounts the walkthrough into it.
+ *
+ * The walkthrough is handed `camera={null}`, so it adopts that camera into its rig rather than
+ * bringing one of its own — which it could only make the session's camera by ending the session.
+ * Thumbstick movement, snap turning, teleport, the bounds clamp and the XR start pose all have to
+ * work here exactly as they do when the walkthrough owns the camera.
+ */
+const HostSession = ({ children }: { children: ReactNode }) => {
+  const { isCurrentlyInXr, isXrAvailable, startXr } = useXr();
+
+  useEffect(() => {
+    if (!isCurrentlyInXr && isXrAvailable('VR')) {
+      startXr('VR');
+    }
+  }, [isCurrentlyInXr, isXrAvailable, startXr]);
+
+  return <>{isCurrentlyInXr && children}</>;
+};
+
+const HostCameraTemplate: Story<Partial<VirtualWalkthroughViewerProps>> = (args) => {
+  const [isRequested, setIsRequested] = useState(false);
+
+  return (
+    <div style={containerStyle}>
+      <div style={{ position: 'absolute', top: 16, left: 16, zIndex: 1001 }}>
+        <Button label='Start in VR' onClick={() => setIsRequested(true)} />
+      </div>
+      <Application style={{ width: '100%', height: '100%' }}>
+        <Entity name='camera' position={[0, 1.3, 0.5]}>
+          <Camera clearColor='#01030A' fov={70} nearClip={0.05} farClip={60000} />
+        </Entity>
+        {isRequested && (
+          <HostSession>
+            <VirtualWalkthroughViewer {...sceneArgs} {...args} camera={null} onXrExit={() => setIsRequested(false)} />
+          </HostSession>
+        )}
+      </Application>
+    </div>
+  );
+};
+
+export const HostOwnedCamera = HostCameraTemplate.bind({});
+
+/**
+ * The same adoption with no session running, which is what a host page shows before anyone puts a
+ * headset on. Pointer drag, WASD, the wheel, auto-rotation and the annotation fly-to all have to
+ * move the host's camera, because it is the only one the scene renders through.
+ */
+const HostCameraDesktopTemplate: Story<Partial<VirtualWalkthroughViewerProps>> = (args) => (
+  <div style={containerStyle}>
+    <Application style={{ width: '100%', height: '100%' }}>
+      <Entity name='camera' position={[0, 1.3, 0.5]}>
+        <Camera clearColor='#01030A' fov={70} nearClip={0.05} farClip={60000} />
+      </Entity>
+      <VirtualWalkthroughViewer {...sceneArgs} {...args} camera={null} />
+    </Application>
+  </div>
+);
+
+export const HostOwnedCameraOutOfXr = HostCameraDesktopTemplate.bind({});
