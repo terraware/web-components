@@ -25,14 +25,14 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/21</span>
+                <span class='fraction'>0/25</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/48</span>
+                <span class='fraction'>0/52</span>
             </div>
         
             
@@ -46,7 +46,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/20</span>
+                <span class='fraction'>0/24</span>
             </div>
         
             
@@ -153,7 +153,37 @@
 <a name='L88'></a><a href='#L88'>88</a>
 <a name='L89'></a><a href='#L89'>89</a>
 <a name='L90'></a><a href='#L90'>90</a>
-<a name='L91'></a><a href='#L91'>91</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L91'></a><a href='#L91'>91</a>
+<a name='L92'></a><a href='#L92'>92</a>
+<a name='L93'></a><a href='#L93'>93</a>
+<a name='L94'></a><a href='#L94'>94</a>
+<a name='L95'></a><a href='#L95'>95</a>
+<a name='L96'></a><a href='#L96'>96</a>
+<a name='L97'></a><a href='#L97'>97</a>
+<a name='L98'></a><a href='#L98'>98</a>
+<a name='L99'></a><a href='#L99'>99</a>
+<a name='L100'></a><a href='#L100'>100</a>
+<a name='L101'></a><a href='#L101'>101</a>
+<a name='L102'></a><a href='#L102'>102</a>
+<a name='L103'></a><a href='#L103'>103</a>
+<a name='L104'></a><a href='#L104'>104</a>
+<a name='L105'></a><a href='#L105'>105</a>
+<a name='L106'></a><a href='#L106'>106</a>
+<a name='L107'></a><a href='#L107'>107</a>
+<a name='L108'></a><a href='#L108'>108</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -194,11 +224,15 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -262,10 +296,23 @@ export interface NavItemProps {
   id?: string;
   isFooter?: boolean;
   href?: string; // menu is an anchor tag
+  defaultOpen?: boolean; // initial expanded state for items with children
 }
 &nbsp;
 export default function <span class="fstat-no" title="function not covered" >NavItem(</span>props: NavItemProps): JSX.Element {
-  const { label, icon, iconColor, children: childrenProps, disabled, selected, onClick, id, isFooter, href } = <span class="cstat-no" title="statement not covered" >props;</span>
+  const {
+    label,
+    icon,
+    iconColor,
+    children: childrenProps,
+    disabled,
+    selected,
+    onClick,
+    id,
+    isFooter,
+    href,
+    defaultOpen,
+  } = <span class="cstat-no" title="statement not covered" >props;</span>
   const children = <span class="cstat-no" title="statement not covered" >href ? null : childrenProps;</span>
 &nbsp;
   const hasChildrenSelected = <span class="cstat-no" title="statement not covered" >useCallback(<span class="fstat-no" title="function not covered" >()</span> =&gt; {</span>
@@ -281,19 +328,23 @@ export default function <span class="fstat-no" title="function not covered" >Nav
 <span class="cstat-no" title="statement not covered" >    return false;</span>
   }, [children]);
 &nbsp;
+  const wasChildrenSelected = <span class="cstat-no" title="statement not covered" >React.useRef(hasChildrenSelected());</span>
 <span class="cstat-no" title="statement not covered" >  React.useEffect(<span class="fstat-no" title="function not covered" >()</span> =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >    if (hasChildrenSelected()) {</span>
+    const childrenSelected = <span class="cstat-no" title="statement not covered" >hasChildrenSelected();</span>
+<span class="cstat-no" title="statement not covered" >    if (childrenSelected &amp;&amp; !wasChildrenSelected.current) {</span>
 <span class="cstat-no" title="statement not covered" >      setOpen(true);</span>
     }
+<span class="cstat-no" title="statement not covered" >    wasChildrenSelected.current = childrenSelected;</span>
   }, [children, hasChildrenSelected, selected]);
 &nbsp;
-  const [open, setOpen] = <span class="cstat-no" title="statement not covered" >React.useState(hasChildrenSelected());</span>
+  const [open, setOpen] = <span class="cstat-no" title="statement not covered" >React.useState(defaultOpen ?? hasChildrenSelected());</span>
 &nbsp;
   const onClickHandler = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >()</span> =&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    if (!disabled) {</span>
-<span class="cstat-no" title="statement not covered" >      setOpen(!open || hasChildrenSelected());</span>
+      const nextOpen = <span class="cstat-no" title="statement not covered" >!open || hasChildrenSelected();</span>
+<span class="cstat-no" title="statement not covered" >      setOpen(nextOpen);</span>
 <span class="cstat-no" title="statement not covered" >      if (onClick) {</span>
-<span class="cstat-no" title="statement not covered" >        onClick(!open);</span>
+<span class="cstat-no" title="statement not covered" >        onClick(nextOpen);</span>
       }
     }
   };
@@ -340,7 +391,7 @@ export default function <span class="fstat-no" title="function not covered" >Nav
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-09-03T23:24:01.305Z
+                at 2026-09-04T12:37:12.103Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>
