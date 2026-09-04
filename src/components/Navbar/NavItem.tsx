@@ -17,10 +17,23 @@ export interface NavItemProps {
   id?: string;
   isFooter?: boolean;
   href?: string; // menu is an anchor tag
+  defaultOpen?: boolean; // initial expanded state for items with children
 }
 
 export default function NavItem(props: NavItemProps): JSX.Element {
-  const { label, icon, iconColor, children: childrenProps, disabled, selected, onClick, id, isFooter, href } = props;
+  const {
+    label,
+    icon,
+    iconColor,
+    children: childrenProps,
+    disabled,
+    selected,
+    onClick,
+    id,
+    isFooter,
+    href,
+    defaultOpen,
+  } = props;
   const children = href ? null : childrenProps;
 
   const hasChildrenSelected = useCallback(() => {
@@ -36,19 +49,23 @@ export default function NavItem(props: NavItemProps): JSX.Element {
     return false;
   }, [children]);
 
+  const wasChildrenSelected = React.useRef(hasChildrenSelected());
   React.useEffect(() => {
-    if (hasChildrenSelected()) {
+    const childrenSelected = hasChildrenSelected();
+    if (childrenSelected && !wasChildrenSelected.current) {
       setOpen(true);
     }
+    wasChildrenSelected.current = childrenSelected;
   }, [children, hasChildrenSelected, selected]);
 
-  const [open, setOpen] = React.useState(hasChildrenSelected());
+  const [open, setOpen] = React.useState(defaultOpen ?? hasChildrenSelected());
 
   const onClickHandler = () => {
     if (!disabled) {
-      setOpen(!open || hasChildrenSelected());
+      const nextOpen = !open || hasChildrenSelected();
+      setOpen(nextOpen);
       if (onClick) {
-        onClick(!open);
+        onClick(nextOpen);
       }
     }
   };
