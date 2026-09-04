@@ -31,7 +31,7 @@ jobs:
         run: echo "ARTIFACT_REGISTRY_PROVIDER=npm" >> $GITHUB_ENV
 
       - name: Setup Node
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@v7
         with:
           node-version: '24.x'
           registry-url: 'https://registry.npmjs.org'
