@@ -1,0 +1,63 @@
+name: Publish npm package
+
+on:
+  push:
+    # The tag is pushed by the Buildkite "version-bump" step which triggers this workflow.
+    tags:
+      - 'v[0-9]+.[0-9]+.[0-9]+'
+
+jobs:
+  publish-npm:
+    name: Publish npm package
+    runs-on: ubuntu-latest
+    permissions:
+      # Lets npm authenticate to the registry via OIDC instead of a long-lived token.
+      id-token: write
+      contents: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Set Environment
+        shell: bash
+        run: echo "ARTIFACT_REGISTRY_PROVIDER=npm" >> $GITHUB_ENV
+
+      - name: Setup Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: '24.x'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Install Dependencies
+        run: |
+          yarn install --frozen-lockfile --network-timeout 100000
+          git checkout -- package.json
+
+      - name: Linter
+        run: yarn lint
+
+      - name: Unit tests
+        run: yarn test
+
+      - name: Build
+        run: yarn build-dist
+
+      - name: License report
+        run: yarn license-report-dist
+
+      - name: Compare artifact package version
+        run: .github/scripts/compare-artifact-package-versions.sh
+
+      - name: Prune package.json
+        run: |
+          cd dist
+          npm pkg delete scripts
+          npm pkg delete devDependencies
+          npm pkg delete eslintConfig
+          npm pkg delete resolutions
+          npm pkg delete browserslist
+          cat package.json
+
+      - name: Publish npm package
+        if: env.UPDATE_NPM_PACKAGE == 'true'
+        run: cd dist && npm publish --scope @terraware

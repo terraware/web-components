@@ -105,13 +105,14 @@ The step needs `VERCEL_TOKEN`, `VERCEL_PROJECT_ID`, and `VERCEL_ORG_ID` in the
 
 ## What stays in GitHub Actions
 
-Two workflows are intentionally not migrated because they respond to GitHub-specific events that
-Buildkite doesn't trigger on:
+Three workflows live in GitHub Actions rather than here:
 
-- `open-pr.yml` — adds the default `patch` label and a comment when a PR is opened.
+- `open-pr.yml` — adds the default `patch` label and a comment when a PR is opened. Responds to a
+  GitHub-specific event that Buildkite doesn't trigger on.
 - `publish-rc.yaml` — publishes a release-candidate npm package when a PR comment contains
-  "publish rc".
+  "publish rc". Same reason.
+- `publish-npm.yml` — publishes stable releases to npm.
 
-The `version-bump` step in this pipeline replaces `auto-version.yml`. After it pushes a bumped
-commit and tag back to `main`, Buildkite will run a second build on that commit, which is what
-actually publishes the new version to npm.
+Publishing has to happen in GitHub Actions because npm's trusted publishers only accept OIDC
+tokens from hosted runners. Our agents are self-hosted, so a publish from this pipeline would
+need a long-lived npm token instead — which is what we moved away from.
