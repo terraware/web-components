@@ -11,6 +11,10 @@ jobs:
     name: Publish RC PR comment
     if: github.event.issue.pull_request && contains(github.event.comment.body, 'publish rc')
     runs-on: ubuntu-latest
+    permissions:
+      # Lets npm authenticate to the registry via OIDC instead of a long-lived token.
+      id-token: write
+      contents: write
     steps:
       - name: Get Branch
         id: 'get-branch'
@@ -81,5 +85,3 @@ jobs:
       - name: Publish npm package
         if: env.UPDATE_NPM_PACKAGE == 'true'
         run: cd dist && npm publish --scope @terraware --tag rc
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_REGISTRY_AUTH_TOKEN }}
