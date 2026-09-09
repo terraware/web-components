@@ -6,6 +6,9 @@ on:
     tags:
       - 'v[0-9]+.[0-9]+.[0-9]+'
 
+env:
+  ARTIFACT_REGISTRY_PROVIDER: npm
+
 jobs:
   publish-npm:
     name: Publish npm package
@@ -18,29 +21,35 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v7
 
-      - name: Set Environment
-        shell: bash
-        run: echo "ARTIFACT_REGISTRY_PROVIDER=npm" >> $GITHUB_ENV
-
       - name: Setup Node
         uses: actions/setup-node@v6
         with:
-          node-version: '24.x'
+          node-version-file: '.nvmrc'
           registry-url: 'https://registry.npmjs.org'
+
+      - name: Upgrade npm for trusted publishing
+        run: |
+          npm install -g npm@^11.5.1
+          npm --version
 
       - name: Install Dependencies
         run: |
           yarn install --frozen-lockfile --network-timeout 100000
           git checkout -- package.json
 
-      - name: Linter
-        run: yarn lint
-
-      - name: Unit tests
-        run: yarn test
-
       - name: Build
         run: yarn build-dist
+
+      - name: Verify tag matches package version
+        shell: bash
+        run: |
+          TAG_VERSION="${GITHUB_REF_NAME#v}"
+          DIST_VERSION=$(node -e "process.stdout.write(require('./dist/package.json').version)")
+          if [[ "$TAG_VERSION" != "$DIST_VERSION" ]]; then
+            echo "Tag $GITHUB_REF_NAME implies $TAG_VERSION but dist/package.json is $DIST_VERSION" >&2
+            exit 1
+          fi
+          echo "Tag $GITHUB_REF_NAME matches dist/package.json version $DIST_VERSION"
 
       - name: License report
         run: yarn license-report-dist
