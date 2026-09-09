@@ -37,13 +37,8 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v6
         with:
-          node-version: '24.x'
+          node-version-file: '.nvmrc'
           registry-url: 'https://registry.npmjs.org'
-
-      - name: Upgrade npm for trusted publishing
-        run: |
-          npm install -g npm@^11.5.1
-          npm --version
 
       - name: Install Dependencies
         run: |
