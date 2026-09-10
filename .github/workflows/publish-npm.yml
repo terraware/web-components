@@ -27,11 +27,6 @@ jobs:
           node-version-file: '.nvmrc'
           registry-url: 'https://registry.npmjs.org'
 
-      - name: Upgrade npm for trusted publishing
-        run: |
-          npm install -g npm@^11.5.1
-          npm --version
-
       - name: Install Dependencies
         run: |
           yarn install --frozen-lockfile --network-timeout 100000
