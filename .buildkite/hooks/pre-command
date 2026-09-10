@@ -25,21 +25,10 @@ else
     APP_VERSION="${COMMIT_SHA}"
 fi
 
-# Decide whether the publish step should push to npm. Mirrors the old
-# .github/scripts/set-environment.sh logic.
-if [[ "${BUILDKITE_TAG:-}" =~ ^v[0-9]+\.[0-9.]+ ]]; then
-    ARTIFACT_REGISTRY_PROVIDER=npm
-elif [[ "${BUILDKITE_BRANCH}" == "main" ]]; then
-    ARTIFACT_REGISTRY_PROVIDER=npm
-else
-    ARTIFACT_REGISTRY_PROVIDER=
-fi
-
 # If this commit's title has a suffix like (#123), it's probably a merged PR.
 MERGED_PR_NUMBER=$(git log -1 --pretty=%s | sed -En 's/.*\(#([0-9]+)\)$/\1/p')
 
 export APP_VERSION
-export ARTIFACT_REGISTRY_PROVIDER
 export COMMIT_SHA
 export MERGED_PR_NUMBER
 export TIER

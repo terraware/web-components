@@ -21,11 +21,6 @@ common:
         - secret-id: 'buildkite_build_secrets'
         - secret-id: 'web_components_build_secrets'
 
-  - &restore-dist
-    artifacts#v1.9.4:
-      download: 'dist'
-      compressed: 'dist.tgz'
-
   - &shallow-clone
     peakon/git-shallow-clone#v0.0.1:
       depth: 1
@@ -61,20 +56,9 @@ steps:
       - *cache-node-modules
     command: .buildkite/scripts/deploy-vercel.sh
 
-  - label: ':npm: Publish npm package'
-    key: 'publish-npm'
-    depends_on: 'build-and-test'
-    if: "build.branch == 'main' || build.tag =~ /^v[0-9]+\\.[0-9]+/"
-    plugins:
-      - *shallow-clone
-      - *load-secrets
-      - *cache-node-modules
-      - *restore-dist
-    command: .buildkite/scripts/publish-npm.sh
-
   - label: ':buildkite: Promote branch-level caches to pipeline-level'
     key: 'promote-caches'
-    depends_on: 'publish-npm'
+    depends_on: 'build-and-test'
     branches: 'main'
     plugins:
       - *shallow-clone
@@ -85,7 +69,7 @@ steps:
 
   - label: ':label: Auto version bump (merged PR)'
     key: 'version-bump'
-    depends_on: 'publish-npm'
+    depends_on: 'build-and-test'
     branches: 'main'
     plugins:
       - *shallow-clone
@@ -94,7 +78,7 @@ steps:
 
   - label: ':books: Deploy docs'
     key: 'deploy-docs'
-    depends_on: 'publish-npm'
+    depends_on: 'build-and-test'
     branches: 'main'
     plugins:
       - *shallow-clone
