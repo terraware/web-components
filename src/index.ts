@@ -48,6 +48,7 @@ import Tabs from './components/Tabs';
 import TextTruncated from './components/TextTruncated';
 import Textfield from './components/Textfield/Textfield';
 import TimelineSlider from './components/TimelineSlider';
+import TimelineSliderV2 from './components/TimelineSliderV2';
 import Tooltip from './components/Tooltip/Tooltip';
 import ViewPhotosDialog from './components/ViewPhotosDialog';
 import * as Svg from './components/svg';
@@ -140,6 +141,7 @@ export {
   Textfield,
   TextTruncated,
   TimelineSlider,
+  TimelineSliderV2,
   theme,
   Tooltip,
   useStrings,
