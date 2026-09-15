@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from 'react';
 
-import { Box } from '@mui/material';
+import { Alert, Box } from '@mui/material';
 import { action } from '@storybook/addon-actions';
 import { Story } from '@storybook/react';
 import { MapMouseEvent } from 'mapbox-gl';
@@ -70,6 +70,15 @@ const Template: Story<{ clusterRadius: number; token: string }> = (args) => {
     setLatitude(event.lngLat.lat.toString());
     setLongitude(event.lngLat.lng.toString());
   }, []);
+
+  if (!args.token || args.token.startsWith('sk.')) {
+    return (
+      <Alert severity='info'>
+        Set the token control to a public Mapbox access token (pk.*), or start Storybook with STORYBOOK_MAPBOX_API_TOKEN
+        configured. Secret tokens (sk.*) cannot be used in browser maps.
+      </Alert>
+    );
+  }
 
   return (
     <MapContainer

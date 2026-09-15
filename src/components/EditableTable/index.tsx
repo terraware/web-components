@@ -316,11 +316,7 @@ export default function EditableTable<TData extends Record<string, any>>({
               size='small'
             />
           )}
-          {consumerRenderToolbarInternalActions ? (
-            consumerRenderToolbarInternalActions({ table: tbl })
-          ) : (
-            <MRT_ToolbarInternalButtons table={tbl} />
-          )}
+          {consumerRenderToolbarInternalActions && consumerRenderToolbarInternalActions({ table: tbl })}
         </Box>
       );
     },
