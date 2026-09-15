@@ -1,18 +1,98 @@
 @use '../../style-dictionary-dist/terraware.scss';
 
-.photos-carousel-container {
-  min-height: 200px;
-  background: terraware.$tw-clr-bg;
-}
+.photos-carousel {
+  .embla {
+    position: relative;
+    padding-bottom: 20px;
+  }
 
-.photos-carousel-image {
-  object-fit: contain;
-  margin: auto;
-  height: 400px;
-  width: 100%;
-}
+  .embla__viewport {
+    overflow: hidden;
+  }
 
-.photo-numbering {
-  font-size: 12px;
-  color: terraware.$tw-clr-txt-info;
+  .embla__container {
+    display: flex;
+    touch-action: pan-y pinch-zoom;
+  }
+
+  .embla__slide {
+    flex: 0 0 100%;
+    min-width: 0;
+    position: relative;
+    min-height: 200px;
+    background: terraware.$tw-clr-bg;
+  }
+
+  .embla__slide__img {
+    object-fit: contain;
+    margin: auto;
+    height: 400px;
+    width: 100%;
+  }
+
+  .embla__prev,
+  .embla__next {
+    position: absolute;
+    top: calc(50% - 31px);
+    width: 43px;
+    height: 43px;
+    border: 0;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+
+    .tw-icon {
+      stroke: currentColor;
+      stroke-width: 1;
+    }
+
+    &:hover {
+      background: rgba(0, 0, 0, 0.8);
+    }
+
+    &:disabled {
+      visibility: hidden;
+    }
+  }
+
+  .embla__prev {
+    left: calc(4% + 1px);
+  }
+
+  .embla__next {
+    right: calc(4% + 1px);
+  }
+
+  .embla__dots {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  .embla__dot {
+    width: 12px;
+    height: 12px;
+    padding: 0;
+    margin: 0 6px 0 0;
+    border: 2px solid grey;
+    border-radius: 50%;
+    background: white;
+    cursor: pointer;
+
+    &--selected,
+    &:hover {
+      background: #080808;
+    }
+  }
+
+  .photo-numbering {
+    font-size: 12px;
+    color: terraware.$tw-clr-txt-info;
+  }
 }

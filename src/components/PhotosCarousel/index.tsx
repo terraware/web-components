@@ -1,19 +1,11 @@
-import React, { type JSX, useCallback, useEffect, useRef, useState } from 'react';
-import CarouselImport from 'react-multi-carousel';
-import 'react-multi-carousel/lib/styles.css';
+import React, { type JSX, useEffect, useState } from 'react';
 
 import { Box, Typography } from '@mui/material';
+import useEmblaCarousel from 'embla-carousel-react';
 
 import BusySpinner from '../BusySpinner';
+import Icon from '../Icon/Icon';
 import './styles.scss';
-
-// react-multi-carousel is CommonJS compiled by TypeScript, so it exports the component as
-// `exports.default` alongside an `__esModule` flag. We publish native ES modules, where the
-// default import of a CommonJS module is the whole `module.exports` object and no bundler
-// unwraps `.default` for us. Unwrap it here; the `??` keeps this correct under bundlers that
-// do apply the legacy interop.
-type CarouselInstance = InstanceType<typeof CarouselImport>;
-const Carousel = (CarouselImport as unknown as { default?: typeof CarouselImport }).default ?? CarouselImport;
 
 export type PhotoItem = {
   url: string;
@@ -30,81 +22,154 @@ export interface PhotosCarouselProps {
   dots?: boolean;
 }
 
-const responsive = {
-  mobile: {
-    breakpoint: { max: 4000, min: 0 },
-    items: 1,
-  },
-};
-
-export default function PhotosCarousel(props: PhotosCarouselProps): JSX.Element {
-  const { photos, selectedSlide, onSlideChange, showArrows, numbered, dots } = props;
-  const isControlled = selectedSlide !== undefined;
+const PhotosCarousel = (props: PhotosCarouselProps): JSX.Element => {
+  const { photos, selectedSlide, onSlideChange, showArrows = false, numbered, dots = true } = props;
   const [internalSlide, setInternalSlide] = useState(0);
-  const [isLoading, setIsLoading] = useState<boolean[]>([]);
-  const myCarousel = useRef<CarouselInstance>(null);
-  const currentSlide = isControlled ? selectedSlide : internalSlide;
+  const currentSlide = Math.max(0, Math.min(selectedSlide ?? internalSlide, photos.length - 1));
+  const [startIndex] = useState(currentSlide);
+  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: false, startIndex });
+  const [scrollSnaps, setScrollSnaps] = useState<number[]>([]);
+  const [prevButtonDisabled, setPrevButtonDisabled] = useState(true);
+  const [nextButtonDisabled, setNextButtonDisabled] = useState(true);
+  const [loadedPhotos, setLoadedPhotos] = useState<string[]>([]);
+  const photoKey = JSON.stringify(photos.map((photo) => photo.url));
 
-  // Keyed on the URLs (not just photos.length) so swapping in a same-length array of
-  // different photos still resets the loading state instead of leaving stale flags.
-  const photoKey = photos.map((p) => p.url).join('|');
-  useEffect(() => {
-    setIsLoading(new Array(photos.length).fill(true));
-  }, [photoKey]);
+  const scrollPrev = () => emblaApi?.scrollPrev();
+  const scrollNext = () => emblaApi?.scrollNext();
+  const scrollTo = (index: number) => emblaApi?.scrollTo(index);
 
   useEffect(() => {
-    if (myCarousel.current && myCarousel.current.state.currentSlide !== currentSlide) {
-      myCarousel.current.goToSlide(currentSlide);
+    if (!emblaApi) {
+      return;
     }
-  }, [currentSlide]);
+    const updateButtons = () => {
+      setPrevButtonDisabled(!emblaApi.canScrollPrev());
+      setNextButtonDisabled(!emblaApi.canScrollNext());
+    };
+    const onInit = () => {
+      setScrollSnaps(emblaApi.scrollSnapList());
+      updateButtons();
+    };
+    onInit();
+    emblaApi.on('reInit', onInit).on('select', updateButtons);
+    return () => {
+      emblaApi.off('reInit', onInit).off('select', updateButtons);
+    };
+  }, [emblaApi]);
 
-  const handleAfterChange = useCallback(() => {
-    const slide = myCarousel.current?.state.currentSlide ?? 0;
-    if (!isControlled) {
+  useEffect(() => {
+    emblaApi?.reInit();
+  }, [emblaApi, photoKey]);
+
+  useEffect(() => {
+    if (!emblaApi) {
+      return;
+    }
+    // Synchronize external selection before subscribing so it does not echo a change callback.
+    if (emblaApi.selectedScrollSnap() !== currentSlide) {
+      emblaApi.scrollTo(currentSlide);
+    }
+    const handleSelect = () => {
+      const slide = emblaApi.selectedScrollSnap();
       setInternalSlide(slide);
-    }
-    if (slide !== currentSlide) {
-      onSlideChange?.(slide);
-    }
-  }, [isControlled, currentSlide, onSlideChange]);
-
-  const finishLoading = (index: number) => {
-    setIsLoading((prev) => {
-      const next = [...prev];
-      next[index] = false;
-      return next;
-    });
-  };
+      if (slide !== currentSlide) {
+        onSlideChange?.(slide);
+      }
+    };
+    emblaApi.on('select', handleSelect);
+    return () => {
+      emblaApi.off('select', handleSelect);
+    };
+  }, [emblaApi, currentSlide, onSlideChange, photoKey]);
 
   return (
-    <Box
-      sx={{
-        '& .react-multi-carousel-list': {
-          paddingBottom: '20px',
-        },
-      }}
-    >
-      <Carousel
-        responsive={responsive}
-        ref={myCarousel}
-        showDots={dots ?? true}
-        arrows={showArrows ?? false}
-        ssr={true}
-        afterChange={handleAfterChange}
-      >
-        {photos.map((p, i) => (
-          <div key={`photo-${i}-container`} className='photos-carousel-container'>
-            {isLoading[i] ? <BusySpinner noBackground={true} /> : undefined}
-            <a href={p.url} target='_blank' rel='noopener noreferrer'>
-              <img className='photos-carousel-image' src={p.url} alt={p.alt} onLoad={() => finishLoading(i)} />
-            </a>
+    <Box className='photos-carousel' role='region' aria-roledescription='carousel' aria-label='Photos'>
+      <div className='embla'>
+        <div
+          className='embla__viewport'
+          ref={emblaRef}
+          onKeyDown={(event) => {
+            if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
+              event.preventDefault();
+              if (event.key === 'ArrowLeft') {
+                emblaApi?.scrollPrev();
+              } else {
+                emblaApi?.scrollNext();
+              }
+            }
+          }}
+        >
+          <div className='embla__container'>
+            {photos.map((photo, index) => (
+              <div
+                key={`${photo.url}-${index}`}
+                className='embla__slide'
+                role='group'
+                aria-roledescription='slide'
+                aria-label={`${index + 1} of ${photos.length}`}
+              >
+                {!loadedPhotos.includes(photo.url) && <BusySpinner noBackground={true} />}
+                <a
+                  href={photo.url}
+                  target='_blank'
+                  rel='noopener noreferrer'
+                  tabIndex={index === currentSlide ? 0 : -1}
+                >
+                  <img
+                    className='embla__slide__img'
+                    src={photo.url}
+                    alt={photo.alt}
+                    onLoad={() => setLoadedPhotos((loaded) => [...loaded, photo.url])}
+                    onError={() => setLoadedPhotos((loaded) => [...loaded, photo.url])}
+                  />
+                </a>
+              </div>
+            ))}
           </div>
-        ))}
-      </Carousel>
-      {numbered ? (
-        <Typography className='photo-numbering'>{`${currentSlide + 1}/${photos.length}`}</Typography>
-      ) : undefined}
-      {photos[currentSlide] && photos[currentSlide].decoration}
+        </div>
+        {showArrows && photos.length > 1 && (
+          <>
+            <button
+              type='button'
+              className='embla__prev'
+              aria-label='Previous photo'
+              disabled={prevButtonDisabled}
+              onClick={scrollPrev}
+            >
+              <Icon name='caretLeft' fillColor='currentColor' />
+            </button>
+            <button
+              type='button'
+              className='embla__next'
+              aria-label='Next photo'
+              disabled={nextButtonDisabled}
+              onClick={scrollNext}
+            >
+              <Icon name='caretRight' fillColor='currentColor' />
+            </button>
+          </>
+        )}
+        {dots && (
+          <div className='embla__dots'>
+            {scrollSnaps.map((_, index) => (
+              <button
+                key={index}
+                type='button'
+                className={`embla__dot${index === currentSlide ? ' embla__dot--selected' : ''}`}
+                aria-label={`Go to photo ${index + 1}`}
+                aria-current={index === currentSlide ? 'true' : undefined}
+                onClick={() => scrollTo(index)}
+              />
+            ))}
+          </div>
+        )}
+      </div>
+      {numbered && (
+        <Typography className='photo-numbering'>{`${photos.length ? currentSlide + 1 : 0}/${photos.length}`}</Typography>
+      )}
+      {photos[currentSlide]?.decoration}
     </Box>
   );
-}
+};
+
+export default PhotosCarousel;
