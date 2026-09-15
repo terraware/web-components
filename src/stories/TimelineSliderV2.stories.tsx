@@ -11,6 +11,8 @@ const GREEN = '#4caf50';
 const ORANGE = '#ff9800';
 const BLUE = '#1976d2';
 
+const ROTATING_COLORS = [GREEN, ORANGE, BLUE];
+
 const Harness = ({ marks }: { marks: TimelineSliderV2Mark[] }) => {
   const [selectedMarkId, setSelectedMarkId] = useState<string>();
 
@@ -49,11 +51,34 @@ const crowded: TimelineSliderV2Mark[] = Array.from({ length: 15 }, (_, index) =>
   value: 50 + index * 0.1,
 })).concat([{ color: BLUE, id: 'edge', label: 'Aug 2025', value: 100 }]);
 
+const pushedAside: TimelineSliderV2Mark[] = [
+  ...Array.from({ length: 9 }, (_, index) => ({
+    color: ROTATING_COLORS[index % 3],
+    id: `before-${index}`,
+    label: `Observation ${index + 1}`,
+    value: index * 5,
+  })),
+  ...Array.from({ length: 5 }, (_, index) => ({
+    color: ROTATING_COLORS[index % 3],
+    id: `peak-${index}`,
+    label: `Peak observation ${index + 1}`,
+    value: 49.5 + index * 0.5,
+  })),
+  ...Array.from({ length: 9 }, (_, index) => ({
+    color: ROTATING_COLORS[(index + 2) % 3],
+    id: `after-${index}`,
+    label: `Observation ${index + 15}`,
+    value: 60 + index * 5,
+  })),
+];
+
 export const Default = () => <Harness marks={spread} />;
 
 export const Clustered = () => <Harness marks={dense} />;
 
 export const LargeCluster = () => <Harness marks={crowded} />;
+
+export const DotsPushedAside = () => <Harness marks={pushedAside} />;
 
 export const SingleValueMarks = () => (
   <Harness
