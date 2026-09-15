@@ -54,3 +54,49 @@ export const toColorWeights = (colors: string[]): ColorWeight[] => {
 
   return [...weights.entries()].map(([color, weight]) => ({ color, weight }));
 };
+
+export type TimelineCluster = {
+  anchorPx: number;
+  id: string;
+  members: PositionedMark[];
+};
+
+export const buildClusters = (
+  marks: LayoutMark[],
+  containerWidth: number,
+  thresholdPx: number
+): TimelineCluster[] => {
+  const positioned = normalizePositions(marks, containerWidth);
+  const clusters: TimelineCluster[] = [];
+  let current: PositionedMark[] = [];
+
+  const flush = () => {
+    if (current.length === 0) {
+      return;
+    }
+
+    const total = current.reduce((sum, member) => sum + member.positionPx, 0);
+
+    clusters.push({
+      anchorPx: total / current.length,
+      id: `cluster-${current[0].id}`,
+      members: current,
+    });
+
+    current = [];
+  };
+
+  positioned.forEach((mark) => {
+    const previous = current[current.length - 1];
+
+    if (previous !== undefined && mark.positionPx - previous.positionPx >= thresholdPx) {
+      flush();
+    }
+
+    current.push(mark);
+  });
+
+  flush();
+
+  return clusters;
+};
