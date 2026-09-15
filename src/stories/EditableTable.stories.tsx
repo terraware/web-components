@@ -177,6 +177,7 @@ const EditableTableWithState = ({ rowCount }: { rowCount: number }) => {
 
   return (
     <EditableTable<RowData>
+      clearAllFiltersLabel='Clear all filters'
       columns={columns}
       data={data}
       enableEditing={true}
@@ -298,6 +299,7 @@ export const WithFilters: Story = () => {
 
   return (
     <EditableTable<RowData>
+      clearAllFiltersLabel='Clear all filters'
       columns={columns}
       data={data}
       enableEditing={true}
@@ -524,6 +526,7 @@ export const WithOccupationFilter: Story = () => {
 
   return (
     <EditableTable<RowData>
+      clearAllFiltersLabel='Clear all filters'
       columns={columns}
       data={data}
       enableEditing={true}
@@ -567,7 +570,13 @@ export const SortingFn: Story = () => {
   return (
     <>
       <Typography>Clicking the headers to see the difference</Typography>
-      <EditableTable<SimpleRow> columns={columns} data={data} enableSorting={true} enablePagination={false} />
+      <EditableTable<SimpleRow>
+        clearAllFiltersLabel='Clear all filters'
+        columns={columns}
+        data={data}
+        enableSorting={true}
+        enablePagination={false}
+      />
       <Typography>
         Note this only makes a difference if there are fewer than 10 rows. Otherwise it will determine the correct
         function to use (see this{' '}
@@ -671,6 +680,7 @@ export const WithoutPagination: Story = () => {
 
   return (
     <EditableTable<RowData>
+      clearAllFiltersLabel='Clear all filters'
       columns={columns}
       data={data}
       enableEditing={true}

@@ -59,7 +59,7 @@ const Template: StoryFn<InViewDemoProps> = (args): JSX.Element => {
           <InView key={index}>
             {({ inView, ref }) => {
               const photos = [...new Array(imagesPerCarousel)].map(
-                (_value, _index) => `https://source.unsplash.com/random/800x600/?forest,jungle,${_index}`
+                (_value, _index) => `https://loremflickr.com/800/600/forest,jungle?lock=${_index}`
               );
 
               if (inView) {
