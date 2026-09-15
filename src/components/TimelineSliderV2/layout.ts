@@ -1,7 +1,7 @@
 export const DOT_SIZE_PX = 12;
 export const CLUSTER_DOT_SIZE_PX = 18;
 export const EXPANDED_SPACING_PX = 20;
-export const MIN_EXPANDED_SPACING_PX = DOT_SIZE_PX + 2;
+export const MIN_SQUEEZE_PITCH_PX = DOT_SIZE_PX;
 export const BAND_PADDING_PX = 8;
 export const SQUEEZE_GAP_PX = 12;
 export const MAX_BAND_RATIO = 0.8;
@@ -61,11 +61,7 @@ export type TimelineCluster = {
   members: PositionedMark[];
 };
 
-export const buildClusters = (
-  marks: LayoutMark[],
-  containerWidth: number,
-  thresholdPx: number
-): TimelineCluster[] => {
+export const buildClusters = (marks: LayoutMark[], containerWidth: number, thresholdPx: number): TimelineCluster[] => {
   const positioned = normalizePositions(marks, containerWidth);
   const clusters: TimelineCluster[] = [];
   let current: PositionedMark[] = [];
@@ -102,8 +98,8 @@ export const buildClusters = (
 };
 
 export const toConicGradient = (colorWeights: ColorWeight[]): string => {
-  if (colorWeights.length === 1) {
-    return colorWeights[0].color;
+  if (colorWeights.length <= 1) {
+    return colorWeights[0]?.color ?? 'transparent';
   }
 
   const total = colorWeights.reduce((sum, { weight }) => sum + weight, 0);
@@ -158,15 +154,15 @@ const toCollapsedNode = (cluster: TimelineCluster, dimmed: boolean): TimelineNod
 
 const clamp = (value: number, min: number, max: number): number => Math.min(Math.max(value, min), max);
 
-const expandedSpacing = (memberCount: number, containerWidth: number): number => {
+const expandedSpacing = (memberCount: number, containerWidth: number, maxBandWidth: number): number => {
   if (memberCount <= 1) {
     return EXPANDED_SPACING_PX;
   }
 
-  const available = containerWidth * MAX_BAND_RATIO - DOT_SIZE_PX - 2 * BAND_PADDING_PX;
-  const fitted = available / (memberCount - 1);
+  const cap = Math.min(containerWidth * MAX_BAND_RATIO, maxBandWidth);
+  const fitted = (cap - DOT_SIZE_PX - 2 * BAND_PADDING_PX) / (memberCount - 1);
 
-  return Math.max(MIN_EXPANDED_SPACING_PX, Math.min(EXPANDED_SPACING_PX, fitted));
+  return Math.max(0, Math.min(EXPANDED_SPACING_PX, fitted));
 };
 
 const rescale = (value: number, fromStart: number, fromEnd: number, toStart: number, toEnd: number): number => {
@@ -196,9 +192,24 @@ export const buildLayout = ({
     return { nodes: clusters.map((cluster) => toCollapsedNode(cluster, false)) };
   }
 
-  const spacing = expandedSpacing(expanded.members.length, containerWidth);
-  const widthPx = (expanded.members.length - 1) * spacing + DOT_SIZE_PX + 2 * BAND_PADDING_PX;
-  const leftPx = clamp(expanded.anchorPx - widthPx / 2, 0, Math.max(0, containerWidth - widthPx));
+  const sideClusters = clusters.filter((cluster) => cluster.id !== expanded.id);
+  const leftCount = sideClusters.filter((cluster) => cluster.anchorPx < expanded.anchorPx).length;
+  const rightCount = sideClusters.length - leftCount;
+
+  const reserve = (count: number) => (count === 0 ? 0 : SQUEEZE_GAP_PX + (count - 1) * MIN_SQUEEZE_PITCH_PX);
+  const leftReserve = reserve(leftCount);
+  const rightReserve = reserve(rightCount);
+
+  const minBandWidth = DOT_SIZE_PX + 2 * BAND_PADDING_PX;
+  const maxBandWidth = Math.max(minBandWidth, containerWidth - leftReserve - rightReserve);
+
+  const spacing = expandedSpacing(expanded.members.length, containerWidth, maxBandWidth);
+  const widthPx = Math.min(maxBandWidth, (expanded.members.length - 1) * spacing + minBandWidth);
+  const leftPx = clamp(
+    expanded.anchorPx - widthPx / 2,
+    leftReserve,
+    Math.max(leftReserve, containerWidth - widthPx - rightReserve)
+  );
   const band = { leftPx, memberCount: expanded.members.length, widthPx };
 
   const leftLimit = Math.max(0, leftPx - SQUEEZE_GAP_PX);

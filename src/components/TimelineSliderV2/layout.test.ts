@@ -5,7 +5,7 @@ import {
   CLUSTER_DOT_SIZE_PX,
   DOT_SIZE_PX,
   EXPANDED_SPACING_PX,
-  MIN_EXPANDED_SPACING_PX,
+  MAX_BAND_RATIO,
   normalizePositions,
   SQUEEZE_GAP_PX,
   toColorWeights,
@@ -222,6 +222,10 @@ describe('buildLayout collapsed', () => {
 
     expect(layout.band).toBeUndefined();
   });
+
+  it('falls back to the default threshold', () => {
+    expect(buildLayout({ containerWidth: 1000, marks }).nodes).toHaveLength(2);
+  });
 });
 
 describe('buildLayout expanded', () => {
@@ -232,8 +236,8 @@ describe('buildLayout expanded', () => {
     { color: '#ff0', id: 'd', value: 1000 },
   ];
 
-  const expand = (marks = dense) =>
-    buildLayout({ containerWidth: 1000, expandedClusterId: 'cluster-b', marks, thresholdPx: 16 });
+  const expand = () =>
+    buildLayout({ containerWidth: 1000, expandedClusterId: 'cluster-b', marks: dense, thresholdPx: 16 });
 
   it('replaces the cluster node with one node per member', () => {
     const layout = expand();
@@ -301,6 +305,29 @@ describe('buildLayout expanded', () => {
     expect([...positions].sort((x, y) => x - y)).toEqual(positions);
   });
 
+  it('rescales interior non-members proportionally into the remaining space', () => {
+    const many = [
+      { color: '#f00', id: 'a', value: 0 },
+      { color: '#f00', id: 'a2', value: 200 },
+      { color: '#0f0', id: 'b', value: 500 },
+      { color: '#00f', id: 'c', value: 505 },
+      { color: '#ff0', id: 'd', value: 800 },
+      { color: '#ff0', id: 'd2', value: 1000 },
+    ];
+    const layout = buildLayout({
+      containerWidth: 1000,
+      expandedClusterId: 'cluster-b',
+      marks: many,
+      thresholdPx: 16,
+    });
+    const at = (markId: string) => layout.nodes.find((node) => node.markIds[0] === markId)!.leftPx;
+
+    expect(at('a')).toBe(0);
+    expect(at('a2')).toBeCloseTo(185.67, 1);
+    expect(at('d')).toBeCloseTo(814.43, 1);
+    expect(at('d2')).toBe(1000);
+  });
+
   it('shrinks spacing so a large cluster still fits', () => {
     const crowded = [
       ...Array.from({ length: 15 }, (_, index) => ({ color: '#0f0', id: `m${index}`, value: 500 + index })),
@@ -315,8 +342,7 @@ describe('buildLayout expanded', () => {
     const members = layout.nodes.filter((node) => node.markIds[0].startsWith('m'));
     const spacing = members[1].leftPx - members[0].leftPx;
 
-    expect(spacing).toBeLessThan(EXPANDED_SPACING_PX);
-    expect(spacing).toBeGreaterThanOrEqual(MIN_EXPANDED_SPACING_PX);
-    expect(layout.band!.widthPx).toBeLessThanOrEqual(300);
+    expect(spacing).toBeCloseTo(212 / 14, 5);
+    expect(layout.band!.widthPx).toBe(MAX_BAND_RATIO * 300);
   });
 });
