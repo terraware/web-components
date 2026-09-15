@@ -56,7 +56,9 @@
   border-radius: 12px;
   background-color: terraware.$tw-clr-base-gray-200;
   transform: translateY(-50%);
-  transition: left 200ms ease, width 200ms ease;
+  transition:
+    left 200ms ease,
+    width 200ms ease;
   z-index: 1;
 }
 
@@ -70,7 +72,11 @@
   appearance: none;
   background: none;
   transform: translate(-50%, -50%);
-  transition: left 200ms ease, width 200ms ease, height 200ms ease, opacity 200ms ease;
+  transition:
+    left 200ms ease,
+    width 200ms ease,
+    height 200ms ease,
+    opacity 200ms ease;
   z-index: 2;
 
   &--dimmed {
