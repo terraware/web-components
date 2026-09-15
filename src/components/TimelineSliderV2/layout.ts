@@ -100,3 +100,22 @@ export const buildClusters = (
 
   return clusters;
 };
+
+export const toConicGradient = (colorWeights: ColorWeight[]): string => {
+  if (colorWeights.length === 1) {
+    return colorWeights[0].color;
+  }
+
+  const total = colorWeights.reduce((sum, { weight }) => sum + weight, 0);
+  let consumed = 0;
+
+  const stops = colorWeights.map(({ color, weight }) => {
+    const startDeg = (consumed / total) * 360;
+    consumed += weight;
+    const endDeg = (consumed / total) * 360;
+
+    return `${color} ${startDeg}deg ${endDeg}deg`;
+  });
+
+  return `conic-gradient(${stops.join(', ')})`;
+};

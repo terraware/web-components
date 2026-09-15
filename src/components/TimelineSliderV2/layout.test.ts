@@ -1,4 +1,4 @@
-import { buildClusters, normalizePositions, toColorWeights } from './layout';
+import { buildClusters, normalizePositions, toColorWeights, toConicGradient } from './layout';
 
 describe('normalizePositions', () => {
   it('maps the value range across the container width', () => {
@@ -131,5 +131,29 @@ describe('buildClusters', () => {
 
   it('returns no clusters for no marks', () => {
     expect(buildClusters([], 100, 16)).toEqual([]);
+  });
+});
+
+describe('toConicGradient', () => {
+  it('returns the bare color for a single weight', () => {
+    expect(toConicGradient([{ color: '#0f0', weight: 1 }])).toBe('#0f0');
+  });
+
+  it('splits two equal weights into half turns each', () => {
+    expect(
+      toConicGradient([
+        { color: '#0f0', weight: 1 },
+        { color: '#f90', weight: 1 },
+      ])
+    ).toBe('conic-gradient(#0f0 0deg 180deg, #f90 180deg 360deg)');
+  });
+
+  it('sizes wedges proportionally to weight', () => {
+    expect(
+      toConicGradient([
+        { color: '#0f0', weight: 3 },
+        { color: '#f90', weight: 1 },
+      ])
+    ).toBe('conic-gradient(#0f0 0deg 270deg, #f90 270deg 360deg)');
   });
 });
