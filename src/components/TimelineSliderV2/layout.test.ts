@@ -1,9 +1,13 @@
 import {
+  BAND_PADDING_PX,
   buildClusters,
   buildLayout,
   CLUSTER_DOT_SIZE_PX,
   DOT_SIZE_PX,
+  EXPANDED_SPACING_PX,
+  MIN_EXPANDED_SPACING_PX,
   normalizePositions,
+  SQUEEZE_GAP_PX,
   toColorWeights,
   toConicGradient,
 } from './layout';
@@ -217,5 +221,102 @@ describe('buildLayout collapsed', () => {
     const layout = buildLayout({ containerWidth: 1000, expandedClusterId: 'cluster-c', marks, thresholdPx: 16 });
 
     expect(layout.band).toBeUndefined();
+  });
+});
+
+describe('buildLayout expanded', () => {
+  const dense = [
+    { color: '#f00', id: 'a', value: 0 },
+    { color: '#0f0', id: 'b', value: 500 },
+    { color: '#00f', id: 'c', value: 505 },
+    { color: '#ff0', id: 'd', value: 1000 },
+  ];
+
+  const expand = (marks = dense) =>
+    buildLayout({ containerWidth: 1000, expandedClusterId: 'cluster-b', marks, thresholdPx: 16 });
+
+  it('replaces the cluster node with one node per member', () => {
+    const layout = expand();
+    const ids = layout.nodes.flatMap((node) => node.markIds);
+
+    expect(ids).toEqual(['a', 'b', 'c', 'd']);
+    expect(layout.nodes.filter((node) => node.markIds.length > 1)).toHaveLength(0);
+  });
+
+  it('reports the member count on the band', () => {
+    expect(expand().band?.memberCount).toBe(2);
+  });
+
+  it('sizes the band from spacing, dot size, and padding', () => {
+    expect(expand().band?.widthPx).toBe(EXPANDED_SPACING_PX + DOT_SIZE_PX + 2 * BAND_PADDING_PX);
+  });
+
+  it('keeps the band inside the container', () => {
+    const layout = expand();
+
+    expect(layout.band!.leftPx).toBeGreaterThanOrEqual(0);
+    expect(layout.band!.leftPx + layout.band!.widthPx).toBeLessThanOrEqual(1000);
+  });
+
+  it('spaces members evenly inside the band', () => {
+    const layout = expand();
+    const members = layout.nodes.filter((node) => ['b', 'c'].includes(node.markIds[0]));
+
+    expect(members[1].leftPx - members[0].leftPx).toBe(EXPANDED_SPACING_PX);
+    expect(members[0].leftPx).toBe(layout.band!.leftPx + BAND_PADDING_PX + DOT_SIZE_PX / 2);
+  });
+
+  it('dims non-members and leaves members undimmed', () => {
+    const layout = expand();
+
+    expect(layout.nodes.filter((node) => node.dimmed).flatMap((node) => node.markIds)).toEqual(['a', 'd']);
+  });
+
+  it('pushes non-members clear of the band', () => {
+    const layout = expand();
+    const left = layout.nodes.find((node) => node.markIds[0] === 'a')!;
+    const right = layout.nodes.find((node) => node.markIds[0] === 'd')!;
+
+    expect(left.leftPx).toBeLessThanOrEqual(layout.band!.leftPx - SQUEEZE_GAP_PX);
+    expect(right.leftPx).toBeGreaterThanOrEqual(layout.band!.leftPx + layout.band!.widthPx + SQUEEZE_GAP_PX);
+  });
+
+  it('preserves left-to-right order after squeezing', () => {
+    const many = [
+      { color: '#f00', id: 'a', value: 0 },
+      { color: '#f00', id: 'a2', value: 200 },
+      { color: '#0f0', id: 'b', value: 500 },
+      { color: '#00f', id: 'c', value: 505 },
+      { color: '#ff0', id: 'd', value: 800 },
+      { color: '#ff0', id: 'd2', value: 1000 },
+    ];
+    const layout = buildLayout({
+      containerWidth: 1000,
+      expandedClusterId: 'cluster-b',
+      marks: many,
+      thresholdPx: 16,
+    });
+    const positions = layout.nodes.map((node) => node.leftPx);
+
+    expect([...positions].sort((x, y) => x - y)).toEqual(positions);
+  });
+
+  it('shrinks spacing so a large cluster still fits', () => {
+    const crowded = [
+      ...Array.from({ length: 15 }, (_, index) => ({ color: '#0f0', id: `m${index}`, value: 500 + index })),
+      { color: '#00f', id: 'far', value: 5000 },
+    ];
+    const layout = buildLayout({
+      containerWidth: 300,
+      expandedClusterId: 'cluster-m0',
+      marks: crowded,
+      thresholdPx: 16,
+    });
+    const members = layout.nodes.filter((node) => node.markIds[0].startsWith('m'));
+    const spacing = members[1].leftPx - members[0].leftPx;
+
+    expect(spacing).toBeLessThan(EXPANDED_SPACING_PX);
+    expect(spacing).toBeGreaterThanOrEqual(MIN_EXPANDED_SPACING_PX);
+    expect(layout.band!.widthPx).toBeLessThanOrEqual(300);
   });
 });
