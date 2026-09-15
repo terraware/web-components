@@ -1,4 +1,12 @@
-import { buildClusters, normalizePositions, toColorWeights, toConicGradient } from './layout';
+import {
+  buildClusters,
+  buildLayout,
+  CLUSTER_DOT_SIZE_PX,
+  DOT_SIZE_PX,
+  normalizePositions,
+  toColorWeights,
+  toConicGradient,
+} from './layout';
 
 describe('normalizePositions', () => {
   it('maps the value range across the container width', () => {
@@ -155,5 +163,59 @@ describe('toConicGradient', () => {
         { color: '#f90', weight: 1 },
       ])
     ).toBe('conic-gradient(#0f0 0deg 270deg, #f90 270deg 360deg)');
+  });
+});
+
+describe('buildLayout collapsed', () => {
+  const marks = [
+    { color: '#f00', id: 'a', value: 0 },
+    { color: '#0f0', id: 'b', value: 1 },
+    { color: '#00f', id: 'c', value: 100 },
+  ];
+
+  it('renders one node per cluster', () => {
+    const layout = buildLayout({ containerWidth: 1000, marks, thresholdPx: 16 });
+
+    expect(layout.nodes).toHaveLength(2);
+    expect(layout.band).toBeUndefined();
+  });
+
+  it('sizes a multi-member node as a cluster dot and a lone node as a plain dot', () => {
+    const layout = buildLayout({ containerWidth: 1000, marks, thresholdPx: 16 });
+
+    expect(layout.nodes[0].sizePx).toBe(CLUSTER_DOT_SIZE_PX);
+    expect(layout.nodes[1].sizePx).toBe(DOT_SIZE_PX);
+  });
+
+  it('exposes every member id on a cluster node', () => {
+    const layout = buildLayout({ containerWidth: 1000, marks, thresholdPx: 16 });
+
+    expect(layout.nodes[0].markIds).toEqual(['a', 'b']);
+  });
+
+  it('dims nothing when no cluster is expanded', () => {
+    const layout = buildLayout({ containerWidth: 1000, marks, thresholdPx: 16 });
+
+    expect(layout.nodes.every((node) => !node.dimmed)).toBe(true);
+  });
+
+  it('returns nothing for an unmeasured container', () => {
+    expect(buildLayout({ containerWidth: 0, marks, thresholdPx: 16 })).toEqual({ nodes: [] });
+  });
+
+  it('returns nothing for no marks', () => {
+    expect(buildLayout({ containerWidth: 500, marks: [], thresholdPx: 16 })).toEqual({ nodes: [] });
+  });
+
+  it('ignores an expanded id that matches no cluster', () => {
+    const layout = buildLayout({ containerWidth: 1000, expandedClusterId: 'cluster-zzz', marks, thresholdPx: 16 });
+
+    expect(layout.band).toBeUndefined();
+  });
+
+  it('ignores an expanded id that resolves to a single-member cluster', () => {
+    const layout = buildLayout({ containerWidth: 1000, expandedClusterId: 'cluster-c', marks, thresholdPx: 16 });
+
+    expect(layout.band).toBeUndefined();
   });
 });
