@@ -745,7 +745,17 @@
 <a name='L680'></a><a href='#L680'>680</a>
 <a name='L681'></a><a href='#L681'>681</a>
 <a name='L682'></a><a href='#L682'>682</a>
-<a name='L683'></a><a href='#L683'>683</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L683'></a><a href='#L683'>683</a>
+<a name='L684'></a><a href='#L684'>684</a>
+<a name='L685'></a><a href='#L685'>685</a>
+<a name='L686'></a><a href='#L686'>686</a>
+<a name='L687'></a><a href='#L687'>687</a>
+<a name='L688'></a><a href='#L688'>688</a>
+<a name='L689'></a><a href='#L689'>689</a>
+<a name='L690'></a><a href='#L690'>690</a>
+<a name='L691'></a><a href='#L691'>691</a>
+<a name='L692'></a><a href='#L692'>692</a>
+<a name='L693'></a><a href='#L693'>693</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -934,6 +944,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -1044,6 +1055,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -1281,6 +1293,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -1312,6 +1325,8 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -1327,6 +1342,10 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -1417,6 +1436,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -1606,6 +1626,7 @@ const EditableTableWithState = <span class="cstat-no" title="statement not cover
 &nbsp;
 <span class="cstat-no" title="statement not covered" >  return (</span>
     &lt;EditableTable&lt;RowData&gt;
+      clearAllFiltersLabel='Clear all filters'
       columns={columns}
       data={data}
       enableEditing={true}
@@ -1727,6 +1748,7 @@ export const WithFilters: Story = <span class="cstat-no" title="statement not co
 &nbsp;
 <span class="cstat-no" title="statement not covered" >  return (</span>
     &lt;EditableTable&lt;RowData&gt;
+      clearAllFiltersLabel='Clear all filters'
       columns={columns}
       data={data}
       enableEditing={true}
@@ -1953,6 +1975,7 @@ export const WithOccupationFilter: Story = <span class="cstat-no" title="stateme
 &nbsp;
 <span class="cstat-no" title="statement not covered" >  return (</span>
     &lt;EditableTable&lt;RowData&gt;
+      clearAllFiltersLabel='Clear all filters'
       columns={columns}
       data={data}
       enableEditing={true}
@@ -1996,7 +2019,13 @@ export const SortingFn: Story = <span class="cstat-no" title="statement not cove
 <span class="cstat-no" title="statement not covered" >  return (</span>
     &lt;&gt;
       &lt;Typography&gt;Clicking the headers to see the difference&lt;/Typography&gt;
-      &lt;EditableTable&lt;SimpleRow&gt; columns={columns} data={data} enableSorting={true} enablePagination={false} /&gt;
+      &lt;EditableTable&lt;SimpleRow&gt;
+        clearAllFiltersLabel='Clear all filters'
+        columns={columns}
+        data={data}
+        enableSorting={true}
+        enablePagination={false}
+      /&gt;
       &lt;Typography&gt;
         Note this only makes a difference if there are fewer than 10 rows. Otherwise it will determine the correct
         function to use (see this{' '}
@@ -2100,6 +2129,7 @@ export const WithoutPagination: Story = <span class="cstat-no" title="statement 
 &nbsp;
 <span class="cstat-no" title="statement not covered" >  return (</span>
     &lt;EditableTable&lt;RowData&gt;
+      clearAllFiltersLabel='Clear all filters'
       columns={columns}
       data={data}
       enableEditing={true}
@@ -2116,7 +2146,7 @@ export const WithoutPagination: Story = <span class="cstat-no" title="statement 
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-09-10T19:27:07.095Z
+                at 2026-09-15T20:56:11.625Z
             </div>
         <script src="../../prettify.js"></script>
         <script>
