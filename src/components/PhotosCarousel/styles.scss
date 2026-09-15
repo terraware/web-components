@@ -1,9 +1,12 @@
 @use '../../style-dictionary-dist/terraware.scss';
 
 .photos-carousel {
+  --arrow-size: 43px;
+  --control-spacing: 20px;
+  --arrow-inset: calc(4% + 1px);
   .embla {
     position: relative;
-    padding-bottom: 20px;
+    padding-bottom: var(--control-spacing);
   }
 
   .embla__viewport {
@@ -33,9 +36,10 @@
   .embla__prev,
   .embla__next {
     position: absolute;
-    top: calc(50% - 31px);
-    width: 43px;
-    height: 43px;
+    top: calc((100% - var(--control-spacing)) / 2);
+    transform: translateY(-50%);
+    width: var(--arrow-size);
+    height: var(--arrow-size);
     border: 0;
     border-radius: 50%;
     background: rgba(0, 0, 0, 0.5);
@@ -60,11 +64,11 @@
   }
 
   .embla__prev {
-    left: calc(4% + 1px);
+    left: var(--arrow-inset);
   }
 
   .embla__next {
-    right: calc(4% + 1px);
+    right: var(--arrow-inset);
   }
 
   .embla__dots {

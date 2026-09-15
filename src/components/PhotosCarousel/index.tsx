@@ -1,11 +1,11 @@
-import React, { type JSX, useEffect, useState } from 'react';
+import React, { type JSX } from 'react';
 
 import { Box, Typography } from '@mui/material';
-import useEmblaCarousel from 'embla-carousel-react';
 
-import BusySpinner from '../BusySpinner';
 import Icon from '../Icon/Icon';
+import PhotoSlide from './PhotoSlide';
 import './styles.scss';
+import usePhotosCarousel from './usePhotosCarousel';
 
 export type PhotoItem = {
   url: string;
@@ -23,107 +23,32 @@ export interface PhotosCarouselProps {
 }
 
 const PhotosCarousel = (props: PhotosCarouselProps): JSX.Element => {
-  const { photos, selectedSlide, onSlideChange, showArrows = false, numbered, dots = true } = props;
-  const [internalSlide, setInternalSlide] = useState(0);
-  const currentSlide = Math.max(0, Math.min(selectedSlide ?? internalSlide, photos.length - 1));
-  const [startIndex] = useState(currentSlide);
-  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: false, startIndex });
-  const [scrollSnaps, setScrollSnaps] = useState<number[]>([]);
-  const [prevButtonDisabled, setPrevButtonDisabled] = useState(true);
-  const [nextButtonDisabled, setNextButtonDisabled] = useState(true);
-  const [loadedPhotos, setLoadedPhotos] = useState<string[]>([]);
-  const photoKey = JSON.stringify(photos.map((photo) => photo.url));
-
-  const scrollPrev = () => emblaApi?.scrollPrev();
-  const scrollNext = () => emblaApi?.scrollNext();
-  const scrollTo = (index: number) => emblaApi?.scrollTo(index);
-
-  useEffect(() => {
-    if (!emblaApi) {
-      return;
-    }
-    const updateButtons = () => {
-      setPrevButtonDisabled(!emblaApi.canScrollPrev());
-      setNextButtonDisabled(!emblaApi.canScrollNext());
-    };
-    const onInit = () => {
-      setScrollSnaps(emblaApi.scrollSnapList());
-      updateButtons();
-    };
-    onInit();
-    emblaApi.on('reInit', onInit).on('select', updateButtons);
-    return () => {
-      emblaApi.off('reInit', onInit).off('select', updateButtons);
-    };
-  }, [emblaApi]);
-
-  useEffect(() => {
-    emblaApi?.reInit();
-  }, [emblaApi, photoKey]);
-
-  useEffect(() => {
-    if (!emblaApi) {
-      return;
-    }
-    // Synchronize external selection before subscribing so it does not echo a change callback.
-    if (emblaApi.selectedScrollSnap() !== currentSlide) {
-      emblaApi.scrollTo(currentSlide);
-    }
-    const handleSelect = () => {
-      const slide = emblaApi.selectedScrollSnap();
-      setInternalSlide(slide);
-      if (slide !== currentSlide) {
-        onSlideChange?.(slide);
-      }
-    };
-    emblaApi.on('select', handleSelect);
-    return () => {
-      emblaApi.off('select', handleSelect);
-    };
-  }, [emblaApi, currentSlide, onSlideChange, photoKey]);
+  const { photos, showArrows = false, numbered, dots = true } = props;
+  const {
+    emblaRef,
+    currentSlide,
+    scrollSnaps,
+    prevButtonDisabled,
+    nextButtonDisabled,
+    scrollPrev,
+    scrollNext,
+    scrollTo,
+    onKeyDown,
+  } = usePhotosCarousel(props);
 
   return (
     <Box className='photos-carousel' role='region' aria-roledescription='carousel' aria-label='Photos'>
       <div className='embla'>
-        <div
-          className='embla__viewport'
-          ref={emblaRef}
-          onKeyDown={(event) => {
-            if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
-              event.preventDefault();
-              if (event.key === 'ArrowLeft') {
-                emblaApi?.scrollPrev();
-              } else {
-                emblaApi?.scrollNext();
-              }
-            }
-          }}
-        >
+        <div className='embla__viewport' ref={emblaRef} onKeyDown={onKeyDown}>
           <div className='embla__container'>
             {photos.map((photo, index) => (
-              <div
+              <PhotoSlide
                 key={`${photo.url}-${index}`}
-                className='embla__slide'
-                role='group'
-                aria-roledescription='slide'
-                aria-label={`${index + 1} of ${photos.length}`}
-              >
-                {!loadedPhotos.includes(photo.url) && <BusySpinner noBackground={true} />}
-                <a
-                  href={photo.url}
-                  target='_blank'
-                  rel='noopener noreferrer'
-                  tabIndex={index === currentSlide ? 0 : -1}
-                >
-                  <img
-                    className='embla__slide__img'
-                    src={photo.url}
-                    alt={photo.alt}
-                    onLoad={() => setLoadedPhotos((loaded) => [...loaded, photo.url])}
-                    onError={() => setLoadedPhotos((loaded) => [...loaded, photo.url])}
-                  />
-                </a>
-              </div>
+                photo={photo}
+                index={index}
+                total={photos.length}
+                selected={index === currentSlide}
+              />
             ))}
           </div>
         </div>
