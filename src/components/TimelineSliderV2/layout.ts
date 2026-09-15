@@ -35,6 +35,7 @@ export const normalizePositions = (marks: LayoutMark[], containerWidth: number):
   const maxValue = Math.max(...values);
   const range = maxValue - minValue;
 
+  // Mirrors TimelineSlider's behavior: when every mark shares one value, they all land at the right edge.
   return marks
     .map((mark) => ({
       color: mark.color,

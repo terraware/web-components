@@ -11,7 +11,11 @@ describe('normalizePositions', () => {
       200
     );
 
-    expect(result.map((mark) => mark.positionPx)).toEqual([0, 100, 200]);
+    expect(result).toEqual([
+      { color: '#f00', id: 'a', positionPx: 0 },
+      { color: '#0f0', id: 'b', positionPx: 100 },
+      { color: '#00f', id: 'c', positionPx: 200 },
+    ]);
   });
 
   it('sorts marks by position regardless of input order', () => {
@@ -36,6 +40,12 @@ describe('normalizePositions', () => {
     );
 
     expect(result.map((mark) => mark.positionPx)).toEqual([300, 300]);
+  });
+
+  it('places a lone mark at the right edge', () => {
+    expect(normalizePositions([{ color: '#f00', id: 'only', value: 42 }], 250)).toEqual([
+      { color: '#f00', id: 'only', positionPx: 250 },
+    ]);
   });
 
   it('returns an empty array for no marks', () => {
