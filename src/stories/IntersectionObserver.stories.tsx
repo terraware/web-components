@@ -1,9 +1,10 @@
 import React, { type JSX, useState } from 'react';
 import { InView } from 'react-intersection-observer';
-import Carousel from 'react-multi-carousel';
 
 import { Snackbar, Typography } from '@mui/material';
 import { StoryFn } from '@storybook/react';
+
+import PhotosCarousel from '../components/PhotosCarousel';
 
 export default {
   title: 'IntersectionObserver',
@@ -18,14 +19,6 @@ const Template: StoryFn<InViewDemoProps> = (args): JSX.Element => {
   const { numberOfCarousels, imagesPerCarousel } = args;
   const carousels = [...new Array(numberOfCarousels)];
   const [visibleCarousels, setVisibleCarousels] = useState<number[]>([]);
-
-  const responsive = {
-    // eslint-disable-next-line id-denylist
-    any: {
-      breakpoint: { max: 10000, min: 0 },
-      items: 1,
-    },
-  };
 
   const setCarouselVisible = (index: number) => {
     if (!visibleCarousels.includes(index)) {
@@ -72,15 +65,7 @@ const Template: StoryFn<InViewDemoProps> = (args): JSX.Element => {
                 <div ref={ref}>
                   {inView ? (
                     <div style={{ minHeight: '600px' }}>
-                      <Carousel responsive={responsive}>
-                        {photos.map((p, i) => {
-                          return (
-                            <div key={`photo-${i}-container`}>
-                              <img src={p} alt={p} />
-                            </div>
-                          );
-                        })}
-                      </Carousel>
+                      <PhotosCarousel photos={photos.map((url) => ({ url, alt: url }))} showArrows dots={false} />
                     </div>
                   ) : null}
                 </div>

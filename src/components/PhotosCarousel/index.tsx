@@ -1,19 +1,11 @@
-import React, { type JSX, useCallback, useEffect, useRef, useState } from 'react';
-import CarouselImport from 'react-multi-carousel';
-import 'react-multi-carousel/lib/styles.css';
+import React, { type JSX } from 'react';
 
 import { Box, Typography } from '@mui/material';
 
-import BusySpinner from '../BusySpinner';
+import Icon from '../Icon/Icon';
+import PhotoSlide from './PhotoSlide';
 import './styles.scss';
-
-// react-multi-carousel is CommonJS compiled by TypeScript, so it exports the component as
-// `exports.default` alongside an `__esModule` flag. We publish native ES modules, where the
-// default import of a CommonJS module is the whole `module.exports` object and no bundler
-// unwraps `.default` for us. Unwrap it here; the `??` keeps this correct under bundlers that
-// do apply the legacy interop.
-type CarouselInstance = InstanceType<typeof CarouselImport>;
-const Carousel = (CarouselImport as unknown as { default?: typeof CarouselImport }).default ?? CarouselImport;
+import usePhotosCarousel from './usePhotosCarousel';
 
 export type PhotoItem = {
   url: string;
@@ -30,81 +22,79 @@ export interface PhotosCarouselProps {
   dots?: boolean;
 }
 
-const responsive = {
-  mobile: {
-    breakpoint: { max: 4000, min: 0 },
-    items: 1,
-  },
-};
-
-export default function PhotosCarousel(props: PhotosCarouselProps): JSX.Element {
-  const { photos, selectedSlide, onSlideChange, showArrows, numbered, dots } = props;
-  const isControlled = selectedSlide !== undefined;
-  const [internalSlide, setInternalSlide] = useState(0);
-  const [isLoading, setIsLoading] = useState<boolean[]>([]);
-  const myCarousel = useRef<CarouselInstance>(null);
-  const currentSlide = isControlled ? selectedSlide : internalSlide;
-
-  // Keyed on the URLs (not just photos.length) so swapping in a same-length array of
-  // different photos still resets the loading state instead of leaving stale flags.
-  const photoKey = photos.map((p) => p.url).join('|');
-  useEffect(() => {
-    setIsLoading(new Array(photos.length).fill(true));
-  }, [photoKey]);
-
-  useEffect(() => {
-    if (myCarousel.current && myCarousel.current.state.currentSlide !== currentSlide) {
-      myCarousel.current.goToSlide(currentSlide);
-    }
-  }, [currentSlide]);
-
-  const handleAfterChange = useCallback(() => {
-    const slide = myCarousel.current?.state.currentSlide ?? 0;
-    if (!isControlled) {
-      setInternalSlide(slide);
-    }
-    if (slide !== currentSlide) {
-      onSlideChange?.(slide);
-    }
-  }, [isControlled, currentSlide, onSlideChange]);
-
-  const finishLoading = (index: number) => {
-    setIsLoading((prev) => {
-      const next = [...prev];
-      next[index] = false;
-      return next;
-    });
-  };
+const PhotosCarousel = (props: PhotosCarouselProps): JSX.Element => {
+  const { photos, showArrows = false, numbered, dots = true } = props;
+  const {
+    emblaRef,
+    currentSlide,
+    scrollSnaps,
+    prevButtonDisabled,
+    nextButtonDisabled,
+    scrollPrev,
+    scrollNext,
+    scrollTo,
+    onKeyDown,
+  } = usePhotosCarousel(props);
 
   return (
-    <Box
-      sx={{
-        '& .react-multi-carousel-list': {
-          paddingBottom: '20px',
-        },
-      }}
-    >
-      <Carousel
-        responsive={responsive}
-        ref={myCarousel}
-        showDots={dots ?? true}
-        arrows={showArrows ?? false}
-        ssr={true}
-        afterChange={handleAfterChange}
-      >
-        {photos.map((p, i) => (
-          <div key={`photo-${i}-container`} className='photos-carousel-container'>
-            {isLoading[i] ? <BusySpinner noBackground={true} /> : undefined}
-            <a href={p.url} target='_blank' rel='noopener noreferrer'>
-              <img className='photos-carousel-image' src={p.url} alt={p.alt} onLoad={() => finishLoading(i)} />
-            </a>
+    <Box className='photos-carousel' role='region' aria-roledescription='carousel' aria-label='Photos'>
+      <div className='embla'>
+        <div className='embla__viewport' ref={emblaRef} onKeyDown={onKeyDown}>
+          <div className='embla__container'>
+            {photos.map((photo, index) => (
+              <PhotoSlide
+                key={`${photo.url}-${index}`}
+                photo={photo}
+                index={index}
+                total={photos.length}
+                selected={index === currentSlide}
+              />
+            ))}
           </div>
-        ))}
-      </Carousel>
-      {numbered ? (
-        <Typography className='photo-numbering'>{`${currentSlide + 1}/${photos.length}`}</Typography>
-      ) : undefined}
-      {photos[currentSlide] && photos[currentSlide].decoration}
+        </div>
+        {showArrows && photos.length > 1 && (
+          <>
+            <button
+              type='button'
+              className='embla__prev'
+              aria-label='Previous photo'
+              disabled={prevButtonDisabled}
+              onClick={scrollPrev}
+            >
+              <Icon name='caretLeft' fillColor='currentColor' />
+            </button>
+            <button
+              type='button'
+              className='embla__next'
+              aria-label='Next photo'
+              disabled={nextButtonDisabled}
+              onClick={scrollNext}
+            >
+              <Icon name='caretRight' fillColor='currentColor' />
+            </button>
+          </>
+        )}
+        {dots && (
+          <div className='embla__dots'>
+            {scrollSnaps.map((_, index) => (
+              <button
+                key={index}
+                type='button'
+                className={`embla__dot${index === currentSlide ? ' embla__dot--selected' : ''}`}
+                aria-label={`Go to photo ${index + 1}`}
+                aria-current={index === currentSlide ? 'true' : undefined}
+                onClick={() => scrollTo(index)}
+              />
+            ))}
+          </div>
+        )}
+      </div>
+      {numbered && (
+        <Typography className='photo-numbering'>{`${photos.length ? currentSlide + 1 : 0}/${photos.length}`}</Typography>
+      )}
+      {photos[currentSlide]?.decoration}
     </Box>
   );
-}
+};
+
+export default PhotosCarousel;
