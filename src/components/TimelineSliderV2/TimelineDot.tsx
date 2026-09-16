@@ -4,6 +4,7 @@ import { type ColorWeight, toConicGradient } from './layout';
 import './styles.scss';
 
 type TimelineDotProps = {
+  ariaLabel?: string;
   colorWeights: ColorWeight[];
   dimmed: boolean;
   leftPx: number;
@@ -14,6 +15,7 @@ type TimelineDotProps = {
 };
 
 const TimelineDot = ({
+  ariaLabel,
   colorWeights,
   dimmed,
   leftPx,
@@ -34,6 +36,7 @@ const TimelineDot = ({
 
   return (
     <button
+      aria-label={ariaLabel}
       className={className}
       style={{ background, height: `${sizePx}px`, left: `${leftPx}px`, width: `${sizePx}px` }}
       onClick={onClick}

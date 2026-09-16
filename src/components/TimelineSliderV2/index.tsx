@@ -9,6 +9,7 @@ import { DEFAULT_CLUSTER_THRESHOLD_PX, type TimelineNode, buildLayout } from './
 import './styles.scss';
 
 export type TimelineSliderV2Mark = {
+  ariaLabel?: string;
   color: string;
   id: string;
   label?: string;
@@ -67,6 +68,19 @@ const TimelineSliderV2 = ({
 
   const selectedLabel = useMemo(() => marks.find((mark) => mark.id === selectedMarkId)?.label, [marks, selectedMarkId]);
 
+  const markNames = useMemo(() => new Map(marks.map((mark) => [mark.id, mark.ariaLabel ?? mark.label])), [marks]);
+
+  const nodeAriaLabel = useCallback(
+    (node: TimelineNode): string | undefined => {
+      const names = node.markIds
+        .map((markId) => markNames.get(markId))
+        .filter((name): name is string => name !== undefined);
+
+      return names.length > 0 ? names.join(', ') : undefined;
+    },
+    [markNames]
+  );
+
   const handleNodeClick = useCallback(
     (node: TimelineNode) => {
       if (node.markIds.length > 1) {
@@ -105,6 +119,7 @@ const TimelineSliderV2 = ({
         {layout.nodes.map((node) => (
           <TimelineDot
             key={node.id}
+            ariaLabel={nodeAriaLabel(node)}
             colorWeights={node.colorWeights}
             dimmed={node.dimmed}
             leftPx={node.leftPx}
