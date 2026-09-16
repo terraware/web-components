@@ -1,3 +1,13 @@
+import type {
+  BuildLayoutParams,
+  ColorWeight,
+  LayoutMark,
+  PositionedMark,
+  TimelineCluster,
+  TimelineLayout,
+  TimelineNode,
+} from './types';
+
 export const DOT_SIZE_PX = 12;
 export const CLUSTER_DOT_SIZE_PX = 18;
 export const EXPANDED_SPACING_PX = 20;
@@ -7,23 +17,6 @@ export const SQUEEZE_GAP_PX = 12;
 export const MAX_BAND_RATIO = 0.8;
 export const DEFAULT_CLUSTER_THRESHOLD_PX = 16;
 export const DIMMED_OPACITY = 0.35;
-
-export type LayoutMark = {
-  color: string;
-  id: string;
-  value: number;
-};
-
-export type ColorWeight = {
-  color: string;
-  weight: number;
-};
-
-export type PositionedMark = {
-  color: string;
-  id: string;
-  positionPx: number;
-};
 
 export const normalizePositions = (marks: LayoutMark[], containerWidth: number): PositionedMark[] => {
   if (marks.length === 0) {
@@ -53,12 +46,6 @@ export const toColorWeights = (colors: string[]): ColorWeight[] => {
   });
 
   return [...weights.entries()].map(([color, weight]) => ({ color, weight }));
-};
-
-export type TimelineCluster = {
-  anchorPx: number;
-  id: string;
-  members: PositionedMark[];
 };
 
 export const buildClusters = (marks: LayoutMark[], containerWidth: number, thresholdPx: number): TimelineCluster[] => {
@@ -114,33 +101,6 @@ export const toConicGradient = (colorWeights: ColorWeight[]): string => {
   });
 
   return `conic-gradient(${stops.join(', ')})`;
-};
-
-export type TimelineNode = {
-  colorWeights: ColorWeight[];
-  dimmed: boolean;
-  id: string;
-  leftPx: number;
-  markIds: string[];
-  sizePx: number;
-};
-
-export type ExpandedBand = {
-  leftPx: number;
-  memberCount: number;
-  widthPx: number;
-};
-
-export type TimelineLayout = {
-  band?: ExpandedBand;
-  nodes: TimelineNode[];
-};
-
-export type BuildLayoutParams = {
-  containerWidth: number;
-  expandedClusterId?: string;
-  marks: LayoutMark[];
-  thresholdPx?: number;
 };
 
 const toCollapsedNode = (cluster: TimelineCluster, dimmed: boolean): TimelineNode => ({
