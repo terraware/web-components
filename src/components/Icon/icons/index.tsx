@@ -64,6 +64,7 @@ import IconFolder from '../../svg/IconFolder';
 import IconFullScreen from '../../svg/IconFullScreen';
 import Futures from '../../svg/IconFutures';
 import IconGraphReport from '../../svg/IconGraphReport';
+import IconGrid from '../../svg/IconGrid';
 import MonitoringNav from '../../svg/IconHeartMonitor';
 import IconHelp from '../../svg/IconHelp';
 import IconHistory from '../../svg/IconHistory';
@@ -76,6 +77,7 @@ import IconLivePlant from '../../svg/IconLivePlant';
 import IconLocations from '../../svg/IconLocations';
 import Mail from '../../svg/IconMail';
 import PeopleNav from '../../svg/IconManager';
+import IconMap from '../../svg/IconMap';
 import IconMarker from '../../svg/IconMarker';
 import IconMenu from '../../svg/IconMenu';
 import IconMenuHorizontal from '../../svg/IconMenuHorizontal';
@@ -187,6 +189,7 @@ export type IconName =
   | 'iconFolder'
   | 'iconFullScreen'
   | 'iconGraphReport'
+  | 'iconGrid'
   | 'iconHelp'
   | 'iconHistory'
   | 'iconLivePlant'
@@ -196,6 +199,7 @@ export type IconName =
   | 'iconLibrary'
   | 'iconList'
   | 'iconLocations'
+  | 'iconMap'
   | 'iconMarker'
   | 'iconMenu'
   | 'iconMenuHorizontal'
@@ -319,6 +323,7 @@ const icons: Record<IconName, SVGComponent> = {
   iconFolder: IconFolder,
   iconFullScreen: IconFullScreen,
   iconGraphReport: IconGraphReport,
+  iconGrid: IconGrid,
   iconHelp: IconHelp,
   iconHistory: IconHistory,
   iconImport: IconImport,
@@ -328,6 +333,7 @@ const icons: Record<IconName, SVGComponent> = {
   iconList: IconList,
   iconLivePlant: IconLivePlant,
   iconLocations: IconLocations,
+  iconMap: IconMap,
   iconMarker: IconMarker,
   iconMenu: IconMenu,
   iconMenuHorizontal: IconMenuHorizontal,
