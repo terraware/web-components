@@ -1,0 +1,200 @@
+import type {
+  BuildLayoutParams,
+  ColorWeight,
+  LayoutMark,
+  PositionedMark,
+  TimelineCluster,
+  TimelineLayout,
+  TimelineNode,
+} from './types';
+
+export const DOT_SIZE_PX = 12;
+export const CLUSTER_DOT_SIZE_PX = 18;
+export const EXPANDED_SPACING_PX = 20;
+export const MIN_SQUEEZE_PITCH_PX = DOT_SIZE_PX;
+export const BAND_PADDING_PX = 8;
+export const SQUEEZE_GAP_PX = 12;
+export const MAX_BAND_RATIO = 0.8;
+export const DEFAULT_CLUSTER_THRESHOLD_PX = 16;
+export const DIMMED_OPACITY = 0.35;
+
+export const normalizePositions = (marks: LayoutMark[], containerWidth: number): PositionedMark[] => {
+  if (marks.length === 0) {
+    return [];
+  }
+
+  const values = marks.map((mark) => mark.value);
+  const minValue = Math.min(...values);
+  const maxValue = Math.max(...values);
+  const range = maxValue - minValue;
+
+  // Mirrors TimelineSlider's behavior: when every mark shares one value, they all land at the right edge.
+  return marks
+    .map((mark) => ({
+      color: mark.color,
+      id: mark.id,
+      positionPx: (range === 0 ? 1 : (mark.value - minValue) / range) * containerWidth,
+    }))
+    .sort((a, b) => a.positionPx - b.positionPx);
+};
+
+export const toColorWeights = (colors: string[]): ColorWeight[] => {
+  const weights = new Map<string, number>();
+
+  colors.forEach((color) => {
+    weights.set(color, (weights.get(color) ?? 0) + 1);
+  });
+
+  return [...weights.entries()].map(([color, weight]) => ({ color, weight }));
+};
+
+export const buildClusters = (marks: LayoutMark[], containerWidth: number, thresholdPx: number): TimelineCluster[] => {
+  const positioned = normalizePositions(marks, containerWidth);
+  const clusters: TimelineCluster[] = [];
+  let current: PositionedMark[] = [];
+
+  const flush = () => {
+    if (current.length === 0) {
+      return;
+    }
+
+    const total = current.reduce((sum, member) => sum + member.positionPx, 0);
+
+    clusters.push({
+      anchorPx: total / current.length,
+      id: `cluster-${current[0].id}`,
+      members: current,
+    });
+
+    current = [];
+  };
+
+  positioned.forEach((mark) => {
+    const previous = current[current.length - 1];
+
+    if (previous !== undefined && mark.positionPx - previous.positionPx >= thresholdPx) {
+      flush();
+    }
+
+    current.push(mark);
+  });
+
+  flush();
+
+  return clusters;
+};
+
+export const toConicGradient = (colorWeights: ColorWeight[]): string => {
+  if (colorWeights.length <= 1) {
+    return colorWeights[0]?.color ?? 'transparent';
+  }
+
+  const total = colorWeights.reduce((sum, { weight }) => sum + weight, 0);
+  let consumed = 0;
+
+  const stops = colorWeights.map(({ color, weight }) => {
+    const startDeg = (consumed / total) * 360;
+    consumed += weight;
+    const endDeg = (consumed / total) * 360;
+
+    return `${color} ${startDeg}deg ${endDeg}deg`;
+  });
+
+  return `conic-gradient(${stops.join(', ')})`;
+};
+
+const toCollapsedNode = (cluster: TimelineCluster, dimmed: boolean): TimelineNode => ({
+  colorWeights: toColorWeights(cluster.members.map((member) => member.color)),
+  dimmed,
+  id: cluster.id,
+  leftPx: cluster.anchorPx,
+  markIds: cluster.members.map((member) => member.id),
+  sizePx: cluster.members.length > 1 ? CLUSTER_DOT_SIZE_PX : DOT_SIZE_PX,
+});
+
+const clamp = (value: number, min: number, max: number): number => Math.min(Math.max(value, min), max);
+
+const expandedSpacing = (memberCount: number, containerWidth: number, maxBandWidth: number): number => {
+  if (memberCount <= 1) {
+    return EXPANDED_SPACING_PX;
+  }
+
+  const cap = Math.min(containerWidth * MAX_BAND_RATIO, maxBandWidth);
+  const fitted = (cap - DOT_SIZE_PX - 2 * BAND_PADDING_PX) / (memberCount - 1);
+
+  return Math.max(0, Math.min(EXPANDED_SPACING_PX, fitted));
+};
+
+const rescale = (value: number, fromStart: number, fromEnd: number, toStart: number, toEnd: number): number => {
+  const fromSpan = fromEnd - fromStart;
+
+  if (fromSpan <= 0) {
+    return toStart;
+  }
+
+  return toStart + ((value - fromStart) / fromSpan) * (toEnd - toStart);
+};
+
+export const buildLayout = ({
+  containerWidth,
+  expandedClusterId,
+  marks,
+  thresholdPx = DEFAULT_CLUSTER_THRESHOLD_PX,
+}: BuildLayoutParams): TimelineLayout => {
+  if (containerWidth <= 0 || marks.length === 0) {
+    return { nodes: [] };
+  }
+
+  const clusters = buildClusters(marks, containerWidth, thresholdPx);
+  const expanded = clusters.find((cluster) => cluster.id === expandedClusterId && cluster.members.length > 1);
+
+  if (expanded === undefined) {
+    return { nodes: clusters.map((cluster) => toCollapsedNode(cluster, false)) };
+  }
+
+  const sideClusters = clusters.filter((cluster) => cluster.id !== expanded.id);
+  const leftCount = sideClusters.filter((cluster) => cluster.anchorPx < expanded.anchorPx).length;
+  const rightCount = sideClusters.length - leftCount;
+
+  const reserve = (count: number) => (count === 0 ? 0 : SQUEEZE_GAP_PX + (count - 1) * MIN_SQUEEZE_PITCH_PX);
+  const leftReserve = reserve(leftCount);
+  const rightReserve = reserve(rightCount);
+
+  const minBandWidth = DOT_SIZE_PX + 2 * BAND_PADDING_PX;
+  const maxBandWidth = Math.max(minBandWidth, containerWidth - leftReserve - rightReserve);
+
+  const spacing = expandedSpacing(expanded.members.length, containerWidth, maxBandWidth);
+  const widthPx = Math.min(maxBandWidth, (expanded.members.length - 1) * spacing + minBandWidth);
+  const leftPx = clamp(
+    expanded.anchorPx - widthPx / 2,
+    leftReserve,
+    Math.max(leftReserve, containerWidth - widthPx - rightReserve)
+  );
+  const band = { leftPx, memberCount: expanded.members.length, widthPx };
+
+  const leftLimit = Math.max(0, leftPx - SQUEEZE_GAP_PX);
+  const rightLimit = Math.min(containerWidth, leftPx + widthPx + SQUEEZE_GAP_PX);
+
+  const nodes = clusters.flatMap((cluster): TimelineNode[] => {
+    if (cluster.id === expanded.id) {
+      return cluster.members.map((member, index) => ({
+        colorWeights: [{ color: member.color, weight: 1 }],
+        dimmed: false,
+        id: member.id,
+        leftPx: leftPx + BAND_PADDING_PX + DOT_SIZE_PX / 2 + index * spacing,
+        markIds: [member.id],
+        sizePx: DOT_SIZE_PX,
+      }));
+    }
+
+    const collapsed = toCollapsedNode(cluster, true);
+    const squeezed =
+      cluster.anchorPx < expanded.anchorPx
+        ? rescale(cluster.anchorPx, 0, expanded.anchorPx, 0, leftLimit)
+        : rescale(cluster.anchorPx, expanded.anchorPx, containerWidth, rightLimit, containerWidth);
+
+    return [{ ...collapsed, leftPx: squeezed }];
+  });
+
+  return { band, nodes };
+};
