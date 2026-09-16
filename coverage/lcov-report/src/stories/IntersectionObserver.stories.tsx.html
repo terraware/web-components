@@ -25,7 +25,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/23</span>
+                <span class='fraction'>0/22</span>
             </div>
         
             
@@ -46,7 +46,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/22</span>
+                <span class='fraction'>0/21</span>
             </div>
         
             
@@ -149,22 +149,8 @@
 <a name='L84'></a><a href='#L84'>84</a>
 <a name='L85'></a><a href='#L85'>85</a>
 <a name='L86'></a><a href='#L86'>86</a>
-<a name='L87'></a><a href='#L87'>87</a>
-<a name='L88'></a><a href='#L88'>88</a>
-<a name='L89'></a><a href='#L89'>89</a>
-<a name='L90'></a><a href='#L90'>90</a>
-<a name='L91'></a><a href='#L91'>91</a>
-<a name='L92'></a><a href='#L92'>92</a>
-<a name='L93'></a><a href='#L93'>93</a>
-<a name='L94'></a><a href='#L94'>94</a>
-<a name='L95'></a><a href='#L95'>95</a>
-<a name='L96'></a><a href='#L96'>96</a>
-<a name='L97'></a><a href='#L97'>97</a>
-<a name='L98'></a><a href='#L98'>98</a>
-<a name='L99'></a><a href='#L99'>99</a>
-<a name='L100'></a><a href='#L100'>100</a>
-<a name='L101'></a><a href='#L101'>101</a>
-<a name='L102'></a><a href='#L102'>102</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L87'></a><a href='#L87'>87</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -184,14 +170,6 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -238,15 +216,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -267,10 +237,11 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import React, { type JSX, useState } from 'react';
 import { InView } from 'react-intersection-observer';
-import Carousel from 'react-multi-carousel';
 &nbsp;
 import { Snackbar, Typography } from '@mui/material';
 import { StoryFn } from '@storybook/react';
+&nbsp;
+import PhotosCarousel from '../components/PhotosCarousel';
 &nbsp;
 export default {
   title: 'IntersectionObserver',
@@ -285,14 +256,6 @@ const Template: StoryFn&lt;InViewDemoProps&gt; = <span class="cstat-no" title="s
   const { numberOfCarousels, imagesPerCarousel } = <span class="cstat-no" title="statement not covered" >args;</span>
   const carousels = <span class="cstat-no" title="statement not covered" >[...new Array(numberOfCarousels)];</span>
   const [visibleCarousels, setVisibleCarousels] = <span class="cstat-no" title="statement not covered" >useState&lt;number[]&gt;([]);</span>
-&nbsp;
-  const responsive = <span class="cstat-no" title="statement not covered" >{</span>
-    // eslint-disable-next-line id-denylist
-    any: {
-      breakpoint: { max: 10000, min: 0 },
-      items: 1,
-    },
-  };
 &nbsp;
   const setCarouselVisible = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >(i</span>ndex: number) =&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    if (!visibleCarousels.includes(index)) {</span>
@@ -339,15 +302,7 @@ const Template: StoryFn&lt;InViewDemoProps&gt; = <span class="cstat-no" title="s
                 &lt;div ref={ref}&gt;
                   {inView ? (
                     &lt;div style={{ minHeight: '600px' }}&gt;
-                      &lt;Carousel responsive={responsive}&gt;
-                        {photos.map(<span class="fstat-no" title="function not covered" >(p</span>, i) =&gt; {
-<span class="cstat-no" title="statement not covered" >                          return (</span>
-                            &lt;div key={`photo-${i}-container`}&gt;
-                              &lt;img src={p} alt={p} /&gt;
-                            &lt;/div&gt;
-                          );
-                        })}
-                      &lt;/Carousel&gt;
+                      &lt;PhotosCarousel photos={photos.map(<span class="fstat-no" title="function not covered" >(u</span>rl) =&gt; (<span class="cstat-no" title="statement not covered" >{ url, alt: url })</span>)} showArrows dots={false} /&gt;
                     &lt;/div&gt;
                   ) : null}
                 &lt;/div&gt;
@@ -373,7 +328,7 @@ export const Default = <span class="cstat-no" title="statement not covered" >Tem
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-09-15T20:59:02.624Z
+                at 2026-09-16T18:10:44.592Z
             </div>
         <script src="../../prettify.js"></script>
         <script>
