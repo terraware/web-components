@@ -5,16 +5,11 @@ import { useTheme } from '@mui/material';
 import ClusterBadge from './ClusterBadge';
 import TimelineDot from './TimelineDot';
 import TimelineRail from './TimelineRail';
-import { DEFAULT_CLUSTER_THRESHOLD_PX, type TimelineNode, buildLayout } from './layout';
+import { DEFAULT_CLUSTER_THRESHOLD_PX, buildLayout } from './layout';
 import './styles.scss';
+import type { TimelineNode, TimelineSliderV2Mark } from './types';
 
-export type TimelineSliderV2Mark = {
-  ariaLabel?: string;
-  color: string;
-  id: string;
-  label?: string;
-  value: number;
-};
+export type { TimelineSliderV2Mark };
 
 export type TimelineSliderV2Props = {
   clusterThresholdPx?: number;

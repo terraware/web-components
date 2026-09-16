@@ -1,7 +1,8 @@
 import React, { type JSX, useMemo } from 'react';
 
-import { type ColorWeight, toConicGradient } from './layout';
+import { toConicGradient } from './layout';
 import './styles.scss';
+import type { ColorWeight } from './types';
 
 type TimelineDotProps = {
   ariaLabel?: string;

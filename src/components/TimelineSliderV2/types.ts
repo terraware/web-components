@@ -1,3 +1,11 @@
+export type TimelineSliderV2Mark = {
+  ariaLabel?: string;
+  color: string;
+  id: string;
+  label?: string;
+  value: number;
+};
+
 export type LayoutMark = {
   color: string;
   id: string;
