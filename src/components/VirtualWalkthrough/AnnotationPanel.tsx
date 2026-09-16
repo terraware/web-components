@@ -55,8 +55,8 @@ const CAROUSEL_SX: SxProps = {
   borderRadius: '12px 12px 0 0',
   overflow: 'hidden',
   flexShrink: 0,
-  '& .photos-carousel-image': { height: 'min(400px, 40vh)' },
-  '& .photos-carousel-container': { minHeight: 'min(200px, 20vh)' },
+  '& .embla__slide__img': { height: 'min(400px, 40vh)' },
+  '& .embla__slide': { minHeight: 'min(200px, 20vh)' },
 };
 
 const TEXT_BLOCK_STYLE: React.CSSProperties = {
