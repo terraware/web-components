@@ -29,10 +29,9 @@ jobs:
       - uses: actions/checkout@v7
 
       - name: Setup Node
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@v7
         with:
           node-version: '24.x'
-          registry-url: 'https://registry.npmjs.org'
 
       - name: Create branch
         run: git checkout -b $(echo design-workflow-${{ github.actor }}-${{ github.event.inputs.jira }}-$(date +%y-%m-%d-%s) | tr ' ' -)
