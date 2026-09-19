@@ -10636,10 +10636,10 @@ pkg-up@^3.1.0:
   dependencies:
     find-up "^3.0.0"
 
-playcanvas@2.21.3:
-  version "2.21.3"
-  resolved "https://registry.yarnpkg.com/playcanvas/-/playcanvas-2.21.3.tgz#328cc2b1c0da1417e463c5acc3741db2b81ec5c5"
-  integrity sha512-+AKl0yeNUBo9JSjMRNi2Sz24KhWDhBVMtvhonbeRnKD6FGhNK0O76zvqOu3zgXZxUEzF54h4QGpruhNUkKvsUQ==
+playcanvas@2.22.2:
+  version "2.22.2"
+  resolved "https://registry.yarnpkg.com/playcanvas/-/playcanvas-2.22.2.tgz#c0e6544ef3cbcc0631425a639684eda27cf1054e"
+  integrity sha512-ePc1zbdrXikBdyOZrxpwSdWSZEUbV0NLdZkA4XDVZJfYqrr7PqWXQ9bY69UpG2dsNVM8d8gTKUJmCx7PO4ITRQ==
   dependencies:
     "@types/webxr" "^0.5.24"
     "@webgpu/types" "^0.1.70"

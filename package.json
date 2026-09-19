@@ -30,7 +30,7 @@
     "luxon": "^3.3.0",
     "marked": "^16.2.1",
     "material-react-table": "^3.2.1",
-    "playcanvas": "2.21.3",
+    "playcanvas": "2.22.2",
     "prettier": "^3.8.1",
     "react-intersection-observer": "^9.5.2",
     "react-responsive": "^9.0.2",
@@ -146,7 +146,7 @@
   "peerDependencies": {
     "@playcanvas/react": "0.11.5",
     "mapbox-gl": "^3.13.0",
-    "playcanvas": "2.21.3",
+    "playcanvas": "2.22.2",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-map-gl": "^8.0.4"
