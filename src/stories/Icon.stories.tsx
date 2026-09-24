@@ -42,7 +42,7 @@ export const AllIcons: Story = () => {
             gap: '0.5rem',
           }}
         >
-          <Icon name={name} size="medium" />
+          <Icon name={name} size='medium' />
           <span style={{ fontSize: '0.75rem', textAlign: 'center', maxWidth: '80px', wordBreak: 'break-word' }}>
             {name}
           </span>
