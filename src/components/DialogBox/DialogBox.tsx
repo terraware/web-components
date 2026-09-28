@@ -1,6 +1,6 @@
 import React, { CSSProperties, type JSX, ReactNode } from 'react';
 
-import { IconButton } from '@mui/material';
+import { Unstable_TrapFocus as FocusTrap, IconButton } from '@mui/material';
 
 import { useDeviceInfo } from '../../utils';
 import Icon from '../Icon/Icon';
@@ -40,6 +40,7 @@ export default function DialogBox(props: Props): JSX.Element | null {
   } = props;
 
   const hasFooter = leftButton || rightButtons || middleButtons;
+  const titleId = React.useId();
 
   const { isMobile } = useDeviceInfo();
 
@@ -66,54 +67,64 @@ export default function DialogBox(props: Props): JSX.Element | null {
       }}
       style={style}
     >
-      <div className={`dialog-box dialog-box--${size}`}>
-        <div className='dialog-box--header'>
-          <div className='close-icon-spacer' />
-          <p className='title'>{title}</p>
-          <IconButton onClick={onClose} size='small'>
-            <Icon name='close' className='icon-close' />
-          </IconButton>
-        </div>
+      <FocusTrap open={open}>
         <div
-          className={(hasFooter ? 'dialog-box--body' : 'dialog-box--body-no-footer') + (scrolled ? ' scrolled' : '')}
+          aria-labelledby={titleId}
+          aria-modal={true}
+          className={`dialog-box dialog-box--${size}`}
+          role='dialog'
+          tabIndex={-1}
         >
-          <div className='dialog-box--message'>{message}</div>
-          <div className='dialog-box--boundary'>{children}</div>
-        </div>
-        {hasFooter && (
-          <div className='dialog-box--footer'>
-            {leftButton && (
-              <div className='dialog-box--footer-container'>
-                <div className='left-button'>{leftButton}</div>
-                <div className='right-buttons'>
-                  {rightButtons?.map((rb, index) => {
-                    const rbWithKey = {
-                      ...rb,
-                      key: `rb-${index}`,
-                      props: { ...rb.props, size: rb.props.size || 'medium' },
+          <div className='dialog-box--header'>
+            <div className='close-icon-spacer' />
+            <p className='title' id={titleId}>
+              {title}
+            </p>
+            <IconButton onClick={onClose} size='small'>
+              <Icon name='close' className='icon-close' />
+            </IconButton>
+          </div>
+          <div
+            className={(hasFooter ? 'dialog-box--body' : 'dialog-box--body-no-footer') + (scrolled ? ' scrolled' : '')}
+          >
+            <div className='dialog-box--message'>{message}</div>
+            <div className='dialog-box--boundary'>{children}</div>
+          </div>
+          {hasFooter && (
+            <div className='dialog-box--footer'>
+              {leftButton && (
+                <div className='dialog-box--footer-container'>
+                  <div className='left-button'>{leftButton}</div>
+                  <div className='right-buttons'>
+                    {rightButtons?.map((rb, index) => {
+                      const rbWithKey = {
+                        ...rb,
+                        key: `rb-${index}`,
+                        props: { ...rb.props, size: rb.props.size || 'medium' },
+                      };
+
+                      return rbWithKey;
+                    })}
+                  </div>
+                </div>
+              )}
+              {middleButtons && (
+                <div className='dialog-box--actions-container'>
+                  {middleButtons?.map((mb, index) => {
+                    const mbWithKey = {
+                      ...mb,
+                      key: `mb-${index}`,
+                      props: { ...mb.props, size: mb.props.size || 'medium' },
                     };
 
-                    return rbWithKey;
+                    return mbWithKey;
                   })}
                 </div>
-              </div>
-            )}
-            {middleButtons && (
-              <div className='dialog-box--actions-container'>
-                {middleButtons?.map((mb, index) => {
-                  const mbWithKey = {
-                    ...mb,
-                    key: `mb-${index}`,
-                    props: { ...mb.props, size: mb.props.size || 'medium' },
-                  };
-
-                  return mbWithKey;
-                })}
-              </div>
-            )}
-          </div>
-        )}
-      </div>
+              )}
+            </div>
+          )}
+        </div>
+      </FocusTrap>
     </div>
   ) : null;
 }
