@@ -40,6 +40,7 @@ export default function DialogBox(props: Props): JSX.Element | null {
   } = props;
 
   const hasFooter = leftButton || rightButtons || middleButtons;
+  const titleId = React.useId();
 
   const { isMobile } = useDeviceInfo();
 
@@ -66,10 +67,12 @@ export default function DialogBox(props: Props): JSX.Element | null {
       }}
       style={style}
     >
-      <div className={`dialog-box dialog-box--${size}`}>
+      <div aria-labelledby={titleId} aria-modal={true} className={`dialog-box dialog-box--${size}`} role='dialog'>
         <div className='dialog-box--header'>
           <div className='close-icon-spacer' />
-          <p className='title'>{title}</p>
+          <p className='title' id={titleId}>
+            {title}
+          </p>
           <IconButton onClick={onClose} size='small'>
             <Icon name='close' className='icon-close' />
           </IconButton>
