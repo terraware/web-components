@@ -1,8 +1,8 @@
 import hexRgb from 'hex-rgb';
-import sd from 'style-dictionary';
+import StyleDictionary from 'style-dictionary';
 
-function build(source, destination) {
-  const StyleDictionary = sd.extend({
+const build = async (source, destination) => {
+  const sd = new StyleDictionary({
     source,
     platforms: {
       js: {
@@ -47,9 +47,9 @@ export default TerrawareTheme;`;
     return palette.replace(/"/g, "'");
   };
 
-  StyleDictionary.registerFormat({
+  sd.registerFormat({
     name: 'twJsModule',
-    formatter: function({dictionary}) {
+    format: function({dictionary}) {
       const theme = {
         palette: {}, // for colors
       };
@@ -77,7 +77,7 @@ export default TerrawareTheme;`;
     }
   });
 
-  StyleDictionary.buildAllPlatforms();
-}
+  await sd.buildAllPlatforms();
+};
 
-build(['./json/**/*.json'], 'TerrawareTheme.ts');
+await build(['./json/**/*.json'], 'TerrawareTheme.ts');

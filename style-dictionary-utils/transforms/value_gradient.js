@@ -2,10 +2,10 @@ module.exports = {
   name: 'value/gradient',
   type: 'value',
   transitive: true,
-  matcher: function (prop) {
+  filter: function (prop) {
     return prop.filePath.endsWith('gradient.json');
   },
-  transformer: function (prop) {
+  transform: function (prop) {
     let value = prop.value;
     if (prop.original && prop.original.value.startsWith('linear-gradient')) {
       const expression = `{${value.path}}`;

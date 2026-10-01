@@ -4,10 +4,10 @@ module.exports = {
   name: 'value/shadow',
   type: 'value',
   transitive: true,
-  matcher: function (prop) {
+  filter: function (prop) {
     return prop.filePath.endsWith('shadow.json');
   },
-  transformer: function (prop) {
+  transform: function (prop) {
     const { x, y, blur, spread, color, opacity } = prop.value;
 
     // convert hex code to rgba string
