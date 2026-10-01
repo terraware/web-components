@@ -36,7 +36,8 @@ loading and error states, and accessible roles and names.
 
 - Query the way a user finds things, with `getByRole`, `getByLabelText`, and `getByText`. Avoid test IDs and class
   names.
-- Drive interactions with `userEvent` rather than calling handlers directly.
+- Drive interactions through the DOM with `userEvent` or `fireEvent` rather than calling handlers directly. Prefer
+  `userEvent` when the full event sequence matters, such as typing, keyboard navigation, or focus changes.
 - Avoid tests that only check that a component renders, or that repeat its implementation.
 
 Examples:
