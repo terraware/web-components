@@ -143,12 +143,12 @@ export const convertAllLocales = async (
 };
 
 export type UnusedStrings = {
-  /** Keys that don't appear anywhere in the source. */
+  /** Keys that are never read from the strings table and don't appear anywhere else either. */
   unused: string[];
   /**
-   * Keys that only appear inside longer identifiers (e.g. DIAMETER_CM inside CROWN_DIAMETER_CM).
-   * They may still be referenced through a computed name like strings[`${prefix}_CM`], so they need
-   * a manual check.
+   * Keys that are never read from the strings table but whose name appears elsewhere in the source,
+   * e.g. as an unrelated enum value, or as a key held in a variable and looked up with
+   * strings[variable]. They need a manual check.
    */
   possiblyUnused: string[];
 };
@@ -186,16 +186,32 @@ export const findSourceFiles = async (
   return nested.flat().sort();
 };
 
+const STRINGS_PROPERTY_ACCESS = /\bstrings\s*\??\.\s*(\w+)/g;
+const STRINGS_INDEX_ACCESS = /\bstrings\s*(?:\?\.)?\s*\[([^\]]*)\]/g;
+const QUOTED_KEY = /(['"`])(\w+)\1/g;
+
+/**
+ * Returns the keys a source file reads from the strings table, either as properties
+ * (strings.SAVE) or as quoted keys inside an index expression (strings[isRead ? 'READ' : 'UNREAD']).
+ */
+export const findAccessedKeys = (source: string): string[] => [
+  ...Array.from(source.matchAll(STRINGS_PROPERTY_ACCESS), (match) => match[1]),
+  ...Array.from(source.matchAll(STRINGS_INDEX_ACCESS)).flatMap((match) =>
+    Array.from(match[1].matchAll(QUOTED_KEY), (literal) => literal[2])
+  ),
+];
+
 export const classifyKeys = (keys: string[], sources: string[]): UnusedStrings => {
+  const accessedKeys = new Set(sources.flatMap(findAccessedKeys));
   const identifiers = new Set(sources.flatMap((source) => source.match(/\w+/g) ?? []));
   const unused: string[] = [];
   const possiblyUnused: string[] = [];
 
   keys.forEach((key) => {
-    if (identifiers.has(key)) {
+    if (accessedKeys.has(key)) {
       return;
     }
-    if (sources.some((source) => source.includes(key))) {
+    if (identifiers.has(key)) {
       possiblyUnused.push(key);
     } else {
       unused.push(key);
@@ -224,7 +240,7 @@ export const formatUnusedStrings = ({ unused, possiblyUnused }: UnusedStrings): 
   if (possiblyUnused.length > 0) {
     lines.push(
       '',
-      'Possibly unused entries (only found inside longer identifiers; check manually):',
+      'Possibly unused entries (never read from strings, but the name appears elsewhere; check manually):',
       ...possiblyUnused
     );
   }

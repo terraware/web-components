@@ -2,7 +2,7 @@ import { mkdir, mkdtemp, rm, writeFile } from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
 
-import { classifyKeys, csvToStrings, findSourceFiles, findUnusedStrings, formatUnusedStrings } from './export';
+import { classifyKeys, csvToStrings, findAccessedKeys, findSourceFiles, findUnusedStrings, formatUnusedStrings } from './export';
 
 // Jest 27 does not resolve the package's conditional subpath export, so expose its real CJS build.
 jest.mock('csv-parse/sync', () => jest.requireActual('csv-parse/dist/cjs/sync.cjs'), { virtual: true });
@@ -66,9 +66,44 @@ afterEach(async () => {
   await rm(rootDir, { recursive: true, force: true });
 });
 
+describe('findAccessedKeys', () => {
+  test('finds property reads from the strings table', () => {
+    const source = `
+      const label = strings.SAVE;
+      const message = strings.formatString(strings.GO_TO, strings?.PEOPLE);
+      const wrapped = strings
+        .CANCEL;
+    `;
+
+    expect(findAccessedKeys(source)).toEqual(['SAVE', 'formatString', 'GO_TO', 'PEOPLE', 'CANCEL']);
+  });
+
+  test('finds quoted keys inside index expressions', () => {
+    const source = `
+      strings['DELETE'];
+      strings["EDIT"];
+      strings[isRead ? 'MARK_AS_UNREAD' : 'MARK_AS_READ'];
+      strings?.[\`ARCHIVE\`];
+    `;
+
+    expect(findAccessedKeys(source)).toEqual(['DELETE', 'EDIT', 'MARK_AS_UNREAD', 'MARK_AS_READ', 'ARCHIVE']);
+  });
+
+  test('ignores keys that are not read from the strings table', () => {
+    const source = `
+      type XrMode = 'AR' | 'VR';
+      const url = 'https://example.com/EDIT.png';
+      // strings table entry for SAVE
+      const total = otherStrings.TOTAL + myStrings['COUNT'] + strings[label];
+    `;
+
+    expect(findAccessedKeys(source)).toEqual([]);
+  });
+});
+
 describe('classifyKeys', () => {
-  test('treats keys that appear as whole identifiers as used', () => {
-    const sources = ['const label = strings.SAVE;', 'title={strings["CANCEL"]}'];
+  test('treats keys read from the strings table as used', () => {
+    const sources = ['const label = strings.SAVE;', "title={strings['CANCEL']}"];
 
     expect(classifyKeys(['SAVE', 'CANCEL'], sources)).toEqual({ unused: [], possiblyUnused: [] });
   });
@@ -77,19 +112,23 @@ describe('classifyKeys', () => {
     expect(classifyKeys(['SAVE', 'DELETE'], ['strings.SAVE'])).toEqual({ unused: ['DELETE'], possiblyUnused: [] });
   });
 
-  test('reports keys found only inside longer identifiers as possibly unused', () => {
-    const sources = ['strings.CROWN_DIAMETER_CM', 'strings.GLOBAL_ROLE_ACCELERATOR_ADMIN'];
-
-    expect(classifyKeys(['DIAMETER_CM', 'ACCELERATOR_ADMIN'], sources)).toEqual({
-      unused: [],
-      possiblyUnused: ['DIAMETER_CM', 'ACCELERATOR_ADMIN'],
+  test('reports keys found only inside longer keys as unused', () => {
+    expect(classifyKeys(['DIAMETER_CM'], ['strings.CROWN_DIAMETER_CM'])).toEqual({
+      unused: ['DIAMETER_CM'],
+      possiblyUnused: [],
     });
   });
 
-  test('counts a key as used if any source has it as a whole identifier', () => {
-    const sources = ['strings.CROWN_DIAMETER_CM', 'strings.DIAMETER_CM'];
+  test('reports keys whose names appear only outside the strings table as possibly unused', () => {
+    const sources = ["type XrMode = 'AR' | 'VR';", "const label = 'TREES'; strings[label];"];
 
-    expect(classifyKeys(['DIAMETER_CM'], sources)).toEqual({ unused: [], possiblyUnused: [] });
+    expect(classifyKeys(['AR', 'TREES'], sources)).toEqual({ unused: [], possiblyUnused: ['AR', 'TREES'] });
+  });
+
+  test('counts a key as used if any source reads it from the strings table', () => {
+    const sources = ["type XrMode = 'AR' | 'VR';", 'strings.AR'];
+
+    expect(classifyKeys(['AR'], sources)).toEqual({ unused: [], possiblyUnused: [] });
   });
 
   test('preserves the order of the keys it was given', () => {
@@ -148,15 +187,16 @@ describe('findUnusedStrings', () => {
 SAVE,Save,
 DELETE,Delete,
 DIAMETER_CM,Diameter (cm),
+EDIT,Edit,
 CONFIRM,"Are you sure?
 This can't be undone.",
 `,
-      'src/Form.tsx': 'strings.SAVE; strings.CROWN_DIAMETER_CM;',
+      'src/Form.tsx': "strings.SAVE; strings.CROWN_DIAMETER_CM; const icon = 'EDIT';",
       'src/strings/strings-en.ts': 'DELETE CONFIRM',
     });
 
     expect(await findUnusedStrings({ csvPath: path.join(rootDir, 'csv/en.csv'), sourceDir: path.join(rootDir, 'src') }))
-      .toEqual({ unused: ['DELETE', 'CONFIRM'], possiblyUnused: ['DIAMETER_CM'] });
+      .toEqual({ unused: ['DELETE', 'DIAMETER_CM', 'CONFIRM'], possiblyUnused: ['EDIT'] });
   });
 });
 
@@ -173,13 +213,13 @@ describe('formatUnusedStrings', () => {
 
   test('lists possibly unused keys in their own section', () => {
     expect(formatUnusedStrings({ unused: [], possiblyUnused: ['DIAMETER_CM'] })).toBe(
-      'No unused entries found.\n\nPossibly unused entries (only found inside longer identifiers; check manually):\nDIAMETER_CM\n'
+      'No unused entries found.\n\nPossibly unused entries (never read from strings, but the name appears elsewhere; check manually):\nDIAMETER_CM\n'
     );
   });
 
   test('lists both sections together', () => {
     expect(formatUnusedStrings({ unused: ['SAVE'], possiblyUnused: ['DIAMETER_CM'] })).toBe(
-      'Unused entries found:\nSAVE\n\nPossibly unused entries (only found inside longer identifiers; check manually):\nDIAMETER_CM\n'
+      'Unused entries found:\nSAVE\n\nPossibly unused entries (never read from strings, but the name appears elsewhere; check manually):\nDIAMETER_CM\n'
     );
   });
 });
