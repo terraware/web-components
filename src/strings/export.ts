@@ -1,9 +1,10 @@
 /**
- * Renders the CSV string tables as TypeScript source.
+ * Renders the CSV string tables as TypeScript source, and finds keys in them that no source file
+ * references.
  *
  * This runs at build time, not at runtime. Nothing in the component runtime imports it, so its Node
  * and CSV dependencies never reach a browser bundle. It's published rather than kept in scripts/ so
- * that applications sharing these string tables can drive the same conversion.
+ * that applications sharing these string tables can drive the same conversion and checks.
  */
 import { parse } from 'csv-parse/sync';
 import { readFile, readdir, writeFile } from 'node:fs/promises';
@@ -139,4 +140,94 @@ export const convertAllLocales = async (
   );
 
   return csvFiles;
+};
+
+export type UnusedStrings = {
+  /** Keys that don't appear anywhere in the source. */
+  unused: string[];
+  /**
+   * Keys that only appear inside longer identifiers (e.g. DIAMETER_CM inside CROWN_DIAMETER_CM).
+   * They may still be referenced through a computed name like strings[`${prefix}_CM`], so they need
+   * a manual check.
+   */
+  possiblyUnused: string[];
+};
+
+export type FindUnusedStringsOptions = {
+  csvPath: string;
+  sourceDir: string;
+  extensions?: string[];
+  /** Directory names to skip at any depth. Defaults to "strings", where the generated tables live. */
+  excludedDirectories?: string[];
+};
+
+const DEFAULT_EXTENSIONS = ['.ts', '.js', '.tsx', '.jsx'];
+const DEFAULT_EXCLUDED_DIRECTORIES = ['strings'];
+
+export const findSourceFiles = async (
+  directory: string,
+  extensions: string[] = DEFAULT_EXTENSIONS,
+  excludedDirectories: string[] = DEFAULT_EXCLUDED_DIRECTORIES
+): Promise<string[]> => {
+  const entries = await readdir(directory, { withFileTypes: true });
+  const nested = await Promise.all(
+    entries.map(async (entry) => {
+      const entryPath = path.join(directory, entry.name);
+      if (entry.isDirectory()) {
+        return excludedDirectories.includes(entry.name)
+          ? []
+          : findSourceFiles(entryPath, extensions, excludedDirectories);
+      }
+
+      return extensions.includes(path.extname(entry.name)) ? [entryPath] : [];
+    })
+  );
+
+  return nested.flat().sort();
+};
+
+export const classifyKeys = (keys: string[], sources: string[]): UnusedStrings => {
+  const identifiers = new Set(sources.flatMap((source) => source.match(/\w+/g) ?? []));
+  const unused: string[] = [];
+  const possiblyUnused: string[] = [];
+
+  keys.forEach((key) => {
+    if (identifiers.has(key)) {
+      return;
+    }
+    if (sources.some((source) => source.includes(key))) {
+      possiblyUnused.push(key);
+    } else {
+      unused.push(key);
+    }
+  });
+
+  return { unused, possiblyUnused };
+};
+
+export const findUnusedStrings = async ({
+  csvPath,
+  sourceDir,
+  extensions,
+  excludedDirectories,
+}: FindUnusedStringsOptions): Promise<UnusedStrings> => {
+  const keys = Object.keys(csvToStrings(await readFile(csvPath, { encoding: 'utf-8' })));
+  const files = await findSourceFiles(sourceDir, extensions, excludedDirectories);
+  const sources = await Promise.all(files.map((file) => readFile(file, { encoding: 'utf-8' })));
+
+  return classifyKeys(keys, sources);
+};
+
+export const formatUnusedStrings = ({ unused, possiblyUnused }: UnusedStrings): string => {
+  const lines = unused.length === 0 ? ['No unused entries found.'] : ['Unused entries found:', ...unused];
+
+  if (possiblyUnused.length > 0) {
+    lines.push(
+      '',
+      'Possibly unused entries (only found inside longer identifiers; check manually):',
+      ...possiblyUnused
+    );
+  }
+
+  return `${lines.join('\n')}\n`;
 };
