@@ -1,10 +1,10 @@
 module.exports = {
   name: 'name/css_composite',
   type: 'name',
-  matcher: function (prop) {
+  filter: function (prop) {
     return prop.filePath.endsWith('composite.json');
   },
-  transformer: function (prop) {
+  transform: function (prop) {
     const attribute = prop.path[1];
     const tokens = prop.path[0];
     if (attribute === 'value') {

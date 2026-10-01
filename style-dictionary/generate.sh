@@ -9,7 +9,7 @@ echo "Downloading json"
 node download-json.js
 echo
 echo "Building style dictionary"
-node build.js
+node build.mjs
 echo
 echo "Building theme"
 node build-theme.mjs

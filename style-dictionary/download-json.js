@@ -10,18 +10,18 @@ zeroHeightFiles.forEach(file => {
 const promise = new Promise((resolve, reject) => {
 
     https.get(file.url,(res) => {
-      // Image will be stored at this path
       const path = `${__dirname}/${file.output}`;
-      const filePath = fs.createWriteStream(path);
-      res.pipe(filePath);
+      const chunks = [];
+      res.on('data', (chunk) => chunks.push(chunk));
 
-      filePath.on('finish',() => {
-        filePath.close();
+      res.on('end', () => {
+        const json = Buffer.concat(chunks).toString('utf8').replace(/\.value\}/g, '}');
+        fs.writeFileSync(path, json);
         console.log(`Download ${file.url} to ${file.output} completed.`);
         resolve(true);
       });
 
-      filePath.on('error', () => {
+      res.on('error', () => {
         reject(new Error(`Failed downloading ${file.url} to ${file.output}`));
       });
 
