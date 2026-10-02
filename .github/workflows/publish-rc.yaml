@@ -1,33 +1,21 @@
 name: Publish RC
 
+# Dispatched by publish-rc-comment.yaml when someone comments "publish rc" on a PR. Can also be run manually with
+# `gh workflow run publish-rc.yaml --ref <branch>`.
 on:
-  issue_comment:
-    types:
-      - created
+  workflow_dispatch:
 
 jobs:
   publish-rc:
-    # This job only runs for pull request comments
-    name: Publish RC PR comment
-    if: github.event.issue.pull_request && contains(github.event.comment.body, 'publish rc')
+    name: Publish RC
     runs-on: ubuntu-latest
     permissions:
       # Lets npm authenticate to the registry via OIDC instead of a long-lived token.
       id-token: write
       contents: write
     steps:
-      - name: Get Branch
-        id: 'get-branch'
-        run: echo ::set-output name=branch::$(gh pr view $PR_NUMBER --repo $REPO --json headRefName --jq '.headRefName')
-        env:
-          REPO: ${{ github.repository }}
-          PR_NUMBER: ${{ github.event.issue.number }}
-          GITHUB_TOKEN: ${{ secrets.GH_DEPLOY_REPO_TOKEN }}
-
       - name: Checkout
         uses: actions/checkout@v7
-        with:
-          ref: ${{ steps.get-branch.outputs.branch }}
 
       # Since this is an explicit publish, we just set the registry provider explicitly
       - name: Set Environment
@@ -59,7 +47,7 @@ jobs:
         run: npm version prerelease --preid=rc -m "Publishing RC - %s"
 
       - name: Git push version bump
-        run: git push origin ${{ steps.get-branch.outputs.branch }} --follow-tags --force
+        run: git push origin ${{ github.ref_name }} --follow-tags --force
 
       - name: Build
         run: yarn build-dist
@@ -83,4 +71,4 @@ jobs:
 
       - name: Publish npm package
         if: env.UPDATE_NPM_PACKAGE == 'true'
-        run: cd dist && npm publish --scope @terraware --tag rc --loglevel verbose
+        run: cd dist && npm publish --scope @terraware --tag rc
