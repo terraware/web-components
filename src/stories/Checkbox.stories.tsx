@@ -1,7 +1,7 @@
 import React from 'react';
 
-import { action } from '@storybook/addon-actions';
 import { Story } from '@storybook/react';
+import { action } from 'storybook/actions';
 
 import Checkbox, { Props as CheckboxProps } from '../components/Checkbox';
 

@@ -18,6 +18,8 @@ export const globalTypes = {
   },
 };
 
+export const tags = ['autodocs'];
+
 export const parameters = {
   actions: { argTypesRegex: '^on[A-Z].*' },
   controls: {

@@ -1,8 +1,8 @@
 import React, { useCallback, useState } from 'react';
 
 import { Box } from '@mui/material';
-import { action } from '@storybook/addon-actions';
 import { Story } from '@storybook/react';
+import { action } from 'storybook/actions';
 
 import Button from '../components/Button/Button';
 import MapContainer from '../components/Map/MapContainer';
