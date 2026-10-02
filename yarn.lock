@@ -10712,10 +10712,10 @@ pkg-up@^3.1.0:
   dependencies:
     find-up "^3.0.0"
 
-playcanvas@2.21.3:
-  version "2.21.3"
-  resolved "https://registry.yarnpkg.com/playcanvas/-/playcanvas-2.21.3.tgz#328cc2b1c0da1417e463c5acc3741db2b81ec5c5"
-  integrity sha512-+AKl0yeNUBo9JSjMRNi2Sz24KhWDhBVMtvhonbeRnKD6FGhNK0O76zvqOu3zgXZxUEzF54h4QGpruhNUkKvsUQ==
+playcanvas@2.22.6:
+  version "2.22.6"
+  resolved "https://registry.yarnpkg.com/playcanvas/-/playcanvas-2.22.6.tgz#fce4021729d26ff49d9ec29133981de645880308"
+  integrity sha512-h5yBfE3jfGYWVEsRp8E3BqcPvpG14wwZUpQiJt+/ePsASaPHbfhtdFbABu5igUTN2k37QBQvfg7H1aCEnw/OFQ==
   dependencies:
     "@types/webxr" "^0.5.24"
     "@webgpu/types" "^0.1.70"
