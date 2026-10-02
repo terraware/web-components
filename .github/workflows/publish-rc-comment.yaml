@@ -1,0 +1,26 @@
+name: Publish RC PR comment
+
+on:
+  issue_comment:
+    types:
+      - created
+
+jobs:
+  dispatch-publish-rc:
+    # npm trusted publishing rejects OIDC tokens from issue_comment runs, so the publish itself happens in a separate
+    # workflow_dispatch run on the PR's branch.
+    name: Dispatch RC publish
+    if: github.event.issue.pull_request && contains(github.event.comment.body, 'publish rc')
+    runs-on: ubuntu-latest
+    permissions:
+      actions: write
+      pull-requests: read
+    steps:
+      - name: Dispatch Publish RC workflow
+        run: |
+          BRANCH=$(gh pr view $PR_NUMBER --repo $REPO --json headRefName --jq '.headRefName')
+          gh workflow run publish-rc.yaml --repo $REPO --ref "$BRANCH"
+        env:
+          REPO: ${{ github.repository }}
+          PR_NUMBER: ${{ github.event.issue.number }}
+          GH_TOKEN: ${{ github.token }}
