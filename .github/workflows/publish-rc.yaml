@@ -4,12 +4,17 @@ on:
   issue_comment:
     types:
       - created
+  # TODO: Remove once RC trusted publishing works. Comment-triggered runs always use the workflow on main, so this
+  # lets us test changes to the workflow from a branch.
+  push:
+    branches-ignore:
+      - main
 
 jobs:
   publish-rc:
     # This job only runs for pull request comments
     name: Publish RC PR comment
-    if: github.event.issue.pull_request && contains(github.event.comment.body, 'publish rc')
+    if: github.event_name == 'push' || (github.event.issue.pull_request && contains(github.event.comment.body, 'publish rc'))
     runs-on: ubuntu-latest
     permissions:
       # Lets npm authenticate to the registry via OIDC instead of a long-lived token.
@@ -18,8 +23,15 @@ jobs:
     steps:
       - name: Get Branch
         id: 'get-branch'
-        run: echo ::set-output name=branch::$(gh pr view $PR_NUMBER --repo $REPO --json headRefName --jq '.headRefName')
+        run: |
+          if [[ "$EVENT_NAME" == push ]]; then
+            echo "branch=$REF_NAME" >> "$GITHUB_OUTPUT"
+          else
+            echo "branch=$(gh pr view $PR_NUMBER --repo $REPO --json headRefName --jq '.headRefName')" >> "$GITHUB_OUTPUT"
+          fi
         env:
+          EVENT_NAME: ${{ github.event_name }}
+          REF_NAME: ${{ github.ref_name }}
           REPO: ${{ github.repository }}
           PR_NUMBER: ${{ github.event.issue.number }}
           GITHUB_TOKEN: ${{ secrets.GH_DEPLOY_REPO_TOKEN }}
@@ -81,6 +93,18 @@ jobs:
           pwd
           cat `pwd`/package.json
 
+      # TODO: Remove once RC trusted publishing works.
+      - name: Show OIDC claims
+        run: |
+          curl -sSf -H "Authorization: Bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" \
+            "$ACTIONS_ID_TOKEN_REQUEST_URL&audience=npm:registry.npmjs.org" |
+            node -e '
+              const jwt = JSON.parse(require("fs").readFileSync(0, "utf8")).value;
+              const claims = JSON.parse(Buffer.from(jwt.split(".")[1], "base64url").toString());
+              const { repository, repository_owner, workflow_ref, job_workflow_ref, event_name, ref, environment } = claims;
+              console.log({ repository, repository_owner, workflow_ref, job_workflow_ref, event_name, ref, environment });
+            '
+
       - name: Publish npm package
         if: env.UPDATE_NPM_PACKAGE == 'true'
-        run: cd dist && npm publish --scope @terraware --tag rc
+        run: cd dist && npm publish --scope @terraware --tag rc --loglevel verbose
