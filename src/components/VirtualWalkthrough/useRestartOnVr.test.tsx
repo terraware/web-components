@@ -7,7 +7,7 @@ import { useRestartOnVr } from './useRestartOnVr';
 
 const handlers = new Map<string, () => void>();
 
-// Plain functions rather than jest.fn: the app-wide `resetMocks` would strip their implementations
+// Plain functions rather than rstest.fn: the app-wide `resetMocks` would strip their implementations
 // before each test, leaving nothing to register the handlers.
 const mockApp = {
   xr: {
@@ -23,8 +23,7 @@ const mockApp = {
   },
 };
 
-// Virtual: jest's resolver doesn't follow the package's subpath exports.
-jest.mock('@playcanvas/react/hooks', () => ({ useApp: () => mockApp }), { virtual: true });
+rstest.mock('@playcanvas/react/hooks', () => ({ useApp: () => mockApp }));
 
 /**
  * Stands in for a script instance, recording the transitions its `enabled` setter would turn into

@@ -1,14 +1,18 @@
 import { type ReactNode, createContext, useContext, useLayoutEffect, useMemo, useState } from 'react';
 
 import { render } from '@testing-library/react';
-import { Entity } from 'playcanvas';
+import { type AppBase, Entity } from 'playcanvas';
 
 import { useAdoptedCamera } from './useAdoptedCamera';
 
-const mockApp = { root: new Entity('root') };
+const mockApp = { root: null as unknown as Entity, systems: {}, _entityIndex: {} };
 
-// Virtual: jest's resolver doesn't follow the package's subpath exports.
-jest.mock('@playcanvas/react/hooks', () => ({ useApp: () => mockApp }), { virtual: true });
+/** Entities belong to an application, which the debug build of PlayCanvas asserts on. */
+const createEntity = (name: string) => new Entity(name, mockApp as unknown as AppBase);
+
+mockApp.root = createEntity('root');
+
+rstest.mock('@playcanvas/react/hooks', () => ({ useApp: () => mockApp }));
 
 /**
  * A stand-in for the camera component the host scene's camera carries. Removing it is what
@@ -48,7 +52,7 @@ const TestEntity = ({
   children?: ReactNode;
 }) => {
   const parent = useContext(ParentContext) ?? mockApp.root;
-  const entity = useMemo(() => new Entity(name), [name]);
+  const entity = useMemo(() => createEntity(name), [name]);
 
   useLayoutEffect(() => {
     parent.addChild(entity);
@@ -80,9 +84,9 @@ describe('useAdoptedCamera', () => {
   let hostCamera: Entity;
 
   beforeEach(() => {
-    mockApp.root = new Entity('root');
-    const host = new Entity('host');
-    hostCamera = new Entity('camera');
+    mockApp.root = createEntity('root');
+    const host = createEntity('host');
+    hostCamera = createEntity('camera');
     attachCamera(hostCamera);
     mockApp.root.addChild(host);
     host.addChild(hostCamera);

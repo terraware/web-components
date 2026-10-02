@@ -6,7 +6,8 @@ import { getLocale, getStrings, setLocale, useStrings } from '.';
 import { strings as en } from './strings-en';
 import { strings as es } from './strings-es';
 
-afterEach(() => setLocale('en'));
+// Components from the previous test may still be mounted when this runs, so the reset re-renders them.
+afterEach(() => act(() => setLocale('en')));
 
 test('the locale defaults to English', () => {
   expect(getLocale()).toBe('en');

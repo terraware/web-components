@@ -4,10 +4,6 @@ import path from 'node:path';
 
 import { classifyKeys, csvToStrings, findAccessedKeys, findSourceFiles, findUnusedStrings, formatUnusedStrings } from './export';
 
-// Jest 27 does not resolve the package's conditional subpath export, so expose its real CJS build.
-jest.mock('csv-parse/sync', () => jest.requireActual('csv-parse/dist/cjs/sync.cjs'), { virtual: true });
-// Prettier's ESM loader is unrelated to CSV parsing and is unsupported by this Jest version.
-jest.mock('prettier', () => ({ format: jest.fn(), resolveConfig: jest.fn() }));
 
 test('csvToStrings skips the header and maps the first two columns', () => {
   const csv = `key,value,comment

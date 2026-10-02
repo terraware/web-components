@@ -32,7 +32,7 @@ describe('raySphereIntersect', () => {
 
 describe('XrExitButton.close', () => {
   const makeButton = () => {
-    const end = jest.fn();
+    const end = rstest.fn();
     const button = Object.create(XrExitButton.prototype) as XrExitButton;
     Object.assign(button, { app: { xr: { end } } });
 
@@ -49,7 +49,7 @@ describe('XrExitButton.close', () => {
 
   it('calls the handler and leaves the session running', () => {
     const { button, end } = makeButton();
-    const onClose = jest.fn();
+    const onClose = rstest.fn();
     button.onClose = onClose;
 
     button.close();
