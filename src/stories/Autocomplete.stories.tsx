@@ -1,8 +1,8 @@
 import React, { useCallback } from 'react';
 
 import { Box, useTheme } from '@mui/material';
-import { action } from '@storybook/addon-actions';
 import { Story } from '@storybook/react';
+import { action } from 'storybook/actions';
 
 import Autocomplete, { Props as AutocompleteProps, ValueType } from '../components/Autocomplete/Autocomplete';
 

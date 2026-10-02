@@ -1,8 +1,8 @@
 import React, { useCallback } from 'react';
 
-import { action } from '@storybook/addon-actions';
 import { Story } from '@storybook/react';
 import { MapMouseEvent } from 'mapbox-gl';
+import { action } from 'storybook/actions';
 
 import MapComponent, { MapComponentProps } from '../components/Map';
 

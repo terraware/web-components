@@ -2,8 +2,8 @@ import React, { ReactNode, useCallback, useEffect, useState } from 'react';
 
 import { Entity } from '@playcanvas/react';
 import { Camera } from '@playcanvas/react/components';
-import { action } from '@storybook/addon-actions';
 import { Story } from '@storybook/react';
+import { action } from 'storybook/actions';
 
 import Button from '../components/Button/Button';
 import { AnnotationProps } from '../components/VirtualWalkthrough/Annotation';

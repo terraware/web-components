@@ -1,9 +1,9 @@
 import React, { useCallback, useState } from 'react';
 
 import { Alert, Box } from '@mui/material';
-import { action } from '@storybook/addon-actions';
 import { Story } from '@storybook/react';
 import { MapMouseEvent } from 'mapbox-gl';
+import { action } from 'storybook/actions';
 
 import Button from '../components/Button/Button';
 import MapBox from '../components/Map/MapBox';
