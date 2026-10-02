@@ -40,8 +40,8 @@
   "scripts": {
     "start": "storybook dev",
     "build": "storybook build -c .storybook -o public",
-    "test": "cp tsconfig.json tsconfig.json.bak && react-scripts test && mv tsconfig.json.bak tsconfig.json",
-    "test-coverage": "cp tsconfig.json tsconfig.json.bak && react-scripts test . --coverage --coverageDirectory='docs/coverage' && mv tsconfig.json.bak tsconfig.json",
+    "test": "react-scripts test",
+    "test-coverage": "react-scripts test . --coverage --coverageDirectory='docs/coverage'",
     "eject": "react-scripts eject",
     "format": "prettier --write .",
     "format:changed": "git diff -z --name-only --diff-filter=ACMR main -- '**.js' '**.ts' '**.tsx' '**.json' '**.css' '**.scss' '**.md' | xargs -0r prettier --write",
