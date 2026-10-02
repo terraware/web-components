@@ -12,7 +12,7 @@ pkg.main = './index.js';
 pkg.module = './index.js';
 pkg.types = './index.d.ts';
 
-// Rollup emits one module per source file with no top-level side effects outside the style
+// Rslib emits one module per source file with no top-level side effects outside the style
 // sheets, so consumers importing a handful of components from the barrel can drop the rest.
 pkg.sideEffects = ['*.css', '*.scss'];
 
