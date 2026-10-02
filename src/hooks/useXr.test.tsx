@@ -8,14 +8,13 @@ const mockApp = {
     active: false,
     type: null,
     isAvailable: (type: string) => type === XRTYPE_VR,
-    on: jest.fn(),
-    off: jest.fn(),
+    on: rstest.fn(),
+    off: rstest.fn(),
   },
-  root: { findComponent: jest.fn() },
+  root: { findComponent: rstest.fn() },
 };
 
-// Virtual: jest's resolver doesn't follow the package's subpath exports.
-jest.mock('@playcanvas/react/hooks', () => ({ useApp: () => mockApp }), { virtual: true });
+rstest.mock('@playcanvas/react/hooks', () => ({ useApp: () => mockApp }));
 
 describe('useXr', () => {
   it('reports availability on the first render, before any effect has run', () => {

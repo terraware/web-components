@@ -7,7 +7,7 @@ const handlers = new Map<string, () => void>();
 
 const DESKTOP_GSPLAT = { radialSorting: false, alphaClipForward: 0, minPixelSize: 0 };
 
-// Plain functions rather than jest.fn: the app-wide `resetMocks` would strip their implementations
+// Plain functions rather than rstest.fn: the app-wide `resetMocks` would strip their implementations
 // before each test, leaving nothing to register the handlers.
 const mockApp = {
   xr: {
@@ -25,8 +25,7 @@ const mockApp = {
   scene: { gsplat: { ...DESKTOP_GSPLAT } },
 };
 
-// Virtual: jest's resolver doesn't follow the package's subpath exports.
-jest.mock('@playcanvas/react/hooks', () => ({ useApp: () => mockApp }), { virtual: true });
+rstest.mock('@playcanvas/react/hooks', () => ({ useApp: () => mockApp }));
 
 const startSession = () => {
   mockApp.xr.active = true;

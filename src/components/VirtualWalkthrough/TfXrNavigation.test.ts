@@ -1,18 +1,5 @@
 import { Vec3 } from 'playcanvas';
 
-// The real base script is an .mjs file that Jest's default CRA transform config never transforms
-// (node_modules is excluded), so importing it directly fails to parse. Nothing under test relies on
-// the base's behaviour, so stubs for the two methods that are called through are enough.
-jest.mock('playcanvas/scripts/esm/xr/xr-navigation.mjs', () => ({
-  XrNavigation: class {
-    update() {
-      return undefined;
-    }
-    tryTeleport() {
-      return undefined;
-    }
-  },
-}));
 
 import { TfXrNavigation } from './TfXrNavigation';
 import { TeleportGestureLatch } from './xr-teleport-gesture';
@@ -21,7 +8,7 @@ const BOUNDS_CENTER = new Vec3(2, 0, 3);
 const BOUNDS_RADIUS = 5;
 
 const makeNavigation = (options: { xrActive: boolean; boundsRadius: number; head: Vec3 }) => {
-  const translate = jest.fn();
+  const translate = rstest.fn();
   const navigation = Object.create(TfXrNavigation.prototype) as TfXrNavigation;
 
   navigation.boundsCenter = BOUNDS_CENTER.clone();
@@ -163,7 +150,7 @@ describe('TfXrNavigation input sources', () => {
   it('teleports on a select from a controller it picked up', () => {
     const source = makeInputSource('right');
     const navigation = makeSessionNavigation([source]);
-    const tryTeleport = jest.spyOn(navigation, 'tryTeleport').mockImplementation(() => undefined);
+    const tryTeleport = rstest.spyOn(navigation, 'tryTeleport').mockImplementation(() => undefined);
 
     navigation.update(1 / 60);
     source.fire('selectend');

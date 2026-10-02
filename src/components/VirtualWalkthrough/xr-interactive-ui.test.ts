@@ -9,8 +9,6 @@ import {
   rayHitsInteractiveUi,
 } from './xr-interactive-ui';
 
-// Jest cannot parse the PlayCanvas ESM scripts that xr-annotation-candidates imports.
-jest.mock('playcanvas/scripts/esm/annotations.mjs', () => ({ Annotation: { scriptName: 'annotation' } }));
 
 const ORIGIN = new Vec3(0, 0, 5);
 const FORWARD = new Vec3(0, 0, -1);

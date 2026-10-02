@@ -41,7 +41,7 @@ test('show options when placeholder is clicked', () => {
 });
 
 test('clicking an option calls the onAdd handler', () => {
-  const handleAdd = jest.fn();
+  const handleAdd = rstest.fn();
   render(
     <MultiSelect
       onAdd={handleAdd}
@@ -72,7 +72,7 @@ test('clicking an option calls the onAdd handler', () => {
 });
 
 test('clicking the pill remove button calls the onRemove handler', () => {
-  const handleRemove = jest.fn();
+  const handleRemove = rstest.fn();
   render(
     <MultiSelect
       onAdd={() => undefined}

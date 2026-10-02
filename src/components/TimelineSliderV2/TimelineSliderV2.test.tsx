@@ -7,9 +7,9 @@ import TimelineSliderV2 from '.';
 const CONTAINER_WIDTH = 500;
 
 class ResizeObserverMock {
-  disconnect = jest.fn();
-  observe = jest.fn();
-  unobserve = jest.fn();
+  disconnect = rstest.fn();
+  observe = rstest.fn();
+  unobserve = rstest.fn();
 }
 
 beforeAll(() => {
