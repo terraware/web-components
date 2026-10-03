@@ -39,7 +39,7 @@ steps:
           save:
             - file
             - branch
-      - artifacts#v1.9.4:
+      - artifacts#v1.10.0:
           upload: 'dist'
           compressed: 'dist.tgz'
     command: .buildkite/scripts/build-and-test.sh
