@@ -26,7 +26,6 @@ echo "--- :package: Prune package.json"
 cd dist
 npm pkg delete scripts
 npm pkg delete devDependencies
-npm pkg delete eslintConfig
 npm pkg delete resolutions
 npm pkg delete browserslist
 cat package.json

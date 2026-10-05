@@ -42,13 +42,10 @@
     "build": "storybook build -c .storybook -o public",
     "test": "rstest",
     "test-coverage": "rstest --coverage",
-    "eject": "react-scripts eject",
     "format": "prettier --write .",
     "format:changed": "git diff -z --name-only --diff-filter=ACMR main -- '**.js' '**.ts' '**.tsx' '**.json' '**.css' '**.scss' '**.md' | xargs -0r prettier --write",
     "storybook": "storybook dev",
     "storybook-https": "storybook dev -p 6006 --https --ssl-cert ./certs/192.168.1.203+2.pem --ssl-key ./certs/192.168.1.203+2-key.pem --host 0.0.0.0",
-    "storybook-legacy": "NODE_OPTIONS=--openssl-legacy-provider storybook dev",
-    "build-storybook": "storybook build -s public",
     "build-dictionary": "./style-dictionary/generate.sh",
     "bundle": "rslib build",
     "generate-assets": "yarn svgr --icon --title-prop --no-dimensions --typescript -d src/components/svg assets",
@@ -64,22 +61,6 @@
     "translate:start": "yarn run autotranslate --watch",
     "ts": "tsc --project ./tsconfig.json"
   },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ],
-    "overrides": [
-      {
-        "files": [
-          "**/*.stories.*"
-        ],
-        "rules": {
-          "import/no-anonymous-default-export": "off"
-        }
-      }
-    ]
-  },
   "browserslist": {
     "production": [
       ">0.2%",
@@ -93,11 +74,6 @@
     ]
   },
   "devDependencies": {
-    "@babel/core": "^7.24.1",
-    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
-    "@babel/polyfill": "^7.12.1",
-    "@babel/preset-react": "^7.24.1",
-    "@babel/preset-typescript": "^7.24.1",
     "@jsdevtools/version-bump-prompt": "^6.1.0",
     "@rsbuild/core": "^2.2.11",
     "@rsbuild/plugin-react": "^2.1.0",
@@ -134,7 +110,6 @@
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-map-gl": "^8.0.4",
-    "react-scripts": "^5.0.1",
     "storybook": "^10.6.1",
     "storybook-react-rsbuild": "^3.6.0",
     "style-dictionary": "^3.9.1",
@@ -150,16 +125,6 @@
     "react-map-gl": "^8.0.4"
   },
   "resolutions": {
-    "@babel/traverse": "^7.24.1",
-    "@babel/core": "^7.24.1",
-    "@babel/helper-replace-supers": "^7.24.1",
-    "@babel/helper-create-class-features-plugin": "^7.24.1",
-    "@babel/helper-remap-async-to-generator": "^7.24.1",
-    "@babel/helper-annotate-as-pure": "^7.24.1",
-    "@babel/helper-wrap-function": "^7.24.1",
-    "@babel/plugin-transform-async-generator-functions": "^7.24.1",
-    "@storybook/react/**/loader-utils": "^2.0.4",
-    "babel-loader": "10.1.1",
     "wrap-ansi": "10.0.2",
     "string-width": "8.3.0"
   },
