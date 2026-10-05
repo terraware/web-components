@@ -1,6 +1,13 @@
-function build(source, destination) {
-  const sd = require('style-dictionary');
-  const StyleDictionary = sd.extend({
+import StyleDictionary from 'style-dictionary';
+import { formattedVariables } from 'style-dictionary/utils';
+
+import nameCssComposite from '../style-dictionary-utils/transforms/name_css_composite.js';
+import valueColorMix from '../style-dictionary-utils/transforms/value_color_mix.js';
+import valueGradient from '../style-dictionary-utils/transforms/value_gradient.js';
+import valueShadow from '../style-dictionary-utils/transforms/value_shadow.js';
+
+const build = async (source, destination) => {
+  const sd = new StyleDictionary({
     source: source,
     platforms: {
       scss: {
@@ -20,19 +27,19 @@ function build(source, destination) {
     },
   });
 
-  StyleDictionary.registerTransform(require('../style-dictionary-utils/transforms/name_css_composite.js'));
-  StyleDictionary.registerTransform(require('../style-dictionary-utils/transforms/value_gradient.js'));
-  StyleDictionary.registerTransform(require('../style-dictionary-utils/transforms/value_shadow.js'));
-  StyleDictionary.registerTransform(require('../style-dictionary-utils/transforms/value_color_mix.js'));
+  sd.registerTransform(nameCssComposite);
+  sd.registerTransform(valueGradient);
+  sd.registerTransform(valueShadow);
+  sd.registerTransform(valueColorMix);
 
   // Same output as the built-in scss/variables format, but prefixed with a
   // `@use "sass:color"` rule so the generated color.mix() calls resolve.
-  StyleDictionary.registerFormat({
+  sd.registerFormat({
     name: 'scss/variables-with-color-module',
-    formatter: function ({ dictionary, options }) {
+    format: ({ dictionary, options }) => {
       return (
         '@use "sass:color";\n' +
-        sd.formatHelpers.formattedVariables({
+        formattedVariables({
           format: 'sass',
           dictionary,
           outputReferences: options.outputReferences,
@@ -42,7 +49,7 @@ function build(source, destination) {
     },
   });
 
-  StyleDictionary.buildAllPlatforms();
-}
+  await sd.buildAllPlatforms();
+};
 
-build(['./json//**/*.json'], 'terraware.scss');
+await build(['./json//**/*.json'], 'terraware.scss');
