@@ -2401,10 +2401,10 @@
   resolved "https://registry.yarnpkg.com/@pkgjs/parseargs/-/parseargs-0.11.0.tgz#a77ea742fab25775145434eb1d2328cf5013ac33"
   integrity sha512-+1VkjdD0QBLPodGrJUeqarH8VAIvQODIbwh9XpP5Syisf7YoQgsJKPNFoqqLQlu+VQ/tVSshMR6loPMn8U+dPg==
 
-"@playcanvas/react@0.11.5":
-  version "0.11.5"
-  resolved "https://registry.yarnpkg.com/@playcanvas/react/-/react-0.11.5.tgz#d47c3837daa2942bddf3475c09e7a4275d521e52"
-  integrity sha512-GlEyEJf9qCsQ9NoL8vXTFg7a6tsB99udia/AHgJmie1vl+dECPg8Itv8UU4iuiFWhqmF4binP/XPkCCARm6sGQ==
+"@playcanvas/react@0.11.7":
+  version "0.11.7"
+  resolved "https://registry.yarnpkg.com/@playcanvas/react/-/react-0.11.7.tgz#f9ad327fbe6539c57be48b9d4c89cde9ad373f91"
+  integrity sha512-qgwWYOC3CCjv9CXuIijtbk/sJ2v7PqCTPrcaOBc7jiLxwQs1lOjupCBBLvKiW/dBRjpRerXv6r1k+PdxU5EZ9w==
   dependencies:
     dedent "^1.6.0"
 
@@ -12657,10 +12657,10 @@ string-natural-compare@^3.0.1:
     is-fullwidth-code-point "^3.0.0"
     strip-ansi "^6.0.1"
 
-string-width@8.2.2, string-width@^4.1.0, string-width@^4.2.0, string-width@^5.1.2, string-width@^8.1.0, string-width@^8.2.0:
-  version "8.2.2"
-  resolved "https://registry.yarnpkg.com/string-width/-/string-width-8.2.2.tgz#7310516493df575742fe98af6fae87d85d5ed0ac"
-  integrity sha512-GaPUh5gfdrYzqeVNZvUfT23vYYxXzKYidUcnMtJg/3rxRV63EFZy3k6xfKlmfeJD0176lnUV/Usr3XcwSvFzpg==
+string-width@8.3.0, string-width@^4.1.0, string-width@^4.2.0, string-width@^5.1.2, string-width@^8.1.0, string-width@^8.2.0:
+  version "8.3.0"
+  resolved "https://registry.yarnpkg.com/string-width/-/string-width-8.3.0.tgz#f1e85ca6d276ed9226c979c3651fb7abf548fbbe"
+  integrity sha512-ZbmZM0JCihQN91dWnxoipT2KOEyHqEyfRXUyjuRhW8b/xnqPDoq4gWEVApTVa9db2wN8mmoikgFBbjh71+cGeQ==
   dependencies:
     get-east-asian-width "^1.5.0"
     strip-ansi "^7.1.2"

@@ -1,6 +1,6 @@
 {
   "name": "@terraware/web-components",
-  "version": "5.0.25",
+  "version": "5.0.26",
   "author": "Terraformation Inc.",
   "license": "Apache-2.0",
   "repository": {
@@ -22,7 +22,7 @@
     "@mui/lab": "^6.0.1-beta.36",
     "@mui/material": "^6.0.0",
     "@mui/x-date-pickers": "^7.22.0",
-    "@playcanvas/react": "0.11.5",
+    "@playcanvas/react": "0.11.7",
     "classnames": "^2.3.2",
     "csv-parse": "^7.0.0",
     "embla-carousel-react": "^8.6.0",
@@ -144,7 +144,7 @@
     "typescript-eslint": "^8.66.0"
   },
   "peerDependencies": {
-    "@playcanvas/react": "0.11.5",
+    "@playcanvas/react": "0.11.7",
     "mapbox-gl": "^3.13.0",
     "playcanvas": "2.21.3",
     "react": "^19.0.0",
@@ -163,7 +163,7 @@
     "@storybook/react/**/loader-utils": "^2.0.4",
     "babel-loader": "10.1.1",
     "wrap-ansi": "10.0.2",
-    "string-width": "8.2.2"
+    "string-width": "8.3.0"
   },
   "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
 }
