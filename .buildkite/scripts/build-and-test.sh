@@ -13,7 +13,7 @@ yarn prettier --check .
 echo "--- :eslint: Run linter"
 yarn lint
 
-echo "--- :jest: Run unit tests"
+echo "--- :test_tube: Run unit tests"
 yarn test
 
 echo "--- :package: Build dist"
