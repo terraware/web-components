@@ -1,6 +1,6 @@
 {
   "name": "@terraware/web-components",
-  "version": "5.0.21",
+  "version": "5.0.26",
   "author": "Terraformation Inc.",
   "license": "Apache-2.0",
   "repository": {
@@ -22,7 +22,7 @@
     "@mui/lab": "^6.0.1-beta.36",
     "@mui/material": "^6.0.0",
     "@mui/x-date-pickers": "^7.22.0",
-    "@playcanvas/react": "0.11.5",
+    "@playcanvas/react": "0.11.7",
     "classnames": "^2.3.2",
     "csv-parse": "^7.0.0",
     "embla-carousel-react": "^8.6.0",
@@ -35,14 +35,13 @@
     "react-intersection-observer": "^11.0.0",
     "react-responsive": "^10.0.0",
     "sass": "^1.75.0",
-    "tinycolor2": "^1.6.0",
-    "web-vitals": "^3.5.2"
+    "tinycolor2": "^1.6.0"
   },
   "scripts": {
     "start": "storybook dev",
     "build": "storybook build -c .storybook -o public",
-    "test": "cp tsconfig.json tsconfig.json.bak && react-scripts test && mv tsconfig.json.bak tsconfig.json",
-    "test-coverage": "cp tsconfig.json tsconfig.json.bak && react-scripts test . --coverage --coverageDirectory='docs/coverage' && mv tsconfig.json.bak tsconfig.json",
+    "test": "react-scripts test",
+    "test-coverage": "react-scripts test . --coverage --coverageDirectory='docs/coverage'",
     "eject": "react-scripts eject",
     "format": "prettier --write .",
     "format:changed": "git diff -z --name-only --diff-filter=ACMR main -- '**.js' '**.ts' '**.tsx' '**.json' '**.css' '**.scss' '**.md' | xargs -0r prettier --write",
@@ -145,7 +144,7 @@
     "typescript-eslint": "^8.66.0"
   },
   "peerDependencies": {
-    "@playcanvas/react": "0.11.5",
+    "@playcanvas/react": "0.11.7",
     "mapbox-gl": "^3.13.0",
     "playcanvas": "2.21.3",
     "react": "^19.0.0",
@@ -163,8 +162,8 @@
     "@babel/plugin-transform-async-generator-functions": "^7.24.1",
     "@storybook/react/**/loader-utils": "^2.0.4",
     "babel-loader": "10.1.1",
-    "wrap-ansi": "7.0.0",
-    "string-width": "8.2.2"
+    "wrap-ansi": "10.0.2",
+    "string-width": "8.3.0"
   },
   "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
 }
