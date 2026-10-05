@@ -2401,10 +2401,10 @@
   resolved "https://registry.yarnpkg.com/@pkgjs/parseargs/-/parseargs-0.11.0.tgz#a77ea742fab25775145434eb1d2328cf5013ac33"
   integrity sha512-+1VkjdD0QBLPodGrJUeqarH8VAIvQODIbwh9XpP5Syisf7YoQgsJKPNFoqqLQlu+VQ/tVSshMR6loPMn8U+dPg==
 
-"@playcanvas/react@0.11.5":
-  version "0.11.5"
-  resolved "https://registry.yarnpkg.com/@playcanvas/react/-/react-0.11.5.tgz#d47c3837daa2942bddf3475c09e7a4275d521e52"
-  integrity sha512-GlEyEJf9qCsQ9NoL8vXTFg7a6tsB99udia/AHgJmie1vl+dECPg8Itv8UU4iuiFWhqmF4binP/XPkCCARm6sGQ==
+"@playcanvas/react@0.11.7":
+  version "0.11.7"
+  resolved "https://registry.yarnpkg.com/@playcanvas/react/-/react-0.11.7.tgz#f9ad327fbe6539c57be48b9d4c89cde9ad373f91"
+  integrity sha512-qgwWYOC3CCjv9CXuIijtbk/sJ2v7PqCTPrcaOBc7jiLxwQs1lOjupCBBLvKiW/dBRjpRerXv6r1k+PdxU5EZ9w==
   dependencies:
     dedent "^1.6.0"
 
