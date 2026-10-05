@@ -14,7 +14,7 @@ yarn install --frozen-lockfile --prefer-offline --network-timeout 100000
 echo "--- :scroll: License report"
 yarn license-report
 
-echo "--- :jest: Run unit tests with coverage"
+echo "--- :test_tube: Run unit tests with coverage"
 yarn test-coverage
 
 # Allow generated docs to be committed to gh-pages branch
