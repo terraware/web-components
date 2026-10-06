@@ -1,9 +1,9 @@
 import React, { ReactElement, useState } from 'react';
 
 import { Box, useTheme } from '@mui/material';
-import { action } from '@storybook/addon-actions';
 import { Story as StoryBook } from '@storybook/react';
 import { DateTime } from 'luxon';
+import { action } from 'storybook/actions';
 
 import DatePicker, { DatePickerDateType, Props as DatePickerProps } from '../components/DatePicker/DatePicker';
 

@@ -9,7 +9,6 @@ const locales = getSupportedLocales(true);
 export const globalTypes = {
   locale: {
     description: 'Language the components render in',
-    defaultValue: 'en',
     toolbar: {
       icon: 'globe',
       items: locales.map(({ id, name }) => ({ value: id, title: name })),
@@ -17,6 +16,12 @@ export const globalTypes = {
     },
   },
 };
+
+export const initialGlobals = {
+  locale: 'en',
+};
+
+export const tags = ['autodocs'];
 
 export const parameters = {
   actions: { argTypesRegex: '^on[A-Z].*' },

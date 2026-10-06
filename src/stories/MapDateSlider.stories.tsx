@@ -1,9 +1,9 @@
 import React, { useCallback, useState } from 'react';
 
 import { Box } from '@mui/material';
-import { action } from '@storybook/addon-actions';
 import { Story } from '@storybook/react';
 import { DateTime } from 'luxon';
+import { action } from 'storybook/actions';
 
 import MapBox, { MapBoxProps } from '../components/Map/MapBox';
 import MapContainer from '../components/Map/MapContainer';

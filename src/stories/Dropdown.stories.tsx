@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
-import { action } from '@storybook/addon-actions';
 import { Story } from '@storybook/react';
+import { action } from 'storybook/actions';
 
 import Dropdown, { DropdownProps, DropdownV1, Props as DropdownV1Props } from '../components/Dropdown';
 
