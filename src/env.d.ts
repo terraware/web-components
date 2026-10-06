@@ -1,4 +1,4 @@
-/// <reference types="react-scripts" />
+/// <reference types="@rsbuild/core/types" />
 
 declare module 'playcanvas/scripts/esm/camera-controls.mjs';
 declare module 'playcanvas/scripts/esm/annotations.mjs';
