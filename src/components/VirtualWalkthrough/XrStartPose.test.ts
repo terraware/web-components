@@ -27,10 +27,10 @@ const buildRig = ({
     script: { enabled: true, tfXrNavigation: navigation },
     findComponent: (type: string) => (type === 'camera' ? { entity: camera } : null),
     getPosition: () => rigPosition,
-    rotate: jest.fn((_x: number, y: number) => {
+    rotate: rstest.fn((_x: number, y: number) => {
       entity.yaw += y;
     }),
-    setPosition: jest.fn((x: number, y: number, z: number) => {
+    setPosition: rstest.fn((x: number, y: number, z: number) => {
       rigPosition.x = x;
       rigPosition.y = y;
       rigPosition.z = z;
