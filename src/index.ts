@@ -43,6 +43,7 @@ import Select from './components/Select/Select';
 import SelectT from './components/Select/SelectT';
 import Separator from './components/Separator';
 import Slider from './components/Slider';
+import Stepper from './components/Stepper';
 import SummaryBox from './components/SummaryBox';
 import Tabs from './components/Tabs';
 import TextTruncated from './components/TextTruncated';
@@ -72,6 +73,7 @@ export type { FileChooserProps } from './components/FileChooser';
 export type { PhotoItem } from './components/PhotosCarousel';
 export type { PhotosCarouselProps } from './components/PhotosCarousel';
 export type { SliderMark } from './components/Slider';
+export type { StepperProps, StepperStep } from './components/Stepper';
 export type { Tab, TabsProps } from './components/Tabs';
 export type { ConfirmProps } from './components/Confirm';
 export type { DatePickerDateType, Props as DatePickerProps } from './components/DatePicker/DatePicker';
@@ -133,6 +135,7 @@ export {
   setLocale,
   Slider,
   stableSort,
+  Stepper,
   SummaryBox,
   supportedLocales,
   Svg,
