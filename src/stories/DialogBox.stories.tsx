@@ -10,7 +10,8 @@ export default {
   title: 'Dialog Box',
   component: DialogBox,
   parameters: {
-    // Each open dialog has a focus trap; rendered inline on the docs page, they fight over focus forever.
+    // Each open dialog has a focus trap, and inline traps on the same docs page fight over focus forever. Render all
+    // but the primary story in iframes; it stays inline so the docs page controls can update it.
     docs: { story: { inline: false, iframeHeight: 500 } },
   },
 };
@@ -43,6 +44,7 @@ const WithButtonTemplate: Story<DialogBoxProps> = (args) => {
 };
 
 export const Small = Template.bind({});
+Small.parameters = { docs: { story: { inline: true, height: '500px' } } };
 Small.args = {
   open: true,
   title: 'Title',
