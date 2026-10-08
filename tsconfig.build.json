@@ -9,7 +9,6 @@
     "src/setupTests.*"
   ],
   "compilerOptions": {
-    // Generate d.ts files
     "noEmit": false,
     "declaration": true,
     "emitDeclarationOnly": true,
