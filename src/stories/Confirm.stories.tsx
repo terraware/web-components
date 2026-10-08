@@ -8,6 +8,11 @@ import Confirm, { ConfirmProps } from '../components/Confirm';
 export default {
   title: 'Confirm',
   component: Confirm,
+  parameters: {
+    // Each open dialog has a focus trap, and inline traps on the same docs page fight over focus forever. Render all
+    // but the primary story in iframes; it stays inline so the docs page controls can update it.
+    docs: { story: { inline: false, iframeHeight: 500 } },
+  },
 };
 
 const Template: Story<ConfirmProps> = (args) => {
@@ -15,6 +20,7 @@ const Template: Story<ConfirmProps> = (args) => {
 };
 
 export const Default = Template.bind({});
+Default.parameters = { docs: { story: { inline: true, height: '500px' } } };
 Default.args = {
   confirmButtonText: 'Ok',
   closeButtonText: 'Cancel',
