@@ -1,12 +1,4 @@
 {
-  "include": ["src/**/*.tsx", "src/**/*.ts"],
-  "exclude": [
-    "src/**/*.stories.tsx",
-    "src/**/*.stories.ts",
-    "src/**/*.test.tsx",
-    "src/**/*.test.ts",
-    "src/stories"
-  ],
   "compilerOptions": {
     "target": "es2017",
     "lib": [
@@ -25,14 +17,16 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "react-jsx",
-    // Generate d.ts files
     "allowJs": true,
-    "declaration": true,
-    "emitDeclarationOnly": true,
-    "outDir": "dist",
-    "declarationMap": true
+    "noEmit": true
   },
   "include": [
     "src"
+  ],
+  // Stories still use Storybook APIs that predate v7 and don't type-check.
+  "exclude": [
+    "src/**/*.stories.tsx",
+    "src/**/*.stories.ts",
+    "src/stories"
   ]
 }

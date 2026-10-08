@@ -13,6 +13,9 @@ yarn prettier --check .
 echo "--- :eslint: Run linter"
 yarn lint
 
+echo "--- :typescript: Type check"
+yarn ts
+
 echo "--- :test_tube: Run unit tests"
 yarn test
 

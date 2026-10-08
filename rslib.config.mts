@@ -1,7 +1,7 @@
 import { pluginReact } from '@rsbuild/plugin-react';
 import { defineConfig } from '@rslib/core';
 
-const notPublished = ['**/*.test.*', '**/*.stories.*', '**/stories/**', '**/*.d.ts'];
+const notPublished = ['**/*.test.*', '**/setupTests.*', '**/*.stories.*', '**/stories/**', '**/*.d.ts'];
 
 export default defineConfig({
   lib: [
@@ -14,6 +14,7 @@ export default defineConfig({
       autoExtension: false,
       dts: true,
       source: {
+        tsconfigPath: './tsconfig.build.json',
         entry: {
           index: ['./src/**/*.{ts,tsx}', ...notPublished.map((pattern) => `!${pattern}`)],
         },
