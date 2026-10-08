@@ -8,6 +8,10 @@ import Confirm, { ConfirmProps } from '../components/Confirm';
 export default {
   title: 'Confirm',
   component: Confirm,
+  parameters: {
+    // Each open dialog has a focus trap; rendered inline on the docs page, they fight over focus forever.
+    docs: { story: { inline: false, iframeHeight: 500 } },
+  },
 };
 
 const Template: Story<ConfirmProps> = (args) => {
