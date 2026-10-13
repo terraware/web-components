@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 
-import { Box, Typography } from '@mui/material';
+import { Box, Typography, useTheme } from '@mui/material';
 import { Story } from '@storybook/react';
 
 import Button from '../components/Button/Button';
+import Icon from '../components/Icon/Icon';
+import IconTooltip from '../components/IconTooltip';
 import Stepper, { StepperProps, StepperStep } from '../components/Stepper';
 
 export default {
@@ -13,12 +15,66 @@ export default {
 
 const steps = ['Purpose', 'Quantities', 'Photos'];
 
+const siteBoundaryLabel = (
+  <>
+    Site Boundary
+    <IconTooltip title='The site boundary is the outer edge of your planting site. It should include every area you plan to plant.' />
+  </>
+);
+
 const stepsWithOptional: (string | StepperStep)[] = [
   'Details',
-  'Site Boundary',
+  { label: siteBoundaryLabel },
   { label: 'Exclusion Areas', optional: { completed: false } },
   { label: 'Strata', optional: { completed: true } },
   'Review',
+];
+
+const LongDescription = () => {
+  const theme = useTheme();
+
+  return (
+    <Box display='flex' flexDirection='column' gap={3} marginTop={2} maxWidth='480px'>
+      <Typography fontSize='16px' lineHeight='24px' color={theme.palette.TwClrTxt as string}>
+        Draw the site boundary of your planting site below. All plantable areas within your project must be contained
+        within the site boundary.
+      </Typography>
+      <Box display='flex' alignItems='flex-start' gap={3}>
+        <Box
+          display='flex'
+          alignItems='center'
+          justifyContent='center'
+          flexShrink={0}
+          width='32px'
+          height='32px'
+          borderRadius='4px'
+          sx={{
+            backgroundColor: theme.palette.TwClrBg as string,
+            boxShadow: `0 2px 4px ${theme.palette.TwClrShdw as string}`,
+          }}
+        >
+          <Icon name='iconEdit' fillColor={theme.palette.TwClrIcn as string} />
+        </Box>
+        <Typography fontSize='16px' lineHeight='24px' color={theme.palette.TwClrTxt as string}>
+          Use the drawing tool to draw the boundary of the planting site. about drawing site boundaries.
+        </Typography>
+      </Box>
+      <Typography fontSize='16px' fontWeight={600} lineHeight='24px' color={theme.palette.TwClrTxt as string}>
+        The site boundary should fit in a bounding box of less than or equal to 20,000 hectares. If it is larger,
+        consider splitting the site into multiple planting sites.
+      </Typography>
+    </Box>
+  );
+};
+
+const stepsWithDescriptions: StepperStep[] = [
+  { label: 'Details', description: 'Name and location' },
+  { label: siteBoundaryLabel, description: <LongDescription /> },
+  { label: 'Exclusion Areas', optional: { completed: false }, description: 'Areas that will not be planted' },
+  {
+    label: 'Review',
+    description: 'Finish up the process.',
+  },
 ];
 
 const Template: Story<StepperProps> = (args) => <Stepper {...args} />;
@@ -95,6 +151,47 @@ export const InteractiveWithOptional = InteractiveTemplate.bind({});
 
 InteractiveWithOptional.args = {
   steps: stepsWithOptional,
+};
+
+export const OptionalInline = Template.bind({});
+
+OptionalInline.args = {
+  activeStep: 4,
+  optionalPlacement: 'inline',
+  steps: stepsWithOptional,
+};
+
+export const Vertical = Template.bind({});
+
+Vertical.args = {
+  activeStep: 1,
+  orientation: 'vertical',
+  steps: stepsWithOptional,
+};
+
+export const WithDescriptions = Template.bind({});
+
+WithDescriptions.args = {
+  activeStep: 1,
+  alwaysShowDescriptions: true,
+  steps: stepsWithDescriptions,
+};
+
+export const VerticalWithDescriptions = Template.bind({});
+
+VerticalWithDescriptions.args = {
+  activeStep: 1,
+  alwaysShowDescriptions: true,
+  optionalPlacement: 'inline',
+  orientation: 'vertical',
+  steps: stepsWithDescriptions,
+};
+
+export const VerticalActiveDescriptionOnly = InteractiveTemplate.bind({});
+
+VerticalActiveDescriptionOnly.args = {
+  orientation: 'vertical',
+  steps: stepsWithDescriptions,
 };
 
 export const CustomStyling = Template.bind({});
