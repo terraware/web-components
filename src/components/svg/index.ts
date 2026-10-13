@@ -65,6 +65,7 @@ export { default as IconGrid } from './IconGrid';
 export { default as IconHeartMonitor } from './IconHeartMonitor';
 export { default as IconHelp } from './IconHelp';
 export { default as IconHistory } from './IconHistory';
+export { default as IconIdea } from './IconIdea';
 export { default as IconImport } from './IconImport';
 export { default as IconIndex } from './IconIndex';
 export { default as IconLayers } from './IconLayers';

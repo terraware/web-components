@@ -68,6 +68,7 @@ import IconGrid from '../../svg/IconGrid';
 import MonitoringNav from '../../svg/IconHeartMonitor';
 import IconHelp from '../../svg/IconHelp';
 import IconHistory from '../../svg/IconHistory';
+import IconIdea from '../../svg/IconIdea';
 import IconImport from '../../svg/IconImport';
 import IconIndex from '../../svg/IconIndex';
 import IconLayers from '../../svg/IconLayers';
@@ -192,6 +193,7 @@ export type IconName =
   | 'iconGrid'
   | 'iconHelp'
   | 'iconHistory'
+  | 'iconIdea'
   | 'iconLivePlant'
   | 'iconImport'
   | 'iconIndex'
@@ -326,6 +328,7 @@ const icons: Record<IconName, SVGComponent> = {
   iconGrid: IconGrid,
   iconHelp: IconHelp,
   iconHistory: IconHistory,
+  iconIdea: IconIdea,
   iconImport: IconImport,
   iconIndex: IconIndex,
   iconLayers: IconLayers,
