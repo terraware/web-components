@@ -99,6 +99,7 @@ export default function DatePicker(props: Props): JSX.Element {
         )}
         {props.showTime ? (
           <DesktopDateTimePicker
+            enableAccessibleFieldDOMStructure={false}
             disabled={props.disabled}
             minDate={minDateTime && minDateTime.isValid ? minDateTime : undefined}
             maxDate={maxDateTime && maxDateTime.isValid ? maxDateTime : undefined}
@@ -143,6 +144,7 @@ export default function DatePicker(props: Props): JSX.Element {
           />
         ) : (
           <DesktopDatePicker
+            enableAccessibleFieldDOMStructure={false}
             disabled={props.disabled}
             format='yyyy-MM-dd'
             minDate={minDateTime && minDateTime.isValid ? minDateTime : undefined}
