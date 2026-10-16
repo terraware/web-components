@@ -1,4 +1,4 @@
-import { CameraComponent, Entity, Quat, Script, Vec3, math } from 'playcanvas';
+import { Entity, Quat, Script, Vec3, math } from 'playcanvas';
 
 import { computeGroundPlane, yOnPlane } from './groundPlane';
 
@@ -117,7 +117,7 @@ export class WalkthroughCamera extends Script {
    * is measured from and whose height the session's floor is taken from.
    */
   private _posedCamera(): Entity | null {
-    this._camera ??= (this.entity.findComponent('camera') as CameraComponent | null)?.entity ?? null;
+    this._camera ??= this.entity.findComponent('camera')?.entity ?? null;
 
     return this._camera;
   }
