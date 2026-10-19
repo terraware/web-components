@@ -49,13 +49,7 @@ export interface Option {
 }
 
 type DatabaseColumnFilterType =
-  | 'multiple_selection'
-  | 'single_selection'
-  | 'search'
-  | 'date_range'
-  | 'number_range'
-  | 'count_weight'
-  | 'hidden';
+  'multiple_selection' | 'single_selection' | 'search' | 'date_range' | 'number_range' | 'count_weight' | 'hidden';
 
 export interface DatabaseColumn extends Omit<TableColumnType, 'key'> {
   key: string;

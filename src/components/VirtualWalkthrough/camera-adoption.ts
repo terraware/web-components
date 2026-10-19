@@ -1,4 +1,4 @@
-import { CameraComponent, Entity, Quat, Vec3 } from 'playcanvas';
+import { Entity, Quat, Vec3 } from 'playcanvas';
 
 /**
  * The pose an adopted camera is put back to when the walkthrough releases it.
@@ -51,7 +51,7 @@ export const adoptSceneCamera = (root: Entity, rig: Entity, ownCamera: Entity): 
     return null;
   }
 
-  const camera = (root.findComponent('camera') as CameraComponent | null)?.entity;
+  const camera = root.findComponent('camera')?.entity;
   // isDescendantOf covers a host that mounted the walkthrough inside its own camera, where
   // reparenting would make a cycle.
   if (!camera || camera === rig || !camera.parent || rig.isDescendantOf(camera)) {
