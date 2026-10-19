@@ -68,11 +68,12 @@ const GradientSky = ({
   useEffect(() => {
     // remove material to avoid memory leak
     return () => {
-      if (material) {
+      // Skip if the app was already destroyed; its graphics device released everything.
+      if (material && app?.graphicsDevice) {
         material.destroy();
       }
     };
-  }, [material]);
+  }, [app, material]);
 
   if (!material) {
     return null;
