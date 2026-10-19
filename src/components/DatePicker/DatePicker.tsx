@@ -70,7 +70,10 @@ export default function DatePicker(props: Props): JSX.Element {
 
   React.useEffect(() => {
     setTemporalValue((prev) => {
-      if (props.value !== prev) {
+      // Keep a partially-entered date instead of clearing every field section.
+      if (!props.value && prev && !prev.isValid) {
+        return prev;
+      } else if (props.value !== prev) {
         return initializeDate(props.value, props.defaultTimeZone);
       } else {
         return prev;
