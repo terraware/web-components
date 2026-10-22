@@ -1,6 +1,7 @@
 import React, { type JSX } from 'react';
 
-import { CircularProgress, StyledEngineProvider, useTheme } from '@mui/material';
+import { CircularProgress, useTheme } from '@mui/material';
+import { StyledEngineProvider } from '@mui/material/styles';
 
 export default function BlockingSpinner(): JSX.Element {
   const theme = useTheme();
