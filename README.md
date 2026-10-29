@@ -46,6 +46,20 @@ Execute the following commands:
 yarn start
 ```
 
+## Visual regression tests
+
+Run `nvm use`, `yarn install`, and `yarn build` before screenshot tests. Docker is required for
+`yarn screenshots:docker` and `yarn screenshots:update`; both use the official Playwright image
+matching the installed version. Review and commit the PNGs in `playwright/snapshots` after updates.
+`yarn screenshots` runs without Docker for debugging (install Chromium with `yarn playwright install chromium`).
+Baselines are platform-neutral but must be generated in Docker, not with the debugging command.
+
+Every story is tested unless its story or file metadata contains `tags: ['no-screenshot']`.
+Use this only for inherently nondeterministic rendering or unsupported external resources.
+External image requests use a local fixture; all other external requests are blocked.
+Canvas/maps are masked; time, timezone, and randomness are fixed. Results and failure diffs are
+in `playwright/test-results` and `playwright-report`.
+
 ## Testing changes out in repos that use `web-components`
 
 You can add a comment to your open pull request with the text "publish rc".

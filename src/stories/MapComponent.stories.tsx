@@ -7,6 +7,7 @@ import { action } from 'storybook/actions';
 import MapComponent, { MapComponentProps } from '../components/Map';
 
 export default {
+  tags: ['no-screenshot'],
   title: 'MapComponent',
   component: MapComponent,
 };

@@ -13,6 +13,7 @@ import TextField from '../components/Textfield/Textfield';
 import { useDeviceInfo } from '../utils';
 
 export default {
+  tags: ['no-screenshot'],
   title: 'MapMarker',
   component: MapBox,
 };

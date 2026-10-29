@@ -11,6 +11,7 @@ import { MapHighlightGroup, MapLayer, MapViewStyle } from '../components/Map/typ
 import { useDeviceInfo } from '../utils';
 
 export default {
+  tags: ['no-screenshot'],
   title: 'MapBox',
   component: MapBox,
 };
