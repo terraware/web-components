@@ -1,6 +1,7 @@
 import React from 'react';
 
-import { StyledEngineProvider, ThemeProvider } from '@mui/material';
+import { ThemeProvider } from '@mui/material';
+import { StyledEngineProvider } from '@mui/material/styles';
 
 import { getSupportedLocales, setLocale, theme } from '../src/';
 

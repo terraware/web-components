@@ -1,6 +1,6 @@
 {
   "name": "@terraware/web-components",
-  "version": "5.1.8",
+  "version": "5.1.9-rc.1",
   "author": "Terraformation Inc.",
   "license": "Apache-2.0",
   "repository": {
@@ -16,12 +16,7 @@
   "dependencies": {
     "@dnd-kit/core": "^6.0.7",
     "@dnd-kit/sortable": "^10.0.0",
-    "@emotion/react": "^11.11.3",
-    "@emotion/styled": "^11.11.3",
-    "@mui/icons-material": "^6.0.0",
-    "@mui/lab": "^6.0.1-beta.36",
-    "@mui/material": "^6.0.0",
-    "@mui/x-date-pickers": "^8.29.5",
+    "@mui/lab": "^7.0.1-beta.25",
     "@playcanvas/react": "0.11.7",
     "classnames": "^2.3.2",
     "csv-parse": "^7.0.0",
@@ -74,7 +69,12 @@
     ]
   },
   "devDependencies": {
+    "@emotion/react": "^11.11.3",
+    "@emotion/styled": "^11.11.3",
     "@jsdevtools/version-bump-prompt": "^6.1.0",
+    "@mui/icons-material": "^7.3.11",
+    "@mui/material": "^7.3.11",
+    "@mui/x-date-pickers": "^8.29.5",
     "@rsbuild/core": "^2.2.11",
     "@rsbuild/plugin-react": "^2.1.0",
     "@rsbuild/plugin-sass": "^2.0.1",
@@ -119,6 +119,11 @@
     "typescript-eslint": "^8.66.0"
   },
   "peerDependencies": {
+    "@emotion/react": "^11.11.3",
+    "@emotion/styled": "^11.11.3",
+    "@mui/icons-material": "^7.3.11",
+    "@mui/material": "^7.3.11",
+    "@mui/x-date-pickers": "^8.29.5",
     "@playcanvas/react": "0.11.7",
     "mapbox-gl": "^3.13.0",
     "playcanvas": "2.23.3",
