@@ -56,6 +56,8 @@ Baselines are platform-neutral but must be generated in Docker, not with the deb
 
 Every story is tested unless its story or file metadata contains `tags: ['no-screenshot']`.
 Use this only for inherently nondeterministic rendering or unsupported external resources.
+Stories can use a standard Storybook `play` function to set up state (such as opening a modal)
+before screenshots. Tests wait for it to finish and honor the story's selected viewport.
 External image requests use a local fixture; all other external requests are blocked.
 Map styles use an empty offline style and a fixed dummy token, independent of build-time secrets.
 Only canvases are masked, preserving map controls and overlays. Screenshots crop to painted content

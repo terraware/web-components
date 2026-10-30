@@ -1,5 +1,9 @@
 import { expect, test } from '@playwright/test';
+import type { ReactRenderer } from '@storybook/react';
 import { readFileSync } from 'node:fs';
+import type { PreviewWeb } from 'storybook/preview-api';
+
+type PreviewWindow = Window & { __STORYBOOK_PREVIEW__?: PreviewWeb<ReactRenderer> };
 
 const index = JSON.parse(readFileSync('public/index.json', 'utf8')) as {
   entries: Record<string, { id: string; type: string; tags: string[] }>;
@@ -71,6 +75,50 @@ for (const story of Object.values(index.entries)) {
     });
     await page.goto(`/iframe.html?id=${encodeURIComponent(story.id)}&viewMode=story&args=token:pk-screenshot`);
     await expect(page.locator('#storybook-root > *').first()).toBeAttached();
+    const viewport = await page.evaluate(async (storyId) => {
+      const preview = (window as PreviewWindow).__STORYBOOK_PREVIEW__;
+      if (!preview) {
+        throw new Error('Storybook preview is unavailable');
+      }
+      const prepared = await preview.loadStory({ storyId });
+      const context = preview.getStoryContext(prepared);
+      const parameters = context.parameters.viewport;
+      const selected = context.globals.viewport?.value ?? parameters?.defaultViewport;
+      const styles = (parameters?.options ?? parameters?.viewports)?.[selected]?.styles;
+      if (!styles) {
+        return null;
+      }
+      const dimension = (value: string | number) => {
+        if (!/^\d+(?:px)?$/.test(String(value)) || Number.parseInt(String(value), 10) <= 0) {
+          throw new Error(`Unsupported story viewport dimension: ${value}`);
+        }
+
+        return Number.parseInt(String(value), 10);
+      };
+
+      return { width: dimension(styles.width), height: dimension(styles.height) };
+    }, story.id);
+    if (viewport) {
+      await page.setViewportSize(viewport);
+    }
+    await expect
+      .poll(() =>
+        page.evaluate((storyId) => {
+          const preview = (window as PreviewWindow).__STORYBOOK_PREVIEW__;
+
+          return preview?.storyRenders.find((render) => render.id === storyId)?.phase;
+        }, story.id)
+      )
+      .toBe('finished');
+    await expect(page.locator('body')).not.toHaveClass(/sb-show-errordisplay/);
+    expect(
+      await page.evaluate((storyId) => {
+        const preview = (window as PreviewWindow).__STORYBOOK_PREVIEW__!;
+        const render = preview.storyRenders.find((candidate) => candidate.id === storyId)!;
+
+        return preview.getStoryContext(render.story!).reporting.reports.filter((report) => report.status === 'failed');
+      }, story.id)
+    ).toEqual([]);
     await page.waitForLoadState('networkidle');
     if (['mapbox--default', 'mapcomponent--default', 'mapmarker--default'].includes(story.id)) {
       await expect(page.getByRole('button', { name: 'Zoom in', exact: true })).toBeVisible();
