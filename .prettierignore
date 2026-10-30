@@ -1,5 +1,10 @@
 # Dependencies
 node_modules
+public/
+playwright/test-results/
+playwright/results.json
+playwright/public/
+playwright-report/
 .yalc
 
 # Tools

@@ -21,7 +21,9 @@
     "noEmit": true
   },
   "include": [
-    "src"
+    "src",
+    "playwright/**/*.ts",
+    "playwright.config.ts"
   ],
   // Stories still use Storybook APIs that predate v7 and don't type-check.
   "exclude": [
