@@ -26,4 +26,4 @@ createServer(async (request, response) => {
   } catch {
     response.writeHead(404).end();
   }
-}).listen(6006, '0.0.0.0');
+}).listen(6006, '127.0.0.1');
