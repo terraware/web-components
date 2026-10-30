@@ -2,6 +2,7 @@ import React from 'react';
 
 import { Box } from '@mui/material';
 import { Story } from '@storybook/react';
+import { expect, userEvent, waitFor, within } from 'storybook/test';
 
 import PopoverMenu, { PopoverMenuProps } from '../components/PopoverMenu';
 import { DropdownItem } from '../components/types';
@@ -21,7 +22,15 @@ const PopoverMenuTemplate: Story<PopoverMenuProps> = (args) => {
   );
 };
 
+const openMenu: NonNullable<Story<PopoverMenuProps>['play']> = async ({ canvasElement }) => {
+  await userEvent.click(within(canvasElement).getAllByRole('button')[0]);
+  const menu = await within(canvasElement.ownerDocument.body).findByRole('menu');
+  await expect(menu).toBeVisible();
+  await waitFor(() => expect(menu.parentElement).toHaveStyle({ opacity: '1', transform: 'none' }));
+};
+
 export const Default = PopoverMenuTemplate.bind({});
+Default.play = openMenu;
 
 Default.args = {
   anchor: (
@@ -40,6 +49,7 @@ Default.args = {
 };
 
 export const ItemizedOnClick = PopoverMenuTemplate.bind({});
+ItemizedOnClick.play = openMenu;
 
 ItemizedOnClick.args = {
   anchor: 'Test Itemized Onclick',
