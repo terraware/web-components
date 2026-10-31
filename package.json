@@ -93,7 +93,7 @@
     "@types/lodash": "^4.17.23",
     "@types/luxon": "^3.2.0",
     "@types/mapbox-gl": "^3.4.1",
-    "@types/node": "^24.0.0",
+    "@types/node": "^26.0.0",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
     "@types/react-map-gl": "^6.1.7",
