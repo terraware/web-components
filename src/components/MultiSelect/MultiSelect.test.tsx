@@ -1,8 +1,53 @@
 import React from 'react';
 
-import { fireEvent, render, screen } from '@testing-library/react';
+import { act, fireEvent, render, screen } from '@testing-library/react';
 
 import MultiSelect from '.';
+
+let resizeObserverCallbacks: (() => void)[] = [];
+
+class ResizeObserverMock {
+  constructor(callback: () => void) {
+    resizeObserverCallbacks.push(callback);
+  }
+  disconnect = rstest.fn();
+  observe = rstest.fn();
+  unobserve = rstest.fn();
+}
+
+beforeAll(() => {
+  global.ResizeObserver = ResizeObserverMock as unknown as typeof ResizeObserver;
+});
+
+afterEach(() => {
+  resizeObserverCallbacks = [];
+  rstest.restoreAllMocks();
+});
+
+const mockLayout = (rects: { trigger: Partial<DOMRect>; optionsContainer: Partial<DOMRect> }) => {
+  rstest.spyOn(HTMLElement.prototype, 'getBoundingClientRect').mockImplementation(function (this: HTMLElement) {
+    const rect = this.classList.contains('multi-select__options-container')
+      ? rects.optionsContainer
+      : this.classList.contains('multi-select__container')
+        ? rects.trigger
+        : {};
+
+    return { top: 0, left: 0, width: 0, height: 0, ...rect } as DOMRect;
+  });
+};
+
+const renderFixedMenu = () =>
+  render(
+    <MultiSelect
+      fixedMenu
+      onAdd={() => undefined}
+      onRemove={() => undefined}
+      options={new Map([[1, 'foo']])}
+      valueRenderer={(v: string) => v}
+      selectedOptions={[]}
+      placeHolder='Select...'
+    />
+  );
 
 test('show options when placeholder is clicked', () => {
   render(
@@ -95,19 +140,34 @@ test('clicking the pill remove button calls the onRemove handler', () => {
 });
 
 test('options list is positioned relative to the viewport when fixedMenu is set', () => {
-  render(
-    <MultiSelect
-      fixedMenu
-      onAdd={() => undefined}
-      onRemove={() => undefined}
-      options={new Map([[1, 'foo']])}
-      valueRenderer={(v: string) => v}
-      selectedOptions={[]}
-      placeHolder='Select...'
-    />
-  );
+  mockLayout({ trigger: { top: 100 }, optionsContainer: { top: 140, left: 20, width: 302 } });
+  renderFixedMenu();
 
   fireEvent.click(screen.getByText('Select...'));
 
-  expect(screen.getByRole('list')).toHaveStyle({ position: 'fixed' });
+  expect(screen.getByRole('list')).toHaveStyle({ position: 'fixed', top: '140px', left: '20px', width: '300px' });
+});
+
+test('fixed options list follows the field when the field changes size', () => {
+  const layout = { trigger: { top: 100 }, optionsContainer: { top: 140, width: 302 } };
+  mockLayout(layout);
+  renderFixedMenu();
+  fireEvent.click(screen.getByText('Select...'));
+
+  layout.optionsContainer.top = 180;
+  act(() => resizeObserverCallbacks.forEach((callback) => callback()));
+
+  expect(screen.getByRole('list')).toHaveStyle({ top: '180px' });
+});
+
+test('fixed options list opens above the field when there is no room below', () => {
+  mockLayout({
+    trigger: { top: window.innerHeight - 80 },
+    optionsContainer: { top: window.innerHeight - 40, width: 302 },
+  });
+  renderFixedMenu();
+
+  fireEvent.click(screen.getByText('Select...'));
+
+  expect(screen.getByRole('list')).toHaveStyle({ top: 'auto', bottom: '80px', maxHeight: '140px' });
 });

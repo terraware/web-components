@@ -7,6 +7,9 @@ import IconTooltip from '../IconTooltip';
 import PillList, { PillListItem } from '../PillList';
 import './styles.scss';
 
+const OPTIONS_MAX_HEIGHT = 140;
+const VIEWPORT_MARGIN = 8;
+
 export type MultiSelectProps<K, V> = {
   className?: string;
   disabled?: boolean;
@@ -61,10 +64,24 @@ export default function MultiSelect<K, V>(props: MultiSelectProps<K, V>): JSX.El
   const optionsContainerRef = useRef<HTMLDivElement>(null);
 
   const positionFixedMenu = useCallback(() => {
-    if (optionsContainerRef.current) {
-      const { top, left, width } = optionsContainerRef.current.getBoundingClientRect();
-      setFixedMenuStyle({ position: 'fixed', top, left, width: width - 2 });
+    const trigger = optionsContainerRef.current?.parentElement;
+    if (!optionsContainerRef.current || !trigger) {
+      return;
     }
+
+    const { top, left, width } = optionsContainerRef.current.getBoundingClientRect();
+    const triggerTop = trigger.getBoundingClientRect().top;
+    const spaceBelow = window.innerHeight - top - VIEWPORT_MARGIN;
+    const spaceAbove = triggerTop - VIEWPORT_MARGIN;
+    const placeAbove = spaceBelow < OPTIONS_MAX_HEIGHT && spaceAbove > spaceBelow;
+
+    setFixedMenuStyle({
+      position: 'fixed',
+      left,
+      width: width - 2,
+      maxHeight: Math.min(OPTIONS_MAX_HEIGHT, placeAbove ? spaceAbove : spaceBelow),
+      ...(placeAbove ? { top: 'auto', bottom: window.innerHeight - triggerTop } : { top }),
+    });
   }, []);
 
   const toggleOptions = () => {
@@ -92,10 +109,15 @@ export default function MultiSelect<K, V>(props: MultiSelectProps<K, V>): JSX.El
     positionFixedMenu();
     window.addEventListener('scroll', positionFixedMenu, true);
     window.addEventListener('resize', positionFixedMenu);
+    const triggerObserver = new ResizeObserver(positionFixedMenu);
+    if (optionsContainerRef.current?.parentElement) {
+      triggerObserver.observe(optionsContainerRef.current.parentElement);
+    }
 
     return () => {
       window.removeEventListener('scroll', positionFixedMenu, true);
       window.removeEventListener('resize', positionFixedMenu);
+      triggerObserver.disconnect();
     };
   }, [fixedMenu, optionsShown, positionFixedMenu]);
 
@@ -157,7 +179,10 @@ export default function MultiSelect<K, V>(props: MultiSelectProps<K, V>): JSX.El
         </div>
         {optionsShown && (
           <div className='multi-select__options-container' ref={optionsContainerRef}>
-            <ul className={'multi-select__options'} style={fixedMenu ? fixedMenuStyle : undefined}>
+            <ul
+              className={`multi-select__options${fixedMenu && fixedMenuStyle?.bottom !== undefined ? ' multi-select__options--above' : ''}`}
+              style={fixedMenu ? fixedMenuStyle : undefined}
+            >
               {unselectedOptions.map((optionKey, index) => {
                 const optionValue = options.get(optionKey);
 
