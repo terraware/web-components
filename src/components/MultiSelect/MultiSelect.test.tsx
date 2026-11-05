@@ -93,3 +93,21 @@ test('clicking the pill remove button calls the onRemove handler', () => {
   // handleRemove should have been called with id 1
   expect(handleRemove).toBeCalledWith(1);
 });
+
+test('options list is positioned relative to the viewport when fixedMenu is set', () => {
+  render(
+    <MultiSelect
+      fixedMenu
+      onAdd={() => undefined}
+      onRemove={() => undefined}
+      options={new Map([[1, 'foo']])}
+      valueRenderer={(v: string) => v}
+      selectedOptions={[]}
+      placeHolder='Select...'
+    />
+  );
+
+  fireEvent.click(screen.getByText('Select...'));
+
+  expect(screen.getByRole('list')).toHaveStyle({ position: 'fixed' });
+});

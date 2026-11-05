@@ -1,4 +1,4 @@
-import React, { type JSX, useEffect, useState } from 'react';
+import React, { CSSProperties, type JSX, useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 
 import { Box, SxProps, TooltipProps } from '@mui/material';
 
@@ -13,6 +13,7 @@ export type MultiSelectProps<K, V> = {
   fullWidth?: boolean;
   helperText?: string;
   errorText?: string;
+  fixedMenu?: boolean;
   id?: string;
   label?: string;
   missingValuePlaceholder?: string;
@@ -38,6 +39,7 @@ export default function MultiSelect<K, V>(props: MultiSelectProps<K, V>): JSX.El
     fullWidth,
     helperText,
     errorText,
+    fixedMenu,
     id,
     label,
     missingValuePlaceholder,
@@ -55,6 +57,15 @@ export default function MultiSelect<K, V>(props: MultiSelectProps<K, V>): JSX.El
   } = props;
 
   const [openedOptions, setOpenedOptions] = useState(false);
+  const [fixedMenuStyle, setFixedMenuStyle] = useState<CSSProperties>();
+  const optionsContainerRef = useRef<HTMLDivElement>(null);
+
+  const positionFixedMenu = useCallback(() => {
+    if (optionsContainerRef.current) {
+      const { top, left, width } = optionsContainerRef.current.getBoundingClientRect();
+      setFixedMenuStyle({ position: 'fixed', top, left, width: width - 2 });
+    }
+  }, []);
 
   const toggleOptions = () => {
     setOpenedOptions((isOpen) => !isOpen && !disabled);
@@ -70,6 +81,24 @@ export default function MultiSelect<K, V>(props: MultiSelectProps<K, V>): JSX.El
     }
   }, [optionsVisible]);
 
+  const unselectedOptions = Array.from<K>(options.keys()).filter((key: K) => !selectedOptions.includes(key));
+  const optionsShown = options && unselectedOptions.length > 0 && openedOptions;
+
+  useLayoutEffect(() => {
+    if (!fixedMenu || !optionsShown) {
+      return;
+    }
+
+    positionFixedMenu();
+    window.addEventListener('scroll', positionFixedMenu, true);
+    window.addEventListener('resize', positionFixedMenu);
+
+    return () => {
+      window.removeEventListener('scroll', positionFixedMenu, true);
+      window.removeEventListener('resize', positionFixedMenu);
+    };
+  }, [fixedMenu, optionsShown, positionFixedMenu]);
+
   const onBlurHandler = (event: any) => {
     // In Chrome > 126, the onBlur event will fire even if you are clicking _within_ the focused element
     // If this is the case, we do not actually want to blur
@@ -83,8 +112,6 @@ export default function MultiSelect<K, V>(props: MultiSelectProps<K, V>): JSX.El
       props.onBlur();
     }
   };
-
-  const unselectedOptions = Array.from<K>(options.keys()).filter((key: K) => !selectedOptions.includes(key));
 
   const valuesPillData = selectedOptions
     .map((item) => {
@@ -128,9 +155,9 @@ export default function MultiSelect<K, V>(props: MultiSelectProps<K, V>): JSX.El
             />
           </div>
         </div>
-        {options && unselectedOptions.length > 0 && openedOptions && (
-          <div className='multi-select__options-container'>
-            <ul className={'multi-select__options'}>
+        {optionsShown && (
+          <div className='multi-select__options-container' ref={optionsContainerRef}>
+            <ul className={'multi-select__options'} style={fixedMenu ? fixedMenuStyle : undefined}>
               {unselectedOptions.map((optionKey, index) => {
                 const optionValue = options.get(optionKey);
 

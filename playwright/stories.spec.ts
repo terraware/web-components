@@ -162,6 +162,9 @@ for (const story of Object.values(index.entries)) {
             top = Math.max(top, parentRect.top);
             clippedBottom = Math.min(clippedBottom, parentRect.bottom);
           }
+          if (style.position === 'fixed') {
+            break;
+          }
         }
         if (clippedRight > left && clippedBottom > top) {
           bounds.push(new DOMRect(left, top, clippedRight - left, clippedBottom - top));
@@ -183,7 +186,7 @@ for (const story of Object.values(index.entries)) {
               !transparent(style.getPropertyValue(`border-${side.toLowerCase()}-color`))
           );
         if (painted || element.matches('img, svg, canvas, input, textarea, select, video')) {
-          add(element.getBoundingClientRect(), element.parentElement);
+          add(element.getBoundingClientRect(), style.position === 'fixed' ? null : element.parentElement);
         }
         for (const node of element.childNodes) {
           if (node.nodeType === Node.TEXT_NODE && node.textContent?.trim()) {

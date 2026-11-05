@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 
-import { Popover, Typography } from '@mui/material';
+import { Box, Popover, Typography } from '@mui/material';
 import { Story } from '@storybook/react';
+import { expect, userEvent, waitFor, within } from 'storybook/test';
 
 import Button from '../components/Button/Button';
 import MultiSelect, { MultiSelectProps } from '../components/MultiSelect';
@@ -181,9 +182,75 @@ const WithParentOptionsVisibilityControlTemplate: Story<MultiSelectProps<number,
   );
 };
 
+const InScrollingModalTemplate: Story<MultiSelectProps<number, string>> = (args) => {
+  const [selectedOptions, setSelectedOptions] = useState<number[]>([]);
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+
+  const handleAdd = (id: number) => setSelectedOptions([...selectedOptions, id]);
+  const handleRemove = (id: number) => setSelectedOptions(selectedOptions.filter((value) => value !== id));
+
+  return (
+    <>
+      <Typography sx={{ marginBottom: '20px' }}>
+        The options list should extend over the modal footer when opened. Without fixedMenu, the scrolling modal body
+        clips it.
+      </Typography>
+
+      <Button onClick={(event) => event && setAnchorEl(event.currentTarget)} label='Show Modal' />
+
+      <Popover
+        open={Boolean(anchorEl)}
+        anchorEl={anchorEl}
+        onClose={() => setAnchorEl(null)}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
+        transformOrigin={{ vertical: 'top', horizontal: 'left' }}
+        sx={{ '& .MuiPaper-root': { borderRadius: '8px', overflow: 'visible', width: '480px' } }}
+      >
+        <Box display='flex' flexDirection='column'>
+          <Box padding='16px 24px' borderBottom='1px solid #ccc'>
+            <Typography fontSize='20px' fontWeight={600}>
+              Filters
+            </Typography>
+          </Box>
+          <Box overflow='auto' maxHeight='380px' padding='14px'>
+            <MultiSelect
+              {...args}
+              selectedOptions={selectedOptions}
+              onAdd={handleAdd}
+              onRemove={handleRemove}
+              valueRenderer={(v: string) => v}
+            />
+          </Box>
+          <Box display='flex' justifyContent='flex-end' padding='16px 24px' borderTop='1px solid #ccc'>
+            <Button onClick={() => setAnchorEl(null)} type='passive' priority='secondary' label='Cancel' />
+            <Button onClick={() => setAnchorEl(null)} label='Apply' />
+          </Box>
+        </Box>
+      </Popover>
+    </>
+  );
+};
+
 export const Default = Template.bind({});
 
 export const WithParentOptionsVisibilityControl = WithParentOptionsVisibilityControlTemplate.bind({});
+
+export const InScrollingModal = InScrollingModalTemplate.bind({});
+
+export const InScrollingModalWithFixedMenu = InScrollingModalTemplate.bind({});
+
+const openModalAndOptions: typeof InScrollingModal.play = async ({ canvasElement }) => {
+  await userEvent.click(within(canvasElement).getByRole('button', { name: 'Show Modal' }));
+  const body = within(canvasElement.ownerDocument.body);
+  const paper = (await body.findByText('Filters')).closest('.MuiPaper-root');
+  await waitFor(() => expect(paper).toHaveStyle({ opacity: '1', transform: 'none' }));
+  await userEvent.click(body.getByText('Select...'));
+  await expect(await body.findByText('eggs')).toBeVisible();
+};
+
+InScrollingModal.play = openModalAndOptions;
+
+InScrollingModalWithFixedMenu.play = openModalAndOptions;
 
 const defaultOptions = new Map<number, string>([
   [1, 'eggs'],
@@ -203,6 +270,7 @@ Default.args = {
   placeHolder: 'Select...',
   options: defaultOptions,
   disabled: false,
+  fixedMenu: false,
 };
 
 WithParentOptionsVisibilityControl.args = {
@@ -213,4 +281,16 @@ WithParentOptionsVisibilityControl.args = {
   placeHolder: 'Select...',
   options: defaultOptions,
   disabled: false,
+};
+
+InScrollingModal.args = {
+  fullWidth: true,
+  placeHolder: 'Select...',
+  options: defaultOptions,
+  fixedMenu: false,
+};
+
+InScrollingModalWithFixedMenu.args = {
+  ...InScrollingModal.args,
+  fixedMenu: true,
 };
