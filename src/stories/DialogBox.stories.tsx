@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 
 import { Story } from '@storybook/react';
+import { expect, userEvent, within } from 'storybook/test';
 
 import Button from '../components/Button/Button';
 import DialogBox, { Props as DialogBoxProps } from '../components/DialogBox/DialogBox';
@@ -121,6 +122,10 @@ noFooter.args = {
 };
 
 export const CloseOutside = WithButtonTemplate.bind({});
+CloseOutside.play = async ({ canvasElement }) => {
+  await userEvent.click(within(canvasElement).getByRole('button', { name: 'Click me' }));
+  await expect(await within(canvasElement.ownerDocument.body).findByRole('dialog', { name: 'Title' })).toBeVisible();
+};
 CloseOutside.args = {
   title: 'Title',
   message: 'Message',

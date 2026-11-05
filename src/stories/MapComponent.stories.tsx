@@ -7,6 +7,7 @@ import { action } from 'storybook/actions';
 import MapComponent, { MapComponentProps } from '../components/Map';
 
 export default {
+  argTypes: { token: { type: 'string', control: 'text' } },
   title: 'MapComponent',
   component: MapComponent,
 };

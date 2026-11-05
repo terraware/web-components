@@ -3,6 +3,7 @@ import React from 'react';
 
 import { Typography } from '@mui/material';
 import { StoryFn } from '@storybook/react';
+import { expect, userEvent, within } from 'storybook/test';
 
 import Button from '../components/Button/Button';
 import ViewPhotosDialog, { ViewPhotosDialogProps } from '../components/ViewPhotosDialog';
@@ -28,6 +29,10 @@ const captionForPhoto = (num: number): JSX.Element => {
 };
 
 export const Default = Template.bind({});
+Default.play = async ({ canvasElement }) => {
+  await userEvent.click(within(canvasElement).getByRole('button', { name: 'View Photos' }));
+  await expect(await within(canvasElement.ownerDocument.body).findByRole('dialog', { name: 'Photos' })).toBeVisible();
+};
 Default.args = {
   open: true,
   title: 'Photos',

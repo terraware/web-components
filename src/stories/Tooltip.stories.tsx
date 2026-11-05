@@ -2,6 +2,7 @@ import React from 'react';
 
 import { Box, TooltipProps } from '@mui/material';
 import { Story } from '@storybook/react';
+import { expect, userEvent, waitFor, within } from 'storybook/test';
 
 import Button from '../components/Button/Button';
 import Tooltip from '../components/Tooltip/Tooltip';
@@ -41,6 +42,12 @@ const Template: Story<TooltipProps> = (args) => {
 };
 
 export const Default = Template.bind({});
+Default.play = async ({ canvasElement }) => {
+  await userEvent.hover(within(canvasElement).getByRole('button', { name: 'Tooltip Button' }));
+  const tooltip = await within(canvasElement.ownerDocument.body).findByRole('tooltip');
+  await expect(tooltip).toBeVisible();
+  await waitFor(() => expect(tooltip.firstElementChild).toHaveStyle({ opacity: '1', transform: 'none' }));
+};
 
 Default.args = {
   title: 'Title',

@@ -8,7 +8,7 @@ import tseslint from 'typescript-eslint';
 export default tseslint.config(
   { ignores: ['dist/', 'public/'] },
   {
-    files: ['src/**/*.ts'],
+    files: ['src/**/*.ts', 'playwright/**/*.ts', 'playwright.config.ts'],
     extends: [
       ...tseslint.configs.recommended,
       ...tseslint.configs.recommendedTypeChecked,

@@ -13,6 +13,7 @@ import TextField from '../components/Textfield/Textfield';
 import { useDeviceInfo } from '../utils';
 
 export default {
+  argTypes: { token: { type: 'string', control: 'text' } },
   title: 'MapMarker',
   component: MapBox,
 };

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 
 import { Box } from '@mui/material';
 import { Story } from '@storybook/react';
+import { expect, userEvent, waitFor, within } from 'storybook/test';
 
 import Button from '../components/Button/Button';
 import PopoverMultiSelect, { PopoverMultiSelectProps } from '../components/PopoverMultiSelect';
@@ -30,6 +31,12 @@ const PopoverMultiSelectTemplate: Story<Omit<PopoverMultiSelectProps, 'anchorEle
 };
 
 export const Default = PopoverMultiSelectTemplate.bind({});
+Default.play = async ({ canvasElement }) => {
+  await userEvent.click(within(canvasElement).getByRole('button', { name: 'Click Me for a Popover' }));
+  const menu = await within(canvasElement.ownerDocument.body).findByRole('menu');
+  await expect(menu).toBeVisible();
+  await waitFor(() => expect(menu.parentElement).toHaveStyle({ opacity: '1', transform: 'none' }));
+};
 
 Default.args = {
   initialSelection: [1, 3],

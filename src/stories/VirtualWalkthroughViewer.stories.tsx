@@ -14,6 +14,7 @@ import VirtualWalkthroughViewer, {
 import { useXr } from '../hooks/useXr';
 
 export default {
+  tags: ['no-screenshot'],
   title: 'VirtualWalkthroughViewer',
   component: VirtualWalkthroughViewer,
   argTypes: {

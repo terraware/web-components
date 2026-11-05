@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 
 import { Story } from '@storybook/react';
+import { userEvent, within } from 'storybook/test';
 
 import Button from '../components/Button/Button';
 import OverlayModal, { Props as OverlayModalProps } from '../components/OverlayModal/OverlayModal';
@@ -23,6 +24,10 @@ const WithButtonTemplate: Story<OverlayModalProps> = (args) => {
       <OverlayModal {...args} open={opened} onClose={() => setOpened(false)} />
     </main>
   );
+};
+
+const openModal: NonNullable<Story<OverlayModalProps>['play']> = async ({ canvasElement }) => {
+  await userEvent.click(within(canvasElement).getByRole('button', { name: 'Open Modal' }));
 };
 
 export const Basic = Template.bind({});
@@ -91,6 +96,7 @@ WithScrollableContent.args = {
 };
 
 export const InteractiveDemo = WithButtonTemplate.bind({});
+InteractiveDemo.play = openModal;
 InteractiveDemo.args = {
   children: (
     <div>
@@ -107,6 +113,7 @@ InteractiveDemo.args = {
 };
 
 export const DisableEscapeClose = WithButtonTemplate.bind({});
+DisableEscapeClose.play = openModal;
 DisableEscapeClose.args = {
   onEscapeClose: false,
   children: (
@@ -119,6 +126,7 @@ DisableEscapeClose.args = {
 };
 
 export const DisableClickOutClose = WithButtonTemplate.bind({});
+DisableClickOutClose.play = openModal;
 DisableClickOutClose.args = {
   onClickOutClose: false,
   children: (
@@ -131,6 +139,7 @@ DisableClickOutClose.args = {
 };
 
 export const WithButtons = WithButtonTemplate.bind({});
+WithButtons.play = openModal;
 WithButtons.args = {
   children: (
     <div>

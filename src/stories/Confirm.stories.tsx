@@ -56,6 +56,7 @@ Disabled.args = {
 };
 
 export const Hidden = Template.bind({});
+Hidden.tags = ['no-screenshot'];
 Hidden.args = {
   confirmButtonText: 'Ok',
   message: 'Hello World',
