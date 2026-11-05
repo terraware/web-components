@@ -44,6 +44,14 @@ steps:
           compressed: 'dist.tgz'
     command: .buildkite/scripts/build-and-test.sh
 
+  - label: ':camera_with_flash: Storybook screenshots'
+    key: 'screenshot-tests'
+    if: "build.branch != 'main' && build.tag == null"
+    plugins:
+      - *shallow-clone
+      - *cache-node-modules
+    command: .buildkite/scripts/run-screenshot-tests.sh
+
   # Previews are opt-in; deploy-vercel.sh checks the PR for the "Vercel preview" label.
   - label: ':vercel: Deploy Vercel preview'
     key: 'vercel-preview'
