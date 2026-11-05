@@ -171,3 +171,24 @@ test('fixed options list opens above the field when there is no room below', () 
 
   expect(screen.getByRole('list')).toHaveStyle({ top: 'auto', bottom: '80px', maxHeight: '140px' });
 });
+
+test('fixed options list height leaves room for its padding, border, and margin at the viewport edge', () => {
+  rstest.spyOn(window, 'innerHeight', 'get').mockReturnValue(200);
+  mockLayout({ trigger: { top: 50 }, optionsContainer: { top: 90, width: 302 } });
+  const getComputedStyle = window.getComputedStyle;
+  const getComputedStyleSpy = rstest
+    .spyOn(window, 'getComputedStyle')
+    .mockImplementation((element) =>
+      element.tagName === 'UL'
+        ? ({ paddingTop: '8px', paddingBottom: '8px', marginTop: '4px', marginBottom: '0px' } as CSSStyleDeclaration)
+        : getComputedStyle(element)
+    );
+  rstest.spyOn(HTMLElement.prototype, 'offsetHeight', 'get').mockReturnValue(160);
+  rstest.spyOn(HTMLElement.prototype, 'clientHeight', 'get').mockReturnValue(158);
+  renderFixedMenu();
+
+  fireEvent.click(screen.getByText('Select...'));
+  getComputedStyleSpy.mockRestore();
+
+  expect(screen.getByRole('list')).toHaveStyle({ top: '90px', maxHeight: '80px' });
+});

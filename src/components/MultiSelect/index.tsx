@@ -10,6 +10,16 @@ import './styles.scss';
 const OPTIONS_MAX_HEIGHT = 140;
 const VIEWPORT_MARGIN = 8;
 
+const getVerticalFrameHeight = (element: HTMLElement) => {
+  const style = getComputedStyle(element);
+  const spacing = [style.paddingTop, style.paddingBottom, style.marginTop, style.marginBottom].reduce(
+    (total, value) => total + (parseFloat(value) || 0),
+    0
+  );
+
+  return element.offsetHeight - element.clientHeight + spacing;
+};
+
 export type MultiSelectProps<K, V> = {
   className?: string;
   disabled?: boolean;
@@ -62,6 +72,7 @@ export default function MultiSelect<K, V>(props: MultiSelectProps<K, V>): JSX.El
   const [openedOptions, setOpenedOptions] = useState(false);
   const [fixedMenuStyle, setFixedMenuStyle] = useState<CSSProperties>();
   const optionsContainerRef = useRef<HTMLDivElement>(null);
+  const optionsRef = useRef<HTMLUListElement>(null);
 
   const positionFixedMenu = useCallback(() => {
     const trigger = optionsContainerRef.current?.parentElement;
@@ -74,12 +85,13 @@ export default function MultiSelect<K, V>(props: MultiSelectProps<K, V>): JSX.El
     const spaceBelow = window.innerHeight - top - VIEWPORT_MARGIN;
     const spaceAbove = triggerTop - VIEWPORT_MARGIN;
     const placeAbove = spaceBelow < OPTIONS_MAX_HEIGHT && spaceAbove > spaceBelow;
+    const menuFrameHeight = optionsRef.current ? getVerticalFrameHeight(optionsRef.current) : 0;
 
     setFixedMenuStyle({
       position: 'fixed',
       left,
       width: width - 2,
-      maxHeight: Math.min(OPTIONS_MAX_HEIGHT, placeAbove ? spaceAbove : spaceBelow),
+      maxHeight: Math.max(0, Math.min(OPTIONS_MAX_HEIGHT, (placeAbove ? spaceAbove : spaceBelow) - menuFrameHeight)),
       ...(placeAbove ? { top: 'auto', bottom: window.innerHeight - triggerTop } : { top }),
     });
   }, []);
@@ -181,6 +193,7 @@ export default function MultiSelect<K, V>(props: MultiSelectProps<K, V>): JSX.El
           <div className='multi-select__options-container' ref={optionsContainerRef}>
             <ul
               className={`multi-select__options${fixedMenu && fixedMenuStyle?.bottom !== undefined ? ' multi-select__options--above' : ''}`}
+              ref={optionsRef}
               style={fixedMenu ? fixedMenuStyle : undefined}
             >
               {unselectedOptions.map((optionKey, index) => {
