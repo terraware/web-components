@@ -1,4 +1,4 @@
-import React, { CSSProperties, type JSX, useState } from 'react';
+import React, { CSSProperties, type JSX, useRef, useState } from 'react';
 
 import { Box, useTheme } from '@mui/material';
 
@@ -11,10 +11,11 @@ export type PageFormProps = {
   cancelID: string;
   saveID: string;
   onCancel: () => void;
-  onSave: () => void;
+  onSave: () => void | Promise<unknown>;
   cancelButtonText: string;
   saveButtonText: string;
   saveDisabled?: boolean;
+  cancelDisabled?: boolean;
   className?: string;
   hideEdit?: boolean;
   additionalRightButtons?: FormButton[];
@@ -27,12 +28,22 @@ export default function PageForm(props: PageFormProps): JSX.Element {
   const theme = useTheme();
   const { isMobile } = useDeviceInfo();
   const [processing, setProcessing] = useState(false);
+  const processingRef = useRef(false);
 
   const handleSave = async () => {
+    if (processingRef.current) {
+      return;
+    }
+    processingRef.current = true;
     setProcessing(true);
-    // eslint-disable-next-line @typescript-eslint/await-thenable
-    await onSave(); // <-- we want all onSaves to be async
-    setProcessing(false);
+    try {
+      await onSave();
+    } catch (error) {
+      console.error(error);
+    } finally {
+      processingRef.current = false;
+      setProcessing(false);
+    }
   };
 
   return (
@@ -45,8 +56,18 @@ export default function PageForm(props: PageFormProps): JSX.Element {
       >
         {children}
       </Box>
-      {/* eslint-disable-next-line @typescript-eslint/no-misused-promises */}
-      {!hideEdit && <FormBottomBar onSave={handleSave} {...bottomBarProps} />}
+      {!hideEdit && (
+        <FormBottomBar
+          {...bottomBarProps}
+          onSave={() => void handleSave()}
+          saveDisabled={processing || bottomBarProps.saveDisabled}
+          cancelDisabled={processing || bottomBarProps.cancelDisabled}
+          additionalRightButtons={bottomBarProps.additionalRightButtons?.map((button) => ({
+            ...button,
+            disabled: processing || button.disabled,
+          }))}
+        />
+      )}
     </>
   );
 }
