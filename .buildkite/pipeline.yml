@@ -25,10 +25,29 @@ common:
     peakon/git-shallow-clone#v0.0.1:
       depth: 1
 
+  - &cache-passed-tree-args
+    backend: s3
+    path: '.passed-tree.json'
+    soft-fail: true
+
 agents:
   queue: 'x86-8core'
 
 steps:
+  - label: ':white_check_mark: Skip if this code already passed'
+    key: 'check-passed-tree'
+    soft_fail: true
+    if: "build.branch != 'main' && build.tag == null"
+    plugins:
+      - *shallow-clone
+      - cache#v1.12.0:
+          <<: *cache-passed-tree-args
+          restore: branch
+    command: .buildkite/scripts/passed-tree.sh check
+
+  - wait: ~
+    continue_on_failure: true
+
   - label: ':yarn: Build and test'
     key: 'build-and-test'
     plugins:
@@ -63,6 +82,21 @@ steps:
       - *load-secrets
       - *cache-node-modules
     command: .buildkite/scripts/deploy-vercel.sh
+
+  - label: ':white_check_mark: Record passing tree'
+    key: 'record-passed-tree'
+    depends_on:
+      - 'build-and-test'
+      - 'screenshot-tests'
+    soft_fail: true
+    if: "build.branch != 'main' && build.tag == null"
+    plugins:
+      - *shallow-clone
+      - cache#v1.12.0:
+          <<: *cache-passed-tree-args
+          save: branch
+          force: true
+    command: .buildkite/scripts/passed-tree.sh record
 
   - label: ':buildkite: Promote branch-level caches to pipeline-level'
     key: 'promote-caches'

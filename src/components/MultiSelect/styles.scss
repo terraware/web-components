@@ -155,6 +155,10 @@
       max-height: 140px;
       overflow-y: auto;
 
+      &--above {
+        margin: 0 0 terraware.$tw-spc-base-xx-small;
+      }
+
       .select-value {
         font-family: terraware.$tw-fnt-frm-fld-select-value-font-family;
         font-size: terraware.$tw-fnt-frm-fld-select-value-font-size;

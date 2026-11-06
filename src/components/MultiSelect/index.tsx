@@ -1,4 +1,4 @@
-import React, { type JSX, useEffect, useState } from 'react';
+import React, { CSSProperties, type JSX, useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 
 import { Box, SxProps, TooltipProps } from '@mui/material';
 
@@ -7,12 +7,26 @@ import IconTooltip from '../IconTooltip';
 import PillList, { PillListItem } from '../PillList';
 import './styles.scss';
 
+const OPTIONS_MAX_HEIGHT = 140;
+const VIEWPORT_MARGIN = 8;
+
+const getVerticalFrameHeight = (element: HTMLElement) => {
+  const style = getComputedStyle(element);
+  const spacing = [style.paddingTop, style.paddingBottom, style.marginTop, style.marginBottom].reduce(
+    (total, value) => total + (parseFloat(value) || 0),
+    0
+  );
+
+  return element.offsetHeight - element.clientHeight + spacing;
+};
+
 export type MultiSelectProps<K, V> = {
   className?: string;
   disabled?: boolean;
   fullWidth?: boolean;
   helperText?: string;
   errorText?: string;
+  fixedMenu?: boolean;
   id?: string;
   label?: string;
   missingValuePlaceholder?: string;
@@ -38,6 +52,7 @@ export default function MultiSelect<K, V>(props: MultiSelectProps<K, V>): JSX.El
     fullWidth,
     helperText,
     errorText,
+    fixedMenu,
     id,
     label,
     missingValuePlaceholder,
@@ -55,6 +70,31 @@ export default function MultiSelect<K, V>(props: MultiSelectProps<K, V>): JSX.El
   } = props;
 
   const [openedOptions, setOpenedOptions] = useState(false);
+  const [fixedMenuStyle, setFixedMenuStyle] = useState<CSSProperties>();
+  const optionsContainerRef = useRef<HTMLDivElement>(null);
+  const optionsRef = useRef<HTMLUListElement>(null);
+
+  const positionFixedMenu = useCallback(() => {
+    const trigger = optionsContainerRef.current?.parentElement;
+    if (!optionsContainerRef.current || !trigger) {
+      return;
+    }
+
+    const { top, left, width } = optionsContainerRef.current.getBoundingClientRect();
+    const triggerTop = trigger.getBoundingClientRect().top;
+    const spaceBelow = window.innerHeight - top - VIEWPORT_MARGIN;
+    const spaceAbove = triggerTop - VIEWPORT_MARGIN;
+    const placeAbove = spaceBelow < OPTIONS_MAX_HEIGHT && spaceAbove > spaceBelow;
+    const menuFrameHeight = optionsRef.current ? getVerticalFrameHeight(optionsRef.current) : 0;
+
+    setFixedMenuStyle({
+      position: 'fixed',
+      left,
+      width: width - 2,
+      maxHeight: Math.max(0, Math.min(OPTIONS_MAX_HEIGHT, (placeAbove ? spaceAbove : spaceBelow) - menuFrameHeight)),
+      ...(placeAbove ? { top: 'auto', bottom: window.innerHeight - triggerTop } : { top }),
+    });
+  }, []);
 
   const toggleOptions = () => {
     setOpenedOptions((isOpen) => !isOpen && !disabled);
@@ -70,6 +110,29 @@ export default function MultiSelect<K, V>(props: MultiSelectProps<K, V>): JSX.El
     }
   }, [optionsVisible]);
 
+  const unselectedOptions = Array.from<K>(options.keys()).filter((key: K) => !selectedOptions.includes(key));
+  const optionsShown = options && unselectedOptions.length > 0 && openedOptions;
+
+  useLayoutEffect(() => {
+    if (!fixedMenu || !optionsShown) {
+      return;
+    }
+
+    positionFixedMenu();
+    window.addEventListener('scroll', positionFixedMenu, true);
+    window.addEventListener('resize', positionFixedMenu);
+    const triggerObserver = new ResizeObserver(positionFixedMenu);
+    if (optionsContainerRef.current?.parentElement) {
+      triggerObserver.observe(optionsContainerRef.current.parentElement);
+    }
+
+    return () => {
+      window.removeEventListener('scroll', positionFixedMenu, true);
+      window.removeEventListener('resize', positionFixedMenu);
+      triggerObserver.disconnect();
+    };
+  }, [fixedMenu, optionsShown, positionFixedMenu]);
+
   const onBlurHandler = (event: any) => {
     // In Chrome > 126, the onBlur event will fire even if you are clicking _within_ the focused element
     // If this is the case, we do not actually want to blur
@@ -83,8 +146,6 @@ export default function MultiSelect<K, V>(props: MultiSelectProps<K, V>): JSX.El
       props.onBlur();
     }
   };
-
-  const unselectedOptions = Array.from<K>(options.keys()).filter((key: K) => !selectedOptions.includes(key));
 
   const valuesPillData = selectedOptions
     .map((item) => {
@@ -128,9 +189,13 @@ export default function MultiSelect<K, V>(props: MultiSelectProps<K, V>): JSX.El
             />
           </div>
         </div>
-        {options && unselectedOptions.length > 0 && openedOptions && (
-          <div className='multi-select__options-container'>
-            <ul className={'multi-select__options'}>
+        {optionsShown && (
+          <div className='multi-select__options-container' ref={optionsContainerRef}>
+            <ul
+              className={`multi-select__options${fixedMenu && fixedMenuStyle?.bottom !== undefined ? ' multi-select__options--above' : ''}`}
+              ref={optionsRef}
+              style={fixedMenu ? fixedMenuStyle : undefined}
+            >
               {unselectedOptions.map((optionKey, index) => {
                 const optionValue = options.get(optionKey);
 
