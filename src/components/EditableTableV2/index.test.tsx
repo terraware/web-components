@@ -240,6 +240,14 @@ test('offers per-column sorting and visibility actions without a top toolbar', (
   expect(screen.queryByRole('checkbox', { name: 'Name' })).not.toBeInTheDocument();
   fireEvent.click(screen.getByRole('checkbox', { name: 'Count' }));
   expect(screen.queryByRole('columnheader', { name: /Count/, hidden: true })).not.toBeInTheDocument();
+  fireEvent.keyDown(screen.getByRole('menu'), { key: 'Escape' });
+  fireEvent.click(screen.getByLabelText('Column actions: Name'));
+  expect(screen.getByRole('checkbox', { name: 'Name' })).toBeDisabled();
+  fireEvent.click(screen.getByRole('menuitem', { name: 'Columns' }));
+  expect(screen.getByRole('checkbox', { name: 'Count' })).not.toBeChecked();
+  fireEvent.click(screen.getByRole('checkbox', { name: 'Count' }));
+  expect(screen.getByRole('columnheader', { name: /Count/, hidden: true })).toBeInTheDocument();
+  expect(screen.getByRole('checkbox', { name: 'Name' })).not.toBeDisabled();
 });
 
 test('marks filtered columns and clears search independently from column filters', () => {

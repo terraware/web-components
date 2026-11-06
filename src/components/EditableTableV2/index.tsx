@@ -411,6 +411,9 @@ const EditableTableV2 = <TData extends object>({
               {strings.TABLE_CLEAR_FILTER}
             </MenuItem>
           )}
+          {menuColumnId && controlsEnabled && (
+            <MenuItem onClick={() => setMenuColumnId(null)}>{strings.TABLE_COLUMNS}</MenuItem>
+          )}
           {table.getAllLeafColumns().map(
             (column, index, allColumns) =>
               (!menuColumnId || menuColumnId === column.id) &&
@@ -421,7 +424,11 @@ const EditableTableV2 = <TData extends object>({
                     control={
                       <Checkbox
                         checked={column.getIsVisible()}
-                        disabled={!enableHiding || !column.getCanHide()}
+                        disabled={
+                          !enableHiding ||
+                          !column.getCanHide() ||
+                          (!enableTopToolbar && column.getIsVisible() && orderedColumns.length === 1)
+                        }
                         onChange={column.getToggleVisibilityHandler()}
                       />
                     }
