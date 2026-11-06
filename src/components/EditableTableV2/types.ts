@@ -4,6 +4,7 @@ import {
   Cell,
   CellContext,
   ColumnDef,
+  Row,
   Table,
   TableOptions,
   columnFilteringFeature,
@@ -46,12 +47,25 @@ export type EditableTableOptionsV2<TData extends object> = Partial<
 >;
 export type EditableTableCellContextV2<TData extends object> = CellContext<Features, TData>;
 
+export type EditableTableEditContextV2<TData extends object> = EditableTableCellContextV2<TData> & {
+  save: (value: unknown) => Promise<void>;
+  cancel: () => void;
+  isSaving: boolean;
+};
+
 export type EditableTableColumnV2<TData extends object> = {
   id: string;
   header: string;
   accessorKey?: keyof TData;
   accessorFn?: (row: TData) => unknown;
   size?: number;
+  enableEditing?: boolean | ((row: Row<Features, TData>) => boolean);
   Cell?: (context: EditableTableCellContextV2<TData>) => ReactNode;
   sortFn?: ColumnDef<Features, TData>['sortFn'];
+  editConfig?: {
+    onSave?: (row: TData, value: unknown, columnId: string) => void | Promise<void>;
+    editVariant?: 'text' | 'select' | 'custom';
+    selectOptions?: { label: string; value: string | number }[];
+    customEditComponent?: (context: EditableTableEditContextV2<TData>) => ReactNode;
+  };
 };
