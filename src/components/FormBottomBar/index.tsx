@@ -23,6 +23,7 @@ export interface Props {
   cancelButtonText?: string;
   saveButtonText: string;
   saveDisabled?: boolean;
+  cancelDisabled?: boolean;
   onSave: () => void;
   additionalRightButtons?: FormButton[];
   desktopOffset?: string;
@@ -35,6 +36,7 @@ export default function FormBottomBar({
   cancelButtonText,
   saveButtonText,
   saveDisabled,
+  cancelDisabled,
   onSave,
   additionalRightButtons,
   desktopOffset,
@@ -72,6 +74,7 @@ export default function FormBottomBar({
         size='medium'
         label={cancelButtonText}
         onClick={onCancel}
+        disabled={cancelDisabled}
         priority='secondary'
         type='passive'
         style={{
