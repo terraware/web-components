@@ -222,10 +222,13 @@ export const Editable = () => {
       enableEditing
       enableGlobalFilter
       enableColumnFilters
+      enableColumnOrdering
+      enableColumnPinning
       stickyFilters
       storageKey='editable-table-v2-story'
       tableOptions={{
         getRowId: (row) => row.id,
+        initialState: { columnPinning: { start: ['name'], end: ['target'] } },
       }}
     />
   );
