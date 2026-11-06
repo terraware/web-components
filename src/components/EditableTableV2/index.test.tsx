@@ -45,6 +45,15 @@ test('only shows the occupation filter in the occupation-only story', () => {
   expect(screen.queryByLabelText('Columns')).not.toBeInTheDocument();
 });
 
+test.each([{ rows: data }, { rows: [] }])(
+  'matches the original divider above pagination, including an empty table',
+  ({ rows }) => {
+    render(<EditableTableV2 columns={columns} data={rows} clearAllFiltersLabel='Clear' />);
+    const footer = screen.getByLabelText('Last page').closest('.MuiTablePagination-root')!;
+    expect(getComputedStyle(footer).boxShadow).toMatch(/^0 1px 2px -1px .+ inset$/);
+  }
+);
+
 test('uses switches and bulk visibility controls while respecting non-hideable columns', () => {
   render(
     <EditableTableV2

@@ -863,6 +863,7 @@ const EditableTableV2 = <TData extends object>({
         {enablePagination && enableBottomToolbar && (
           <TablePagination
             component='div'
+            sx={(theme) => ({ boxShadow: `0 1px 2px -1px ${alpha(theme.palette.grey[700], 0.5)} inset` })}
             showFirstButton
             showLastButton
             count={table.getRowCount()}
