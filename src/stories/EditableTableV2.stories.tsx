@@ -1,6 +1,5 @@
 import React, { useMemo, useState } from 'react';
 
-import { Typography } from '@mui/material';
 import { StoryFn } from '@storybook/react';
 
 import EditableTableV2, { EditableTableColumnV2 } from '../components/EditableTableV2';
@@ -167,42 +166,6 @@ export const WithFilters = () => <EditableTableWithStateV2 scenario='filters' />
 export const WithClearAllFilters = () => <EditableTableWithStateV2 scenario='clearAllFilters' />;
 
 export const WithOccupationFilter = () => <EditableTableWithStateV2 scenario='occupationFilter' />;
-
-export const SortingFn = () => {
-  type SimpleRow = { id: string; value: string };
-  const data: SimpleRow[] = [
-    { id: '1', value: '15372' },
-    { id: '2', value: '1467' },
-    { id: '3', value: '20' },
-    { id: '4', value: '113' },
-    { id: '5', value: '13770' },
-  ];
-  const columns = useMemo<EditableTableColumnV2<SimpleRow>[]>(
-    () => [
-      { id: 'noSorting', header: 'With String Sorting Function', accessorKey: 'value', size: 200, sortFn: 'text' },
-      {
-        id: 'withSorting',
-        header: 'With Alphanumeric Sorting Function',
-        accessorKey: 'value',
-        size: 200,
-        sortFn: 'alphanumeric',
-      },
-    ],
-    []
-  );
-  return (
-    <>
-      <Typography>Click the headers to compare string and alphanumeric sorting.</Typography>
-      <EditableTableV2
-        columns={columns}
-        data={data}
-        clearAllFiltersLabel='Clear all filters'
-        enableSorting
-        enablePagination={false}
-      />
-    </>
-  );
-};
 
 export const WithoutPagination = () => <EditableTableWithStateV2 scenario='withoutPagination' rowCount={20} />;
 

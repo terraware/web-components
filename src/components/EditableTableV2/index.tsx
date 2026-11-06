@@ -3,12 +3,18 @@ import React, { CSSProperties, ReactNode, useEffect, useMemo, useState } from 'r
 import {
   ArrowDownward,
   ArrowUpward,
+  ClearAll,
   Close,
   FilterAlt,
+  FilterList,
+  FilterListOff,
   MoreVert,
+  PushPin,
   Search,
+  Sort,
   SyncAlt,
   ViewColumn,
+  VisibilityOff,
 } from '@mui/icons-material';
 import {
   Box,
@@ -16,6 +22,7 @@ import {
   FormControlLabel,
   IconButton,
   InputAdornment,
+  ListItemIcon,
   Menu,
   MenuItem,
   Paper,
@@ -112,6 +119,19 @@ const pinnedStyles = <TData extends object>(column: Column<typeof editableTableF
 
 const UnsortedIcon = (props: React.ComponentProps<typeof SyncAlt>) => (
   <SyncAlt {...props} style={{ ...props.style, transform: 'rotate(-90deg) scaleX(0.9) translateX(-1px)' }} />
+);
+
+const ColumnActionMenuItemV2 = ({
+  icon,
+  children,
+  ...props
+}: React.ComponentProps<typeof MenuItem> & { icon: ReactNode }) => (
+  <MenuItem sx={{ minWidth: '120px', my: 0, py: '6px' }} {...props}>
+    <Box display='flex' alignItems='center'>
+      <ListItemIcon>{icon}</ListItemIcon>
+      {children}
+    </Box>
+  </MenuItem>
 );
 
 const ColumnFilter = <TData extends object>({
@@ -413,41 +433,118 @@ const EditableTableV2 = <TData extends object>({
             table.getColumn(menuColumnId)?.getCanSort() &&
             [
               {
+                label: strings.TABLE_CLEAR_SORTING,
+                icon: <ClearAll />,
+                disabled: !table.getColumn(menuColumnId)?.getIsSorted(),
+                action: () => table.getColumn(menuColumnId)?.clearSorting(),
+              },
+              {
                 label: strings.TABLE_SORT_ASCENDING,
+                icon: <Sort sx={{ transform: 'rotate(180deg) scaleX(-1)' }} />,
+                disabled: table.getColumn(menuColumnId)?.getIsSorted() === 'asc',
                 action: () => table.getColumn(menuColumnId)?.toggleSorting(false),
               },
               {
                 label: strings.TABLE_SORT_DESCENDING,
+                icon: <Sort />,
+                disabled: table.getColumn(menuColumnId)?.getIsSorted() === 'desc',
+                divider: enableColumnFilters || controlsEnabled,
                 action: () => table.getColumn(menuColumnId)?.toggleSorting(true),
               },
-              { label: strings.TABLE_CLEAR_SORTING, action: () => table.getColumn(menuColumnId)?.clearSorting() },
-            ].map(({ label, action }) => (
-              <MenuItem
+            ].map(({ label, icon, disabled, divider, action }) => (
+              <ColumnActionMenuItemV2
                 key={label}
+                icon={icon}
+                disabled={disabled}
+                divider={divider}
                 onClick={() => {
                   action();
                   setMenuAnchor(null);
                 }}
               >
                 {label}
-              </MenuItem>
+              </ColumnActionMenuItemV2>
             ))}
-          {menuColumnId && table.getColumn(menuColumnId)?.getIsFiltered() && (
-            <MenuItem
+          {menuColumnId && table.getColumn(menuColumnId)?.getCanFilter() && (
+            <ColumnActionMenuItemV2
+              icon={<FilterListOff />}
+              disabled={!table.getColumn(menuColumnId)?.getIsFiltered()}
               onClick={() => {
                 table.getColumn(menuColumnId)?.setFilterValue(undefined);
                 setMenuAnchor(null);
               }}
             >
               {strings.TABLE_CLEAR_FILTER}
-            </MenuItem>
+            </ColumnActionMenuItemV2>
+          )}
+          {menuColumnId && table.getColumn(menuColumnId)?.getCanFilter() && (
+            <ColumnActionMenuItemV2 icon={<FilterList />} disabled divider={controlsEnabled}>
+              {strings.TABLE_FILTER_BY.replace('{column}', definitions.get(menuColumnId)!.header)}
+            </ColumnActionMenuItemV2>
+          )}
+          {menuColumnId &&
+            enableColumnPinning &&
+            (
+              [
+                { label: strings.TABLE_PIN_START, direction: 'start', rotation: '90deg' },
+                { label: strings.TABLE_PIN_END, direction: 'end', rotation: '-90deg' },
+                { label: strings.TABLE_UNPIN, direction: false, rotation: '0deg' },
+              ] as const
+            ).map(({ label, direction, rotation }) => (
+              <ColumnActionMenuItemV2
+                key={label}
+                icon={<PushPin sx={{ transform: `rotate(${rotation})` }} />}
+                disabled={
+                  !table.getColumn(menuColumnId)?.getCanPin() ||
+                  table.getColumn(menuColumnId)?.getIsPinned() === direction
+                }
+                divider={direction === false && enableHiding}
+                onClick={() => {
+                  table.getColumn(menuColumnId)?.pin(direction);
+                  setMenuAnchor(null);
+                }}
+              >
+                {label}
+              </ColumnActionMenuItemV2>
+            ))}
+          {menuColumnId && enableHiding && (
+            <ColumnActionMenuItemV2
+              icon={<VisibilityOff />}
+              disabled={
+                !table.getColumn(menuColumnId)?.getCanHide() ||
+                (!(enableTopToolbar && showColumnsButton) && orderedColumns.length === 1)
+              }
+              onClick={() => {
+                table.getColumn(menuColumnId)?.toggleVisibility(false);
+                setMenuAnchor(null);
+              }}
+            >
+              {strings.TABLE_HIDE_COLUMN.replace('{column}', definitions.get(menuColumnId)!.header)}
+            </ColumnActionMenuItemV2>
+          )}
+          {menuColumnId && enableHiding && (
+            <ColumnActionMenuItemV2
+              icon={<ViewColumn />}
+              disabled={table.getAllLeafColumns().every((column) => column.getIsVisible() || !column.getCanHide())}
+              onClick={() => {
+                table
+                  .getAllLeafColumns()
+                  .filter((column) => column.getCanHide())
+                  .forEach((column) => column.toggleVisibility(true));
+                setMenuAnchor(null);
+              }}
+            >
+              {strings.TABLE_SHOW_ALL_COLUMNS}
+            </ColumnActionMenuItemV2>
           )}
           {menuColumnId && controlsEnabled && (
-            <MenuItem onClick={() => setMenuColumnId(null)}>{strings.TABLE_COLUMNS}</MenuItem>
+            <ColumnActionMenuItemV2 icon={<ViewColumn />} onClick={() => setMenuColumnId(null)}>
+              {strings.TABLE_COLUMNS}
+            </ColumnActionMenuItemV2>
           )}
           {table.getAllLeafColumns().map(
             (column, index, allColumns) =>
-              (!menuColumnId || menuColumnId === column.id) &&
+              !menuColumnId &&
               controlsEnabled && (
                 <Box key={column.id} display='flex' alignItems='center' px={2} gap={1}>
                   <FormControlLabel
@@ -658,6 +755,8 @@ const EditableTableV2 = <TData extends object>({
         {enablePagination && enableBottomToolbar && (
           <TablePagination
             component='div'
+            showFirstButton
+            showLastButton
             count={table.getRowCount()}
             page={table.state.pagination.pageIndex}
             rowsPerPage={table.state.pagination.pageSize}
@@ -666,7 +765,14 @@ const EditableTableV2 = <TData extends object>({
             )}
             labelRowsPerPage={strings.TABLE_ROWS_PER_PAGE}
             labelDisplayedRows={({ from, to, count }) => `${from}–${to} / ${count}`}
-            getItemAriaLabel={(type) => (type === 'next' ? strings.TABLE_NEXT_PAGE : strings.TABLE_PREVIOUS_PAGE)}
+            getItemAriaLabel={(type) =>
+              ({
+                first: strings.TABLE_FIRST_PAGE,
+                last: strings.TABLE_LAST_PAGE,
+                next: strings.TABLE_NEXT_PAGE,
+                previous: strings.TABLE_PREVIOUS_PAGE,
+              })[type]
+            }
             onPageChange={(_, page) => table.setPageIndex(page)}
             onRowsPerPageChange={(event) => table.setPageSize(Number(event.target.value))}
           />

@@ -3,7 +3,8 @@ import React from 'react';
 import { fireEvent, render, screen, waitFor, within } from '@testing-library/react';
 
 import EditableTableV2, { EditableTableColumnV2 } from '.';
-import { SortingFn, WithOccupationFilter } from '../../stories/EditableTableV2.stories';
+import { WithClearAllFilters, WithFilters, WithOccupationFilter } from '../../stories/EditableTableV2.stories';
+import { getStrings, setLocale } from '../../strings';
 
 type Item = { id: string; name: string; count: number };
 const data: Item[] = [
@@ -27,6 +28,31 @@ test('only shows the occupation filter in the occupation-only story', () => {
   expect(screen.queryByLabelText('Filter: Available')).not.toBeInTheDocument();
   expect(screen.queryByLabelText('Columns')).not.toBeInTheDocument();
 });
+
+test.each([WithFilters, WithClearAllFilters, WithOccupationFilter])(
+  'renders a filter story in every bundled locale: %s',
+  (Story) => {
+    try {
+      for (const locale of ['en', 'es', 'fr', 'gx']) {
+        setLocale(locale);
+        const strings = getStrings();
+        const view = render(<Story />);
+        expect(screen.getByRole('combobox', { name: `${strings.TABLE_FILTER}: Occupation` })).toBeInTheDocument();
+        fireEvent.click(screen.getByLabelText(`${strings.TABLE_COLUMN_ACTIONS}: Name`));
+        expect(screen.getByRole('menuitem', { name: strings.TABLE_SORT_ASCENDING })).toHaveTextContent(
+          strings.TABLE_SORT_ASCENDING
+        );
+        expect(screen.getByRole('menuitem', { name: strings.TABLE_CLEAR_SORTING })).toHaveAttribute(
+          'aria-disabled',
+          'true'
+        );
+        view.unmount();
+      }
+    } finally {
+      setLocale('en');
+    }
+  }
+);
 
 test('sorts and filters rows, and clears global and column filters', () => {
   render(
@@ -86,10 +112,18 @@ test('paginates and renders pinned columns with sticky offsets', () => {
     />
   );
   expect(rowNames()).toEqual(['Zebra']);
+  expect(screen.getByLabelText('First page')).toBeDisabled();
+  expect(screen.getByLabelText('Last page')).toBeEnabled();
   expect(screen.getByText('Zebra').style.position).toBe('');
+  fireEvent.click(screen.getByLabelText('Last page'));
+  expect(rowNames()).toEqual(['Acacia']);
+  expect(screen.getByLabelText('Last page')).toBeDisabled();
+  expect(screen.getByLabelText('First page')).toBeEnabled();
+  expect(getComputedStyle(screen.getByText('Acacia')).position).toBe('sticky');
+  fireEvent.click(screen.getByLabelText('First page'));
+  expect(rowNames()).toEqual(['Zebra']);
   fireEvent.click(screen.getByLabelText('Next page'));
   expect(rowNames()).toEqual(['Acacia']);
-  expect(getComputedStyle(screen.getByText('Acacia')).position).toBe('sticky');
 });
 
 test('persists filters and tolerates corrupt storage', () => {
@@ -254,16 +288,31 @@ test('offers per-column sorting and visibility actions without a top toolbar', (
   expect(screen.getByRole('columnheader', { name: /Count/ })).not.toHaveAttribute('aria-sort');
   actions();
   expect(screen.queryByRole('checkbox', { name: 'Name' })).not.toBeInTheDocument();
-  fireEvent.click(screen.getByRole('checkbox', { name: 'Count' }));
+  fireEvent.click(screen.getByRole('menuitem', { name: 'Hide Count column' }));
   expect(screen.queryByRole('columnheader', { name: /Count/, hidden: true })).not.toBeInTheDocument();
-  fireEvent.keyDown(screen.getByRole('menu'), { key: 'Escape' });
   fireEvent.click(screen.getByLabelText('Column actions: Name'));
-  expect(screen.getByRole('checkbox', { name: 'Name' })).toBeDisabled();
+  expect(screen.getByRole('menuitem', { name: 'Hide Name column' })).toHaveAttribute('aria-disabled', 'true');
   fireEvent.click(screen.getByRole('menuitem', { name: 'Columns' }));
   expect(screen.getByRole('checkbox', { name: 'Count' })).not.toBeChecked();
   fireEvent.click(screen.getByRole('checkbox', { name: 'Count' }));
   expect(screen.getByRole('columnheader', { name: /Count/, hidden: true })).toBeInTheDocument();
   expect(screen.getByRole('checkbox', { name: 'Name' })).not.toBeDisabled();
+});
+
+test('pins columns and restores hidden columns directly from header action menus', () => {
+  render(<EditableTableV2 columns={columns} data={data} clearAllFiltersLabel='Clear' enableColumnPinning />);
+  fireEvent.click(screen.getByLabelText('Column actions: Count'));
+  fireEvent.click(screen.getByRole('menuitem', { name: 'Pin to end' }));
+  expect(getComputedStyle(screen.getByText('3')).position).toBe('sticky');
+  expect(getComputedStyle(screen.getByText('3')).insetInlineEnd).toBe('0');
+  fireEvent.click(screen.getByLabelText('Column actions: Count'));
+  fireEvent.click(screen.getByRole('menuitem', { name: 'Unpinned' }));
+  expect(getComputedStyle(screen.getByText('3')).position).not.toBe('sticky');
+  fireEvent.click(screen.getByLabelText('Column actions: Count'));
+  fireEvent.click(screen.getByRole('menuitem', { name: 'Hide Count column' }));
+  fireEvent.click(screen.getByLabelText('Column actions: Name'));
+  fireEvent.click(screen.getByRole('menuitem', { name: 'Show all columns' }));
+  expect(screen.getByRole('columnheader', { name: /Count/ })).toBeInTheDocument();
 });
 
 test('marks filtered columns and clears search independently from column filters', () => {
@@ -306,11 +355,15 @@ test('supports accessible standard select filters', () => {
   expect(screen.getByLabelText('Filtered: Name')).toBeInTheDocument();
 });
 
-test('compares lexicographic and alphanumeric sorting in the Sorting Fn story', () => {
-  render(<SortingFn />);
-  fireEvent.click(screen.getByText('With String Sorting Function'));
-  expect(rowNames()).toEqual(['113', '13770', '1467', '15372', '20']);
-  fireEvent.click(screen.getByText('With Alphanumeric Sorting Function'));
+test('automatically selects alphanumeric sorting with fewer than ten rows', () => {
+  render(
+    <EditableTableV2
+      columns={[{ id: 'name', header: 'Name', accessorKey: 'name' }]}
+      data={['15372', '1467', '20', '113', '13770'].map((name) => ({ name }))}
+      clearAllFiltersLabel='Clear'
+    />
+  );
+  fireEvent.click(screen.getByText('Name'));
   expect(rowNames()).toEqual(['20', '113', '1467', '13770', '15372']);
 });
 

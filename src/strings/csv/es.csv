@@ -52,6 +52,9 @@ TABLE_COLUMNS,Columnas,ee2f54ee
 TABLE_FILTER,Filtrar,51b390ee
 TABLE_FILTER_BY,Filtrar por {column},0e2b5966
 TABLE_FILTERED,Filtrado,5ce35c5c
+TABLE_FIRST_PAGE,Primera página,2ba1de3f
+TABLE_HIDE_COLUMN,Ocultar columna {column},b4a87c14
+TABLE_LAST_PAGE,Última página,6eafe34a
 TABLE_MAX,Máximo,96f88e1f
 TABLE_MIN,Mínimo,f2a882fd
 TABLE_MOVE_BACK,Mover columna hacia atrás,ccaba4fb
@@ -65,6 +68,7 @@ TABLE_PREVIOUS_PAGE,Página anterior,d87b58b7
 TABLE_ROWS_PER_PAGE,Filas por página,ff461aa5
 TABLE_SAVE_ERROR,"No se pudieron guardar los cambios. Por favor, inténtelo de nuevo.",85668916
 TABLE_SEARCH,Buscar,9f30c236
+TABLE_SHOW_ALL_COLUMNS,Mostrar todas las columnas,2a5e28e5
 TABLE_SORT_ASCENDING,Orden ascendente,31099f95
 TABLE_SORT_DESCENDING,Orden descendente,7a1c9c06
 TABLE_UNPIN,Sin fijar,acf61315
