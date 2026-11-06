@@ -442,7 +442,12 @@ test('marks filtered columns and clears search independently from column filters
   expect(screen.getByLabelText('Filter: Name')).toHaveAttribute('placeholder', 'Filter by Name');
   expect(screen.getByLabelText('Search')).toHaveAttribute('placeholder', 'Search');
   fireEvent.change(screen.getByLabelText('Filter: Name'), { target: { value: 'Zebra' } });
-  expect(screen.getByLabelText('Filtered: Name')).toBeInTheDocument();
+  const filterIcon = screen.getByLabelText('Filtered: Name');
+  const header = screen.getByRole('columnheader', { name: /Name/ });
+  const sortIcon = header.querySelector('.MuiTableSortLabel-icon')!;
+  expect(filterIcon.compareDocumentPosition(sortIcon) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+  fireEvent.click(filterIcon);
+  expect(header).not.toHaveAttribute('aria-sort');
   fireEvent.change(screen.getByLabelText('Search'), { target: { value: 'missing' } });
   fireEvent.click(screen.getByLabelText('Clear search'));
   expect(rowNames()).toEqual(['Zebra']);

@@ -715,74 +715,88 @@ const EditableTableV2 = <TData extends object>({
           <Table sx={{ minWidth: table.getTotalSize() }}>
             <TableHead>
               <TableRow>
-                {orderedColumns.map((column) => (
-                  <TableCell
-                    key={column.id}
-                    sortDirection={column.getIsSorted() || false}
-                    sx={{
-                      ...pinnedStyles(column),
-                      bgcolor: 'background.paper',
-                      fontWeight: 'bold',
-                      p: 2,
-                      pt: '12px',
-                      pb: filtersVisible ? '6.4px' : '9.6px',
-                      verticalAlign: 'top',
-                      '&:hover .MuiIconButton-root': { opacity: 1 },
-                    }}
-                  >
-                    <Box display='flex' alignItems='center' sx={{ minHeight: '24px' }}>
-                      {column.getCanSort() ? (
-                        <TableSortLabel
-                          active={!!column.getIsSorted()}
-                          direction={column.getIsSorted() || 'asc'}
-                          IconComponent={column.getIsSorted() ? ArrowDownward : UnsortedIcon}
-                          sx={(theme) => ({
-                            fontWeight: 'inherit',
-                            whiteSpace: definitions.get(column.id)!.header.length < 20 ? 'nowrap' : 'normal',
-                            '& .MuiTableSortLabel-icon': {
-                              color: `${theme.palette.mode === 'dark' ? theme.palette.text.primary : theme.palette.text.secondary} !important`,
-                              opacity: column.getIsSorted() ? 1 : 0.3,
-                              width: '3ch',
-                              m: 0,
-                            },
-                          })}
-                          onClick={column.getToggleSortingHandler()}
-                        >
-                          {definitions.get(column.id)?.header}
-                        </TableSortLabel>
-                      ) : (
-                        definitions.get(column.id)?.header
-                      )}
+                {orderedColumns.map((column) => {
+                  const header = (
+                    <>
+                      {definitions.get(column.id)?.header}
                       {column.getIsFiltered() && (
                         <Tooltip title={`${strings.TABLE_FILTERED}: ${definitions.get(column.id)?.header}`}>
                           <FilterAlt
                             sx={{ color: 'action.active', ml: '4px', width: '18px', height: '18px' }}
                             role='img'
                             aria-label={`${strings.TABLE_FILTERED}: ${definitions.get(column.id)?.header}`}
+                            onClick={(event) => event.stopPropagation()}
                           />
                         </Tooltip>
                       )}
-                      {enableColumnActions && (column.getCanSort() || column.getCanFilter() || controlsEnabled) && (
-                        <IconButton
-                          size='small'
-                          sx={{ height: '2rem', width: '2rem', m: '-8px -4px', opacity: 0.3, transition: 'all 150ms' }}
-                          aria-label={`${strings.TABLE_COLUMN_ACTIONS}: ${definitions.get(column.id)?.header}`}
-                          aria-haspopup='menu'
-                          aria-expanded={!!menuAnchor && menuColumnId === column.id}
-                          onClick={(event) => {
-                            setMenuColumnId(column.id);
-                            setMenuAnchor(event.currentTarget);
-                          }}
-                        >
-                          <MoreVert sx={{ transform: 'scale(0.9)' }} />
-                        </IconButton>
+                    </>
+                  );
+                  return (
+                    <TableCell
+                      key={column.id}
+                      sortDirection={column.getIsSorted() || false}
+                      sx={{
+                        ...pinnedStyles(column),
+                        bgcolor: 'background.paper',
+                        fontWeight: 'bold',
+                        p: 2,
+                        pt: '12px',
+                        pb: filtersVisible ? '6.4px' : '9.6px',
+                        verticalAlign: 'top',
+                        '&:hover .MuiIconButton-root': { opacity: 1 },
+                      }}
+                    >
+                      <Box display='flex' alignItems='center' sx={{ minHeight: '24px' }}>
+                        {column.getCanSort() ? (
+                          <TableSortLabel
+                            active={!!column.getIsSorted()}
+                            direction={column.getIsSorted() || 'asc'}
+                            IconComponent={column.getIsSorted() ? ArrowDownward : UnsortedIcon}
+                            sx={(theme) => ({
+                              fontWeight: 'inherit',
+                              whiteSpace: definitions.get(column.id)!.header.length < 20 ? 'nowrap' : 'normal',
+                              '& .MuiTableSortLabel-icon': {
+                                color: `${theme.palette.mode === 'dark' ? theme.palette.text.primary : theme.palette.text.secondary} !important`,
+                                opacity: column.getIsSorted() ? 1 : 0.3,
+                                width: '3ch',
+                                m: 0,
+                              },
+                            })}
+                            onClick={column.getToggleSortingHandler()}
+                          >
+                            {header}
+                          </TableSortLabel>
+                        ) : (
+                          header
+                        )}
+                        {enableColumnActions && (column.getCanSort() || column.getCanFilter() || controlsEnabled) && (
+                          <IconButton
+                            size='small'
+                            sx={{
+                              height: '2rem',
+                              width: '2rem',
+                              m: '-8px -4px',
+                              opacity: 0.3,
+                              transition: 'all 150ms',
+                            }}
+                            aria-label={`${strings.TABLE_COLUMN_ACTIONS}: ${definitions.get(column.id)?.header}`}
+                            aria-haspopup='menu'
+                            aria-expanded={!!menuAnchor && menuColumnId === column.id}
+                            onClick={(event) => {
+                              setMenuColumnId(column.id);
+                              setMenuAnchor(event.currentTarget);
+                            }}
+                          >
+                            <MoreVert sx={{ transform: 'scale(0.9)' }} />
+                          </IconButton>
+                        )}
+                      </Box>
+                      {filtersVisible && column.getCanFilter() && (
+                        <ColumnFilter column={column} definition={definitions.get(column.id)!} />
                       )}
-                    </Box>
-                    {filtersVisible && column.getCanFilter() && (
-                      <ColumnFilter column={column} definition={definitions.get(column.id)!} />
-                    )}
-                  </TableCell>
-                ))}
+                    </TableCell>
+                  );
+                })}
               </TableRow>
             </TableHead>
             <TableBody>
