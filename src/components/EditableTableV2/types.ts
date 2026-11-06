@@ -61,6 +61,9 @@ export type EditableTableColumnV2<TData extends object> = {
   size?: number;
   enableEditing?: boolean | ((row: Row<Features, TData>) => boolean);
   Cell?: (context: EditableTableCellContextV2<TData>) => ReactNode;
+  filterVariant?: 'text' | 'select' | 'multi-select' | 'range' | 'date-range';
+  filterSelectOptions?: string[];
+  filterFn?: (row: TData, columnId: string, value: unknown) => boolean;
   sortFn?: ColumnDef<Features, TData>['sortFn'];
   editConfig?: {
     onSave?: (row: TData, value: unknown, columnId: string) => void | Promise<void>;
