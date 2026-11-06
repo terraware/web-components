@@ -62,9 +62,11 @@ const createRows = (rowCount: number): RowData[] =>
 const EditableTableWithStateV2 = ({
   rowCount = 50,
   scenario = 'default',
+  showTopToolbar = false,
 }: {
   rowCount?: number;
   scenario?: Scenario;
+  showTopToolbar?: boolean;
 }) => {
   const [data, setData] = useState(() => createRows(rowCount));
   const filtered = scenario === 'filters' || scenario === 'clearAllFilters';
@@ -148,7 +150,8 @@ const EditableTableWithStateV2 = ({
       enableSorting
       enablePagination={!withoutPagination}
       enableBottomToolbar={!withoutPagination}
-      enableGlobalFilter={filtered}
+      enableGlobalFilter={filtered || showTopToolbar}
+      showColumnsButton={showTopToolbar}
       enableColumnFilters={filtered || scenario === 'occupationFilter'}
       initialSorting={scenario === 'default' ? [{ id: 'name', desc: false }] : undefined}
       onClearAllFilters={scenario === 'clearAllFilters' ? () => console.log('All filters cleared') : undefined}
@@ -160,6 +163,8 @@ const Template: StoryFn<{ rowCount: number }> = (args) => <EditableTableWithStat
 
 export const Default = Template.bind({});
 Default.args = { rowCount: 50 };
+
+export const WithTopToolbar = () => <EditableTableWithStateV2 rowCount={50} showTopToolbar />;
 
 export const WithFilters = () => <EditableTableWithStateV2 scenario='filters' />;
 

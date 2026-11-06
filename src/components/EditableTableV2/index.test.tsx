@@ -3,7 +3,13 @@ import React from 'react';
 import { fireEvent, render, screen, waitFor, within } from '@testing-library/react';
 
 import EditableTableV2, { EditableTableColumnV2 } from '.';
-import { WithClearAllFilters, WithFilters, WithOccupationFilter } from '../../stories/EditableTableV2.stories';
+import { WithTopToolbar as WithTopToolbarLegacy } from '../../stories/EditableTable.stories';
+import {
+  WithClearAllFilters,
+  WithFilters,
+  WithOccupationFilter,
+  WithTopToolbar,
+} from '../../stories/EditableTableV2.stories';
 import { getStrings, setLocale } from '../../strings';
 
 type Item = { id: string; name: string; count: number };
@@ -20,6 +26,16 @@ const rowNames = () =>
     .getAllByRole('row')
     .slice(1)
     .map((row) => within(row).getAllByRole('cell')[0].textContent);
+
+test.each([
+  { name: 'MRT', Story: WithTopToolbarLegacy, columnsLabel: 'Show/Hide columns' },
+  { name: 'V2', Story: WithTopToolbar, columnsLabel: 'Columns' },
+])('shows search and column controls in the $name toolbar story', ({ Story, columnsLabel }) => {
+  render(<Story />);
+  expect(screen.getByPlaceholderText('Search')).toBeInTheDocument();
+  fireEvent.click(screen.getByRole('button', { name: columnsLabel }));
+  expect(screen.getByRole('menu')).toBeInTheDocument();
+});
 
 test('only shows the occupation filter in the occupation-only story', () => {
   render(<WithOccupationFilter />);

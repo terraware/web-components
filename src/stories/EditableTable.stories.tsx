@@ -1,7 +1,8 @@
 import React, { useMemo, useState } from 'react';
 
 import { Link, Typography } from '@mui/material';
-import { Story } from '@storybook/react';
+import { StoryFn as Story } from '@storybook/react';
+import { MRT_ShowHideColumnsButton } from 'material-react-table';
 
 import EditableTable, { EditableTableColumn } from '../components/EditableTable';
 
@@ -22,7 +23,13 @@ type RowData = {
   previousStudies?: string;
 };
 
-const EditableTableWithState = ({ rowCount }: { rowCount: number }) => {
+const EditableTableWithState = ({
+  rowCount,
+  showTopToolbar = false,
+}: {
+  rowCount: number;
+  showTopToolbar?: boolean;
+}) => {
   const [data, setData] = useState<RowData[]>(() => {
     return Array(rowCount)
       .fill(null)
@@ -183,6 +190,10 @@ const EditableTableWithState = ({ rowCount }: { rowCount: number }) => {
       enableEditing={true}
       enableSorting={true}
       enablePagination={true}
+      enableGlobalFilter={showTopToolbar}
+      renderToolbarInternalActions={
+        showTopToolbar ? ({ table }) => <MRT_ShowHideColumnsButton table={table} /> : undefined
+      }
       initialSorting={[{ id: 'name', desc: false }]}
     />
   );
@@ -195,6 +206,8 @@ export const Default = Template.bind({});
 Default.args = {
   rowCount: 50,
 };
+
+export const WithTopToolbar = () => <EditableTableWithState rowCount={50} showTopToolbar />;
 
 export const WithFilters: Story = () => {
   const rowCount = 50;
