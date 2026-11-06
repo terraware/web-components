@@ -304,7 +304,7 @@ test('pins columns and restores hidden columns directly from header action menus
   fireEvent.click(screen.getByLabelText('Column actions: Count'));
   fireEvent.click(screen.getByRole('menuitem', { name: 'Pin to end' }));
   expect(getComputedStyle(screen.getByText('3')).position).toBe('sticky');
-  expect(getComputedStyle(screen.getByText('3')).insetInlineEnd).toBe('0');
+  expect(getComputedStyle(screen.getByText('3')).insetInlineEnd).toBe('0px');
   fireEvent.click(screen.getByLabelText('Column actions: Count'));
   fireEvent.click(screen.getByRole('menuitem', { name: 'Unpinned' }));
   expect(getComputedStyle(screen.getByText('3')).position).not.toBe('sticky');
