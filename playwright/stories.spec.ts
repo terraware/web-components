@@ -120,6 +120,10 @@ for (const story of Object.values(index.entries)) {
       }, story.id)
     ).toEqual([]);
     await page.waitForLoadState('networkidle');
+    if (['editable-table--with-top-toolbar', 'editable-table-v2--with-top-toolbar'].includes(story.id)) {
+      await expect(page.getByRole('button', { name: 'Export', exact: true })).toBeVisible();
+      await expect(page.getByRole('button', { name: 'Toggle full screen', exact: true })).toBeVisible();
+    }
     if (['mapbox--default', 'mapcomponent--default', 'mapmarker--default'].includes(story.id)) {
       await expect(page.getByRole('button', { name: 'Zoom in', exact: true })).toBeVisible();
     }
@@ -137,6 +141,16 @@ for (const story of Object.values(index.entries)) {
         )
       )
     ).toBe(true);
+    if (['editable-table--with-top-toolbar', 'editable-table-v2--with-top-toolbar'].includes(story.id)) {
+      await page.getByRole('button', { name: /^(Columns|Show\/Hide columns)$/ }).click();
+      const menu = page.getByRole('menu');
+      await expect(menu.getByLabel('Name', { exact: true })).toBeChecked();
+      await expect(menu.getByRole('button', { name: 'Hide all', exact: true })).toBeEnabled();
+      await expect(menu.getByRole('button', { name: 'Show all', exact: true })).toBeDisabled();
+      await expect(menu).toHaveScreenshot(`${story.id}-column-manager.png`);
+      await page.keyboard.press('Escape');
+      await expect(menu).not.toBeVisible();
+    }
     const clip = await page.evaluate(() => {
       const bounds: DOMRect[] = [];
       const visible = (element: Element): boolean => {

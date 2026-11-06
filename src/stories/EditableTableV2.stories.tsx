@@ -3,6 +3,7 @@ import React, { useMemo, useState } from 'react';
 import { StoryFn } from '@storybook/react';
 
 import EditableTableV2, { EditableTableColumnV2 } from '../components/EditableTableV2';
+import EditableTableExportButton from './EditableTableExportButton';
 
 export default { title: 'Editable Table V2', component: EditableTableV2 };
 
@@ -151,6 +152,25 @@ const EditableTableWithStateV2 = ({
       enablePagination={!withoutPagination}
       enableBottomToolbar={!withoutPagination}
       enableGlobalFilter={filtered || showTopToolbar}
+      showColumnsButton={showTopToolbar}
+      showGlobalFilterButton={showTopToolbar}
+      showColumnFiltersButton={showTopToolbar}
+      showDensityButton={showTopToolbar}
+      showFullScreenButton={showTopToolbar}
+      renderToolbarInternalActions={
+        showTopToolbar
+          ? ({ table }) => (
+              <EditableTableExportButton
+                getRows={() => [
+                  table.getVisibleLeafColumns().map((column) => column.columnDef.header),
+                  ...table
+                    .getPrePaginatedRowModel()
+                    .rows.map((row) => row.getVisibleCells().map((cell) => cell.getValue())),
+                ]}
+              />
+            )
+          : undefined
+      }
       enableColumnFilters={filtered || scenario === 'occupationFilter'}
       initialSorting={scenario === 'default' ? [{ id: 'name', desc: false }] : undefined}
       onClearAllFilters={scenario === 'clearAllFilters' ? () => console.log('All filters cleared') : undefined}
@@ -162,6 +182,8 @@ const Template: StoryFn<{ rowCount: number }> = (args) => <EditableTableWithStat
 
 export const Default = Template.bind({});
 Default.args = { rowCount: 50 };
+
+export const WithTopToolbar = () => <EditableTableWithStateV2 rowCount={50} showTopToolbar />;
 
 export const WithFilters = () => <EditableTableWithStateV2 scenario='filters' />;
 
