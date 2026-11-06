@@ -43,6 +43,41 @@ RIGHT_MOUSE,Bouton droit de la souris,d551c809
 SAVE,Sauvegarder,526a3e42
 SHIFT,Maj,4d173d2a
 SWIPE,Glisser,bc0962fa
+TABLE_ALL,Tout,832a8cf5
+TABLE_CLEAR_FILTER,Effacer le filtre,5da35d2b
+TABLE_CLEAR_SEARCH,Effacer la recherche,34aba902
+TABLE_CLEAR_SORTING,Effacer le tri,9879810b
+TABLE_COLUMN_ACTIONS,Actions de colonne,119371ac
+TABLE_COLUMNS,Colonnes,ee2f54ee
+TABLE_FILTER,Filtrer,51b390ee
+TABLE_FILTER_BY,Filtrer par {column},0e2b5966
+TABLE_FILTERED,Filtré,5ce35c5c
+TABLE_FIRST_PAGE,Première page,2ba1de3f
+TABLE_HIDE_ALL,Tout masquer,b0d973e4
+TABLE_HIDE_COLUMN,Masquer la colonne {column},b4a87c14
+TABLE_LAST_PAGE,Dernière page,6eafe34a
+TABLE_MAX,Maximum,96f88e1f
+TABLE_MIN,Minimum,f2a882fd
+TABLE_MOVE_BACK,Déplacer la colonne vers l’arrière,ccaba4fb
+TABLE_MOVE_FORWARD,Déplacer la colonne vers l’avant,a7cfa4d3
+TABLE_NEXT_PAGE,Page suivante,be0bb188
+TABLE_NO_ROWS,Aucun enregistrement à afficher,eb47076d
+TABLE_PIN,Épingler la colonne,f25241a0
+TABLE_PIN_END,Épingler à la fin,d0d0c7b9
+TABLE_PIN_START,Épingler au début,d1e1d24e
+TABLE_PREVIOUS_PAGE,Page précédente,d87b58b7
+TABLE_ROWS_PER_PAGE,Lignes par page,ff461aa5
+TABLE_SAVE_ERROR,Impossible d’enregistrer les modifications. Veuillez réessayer.,85668916
+TABLE_SEARCH,Rechercher,9f30c236
+TABLE_SHOW_ALL,Tout afficher,3208186f
+TABLE_SHOW_ALL_COLUMNS,Afficher toutes les colonnes,2a5e28e5
+TABLE_SORT_ASCENDING,Trier par {column} croissant,a9a8f74e
+TABLE_SORT_DESCENDING,Trier par {column} décroissant,48cf7e0a
+TABLE_TOGGLE_DENSITY,Changer la densité,8f835a40
+TABLE_TOGGLE_FILTERS,Afficher/Masquer les filtres,312baea2
+TABLE_TOGGLE_FULLSCREEN,Basculer en plein écran,6bc79fb8
+TABLE_TOGGLE_SEARCH,Afficher/Masquer la recherche,6f191035
+TABLE_UNPIN,Désépinglée,acf61315
 TITLE,Titre,a5f8fc0b
 TOUCH_DRAG,Toucher + Glisser,ff6d48d2
 UPLOAD_FILES,Téléverser des fichiers,b98547be
