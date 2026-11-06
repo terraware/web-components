@@ -1,10 +1,16 @@
-import { StrictMode } from 'react';
+import React, { StrictMode } from 'react';
 
 import { act, fireEvent, render, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import EditableTableV2, { EditableTableColumnV2 } from '.';
-import { WithClearAllFilters, WithFilters, WithOccupationFilter } from '../../stories/EditableTableV2.stories';
+import { WithTopToolbar as WithTopToolbarLegacy } from '../../stories/EditableTable.stories';
+import {
+  WithClearAllFilters,
+  WithFilters,
+  WithOccupationFilter,
+  WithTopToolbar,
+} from '../../stories/EditableTableV2.stories';
 import { getStrings, setLocale } from '../../strings';
 
 type Item = { id: string; name: string; count: number };
@@ -21,6 +27,16 @@ const rowNames = () =>
     .getAllByRole('row')
     .slice(1)
     .map((row) => within(row).getAllByRole('cell')[0].textContent);
+
+test.each([
+  { name: 'MRT', Story: WithTopToolbarLegacy, columnsLabel: 'Show/Hide columns' },
+  { name: 'V2', Story: WithTopToolbar, columnsLabel: 'Columns' },
+])('shows search and column controls in the $name toolbar story', ({ Story, columnsLabel }) => {
+  render(<Story />);
+  expect(screen.getByPlaceholderText('Search')).toBeInTheDocument();
+  fireEvent.click(screen.getByRole('button', { name: columnsLabel }));
+  expect(screen.getByRole('menu')).toBeInTheDocument();
+});
 
 test('only shows the occupation filter in the occupation-only story', () => {
   render(<WithOccupationFilter />);
@@ -69,6 +85,64 @@ test('can hide and restore all columns from the toolbar manager', () => {
   fireEvent.click(screen.getByRole('button', { name: 'Columns' }));
   fireEvent.click(screen.getByRole('button', { name: 'Show all' }));
   expect(screen.getAllByRole('columnheader', { hidden: true })).toHaveLength(2);
+});
+
+test('toggles search, column filters, density, and fullscreen in the full V2 toolbar story', () => {
+  const view = render(<WithTopToolbar />);
+  const wrapper = view.container.firstElementChild!;
+  expect(getComputedStyle(wrapper).padding).toBe('16px');
+  expect(screen.getByRole('button', { name: 'Export' })).toBeInTheDocument();
+  const searchToggle = screen.getByRole('button', { name: 'Show/Hide search' });
+  expect(within(searchToggle).getByTestId('SearchOffIcon')).toBeInTheDocument();
+  fireEvent.click(screen.getByRole('button', { name: 'Show/Hide search' }));
+  expect(screen.queryByPlaceholderText('Search')).not.toBeInTheDocument();
+  expect(within(searchToggle).getByTestId('SearchIcon')).toBeInTheDocument();
+  fireEvent.click(screen.getByRole('button', { name: 'Show/Hide search' }));
+  expect(screen.getByPlaceholderText('Search')).toBeInTheDocument();
+  expect(within(searchToggle).getByTestId('SearchOffIcon')).toBeInTheDocument();
+  expect(screen.queryByLabelText('Filter: Name')).not.toBeInTheDocument();
+  fireEvent.click(screen.getByRole('button', { name: 'Show/Hide filters' }));
+  fireEvent.change(screen.getByLabelText('Filter: Name'), { target: { value: 'Carlos_3' } });
+  expect(rowNames().every((name) => name?.startsWith('Carlos_3'))).toBe(true);
+  fireEvent.click(screen.getByRole('button', { name: 'Show/Hide filters' }));
+  expect(screen.queryByLabelText('Filter: Name')).not.toBeInTheDocument();
+  const cell = screen.getByText('Carlos_3').closest('td')!;
+  expect(getComputedStyle(cell).paddingTop).toBe('16px');
+  fireEvent.click(screen.getByRole('button', { name: 'Toggle density' }));
+  expect(getComputedStyle(cell).paddingTop).toBe('4px');
+  fireEvent.click(screen.getByRole('button', { name: 'Toggle density' }));
+  expect(getComputedStyle(cell).paddingTop).toBe('24px');
+  fireEvent.click(screen.getByRole('button', { name: 'Toggle full screen' }));
+  expect(screen.getByRole('button', { name: 'Toggle full screen' })).toHaveAttribute('aria-pressed', 'true');
+  expect(document.body.style.overflow).toBe('hidden');
+  expect(getComputedStyle(wrapper).padding).toBe('0px');
+  expect(getComputedStyle(wrapper).margin).toBe('0px');
+  expect(getComputedStyle(wrapper).position).toBe('fixed');
+  fireEvent.keyDown(document, { key: 'Escape' });
+  expect(screen.getByRole('button', { name: 'Toggle full screen' })).toHaveAttribute('aria-pressed', 'false');
+  expect(document.body.style.overflow).not.toBe('hidden');
+  expect(getComputedStyle(wrapper).padding).toBe('16px');
+  fireEvent.click(screen.getByRole('button', { name: 'Toggle full screen' }));
+  view.unmount();
+  expect(document.body.style.overflow).not.toBe('hidden');
+});
+
+test('toggles and applies column filters in the original full toolbar story', async () => {
+  render(<WithTopToolbarLegacy />);
+  expect(screen.queryByRole('textbox', { name: 'Filter by Name' })).not.toBeInTheDocument();
+  fireEvent.click(screen.getByRole('button', { name: 'Show/Hide filters' }));
+  const nameFilter = await screen.findByRole('textbox', { name: 'Filter by Name' });
+  expect(screen.getByRole('combobox', { name: 'Filter by Occupation' })).toBeVisible();
+  expect(screen.getByRole('combobox', { name: 'Filter by Available' })).toBeVisible();
+  fireEvent.change(nameFilter, { target: { value: 'Carlos_3' } });
+  await waitFor(() => {
+    expect(rowNames().length).toBeGreaterThan(0);
+    expect(rowNames().every((name) => name?.startsWith('Carlos_3'))).toBe(true);
+  });
+  fireEvent.click(screen.getByRole('button', { name: 'Show/Hide filters' }));
+  await waitFor(() => expect(screen.queryByRole('textbox', { name: 'Filter by Name' })).not.toBeInTheDocument());
+  fireEvent.click(screen.getByRole('button', { name: 'Show/Hide filters' }));
+  expect(await screen.findByRole('textbox', { name: 'Filter by Name' })).toHaveValue('Carlos_3');
 });
 
 test.each([WithFilters, WithClearAllFilters, WithOccupationFilter])(
