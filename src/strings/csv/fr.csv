@@ -49,3 +49,9 @@ UPLOAD_FILES,Téléverser des fichiers,b98547be
 UPLOAD_FILES_DESCRIPTION,Parcourir ou glisser-déposer des fichiers.,7c4a7822
 VR,RV,98fd7fc5
 ZOOM,Zoom,07b636df
+TABLE_FIRST_PAGE,Première page,2ba1de3f
+TABLE_LAST_PAGE,Dernière page,6eafe34a
+TABLE_NEXT_PAGE,Page suivante,be0bb188
+TABLE_NO_ROWS,Aucun enregistrement à afficher,eb47076d
+TABLE_PREVIOUS_PAGE,Page précédente,d87b58b7
+TABLE_ROWS_PER_PAGE,Lignes par page,ff461aa5
