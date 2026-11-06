@@ -1,7 +1,7 @@
 import React, { useMemo, useState } from 'react';
 
 import { Typography } from '@mui/material';
-import { Story } from '@storybook/react';
+import { StoryFn } from '@storybook/react';
 
 import EditableTableV2, { EditableTableColumnV2 } from '../components/EditableTableV2';
 
@@ -157,7 +157,7 @@ const EditableTableWithStateV2 = ({
   );
 };
 
-const Template: Story<{ rowCount: number }> = (args) => <EditableTableWithStateV2 {...args} />;
+const Template: StoryFn<{ rowCount: number }> = (args) => <EditableTableWithStateV2 {...args} />;
 
 export const Default = Template.bind({});
 Default.args = { rowCount: 50 };
@@ -179,7 +179,7 @@ export const SortingFn = () => {
   ];
   const columns = useMemo<EditableTableColumnV2<SimpleRow>[]>(
     () => [
-      { id: 'noSorting', header: 'Without Sorting Function', accessorKey: 'value', size: 200 },
+      { id: 'noSorting', header: 'With String Sorting Function', accessorKey: 'value', size: 200, sortFn: 'text' },
       {
         id: 'withSorting',
         header: 'With Alphanumeric Sorting Function',
@@ -192,7 +192,7 @@ export const SortingFn = () => {
   );
   return (
     <>
-      <Typography>Click the headers to compare automatic and explicit alphanumeric sorting.</Typography>
+      <Typography>Click the headers to compare string and alphanumeric sorting.</Typography>
       <EditableTableV2
         columns={columns}
         data={data}

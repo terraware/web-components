@@ -1,11 +1,21 @@
 import React, { CSSProperties, ReactNode, useEffect, useMemo, useState } from 'react';
 
-import { ArrowDownward, ArrowUpward, ViewColumn } from '@mui/icons-material';
+import {
+  ArrowDownward,
+  ArrowUpward,
+  Close,
+  FilterAlt,
+  MoreVert,
+  Search,
+  SyncAlt,
+  ViewColumn,
+} from '@mui/icons-material';
 import {
   Box,
   Checkbox,
   FormControlLabel,
   IconButton,
+  InputAdornment,
   Menu,
   MenuItem,
   Paper,
@@ -22,6 +32,7 @@ import {
   TextField,
   Theme,
   Toolbar,
+  Tooltip,
 } from '@mui/material';
 import { Column, ColumnDef, ColumnFiltersState, useTable } from '@tanstack/react-table';
 
@@ -46,6 +57,7 @@ export type EditableTablePropsV2<TData extends object> = {
   enableClearAllFilters?: boolean;
   enableEditing?: boolean;
   enableColumnOrdering?: boolean;
+  enableColumnActions?: boolean;
   enableColumnPinning?: boolean;
   enableHiding?: boolean;
   enableSorting?: boolean;
@@ -96,6 +108,10 @@ const pinnedStyles = <TData extends object>(column: Column<typeof editableTableF
   };
 };
 
+const UnsortedIcon = (props: React.ComponentProps<typeof SyncAlt>) => (
+  <SyncAlt {...props} style={{ ...props.style, transform: 'rotate(90deg)' }} />
+);
+
 const ColumnFilter = <TData extends object>({
   column,
   definition,
@@ -114,6 +130,8 @@ const ColumnFilter = <TData extends object>({
           <TextField
             key={index}
             size='small'
+            variant='standard'
+            placeholder={index === 0 ? strings.TABLE_MIN : strings.TABLE_MAX}
             type={definition.filterVariant === 'date-range' ? 'date' : 'number'}
             value={range[index] ?? ''}
             slotProps={{
@@ -135,11 +153,20 @@ const ColumnFilter = <TData extends object>({
     <TextField
       fullWidth
       size='small'
-      label={label}
+      variant='standard'
+      placeholder={label}
       select={select}
       value={value ?? (multiple ? [] : '')}
       onChange={(event) => column.setFilterValue(event.target.value || undefined)}
-      slotProps={{ select: { multiple } }}
+      slotProps={{
+        htmlInput: { 'aria-label': label },
+        select: {
+          multiple,
+          displayEmpty: true,
+          'aria-label': label,
+          renderValue: (selected) => (Array.isArray(selected) ? selected.join(', ') : String(selected ?? '')) || label,
+        },
+      }}
     >
       {select && !multiple && <MenuItem value=''>{strings.TABLE_ALL}</MenuItem>}
       {select &&
@@ -159,6 +186,7 @@ const EditableTableV2 = <TData extends object>({
   enableClearAllFilters = true,
   enableEditing = false,
   enableColumnOrdering = false,
+  enableColumnActions = true,
   enableColumnPinning = false,
   enableHiding = true,
   enableSorting = true,
@@ -179,6 +207,7 @@ const EditableTableV2 = <TData extends object>({
 }: EditableTablePropsV2<TData>) => {
   const strings = useStrings();
   const [editingCell, setEditingCell] = useState<string | null>(null);
+  const [menuColumnId, setMenuColumnId] = useState<string | null>(null);
   const [menuAnchor, setMenuAnchor] = useState<HTMLElement | null>(null);
   const [columnFilters, setColumnFilters] = useState(() => readFilters(stickyFilters ? storageKey : undefined));
 
@@ -242,6 +271,7 @@ const EditableTableV2 = <TData extends object>({
     columns: tableColumns,
     data,
     enableSorting,
+    sortDescFirst: false,
     enableColumnPinning,
     enableHiding,
     enableColumnFilters,
@@ -301,8 +331,30 @@ const EditableTableV2 = <TData extends object>({
           <Toolbar sx={{ gap: 1, flexWrap: 'wrap' }}>
             {enableGlobalFilter && (
               <TextField
-                label={strings.TABLE_SEARCH}
+                placeholder={strings.TABLE_SEARCH}
                 size='small'
+                slotProps={{
+                  htmlInput: { 'aria-label': strings.TABLE_SEARCH },
+                  input: {
+                    startAdornment: (
+                      <InputAdornment position='start'>
+                        <Search />
+                      </InputAdornment>
+                    ),
+                    endAdornment: (
+                      <InputAdornment position='end'>
+                        <IconButton
+                          size='small'
+                          aria-label={strings.TABLE_CLEAR_SEARCH}
+                          disabled={!table.state.globalFilter}
+                          onClick={() => table.setGlobalFilter('')}
+                        >
+                          <Close />
+                        </IconButton>
+                      </InputAdornment>
+                    ),
+                  },
+                }}
                 value={table.state.globalFilter ?? ''}
                 onChange={(event) => table.setGlobalFilter(event.target.value)}
               />
@@ -313,12 +365,56 @@ const EditableTableV2 = <TData extends object>({
             )}
             {renderToolbarInternalActions?.({ table })}
             {controlsEnabled && (
-              <IconButton aria-label={strings.TABLE_COLUMNS} onClick={(event) => setMenuAnchor(event.currentTarget)}>
+              <IconButton
+                aria-label={strings.TABLE_COLUMNS}
+                onClick={(event) => {
+                  setMenuColumnId(null);
+                  setMenuAnchor(event.currentTarget);
+                }}
+              >
                 <ViewColumn />
               </IconButton>
             )}
-            <Menu anchorEl={menuAnchor} open={!!menuAnchor} onClose={() => setMenuAnchor(null)}>
-              {table.getAllLeafColumns().map((column, index, allColumns) => (
+          </Toolbar>
+        )}
+        <Menu anchorEl={menuAnchor} open={!!menuAnchor} onClose={() => setMenuAnchor(null)}>
+          {menuColumnId &&
+            table.getColumn(menuColumnId)?.getCanSort() &&
+            [
+              {
+                label: strings.TABLE_SORT_ASCENDING,
+                action: () => table.getColumn(menuColumnId)?.toggleSorting(false),
+              },
+              {
+                label: strings.TABLE_SORT_DESCENDING,
+                action: () => table.getColumn(menuColumnId)?.toggleSorting(true),
+              },
+              { label: strings.TABLE_CLEAR_SORTING, action: () => table.getColumn(menuColumnId)?.clearSorting() },
+            ].map(({ label, action }) => (
+              <MenuItem
+                key={label}
+                onClick={() => {
+                  action();
+                  setMenuAnchor(null);
+                }}
+              >
+                {label}
+              </MenuItem>
+            ))}
+          {menuColumnId && table.getColumn(menuColumnId)?.getIsFiltered() && (
+            <MenuItem
+              onClick={() => {
+                table.getColumn(menuColumnId)?.setFilterValue(undefined);
+                setMenuAnchor(null);
+              }}
+            >
+              {strings.TABLE_CLEAR_FILTER}
+            </MenuItem>
+          )}
+          {table.getAllLeafColumns().map(
+            (column, index, allColumns) =>
+              (!menuColumnId || menuColumnId === column.id) &&
+              controlsEnabled && (
                 <Box key={column.id} display='flex' alignItems='center' px={2} gap={1}>
                   <FormControlLabel
                     label={definitions.get(column.id)?.header}
@@ -366,10 +462,9 @@ const EditableTableV2 = <TData extends object>({
                     </TextField>
                   )}
                 </Box>
-              ))}
-            </Menu>
-          </Toolbar>
-        )}
+              )
+          )}
+        </Menu>
         <TableContainer {...containerProps}>
           <Table sx={{ minWidth: table.getTotalSize() }}>
             <TableHead>
@@ -380,17 +475,44 @@ const EditableTableV2 = <TData extends object>({
                     sortDirection={column.getIsSorted() || false}
                     sx={{ ...pinnedStyles(column), bgcolor: 'background.paper' }}
                   >
-                    {column.getCanSort() ? (
-                      <TableSortLabel
-                        active={!!column.getIsSorted()}
-                        direction={column.getIsSorted() || 'asc'}
-                        onClick={column.getToggleSortingHandler()}
-                      >
-                        {definitions.get(column.id)?.header}
-                      </TableSortLabel>
-                    ) : (
-                      definitions.get(column.id)?.header
-                    )}
+                    <Box display='flex' alignItems='center' gap={0.5}>
+                      {column.getCanSort() ? (
+                        <TableSortLabel
+                          active={!!column.getIsSorted()}
+                          direction={column.getIsSorted() || 'asc'}
+                          IconComponent={column.getIsSorted() ? ArrowDownward : UnsortedIcon}
+                          sx={{ '& .MuiTableSortLabel-icon': { opacity: column.getIsSorted() ? 1 : 0.4 } }}
+                          onClick={column.getToggleSortingHandler()}
+                        >
+                          {definitions.get(column.id)?.header}
+                        </TableSortLabel>
+                      ) : (
+                        definitions.get(column.id)?.header
+                      )}
+                      {column.getIsFiltered() && (
+                        <Tooltip title={`${strings.TABLE_FILTERED}: ${definitions.get(column.id)?.header}`}>
+                          <FilterAlt
+                            fontSize='small'
+                            role='img'
+                            aria-label={`${strings.TABLE_FILTERED}: ${definitions.get(column.id)?.header}`}
+                          />
+                        </Tooltip>
+                      )}
+                      {enableColumnActions && (column.getCanSort() || column.getCanFilter() || controlsEnabled) && (
+                        <IconButton
+                          size='small'
+                          aria-label={`${strings.TABLE_COLUMN_ACTIONS}: ${definitions.get(column.id)?.header}`}
+                          aria-haspopup='menu'
+                          aria-expanded={!!menuAnchor && menuColumnId === column.id}
+                          onClick={(event) => {
+                            setMenuColumnId(column.id);
+                            setMenuAnchor(event.currentTarget);
+                          }}
+                        >
+                          <MoreVert fontSize='small' />
+                        </IconButton>
+                      )}
+                    </Box>
                     {enableColumnFilters && column.getCanFilter() && (
                       <ColumnFilter column={column} definition={definitions.get(column.id)!} />
                     )}

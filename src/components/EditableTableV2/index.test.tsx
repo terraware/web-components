@@ -3,6 +3,7 @@ import React from 'react';
 import { fireEvent, render, screen, waitFor, within } from '@testing-library/react';
 
 import EditableTableV2, { EditableTableColumnV2 } from '.';
+import { SortingFn } from '../../stories/EditableTableV2.stories';
 
 type Item = { id: string; name: string; count: number };
 const data: Item[] = [
@@ -205,4 +206,91 @@ test('filters numeric ranges', () => {
   fireEvent.change(screen.getByLabelText('Filter: Count Minimum'), { target: { value: '2' } });
   expect(screen.queryByText('1')).not.toBeInTheDocument();
   expect(screen.getByText('3')).toBeInTheDocument();
+});
+
+test('shows unsorted indicators and cycles numeric sorting ascending first', () => {
+  render(<EditableTableV2 columns={columns} data={data} clearAllFiltersLabel='Clear' />);
+  expect(screen.getAllByTestId('SyncAltIcon')).toHaveLength(2);
+  const header = screen.getByRole('columnheader', { name: /Count/ });
+  expect(header).not.toHaveAttribute('aria-sort');
+  fireEvent.click(screen.getByText('Count'));
+  expect(header).toHaveAttribute('aria-sort', 'ascending');
+  expect(rowNames()).toEqual(['Acacia', 'Zebra']);
+  expect(screen.getAllByTestId('SyncAltIcon')).toHaveLength(1);
+  fireEvent.click(screen.getByText('Count'));
+  expect(header).toHaveAttribute('aria-sort', 'descending');
+  expect(rowNames()).toEqual(['Zebra', 'Acacia']);
+  fireEvent.click(screen.getByText('Count'));
+  expect(header).not.toHaveAttribute('aria-sort');
+});
+
+test('offers per-column sorting and visibility actions without a top toolbar', () => {
+  render(<EditableTableV2 columns={columns} data={data} clearAllFiltersLabel='Clear' enableTopToolbar={false} />);
+  const actions = () => fireEvent.click(screen.getByLabelText('Column actions: Count'));
+  actions();
+  fireEvent.click(screen.getByRole('menuitem', { name: 'Sort ascending' }));
+  expect(rowNames()).toEqual(['Acacia', 'Zebra']);
+  actions();
+  fireEvent.click(screen.getByRole('menuitem', { name: 'Sort descending' }));
+  expect(rowNames()).toEqual(['Zebra', 'Acacia']);
+  actions();
+  fireEvent.click(screen.getByRole('menuitem', { name: 'Clear sorting' }));
+  expect(screen.getByRole('columnheader', { name: /Count/ })).not.toHaveAttribute('aria-sort');
+  actions();
+  expect(screen.queryByRole('checkbox', { name: 'Name' })).not.toBeInTheDocument();
+  fireEvent.click(screen.getByRole('checkbox', { name: 'Count' }));
+  expect(screen.queryByRole('columnheader', { name: /Count/, hidden: true })).not.toBeInTheDocument();
+});
+
+test('marks filtered columns and clears search independently from column filters', () => {
+  render(
+    <EditableTableV2
+      columns={columns}
+      data={data}
+      clearAllFiltersLabel='Clear'
+      enableGlobalFilter
+      enableColumnFilters
+    />
+  );
+  expect(screen.queryByLabelText('Filtered: Name')).not.toBeInTheDocument();
+  expect(screen.getByLabelText('Filter: Name')).toHaveAttribute('placeholder', 'Filter: Name');
+  expect(screen.getByLabelText('Search')).toHaveAttribute('placeholder', 'Search');
+  fireEvent.change(screen.getByLabelText('Filter: Name'), { target: { value: 'Zebra' } });
+  expect(screen.getByLabelText('Filtered: Name')).toBeInTheDocument();
+  fireEvent.change(screen.getByLabelText('Search'), { target: { value: 'missing' } });
+  fireEvent.click(screen.getByLabelText('Clear search'));
+  expect(rowNames()).toEqual(['Zebra']);
+  expect(screen.getByLabelText('Filtered: Name')).toBeInTheDocument();
+  fireEvent.click(screen.getByLabelText('Column actions: Name'));
+  fireEvent.click(screen.getByRole('menuitem', { name: 'Clear filter' }));
+  expect(screen.queryByLabelText('Filtered: Name')).not.toBeInTheDocument();
+  expect(rowNames()).toHaveLength(2);
+});
+
+test('supports accessible standard select filters', () => {
+  render(
+    <EditableTableV2
+      columns={[{ ...columns[0], filterVariant: 'select', filterSelectOptions: ['Zebra', 'Acacia'] }]}
+      data={data}
+      clearAllFiltersLabel='Clear'
+      enableColumnFilters
+    />
+  );
+  fireEvent.mouseDown(screen.getByRole('combobox', { name: 'Filter: Name' }));
+  fireEvent.click(screen.getByRole('option', { name: 'Acacia' }));
+  expect(rowNames()).toEqual(['Acacia']);
+  expect(screen.getByLabelText('Filtered: Name')).toBeInTheDocument();
+});
+
+test('compares lexicographic and alphanumeric sorting in the Sorting Fn story', () => {
+  render(<SortingFn />);
+  fireEvent.click(screen.getByText('With String Sorting Function'));
+  expect(rowNames()).toEqual(['113', '13770', '1467', '15372', '20']);
+  fireEvent.click(screen.getByText('With Alphanumeric Sorting Function'));
+  expect(rowNames()).toEqual(['20', '113', '1467', '13770', '15372']);
+});
+
+test('can disable per-column action buttons', () => {
+  render(<EditableTableV2 columns={columns} data={data} clearAllFiltersLabel='Clear' enableColumnActions={false} />);
+  expect(screen.queryByLabelText('Column actions: Name')).not.toBeInTheDocument();
 });
