@@ -1,4 +1,4 @@
-import { fireEvent, render, screen, within } from '@testing-library/react';
+import { fireEvent, render, screen, waitFor, within } from '@testing-library/react';
 
 import EditableTableV2, { EditableTableColumnV2 } from '.';
 
@@ -9,7 +9,7 @@ const data: Item[] = [
 ];
 const columns: EditableTableColumnV2<Item>[] = [
   { id: 'name', header: 'Name', accessorKey: 'name' },
-  { id: 'count', header: 'Count', accessorKey: 'count' },
+  { id: 'count', header: 'Count', accessorKey: 'count', enableEditing: false },
 ];
 const rowNames = () =>
   screen
@@ -25,6 +25,30 @@ test.each([{ rows: data }, { rows: [] }])(
     expect(getComputedStyle(footer).boxShadow).toMatch(/^0 1px 2px -1px .+ inset$/);
   }
 );
+
+test('saves text once on Enter and cancels on Escape', async () => {
+  const onSave = rstest.fn();
+  render(
+    <EditableTableV2
+      columns={[{ ...columns[0], editConfig: { onSave } }, columns[1]]}
+      data={data}
+      clearAllFiltersLabel='Clear'
+      enableEditing
+    />
+  );
+  fireEvent.doubleClick(screen.getByText('Zebra'));
+  const input = screen.getByLabelText('Name');
+  fireEvent.change(input, { target: { value: 'Oak' } });
+  fireEvent.keyDown(input, { key: 'Enter' });
+  await waitFor(() => expect(onSave).toHaveBeenCalledTimes(1));
+  expect(onSave).toHaveBeenCalledWith(data[0], 'Oak', 'name');
+  await waitFor(() => expect(screen.queryByLabelText('Name')).not.toBeInTheDocument());
+  fireEvent.doubleClick(screen.getByText('Zebra'));
+  fireEvent.keyDown(screen.getByLabelText('Name'), { key: 'Escape' });
+  expect(onSave).toHaveBeenCalledTimes(1);
+  fireEvent.doubleClick(screen.getByText('3'));
+  expect(screen.queryByLabelText('Count')).not.toBeInTheDocument();
+});
 
 test('paginates with first, last, next and previous controls', () => {
   render(
@@ -48,6 +72,84 @@ test('paginates with first, last, next and previous controls', () => {
   expect(rowNames()).toEqual(['Zebra']);
   fireEvent.click(screen.getByLabelText('Next page'));
   expect(rowNames()).toEqual(['Acacia']);
+});
+
+test('supports custom renderers, custom editors and row clicks', async () => {
+  const onSave = rstest.fn();
+  const onRowClick = rstest.fn();
+  render(
+    <EditableTableV2
+      columns={[
+        {
+          ...columns[0],
+          Cell: ({ cell }) => <strong>{cell.getValue<string>()}!</strong>,
+          editConfig: {
+            onSave,
+            editVariant: 'custom',
+            customEditComponent: ({ save }) => <button onClick={() => void save('Oak')}>Save custom</button>,
+          },
+        },
+      ]}
+      data={data}
+      clearAllFiltersLabel='Clear'
+      enableEditing
+      onRowClick={onRowClick}
+    />
+  );
+  fireEvent.click(screen.getByText('Zebra!'));
+  expect(onRowClick).toHaveBeenCalledWith(data[0]);
+  fireEvent.doubleClick(screen.getByText('Zebra!'));
+  fireEvent.click(screen.getByText('Save custom'));
+  await waitFor(() => expect(onSave).toHaveBeenCalledWith(data[0], 'Oak', 'name'));
+  expect(onRowClick).toHaveBeenCalledTimes(1);
+});
+
+test('shows a rejected save and permits retrying', async () => {
+  const onSave = rstest.fn().mockRejectedValueOnce(new Error('failed')).mockResolvedValue(undefined);
+  render(
+    <EditableTableV2
+      columns={[{ ...columns[0], editConfig: { onSave } }]}
+      data={data}
+      clearAllFiltersLabel='Clear'
+      enableEditing
+    />
+  );
+  fireEvent.doubleClick(screen.getByText('Zebra'));
+  fireEvent.change(screen.getByLabelText('Name'), { target: { value: 'Oak' } });
+  fireEvent.blur(screen.getByLabelText('Name'));
+  expect(await screen.findByRole('alert')).toHaveTextContent('Unable to save changes');
+  fireEvent.keyDown(screen.getByLabelText('Name'), { key: 'Enter' });
+  await waitFor(() => expect(screen.queryByLabelText('Name')).not.toBeInTheDocument());
+  expect(onSave).toHaveBeenCalledTimes(2);
+});
+
+test('edits select values and saves on blur', async () => {
+  const onSave = rstest.fn();
+  render(
+    <EditableTableV2
+      columns={[
+        {
+          ...columns[0],
+          editConfig: {
+            onSave,
+            editVariant: 'select',
+            selectOptions: [
+              { label: 'Zebra', value: 'Zebra' },
+              { label: 'Oak', value: 'Oak' },
+            ],
+          },
+        },
+      ]}
+      data={data}
+      clearAllFiltersLabel='Clear'
+      enableEditing
+    />
+  );
+  fireEvent.doubleClick(screen.getByText('Zebra'));
+  fireEvent.mouseDown(screen.getByRole('combobox', { name: 'Name' }));
+  fireEvent.click(screen.getByRole('option', { name: 'Oak' }));
+  fireEvent.blur(screen.getByRole('combobox', { name: 'Name' }));
+  await waitFor(() => expect(onSave).toHaveBeenCalledWith(data[0], 'Oak', 'name'));
 });
 
 test('shows unsorted indicators and cycles numeric sorting ascending first', () => {
