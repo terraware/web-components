@@ -51,6 +51,7 @@ VR,VR,Virtual Reality
 ZOOM,Zoom,
 TABLE_SAVE_ERROR,Unable to save changes. Please try again.,
 TABLE_FILTER,Filter,
+TABLE_FILTER_BY,Filter by {column},
 TABLE_MIN,Minimum,
 TABLE_MAX,Maximum,
 TABLE_ALL,All,

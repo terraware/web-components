@@ -34,6 +34,7 @@ import {
   Toolbar,
   Tooltip,
 } from '@mui/material';
+import { alpha, darken, lighten } from '@mui/material/styles';
 import { Column, ColumnDef, ColumnFiltersState, useTable } from '@tanstack/react-table';
 
 import { useStrings } from '../../strings';
@@ -58,6 +59,7 @@ export type EditableTablePropsV2<TData extends object> = {
   enableEditing?: boolean;
   enableColumnOrdering?: boolean;
   enableColumnActions?: boolean;
+  showColumnsButton?: boolean;
   enableColumnPinning?: boolean;
   enableHiding?: boolean;
   enableSorting?: boolean;
@@ -109,7 +111,7 @@ const pinnedStyles = <TData extends object>(column: Column<typeof editableTableF
 };
 
 const UnsortedIcon = (props: React.ComponentProps<typeof SyncAlt>) => (
-  <SyncAlt {...props} style={{ ...props.style, transform: 'rotate(90deg)' }} />
+  <SyncAlt {...props} style={{ ...props.style, transform: 'rotate(-90deg) scaleX(0.9) translateX(-1px)' }} />
 );
 
 const ColumnFilter = <TData extends object>({
@@ -121,6 +123,7 @@ const ColumnFilter = <TData extends object>({
 }) => {
   const strings = useStrings();
   const label = `${strings.TABLE_FILTER}: ${definition.header}`;
+  const placeholder = strings.TABLE_FILTER_BY.replace('{column}', definition.header);
   const value = column.getFilterValue();
   if (definition.filterVariant === 'range' || definition.filterVariant === 'date-range') {
     const range = Array.isArray(value) ? value : ['', ''];
@@ -152,19 +155,40 @@ const ColumnFilter = <TData extends object>({
   return (
     <TextField
       fullWidth
-      size='small'
       variant='standard'
-      placeholder={label}
+      placeholder={placeholder}
+      sx={{ minWidth: 120, mx: '-2px', p: 0, width: 'calc(100% + 4px)' }}
       select={select}
       value={value ?? (multiple ? [] : '')}
       onChange={(event) => column.setFilterValue(event.target.value || undefined)}
       slotProps={{
         htmlInput: { 'aria-label': label },
+        input: {
+          endAdornment: (
+            <InputAdornment
+              position='end'
+              sx={{ mr: select ? '20px' : undefined, visibility: isActiveFilter({ value }) ? 'visible' : 'hidden' }}
+            >
+              <IconButton
+                size='small'
+                aria-label={`${strings.TABLE_CLEAR_FILTER}: ${definition.header}`}
+                disabled={!isActiveFilter({ value })}
+                onClick={() => column.setFilterValue(undefined)}
+                sx={{ height: '2rem', width: '2rem', transform: 'scale(0.9)' }}
+              >
+                <Close />
+              </IconButton>
+            </InputAdornment>
+          ),
+        },
         select: {
           multiple,
           displayEmpty: true,
           'aria-label': label,
-          renderValue: (selected) => (Array.isArray(selected) ? selected.join(', ') : String(selected ?? '')) || label,
+          renderValue: (selected) =>
+            (Array.isArray(selected) ? selected.join(', ') : String(selected ?? '')) || (
+              <Box sx={{ opacity: 0.5 }}>{placeholder}</Box>
+            ),
         },
       }}
     >
@@ -187,6 +211,7 @@ const EditableTableV2 = <TData extends object>({
   enableEditing = false,
   enableColumnOrdering = false,
   enableColumnActions = true,
+  showColumnsButton = false,
   enableColumnPinning = false,
   enableHiding = true,
   enableSorting = true,
@@ -328,7 +353,17 @@ const EditableTableV2 = <TData extends object>({
     <Box minHeight='160px' padding={2} sx={sx}>
       <Paper elevation={0}>
         {enableTopToolbar && (
-          <Toolbar sx={{ gap: 1, flexWrap: 'wrap' }}>
+          <Toolbar
+            disableGutters
+            sx={{
+              gap: 1,
+              flexWrap: 'wrap',
+              alignItems: 'flex-start',
+              p: 1,
+              minHeight: '56px !important',
+              boxSizing: 'border-box',
+            }}
+          >
             {enableGlobalFilter && (
               <TextField
                 placeholder={strings.TABLE_SEARCH}
@@ -336,11 +371,7 @@ const EditableTableV2 = <TData extends object>({
                 slotProps={{
                   htmlInput: { 'aria-label': strings.TABLE_SEARCH },
                   input: {
-                    startAdornment: (
-                      <InputAdornment position='start'>
-                        <Search />
-                      </InputAdornment>
-                    ),
+                    startAdornment: <Search sx={{ mr: '4px' }} />,
                     endAdornment: (
                       <InputAdornment position='end'>
                         <IconButton
@@ -364,7 +395,7 @@ const EditableTableV2 = <TData extends object>({
               <Button label={clearAllFiltersLabel} priority='ghost' size='small' onClick={clearFilters} />
             )}
             {renderToolbarInternalActions?.({ table })}
-            {controlsEnabled && (
+            {showColumnsButton && controlsEnabled && (
               <IconButton
                 aria-label={strings.TABLE_COLUMNS}
                 onClick={(event) => {
@@ -427,7 +458,9 @@ const EditableTableV2 = <TData extends object>({
                         disabled={
                           !enableHiding ||
                           !column.getCanHide() ||
-                          (!enableTopToolbar && column.getIsVisible() && orderedColumns.length === 1)
+                          (!(enableTopToolbar && showColumnsButton) &&
+                            column.getIsVisible() &&
+                            orderedColumns.length === 1)
                         }
                         onChange={column.getToggleVisibilityHandler()}
                       />
@@ -480,15 +513,33 @@ const EditableTableV2 = <TData extends object>({
                   <TableCell
                     key={column.id}
                     sortDirection={column.getIsSorted() || false}
-                    sx={{ ...pinnedStyles(column), bgcolor: 'background.paper' }}
+                    sx={{
+                      ...pinnedStyles(column),
+                      bgcolor: 'background.paper',
+                      fontWeight: 'bold',
+                      p: 2,
+                      pt: '12px',
+                      pb: enableColumnFilters ? '6.4px' : '9.6px',
+                      verticalAlign: 'top',
+                      '&:hover .MuiIconButton-root': { opacity: 1 },
+                    }}
                   >
-                    <Box display='flex' alignItems='center' gap={0.5}>
+                    <Box display='flex' alignItems='center' sx={{ minHeight: '24px' }}>
                       {column.getCanSort() ? (
                         <TableSortLabel
                           active={!!column.getIsSorted()}
                           direction={column.getIsSorted() || 'asc'}
                           IconComponent={column.getIsSorted() ? ArrowDownward : UnsortedIcon}
-                          sx={{ '& .MuiTableSortLabel-icon': { opacity: column.getIsSorted() ? 1 : 0.4 } }}
+                          sx={(theme) => ({
+                            fontWeight: 'inherit',
+                            whiteSpace: definitions.get(column.id)!.header.length < 20 ? 'nowrap' : 'normal',
+                            '& .MuiTableSortLabel-icon': {
+                              color: `${theme.palette.mode === 'dark' ? theme.palette.text.primary : theme.palette.text.secondary} !important`,
+                              opacity: column.getIsSorted() ? 1 : 0.3,
+                              width: '3ch',
+                              m: 0,
+                            },
+                          })}
                           onClick={column.getToggleSortingHandler()}
                         >
                           {definitions.get(column.id)?.header}
@@ -499,7 +550,7 @@ const EditableTableV2 = <TData extends object>({
                       {column.getIsFiltered() && (
                         <Tooltip title={`${strings.TABLE_FILTERED}: ${definitions.get(column.id)?.header}`}>
                           <FilterAlt
-                            fontSize='small'
+                            sx={{ color: 'action.active', ml: '4px', width: '18px', height: '18px' }}
                             role='img'
                             aria-label={`${strings.TABLE_FILTERED}: ${definitions.get(column.id)?.header}`}
                           />
@@ -508,6 +559,7 @@ const EditableTableV2 = <TData extends object>({
                       {enableColumnActions && (column.getCanSort() || column.getCanFilter() || controlsEnabled) && (
                         <IconButton
                           size='small'
+                          sx={{ height: '2rem', width: '2rem', m: '-8px -4px', opacity: 0.3, transition: 'all 150ms' }}
                           aria-label={`${strings.TABLE_COLUMN_ACTIONS}: ${definitions.get(column.id)?.header}`}
                           aria-haspopup='menu'
                           aria-expanded={!!menuAnchor && menuColumnId === column.id}
@@ -516,7 +568,7 @@ const EditableTableV2 = <TData extends object>({
                             setMenuAnchor(event.currentTarget);
                           }}
                         >
-                          <MoreVert fontSize='small' />
+                          <MoreVert sx={{ transform: 'scale(0.9)' }} />
                         </IconButton>
                       )}
                     </Box>
@@ -532,7 +584,17 @@ const EditableTableV2 = <TData extends object>({
                 <TableRow
                   key={row.id}
                   onClick={onRowClick ? () => onRowClick(row.original) : undefined}
-                  sx={{ cursor: onRowClick ? 'pointer' : 'default' }}
+                  sx={(theme) => {
+                    const background = theme.palette.background.default;
+                    const hoverColor = alpha(
+                      theme.palette.mode === 'dark' ? lighten(background, 0.3) : darken(background, 0.3),
+                      0.3
+                    );
+                    return {
+                      cursor: onRowClick ? 'pointer' : 'default',
+                      '&:hover > td': { backgroundImage: `linear-gradient(${hoverColor}, ${hoverColor})` },
+                    };
+                  }}
                 >
                   {[...row.getStartVisibleCells(), ...row.getCenterVisibleCells(), ...row.getEndVisibleCells()].map(
                     (cell) => {
@@ -562,6 +624,9 @@ const EditableTableV2 = <TData extends object>({
                             ...pinnedStyles(column),
                             borderBottom: 'none',
                             bgcolor: rowIndex % 2 === 0 ? 'TwClrBaseGray025' : 'background.paper',
+                            cursor: canEdit ? 'pointer' : 'inherit',
+                            outlineOffset: '-1px',
+                            '&:hover': { outline: canEdit ? '1px solid' : undefined, outlineColor: 'grey.500' },
                           }}
                         >
                           {editingCell === cell.id ? (

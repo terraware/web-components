@@ -3,7 +3,7 @@ import React from 'react';
 import { fireEvent, render, screen, waitFor, within } from '@testing-library/react';
 
 import EditableTableV2, { EditableTableColumnV2 } from '.';
-import { SortingFn } from '../../stories/EditableTableV2.stories';
+import { SortingFn, WithOccupationFilter } from '../../stories/EditableTableV2.stories';
 
 type Item = { id: string; name: string; count: number };
 const data: Item[] = [
@@ -19,6 +19,14 @@ const rowNames = () =>
     .getAllByRole('row')
     .slice(1)
     .map((row) => within(row).getAllByRole('cell')[0].textContent);
+
+test('only shows the occupation filter in the occupation-only story', () => {
+  render(<WithOccupationFilter />);
+  expect(screen.getByRole('combobox', { name: 'Filter: Occupation' })).toBeInTheDocument();
+  expect(screen.queryByLabelText('Filter: Name')).not.toBeInTheDocument();
+  expect(screen.queryByLabelText('Filter: Available')).not.toBeInTheDocument();
+  expect(screen.queryByLabelText('Columns')).not.toBeInTheDocument();
+});
 
 test('sorts and filters rows, and clears global and column filters', () => {
   render(
@@ -105,7 +113,15 @@ test('persists filters and tolerates corrupt storage', () => {
 });
 
 test('moves and hides columns using the column controls', () => {
-  render(<EditableTableV2 columns={columns} data={data} clearAllFiltersLabel='Clear' enableColumnOrdering />);
+  render(
+    <EditableTableV2
+      columns={columns}
+      data={data}
+      clearAllFiltersLabel='Clear'
+      enableColumnOrdering
+      showColumnsButton
+    />
+  );
   fireEvent.click(screen.getByLabelText('Columns'));
   fireEvent.click(screen.getByLabelText('Move column forward: Name'));
   expect(screen.getAllByRole('columnheader', { hidden: true }).map((header) => header.textContent)).toEqual([
@@ -261,7 +277,7 @@ test('marks filtered columns and clears search independently from column filters
     />
   );
   expect(screen.queryByLabelText('Filtered: Name')).not.toBeInTheDocument();
-  expect(screen.getByLabelText('Filter: Name')).toHaveAttribute('placeholder', 'Filter: Name');
+  expect(screen.getByLabelText('Filter: Name')).toHaveAttribute('placeholder', 'Filter by Name');
   expect(screen.getByLabelText('Search')).toHaveAttribute('placeholder', 'Search');
   fireEvent.change(screen.getByLabelText('Filter: Name'), { target: { value: 'Zebra' } });
   expect(screen.getByLabelText('Filtered: Name')).toBeInTheDocument();

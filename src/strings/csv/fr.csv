@@ -50,6 +50,7 @@ TABLE_CLEAR_SORTING,Effacer le tri,9879810b
 TABLE_COLUMN_ACTIONS,Actions de colonne,119371ac
 TABLE_COLUMNS,Colonnes,ee2f54ee
 TABLE_FILTER,Filtrer,51b390ee
+TABLE_FILTER_BY,Filtrer par {column},0e2b5966
 TABLE_FILTERED,Filtré,5ce35c5c
 TABLE_MAX,Maximum,96f88e1f
 TABLE_MIN,Minimum,f2a882fd
