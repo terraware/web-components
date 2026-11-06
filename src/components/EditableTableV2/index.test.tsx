@@ -1,6 +1,8 @@
 import { fireEvent, render, screen, waitFor, within } from '@testing-library/react';
 
 import EditableTableV2, { EditableTableColumnV2 } from '.';
+import { WithClearAllFilters, WithFilters, WithOccupationFilter } from '../../stories/EditableTableV2.stories';
+import { getStrings, setLocale } from '../../strings';
 
 type Item = { id: string; name: string; count: number };
 const data: Item[] = [
@@ -8,7 +10,7 @@ const data: Item[] = [
   { id: 'b', name: 'Acacia', count: 1 },
 ];
 const columns: EditableTableColumnV2<Item>[] = [
-  { id: 'name', header: 'Name', accessorKey: 'name' },
+  { id: 'name', header: 'Name', accessorKey: 'name', filterVariant: 'text' },
   { id: 'count', header: 'Count', accessorKey: 'count', enableEditing: false },
 ];
 const rowNames = () =>
@@ -16,6 +18,14 @@ const rowNames = () =>
     .getAllByRole('row')
     .slice(1)
     .map((row) => within(row).getAllByRole('cell')[0].textContent);
+
+test('only shows the occupation filter in the occupation-only story', () => {
+  render(<WithOccupationFilter />);
+  expect(screen.getByRole('combobox', { name: 'Filter: Occupation' })).toBeInTheDocument();
+  expect(screen.queryByLabelText('Filter: Name')).not.toBeInTheDocument();
+  expect(screen.queryByLabelText('Filter: Available')).not.toBeInTheDocument();
+  expect(screen.queryByLabelText('Columns')).not.toBeInTheDocument();
+});
 
 test.each([{ rows: data }, { rows: [] }])(
   'matches the original divider above pagination, including an empty table',
@@ -25,6 +35,44 @@ test.each([{ rows: data }, { rows: [] }])(
     expect(getComputedStyle(footer).boxShadow).toMatch(/^0 1px 2px -1px .+ inset$/);
   }
 );
+
+test.each([WithFilters, WithClearAllFilters, WithOccupationFilter])(
+  'renders a filter story in every bundled locale: %s',
+  (Story) => {
+    try {
+      for (const locale of ['en', 'es', 'fr', 'gx']) {
+        setLocale(locale);
+        const strings = getStrings();
+        const view = render(<Story />);
+        expect(screen.getByRole('combobox', { name: `${strings.TABLE_FILTER}: Occupation` })).toBeInTheDocument();
+        view.unmount();
+      }
+    } finally {
+      setLocale('en');
+    }
+  }
+);
+
+test('sorts and filters rows, and clears global and column filters', () => {
+  render(
+    <EditableTableV2
+      columns={columns}
+      data={data}
+      clearAllFiltersLabel='Clear'
+      enableGlobalFilter
+      enableColumnFilters
+      enablePagination={false}
+    />
+  );
+  fireEvent.click(screen.getByText('Name'));
+  expect(rowNames()).toEqual(['Acacia', 'Zebra']);
+  fireEvent.change(screen.getByLabelText('Filter: Name'), { target: { value: 'Zeb' } });
+  expect(rowNames()).toEqual(['Zebra']);
+  fireEvent.change(screen.getByLabelText('Search'), { target: { value: 'missing' } });
+  expect(screen.getByText('No records to display')).toBeInTheDocument();
+  fireEvent.click(screen.getByText('Clear'));
+  expect(rowNames()).toHaveLength(2);
+});
 
 test('saves text once on Enter and cancels on Escape', async () => {
   const onSave = rstest.fn();
@@ -72,6 +120,26 @@ test('paginates with first, last, next and previous controls', () => {
   expect(rowNames()).toEqual(['Zebra']);
   fireEvent.click(screen.getByLabelText('Next page'));
   expect(rowNames()).toEqual(['Acacia']);
+});
+
+test('persists filters and tolerates corrupt storage', () => {
+  localStorage.setItem('table_columnFilters', 'invalid');
+  const props = {
+    columns,
+    data,
+    clearAllFiltersLabel: 'Clear',
+    enableColumnFilters: true,
+    stickyFilters: true,
+    storageKey: 'table',
+  };
+  const view = render(<EditableTableV2 {...props} />);
+  fireEvent.change(screen.getByLabelText('Filter: Name'), { target: { value: 'Zebra' } });
+  expect(JSON.parse(localStorage.getItem('table_columnFilters')!)).toEqual([{ id: 'name', value: 'Zebra' }]);
+  view.unmount();
+  render(<EditableTableV2 {...props} />);
+  expect(rowNames()).toEqual(['Zebra']);
+  fireEvent.click(screen.getByText('Clear'));
+  expect(localStorage.getItem('table_columnFilters')).toBeNull();
 });
 
 test('supports custom renderers, custom editors and row clicks', async () => {
@@ -152,6 +220,20 @@ test('edits select values and saves on blur', async () => {
   await waitFor(() => expect(onSave).toHaveBeenCalledWith(data[0], 'Oak', 'name'));
 });
 
+test('filters numeric ranges', () => {
+  render(
+    <EditableTableV2
+      columns={[{ ...columns[1], filterVariant: 'range' }]}
+      data={data}
+      clearAllFiltersLabel='Clear'
+      enableColumnFilters
+    />
+  );
+  fireEvent.change(screen.getByLabelText('Filter: Count Minimum'), { target: { value: '2' } });
+  expect(screen.queryByText('1')).not.toBeInTheDocument();
+  expect(screen.getByText('3')).toBeInTheDocument();
+});
+
 test('shows unsorted indicators and cycles numeric sorting ascending first', () => {
   render(<EditableTableV2 columns={columns} data={data} clearAllFiltersLabel='Clear' />);
   expect(screen.getAllByTestId('SyncAltIcon')).toHaveLength(2);
@@ -166,6 +248,50 @@ test('shows unsorted indicators and cycles numeric sorting ascending first', () 
   expect(rowNames()).toEqual(['Zebra', 'Acacia']);
   fireEvent.click(screen.getByText('Count'));
   expect(header).not.toHaveAttribute('aria-sort');
+});
+
+test('marks filtered columns and clears search independently from column filters', () => {
+  render(
+    <EditableTableV2
+      columns={columns}
+      data={data}
+      clearAllFiltersLabel='Clear'
+      enableGlobalFilter
+      enableColumnFilters
+    />
+  );
+  expect(screen.queryByLabelText('Filtered: Name')).not.toBeInTheDocument();
+  expect(screen.getByLabelText('Filter: Name')).toHaveAttribute('placeholder', 'Filter by Name');
+  expect(screen.getByLabelText('Search')).toHaveAttribute('placeholder', 'Search');
+  fireEvent.change(screen.getByLabelText('Filter: Name'), { target: { value: 'Zebra' } });
+  const filterIcon = screen.getByLabelText('Filtered: Name');
+  const header = screen.getByRole('columnheader', { name: /Name/ });
+  const sortIcon = header.querySelector('.MuiTableSortLabel-icon')!;
+  expect(filterIcon.compareDocumentPosition(sortIcon) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+  fireEvent.click(filterIcon);
+  expect(header).not.toHaveAttribute('aria-sort');
+  fireEvent.change(screen.getByLabelText('Search'), { target: { value: 'missing' } });
+  fireEvent.click(screen.getByLabelText('Clear search'));
+  expect(rowNames()).toEqual(['Zebra']);
+  expect(screen.getByLabelText('Filtered: Name')).toBeInTheDocument();
+  fireEvent.click(screen.getByText('Clear'));
+  expect(screen.queryByLabelText('Filtered: Name')).not.toBeInTheDocument();
+  expect(rowNames()).toHaveLength(2);
+});
+
+test('supports accessible standard select filters', () => {
+  render(
+    <EditableTableV2
+      columns={[{ ...columns[0], filterVariant: 'select', filterSelectOptions: ['Zebra', 'Acacia'] }]}
+      data={data}
+      clearAllFiltersLabel='Clear'
+      enableColumnFilters
+    />
+  );
+  fireEvent.mouseDown(screen.getByRole('combobox', { name: 'Filter: Name' }));
+  fireEvent.click(screen.getByRole('option', { name: 'Acacia' }));
+  expect(rowNames()).toEqual(['Acacia']);
+  expect(screen.getByLabelText('Filtered: Name')).toBeInTheDocument();
 });
 
 test('automatically selects alphanumeric sorting with fewer than ten rows', () => {
