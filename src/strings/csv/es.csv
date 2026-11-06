@@ -43,6 +43,23 @@ RIGHT_MOUSE,Botón derecho del ratón,d551c809
 SAVE,Guardar,526a3e42
 SHIFT,Shift,4d173d2a
 SWIPE,Deslizar,bc0962fa
+TABLE_ALL,Todos,832a8cf5
+TABLE_COLUMNS,Columnas,ee2f54ee
+TABLE_FILTER,Filtrar,51b390ee
+TABLE_MAX,Máximo,96f88e1f
+TABLE_MIN,Mínimo,f2a882fd
+TABLE_MOVE_BACK,Mover columna hacia atrás,ccaba4fb
+TABLE_MOVE_FORWARD,Mover columna hacia adelante,a7cfa4d3
+TABLE_NEXT_PAGE,Página siguiente,be0bb188
+TABLE_NO_ROWS,No hay registros para mostrar,eb47076d
+TABLE_PIN,Fijar columna,f25241a0
+TABLE_PIN_END,Fijar al final,d0d0c7b9
+TABLE_PIN_START,Fijar al inicio,d1e1d24e
+TABLE_PREVIOUS_PAGE,Página anterior,d87b58b7
+TABLE_ROWS_PER_PAGE,Filas por página,ff461aa5
+TABLE_SAVE_ERROR,"No se pudieron guardar los cambios. Por favor, inténtelo de nuevo.",85668916
+TABLE_SEARCH,Buscar,9f30c236
+TABLE_UNPIN,Sin fijar,acf61315
 TITLE,Título,a5f8fc0b
 TOUCH_DRAG,Tocar y arrastrar,ff6d48d2
 UPLOAD_FILES,Subir archivos,b98547be

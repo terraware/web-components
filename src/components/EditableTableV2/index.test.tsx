@@ -1,0 +1,208 @@
+import React from 'react';
+
+import { fireEvent, render, screen, waitFor, within } from '@testing-library/react';
+
+import EditableTableV2, { EditableTableColumnV2 } from '.';
+
+type Item = { id: string; name: string; count: number };
+const data: Item[] = [
+  { id: 'a', name: 'Zebra', count: 3 },
+  { id: 'b', name: 'Acacia', count: 1 },
+];
+const columns: EditableTableColumnV2<Item>[] = [
+  { id: 'name', header: 'Name', accessorKey: 'name', filterVariant: 'text' },
+  { id: 'count', header: 'Count', accessorKey: 'count', enableEditing: false },
+];
+const rowNames = () =>
+  screen
+    .getAllByRole('row')
+    .slice(1)
+    .map((row) => within(row).getAllByRole('cell')[0].textContent);
+
+test('sorts and filters rows, and clears global and column filters', () => {
+  render(
+    <EditableTableV2
+      columns={columns}
+      data={data}
+      clearAllFiltersLabel='Clear'
+      enableGlobalFilter
+      enableColumnFilters
+      enablePagination={false}
+    />
+  );
+  fireEvent.click(screen.getByText('Name'));
+  expect(rowNames()).toEqual(['Acacia', 'Zebra']);
+  fireEvent.change(screen.getByLabelText('Filter: Name'), { target: { value: 'Zeb' } });
+  expect(rowNames()).toEqual(['Zebra']);
+  fireEvent.change(screen.getByLabelText('Search'), { target: { value: 'missing' } });
+  expect(screen.getByText('No records to display')).toBeInTheDocument();
+  fireEvent.click(screen.getByText('Clear'));
+  expect(rowNames()).toHaveLength(2);
+});
+
+test('saves text once on Enter and cancels on Escape', async () => {
+  const onSave = rstest.fn();
+  render(
+    <EditableTableV2
+      columns={[{ ...columns[0], editConfig: { onSave } }, columns[1]]}
+      data={data}
+      clearAllFiltersLabel='Clear'
+      enableEditing
+    />
+  );
+  fireEvent.doubleClick(screen.getByText('Zebra'));
+  const input = screen.getByLabelText('Name');
+  fireEvent.change(input, { target: { value: 'Oak' } });
+  fireEvent.keyDown(input, { key: 'Enter' });
+  await waitFor(() => expect(onSave).toHaveBeenCalledTimes(1));
+  expect(onSave).toHaveBeenCalledWith(data[0], 'Oak', 'name');
+  await waitFor(() => expect(screen.queryByLabelText('Name')).not.toBeInTheDocument());
+  fireEvent.doubleClick(screen.getByText('Zebra'));
+  fireEvent.keyDown(screen.getByLabelText('Name'), { key: 'Escape' });
+  expect(onSave).toHaveBeenCalledTimes(1);
+  fireEvent.doubleClick(screen.getByText('3'));
+  expect(screen.queryByLabelText('Count')).not.toBeInTheDocument();
+});
+
+test('paginates and renders pinned columns with sticky offsets', () => {
+  render(
+    <EditableTableV2
+      columns={columns}
+      data={data}
+      clearAllFiltersLabel='Clear'
+      enableColumnPinning
+      tableOptions={{
+        initialState: { pagination: { pageSize: 1, pageIndex: 0 }, columnPinning: { start: ['name'], end: ['count'] } },
+      }}
+    />
+  );
+  expect(rowNames()).toEqual(['Zebra']);
+  expect(screen.getByText('Zebra').style.position).toBe('');
+  fireEvent.click(screen.getByLabelText('Next page'));
+  expect(rowNames()).toEqual(['Acacia']);
+  expect(getComputedStyle(screen.getByText('Acacia')).position).toBe('sticky');
+});
+
+test('persists filters and tolerates corrupt storage', () => {
+  localStorage.setItem('table_columnFilters', 'invalid');
+  const props = {
+    columns,
+    data,
+    clearAllFiltersLabel: 'Clear',
+    enableColumnFilters: true,
+    stickyFilters: true,
+    storageKey: 'table',
+  };
+  const view = render(<EditableTableV2 {...props} />);
+  fireEvent.change(screen.getByLabelText('Filter: Name'), { target: { value: 'Zebra' } });
+  expect(JSON.parse(localStorage.getItem('table_columnFilters')!)).toEqual([{ id: 'name', value: 'Zebra' }]);
+  view.unmount();
+  render(<EditableTableV2 {...props} />);
+  expect(rowNames()).toEqual(['Zebra']);
+  fireEvent.click(screen.getByText('Clear'));
+  expect(localStorage.getItem('table_columnFilters')).toBeNull();
+});
+
+test('moves and hides columns using the column controls', () => {
+  render(<EditableTableV2 columns={columns} data={data} clearAllFiltersLabel='Clear' enableColumnOrdering />);
+  fireEvent.click(screen.getByLabelText('Columns'));
+  fireEvent.click(screen.getByLabelText('Move column forward: Name'));
+  expect(screen.getAllByRole('columnheader', { hidden: true }).map((header) => header.textContent)).toEqual([
+    'Count',
+    'Name',
+  ]);
+  fireEvent.click(screen.getByRole('checkbox', { name: 'Name' }));
+  expect(screen.getAllByRole('columnheader', { hidden: true })).toHaveLength(1);
+});
+
+test('supports custom renderers, custom editors and row clicks', async () => {
+  const onSave = rstest.fn();
+  const onRowClick = rstest.fn();
+  render(
+    <EditableTableV2
+      columns={[
+        {
+          ...columns[0],
+          Cell: ({ cell }) => <strong>{cell.getValue<string>()}!</strong>,
+          editConfig: {
+            onSave,
+            editVariant: 'custom',
+            customEditComponent: ({ save }) => <button onClick={() => void save('Oak')}>Save custom</button>,
+          },
+        },
+      ]}
+      data={data}
+      clearAllFiltersLabel='Clear'
+      enableEditing
+      onRowClick={onRowClick}
+    />
+  );
+  fireEvent.click(screen.getByText('Zebra!'));
+  expect(onRowClick).toHaveBeenCalledWith(data[0]);
+  fireEvent.doubleClick(screen.getByText('Zebra!'));
+  fireEvent.click(screen.getByText('Save custom'));
+  await waitFor(() => expect(onSave).toHaveBeenCalledWith(data[0], 'Oak', 'name'));
+  expect(onRowClick).toHaveBeenCalledTimes(1);
+});
+
+test('shows a rejected save and permits retrying', async () => {
+  const onSave = rstest.fn().mockRejectedValueOnce(new Error('failed')).mockResolvedValue(undefined);
+  render(
+    <EditableTableV2
+      columns={[{ ...columns[0], editConfig: { onSave } }]}
+      data={data}
+      clearAllFiltersLabel='Clear'
+      enableEditing
+    />
+  );
+  fireEvent.doubleClick(screen.getByText('Zebra'));
+  fireEvent.change(screen.getByLabelText('Name'), { target: { value: 'Oak' } });
+  fireEvent.blur(screen.getByLabelText('Name'));
+  expect(await screen.findByRole('alert')).toHaveTextContent('Unable to save changes');
+  fireEvent.keyDown(screen.getByLabelText('Name'), { key: 'Enter' });
+  await waitFor(() => expect(screen.queryByLabelText('Name')).not.toBeInTheDocument());
+  expect(onSave).toHaveBeenCalledTimes(2);
+});
+
+test('edits select values and saves on blur', async () => {
+  const onSave = rstest.fn();
+  render(
+    <EditableTableV2
+      columns={[
+        {
+          ...columns[0],
+          editConfig: {
+            onSave,
+            editVariant: 'select',
+            selectOptions: [
+              { label: 'Zebra', value: 'Zebra' },
+              { label: 'Oak', value: 'Oak' },
+            ],
+          },
+        },
+      ]}
+      data={data}
+      clearAllFiltersLabel='Clear'
+      enableEditing
+    />
+  );
+  fireEvent.doubleClick(screen.getByText('Zebra'));
+  fireEvent.mouseDown(screen.getByRole('combobox', { name: 'Name' }));
+  fireEvent.click(screen.getByRole('option', { name: 'Oak' }));
+  fireEvent.blur(screen.getByRole('combobox', { name: 'Name' }));
+  await waitFor(() => expect(onSave).toHaveBeenCalledWith(data[0], 'Oak', 'name'));
+});
+
+test('filters numeric ranges', () => {
+  render(
+    <EditableTableV2
+      columns={[{ ...columns[1], filterVariant: 'range' }]}
+      data={data}
+      clearAllFiltersLabel='Clear'
+      enableColumnFilters
+    />
+  );
+  fireEvent.change(screen.getByLabelText('Filter: Count Minimum'), { target: { value: '2' } });
+  expect(screen.queryByText('1')).not.toBeInTheDocument();
+  expect(screen.getByText('3')).toBeInTheDocument();
+});
