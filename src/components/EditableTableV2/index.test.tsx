@@ -45,6 +45,68 @@ test('only shows the occupation filter in the occupation-only story', () => {
   expect(screen.queryByLabelText('Columns')).not.toBeInTheDocument();
 });
 
+test('uses switches and bulk visibility controls while respecting non-hideable columns', () => {
+  render(
+    <EditableTableV2
+      columns={[{ ...columns[0], enableHiding: false }, columns[1]]}
+      data={data}
+      clearAllFiltersLabel='Clear'
+      showColumnsButton
+    />
+  );
+  fireEvent.click(screen.getByRole('button', { name: 'Columns' }));
+  expect(screen.getByRole('switch', { name: 'Name' })).toBeDisabled();
+  expect(screen.getByRole('switch', { name: 'Count' }).closest('.MuiSwitch-root')).toBeInTheDocument();
+  expect(screen.getByRole('button', { name: 'Show all' })).toBeDisabled();
+  fireEvent.click(screen.getByRole('button', { name: 'Hide all' }));
+  expect(screen.getByRole('switch', { name: 'Name' })).toBeChecked();
+  expect(screen.getByRole('switch', { name: 'Count' })).not.toBeChecked();
+  expect(screen.getByRole('button', { name: 'Hide all' })).toBeDisabled();
+  fireEvent.click(screen.getByRole('button', { name: 'Show all' }));
+  expect(screen.getByRole('switch', { name: 'Count' })).toBeChecked();
+});
+
+test('can hide and restore all columns from the toolbar manager', () => {
+  render(<EditableTableV2 columns={columns} data={data} clearAllFiltersLabel='Clear' showColumnsButton />);
+  fireEvent.click(screen.getByRole('button', { name: 'Columns' }));
+  fireEvent.click(screen.getByRole('button', { name: 'Hide all' }));
+  expect(screen.queryByRole('columnheader', { hidden: true })).not.toBeInTheDocument();
+  fireEvent.keyDown(screen.getByRole('menu'), { key: 'Escape' });
+  fireEvent.click(screen.getByRole('button', { name: 'Columns' }));
+  fireEvent.click(screen.getByRole('button', { name: 'Show all' }));
+  expect(screen.getAllByRole('columnheader', { hidden: true })).toHaveLength(2);
+});
+
+test('toggles search, column filters, density, and fullscreen in the full V2 toolbar story', () => {
+  const view = render(<WithTopToolbar />);
+  expect(screen.getByRole('button', { name: 'Export' })).toBeInTheDocument();
+  fireEvent.click(screen.getByRole('button', { name: 'Show/Hide search' }));
+  expect(screen.queryByPlaceholderText('Search')).not.toBeInTheDocument();
+  fireEvent.click(screen.getByRole('button', { name: 'Show/Hide search' }));
+  expect(screen.getByPlaceholderText('Search')).toBeInTheDocument();
+  expect(screen.queryByLabelText('Filter: Name')).not.toBeInTheDocument();
+  fireEvent.click(screen.getByRole('button', { name: 'Show/Hide filters' }));
+  fireEvent.change(screen.getByLabelText('Filter: Name'), { target: { value: 'Carlos_3' } });
+  expect(rowNames().every((name) => name?.startsWith('Carlos_3'))).toBe(true);
+  fireEvent.click(screen.getByRole('button', { name: 'Show/Hide filters' }));
+  expect(screen.queryByLabelText('Filter: Name')).not.toBeInTheDocument();
+  const cell = screen.getByText('Carlos_3').closest('td')!;
+  expect(getComputedStyle(cell).paddingTop).toBe('16px');
+  fireEvent.click(screen.getByRole('button', { name: 'Toggle density' }));
+  expect(getComputedStyle(cell).paddingTop).toBe('4px');
+  fireEvent.click(screen.getByRole('button', { name: 'Toggle density' }));
+  expect(getComputedStyle(cell).paddingTop).toBe('24px');
+  fireEvent.click(screen.getByRole('button', { name: 'Toggle full screen' }));
+  expect(screen.getByRole('button', { name: 'Toggle full screen' })).toHaveAttribute('aria-pressed', 'true');
+  expect(document.body.style.overflow).toBe('hidden');
+  fireEvent.keyDown(document, { key: 'Escape' });
+  expect(screen.getByRole('button', { name: 'Toggle full screen' })).toHaveAttribute('aria-pressed', 'false');
+  expect(document.body.style.overflow).not.toBe('hidden');
+  fireEvent.click(screen.getByRole('button', { name: 'Toggle full screen' }));
+  view.unmount();
+  expect(document.body.style.overflow).not.toBe('hidden');
+});
+
 test.each([WithFilters, WithClearAllFilters, WithOccupationFilter])(
   'renders a filter story in every bundled locale: %s',
   (Story) => {
@@ -55,9 +117,9 @@ test.each([WithFilters, WithClearAllFilters, WithOccupationFilter])(
         const view = render(<Story />);
         expect(screen.getByRole('combobox', { name: `${strings.TABLE_FILTER}: Occupation` })).toBeInTheDocument();
         fireEvent.click(screen.getByLabelText(`${strings.TABLE_COLUMN_ACTIONS}: Name`));
-        expect(screen.getByRole('menuitem', { name: strings.TABLE_SORT_ASCENDING })).toHaveTextContent(
-          strings.TABLE_SORT_ASCENDING
-        );
+        expect(
+          screen.getByRole('menuitem', { name: strings.TABLE_SORT_ASCENDING.replace('{column}', 'Name') })
+        ).toHaveTextContent(strings.TABLE_SORT_ASCENDING.replace('{column}', 'Name'));
         expect(screen.getByRole('menuitem', { name: strings.TABLE_CLEAR_SORTING })).toHaveAttribute(
           'aria-disabled',
           'true'
@@ -178,7 +240,7 @@ test('moves and hides columns using the column controls', () => {
     'Count',
     'Name',
   ]);
-  fireEvent.click(screen.getByRole('checkbox', { name: 'Name' }));
+  fireEvent.click(screen.getByRole('switch', { name: 'Name' }));
   expect(screen.getAllByRole('columnheader', { hidden: true })).toHaveLength(1);
 });
 
@@ -294,25 +356,23 @@ test('offers per-column sorting and visibility actions without a top toolbar', (
   render(<EditableTableV2 columns={columns} data={data} clearAllFiltersLabel='Clear' enableTopToolbar={false} />);
   const actions = () => fireEvent.click(screen.getByLabelText('Column actions: Count'));
   actions();
-  fireEvent.click(screen.getByRole('menuitem', { name: 'Sort ascending' }));
+  fireEvent.click(screen.getByRole('menuitem', { name: 'Sort by Count ascending' }));
   expect(rowNames()).toEqual(['Acacia', 'Zebra']);
   actions();
-  fireEvent.click(screen.getByRole('menuitem', { name: 'Sort descending' }));
+  fireEvent.click(screen.getByRole('menuitem', { name: 'Sort by Count descending' }));
   expect(rowNames()).toEqual(['Zebra', 'Acacia']);
   actions();
   fireEvent.click(screen.getByRole('menuitem', { name: 'Clear sorting' }));
   expect(screen.getByRole('columnheader', { name: /Count/ })).not.toHaveAttribute('aria-sort');
   actions();
-  expect(screen.queryByRole('checkbox', { name: 'Name' })).not.toBeInTheDocument();
+  expect(screen.queryByRole('menuitem', { name: 'Columns' })).not.toBeInTheDocument();
+  expect(screen.queryByRole('switch', { name: 'Name' })).not.toBeInTheDocument();
   fireEvent.click(screen.getByRole('menuitem', { name: 'Hide Count column' }));
   expect(screen.queryByRole('columnheader', { name: /Count/, hidden: true })).not.toBeInTheDocument();
   fireEvent.click(screen.getByLabelText('Column actions: Name'));
   expect(screen.getByRole('menuitem', { name: 'Hide Name column' })).toHaveAttribute('aria-disabled', 'true');
-  fireEvent.click(screen.getByRole('menuitem', { name: 'Columns' }));
-  expect(screen.getByRole('checkbox', { name: 'Count' })).not.toBeChecked();
-  fireEvent.click(screen.getByRole('checkbox', { name: 'Count' }));
+  fireEvent.click(screen.getByRole('menuitem', { name: 'Show all columns' }));
   expect(screen.getByRole('columnheader', { name: /Count/, hidden: true })).toBeInTheDocument();
-  expect(screen.getByRole('checkbox', { name: 'Name' })).not.toBeDisabled();
 });
 
 test('pins columns and restores hidden columns directly from header action menus', () => {

@@ -3,6 +3,7 @@ import React, { useMemo, useState } from 'react';
 import { StoryFn } from '@storybook/react';
 
 import EditableTableV2, { EditableTableColumnV2 } from '../components/EditableTableV2';
+import EditableTableExportButton from './EditableTableExportButton';
 
 export default { title: 'Editable Table V2', component: EditableTableV2 };
 
@@ -69,7 +70,7 @@ const EditableTableWithStateV2 = ({
   showTopToolbar?: boolean;
 }) => {
   const [data, setData] = useState(() => createRows(rowCount));
-  const filtered = scenario === 'filters' || scenario === 'clearAllFilters';
+  const filtered = scenario === 'filters' || scenario === 'clearAllFilters' || showTopToolbar;
   const withoutPagination = scenario === 'withoutPagination';
   const columns = useMemo<EditableTableColumnV2<RowData>[]>(() => {
     const onSave = (row: RowData, value: unknown, columnId: string) => {
@@ -152,6 +153,24 @@ const EditableTableWithStateV2 = ({
       enableBottomToolbar={!withoutPagination}
       enableGlobalFilter={filtered || showTopToolbar}
       showColumnsButton={showTopToolbar}
+      showGlobalFilterButton={showTopToolbar}
+      showColumnFiltersButton={showTopToolbar}
+      showDensityButton={showTopToolbar}
+      showFullScreenButton={showTopToolbar}
+      renderToolbarInternalActions={
+        showTopToolbar
+          ? ({ table }) => (
+              <EditableTableExportButton
+                getRows={() => [
+                  table.getVisibleLeafColumns().map((column) => column.columnDef.header),
+                  ...table
+                    .getPrePaginatedRowModel()
+                    .rows.map((row) => row.getVisibleCells().map((cell) => cell.getValue())),
+                ]}
+              />
+            )
+          : undefined
+      }
       enableColumnFilters={filtered || scenario === 'occupationFilter'}
       initialSorting={scenario === 'default' ? [{ id: 'name', desc: false }] : undefined}
       onClearAllFilters={scenario === 'clearAllFilters' ? () => console.log('All filters cleared') : undefined}

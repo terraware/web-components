@@ -2,9 +2,16 @@ import React, { useMemo, useState } from 'react';
 
 import { Link, Typography } from '@mui/material';
 import { StoryFn as Story } from '@storybook/react';
-import { MRT_ShowHideColumnsButton } from 'material-react-table';
+import {
+  MRT_ShowHideColumnsButton,
+  MRT_ToggleDensePaddingButton,
+  MRT_ToggleFiltersButton,
+  MRT_ToggleFullScreenButton,
+  MRT_ToggleGlobalFilterButton,
+} from 'material-react-table';
 
 import EditableTable, { EditableTableColumn } from '../components/EditableTable';
+import EditableTableExportButton from './EditableTableExportButton';
 
 export default {
   title: 'Editable Table',
@@ -191,8 +198,38 @@ const EditableTableWithState = ({
       enableSorting={true}
       enablePagination={true}
       enableGlobalFilter={showTopToolbar}
+      tableOptions={
+        showTopToolbar
+          ? {
+              enableColumnFilters: true,
+              initialState: {
+                showGlobalFilter: true,
+                showColumnFilters: false,
+                sorting: [{ id: 'name', desc: false }],
+              },
+            }
+          : undefined
+      }
       renderToolbarInternalActions={
-        showTopToolbar ? ({ table }) => <MRT_ShowHideColumnsButton table={table} /> : undefined
+        showTopToolbar
+          ? ({ table }) => (
+              <>
+                <EditableTableExportButton
+                  getRows={() => [
+                    table.getVisibleLeafColumns().map((column) => column.columnDef.header),
+                    ...table
+                      .getPrePaginationRowModel()
+                      .rows.map((row) => row.getVisibleCells().map((cell) => cell.getValue())),
+                  ]}
+                />
+                <MRT_ToggleGlobalFilterButton table={table} />
+                <MRT_ToggleFiltersButton table={table} />
+                <MRT_ShowHideColumnsButton table={table} />
+                <MRT_ToggleDensePaddingButton table={table} />
+                <MRT_ToggleFullScreenButton table={table} />
+              </>
+            )
+          : undefined
       }
       initialSorting={[{ id: 'name', desc: false }]}
     />
