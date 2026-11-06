@@ -35,7 +35,7 @@
   },
   "scripts": {
     "start": "yarn generate-strings && storybook dev",
-    "build": "yarn generate-strings && storybook build -c .storybook -o public",
+    "build": "storybook build -c .storybook -o public",
     "test": "rstest",
     "test-coverage": "rstest --coverage",
     "format": "prettier --write .",
