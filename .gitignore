@@ -46,3 +46,6 @@ docs/superpowers
 
 # certs
 certs/
+
+# CI record of the last passing tree
+.passed-tree.json
