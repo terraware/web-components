@@ -86,6 +86,7 @@ const EditableTableWithState = ({
         header: 'Name',
         accessorKey: 'name',
         size: 150,
+        filterVariant: showTopToolbar ? 'text' : undefined,
         editConfig: {
           onSave: (row, value, columnId) => {
             setData((prev) => prev.map((item) => (item.id === row.id ? { ...item, [columnId]: value } : item)));
@@ -119,6 +120,8 @@ const EditableTableWithState = ({
         header: 'Occupation',
         accessorKey: 'occupation',
         size: 180,
+        filterVariant: showTopToolbar ? 'select' : undefined,
+        filterSelectOptions: ['Artist', 'Freelancer', 'Business analyst', 'Developer', 'Designer'],
         editConfig: {
           editVariant: 'select',
           selectOptions: [
@@ -138,6 +141,8 @@ const EditableTableWithState = ({
         header: 'Available',
         accessorKey: 'available',
         size: 120,
+        filterVariant: showTopToolbar ? 'select' : undefined,
+        filterSelectOptions: ['yes', 'no'],
         editConfig: {
           editVariant: 'select',
           selectOptions: [
@@ -186,7 +191,7 @@ const EditableTableWithState = ({
         },
       },
     ],
-    []
+    [showTopToolbar]
   );
 
   return (
@@ -198,10 +203,10 @@ const EditableTableWithState = ({
       enableSorting={true}
       enablePagination={true}
       enableGlobalFilter={showTopToolbar}
+      enableColumnFilters={showTopToolbar}
       tableOptions={
         showTopToolbar
           ? {
-              enableColumnFilters: true,
               initialState: {
                 showGlobalFilter: true,
                 showColumnFilters: false,

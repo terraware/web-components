@@ -16,6 +16,7 @@ import {
   MoreVert,
   PushPin,
   Search,
+  SearchOff,
   Sort,
   SyncAlt,
   ViewColumn,
@@ -417,7 +418,7 @@ const EditableTableV2 = <TData extends object>({
         ...(Array.isArray(sx) ? sx : [sx]),
         ...(showDensityButton ? [{ '& td': { py: density === 0 ? '4px' : density === 1 ? '16px' : '24px' } }] : []),
         ...(fullScreen
-          ? [{ position: 'fixed', inset: 0, zIndex: 1200, bgcolor: 'background.paper', overflow: 'auto' }]
+          ? [{ position: 'fixed', inset: 0, m: 0, p: 0, zIndex: 1200, bgcolor: 'background.paper', overflow: 'auto' }]
           : []),
       ]}
     >
@@ -473,7 +474,7 @@ const EditableTableV2 = <TData extends object>({
                     aria-pressed={globalFilterVisible}
                     onClick={() => setGlobalFilterVisible((visible) => !visible)}
                   >
-                    <Search />
+                    {globalFilterVisible ? <SearchOff /> : <Search />}
                   </IconButton>
                 </Tooltip>
               )}
