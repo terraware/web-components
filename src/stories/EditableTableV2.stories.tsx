@@ -63,10 +63,12 @@ const EditableTableWithStateV2 = ({
   rowCount = 50,
   scenario = 'default',
   showTopToolbar = false,
+  pinnedColumns = false,
 }: {
   rowCount?: number;
   scenario?: Scenario;
   showTopToolbar?: boolean;
+  pinnedColumns?: boolean;
 }) => {
   const [data, setData] = useState(() => createRows(rowCount));
   const filtered = scenario === 'filters' || scenario === 'clearAllFilters' || showTopToolbar;
@@ -152,7 +154,14 @@ const EditableTableWithStateV2 = ({
       enableBottomToolbar={!withoutPagination}
       enableGlobalFilter={filtered || showTopToolbar}
       enableColumnFilters={filtered || scenario === 'occupationFilter'}
-      initialSorting={scenario === 'default' ? [{ id: 'name', desc: false }] : undefined}
+      initialSorting={scenario === 'default' && !pinnedColumns ? [{ id: 'name', desc: false }] : undefined}
+      enableColumnPinning={pinnedColumns}
+      sx={pinnedColumns ? { maxWidth: 900 } : undefined}
+      tableOptions={
+        pinnedColumns
+          ? { initialState: { columnPinning: { start: ['name', 'middlename'], end: ['pets', 'previousStudies'] } } }
+          : undefined
+      }
       onClearAllFilters={scenario === 'clearAllFilters' ? () => console.log('All filters cleared') : undefined}
     />
   );
@@ -164,6 +173,8 @@ export const Default = Template.bind({});
 Default.args = { rowCount: 50 };
 
 export const WithFilters = () => <EditableTableWithStateV2 scenario='filters' />;
+
+export const WithPinnedColumns = () => <EditableTableWithStateV2 rowCount={50} pinnedColumns />;
 
 export const WithClearAllFilters = () => <EditableTableWithStateV2 scenario='clearAllFilters' />;
 

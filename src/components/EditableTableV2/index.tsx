@@ -1,4 +1,4 @@
-import React, { CSSProperties, ReactNode, useEffect, useMemo, useState } from 'react';
+import React, { ReactNode, useEffect, useMemo, useState } from 'react';
 
 import {
   ArrowDownward,
@@ -104,14 +104,30 @@ const readFilters = (storageKey?: string): ColumnFiltersState => {
   }
 };
 
-const pinnedStyles = <TData extends object>(column: Column<typeof editableTableFeatures, TData>): CSSProperties => {
+const pinnedStyles = <TData extends object>(column: Column<typeof editableTableFeatures, TData>, theme: Theme) => {
   const position = column.getIsPinned();
+  const background = theme.palette.background.default;
+  const baseBackground = theme.palette.mode === 'dark' ? lighten(background, 0.05) : background;
   return {
     width: column.getSize(),
     minWidth: column.getSize(),
     ...(position && {
-      position: 'sticky',
+      position: 'sticky' as const,
       zIndex: 1,
+      opacity: 0.97,
+      '&::before': {
+        content: '""',
+        position: 'absolute' as const,
+        inset: 0,
+        zIndex: -1,
+        backgroundColor: alpha(darken(baseBackground, theme.palette.mode === 'dark' ? 0.05 : 0.01), 0.97),
+        boxShadow:
+          position === 'start' && column.getIsLastColumn('start')
+            ? `-4px 0 4px -4px ${alpha(theme.palette.grey[700], 0.5)} inset`
+            : position === 'end' && column.getIsFirstColumn('end')
+              ? `4px 0 4px -4px ${alpha(theme.palette.grey[700], 0.5)} inset`
+              : undefined,
+      },
       ...(position === 'start'
         ? { insetInlineStart: column.getStart('start') }
         : { insetInlineEnd: column.getAfter('end') }),
@@ -643,8 +659,8 @@ const EditableTableV2 = <TData extends object>({
                     <TableCell
                       key={column.id}
                       sortDirection={column.getIsSorted() || false}
-                      sx={{
-                        ...pinnedStyles(column),
+                      sx={(theme) => ({
+                        ...pinnedStyles(column, theme),
                         bgcolor: 'background.paper',
                         fontWeight: 'bold',
                         p: 2,
@@ -652,7 +668,7 @@ const EditableTableV2 = <TData extends object>({
                         pb: filtersVisible ? '6.4px' : '9.6px',
                         verticalAlign: 'top',
                         '&:hover .MuiIconButton-root': { opacity: 1 },
-                      }}
+                      })}
                     >
                       <Box display='flex' alignItems='center' sx={{ minHeight: '24px' }}>
                         {column.getCanSort() ? (
@@ -749,14 +765,14 @@ const EditableTableV2 = <TData extends object>({
                                 }
                               : undefined
                           }
-                          sx={{
-                            ...pinnedStyles(column),
+                          sx={(theme) => ({
+                            ...pinnedStyles(column, theme),
                             borderBottom: 'none',
                             bgcolor: rowIndex % 2 === 0 ? 'TwClrBaseGray025' : 'background.paper',
                             cursor: canEdit ? 'pointer' : 'inherit',
                             outlineOffset: '-1px',
                             '&:hover': { outline: canEdit ? '1px solid' : undefined, outlineColor: 'grey.500' },
-                          }}
+                          })}
                         >
                           {editingCell?.id === cell.id ? (
                             <EditableCellV2
