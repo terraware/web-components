@@ -1,6 +1,7 @@
 import { StrictMode } from 'react';
 
 import { act, fireEvent, render, screen, waitFor, within } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 
 import EditableTableV2, { EditableTableColumnV2 } from '.';
 
@@ -138,6 +139,7 @@ test('paginates with first, last, next and previous controls', () => {
 });
 
 test('supports custom renderers, custom editors and row clicks', async () => {
+  const user = userEvent.setup();
   const onSave = rstest.fn();
   const onRowClick = rstest.fn();
   render(
@@ -152,6 +154,7 @@ test('supports custom renderers, custom editors and row clicks', async () => {
             customEditComponent: ({ save }) => <button onClick={() => void save('Oak')}>Save custom</button>,
           },
         },
+        columns[1],
       ]}
       data={data}
       clearAllFiltersLabel='Clear'
@@ -159,13 +162,40 @@ test('supports custom renderers, custom editors and row clicks', async () => {
       onRowClick={onRowClick}
     />
   );
-  fireEvent.click(screen.getByText('Zebra!'));
-  expect(onRowClick).toHaveBeenCalledWith(data[0]);
-  fireEvent.doubleClick(screen.getByText('Zebra!'));
-  fireEvent.click(screen.getByText('Save custom'));
+  await user.click(screen.getByText('Zebra!'));
+  expect(onRowClick).not.toHaveBeenCalled();
+  await user.dblClick(screen.getByText('Zebra!'));
+  expect(onRowClick).not.toHaveBeenCalled();
+  await user.click(screen.getByText('Save custom'));
   await waitFor(() => expect(onSave).toHaveBeenCalledWith(data[0], 'Oak', 'name'));
+  expect(onRowClick).not.toHaveBeenCalled();
+  await user.click(screen.getByText('3'));
+  expect(onRowClick).toHaveBeenCalledWith(data[0]);
   expect(onRowClick).toHaveBeenCalledTimes(1);
 });
+
+test.each([false, true])(
+  'only consumes clicks on cells that can be edited (enableEditing: %s)',
+  async (enableEditing) => {
+    const user = userEvent.setup();
+    const onRowClick = rstest.fn();
+    render(
+      <EditableTableV2
+        columns={[{ ...columns[0], enableEditing: (row) => row.original.id === 'a' }]}
+        data={data}
+        clearAllFiltersLabel='Clear'
+        enableEditing={enableEditing}
+        onRowClick={onRowClick}
+      />
+    );
+    await user.click(screen.getByText('Zebra'));
+    expect(onRowClick).toHaveBeenCalledTimes(enableEditing ? 0 : 1);
+    await user.click(screen.getByText('Acacia'));
+    expect(onRowClick).toHaveBeenLastCalledWith(data[1]);
+    expect(onRowClick).toHaveBeenCalledTimes(enableEditing ? 1 : 2);
+    expect(screen.queryByLabelText('Name')).not.toBeInTheDocument();
+  }
+);
 
 test('shows a rejected save and permits retrying', async () => {
   const onSave = rstest.fn().mockRejectedValueOnce(new Error('failed')).mockResolvedValue(undefined);
