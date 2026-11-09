@@ -88,6 +88,31 @@ test.each([false, true])('keeps the current editor open when an older save resol
   expect(onSave).toHaveBeenCalledTimes(1);
 });
 
+test('clears the edit session when saving removes the row from view', async () => {
+  let resolveSave!: () => void;
+  const onSave = rstest.fn(
+    () =>
+      new Promise<void>((resolve) => {
+        resolveSave = resolve;
+      })
+  );
+  const editableColumns = [{ ...columns[0], editConfig: { onSave } }];
+  const table = (rows: Item[]) => (
+    <EditableTableV2 columns={editableColumns} data={rows} clearAllFiltersLabel='Clear' enableEditing />
+  );
+  const { rerender } = render(table(data));
+  fireEvent.doubleClick(screen.getByText('Zebra'));
+  fireEvent.change(screen.getByLabelText('Name'), { target: { value: 'Oak' } });
+  fireEvent.keyDown(screen.getByLabelText('Name'), { key: 'Enter' });
+  expect(onSave).toHaveBeenCalledTimes(1);
+  rerender(table([]));
+  expect(screen.queryByLabelText('Name')).not.toBeInTheDocument();
+  await act(async () => resolveSave());
+  rerender(table(data));
+  expect(screen.getByText('Zebra')).toBeInTheDocument();
+  expect(screen.queryByLabelText('Name')).not.toBeInTheDocument();
+});
+
 test('paginates with first, last, next and previous controls', () => {
   render(
     <EditableTableV2

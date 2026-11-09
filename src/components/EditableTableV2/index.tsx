@@ -74,7 +74,7 @@ const EditableTableV2 = <TData extends object>({
   sx,
 }: EditableTablePropsV2<TData>) => {
   const strings = useStrings();
-  const [editingCell, setEditingCell] = useState<string | null>(null);
+  const [editingCell, setEditingCell] = useState<{ id: string } | null>(null);
   const tableColumns = useMemo<ColumnDef<typeof editableTableFeatures, TData>[]>(
     () =>
       columns.map((column) => ({
@@ -200,13 +200,13 @@ const EditableTableV2 = <TData extends object>({
                       <TableCell
                         key={cell.id}
                         tabIndex={canEdit ? 0 : undefined}
-                        onDoubleClick={canEdit ? () => setEditingCell(cell.id) : undefined}
+                        onDoubleClick={canEdit ? () => setEditingCell({ id: cell.id }) : undefined}
                         onKeyDown={
                           canEdit
                             ? (event) => {
                                 if (event.key === 'Enter' || event.key === 'F2') {
                                   event.preventDefault();
-                                  setEditingCell(cell.id);
+                                  setEditingCell({ id: cell.id });
                                 }
                               }
                             : undefined
@@ -220,12 +220,12 @@ const EditableTableV2 = <TData extends object>({
                           '&:hover': { outline: canEdit ? '1px solid' : undefined, outlineColor: 'grey.500' },
                         }}
                       >
-                        {editingCell === cell.id ? (
+                        {editingCell?.id === cell.id ? (
                           <EditableCellV2
                             key={cell.id}
                             cell={cell}
                             column={definition}
-                            onClose={() => setEditingCell(null)}
+                            onClose={() => setEditingCell((current) => (current === editingCell ? null : current))}
                           />
                         ) : definition.Cell ? (
                           <definition.Cell {...cell.getContext()} />
