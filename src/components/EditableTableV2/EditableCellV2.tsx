@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 
 import { Alert, Box, MenuItem, TextField } from '@mui/material';
 
@@ -17,25 +17,17 @@ const EditableCellV2 = <TData extends object>({ cell, column, onClose }: Props<T
   const [isSaving, setIsSaving] = useState(false);
   const [failed, setFailed] = useState(false);
   const finished = useRef(false);
-  const mounted = useRef(false);
   const config = column.editConfig;
 
-  useEffect(() => {
-    mounted.current = true;
-    return () => {
-      mounted.current = false;
-    };
-  }, []);
-
   const cancel = () => {
-    if (mounted.current && !isSaving) {
+    if (!isSaving) {
       finished.current = true;
       onClose();
     }
   };
 
   const save = async (nextValue: unknown) => {
-    if (!mounted.current || finished.current) {
+    if (finished.current) {
       return;
     }
     finished.current = true;
@@ -45,18 +37,12 @@ const EditableCellV2 = <TData extends object>({ cell, column, onClose }: Props<T
       if (nextValue !== (cell.getValue() ?? '')) {
         await config?.onSave?.(cell.row.original, nextValue, column.id);
       }
-      if (mounted.current) {
-        onClose();
-      }
+      onClose();
     } catch {
-      if (mounted.current) {
-        finished.current = false;
-        setFailed(true);
-      }
+      finished.current = false;
+      setFailed(true);
     } finally {
-      if (mounted.current) {
-        setIsSaving(false);
-      }
+      setIsSaving(false);
     }
   };
 
