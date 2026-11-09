@@ -200,6 +200,7 @@ const EditableTableV2 = <TData extends object>({
                       <TableCell
                         key={cell.id}
                         tabIndex={canEdit ? 0 : undefined}
+                        onClick={canEdit ? (event) => event.stopPropagation() : undefined}
                         onDoubleClick={canEdit ? () => setEditingCell({ id: cell.id }) : undefined}
                         onKeyDown={
                           canEdit
