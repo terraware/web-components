@@ -1,4 +1,6 @@
-import { fireEvent, render, screen, waitFor, within } from '@testing-library/react';
+import { StrictMode } from 'react';
+
+import { act, fireEvent, render, screen, waitFor, within } from '@testing-library/react';
 
 import EditableTableV2, { EditableTableColumnV2 } from '.';
 
@@ -48,6 +50,42 @@ test('saves text once on Enter and cancels on Escape', async () => {
   expect(onSave).toHaveBeenCalledTimes(1);
   fireEvent.doubleClick(screen.getByText('3'));
   expect(screen.queryByLabelText('Count')).not.toBeInTheDocument();
+});
+
+test.each([false, true])('keeps the current editor open when an older save resolves (reopen: %s)', async (reopen) => {
+  let resolveSave!: () => void;
+  const onSave = rstest.fn(
+    () =>
+      new Promise<void>((resolve) => {
+        resolveSave = resolve;
+      })
+  );
+  render(
+    <StrictMode>
+      <EditableTableV2
+        columns={[{ ...columns[0], editConfig: { onSave } }]}
+        data={data}
+        clearAllFiltersLabel='Clear'
+        enableEditing
+      />
+    </StrictMode>
+  );
+  fireEvent.doubleClick(screen.getByText('Zebra'));
+  fireEvent.change(screen.getByLabelText('Name'), { target: { value: 'Oak' } });
+  fireEvent.keyDown(screen.getByLabelText('Name'), { key: 'Enter' });
+  expect(onSave).toHaveBeenCalledWith(data[0], 'Oak', 'name');
+  expect(screen.getByLabelText('Name')).toBeDisabled();
+  fireEvent.doubleClick(screen.getByText('Acacia'));
+  if (reopen) {
+    fireEvent.keyDown(screen.getByLabelText('Name'), { key: 'Escape' });
+    fireEvent.doubleClick(screen.getByText('Zebra'));
+  }
+  const currentInput = screen.getByLabelText('Name');
+  fireEvent.change(currentInput, { target: { value: 'Unsaved edit' } });
+  await act(async () => resolveSave());
+  expect(screen.getByLabelText('Name')).toBe(currentInput);
+  expect(currentInput).toHaveValue('Unsaved edit');
+  expect(onSave).toHaveBeenCalledTimes(1);
 });
 
 test('paginates with first, last, next and previous controls', () => {
