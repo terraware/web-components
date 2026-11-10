@@ -80,7 +80,12 @@ test.each([
     });
   });
   screen.getByLabelText('Drag column: Name').focus();
-  await user.keyboard(`[Space][ArrowRight]${cancel ? '[Escape]' : '[Space]'}`);
+  await user.keyboard('[Space]');
+  expect(screen.getByTestId('column-drag-overlay')).toHaveTextContent('Name');
+  expect(headers[0]).toHaveStyle({ outline: '1px dashed #9e9e9e' });
+  await user.keyboard('[ArrowRight]');
+  await user.keyboard(cancel ? '[Escape]' : '[Space]');
+  expect(screen.queryByTestId('column-drag-overlay')).not.toBeInTheDocument();
   await waitFor(() => expect(screen.getAllByRole('columnheader')[0]).toHaveTextContent(reordered ? 'Count' : 'Name'));
   expect(within(screen.getAllByRole('row')[1]).getAllByRole('cell')[0]).toHaveTextContent(reordered ? '3' : 'Zebra');
   if (controlled) {
