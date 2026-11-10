@@ -64,11 +64,13 @@ const EditableTableWithStateV2 = ({
   rowCount = 50,
   scenario = 'default',
   showTopToolbar = false,
+  columnDragging = false,
   pinnedColumns = false,
 }: {
   rowCount?: number;
   scenario?: Scenario;
   showTopToolbar?: boolean;
+  columnDragging?: boolean;
   pinnedColumns?: boolean;
 }) => {
   const [data, setData] = useState(() => createRows(rowCount));
@@ -154,6 +156,8 @@ const EditableTableWithStateV2 = ({
       enablePagination={!withoutPagination}
       enableBottomToolbar={!withoutPagination}
       enableGlobalFilter={filtered || showTopToolbar}
+      enableColumnDragging={columnDragging}
+      enableColumnOrdering={columnDragging}
       showColumnsButton={showTopToolbar}
       showGlobalFilterButton={showTopToolbar}
       showColumnFiltersButton={showTopToolbar}
@@ -193,6 +197,8 @@ export const Default = Template.bind({});
 Default.args = { rowCount: 50 };
 
 export const WithTopToolbar = () => <EditableTableWithStateV2 rowCount={50} showTopToolbar />;
+
+export const WithColumnDragging = () => <EditableTableWithStateV2 rowCount={10} showTopToolbar columnDragging />;
 
 export const WithFilters = () => <EditableTableWithStateV2 scenario='filters' />;
 

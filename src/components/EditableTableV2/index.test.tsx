@@ -29,6 +29,66 @@ const rowNames = () =>
     .map((row) => within(row).getAllByRole('cell')[0].textContent);
 
 test.each([
+  { enableColumnDragging: false, enableColumnOrdering: false, handles: 0 },
+  { enableColumnDragging: true, enableColumnOrdering: false, handles: 2 },
+  { enableColumnDragging: false, enableColumnOrdering: true, handles: 2 },
+])('gates header and manager dragging: %j', (props) => {
+  render(<EditableTableV2 columns={columns} data={[]} clearAllFiltersLabel='Clear' showColumnsButton {...props} />);
+  expect(screen.queryAllByLabelText(/^Drag column:/)).toHaveLength(props.handles);
+  fireEvent.click(screen.getByRole('button', { name: 'Columns' }));
+  expect(within(screen.getByRole('menu')).queryAllByLabelText(/^Drag column:/)).toHaveLength(
+    props.enableColumnOrdering ? 2 : 0
+  );
+});
+
+test.each([
+  { start: [], reordered: true, controlled: false, cancel: false },
+  { start: ['name', 'count'], reordered: true, controlled: false, cancel: false },
+  { start: ['name'], reordered: false, controlled: false, cancel: false },
+  { start: [], reordered: false, controlled: true, cancel: false },
+  { start: [], reordered: false, controlled: false, cancel: true },
+])('handles keyboard column drops: %j', async ({ start, reordered, controlled, cancel }) => {
+  const user = userEvent.setup();
+  const onColumnOrderChange = rs.fn((updater: string[] | ((previous: string[]) => string[])) =>
+    typeof updater === 'function' ? updater(['name', 'count']) : updater
+  );
+  render(
+    <EditableTableV2
+      columns={columns}
+      data={data}
+      clearAllFiltersLabel='Clear'
+      enableColumnDragging
+      enableColumnPinning
+      tableOptions={{
+        initialState: { columnPinning: { start, end: [] } },
+        ...(controlled && { state: { columnOrder: ['name', 'count'] }, onColumnOrderChange }),
+      }}
+    />
+  );
+  const headers = screen.getAllByRole('columnheader');
+  headers.forEach((header, index) => {
+    header.getBoundingClientRect = () => ({
+      x: index * 200,
+      y: 0,
+      left: index * 200,
+      right: (index + 1) * 200,
+      top: 0,
+      bottom: 50,
+      width: 200,
+      height: 50,
+      toJSON: () => ({}),
+    });
+  });
+  screen.getByLabelText('Drag column: Name').focus();
+  await user.keyboard(`[Space][ArrowRight]${cancel ? '[Escape]' : '[Space]'}`);
+  await waitFor(() => expect(screen.getAllByRole('columnheader')[0]).toHaveTextContent(reordered ? 'Count' : 'Name'));
+  expect(within(screen.getAllByRole('row')[1]).getAllByRole('cell')[0]).toHaveTextContent(reordered ? '3' : 'Zebra');
+  if (controlled) {
+    expect(onColumnOrderChange.mock.results[0].value).toEqual(['count', 'name']);
+  }
+});
+
+test.each([
   { name: 'MRT', Story: WithTopToolbarLegacy, columnsLabel: 'Show/Hide columns' },
   { name: 'V2', Story: WithTopToolbar, columnsLabel: 'Columns' },
 ])('shows search and column controls in the $name toolbar story', ({ Story, columnsLabel }) => {
