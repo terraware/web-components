@@ -12,7 +12,7 @@ import {
   useSensors,
 } from '@dnd-kit/core';
 import { SortableContext, sortableKeyboardCoordinates, useSortable } from '@dnd-kit/sortable';
-import { DragIndicator } from '@mui/icons-material';
+import { DragHandle } from '@mui/icons-material';
 import {
   Box,
   IconButton,
@@ -24,6 +24,7 @@ import {
   TableCellProps,
   TableContainer,
   TableContainerProps,
+  Tooltip,
   useTheme,
 } from '@mui/material';
 
@@ -131,17 +132,29 @@ const useColumnDrag = ({ id, label, enabled }: ColumnDragProps, activeOutlineWid
     outlineOffset: '-2px',
   };
   const handle = enabled && (
-    <IconButton
-      size='small'
-      ref={setActivatorNodeRef}
-      {...attributes}
-      {...listeners}
-      aria-label={`${strings.TABLE_DRAG_COLUMN}: ${label}`}
-      sx={{ touchAction: 'none', cursor: 'grab' }}
-      onClick={(event) => event.stopPropagation()}
-    >
-      <DragIndicator fontSize='small' />
-    </IconButton>
+    <Tooltip title={strings.TABLE_MOVE} placement='top'>
+      <IconButton
+        size='small'
+        disableRipple
+        ref={setActivatorNodeRef}
+        {...attributes}
+        {...listeners}
+        aria-label={`${strings.TABLE_DRAG_COLUMN}: ${label}`}
+        sx={{
+          touchAction: 'none',
+          cursor: 'grab',
+          '&:active': { cursor: 'grabbing' },
+          '&:hover': { backgroundColor: 'transparent', opacity: 1 },
+          m: '0 -0.1rem',
+          opacity: 0.5,
+          p: '2px',
+          transition: 'all 150ms ease-in-out',
+        }}
+        onClick={(event) => event.stopPropagation()}
+      >
+        <DragHandle />
+      </IconButton>
+    </Tooltip>
   );
   return { ref, handle, dragStyles, isDragging };
 };
