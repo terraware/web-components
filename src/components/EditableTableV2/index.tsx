@@ -813,7 +813,6 @@ const EditableTableV2 = <TData extends object>({
                       })}
                     >
                       <Box display='flex' alignItems='center' sx={{ minHeight: '24px' }}>
-                        <ColumnDragHandle />
                         {column.getCanSort() ? (
                           <TableSortLabel
                             active={!!column.getIsSorted()}
@@ -836,6 +835,7 @@ const EditableTableV2 = <TData extends object>({
                         ) : (
                           header
                         )}
+                        <ColumnDragHandle />
                         {enableColumnActions && (column.getCanSort() || column.getCanFilter() || controlsEnabled) && (
                           <IconButton
                             size='small'

@@ -28,6 +28,29 @@ const rowNames = () =>
     .slice(1)
     .map((row) => within(row).getAllByRole('cell')[0].textContent);
 
+test('matches the MRT handle icon, tooltip, and header action placement', async () => {
+  const user = userEvent.setup();
+  render(
+    <EditableTableV2 columns={columns} data={[]} clearAllFiltersLabel='Clear' enableColumnOrdering showColumnsButton />
+  );
+  const header = screen.getAllByRole('columnheader')[0];
+  const handle = within(header).getByLabelText('Drag column: Name');
+  expect(within(handle).getByTestId('DragHandleIcon')).toBeInTheDocument();
+  const buttons = within(header).getAllByRole('button');
+  expect(buttons.map((button) => button.getAttribute('aria-label'))).toEqual([
+    null,
+    'Drag column: Name',
+    'Column actions: Name',
+  ]);
+  await user.hover(handle);
+  expect(await screen.findByRole('tooltip')).toHaveTextContent('Move');
+  await user.unhover(handle);
+  fireEvent.click(screen.getByRole('button', { name: 'Columns' }));
+  const item = within(screen.getByRole('menu')).getByLabelText('Drag column: Name').closest('li')!;
+  expect(within(item).getAllByRole('button')[0]).toHaveAttribute('aria-label', 'Drag column: Name');
+  expect(within(item).getByTestId('DragHandleIcon')).toBeInTheDocument();
+});
+
 test.each([
   { enableColumnDragging: false, enableColumnOrdering: false, handles: 0 },
   { enableColumnDragging: true, enableColumnOrdering: false, handles: 2 },
