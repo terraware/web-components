@@ -1,5 +1,7 @@
 import React, { ReactNode, useEffect, useMemo, useState } from 'react';
 
+import { DragEndEvent } from '@dnd-kit/core';
+import { arrayMove } from '@dnd-kit/sortable';
 import {
   ArrowDownward,
   ArrowUpward,
@@ -30,7 +32,6 @@ import {
   IconButton,
   InputAdornment,
   ListItemIcon,
-  Menu,
   MenuItem,
   Button as MuiButton,
   Paper,
@@ -39,7 +40,6 @@ import {
   Table,
   TableBody,
   TableCell,
-  TableContainer,
   TableContainerProps,
   TableHead,
   TablePagination,
@@ -55,6 +55,13 @@ import { Column, ColumnDef, ColumnFiltersState, useTable } from '@tanstack/react
 
 import { useStrings } from '../../strings';
 import Button from '../Button/Button';
+import {
+  ColumnDragHandle,
+  ColumnDragMenu,
+  ColumnDragTableContainer,
+  DraggableColumnHeader,
+  DraggableColumnItem,
+} from './ColumnDragging';
 import EditableCellV2 from './EditableCellV2';
 import { EditableTableColumnV2, EditableTableInstanceV2, EditableTableOptionsV2, editableTableFeatures } from './types';
 
@@ -74,6 +81,7 @@ export type EditableTablePropsV2<TData extends object> = {
   enableClearAllFilters?: boolean;
   enableEditing?: boolean;
   enableColumnOrdering?: boolean;
+  enableColumnDragging?: boolean;
   enableColumnActions?: boolean;
   showColumnsButton?: boolean;
   showGlobalFilterButton?: boolean;
@@ -259,6 +267,7 @@ const EditableTableV2 = <TData extends object>({
   enableClearAllFilters = true,
   enableEditing = false,
   enableColumnOrdering = false,
+  enableColumnDragging = false,
   enableColumnActions = true,
   showColumnsButton = false,
   showGlobalFilterButton = false,
@@ -426,6 +435,26 @@ const EditableTableV2 = <TData extends object>({
     }
   };
 
+  const reorderColumns = ({ active, over }: DragEndEvent) => {
+    if (!over || active.id === over.id) {
+      return;
+    }
+    const source = table.getAllLeafColumns().find((column) => column.id === active.id);
+    const target = table.getAllLeafColumns().find((column) => column.id === over.id);
+    if (!source || !target || source.getIsPinned() !== target.getIsPinned()) {
+      return;
+    }
+    const pin = source.getIsPinned();
+    const order = table.getAllLeafColumns().map((column) => column.id);
+    table.setColumnOrder(arrayMove(order, order.indexOf(source.id), order.indexOf(target.id)));
+    if (pin) {
+      table.setColumnPinning((previous) => {
+        const group = previous[pin] ?? [];
+        return { ...previous, [pin]: arrayMove(group, group.indexOf(source.id), group.indexOf(target.id)) };
+      });
+    }
+  };
+
   return (
     <Box
       minHeight='160px'
@@ -540,7 +569,13 @@ const EditableTableV2 = <TData extends object>({
             </Box>
           </Toolbar>
         )}
-        <Menu anchorEl={menuAnchor} open={!!menuAnchor} onClose={() => setMenuAnchor(null)}>
+        <ColumnDragMenu
+          ids={table.getAllLeafColumns().map((column) => column.id)}
+          onDragEnd={reorderColumns}
+          anchorEl={menuAnchor}
+          open={!!menuAnchor}
+          onClose={() => setMenuAnchor(null)}
+        >
           {menuColumnId &&
             table.getColumn(menuColumnId)?.getCanSort() &&
             [
@@ -670,7 +705,15 @@ const EditableTableV2 = <TData extends object>({
             (column, index, allColumns) =>
               !menuColumnId &&
               controlsEnabled && (
-                <MenuItem key={column.id} disableRipple sx={{ my: 0, py: '6px', pl: '16px' }}>
+                <DraggableColumnItem
+                  key={column.id}
+                  id={column.id}
+                  label={definitions.get(column.id)!.header}
+                  enabled={enableColumnOrdering}
+                  disableRipple
+                  sx={{ my: 0, py: '6px', pl: '16px' }}
+                >
+                  <ColumnDragHandle />
                   <FormControlLabel
                     label={definitions.get(column.id)?.header}
                     slotProps={{ typography: { sx: { mb: 0 } } }}
@@ -723,11 +766,15 @@ const EditableTableV2 = <TData extends object>({
                       <MenuItem value='end'>{strings.TABLE_PIN_END}</MenuItem>
                     </TextField>
                   )}
-                </MenuItem>
+                </DraggableColumnItem>
               )
           )}
-        </Menu>
-        <TableContainer {...containerProps}>
+        </ColumnDragMenu>
+        <ColumnDragTableContainer
+          {...containerProps}
+          ids={orderedColumns.map((column) => column.id)}
+          onDragEnd={reorderColumns}
+        >
           <Table sx={{ minWidth: table.getTotalSize() }}>
             <TableHead>
               <TableRow>
@@ -748,8 +795,11 @@ const EditableTableV2 = <TData extends object>({
                     </>
                   );
                   return (
-                    <TableCell
+                    <DraggableColumnHeader
                       key={column.id}
+                      id={column.id}
+                      label={definitions.get(column.id)!.header}
+                      enabled={enableColumnDragging || enableColumnOrdering}
                       sortDirection={column.getIsSorted() || false}
                       sx={(theme) => ({
                         ...pinnedStyles(column, theme),
@@ -763,6 +813,7 @@ const EditableTableV2 = <TData extends object>({
                       })}
                     >
                       <Box display='flex' alignItems='center' sx={{ minHeight: '24px' }}>
+                        <ColumnDragHandle />
                         {column.getCanSort() ? (
                           <TableSortLabel
                             active={!!column.getIsSorted()}
@@ -810,7 +861,7 @@ const EditableTableV2 = <TData extends object>({
                       {filtersVisible && column.getCanFilter() && (
                         <ColumnFilter column={column} definition={definitions.get(column.id)!} />
                       )}
-                    </TableCell>
+                    </DraggableColumnHeader>
                   );
                 })}
               </TableRow>
@@ -891,7 +942,7 @@ const EditableTableV2 = <TData extends object>({
               )}
             </TableBody>
           </Table>
-        </TableContainer>
+        </ColumnDragTableContainer>
         {enablePagination && enableBottomToolbar && (
           <TablePagination
             component='div'
