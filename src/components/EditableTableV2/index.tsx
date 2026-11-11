@@ -34,6 +34,7 @@ import {
   Table,
   TableBody,
   TableCell,
+  TableCellProps,
   TableContainerProps,
   TableHead,
   TablePagination,
@@ -45,7 +46,7 @@ import {
   Tooltip,
 } from '@mui/material';
 import { alpha, darken, lighten, useTheme } from '@mui/material/styles';
-import { Column, ColumnDef, ColumnFiltersState, functionalUpdate, useTable } from '@tanstack/react-table';
+import { Column, ColumnDef, ColumnFiltersState, Row, functionalUpdate, useTable } from '@tanstack/react-table';
 import { MRT_FilterFns, MRT_SortingFns } from 'material-react-table';
 
 import { useStrings } from '../../strings';
@@ -68,7 +69,13 @@ import {
   EditableTableToolbarRoot,
 } from './ToolbarButtons';
 import { toInternalPinning, toPublicPinning } from './pinning';
-import { EditableTableColumnV2, EditableTableInstanceV2, EditableTableOptionsV2, editableTableFeatures } from './types';
+import {
+  EditableTableCellV2,
+  EditableTableColumnV2,
+  EditableTableInstanceV2,
+  EditableTableOptionsV2,
+  editableTableFeatures,
+} from './types';
 
 export type {
   EditableTableColumnPinningV2,
@@ -89,6 +96,7 @@ export type EditableTablePropsV2<TData extends object> = {
   enableColumnOrdering?: boolean;
   enableColumnDragging?: boolean;
   enableColumnActions?: boolean;
+  enableShowAllColumnsMenuItem?: boolean;
   showColumnsButton?: boolean;
   showGlobalFilterButton?: boolean;
   showColumnFiltersButton?: boolean;
@@ -98,6 +106,7 @@ export type EditableTablePropsV2<TData extends object> = {
   enableHiding?: boolean;
   enableSorting?: boolean;
   enableGlobalFilter?: boolean;
+  positionGlobalFilter?: 'left' | 'right';
   enableColumnFilters?: boolean;
   stickyFilters?: boolean;
   storageKey?: string;
@@ -108,6 +117,21 @@ export type EditableTablePropsV2<TData extends object> = {
   onClearAllFilters?: () => void;
   onRowClick?: (row: TData) => void;
   renderToolbarInternalActions?: (props: { table: EditableTableInstanceV2<TData> }) => ReactNode;
+  renderTopToolbarCustomActions?: (props: { table: EditableTableInstanceV2<TData> }) => ReactNode;
+  muiTableHeadCellProps?:
+    | TableCellProps
+    | ((args: {
+        column: Column<typeof editableTableFeatures, TData>;
+        table: EditableTableInstanceV2<TData>;
+      }) => TableCellProps);
+  muiTableBodyCellProps?:
+    | TableCellProps
+    | ((args: {
+        cell: EditableTableCellV2<TData>;
+        column: Column<typeof editableTableFeatures, TData>;
+        row: Row<typeof editableTableFeatures, TData>;
+        table: EditableTableInstanceV2<TData>;
+      }) => TableCellProps);
   tableOptions?: EditableTableOptionsV2<TData>;
   containerProps?: TableContainerProps;
   sx?: SxProps<Theme>;
@@ -294,6 +318,7 @@ const EditableTableV2 = <TData extends object>({
   enableColumnOrdering = false,
   enableColumnDragging = false,
   enableColumnActions = true,
+  enableShowAllColumnsMenuItem = true,
   showColumnsButton = false,
   showGlobalFilterButton = false,
   showColumnFiltersButton = false,
@@ -303,6 +328,7 @@ const EditableTableV2 = <TData extends object>({
   enableHiding = true,
   enableSorting = true,
   enableGlobalFilter = false,
+  positionGlobalFilter = 'left',
   enableColumnFilters = false,
   stickyFilters = false,
   storageKey,
@@ -313,6 +339,9 @@ const EditableTableV2 = <TData extends object>({
   onClearAllFilters,
   onRowClick,
   renderToolbarInternalActions,
+  renderTopToolbarCustomActions,
+  muiTableHeadCellProps,
+  muiTableBodyCellProps,
   tableOptions,
   containerProps,
   sx,
@@ -621,6 +650,33 @@ const EditableTableV2 = <TData extends object>({
     }
   };
 
+  const searchField = enableGlobalFilter && globalFilterVisible && (
+    <TextField
+      placeholder={strings.TABLE_SEARCH}
+      size='small'
+      slotProps={{
+        htmlInput: { 'aria-label': strings.TABLE_SEARCH },
+        input: {
+          startAdornment: <Search sx={{ mr: '4px' }} />,
+          endAdornment: (
+            <InputAdornment position='end'>
+              <IconButton
+                size='small'
+                aria-label={strings.TABLE_CLEAR_SEARCH}
+                disabled={!table.state.globalFilter}
+                onClick={() => table.setGlobalFilter('')}
+              >
+                <Close />
+              </IconButton>
+            </InputAdornment>
+          ),
+        },
+      }}
+      value={table.state.globalFilter ?? ''}
+      onChange={(event) => table.setGlobalFilter(event.target.value)}
+    />
+  );
+
   return (
     <EditableTableToolbarRoot
       value={{
@@ -664,33 +720,10 @@ const EditableTableV2 = <TData extends object>({
               boxSizing: 'border-box',
             }}
           >
-            {enableGlobalFilter && globalFilterVisible && (
-              <TextField
-                placeholder={strings.TABLE_SEARCH}
-                size='small'
-                slotProps={{
-                  htmlInput: { 'aria-label': strings.TABLE_SEARCH },
-                  input: {
-                    startAdornment: <Search sx={{ mr: '4px' }} />,
-                    endAdornment: (
-                      <InputAdornment position='end'>
-                        <IconButton
-                          size='small'
-                          aria-label={strings.TABLE_CLEAR_SEARCH}
-                          disabled={!table.state.globalFilter}
-                          onClick={() => table.setGlobalFilter('')}
-                        >
-                          <Close />
-                        </IconButton>
-                      </InputAdornment>
-                    ),
-                  },
-                }}
-                value={table.state.globalFilter ?? ''}
-                onChange={(event) => table.setGlobalFilter(event.target.value)}
-              />
-            )}
+            {positionGlobalFilter === 'left' && searchField}
+            {renderTopToolbarCustomActions?.({ table })}
             <Box flexGrow={1} />
+            {positionGlobalFilter === 'right' && searchField}
             {enableClearAllFilters && hasFilters && (
               <Button label={clearAllFiltersLabel} priority='ghost' size='small' onClick={clearFilters} />
             )}
@@ -812,7 +845,7 @@ const EditableTableV2 = <TData extends object>({
               {strings.TABLE_HIDE_COLUMN.replace('{column}', definitions.get(menuColumnId)!.header)}
             </ColumnActionMenuItemV2>
           )}
-          {menuColumnId && enableHiding && (
+          {menuColumnId && enableHiding && enableShowAllColumnsMenuItem && (
             <ColumnActionMenuItemV2
               icon={<ViewColumn />}
               disabled={table.getAllLeafColumns().every((column) => column.getIsVisible() || !column.getCanHide())}
@@ -924,9 +957,13 @@ const EditableTableV2 = <TData extends object>({
             <TableHead>
               <TableRow>
                 {orderedColumns.map((column) => {
+                  const headCellProps =
+                    typeof muiTableHeadCellProps === 'function'
+                      ? muiTableHeadCellProps({ column, table })
+                      : muiTableHeadCellProps;
                   const header = (
                     <>
-                      {definitions.get(column.id)?.header}
+                      <span className='Mui-TableHeadCell-Content-Wrapper'>{definitions.get(column.id)?.header}</span>
                       {column.getIsFiltered() && (
                         <Tooltip title={`${strings.TABLE_FILTERED}: ${definitions.get(column.id)?.header}`}>
                           <FilterAlt
@@ -941,22 +978,27 @@ const EditableTableV2 = <TData extends object>({
                   );
                   return (
                     <DraggableColumnHeader
+                      {...headCellProps}
                       key={column.id}
                       data-column-id={column.id}
+                      data-pinned={column.getIsPinned() ? 'true' : undefined}
                       id={column.id}
                       label={definitions.get(column.id)!.header}
                       enabled={enableColumnDragging || enableColumnOrdering}
                       sortDirection={column.getIsSorted() || false}
-                      sx={(theme) => ({
-                        ...pinnedStyles(column, theme, pinnedOffsets),
-                        bgcolor: 'background.paper',
-                        fontWeight: 'bold',
-                        p: 2,
-                        pt: '12px',
-                        pb: filtersVisible ? '6.4px' : '9.6px',
-                        verticalAlign: 'top',
-                        '&:hover .MuiIconButton-root': { opacity: 1 },
-                      })}
+                      sx={[
+                        (theme) => ({
+                          ...pinnedStyles(column, theme, pinnedOffsets),
+                          bgcolor: 'background.paper',
+                          fontWeight: 'bold',
+                          p: 2,
+                          pt: '12px',
+                          pb: filtersVisible ? '6.4px' : '9.6px',
+                          verticalAlign: 'top',
+                          '&:hover .MuiIconButton-root': { opacity: 1 },
+                        }),
+                        ...(Array.isArray(headCellProps?.sx) ? headCellProps.sx : [headCellProps?.sx]),
+                      ]}
                     >
                       <Box key='content' display='flex' alignItems='center' sx={{ minHeight: '24px' }}>
                         {column.getCanSort() ? (
@@ -1042,35 +1084,50 @@ const EditableTableV2 = <TData extends object>({
                         (!!editConfig?.onSave ||
                           (editConfig?.editVariant === 'custom' && !!editConfig.customEditComponent));
                       const value = cell.getValue();
+                      const bodyCellProps =
+                        typeof muiTableBodyCellProps === 'function'
+                          ? muiTableBodyCellProps({ cell, column, row, table })
+                          : muiTableBodyCellProps;
                       return (
                         <ColumnDragBodyCell
+                          {...bodyCellProps}
+                          key={cell.id}
                           columnId={column.id}
                           lastRow={rowIndex === rows.length - 1}
-                          key={cell.id}
-                          tabIndex={canEdit ? 0 : undefined}
-                          onClick={canEdit ? (event) => event.stopPropagation() : undefined}
-                          onDoubleClick={canEdit ? () => setEditingCell({ id: cell.id }) : undefined}
-                          onKeyDown={
-                            canEdit
-                              ? (event) => {
-                                  if (
-                                    event.target === event.currentTarget &&
-                                    (event.key === 'Enter' || event.key === 'F2')
-                                  ) {
-                                    event.preventDefault();
-                                    setEditingCell({ id: cell.id });
-                                  }
-                                }
-                              : undefined
-                          }
-                          sx={(theme) => ({
-                            ...pinnedStyles(column, theme, pinnedOffsets),
-                            borderBottom: 'none',
-                            bgcolor: rowIndex % 2 === 0 ? 'TwClrBaseGray025' : 'background.paper',
-                            cursor: canEdit ? 'pointer' : 'inherit',
-                            outlineOffset: '-1px',
-                            '&:hover': { outline: canEdit ? '1px solid' : undefined, outlineColor: 'grey.500' },
-                          })}
+                          data-pinned={column.getIsPinned() ? 'true' : undefined}
+                          tabIndex={bodyCellProps?.tabIndex ?? (canEdit ? 0 : undefined)}
+                          onClick={(event) => {
+                            if (canEdit) {
+                              event.stopPropagation();
+                            }
+                            bodyCellProps?.onClick?.(event);
+                          }}
+                          onDoubleClick={(event) => {
+                            if (canEdit) {
+                              setEditingCell({ id: cell.id });
+                            }
+                            bodyCellProps?.onDoubleClick?.(event);
+                          }}
+                          onKeyDown={(event) => {
+                            if (canEdit && event.target === event.currentTarget) {
+                              if (event.key === 'Enter' || event.key === 'F2') {
+                                event.preventDefault();
+                                setEditingCell({ id: cell.id });
+                              }
+                            }
+                            bodyCellProps?.onKeyDown?.(event);
+                          }}
+                          sx={[
+                            (theme) => ({
+                              ...pinnedStyles(column, theme, pinnedOffsets),
+                              borderBottom: 'none',
+                              bgcolor: rowIndex % 2 === 0 ? 'TwClrBaseGray025' : 'background.paper',
+                              cursor: canEdit ? 'pointer' : 'inherit',
+                              outlineOffset: '-1px',
+                              '&:hover': { outline: canEdit ? '1px solid' : undefined, outlineColor: 'grey.500' },
+                            }),
+                            ...(Array.isArray(bodyCellProps?.sx) ? bodyCellProps.sx : [bodyCellProps?.sx]),
+                          ]}
                         >
                           {editingCell?.id === cell.id ? (
                             <EditableCellV2
