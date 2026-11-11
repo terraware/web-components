@@ -28,6 +28,94 @@ const rowNames = () =>
     .slice(1)
     .map((row) => within(row).getAllByRole('cell')[0].textContent);
 
+test('matches the MRT handle icon, tooltip, and header action placement', async () => {
+  const user = userEvent.setup();
+  render(
+    <EditableTableV2 columns={columns} data={[]} clearAllFiltersLabel='Clear' enableColumnOrdering showColumnsButton />
+  );
+  const header = screen.getAllByRole('columnheader')[0];
+  const handle = within(header).getByLabelText('Drag column: Name');
+  expect(within(handle).getByTestId('DragHandleIcon')).toBeInTheDocument();
+  const buttons = within(header).getAllByRole('button');
+  expect(buttons.map((button) => button.getAttribute('aria-label'))).toEqual([
+    null,
+    'Drag column: Name',
+    'Column actions: Name',
+  ]);
+  await user.hover(handle);
+  expect(await screen.findByRole('tooltip')).toHaveTextContent('Move');
+  await user.unhover(handle);
+  fireEvent.click(screen.getByRole('button', { name: 'Columns' }));
+  const item = within(screen.getByRole('menu')).getByLabelText('Drag column: Name').closest('li')!;
+  expect(within(item).getAllByRole('button')[0]).toHaveAttribute('aria-label', 'Drag column: Name');
+  expect(within(item).getByTestId('DragHandleIcon')).toBeInTheDocument();
+});
+
+test.each([
+  { enableColumnDragging: false, enableColumnOrdering: false, handles: 0 },
+  { enableColumnDragging: true, enableColumnOrdering: false, handles: 2 },
+  { enableColumnDragging: false, enableColumnOrdering: true, handles: 2 },
+])('gates header and manager dragging: %j', (props) => {
+  render(<EditableTableV2 columns={columns} data={[]} clearAllFiltersLabel='Clear' showColumnsButton {...props} />);
+  expect(screen.queryAllByLabelText(/^Drag column:/)).toHaveLength(props.handles);
+  fireEvent.click(screen.getByRole('button', { name: 'Columns' }));
+  expect(within(screen.getByRole('menu')).queryAllByLabelText(/^Drag column:/)).toHaveLength(
+    props.enableColumnOrdering ? 2 : 0
+  );
+});
+
+test.each([
+  { start: [], reordered: true, controlled: false, cancel: false },
+  { start: ['name', 'count'], reordered: true, controlled: false, cancel: false },
+  { start: ['name'], reordered: false, controlled: false, cancel: false },
+  { start: [], reordered: false, controlled: true, cancel: false },
+  { start: [], reordered: false, controlled: false, cancel: true },
+])('handles keyboard column drops: %j', async ({ start, reordered, controlled, cancel }) => {
+  const user = userEvent.setup();
+  const onColumnOrderChange = rs.fn((updater: string[] | ((previous: string[]) => string[])) =>
+    typeof updater === 'function' ? updater(['name', 'count']) : updater
+  );
+  render(
+    <EditableTableV2
+      columns={columns}
+      data={data}
+      clearAllFiltersLabel='Clear'
+      enableColumnDragging
+      enableColumnPinning
+      tableOptions={{
+        initialState: { columnPinning: { start, end: [] } },
+        ...(controlled && { state: { columnOrder: ['name', 'count'] }, onColumnOrderChange }),
+      }}
+    />
+  );
+  const headers = screen.getAllByRole('columnheader');
+  headers.forEach((header, index) => {
+    header.getBoundingClientRect = () => ({
+      x: index * 200,
+      y: 0,
+      left: index * 200,
+      right: (index + 1) * 200,
+      top: 0,
+      bottom: 50,
+      width: 200,
+      height: 50,
+      toJSON: () => ({}),
+    });
+  });
+  screen.getByLabelText('Drag column: Name').focus();
+  await user.keyboard('[Space]');
+  expect(screen.getByTestId('column-drag-overlay')).toHaveTextContent('Name');
+  expect(headers[0]).toHaveStyle({ outline: '1px dashed #9e9e9e' });
+  await user.keyboard('[ArrowRight]');
+  await user.keyboard(cancel ? '[Escape]' : '[Space]');
+  expect(screen.queryByTestId('column-drag-overlay')).not.toBeInTheDocument();
+  await waitFor(() => expect(screen.getAllByRole('columnheader')[0]).toHaveTextContent(reordered ? 'Count' : 'Name'));
+  expect(within(screen.getAllByRole('row')[1]).getAllByRole('cell')[0]).toHaveTextContent(reordered ? '3' : 'Zebra');
+  if (controlled) {
+    expect(onColumnOrderChange.mock.results[0].value).toEqual(['count', 'name']);
+  }
+});
+
 test.each([
   { name: 'MRT', Story: WithTopToolbarLegacy, columnsLabel: 'Show/Hide columns' },
   { name: 'V2', Story: WithTopToolbar, columnsLabel: 'Columns' },
