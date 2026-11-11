@@ -1,9 +1,9 @@
-import React, { StrictMode } from 'react';
+import React, { StrictMode, useState } from 'react';
 
 import { act, fireEvent, render, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
-import EditableTableV2, { EditableTableColumnV2 } from '.';
+import EditableTableV2, { EditableTableColumnPinningV2, EditableTableColumnV2, EditableTableInstanceV2 } from '.';
 import { WithTopToolbar as WithTopToolbarLegacy } from '../../stories/EditableTable.stories';
 import {
   WithClearAllFilters,
@@ -103,7 +103,7 @@ test.each([false, true])('merges cell props and preserves table interactions (fu
       onRowClick={onRowClick}
       muiTableHeadCellProps={functionForm ? head : headProps}
       muiTableBodyCellProps={functionForm ? body : bodyProps}
-      tableOptions={{ initialState: { columnPinning: { start: ['name'], end: [] } } }}
+      tableOptions={{ initialState: { columnPinning: { left: ['name'], right: [] } } }}
     />
   );
   const headers = screen.getAllByRole('columnheader');
@@ -194,7 +194,7 @@ test.each([
       enableColumnDragging
       enableColumnPinning
       tableOptions={{
-        initialState: { columnPinning: { start, end: [] } },
+        initialState: { columnPinning: { left: start, right: [] } },
         ...(controlled && { state: { columnOrder: ['name', 'count'] }, onColumnOrderChange }),
       }}
     />
@@ -483,7 +483,10 @@ test('paginates and renders pinned columns with sticky offsets', () => {
       clearAllFiltersLabel='Clear'
       enableColumnPinning
       tableOptions={{
-        initialState: { pagination: { pageSize: 1, pageIndex: 0 }, columnPinning: { start: ['name'], end: ['count'] } },
+        initialState: {
+          pagination: { pageSize: 1, pageIndex: 0 },
+          columnPinning: { left: ['name'], right: ['count'] },
+        },
       }}
     />
   );
@@ -702,10 +705,82 @@ test('offers per-column sorting and visibility actions without a top toolbar', (
   expect(screen.getByRole('columnheader', { name: /Count/, hidden: true })).toBeInTheDocument();
 });
 
+test.each([{ left: ['name'], right: ['count'] }, { left: ['name'] }, { right: ['count'] }, {}])(
+  'translates uncontrolled initial pinning %j',
+  (columnPinning) => {
+    render(
+      <EditableTableV2
+        columns={columns}
+        data={[]}
+        clearAllFiltersLabel='Clear'
+        enableColumnPinning
+        tableOptions={{ initialState: { columnPinning } }}
+      />
+    );
+    expect(screen.getByRole('columnheader', { name: /Name/ }).getAttribute('data-pinned')).toBe(
+      'left' in columnPinning ? 'true' : null
+    );
+    expect(screen.getByRole('columnheader', { name: /Count/ }).getAttribute('data-pinned')).toBe(
+      'right' in columnPinning ? 'true' : null
+    );
+    fireEvent.click(screen.getByLabelText('Column actions: Name'));
+    fireEvent.click(screen.getByRole('menuitem', { name: 'Pin to right' }));
+    expect(screen.getByRole('columnheader', { name: /Name/ })).toHaveAttribute('data-pinned', 'true');
+  }
+);
+
+test('round trips controlled left/right pinning through menus and raw TanStack updaters', () => {
+  const initialPinning = { left: ['name'], right: [] };
+  const onChange = rs.fn();
+  let table: EditableTableInstanceV2<Item>;
+  const Controlled = () => {
+    const [columnPinning, setColumnPinning] = useState<EditableTableColumnPinningV2>(initialPinning);
+    return (
+      <EditableTableV2
+        columns={columns}
+        data={data}
+        clearAllFiltersLabel='Clear'
+        enableColumnPinning
+        showColumnsButton
+        renderTopToolbarCustomActions={({ table: instance }) => {
+          table = instance;
+          return <output aria-label='Pinning state'>{JSON.stringify(columnPinning)}</output>;
+        }}
+        tableOptions={{
+          state: { columnPinning },
+          onColumnPinningChange: (updater) => {
+            onChange(updater);
+            setColumnPinning(updater);
+          },
+        }}
+      />
+    );
+  };
+  render(<Controlled />);
+  fireEvent.click(screen.getByLabelText('Column actions: Count'));
+  fireEvent.click(screen.getByRole('menuitem', { name: 'Pin to right' }));
+  expect(onChange.mock.calls[0][0](initialPinning)).toEqual({ left: ['name'], right: ['count'] });
+  expect(screen.getByRole('status', { name: 'Pinning state' })).toHaveTextContent(
+    '{"left":["name"],"right":["count"]}'
+  );
+  expect(table!.getColumn('name')!.getIsPinned()).toBe('start');
+  expect(table!.getColumn('count')!.getIsPinned()).toBe('end');
+  expect(getComputedStyle(screen.getByText('3')).insetInlineEnd).toBe('0px');
+  act(() => table!.setColumnPinning({ start: [], end: ['name'] }));
+  expect(screen.getByLabelText('Pinning state')).toHaveTextContent('{"left":[],"right":["name"]}');
+  act(() => table!.setColumnPinning((previous) => ({ start: previous.end, end: [] })));
+  expect(screen.getByRole('status', { name: 'Pinning state' })).toHaveTextContent('{"left":["name"],"right":[]}');
+  fireEvent.click(screen.getByLabelText('Columns'));
+  const selects = screen.getAllByRole('combobox', { name: 'Pin column' });
+  fireEvent.mouseDown(selects[0]);
+  fireEvent.click(screen.getByRole('option', { name: 'Pin to right' }));
+  expect(screen.getByLabelText('Pinning state')).toHaveTextContent('{"left":[],"right":["name"]}');
+});
+
 test('pins columns and restores hidden columns directly from header action menus', () => {
   render(<EditableTableV2 columns={columns} data={data} clearAllFiltersLabel='Clear' enableColumnPinning />);
   fireEvent.click(screen.getByLabelText('Column actions: Count'));
-  fireEvent.click(screen.getByRole('menuitem', { name: 'Pin to end' }));
+  fireEvent.click(screen.getByRole('menuitem', { name: 'Pin to right' }));
   expect(getComputedStyle(screen.getByText('3')).position).toBe('sticky');
   expect(getComputedStyle(screen.getByText('3')).insetInlineEnd).toBe('0px');
   fireEvent.click(screen.getByLabelText('Column actions: Count'));

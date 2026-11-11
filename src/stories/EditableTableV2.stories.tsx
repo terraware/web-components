@@ -184,7 +184,7 @@ const EditableTableWithStateV2 = ({
       sx={pinnedColumns ? { maxWidth: 900 } : undefined}
       tableOptions={
         pinnedColumns
-          ? { initialState: { columnPinning: { start: ['name', 'middlename'], end: ['pets', 'previousStudies'] } } }
+          ? { initialState: { columnPinning: { left: ['name', 'middlename'], right: ['pets', 'previousStudies'] } } }
           : undefined
       }
       onClearAllFilters={scenario === 'clearAllFilters' ? () => console.log('All filters cleared') : undefined}
@@ -227,7 +227,7 @@ export const WithMrtProps = () => (
       title: String(cell.getValue()),
       sx: { padding: '12px', '&[data-pinned="true"]': { filter: 'brightness(0.97)' } },
     })}
-    tableOptions={{ initialState: { columnPinning: { start: ['name'], end: [] } } }}
+    tableOptions={{ initialState: { columnPinning: { left: ['name'], right: [] } } }}
   />
 );
 
@@ -298,7 +298,7 @@ export const Editable = () => {
       storageKey='editable-table-v2-story'
       tableOptions={{
         getRowId: (row) => row.id,
-        initialState: { columnPinning: { start: ['name'], end: ['target'] } },
+        initialState: { columnPinning: { left: ['name'], right: ['target'] } },
       }}
     />
   );

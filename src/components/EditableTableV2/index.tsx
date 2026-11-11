@@ -52,7 +52,15 @@ import {
   Tooltip,
 } from '@mui/material';
 import { alpha, darken, lighten } from '@mui/material/styles';
-import { Column, ColumnDef, ColumnFiltersState, Row, useTable } from '@tanstack/react-table';
+import {
+  Column,
+  ColumnDef,
+  ColumnFiltersState,
+  ColumnPinningState,
+  Row,
+  functionalUpdate,
+  useTable,
+} from '@tanstack/react-table';
 
 import { useStrings } from '../../strings';
 import Button from '../Button/Button';
@@ -66,6 +74,7 @@ import {
 import EditableCellV2 from './EditableCellV2';
 import {
   EditableTableCellV2,
+  EditableTableColumnPinningV2,
   EditableTableColumnV2,
   EditableTableInstanceV2,
   EditableTableOptionsV2,
@@ -73,6 +82,7 @@ import {
 } from './types';
 
 export type {
+  EditableTableColumnPinningV2,
   EditableTableCellV2,
   EditableTableCellContextV2,
   EditableTableColumnV2,
@@ -386,6 +396,13 @@ const EditableTableV2 = <TData extends object>({
   );
 
   const persistFilters = stickyFilters && !!storageKey && tableOptions?.state?.columnFilters === undefined;
+  const { state, initialState, onColumnPinningChange, ...options } = tableOptions ?? {};
+  const { columnPinning: controlledPinning, ...controlledState } = state ?? {};
+  const { columnPinning: initialPinning, ...initialTableState } = initialState ?? {};
+  const toInternalPinning = (pinning: EditableTableColumnPinningV2): ColumnPinningState => ({
+    start: pinning.left ?? [],
+    end: pinning.right ?? [],
+  });
   const table = useTable({
     features: editableTableFeatures,
     columns: tableColumns,
@@ -397,10 +414,25 @@ const EditableTableV2 = <TData extends object>({
     enableColumnFilters,
     enableGlobalFilter,
     manualPagination: !enablePagination,
-    ...tableOptions,
-    initialState: { sorting: initialSorting ?? [], ...tableOptions?.initialState },
+    ...options,
+    initialState: {
+      sorting: initialSorting ?? [],
+      ...initialTableState,
+      ...(initialPinning && { columnPinning: toInternalPinning(initialPinning) }),
+    },
+    state: {
+      ...controlledState,
+      ...(controlledPinning && { columnPinning: toInternalPinning(controlledPinning) }),
+      ...(persistFilters && { columnFilters }),
+    },
+    ...(onColumnPinningChange && {
+      onColumnPinningChange: (updater) =>
+        onColumnPinningChange((previous) => {
+          const next = functionalUpdate(updater, toInternalPinning(previous));
+          return { left: next.start, right: next.end };
+        }),
+    }),
     ...(persistFilters && {
-      state: { ...tableOptions?.state, columnFilters },
       onColumnFiltersChange: (updater) => {
         setColumnFilters((previous) => {
           const next = typeof updater === 'function' ? updater(previous) : updater;
@@ -666,8 +698,8 @@ const EditableTableV2 = <TData extends object>({
             enableColumnPinning &&
             (
               [
-                { label: strings.TABLE_PIN_START, direction: 'start', rotation: '90deg' },
-                { label: strings.TABLE_PIN_END, direction: 'end', rotation: '-90deg' },
+                { label: strings.TABLE_PIN_LEFT, direction: 'start', rotation: '90deg' },
+                { label: strings.TABLE_PIN_RIGHT, direction: 'end', rotation: '-90deg' },
                 { label: strings.TABLE_UNPIN, direction: false, rotation: '0deg' },
               ] as const
             ).map(({ label, direction, rotation }) => (
@@ -787,16 +819,16 @@ const EditableTableV2 = <TData extends object>({
                       select
                       size='small'
                       label={strings.TABLE_PIN}
-                      value={column.getIsPinned() || ''}
+                      value={column.getIsPinned() === 'start' ? 'left' : column.getIsPinned() === 'end' ? 'right' : ''}
                       onChange={(event) =>
                         column.pin(
-                          event.target.value === 'start' ? 'start' : event.target.value === 'end' ? 'end' : false
+                          event.target.value === 'left' ? 'start' : event.target.value === 'right' ? 'end' : false
                         )
                       }
                     >
                       <MenuItem value=''>{strings.TABLE_UNPIN}</MenuItem>
-                      <MenuItem value='start'>{strings.TABLE_PIN_START}</MenuItem>
-                      <MenuItem value='end'>{strings.TABLE_PIN_END}</MenuItem>
+                      <MenuItem value='left'>{strings.TABLE_PIN_LEFT}</MenuItem>
+                      <MenuItem value='right'>{strings.TABLE_PIN_RIGHT}</MenuItem>
                     </TextField>
                   )}
                 </DraggableColumnItem>
