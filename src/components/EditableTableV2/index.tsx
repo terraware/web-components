@@ -1,4 +1,4 @@
-import React, { ReactNode, useEffect, useMemo, useState } from 'react';
+import React, { ReactNode, useCallback, useEffect, useMemo, useState } from 'react';
 
 import {
   ArrowDownward,
@@ -298,6 +298,11 @@ const EditableTableV2 = <TData extends object>({
   const [fullScreen, setFullScreen] = useState(false);
   const [menuColumnId, setMenuColumnId] = useState<string | null>(null);
   const [menuAnchor, setMenuAnchor] = useState<HTMLElement | null>(null);
+  const [columnsButtonCount, setColumnsButtonCount] = useState(0);
+  const registerColumnsButton = useCallback(() => {
+    setColumnsButtonCount((count) => count + 1);
+    return () => setColumnsButtonCount((count) => count - 1);
+  }, []);
   const [columnFilters, setColumnFilters] = useState(() => readFilters(stickyFilters ? storageKey : undefined));
 
   useEffect(() => {
@@ -422,6 +427,7 @@ const EditableTableV2 = <TData extends object>({
   ];
   const rows = table.getRowModel().rows;
   const controlsEnabled = enableHiding || enableColumnOrdering || enableColumnPinning;
+  const columnManagerReachable = columnsButtonCount > 0;
   const hideableColumns = table.getAllLeafColumns().filter((column) => column.getCanHide());
   const filtersVisible = enableColumnFilters && columnFiltersVisible;
 
@@ -476,6 +482,7 @@ const EditableTableV2 = <TData extends object>({
         columnFiltersVisible,
         density: density ?? 1,
         fullScreen,
+        registerColumnsButton,
         toggleGlobalFilter: () => setGlobalFilterVisible((visible) => !visible),
         toggleColumnFilters: () => setColumnFiltersVisible((visible) => !visible),
         toggleDensity: () => setDensity((value) => ((value ?? 1) + 2) % 3),
@@ -642,8 +649,7 @@ const EditableTableV2 = <TData extends object>({
             <ColumnActionMenuItemV2
               icon={<VisibilityOff />}
               disabled={
-                !table.getColumn(menuColumnId)?.getCanHide() ||
-                (!(enableTopToolbar && showColumnsButton) && orderedColumns.length === 1)
+                !table.getColumn(menuColumnId)?.getCanHide() || (!columnManagerReachable && orderedColumns.length === 1)
               }
               onClick={() => {
                 table.getColumn(menuColumnId)?.toggleVisibility(false);
@@ -671,7 +677,10 @@ const EditableTableV2 = <TData extends object>({
           {!menuColumnId && enableHiding && (
             <Box display='flex' justifyContent='space-between' px={1} pb={1}>
               <MuiButton
-                disabled={!hideableColumns.some((column) => column.getIsVisible())}
+                disabled={
+                  !hideableColumns.some((column) => column.getIsVisible()) ||
+                  (!columnManagerReachable && orderedColumns.every((column) => column.getCanHide()))
+                }
                 onClick={() => hideableColumns.forEach((column) => column.toggleVisibility(false))}
               >
                 {strings.TABLE_HIDE_ALL}
@@ -699,9 +708,7 @@ const EditableTableV2 = <TData extends object>({
                         disabled={
                           !enableHiding ||
                           !column.getCanHide() ||
-                          (!(enableTopToolbar && (showColumnsButton || renderToolbarInternalActions)) &&
-                            column.getIsVisible() &&
-                            orderedColumns.length === 1)
+                          (!columnManagerReachable && column.getIsVisible() && orderedColumns.length === 1)
                         }
                         onChange={column.getToggleVisibilityHandler()}
                       />
