@@ -67,6 +67,14 @@ export type { IconName } from './components/Icon/icons/';
 export type { Size } from './components/Size';
 export type { DropdownItem } from './components/types';
 export type { EditableTableColumn, EditableTableProps } from './components/EditableTable';
+export {
+  EditableTableToggleGlobalFilterButtonV2,
+  EditableTableToggleFiltersButtonV2,
+  EditableTableShowHideColumnsButtonV2,
+  EditableTableToggleDensePaddingButtonV2,
+  EditableTableToggleFullScreenButtonV2,
+} from './components/EditableTableV2/ToolbarButtons';
+
 export type {
   EditableTableCellV2,
   EditableTableCellContextV2,

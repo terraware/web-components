@@ -9,6 +9,7 @@ import {
   Editable,
   WithClearAllFilters,
   WithColumnDragging,
+  WithCustomToolbarOrder,
   WithFilters,
   WithMrtProps,
   WithOccupationFilter,
@@ -16,6 +17,7 @@ import {
   WithTopToolbar,
 } from '../../stories/EditableTableV2.stories';
 import { getStrings, setLocale } from '../../strings';
+import { EditableTableToggleDensePaddingButtonV2 } from './ToolbarButtons';
 
 type Item = { id: string; name: string; count: number };
 test('renders main table story configurations without React key warnings', () => {
@@ -309,6 +311,117 @@ test('can hide and restore all columns from the toolbar manager', () => {
   fireEvent.click(screen.getByRole('button', { name: 'Columns' }));
   fireEvent.click(screen.getByRole('button', { name: 'Show all' }));
   expect(screen.getAllByRole('columnheader', { hidden: true })).toHaveLength(2);
+});
+
+test('keeps the default internal toolbar button order', () => {
+  const view = render(
+    <EditableTableV2
+      columns={columns}
+      data={data}
+      clearAllFiltersLabel='Clear'
+      enableGlobalFilter
+      enableColumnFilters
+      showGlobalFilterButton
+      showColumnFiltersButton
+      showColumnsButton
+      showDensityButton
+      showFullScreenButton
+    />
+  );
+  const toolbar = within(view.container.querySelector('.MuiToolbar-root')!);
+  expect(toolbar.getAllByRole('button').map((button) => button.getAttribute('aria-label'))).toEqual([
+    'Clear search',
+    'Show/Hide search',
+    'Show/Hide filters',
+    'Columns',
+    'Toggle density',
+    'Toggle full screen',
+  ]);
+});
+
+test.each([false, true])('custom internal actions replace defaults and preserve clear-all (empty: %s)', (empty) => {
+  render(
+    <EditableTableV2
+      columns={columns}
+      data={data}
+      clearAllFiltersLabel='Clear'
+      enableGlobalFilter
+      enableColumnFilters
+      showGlobalFilterButton
+      showColumnFiltersButton
+      showColumnsButton
+      showDensityButton
+      showFullScreenButton
+      tableOptions={{ initialState: { globalFilter: 'Zebra' } }}
+      renderToolbarInternalActions={() => (empty ? null : <button>Only mine</button>)}
+    />
+  );
+  for (const name of ['Show/Hide search', 'Show/Hide filters', 'Columns', 'Toggle density', 'Toggle full screen']) {
+    expect(screen.queryByRole('button', { name })).not.toBeInTheDocument();
+  }
+  expect(!!screen.queryByRole('button', { name: 'Only mine' })).toBe(!empty);
+  fireEvent.click(screen.getByRole('button', { name: 'Clear' }));
+  expect(rowNames()).toEqual(['Zebra', 'Acacia']);
+});
+
+test('composes exported toolbar buttons in consumer order and drives shared table state', () => {
+  const view = render(<WithCustomToolbarOrder />);
+  const wrapper = view.container.firstElementChild!;
+  const toolbar = within(view.container.querySelector('.MuiToolbar-root')!);
+  expect(
+    toolbar.getAllByRole('button').map((button) => button.getAttribute('aria-label') ?? button.textContent)
+  ).toEqual([
+    'Clear search',
+    'Show/Hide filters',
+    'Reset filters',
+    'Columns',
+    'Toggle density',
+    'Toggle full screen',
+    'Show/Hide search',
+  ]);
+  fireEvent.click(screen.getByRole('button', { name: 'Show/Hide search' }));
+  expect(screen.queryByLabelText('Search')).not.toBeInTheDocument();
+  fireEvent.click(screen.getByRole('button', { name: 'Show/Hide search' }));
+  expect(screen.getByLabelText('Search')).toBeInTheDocument();
+  fireEvent.click(screen.getByRole('button', { name: 'Show/Hide filters' }));
+  fireEvent.change(screen.getByLabelText('Filter: Name'), { target: { value: 'Carlos' } });
+  expect(rowNames()).toEqual(['Carlos_3']);
+  fireEvent.click(screen.getByRole('button', { name: 'Reset filters' }));
+  expect(rowNames()).toHaveLength(5);
+  fireEvent.click(screen.getByRole('button', { name: 'Columns' }));
+  fireEvent.click(screen.getByRole('switch', { name: 'Occupation' }));
+  expect(screen.queryByRole('columnheader', { name: /Occupation/, hidden: true })).not.toBeInTheDocument();
+  fireEvent.click(screen.getByRole('switch', { name: 'Name' }));
+  expect(screen.queryByRole('columnheader', { hidden: true })).not.toBeInTheDocument();
+  fireEvent.click(screen.getByRole('button', { name: 'Show all' }));
+  fireEvent.keyDown(screen.getByRole('menu'), { key: 'Escape' });
+  const cell = screen.getByText('Carlos_3').closest('td')!;
+  for (const padding of ['4px', '24px', '16px']) {
+    fireEvent.click(screen.getByRole('button', { name: 'Toggle density' }));
+    expect(getComputedStyle(cell).paddingTop).toBe(padding);
+  }
+  fireEvent.click(screen.getByRole('button', { name: 'Toggle full screen' }));
+  expect(getComputedStyle(wrapper).position).toBe('fixed');
+  fireEvent.keyDown(document, { key: 'Escape' });
+  expect(getComputedStyle(wrapper).position).not.toBe('fixed');
+});
+
+test('custom density control cycles all padding sizes without the default-button flag', () => {
+  render(
+    <EditableTableV2
+      columns={columns}
+      data={data}
+      clearAllFiltersLabel='Clear'
+      muiTableBodyCellProps={{ sx: { py: '12px' } }}
+      renderToolbarInternalActions={({ table }) => <EditableTableToggleDensePaddingButtonV2 table={table} />}
+    />
+  );
+  const cell = screen.getByText('Zebra');
+  expect(getComputedStyle(cell).paddingTop).toBe('12px');
+  for (const padding of ['4px', '24px', '16px']) {
+    fireEvent.click(screen.getByRole('button', { name: 'Toggle density' }));
+    expect(getComputedStyle(cell).paddingTop).toBe(padding);
+  }
 });
 
 test('toggles search, column filters, density, and fullscreen in the full V2 toolbar story', () => {

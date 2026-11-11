@@ -7,18 +7,12 @@ import {
   ArrowUpward,
   ClearAll,
   Close,
-  DensityLarge,
-  DensityMedium,
-  DensitySmall,
   FilterAlt,
   FilterList,
   FilterListOff,
-  Fullscreen,
-  FullscreenExit,
   MoreVert,
   PushPin,
   Search,
-  SearchOff,
   Sort,
   SyncAlt,
   ViewColumn,
@@ -73,6 +67,14 @@ import {
   DraggableColumnItem,
 } from './ColumnDragging';
 import EditableCellV2 from './EditableCellV2';
+import {
+  EditableTableShowHideColumnsButtonV2,
+  EditableTableToggleDensePaddingButtonV2,
+  EditableTableToggleFiltersButtonV2,
+  EditableTableToggleFullScreenButtonV2,
+  EditableTableToggleGlobalFilterButtonV2,
+  EditableTableToolbarRoot,
+} from './ToolbarButtons';
 import {
   EditableTableCellV2,
   EditableTableColumnPinningV2,
@@ -336,7 +338,7 @@ const EditableTableV2 = <TData extends object>({
   const [editingCell, setEditingCell] = useState<{ id: string } | null>(null);
   const [globalFilterVisible, setGlobalFilterVisible] = useState(true);
   const [columnFiltersVisible, setColumnFiltersVisible] = useState(!showColumnFiltersButton);
-  const [density, setDensity] = useState(1);
+  const [density, setDensity] = useState<number>();
   const [fullScreen, setFullScreen] = useState(false);
   const [menuColumnId, setMenuColumnId] = useState<string | null>(null);
   const [menuAnchor, setMenuAnchor] = useState<HTMLElement | null>(null);
@@ -546,12 +548,29 @@ const EditableTableV2 = <TData extends object>({
   );
 
   return (
-    <Box
+    <EditableTableToolbarRoot
+      value={{
+        table,
+        globalFilterVisible,
+        columnFiltersVisible,
+        density: density ?? 1,
+        fullScreen,
+        toggleGlobalFilter: () => setGlobalFilterVisible((visible) => !visible),
+        toggleColumnFilters: () => setColumnFiltersVisible((visible) => !visible),
+        toggleDensity: () => setDensity((value) => ((value ?? 1) + 2) % 3),
+        toggleFullScreen: () => setFullScreen((value) => !value),
+        openColumns: (anchor) => {
+          setMenuColumnId(null);
+          setMenuAnchor(anchor);
+        },
+      }}
       minHeight='160px'
       padding={2}
       sx={[
         ...(Array.isArray(sx) ? sx : [sx]),
-        ...(showDensityButton ? [{ '& td': { py: density === 0 ? '4px' : density === 1 ? '16px' : '24px' } }] : []),
+        ...(showDensityButton || density !== undefined
+          ? [{ '& td': { py: density === 0 ? '4px' : density === 2 ? '24px' : '16px' } }]
+          : []),
         ...(fullScreen
           ? [{ position: 'fixed', inset: 0, m: 0, p: 0, zIndex: 1200, bgcolor: 'background.paper', overflow: 'auto' }]
           : []),
@@ -578,60 +597,20 @@ const EditableTableV2 = <TData extends object>({
               <Button label={clearAllFiltersLabel} priority='ghost' size='small' onClick={clearFilters} />
             )}
             <Box display='flex' alignItems='center'>
-              {renderToolbarInternalActions?.({ table })}
-              {showGlobalFilterButton && enableGlobalFilter && (
-                <Tooltip title={strings.TABLE_TOGGLE_SEARCH}>
-                  <IconButton
-                    aria-label={strings.TABLE_TOGGLE_SEARCH}
-                    aria-pressed={globalFilterVisible}
-                    onClick={() => setGlobalFilterVisible((visible) => !visible)}
-                  >
-                    {globalFilterVisible ? <SearchOff /> : <Search />}
-                  </IconButton>
-                </Tooltip>
-              )}
-              {showColumnFiltersButton && enableColumnFilters && (
-                <Tooltip title={strings.TABLE_TOGGLE_FILTERS}>
-                  <IconButton
-                    aria-label={strings.TABLE_TOGGLE_FILTERS}
-                    aria-pressed={columnFiltersVisible}
-                    onClick={() => setColumnFiltersVisible((visible) => !visible)}
-                  >
-                    {columnFiltersVisible ? <FilterListOff /> : <FilterList />}
-                  </IconButton>
-                </Tooltip>
-              )}
-              {showColumnsButton && controlsEnabled && (
-                <IconButton
-                  aria-label={strings.TABLE_COLUMNS}
-                  onClick={(event) => {
-                    setMenuColumnId(null);
-                    setMenuAnchor(event.currentTarget);
-                  }}
-                >
-                  <ViewColumn />
-                </IconButton>
-              )}
-              {showDensityButton && (
-                <Tooltip title={strings.TABLE_TOGGLE_DENSITY}>
-                  <IconButton
-                    aria-label={strings.TABLE_TOGGLE_DENSITY}
-                    onClick={() => setDensity((value) => (value + 2) % 3)}
-                  >
-                    {density === 0 ? <DensitySmall /> : density === 1 ? <DensityMedium /> : <DensityLarge />}
-                  </IconButton>
-                </Tooltip>
-              )}
-              {showFullScreenButton && (
-                <Tooltip title={strings.TABLE_TOGGLE_FULLSCREEN}>
-                  <IconButton
-                    aria-label={strings.TABLE_TOGGLE_FULLSCREEN}
-                    aria-pressed={fullScreen}
-                    onClick={() => setFullScreen((value) => !value)}
-                  >
-                    {fullScreen ? <FullscreenExit /> : <Fullscreen />}
-                  </IconButton>
-                </Tooltip>
+              {renderToolbarInternalActions ? (
+                renderToolbarInternalActions({ table })
+              ) : (
+                <>
+                  {showGlobalFilterButton && enableGlobalFilter && (
+                    <EditableTableToggleGlobalFilterButtonV2 table={table} />
+                  )}
+                  {showColumnFiltersButton && enableColumnFilters && (
+                    <EditableTableToggleFiltersButtonV2 table={table} />
+                  )}
+                  {showColumnsButton && controlsEnabled && <EditableTableShowHideColumnsButtonV2 table={table} />}
+                  {showDensityButton && <EditableTableToggleDensePaddingButtonV2 table={table} />}
+                  {showFullScreenButton && <EditableTableToggleFullScreenButtonV2 table={table} />}
+                </>
               )}
             </Box>
           </Toolbar>
@@ -790,7 +769,7 @@ const EditableTableV2 = <TData extends object>({
                         disabled={
                           !enableHiding ||
                           !column.getCanHide() ||
-                          (!(enableTopToolbar && showColumnsButton) &&
+                          (!(enableTopToolbar && (showColumnsButton || renderToolbarInternalActions)) &&
                             column.getIsVisible() &&
                             orderedColumns.length === 1)
                         }
@@ -1066,7 +1045,7 @@ const EditableTableV2 = <TData extends object>({
           />
         )}
       </Paper>
-    </Box>
+    </EditableTableToolbarRoot>
   );
 };
 

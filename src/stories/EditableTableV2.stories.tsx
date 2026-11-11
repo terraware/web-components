@@ -1,9 +1,16 @@
 import React, { useMemo, useState } from 'react';
 
-import { Button } from '@mui/material';
+import { Box, Button } from '@mui/material';
 import { StoryFn } from '@storybook/react';
 
 import EditableTableV2, { EditableTableColumnV2 } from '../components/EditableTableV2';
+import {
+  EditableTableShowHideColumnsButtonV2,
+  EditableTableToggleDensePaddingButtonV2,
+  EditableTableToggleFiltersButtonV2,
+  EditableTableToggleFullScreenButtonV2,
+  EditableTableToggleGlobalFilterButtonV2,
+} from '../components/EditableTableV2/ToolbarButtons';
 import EditableTableExportButton from './EditableTableExportButton';
 
 export default { title: 'Editable Table V2', component: EditableTableV2 };
@@ -167,14 +174,21 @@ const EditableTableWithStateV2 = ({
       renderToolbarInternalActions={
         showTopToolbar
           ? ({ table }) => (
-              <EditableTableExportButton
-                getRows={() => [
-                  table.getVisibleLeafColumns().map((column) => column.columnDef.header),
-                  ...table
-                    .getPrePaginatedRowModel()
-                    .rows.map((row) => row.getVisibleCells().map((cell) => cell.getValue())),
-                ]}
-              />
+              <>
+                <EditableTableExportButton
+                  getRows={() => [
+                    table.getVisibleLeafColumns().map((column) => column.columnDef.header),
+                    ...table
+                      .getPrePaginatedRowModel()
+                      .rows.map((row) => row.getVisibleCells().map((cell) => cell.getValue())),
+                  ]}
+                />
+                <EditableTableToggleGlobalFilterButtonV2 table={table} />
+                {(filtered || scenario === 'occupationFilter') && <EditableTableToggleFiltersButtonV2 table={table} />}
+                <EditableTableShowHideColumnsButtonV2 table={table} />
+                <EditableTableToggleDensePaddingButtonV2 table={table} />
+                <EditableTableToggleFullScreenButtonV2 table={table} />
+              </>
             )
           : undefined
       }
@@ -200,6 +214,30 @@ Default.args = { rowCount: 50 };
 export const WithTopToolbar = () => <EditableTableWithStateV2 rowCount={50} showTopToolbar />;
 
 export const WithColumnDragging = () => <EditableTableWithStateV2 rowCount={10} showTopToolbar columnDragging />;
+
+export const WithCustomToolbarOrder = () => (
+  <EditableTableV2
+    clearAllFiltersLabel='Clear filters'
+    columns={[
+      { id: 'name', header: 'Name', accessorKey: 'name', filterVariant: 'text' },
+      { id: 'occupation', header: 'Occupation', accessorKey: 'occupation', filterVariant: 'text' },
+    ]}
+    data={createRows(5)}
+    enableGlobalFilter
+    enableColumnFilters
+    showColumnFiltersButton
+    renderToolbarInternalActions={({ table }) => (
+      <Box display='flex' alignItems='center'>
+        <EditableTableToggleFiltersButtonV2 table={table} />
+        <Button onClick={() => table.resetColumnFilters()}>Reset filters</Button>
+        <EditableTableShowHideColumnsButtonV2 table={table} />
+        <EditableTableToggleDensePaddingButtonV2 table={table} />
+        <EditableTableToggleFullScreenButtonV2 table={table} />
+        <EditableTableToggleGlobalFilterButtonV2 table={table} />
+      </Box>
+    )}
+  />
+);
 
 export const WithMrtProps = () => (
   <EditableTableV2
