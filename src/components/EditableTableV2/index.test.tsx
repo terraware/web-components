@@ -138,6 +138,28 @@ test.each([false, true])('custom internal actions replace defaults and preserve 
   expect(rowNames()).toEqual(['Zebra', 'Acacia']);
 });
 
+test('keeps a column visible when custom actions replace the columns button', () => {
+  render(
+    <EditableTableV2
+      columns={columns}
+      data={data}
+      clearAllFiltersLabel='Clear'
+      showColumnsButton
+      renderToolbarInternalActions={() => <button>Only mine</button>}
+    />
+  );
+  expect(screen.getByRole('button', { name: 'Only mine' })).toBeInTheDocument();
+  expect(screen.queryByRole('button', { name: 'Columns' })).not.toBeInTheDocument();
+  fireEvent.click(screen.getByLabelText('Column actions: Name'));
+  fireEvent.click(screen.getByRole('menuitem', { name: 'Hide Name column' }));
+  expect(screen.getAllByRole('columnheader', { hidden: true })).toHaveLength(1);
+  fireEvent.click(screen.getByLabelText('Column actions: Count'));
+  const hideLastColumn = screen.getByRole('menuitem', { name: 'Hide Count column' });
+  expect(hideLastColumn).toHaveAttribute('aria-disabled', 'true');
+  fireEvent.click(screen.getByRole('menuitem', { name: 'Show all columns' }));
+  expect(screen.getAllByRole('columnheader', { hidden: true })).toHaveLength(2);
+});
+
 test('composes exported toolbar buttons in consumer order and drives shared table state', () => {
   const view = render(<WithCustomToolbarOrder />);
   const wrapper = view.container.firstElementChild!;

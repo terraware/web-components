@@ -1,4 +1,4 @@
-import React, { createContext, useContext } from 'react';
+import React, { createContext, useContext, useEffect } from 'react';
 
 import {
   DensityLarge,
@@ -28,6 +28,7 @@ type ToolbarState = {
   toggleDensity: () => void;
   toggleFullScreen: () => void;
   openColumns: (anchor: HTMLElement) => void;
+  registerColumnsButton: () => () => void;
 };
 
 const ToolbarContext = createContext<ToolbarState | null>(null);
@@ -44,6 +45,12 @@ type Action = 'globalFilter' | 'filters' | 'columns' | 'density' | 'fullScreen';
 const ToolbarButton = <TData extends object>({ table, action }: ButtonProps<TData> & { action: Action }) => {
   const state = useContext(ToolbarContext);
   const strings = useStrings();
+  const registerColumnsButton = state?.registerColumnsButton;
+  useEffect(() => {
+    if (action === 'columns') {
+      return registerColumnsButton?.();
+    }
+  }, [action, registerColumnsButton]);
   if (!state || state.table !== table) {
     throw new Error('EditableTableV2 toolbar buttons must be rendered inside their table.');
   }
