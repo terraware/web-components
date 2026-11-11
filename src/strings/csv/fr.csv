@@ -58,6 +58,8 @@ TABLE_HIDE_COLUMN,Masquer la colonne {column},b4a87c14
 TABLE_LAST_PAGE,Dernière page,6eafe34a
 TABLE_MAX,Maximum,96f88e1f
 TABLE_MIN,Minimum,f2a882fd
+TABLE_DRAG_COLUMN,Déplacer la colonne,
+TABLE_MOVE,Déplacer,
 TABLE_MOVE_BACK,Déplacer la colonne vers l’arrière,ccaba4fb
 TABLE_MOVE_FORWARD,Déplacer la colonne vers l’avant,a7cfa4d3
 TABLE_NEXT_PAGE,Page suivante,be0bb188

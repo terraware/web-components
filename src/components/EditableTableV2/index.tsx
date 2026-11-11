@@ -1,5 +1,7 @@
 import React, { ReactNode, useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 
+import { DragEndEvent } from '@dnd-kit/core';
+import { arrayMove } from '@dnd-kit/sortable';
 import {
   ArrowDownward,
   ArrowUpward,
@@ -24,7 +26,6 @@ import {
   IconButton,
   InputAdornment,
   ListItemIcon,
-  Menu,
   MenuItem,
   Button as MuiButton,
   Paper,
@@ -33,7 +34,6 @@ import {
   Table,
   TableBody,
   TableCell,
-  TableContainer,
   TableContainerProps,
   TableHead,
   TablePagination,
@@ -50,6 +50,14 @@ import { MRT_FilterFns, MRT_SortingFns } from 'material-react-table';
 
 import { useStrings } from '../../strings';
 import Button from '../Button/Button';
+import {
+  ColumnDragBodyCell,
+  ColumnDragHandle,
+  ColumnDragMenu,
+  ColumnDragTableContainer,
+  DraggableColumnHeader,
+  DraggableColumnItem,
+} from './ColumnDragging';
 import EditableCellV2 from './EditableCellV2';
 import {
   EditableTableShowHideColumnsButtonV2,
@@ -79,6 +87,7 @@ export type EditableTablePropsV2<TData extends object> = {
   enableClearAllFilters?: boolean;
   enableEditing?: boolean;
   enableColumnOrdering?: boolean;
+  enableColumnDragging?: boolean;
   enableColumnActions?: boolean;
   showColumnsButton?: boolean;
   showGlobalFilterButton?: boolean;
@@ -283,6 +292,7 @@ const EditableTableV2 = <TData extends object>({
   enableClearAllFilters = true,
   enableEditing = false,
   enableColumnOrdering = false,
+  enableColumnDragging = false,
   enableColumnActions = true,
   showColumnsButton = false,
   showGlobalFilterButton = false,
@@ -591,6 +601,26 @@ const EditableTableV2 = <TData extends object>({
     }
   };
 
+  const reorderColumns = ({ active, over }: DragEndEvent) => {
+    if (!over || active.id === over.id) {
+      return;
+    }
+    const source = table.getAllLeafColumns().find((column) => column.id === active.id);
+    const target = table.getAllLeafColumns().find((column) => column.id === over.id);
+    if (!source || !target || source.getIsPinned() !== target.getIsPinned()) {
+      return;
+    }
+    const pin = source.getIsPinned();
+    const order = table.getAllLeafColumns().map((column) => column.id);
+    table.setColumnOrder(arrayMove(order, order.indexOf(source.id), order.indexOf(target.id)));
+    if (pin) {
+      table.setColumnPinning((previous) => {
+        const group = previous[pin] ?? [];
+        return { ...previous, [pin]: arrayMove(group, group.indexOf(source.id), group.indexOf(target.id)) };
+      });
+    }
+  };
+
   return (
     <EditableTableToolbarRoot
       value={{
@@ -683,7 +713,13 @@ const EditableTableV2 = <TData extends object>({
             </Box>
           </Toolbar>
         )}
-        <Menu anchorEl={menuAnchor} open={!!menuAnchor} onClose={() => setMenuAnchor(null)}>
+        <ColumnDragMenu
+          ids={table.getAllLeafColumns().map((column) => column.id)}
+          onDragEnd={reorderColumns}
+          anchorEl={menuAnchor}
+          open={!!menuAnchor}
+          onClose={() => setMenuAnchor(null)}
+        >
           {menuColumnId &&
             table.getColumn(menuColumnId)?.getCanSort() &&
             [
@@ -815,7 +851,15 @@ const EditableTableV2 = <TData extends object>({
             (column, index) =>
               !menuColumnId &&
               controlsEnabled && (
-                <MenuItem key={column.id} disableRipple sx={{ my: 0, py: '6px', pl: '16px' }}>
+                <DraggableColumnItem
+                  key={column.id}
+                  id={column.id}
+                  label={definitions.get(column.id)!.header}
+                  enabled={enableColumnOrdering}
+                  disableRipple
+                  sx={{ my: 0, py: '6px', pl: '16px' }}
+                >
+                  <ColumnDragHandle />
                   <FormControlLabel
                     label={definitions.get(column.id)?.header}
                     slotProps={{ typography: { sx: { mb: 0 } } }}
@@ -867,11 +911,15 @@ const EditableTableV2 = <TData extends object>({
                       <MenuItem value='right'>{strings.TABLE_PIN_RIGHT}</MenuItem>
                     </TextField>
                   )}
-                </MenuItem>
+                </DraggableColumnItem>
               )
           )}
-        </Menu>
-        <TableContainer {...containerProps}>
+        </ColumnDragMenu>
+        <ColumnDragTableContainer
+          {...containerProps}
+          ids={orderedColumns.map((column) => column.id)}
+          onDragEnd={reorderColumns}
+        >
           <Table ref={tableRef} sx={{ minWidth: table.getTotalSize() }}>
             <TableHead>
               <TableRow>
@@ -892,9 +940,12 @@ const EditableTableV2 = <TData extends object>({
                     </>
                   );
                   return (
-                    <TableCell
+                    <DraggableColumnHeader
                       key={column.id}
                       data-column-id={column.id}
+                      id={column.id}
+                      label={definitions.get(column.id)!.header}
+                      enabled={enableColumnDragging || enableColumnOrdering}
                       sortDirection={column.getIsSorted() || false}
                       sx={(theme) => ({
                         ...pinnedStyles(column, theme, pinnedOffsets),
@@ -907,7 +958,7 @@ const EditableTableV2 = <TData extends object>({
                         '&:hover .MuiIconButton-root': { opacity: 1 },
                       })}
                     >
-                      <Box display='flex' alignItems='center' sx={{ minHeight: '24px' }}>
+                      <Box key='content' display='flex' alignItems='center' sx={{ minHeight: '24px' }}>
                         {column.getCanSort() ? (
                           <TableSortLabel
                             active={!!column.getIsSorted()}
@@ -930,6 +981,7 @@ const EditableTableV2 = <TData extends object>({
                         ) : (
                           header
                         )}
+                        <ColumnDragHandle />
                         {enableColumnActions && (column.getCanSort() || column.getCanFilter() || controlsEnabled) && (
                           <IconButton
                             size='small'
@@ -953,9 +1005,9 @@ const EditableTableV2 = <TData extends object>({
                         )}
                       </Box>
                       {filtersVisible && column.getCanFilter() && (
-                        <ColumnFilter column={column} definition={definitions.get(column.id)!} />
+                        <ColumnFilter key='filter' column={column} definition={definitions.get(column.id)!} />
                       )}
-                    </TableCell>
+                    </DraggableColumnHeader>
                   );
                 })}
               </TableRow>
@@ -991,7 +1043,9 @@ const EditableTableV2 = <TData extends object>({
                           (editConfig?.editVariant === 'custom' && !!editConfig.customEditComponent));
                       const value = cell.getValue();
                       return (
-                        <TableCell
+                        <ColumnDragBodyCell
+                          columnId={column.id}
+                          lastRow={rowIndex === rows.length - 1}
                           key={cell.id}
                           tabIndex={canEdit ? 0 : undefined}
                           onClick={canEdit ? (event) => event.stopPropagation() : undefined}
@@ -1030,7 +1084,7 @@ const EditableTableV2 = <TData extends object>({
                           ) : (
                             String(value ?? '')
                           )}
-                        </TableCell>
+                        </ColumnDragBodyCell>
                       );
                     }
                   )}
@@ -1043,7 +1097,7 @@ const EditableTableV2 = <TData extends object>({
               )}
             </TableBody>
           </Table>
-        </TableContainer>
+        </ColumnDragTableContainer>
         {enablePagination && enableBottomToolbar && (
           <TablePagination
             component='div'
