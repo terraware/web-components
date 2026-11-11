@@ -239,6 +239,36 @@ export const WithCustomToolbarOrder = () => (
   />
 );
 
+export const WithMrtProps = () => (
+  <EditableTableV2
+    clearAllFiltersLabel='Clear filters'
+    columns={[
+      { id: 'name', header: 'Name', accessorKey: 'name' },
+      { id: 'occupation', header: 'Occupation', accessorKey: 'occupation' },
+      { id: 'available', header: 'Available', accessorKey: 'available' },
+    ]}
+    data={createRows(5)}
+    enableGlobalFilter
+    positionGlobalFilter='right'
+    enableShowAllColumnsMenuItem={false}
+    enableColumnPinning
+    renderTopToolbarCustomActions={({ table }) => (
+      <Button variant='outlined' onClick={() => table.setGlobalFilter('')}>
+        Reset view ({table.getRowModel().rows.length})
+      </Button>
+    )}
+    muiTableHeadCellProps={({ column }) => ({
+      title: column.columnDef.header as string,
+      sx: { padding: '8px', height: '56px', '& .Mui-TableHeadCell-Content-Wrapper': { whiteSpace: 'normal' } },
+    })}
+    muiTableBodyCellProps={({ cell }) => ({
+      title: String(cell.getValue()),
+      sx: { padding: '12px', '&[data-pinned="true"]': { filter: 'brightness(0.97)' } },
+    })}
+    tableOptions={{ initialState: { columnPinning: { left: ['name'], right: [] } } }}
+  />
+);
+
 export const WithFilters = () => <EditableTableWithStateV2 scenario='filters' />;
 
 export const WithPinnedColumns = () => <EditableTableWithStateV2 rowCount={50} pinnedColumns />;
