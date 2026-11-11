@@ -26,6 +26,14 @@ Install new dependencies with `yarn` instead of `npm`.
 Format the code, run the typescript checker, and run the linter when you're done working. There's no need to rerun tests
 after code formatting.
 
+## Internationalization
+
+- Add new strings to `src/strings/csv/en.csv` and run `yarn translate` afterward
+- Before adding a string, check whether an existing one already has the same text
+- Name strings after their text, not the feature using them, so they can be reused (e.g. `{0} days` should be `X_DAYS`,
+  not `<feature-name>_DAYS`). Use feature-specific names only for text that is specific to that feature, such as
+  `SPECIES_DENSITY_WARNING_MESSAGE`.
+
 ## Pull Requests
 
 PR descriptions should focus on why the change was needed and what changed at a high level. Don't talk about choices
