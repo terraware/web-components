@@ -71,6 +71,7 @@ export type {
   EditableTableCellV2,
   EditableTableCellContextV2,
   EditableTableColumnV2,
+  EditableTableEditContextV2,
   EditableTableInstanceV2,
   EditableTableOptionsV2,
   EditableTablePropsV2,
