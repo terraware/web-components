@@ -1,5 +1,6 @@
 import React, { useMemo, useState } from 'react';
 
+import { Button } from '@mui/material';
 import { StoryFn } from '@storybook/react';
 
 import EditableTableV2, { EditableTableColumnV2 } from '../components/EditableTableV2';
@@ -199,6 +200,36 @@ Default.args = { rowCount: 50 };
 export const WithTopToolbar = () => <EditableTableWithStateV2 rowCount={50} showTopToolbar />;
 
 export const WithColumnDragging = () => <EditableTableWithStateV2 rowCount={10} showTopToolbar columnDragging />;
+
+export const WithMrtProps = () => (
+  <EditableTableV2
+    clearAllFiltersLabel='Clear filters'
+    columns={[
+      { id: 'name', header: 'Name', accessorKey: 'name' },
+      { id: 'occupation', header: 'Occupation', accessorKey: 'occupation' },
+      { id: 'available', header: 'Available', accessorKey: 'available' },
+    ]}
+    data={createRows(5)}
+    enableGlobalFilter
+    positionGlobalFilter='right'
+    enableShowAllColumnsMenuItem={false}
+    enableColumnPinning
+    renderTopToolbarCustomActions={({ table }) => (
+      <Button variant='outlined' onClick={() => table.setGlobalFilter('')}>
+        Reset view ({table.getRowModel().rows.length})
+      </Button>
+    )}
+    muiTableHeadCellProps={({ column }) => ({
+      title: column.columnDef.header as string,
+      sx: { padding: '8px', height: '56px', '& .Mui-TableHeadCell-Content-Wrapper': { whiteSpace: 'normal' } },
+    })}
+    muiTableBodyCellProps={({ cell }) => ({
+      title: String(cell.getValue()),
+      sx: { padding: '12px', '&[data-pinned="true"]': { filter: 'brightness(0.97)' } },
+    })}
+    tableOptions={{ initialState: { columnPinning: { start: ['name'], end: [] } } }}
+  />
+);
 
 export const WithFilters = () => <EditableTableWithStateV2 scenario='filters' />;
 

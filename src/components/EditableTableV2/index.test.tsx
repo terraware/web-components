@@ -28,6 +28,117 @@ const rowNames = () =>
     .slice(1)
     .map((row) => within(row).getAllByRole('cell')[0].textContent);
 
+test.each(['left', 'right'] as const)(
+  'places custom toolbar actions and the %s search in MRT order',
+  (positionGlobalFilter) => {
+    const custom = rs.fn(({ table }) => <button>Rows: {table.getRowModel().rows.length}</button>);
+    render(
+      <EditableTableV2
+        columns={columns}
+        data={data}
+        clearAllFiltersLabel='Clear'
+        enableGlobalFilter
+        positionGlobalFilter={positionGlobalFilter}
+        renderTopToolbarCustomActions={custom}
+        renderToolbarInternalActions={() => <button>Internal</button>}
+      />
+    );
+    const search = screen.getByRole('textbox', { name: 'Search' });
+    const actions = screen.getByRole('button', { name: 'Rows: 2' });
+    expect(!!(search.compareDocumentPosition(actions) & Node.DOCUMENT_POSITION_FOLLOWING)).toBe(
+      positionGlobalFilter === 'left'
+    );
+    expect(
+      actions.compareDocumentPosition(screen.getByRole('button', { name: 'Internal' })) &
+        Node.DOCUMENT_POSITION_FOLLOWING
+    ).toBeTruthy();
+    expect(custom).toHaveBeenCalled();
+  }
+);
+
+test('removes only the per-column show-all action and avoids a trailing divider', () => {
+  render(
+    <EditableTableV2
+      columns={columns}
+      data={data}
+      clearAllFiltersLabel='Clear'
+      enableShowAllColumnsMenuItem={false}
+      showColumnsButton
+    />
+  );
+  fireEvent.click(screen.getByLabelText('Column actions: Name'));
+  expect(screen.queryByText('Show all columns')).not.toBeInTheDocument();
+  const items = within(screen.getByRole('menu')).getAllByRole('menuitem');
+  expect(items.at(-1)).not.toHaveClass('MuiMenuItem-divider');
+  fireEvent.keyDown(screen.getByRole('menu'), { key: 'Escape' });
+  fireEvent.click(screen.getByLabelText('Columns'));
+  expect(screen.getByRole('button', { name: 'Show all' })).toBeInTheDocument();
+  expect(screen.getByRole('button', { name: 'Hide all' })).toBeInTheDocument();
+});
+
+test.each([false, true])('merges cell props and preserves table interactions (function form: %s)', (functionForm) => {
+  const onClick = rs.fn();
+  const onDoubleClick = rs.fn();
+  const onKeyDown = rs.fn();
+  const onRowClick = rs.fn();
+  const headProps = { title: 'Custom head', sx: { padding: '3px' }, onClick };
+  const bodyProps = { title: 'Custom body', sx: [{ padding: '5px' }], onClick, onDoubleClick, onKeyDown };
+  const head = rs.fn(({ column, table }) => {
+    expect(table.getColumn(column.id)).toBe(column);
+    return headProps;
+  });
+  const body = rs.fn(({ cell, column, row, table }) => {
+    expect(cell.column).toBe(column);
+    expect(cell.row).toBe(row);
+    expect(table.getRowModel().rows).toContain(row);
+    return bodyProps;
+  });
+  render(
+    <EditableTableV2
+      columns={columns}
+      data={data}
+      clearAllFiltersLabel='Clear'
+      enableEditing
+      enableColumnPinning
+      onRowClick={onRowClick}
+      muiTableHeadCellProps={functionForm ? head : headProps}
+      muiTableBodyCellProps={functionForm ? body : bodyProps}
+      tableOptions={{ initialState: { columnPinning: { start: ['name'], end: [] } } }}
+    />
+  );
+  const headers = screen.getAllByRole('columnheader');
+  expect(headers[0]).toHaveAttribute('data-pinned', 'true');
+  expect(headers[1]).not.toHaveAttribute('data-pinned');
+  expect(headers[0].querySelector('.Mui-TableHeadCell-Content-Wrapper')).toHaveTextContent('Name');
+  expect(headers[0]).toHaveStyle({ padding: '3px' });
+  fireEvent.click(within(headers[0]).getByRole('button', { name: 'Name' }));
+  expect(onClick).toHaveBeenCalled();
+  expect(rowNames()).toEqual(['Acacia', 'Zebra']);
+  let cells = within(screen.getAllByRole('row')[1]).getAllByRole('cell');
+  expect(cells[0]).toHaveAttribute('data-pinned', 'true');
+  expect(cells[0]).toHaveAttribute('title', 'Custom body');
+  expect(cells[0]).toHaveStyle({ padding: '5px' });
+  fireEvent.click(cells[1]);
+  expect(onRowClick).toHaveBeenCalledTimes(1);
+  fireEvent.click(cells[0]);
+  expect(onRowClick).toHaveBeenCalledTimes(1);
+  fireEvent.doubleClick(cells[0]);
+  expect(onDoubleClick).toHaveBeenCalledTimes(1);
+  expect(screen.getByRole('textbox', { name: 'Name' })).toBeInTheDocument();
+  fireEvent.keyDown(screen.getByRole('textbox', { name: 'Name' }), { key: 'Escape' });
+  cells = within(screen.getAllByRole('row')[1]).getAllByRole('cell');
+  fireEvent.keyDown(cells[0], { key: 'F2' });
+  expect(onKeyDown).toHaveBeenCalledTimes(1);
+  expect(screen.getByRole('textbox', { name: 'Name' })).toBeInTheDocument();
+  if (functionForm) {
+    expect(head).toHaveBeenCalled();
+    expect(body).toHaveBeenCalled();
+  } else {
+    expect(head).not.toHaveBeenCalled();
+    expect(body).not.toHaveBeenCalled();
+  }
+});
+
 test('matches the MRT handle icon, tooltip, and header action placement', async () => {
   const user = userEvent.setup();
   render(
