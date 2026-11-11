@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
+import { StrictMode } from 'react';
 
-import { act, fireEvent, render, screen, within } from '@testing-library/react';
+import { act, fireEvent, render, screen, waitFor, within } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 
 import EditableTableV2, { EditableTableColumnPinningV2, EditableTableColumnV2, EditableTableInstanceV2 } from '.';
 
@@ -11,13 +13,98 @@ const data: Item[] = [
 ];
 const columns: EditableTableColumnV2<Item>[] = [
   { id: 'name', header: 'Name', accessorKey: 'name' },
-  { id: 'count', header: 'Count', accessorKey: 'count' },
+  { id: 'count', header: 'Count', accessorKey: 'count', enableEditing: false },
 ];
 const rowNames = () =>
   screen
     .getAllByRole('row')
     .slice(1)
     .map((row) => within(row).getAllByRole('cell')[0].textContent);
+
+test('saves text once on Enter and cancels on Escape', async () => {
+  const onSave = rstest.fn();
+  render(
+    <EditableTableV2
+      columns={[{ ...columns[0], editConfig: { onSave } }, columns[1]]}
+      data={data}
+      clearAllFiltersLabel='Clear'
+      enableEditing
+    />
+  );
+  fireEvent.doubleClick(screen.getByText('Zebra'));
+  const input = screen.getByLabelText('Name');
+  fireEvent.change(input, { target: { value: 'Oak' } });
+  fireEvent.keyDown(input, { key: 'Enter' });
+  await waitFor(() => expect(onSave).toHaveBeenCalledTimes(1));
+  expect(onSave).toHaveBeenCalledWith(data[0], 'Oak', 'name');
+  await waitFor(() => expect(screen.queryByLabelText('Name')).not.toBeInTheDocument());
+  fireEvent.doubleClick(screen.getByText('Zebra'));
+  fireEvent.keyDown(screen.getByLabelText('Name'), { key: 'Escape' });
+  expect(onSave).toHaveBeenCalledTimes(1);
+  fireEvent.doubleClick(screen.getByText('3'));
+  expect(screen.queryByLabelText('Count')).not.toBeInTheDocument();
+});
+
+test.each([false, true])('keeps the current editor open when an older save resolves (reopen: %s)', async (reopen) => {
+  let resolveSave!: () => void;
+  const onSave = rstest.fn(
+    () =>
+      new Promise<void>((resolve) => {
+        resolveSave = resolve;
+      })
+  );
+  render(
+    <StrictMode>
+      <EditableTableV2
+        columns={[{ ...columns[0], editConfig: { onSave } }]}
+        data={data}
+        clearAllFiltersLabel='Clear'
+        enableEditing
+      />
+    </StrictMode>
+  );
+  fireEvent.doubleClick(screen.getByText('Zebra'));
+  fireEvent.change(screen.getByLabelText('Name'), { target: { value: 'Oak' } });
+  fireEvent.keyDown(screen.getByLabelText('Name'), { key: 'Enter' });
+  expect(onSave).toHaveBeenCalledWith(data[0], 'Oak', 'name');
+  expect(screen.getByLabelText('Name')).toBeDisabled();
+  fireEvent.doubleClick(screen.getByText('Acacia'));
+  if (reopen) {
+    fireEvent.keyDown(screen.getByLabelText('Name'), { key: 'Escape' });
+    fireEvent.doubleClick(screen.getByText('Zebra'));
+  }
+  const currentInput = screen.getByLabelText('Name');
+  fireEvent.change(currentInput, { target: { value: 'Unsaved edit' } });
+  await act(async () => resolveSave());
+  expect(screen.getByLabelText('Name')).toBe(currentInput);
+  expect(currentInput).toHaveValue('Unsaved edit');
+  expect(onSave).toHaveBeenCalledTimes(1);
+});
+
+test('clears the edit session when saving removes the row from view', async () => {
+  let resolveSave!: () => void;
+  const onSave = rstest.fn(
+    () =>
+      new Promise<void>((resolve) => {
+        resolveSave = resolve;
+      })
+  );
+  const editableColumns = [{ ...columns[0], editConfig: { onSave } }];
+  const table = (rows: Item[]) => (
+    <EditableTableV2 columns={editableColumns} data={rows} clearAllFiltersLabel='Clear' enableEditing />
+  );
+  const { rerender } = render(table(data));
+  fireEvent.doubleClick(screen.getByText('Zebra'));
+  fireEvent.change(screen.getByLabelText('Name'), { target: { value: 'Oak' } });
+  fireEvent.keyDown(screen.getByLabelText('Name'), { key: 'Enter' });
+  expect(onSave).toHaveBeenCalledTimes(1);
+  rerender(table([]));
+  expect(screen.queryByLabelText('Name')).not.toBeInTheDocument();
+  await act(async () => resolveSave());
+  rerender(table(data));
+  expect(screen.getByText('Zebra')).toBeInTheDocument();
+  expect(screen.queryByLabelText('Name')).not.toBeInTheDocument();
+});
 
 test('paginates with first, last, next and previous controls', () => {
   render(
@@ -41,6 +128,113 @@ test('paginates with first, last, next and previous controls', () => {
   expect(rowNames()).toEqual(['Zebra']);
   fireEvent.click(screen.getByLabelText('Next page'));
   expect(rowNames()).toEqual(['Acacia']);
+});
+
+test('supports custom renderers, custom editors and row clicks', async () => {
+  const user = userEvent.setup();
+  const onSave = rstest.fn();
+  const onRowClick = rstest.fn();
+  render(
+    <EditableTableV2
+      columns={[
+        {
+          ...columns[0],
+          Cell: ({ cell }) => <strong>{cell.getValue<string>()}!</strong>,
+          editConfig: {
+            onSave,
+            editVariant: 'custom',
+            customEditComponent: ({ save }) => <button onClick={() => void save('Oak')}>Save custom</button>,
+          },
+        },
+        columns[1],
+      ]}
+      data={data}
+      clearAllFiltersLabel='Clear'
+      enableEditing
+      onRowClick={onRowClick}
+    />
+  );
+  await user.click(screen.getByText('Zebra!'));
+  expect(onRowClick).not.toHaveBeenCalled();
+  await user.dblClick(screen.getByText('Zebra!'));
+  expect(onRowClick).not.toHaveBeenCalled();
+  await user.click(screen.getByText('Save custom'));
+  await waitFor(() => expect(onSave).toHaveBeenCalledWith(data[0], 'Oak', 'name'));
+  expect(onRowClick).not.toHaveBeenCalled();
+  await user.click(screen.getByText('3'));
+  expect(onRowClick).toHaveBeenCalledWith(data[0]);
+  expect(onRowClick).toHaveBeenCalledTimes(1);
+});
+
+test.each([false, true])(
+  'only consumes clicks on cells that can be edited (enableEditing: %s)',
+  async (enableEditing) => {
+    const user = userEvent.setup();
+    const onRowClick = rstest.fn();
+    render(
+      <EditableTableV2
+        columns={[{ ...columns[0], enableEditing: (row) => row.original.id === 'a' }]}
+        data={data}
+        clearAllFiltersLabel='Clear'
+        enableEditing={enableEditing}
+        onRowClick={onRowClick}
+      />
+    );
+    await user.click(screen.getByText('Zebra'));
+    expect(onRowClick).toHaveBeenCalledTimes(enableEditing ? 0 : 1);
+    await user.click(screen.getByText('Acacia'));
+    expect(onRowClick).toHaveBeenLastCalledWith(data[1]);
+    expect(onRowClick).toHaveBeenCalledTimes(enableEditing ? 1 : 2);
+    expect(screen.queryByLabelText('Name')).not.toBeInTheDocument();
+  }
+);
+
+test('shows a rejected save and permits retrying', async () => {
+  const onSave = rstest.fn().mockRejectedValueOnce(new Error('failed')).mockResolvedValue(undefined);
+  render(
+    <EditableTableV2
+      columns={[{ ...columns[0], editConfig: { onSave } }]}
+      data={data}
+      clearAllFiltersLabel='Clear'
+      enableEditing
+    />
+  );
+  fireEvent.doubleClick(screen.getByText('Zebra'));
+  fireEvent.change(screen.getByLabelText('Name'), { target: { value: 'Oak' } });
+  fireEvent.blur(screen.getByLabelText('Name'));
+  expect(await screen.findByRole('alert')).toHaveTextContent('Unable to save changes');
+  fireEvent.keyDown(screen.getByLabelText('Name'), { key: 'Enter' });
+  await waitFor(() => expect(screen.queryByLabelText('Name')).not.toBeInTheDocument());
+  expect(onSave).toHaveBeenCalledTimes(2);
+});
+
+test('edits select values and saves on blur', async () => {
+  const onSave = rstest.fn();
+  render(
+    <EditableTableV2
+      columns={[
+        {
+          ...columns[0],
+          editConfig: {
+            onSave,
+            editVariant: 'select',
+            selectOptions: [
+              { label: 'Zebra', value: 'Zebra' },
+              { label: 'Oak', value: 'Oak' },
+            ],
+          },
+        },
+      ]}
+      data={data}
+      clearAllFiltersLabel='Clear'
+      enableEditing
+    />
+  );
+  fireEvent.doubleClick(screen.getByText('Zebra'));
+  fireEvent.mouseDown(screen.getByRole('combobox', { name: 'Name' }));
+  fireEvent.click(screen.getByRole('option', { name: 'Oak' }));
+  fireEvent.blur(screen.getByRole('combobox', { name: 'Name' }));
+  await waitFor(() => expect(onSave).toHaveBeenCalledWith(data[0], 'Oak', 'name'));
 });
 
 test('shows unsorted indicators and cycles numeric sorting ascending first', () => {
