@@ -22,6 +22,38 @@ const rowNames = () =>
     .slice(1)
     .map((row) => within(row).getAllByRole('cell')[0].textContent);
 
+test('uses switches and bulk visibility controls while respecting non-hideable columns', () => {
+  render(
+    <EditableTableV2
+      columns={[{ ...columns[0], enableHiding: false }, columns[1]]}
+      data={data}
+      clearAllFiltersLabel='Clear'
+      showColumnsButton
+    />
+  );
+  fireEvent.click(screen.getByRole('button', { name: 'Columns' }));
+  expect(screen.getByRole('switch', { name: 'Name' })).toBeDisabled();
+  expect(screen.getByRole('switch', { name: 'Count' }).closest('.MuiSwitch-root')).toBeInTheDocument();
+  expect(screen.getByRole('button', { name: 'Show all' })).toBeDisabled();
+  fireEvent.click(screen.getByRole('button', { name: 'Hide all' }));
+  expect(screen.getByRole('switch', { name: 'Name' })).toBeChecked();
+  expect(screen.getByRole('switch', { name: 'Count' })).not.toBeChecked();
+  expect(screen.getByRole('button', { name: 'Hide all' })).toBeDisabled();
+  fireEvent.click(screen.getByRole('button', { name: 'Show all' }));
+  expect(screen.getByRole('switch', { name: 'Count' })).toBeChecked();
+});
+
+test('can hide and restore all columns from the toolbar manager', () => {
+  render(<EditableTableV2 columns={columns} data={data} clearAllFiltersLabel='Clear' showColumnsButton />);
+  fireEvent.click(screen.getByRole('button', { name: 'Columns' }));
+  fireEvent.click(screen.getByRole('button', { name: 'Hide all' }));
+  expect(screen.queryByRole('columnheader', { hidden: true })).not.toBeInTheDocument();
+  fireEvent.keyDown(screen.getByRole('menu'), { key: 'Escape' });
+  fireEvent.click(screen.getByRole('button', { name: 'Columns' }));
+  fireEvent.click(screen.getByRole('button', { name: 'Show all' }));
+  expect(screen.getAllByRole('columnheader', { hidden: true })).toHaveLength(2);
+});
+
 test('sorts and filters rows, and clears global and column filters', () => {
   render(
     <EditableTableV2
@@ -128,24 +160,30 @@ test('clears the edit session when saving removes the row from view', async () =
   expect(screen.queryByLabelText('Name')).not.toBeInTheDocument();
 });
 
-test('paginates with first, last, next and previous controls', () => {
+test('paginates and renders pinned columns with sticky offsets', () => {
   render(
     <EditableTableV2
       columns={columns}
       data={data}
       clearAllFiltersLabel='Clear'
+      enableColumnPinning
       tableOptions={{
-        initialState: { pagination: { pageSize: 1, pageIndex: 0 } },
+        initialState: {
+          pagination: { pageSize: 1, pageIndex: 0 },
+          columnPinning: { left: ['name'], right: ['count'] },
+        },
       }}
     />
   );
   expect(rowNames()).toEqual(['Zebra']);
   expect(screen.getByLabelText('First page')).toBeDisabled();
   expect(screen.getByLabelText('Last page')).toBeEnabled();
+  expect(screen.getByText('Zebra').style.position).toBe('');
   fireEvent.click(screen.getByLabelText('Last page'));
   expect(rowNames()).toEqual(['Acacia']);
   expect(screen.getByLabelText('Last page')).toBeDisabled();
   expect(screen.getByLabelText('First page')).toBeEnabled();
+  expect(getComputedStyle(screen.getByText('Acacia')).position).toBe('sticky');
   fireEvent.click(screen.getByLabelText('First page'));
   expect(rowNames()).toEqual(['Zebra']);
   fireEvent.click(screen.getByLabelText('Next page'));
@@ -170,6 +208,26 @@ test('persists filters and tolerates corrupt storage', () => {
   expect(rowNames()).toEqual(['Zebra']);
   fireEvent.click(screen.getByText('Clear'));
   expect(localStorage.getItem('table_columnFilters')).toBeNull();
+});
+
+test('moves and hides columns using the column controls', () => {
+  render(
+    <EditableTableV2
+      columns={columns}
+      data={data}
+      clearAllFiltersLabel='Clear'
+      enableColumnOrdering
+      showColumnsButton
+    />
+  );
+  fireEvent.click(screen.getByLabelText('Columns'));
+  fireEvent.click(screen.getByLabelText('Move column forward: Name'));
+  expect(screen.getAllByRole('columnheader', { hidden: true }).map((header) => header.textContent)).toEqual([
+    'Count',
+    'Name',
+  ]);
+  fireEvent.click(screen.getByRole('switch', { name: 'Name' }));
+  expect(screen.getAllByRole('columnheader', { hidden: true })).toHaveLength(1);
 });
 
 test('supports custom renderers, custom editors and row clicks', async () => {
@@ -309,6 +367,29 @@ test('shows unsorted indicators and cycles numeric sorting ascending first', () 
   expect(header).not.toHaveAttribute('aria-sort');
 });
 
+test('offers per-column sorting and visibility actions without a top toolbar', () => {
+  render(<EditableTableV2 columns={columns} data={data} clearAllFiltersLabel='Clear' enableTopToolbar={false} />);
+  const actions = () => fireEvent.click(screen.getByLabelText('Column actions: Count'));
+  actions();
+  fireEvent.click(screen.getByRole('menuitem', { name: 'Sort by Count ascending' }));
+  expect(rowNames()).toEqual(['Acacia', 'Zebra']);
+  actions();
+  fireEvent.click(screen.getByRole('menuitem', { name: 'Sort by Count descending' }));
+  expect(rowNames()).toEqual(['Zebra', 'Acacia']);
+  actions();
+  fireEvent.click(screen.getByRole('menuitem', { name: 'Clear sorting' }));
+  expect(screen.getByRole('columnheader', { name: /Count/ })).not.toHaveAttribute('aria-sort');
+  actions();
+  expect(screen.queryByRole('menuitem', { name: 'Columns' })).not.toBeInTheDocument();
+  expect(screen.queryByRole('switch', { name: 'Name' })).not.toBeInTheDocument();
+  fireEvent.click(screen.getByRole('menuitem', { name: 'Hide Count column' }));
+  expect(screen.queryByRole('columnheader', { name: /Count/, hidden: true })).not.toBeInTheDocument();
+  fireEvent.click(screen.getByLabelText('Column actions: Name'));
+  expect(screen.getByRole('menuitem', { name: 'Hide Name column' })).toHaveAttribute('aria-disabled', 'true');
+  fireEvent.click(screen.getByRole('menuitem', { name: 'Show all columns' }));
+  expect(screen.getByRole('columnheader', { name: /Count/, hidden: true })).toBeInTheDocument();
+});
+
 test.each([{ left: ['name'], right: ['count'] }, { left: ['name'] }, { right: ['count'] }, {}])(
   'translates uncontrolled initial pinning %j',
   (columnPinning) => {
@@ -371,7 +452,7 @@ test('exposes typed filter metadata on generated TanStack columns', () => {
   expect(inspect.mock.calls.length).toBeGreaterThan(callsBeforeEmptyData);
 });
 
-test('round trips controlled left/right pinning through raw TanStack updaters', () => {
+test('round trips controlled left/right pinning through menus and raw TanStack updaters', () => {
   const initialPinning = { left: ['name'], right: [] };
   const onChange = rs.fn();
   let table: EditableTableInstanceV2<Item>;
@@ -382,6 +463,8 @@ test('round trips controlled left/right pinning through raw TanStack updaters', 
         columns={columns}
         data={data}
         clearAllFiltersLabel='Clear'
+        enableColumnPinning
+        showColumnsButton
         renderToolbarInternalActions={({ table: instance }) => {
           table = instance;
           return <output aria-label='Pinning state'>{JSON.stringify(columnPinning)}</output>;
@@ -397,17 +480,40 @@ test('round trips controlled left/right pinning through raw TanStack updaters', 
     );
   };
   render(<Controlled />);
-  act(() => table!.getColumn('count')!.pin('end'));
+  fireEvent.click(screen.getByLabelText('Column actions: Count'));
+  fireEvent.click(screen.getByRole('menuitem', { name: 'Pin to right' }));
   expect(onChange.mock.calls[0][0](initialPinning)).toEqual({ left: ['name'], right: ['count'] });
   expect(screen.getByRole('status', { name: 'Pinning state' })).toHaveTextContent(
     '{"left":["name"],"right":["count"]}'
   );
   expect(table!.getColumn('name')!.getIsPinned()).toBe('start');
   expect(table!.getColumn('count')!.getIsPinned()).toBe('end');
+  expect(getComputedStyle(screen.getByText('3')).insetInlineEnd).toBe('0px');
   act(() => table!.setColumnPinning({ start: [], end: ['name'] }));
   expect(screen.getByLabelText('Pinning state')).toHaveTextContent('{"left":[],"right":["name"]}');
   act(() => table!.setColumnPinning((previous) => ({ start: previous.end, end: [] })));
   expect(screen.getByRole('status', { name: 'Pinning state' })).toHaveTextContent('{"left":["name"],"right":[]}');
+  fireEvent.click(screen.getByLabelText('Columns'));
+  const selects = screen.getAllByRole('combobox', { name: 'Pin column' });
+  fireEvent.mouseDown(selects[0]);
+  fireEvent.click(screen.getByRole('option', { name: 'Pin to right' }));
+  expect(screen.getByLabelText('Pinning state')).toHaveTextContent('{"left":[],"right":["name"]}');
+});
+
+test('pins columns and restores hidden columns directly from header action menus', () => {
+  render(<EditableTableV2 columns={columns} data={data} clearAllFiltersLabel='Clear' enableColumnPinning />);
+  fireEvent.click(screen.getByLabelText('Column actions: Count'));
+  fireEvent.click(screen.getByRole('menuitem', { name: 'Pin to right' }));
+  expect(getComputedStyle(screen.getByText('3')).position).toBe('sticky');
+  expect(getComputedStyle(screen.getByText('3')).insetInlineEnd).toBe('0px');
+  fireEvent.click(screen.getByLabelText('Column actions: Count'));
+  fireEvent.click(screen.getByRole('menuitem', { name: 'Unpinned' }));
+  expect(getComputedStyle(screen.getByText('3')).position).not.toBe('sticky');
+  fireEvent.click(screen.getByLabelText('Column actions: Count'));
+  fireEvent.click(screen.getByRole('menuitem', { name: 'Hide Count column' }));
+  fireEvent.click(screen.getByLabelText('Column actions: Name'));
+  fireEvent.click(screen.getByRole('menuitem', { name: 'Show all columns' }));
+  expect(screen.getByRole('columnheader', { name: /Count/ })).toBeInTheDocument();
 });
 
 test('marks filtered columns and clears search independently from column filters', () => {
@@ -434,7 +540,8 @@ test('marks filtered columns and clears search independently from column filters
   fireEvent.click(screen.getByLabelText('Clear search'));
   expect(rowNames()).toEqual(['Zebra']);
   expect(screen.getByLabelText('Filtered: Name')).toBeInTheDocument();
-  fireEvent.click(screen.getByText('Clear'));
+  fireEvent.click(screen.getByLabelText('Column actions: Name'));
+  fireEvent.click(screen.getByRole('menuitem', { name: 'Clear filter' }));
   expect(screen.queryByLabelText('Filtered: Name')).not.toBeInTheDocument();
   expect(rowNames()).toHaveLength(2);
 });
@@ -464,4 +571,9 @@ test('automatically selects alphanumeric sorting with fewer than ten rows', () =
   );
   fireEvent.click(screen.getByText('Name'));
   expect(rowNames()).toEqual(['20', '113', '1467', '13770', '15372']);
+});
+
+test('can disable per-column action buttons', () => {
+  render(<EditableTableV2 columns={columns} data={data} clearAllFiltersLabel='Clear' enableColumnActions={false} />);
+  expect(screen.queryByLabelText('Column actions: Name')).not.toBeInTheDocument();
 });
