@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
-import { StrictMode } from 'react';
+import React, { StrictMode, useState } from 'react';
 
 import { act, fireEvent, render, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import EditableTableV2, { EditableTableColumnPinningV2, EditableTableColumnV2, EditableTableInstanceV2 } from '.';
-import { WithClearAllFilters, WithFilters } from '../../stories/EditableTableV2.stories';
+import { WithCustomToolbarOrder, WithTopToolbar } from '../../stories/EditableTableV2.stories';
+import { EditableTableShowHideColumnsButtonV2, EditableTableToggleDensePaddingButtonV2 } from './ToolbarButtons';
 
 type Item = { id: string; name: string; count: number };
 const data: Item[] = [
@@ -87,6 +87,156 @@ test('can hide and restore all columns from the toolbar manager', () => {
   expect(screen.getAllByRole('columnheader', { hidden: true })).toHaveLength(2);
 });
 
+test('keeps the default internal toolbar button order', () => {
+  const view = render(
+    <EditableTableV2
+      columns={columns}
+      data={data}
+      clearAllFiltersLabel='Clear'
+      enableGlobalFilter
+      enableColumnFilters
+      showGlobalFilterButton
+      showColumnFiltersButton
+      showColumnsButton
+      showDensityButton
+      showFullScreenButton
+    />
+  );
+  const toolbar = within(view.container.querySelector('.MuiToolbar-root')!);
+  expect(toolbar.getAllByRole('button').map((button) => button.getAttribute('aria-label'))).toEqual([
+    'Clear search',
+    'Show/Hide search',
+    'Show/Hide filters',
+    'Columns',
+    'Toggle density',
+    'Toggle full screen',
+  ]);
+});
+
+test.each([false, true])('custom internal actions replace defaults and preserve clear-all (empty: %s)', (empty) => {
+  render(
+    <EditableTableV2
+      columns={columns}
+      data={data}
+      clearAllFiltersLabel='Clear'
+      enableGlobalFilter
+      enableColumnFilters
+      showGlobalFilterButton
+      showColumnFiltersButton
+      showColumnsButton
+      showDensityButton
+      showFullScreenButton
+      tableOptions={{ initialState: { globalFilter: 'Zebra' } }}
+      renderToolbarInternalActions={() => (empty ? null : <button>Only mine</button>)}
+    />
+  );
+  for (const name of ['Show/Hide search', 'Show/Hide filters', 'Columns', 'Toggle density', 'Toggle full screen']) {
+    expect(screen.queryByRole('button', { name })).not.toBeInTheDocument();
+  }
+  expect(!!screen.queryByRole('button', { name: 'Only mine' })).toBe(!empty);
+  fireEvent.click(screen.getByRole('button', { name: 'Clear' }));
+  expect(rowNames()).toEqual(['Zebra', 'Acacia']);
+});
+
+test('composes exported toolbar buttons in consumer order and drives shared table state', () => {
+  const view = render(<WithCustomToolbarOrder />);
+  const wrapper = view.container.firstElementChild!;
+  const toolbar = within(view.container.querySelector('.MuiToolbar-root')!);
+  expect(
+    toolbar.getAllByRole('button').map((button) => button.getAttribute('aria-label') ?? button.textContent)
+  ).toEqual([
+    'Clear search',
+    'Show/Hide filters',
+    'Reset filters',
+    'Columns',
+    'Toggle density',
+    'Toggle full screen',
+    'Show/Hide search',
+  ]);
+  fireEvent.click(screen.getByRole('button', { name: 'Show/Hide search' }));
+  expect(screen.queryByLabelText('Search')).not.toBeInTheDocument();
+  fireEvent.click(screen.getByRole('button', { name: 'Show/Hide search' }));
+  expect(screen.getByLabelText('Search')).toBeInTheDocument();
+  fireEvent.click(screen.getByRole('button', { name: 'Show/Hide filters' }));
+  fireEvent.change(screen.getByLabelText('Filter: Name'), { target: { value: 'Carlos' } });
+  expect(rowNames()).toEqual(['Carlos_3']);
+  fireEvent.click(screen.getByRole('button', { name: 'Reset filters' }));
+  expect(rowNames()).toHaveLength(5);
+  fireEvent.click(screen.getByRole('button', { name: 'Columns' }));
+  fireEvent.click(screen.getByRole('switch', { name: 'Occupation' }));
+  expect(screen.queryByRole('columnheader', { name: /Occupation/, hidden: true })).not.toBeInTheDocument();
+  fireEvent.click(screen.getByRole('switch', { name: 'Name' }));
+  expect(screen.queryByRole('columnheader', { hidden: true })).not.toBeInTheDocument();
+  fireEvent.click(screen.getByRole('button', { name: 'Show all' }));
+  fireEvent.keyDown(screen.getByRole('menu'), { key: 'Escape' });
+  const cell = screen.getByText('Carlos_3').closest('td')!;
+  for (const padding of ['4px', '24px', '16px']) {
+    fireEvent.click(screen.getByRole('button', { name: 'Toggle density' }));
+    expect(getComputedStyle(cell).paddingTop).toBe(padding);
+  }
+  fireEvent.click(screen.getByRole('button', { name: 'Toggle full screen' }));
+  expect(getComputedStyle(wrapper).position).toBe('fixed');
+  fireEvent.keyDown(document, { key: 'Escape' });
+  expect(getComputedStyle(wrapper).position).not.toBe('fixed');
+});
+
+test('custom density control cycles all padding sizes without the default-button flag', () => {
+  render(
+    <EditableTableV2
+      columns={columns}
+      data={data}
+      clearAllFiltersLabel='Clear'
+      renderToolbarInternalActions={({ table }) => <EditableTableToggleDensePaddingButtonV2 table={table} />}
+    />
+  );
+  const cell = screen.getByText('Zebra');
+  expect(getComputedStyle(cell).paddingTop).toBe('16px');
+  for (const padding of ['4px', '24px', '16px']) {
+    fireEvent.click(screen.getByRole('button', { name: 'Toggle density' }));
+    expect(getComputedStyle(cell).paddingTop).toBe(padding);
+  }
+});
+
+test('toggles search, column filters, density, and fullscreen in the full V2 toolbar story', () => {
+  const view = render(<WithTopToolbar />);
+  const wrapper = view.container.firstElementChild!;
+  expect(getComputedStyle(wrapper).padding).toBe('16px');
+  expect(screen.getByRole('button', { name: 'Export' })).toBeInTheDocument();
+  const searchToggle = screen.getByRole('button', { name: 'Show/Hide search' });
+  expect(within(searchToggle).getByTestId('SearchOffIcon')).toBeInTheDocument();
+  fireEvent.click(screen.getByRole('button', { name: 'Show/Hide search' }));
+  expect(screen.queryByPlaceholderText('Search')).not.toBeInTheDocument();
+  expect(within(searchToggle).getByTestId('SearchIcon')).toBeInTheDocument();
+  fireEvent.click(screen.getByRole('button', { name: 'Show/Hide search' }));
+  expect(screen.getByPlaceholderText('Search')).toBeInTheDocument();
+  expect(within(searchToggle).getByTestId('SearchOffIcon')).toBeInTheDocument();
+  expect(screen.queryByLabelText('Filter: Name')).not.toBeInTheDocument();
+  fireEvent.click(screen.getByRole('button', { name: 'Show/Hide filters' }));
+  fireEvent.change(screen.getByLabelText('Filter: Name'), { target: { value: 'Carlos_3' } });
+  expect(rowNames().every((name) => name?.startsWith('Carlos_3'))).toBe(true);
+  fireEvent.click(screen.getByRole('button', { name: 'Show/Hide filters' }));
+  expect(screen.queryByLabelText('Filter: Name')).not.toBeInTheDocument();
+  const cell = screen.getByText('Carlos_3').closest('td')!;
+  expect(getComputedStyle(cell).paddingTop).toBe('16px');
+  fireEvent.click(screen.getByRole('button', { name: 'Toggle density' }));
+  expect(getComputedStyle(cell).paddingTop).toBe('4px');
+  fireEvent.click(screen.getByRole('button', { name: 'Toggle density' }));
+  expect(getComputedStyle(cell).paddingTop).toBe('24px');
+  fireEvent.click(screen.getByRole('button', { name: 'Toggle full screen' }));
+  expect(screen.getByRole('button', { name: 'Toggle full screen' })).toHaveAttribute('aria-pressed', 'true');
+  expect(document.body.style.overflow).toBe('hidden');
+  expect(getComputedStyle(wrapper).padding).toBe('0px');
+  expect(getComputedStyle(wrapper).margin).toBe('0px');
+  expect(getComputedStyle(wrapper).position).toBe('fixed');
+  fireEvent.keyDown(document, { key: 'Escape' });
+  expect(screen.getByRole('button', { name: 'Toggle full screen' })).toHaveAttribute('aria-pressed', 'false');
+  expect(document.body.style.overflow).not.toBe('hidden');
+  expect(getComputedStyle(wrapper).padding).toBe('16px');
+  fireEvent.click(screen.getByRole('button', { name: 'Toggle full screen' }));
+  view.unmount();
+  expect(document.body.style.overflow).not.toBe('hidden');
+});
+
 test('sorts and filters rows, and clears global and column filters', () => {
   render(
     <EditableTableV2
@@ -95,9 +245,11 @@ test('sorts and filters rows, and clears global and column filters', () => {
       clearAllFiltersLabel='Clear'
       enableGlobalFilter
       enableColumnFilters
+      showColumnFiltersButton
       enablePagination={false}
     />
   );
+  fireEvent.click(screen.getByRole('button', { name: 'Show/Hide filters' }));
   fireEvent.click(screen.getByText('Name'));
   expect(rowNames()).toEqual(['Acacia', 'Zebra']);
   fireEvent.change(screen.getByLabelText('Filter: Name'), { target: { value: 'Zeb' } });
@@ -274,10 +426,12 @@ test('persists filters and tolerates corrupt storage', () => {
     data,
     clearAllFiltersLabel: 'Clear',
     enableColumnFilters: true,
+    showColumnFiltersButton: true,
     stickyFilters: true,
     storageKey: 'table',
   };
   const view = render(<EditableTableV2 {...props} />);
+  fireEvent.click(screen.getByRole('button', { name: 'Show/Hide filters' }));
   fireEvent.change(screen.getByLabelText('Filter: Name'), { target: { value: 'Zebra' } });
   expect(JSON.parse(localStorage.getItem('table_columnFilters')!)).toEqual([{ id: 'name', value: 'Zebra' }]);
   view.unmount();
@@ -451,8 +605,10 @@ test('filters numeric ranges', () => {
       data={data}
       clearAllFiltersLabel='Clear'
       enableColumnFilters
+      showColumnFiltersButton
     />
   );
+  fireEvent.click(screen.getByRole('button', { name: 'Show/Hide filters' }));
   fireEvent.change(screen.getByLabelText('Filter: Count Minimum'), { target: { value: '2' } });
   expect(screen.queryByText('1')).not.toBeInTheDocument();
   expect(screen.getByText('3')).toBeInTheDocument();
@@ -574,7 +730,12 @@ test('round trips controlled left/right pinning through menus and raw TanStack u
         showColumnsButton
         renderToolbarInternalActions={({ table: instance }) => {
           table = instance;
-          return <output aria-label='Pinning state'>{JSON.stringify(columnPinning)}</output>;
+          return (
+            <>
+              <output aria-label='Pinning state'>{JSON.stringify(columnPinning)}</output>
+              <EditableTableShowHideColumnsButtonV2 table={instance} />
+            </>
+          );
         }}
         tableOptions={{
           state: { columnPinning },
@@ -631,8 +792,10 @@ test('marks filtered columns and clears search independently from column filters
       clearAllFiltersLabel='Clear'
       enableGlobalFilter
       enableColumnFilters
+      showColumnFiltersButton
     />
   );
+  fireEvent.click(screen.getByRole('button', { name: 'Show/Hide filters' }));
   expect(screen.queryByLabelText('Filtered: Name')).not.toBeInTheDocument();
   expect(screen.getByLabelText('Filter: Name')).toHaveAttribute('placeholder', 'Filter by Name');
   expect(screen.getByLabelText('Search')).toHaveAttribute('placeholder', 'Search');
@@ -663,8 +826,10 @@ test.each(['select', 'multi-select'] as const)(
         data={data}
         clearAllFiltersLabel='Clear'
         enableColumnFilters
+        showColumnFiltersButton
       />
     );
+    await user.click(screen.getByRole('button', { name: 'Show/Hide filters' }));
     await user.click(screen.getByRole('combobox', { name: 'Filter: Name' }));
     await user.click(screen.getByRole('option', { name: 'Acacia' }));
     await user.keyboard('{Escape}');
