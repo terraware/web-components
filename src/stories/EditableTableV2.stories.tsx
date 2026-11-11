@@ -3,7 +3,6 @@ import React, { useMemo, useState } from 'react';
 import { StoryFn } from '@storybook/react';
 
 import EditableTableV2, { EditableTableColumnV2 } from '../components/EditableTableV2';
-import EditableTableExportButton from './EditableTableExportButton';
 
 export default { title: 'Editable Table V2', component: EditableTableV2 };
 
@@ -63,11 +62,14 @@ const createRows = (rowCount: number): RowData[] =>
 const EditableTableWithStateV2 = ({
   rowCount = 50,
   scenario = 'default',
+  showTopToolbar = false,
 }: {
   rowCount?: number;
   scenario?: Scenario;
+  showTopToolbar?: boolean;
 }) => {
   const [data, setData] = useState(() => createRows(rowCount));
+  const filtered = scenario === 'filters' || scenario === 'clearAllFilters' || showTopToolbar;
   const withoutPagination = scenario === 'withoutPagination';
   const columns = useMemo<EditableTableColumnV2<RowData>[]>(() => {
     const onSave = (row: RowData, value: unknown, columnId: string) => {
@@ -83,7 +85,7 @@ const EditableTableWithStateV2 = ({
         header: 'Name',
         accessorKey: 'name',
         size: 150,
-
+        filterVariant: filtered ? 'text' : undefined,
         editConfig: { onSave },
       },
       { id: 'middlename', header: 'Middle Name', accessorKey: 'middlename', size: 150, editConfig: { onSave } },
@@ -93,7 +95,8 @@ const EditableTableWithStateV2 = ({
         header: 'Occupation',
         accessorKey: 'occupation',
         size: 180,
-
+        filterVariant: filtered || scenario === 'occupationFilter' ? 'select' : undefined,
+        filterSelectOptions: occupations,
         editConfig: {
           editVariant: 'select',
           selectOptions: (withoutPagination ? occupations.slice(0, 3) : occupations).map((value) => ({
@@ -108,7 +111,8 @@ const EditableTableWithStateV2 = ({
         header: 'Available',
         accessorKey: 'available',
         size: 120,
-
+        filterVariant: filtered ? 'select' : undefined,
+        filterSelectOptions: ['yes', 'no'],
         editConfig: {
           editVariant: 'select',
           selectOptions: [
@@ -135,7 +139,7 @@ const EditableTableWithStateV2 = ({
           ? ['name', 'lastname', 'occupation']
           : ['name', 'occupation', 'available'];
     return allColumns.filter((column) => columnIds.includes(column.id));
-  }, [scenario, withoutPagination]);
+  }, [filtered, scenario, withoutPagination]);
 
   return (
     <EditableTableV2
@@ -146,7 +150,10 @@ const EditableTableWithStateV2 = ({
       enableSorting
       enablePagination={!withoutPagination}
       enableBottomToolbar={!withoutPagination}
+      enableGlobalFilter={filtered || showTopToolbar}
+      enableColumnFilters={filtered || scenario === 'occupationFilter'}
       initialSorting={scenario === 'default' ? [{ id: 'name', desc: false }] : undefined}
+      onClearAllFilters={scenario === 'clearAllFilters' ? () => console.log('All filters cleared') : undefined}
     />
   );
 };
@@ -155,6 +162,12 @@ const Template: StoryFn<{ rowCount: number }> = (args) => <EditableTableWithStat
 
 export const Default = Template.bind({});
 Default.args = { rowCount: 50 };
+
+export const WithFilters = () => <EditableTableWithStateV2 scenario='filters' />;
+
+export const WithClearAllFilters = () => <EditableTableWithStateV2 scenario='clearAllFilters' />;
+
+export const WithOccupationFilter = () => <EditableTableWithStateV2 scenario='occupationFilter' />;
 
 export const WithoutPagination = () => <EditableTableWithStateV2 scenario='withoutPagination' rowCount={20} />;
 
@@ -175,12 +188,13 @@ export const Editable = () => {
         previous.map((item) => (item.id === row.id ? { ...item, [id]: id === 'target' ? Number(value) : value } : item))
       );
     return [
-      { id: 'name', header: 'Indicator', accessorKey: 'name', editConfig: { onSave } },
+      { id: 'name', header: 'Indicator', accessorKey: 'name', filterVariant: 'text', editConfig: { onSave } },
       {
         id: 'status',
         header: 'Status',
         accessorKey: 'status',
-
+        filterVariant: 'select',
+        filterSelectOptions: ['Active', 'Complete'],
         editConfig: {
           onSave,
           editVariant: 'select',
@@ -194,7 +208,7 @@ export const Editable = () => {
         id: 'target',
         header: 'Target',
         accessorKey: 'target',
-
+        filterVariant: 'range',
         Cell: ({ cell }) => <strong>{cell.getValue<number>().toFixed(2)}</strong>,
         editConfig: { onSave },
       },
@@ -206,6 +220,10 @@ export const Editable = () => {
       data={data}
       clearAllFiltersLabel='Clear all filters'
       enableEditing
+      enableGlobalFilter
+      enableColumnFilters
+      stickyFilters
+      storageKey='editable-table-v2-story'
       tableOptions={{
         getRowId: (row) => row.id,
       }}
