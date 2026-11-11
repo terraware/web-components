@@ -49,10 +49,19 @@ UPLOAD_FILES,Subir archivos,b98547be
 UPLOAD_FILES_DESCRIPTION,Buscar o arrastrar y soltar archivos.,7c4a7822
 VR,RV,98fd7fc5
 ZOOM,Acercar/alejar,07b636df
+TABLE_ALL,Todos,832a8cf5
+TABLE_CLEAR_FILTER,Borrar filtro,5da35d2b
+TABLE_CLEAR_SEARCH,Borrar búsqueda,34aba902
+TABLE_FILTER,Filtrar,51b390ee
+TABLE_FILTER_BY,Filtrar por {column},0e2b5966
+TABLE_FILTERED,Filtrado,5ce35c5c
 TABLE_FIRST_PAGE,Primera página,2ba1de3f
 TABLE_LAST_PAGE,Última página,6eafe34a
+TABLE_MAX,Máximo,96f88e1f
+TABLE_MIN,Mínimo,f2a882fd
 TABLE_NEXT_PAGE,Página siguiente,be0bb188
 TABLE_NO_ROWS,No hay registros para mostrar,eb47076d
 TABLE_PREVIOUS_PAGE,Página anterior,d87b58b7
 TABLE_ROWS_PER_PAGE,Filas por página,ff461aa5
 TABLE_SAVE_ERROR,"No se pudieron guardar los cambios. Por favor, inténtelo de nuevo.",85668916
+TABLE_SEARCH,Buscar,9f30c236
