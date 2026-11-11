@@ -7,6 +7,7 @@ import {
   Row,
   Table,
   TableOptions,
+  Updater,
   columnFilteringFeature,
   columnOrderingFeature,
   columnPinningFeature,
@@ -42,9 +43,22 @@ export const editableTableFeatures = tableFeatures({
 type Features = typeof editableTableFeatures;
 export type EditableTableCellV2<TData extends object> = Cell<Features, TData>;
 export type EditableTableInstanceV2<TData extends object> = Table<Features, TData>;
+export type EditableTableColumnPinningV2 = { left?: string[]; right?: string[] };
+
 export type EditableTableOptionsV2<TData extends object> = Partial<
-  Omit<TableOptions<Features, TData>, 'features' | 'columns' | 'data'>
->;
+  Omit<
+    TableOptions<Features, TData>,
+    'features' | 'columns' | 'data' | 'initialState' | 'state' | 'onColumnPinningChange'
+  >
+> & {
+  initialState?: Omit<NonNullable<TableOptions<Features, TData>['initialState']>, 'columnPinning'> & {
+    columnPinning?: EditableTableColumnPinningV2;
+  };
+  state?: Omit<NonNullable<TableOptions<Features, TData>['state']>, 'columnPinning'> & {
+    columnPinning?: EditableTableColumnPinningV2;
+  };
+  onColumnPinningChange?: (updater: Updater<EditableTableColumnPinningV2>) => void;
+};
 export type EditableTableCellContextV2<TData extends object> = CellContext<Features, TData>;
 
 export type EditableTableEditContextV2<TData extends object> = EditableTableCellContextV2<TData> & {

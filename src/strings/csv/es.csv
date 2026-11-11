@@ -65,8 +65,8 @@ TABLE_MOVE_FORWARD,Mover columna hacia adelante,a7cfa4d3
 TABLE_NEXT_PAGE,Página siguiente,be0bb188
 TABLE_NO_ROWS,No hay registros para mostrar,eb47076d
 TABLE_PIN,Fijar columna,f25241a0
-TABLE_PIN_END,Fijar al final,d0d0c7b9
-TABLE_PIN_START,Fijar al inicio,d1e1d24e
+TABLE_PIN_RIGHT,Anclar a la derecha,
+TABLE_PIN_LEFT,Anclar a la izquierda,
 TABLE_PREVIOUS_PAGE,Página anterior,d87b58b7
 TABLE_ROWS_PER_PAGE,Filas por página,ff461aa5
 TABLE_SAVE_ERROR,"No se pudieron guardar los cambios. Por favor, inténtelo de nuevo.",85668916
