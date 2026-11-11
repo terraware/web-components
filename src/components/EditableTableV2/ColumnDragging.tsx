@@ -8,6 +8,7 @@ import {
   KeyboardSensor,
   PointerSensor,
   closestCenter,
+  useDndContext,
   useSensor,
   useSensors,
 } from '@dnd-kit/core';
@@ -101,6 +102,25 @@ export const ColumnDragTableContainer = ({
 const DragHandleContext = createContext<ReactNode>(null);
 export const ColumnDragHandle = () => useContext(DragHandleContext);
 
+const useColumnDragBorders = (id: string, edge?: 'top' | 'bottom') => {
+  const { active, over } = useDndContext();
+  const theme = useTheme();
+  const isDragging = active?.id === id;
+  const isOver = over?.id === id;
+  if (!isDragging && !isOver) {
+    return {};
+  }
+  const border = isDragging ? `1px dashed ${theme.palette.grey[500]}` : `2px dashed ${theme.palette.primary.main}`;
+  return {
+    borderLeft: border,
+    borderRight: border,
+    ...(edge === 'top' && { borderTop: border }),
+    ...(edge === 'bottom' && { borderBottom: border }),
+    opacity: 0.5,
+    ...(isDragging && { zIndex: 2 }),
+  };
+};
+
 type ColumnDragProps = {
   id: string;
   label: string;
@@ -160,12 +180,22 @@ const useColumnDrag = ({ id, label, enabled }: ColumnDragProps, activeOutlineWid
 };
 
 export const DraggableColumnHeader = ({ id, label, enabled, ...props }: ColumnDragProps & TableCellProps) => {
-  const { ref, handle, dragStyles } = useColumnDrag({ id, label, enabled });
+  const { ref, handle } = useColumnDrag({ id, label, enabled });
+  const borders = useColumnDragBorders(id, 'top');
   return (
     <DragHandleContext.Provider value={handle}>
-      <TableCell {...props} ref={ref} sx={[...(Array.isArray(props.sx) ? props.sx : [props.sx]), dragStyles]} />
+      <TableCell {...props} ref={ref} sx={[...(Array.isArray(props.sx) ? props.sx : [props.sx]), borders]} />
     </DragHandleContext.Provider>
   );
+};
+
+export const ColumnDragBodyCell = ({
+  columnId,
+  lastRow,
+  ...props
+}: TableCellProps & { columnId: string; lastRow: boolean }) => {
+  const borders = useColumnDragBorders(columnId, lastRow ? 'bottom' : undefined);
+  return <TableCell {...props} sx={[...(Array.isArray(props.sx) ? props.sx : [props.sx]), borders]} />;
 };
 
 export const DraggableColumnItem = ({ id, label, enabled, ...props }: ColumnDragProps & MenuItemProps) => {

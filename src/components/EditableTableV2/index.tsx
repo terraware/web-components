@@ -65,6 +65,7 @@ import {
 import { useStrings } from '../../strings';
 import Button from '../Button/Button';
 import {
+  ColumnDragBodyCell,
   ColumnDragHandle,
   ColumnDragMenu,
   ColumnDragTableContainer,
@@ -972,9 +973,11 @@ const EditableTableV2 = <TData extends object>({
                           ? muiTableBodyCellProps({ cell, column, row, table })
                           : muiTableBodyCellProps;
                       return (
-                        <TableCell
+                        <ColumnDragBodyCell
                           {...bodyCellProps}
                           key={cell.id}
+                          columnId={column.id}
+                          lastRow={rowIndex === rows.length - 1}
                           data-pinned={column.getIsPinned() ? 'true' : undefined}
                           tabIndex={bodyCellProps?.tabIndex ?? (canEdit ? 0 : undefined)}
                           onClick={(event) => {
@@ -1022,7 +1025,7 @@ const EditableTableV2 = <TData extends object>({
                           ) : (
                             String(value ?? '')
                           )}
-                        </TableCell>
+                        </ColumnDragBodyCell>
                       );
                     }
                   )}
