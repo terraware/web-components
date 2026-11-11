@@ -218,6 +218,29 @@ for (const story of Object.values(index.entries)) {
       caret: 'hide',
       maxDiffPixelRatio: 0.001,
     });
+    if (['editable-table--with-pinned-columns', 'editable-table-v2--with-pinned-columns'].includes(story.id)) {
+      const container = page.locator('.MuiTableContainer-root');
+      const pinnedHeaders = ['Name', 'Previous Studies'].map((name) =>
+        page.getByRole('columnheader', { name: new RegExp(`^${name}`) })
+      );
+      const initialPositions = await Promise.all(pinnedHeaders.map((header) => header.boundingBox()));
+      const maxScroll = await container.evaluate((element) => element.scrollWidth - element.clientWidth);
+      expect(maxScroll).toBeGreaterThan(0);
+      for (const [label, scroll] of [
+        ['middle', Math.round(maxScroll / 2)],
+        ['end', maxScroll],
+      ] as const) {
+        await container.evaluate((element, left) => {
+          element.scrollLeft = left;
+        }, scroll);
+        await expect.poll(() => container.evaluate((element) => element.scrollLeft)).toBeCloseTo(scroll, 0);
+        for (const [headerIndex, header] of pinnedHeaders.entries()) {
+          const position = await header.boundingBox();
+          expect(position!.x).toBeCloseTo(initialPositions[headerIndex]!.x, 0);
+        }
+        await expect(page).toHaveScreenshot(`${story.id}-${label}.png`, { clip });
+      }
+    }
     if (['editable-table--with-filters', 'editable-table-v2--with-filters'].includes(story.id)) {
       await page.getByRole('textbox', { name: /^(Filter: Name|Filter by Name)$/ }).fill('Carlos');
       await expect(page.getByRole('cell', { name: 'Constanza_0', exact: true })).not.toBeVisible();

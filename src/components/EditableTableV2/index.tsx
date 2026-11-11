@@ -1,12 +1,33 @@
-import React, { CSSProperties, ReactNode, useEffect, useMemo, useState } from 'react';
+import React, { ReactNode, useEffect, useMemo, useState } from 'react';
 
-import { ArrowDownward, Close, FilterAlt, Search, SyncAlt } from '@mui/icons-material';
+import {
+  ArrowDownward,
+  ArrowUpward,
+  ClearAll,
+  Close,
+  FilterAlt,
+  FilterList,
+  FilterListOff,
+  MoreVert,
+  PushPin,
+  Search,
+  Sort,
+  SyncAlt,
+  ViewColumn,
+  VisibilityOff,
+} from '@mui/icons-material';
 import {
   Box,
+  Divider,
+  FormControlLabel,
   IconButton,
   InputAdornment,
+  ListItemIcon,
+  Menu,
   MenuItem,
+  Button as MuiButton,
   Paper,
+  Switch,
   SxProps,
   Table,
   TableBody,
@@ -45,6 +66,11 @@ export type EditableTablePropsV2<TData extends object> = {
   data: TData[];
   enableClearAllFilters?: boolean;
   enableEditing?: boolean;
+  enableColumnOrdering?: boolean;
+  enableColumnActions?: boolean;
+  showColumnsButton?: boolean;
+  enableColumnPinning?: boolean;
+  enableHiding?: boolean;
   enableSorting?: boolean;
   enableGlobalFilter?: boolean;
   enableColumnFilters?: boolean;
@@ -78,12 +104,52 @@ const readFilters = (storageKey?: string): ColumnFiltersState => {
   }
 };
 
-const pinnedStyles = <TData extends object>(column: Column<typeof editableTableFeatures, TData>): CSSProperties => {
-  return { width: column.getSize(), minWidth: column.getSize() };
+const pinnedStyles = <TData extends object>(column: Column<typeof editableTableFeatures, TData>, theme: Theme) => {
+  const position = column.getIsPinned();
+  const background = theme.palette.background.default;
+  const baseBackground = theme.palette.mode === 'dark' ? lighten(background, 0.05) : background;
+  return {
+    width: column.getSize(),
+    minWidth: column.getSize(),
+    ...(position && {
+      position: 'sticky' as const,
+      zIndex: 1,
+      opacity: 0.97,
+      '&::before': {
+        content: '""',
+        position: 'absolute' as const,
+        inset: 0,
+        zIndex: -1,
+        backgroundColor: alpha(darken(baseBackground, theme.palette.mode === 'dark' ? 0.05 : 0.01), 0.97),
+        boxShadow:
+          position === 'start' && column.getIsLastColumn('start')
+            ? `-4px 0 4px -4px ${alpha(theme.palette.grey[700], 0.5)} inset`
+            : position === 'end' && column.getIsFirstColumn('end')
+              ? `4px 0 4px -4px ${alpha(theme.palette.grey[700], 0.5)} inset`
+              : undefined,
+      },
+      ...(position === 'start'
+        ? { insetInlineStart: column.getStart('start') }
+        : { insetInlineEnd: column.getAfter('end') }),
+    }),
+  };
 };
 
 const UnsortedIcon = (props: React.ComponentProps<typeof SyncAlt>) => (
   <SyncAlt {...props} style={{ ...props.style, transform: 'rotate(-90deg) scaleX(0.9) translateX(-1px)' }} />
+);
+
+const ColumnActionMenuItemV2 = ({
+  icon,
+  children,
+  ...props
+}: React.ComponentProps<typeof MenuItem> & { icon: ReactNode }) => (
+  <MenuItem sx={{ minWidth: '120px', my: 0, py: '6px' }} {...props}>
+    <Box display='flex' alignItems='center'>
+      <ListItemIcon>{icon}</ListItemIcon>
+      {children}
+    </Box>
+  </MenuItem>
 );
 
 const ColumnFilter = <TData extends object>({
@@ -181,6 +247,11 @@ const EditableTableV2 = <TData extends object>({
   data,
   enableClearAllFilters = true,
   enableEditing = false,
+  enableColumnOrdering = false,
+  enableColumnActions = true,
+  showColumnsButton = false,
+  enableColumnPinning = false,
+  enableHiding = true,
   enableSorting = true,
   enableGlobalFilter = false,
   enableColumnFilters = false,
@@ -199,6 +270,8 @@ const EditableTableV2 = <TData extends object>({
 }: EditableTablePropsV2<TData>) => {
   const strings = useStrings();
   const [editingCell, setEditingCell] = useState<{ id: string } | null>(null);
+  const [menuColumnId, setMenuColumnId] = useState<string | null>(null);
+  const [menuAnchor, setMenuAnchor] = useState<HTMLElement | null>(null);
   const [columnFilters, setColumnFilters] = useState(() => readFilters(stickyFilters ? storageKey : undefined));
 
   useEffect(() => {
@@ -213,6 +286,7 @@ const EditableTableV2 = <TData extends object>({
         accessorFn:
           column.accessorFn ?? ((row) => (column.accessorKey !== undefined ? row[column.accessorKey] : undefined)),
         size: column.size,
+        enableHiding: column.enableHiding ?? true,
         enableColumnFilter: !!column.filterVariant,
         ...(column.sortFn ? { sortFn: column.sortFn } : {}),
         filterFn: (row, id, filterValue: unknown) => {
@@ -261,6 +335,8 @@ const EditableTableV2 = <TData extends object>({
     data,
     enableSorting,
     sortDescFirst: false,
+    enableColumnPinning,
+    enableHiding,
     enableColumnFilters,
     enableGlobalFilter,
     manualPagination: !enablePagination,
@@ -293,9 +369,25 @@ const EditableTableV2 = <TData extends object>({
   };
   const definitions = new Map(columns.map((column) => [column.id, column]));
   const visibleColumns = table.getVisibleLeafColumns();
-  const orderedColumns = visibleColumns;
+  const orderedColumns = [
+    ...table.getStartVisibleLeafColumns(),
+    ...table.getCenterVisibleLeafColumns(),
+    ...table.getEndVisibleLeafColumns(),
+  ];
   const rows = table.getRowModel().rows;
+  const controlsEnabled = enableHiding || enableColumnOrdering || enableColumnPinning;
+  const hideableColumns = table.getAllLeafColumns().filter((column) => column.getCanHide());
   const filtersVisible = enableColumnFilters;
+
+  const moveColumn = (id: string, offset: number) => {
+    const order = table.getAllLeafColumns().map((column) => column.id);
+    const index = order.indexOf(id);
+    const target = index + offset;
+    if (target >= 0 && target < order.length) {
+      [order[index], order[target]] = [order[target], order[index]];
+      table.setColumnOrder(order);
+    }
+  };
 
   return (
     <Box minHeight='160px' padding={2} sx={sx}>
@@ -343,8 +435,206 @@ const EditableTableV2 = <TData extends object>({
               <Button label={clearAllFiltersLabel} priority='ghost' size='small' onClick={clearFilters} />
             )}
             {renderToolbarInternalActions?.({ table })}
+            {showColumnsButton && controlsEnabled && (
+              <IconButton
+                aria-label={strings.TABLE_COLUMNS}
+                onClick={(event) => {
+                  setMenuColumnId(null);
+                  setMenuAnchor(event.currentTarget);
+                }}
+              >
+                <ViewColumn />
+              </IconButton>
+            )}
           </Toolbar>
         )}
+        <Menu anchorEl={menuAnchor} open={!!menuAnchor} onClose={() => setMenuAnchor(null)}>
+          {menuColumnId &&
+            table.getColumn(menuColumnId)?.getCanSort() &&
+            [
+              {
+                label: strings.TABLE_CLEAR_SORTING,
+                icon: <ClearAll />,
+                disabled: !table.getColumn(menuColumnId)?.getIsSorted(),
+                action: () => table.getColumn(menuColumnId)?.clearSorting(),
+              },
+              {
+                label: strings.TABLE_SORT_ASCENDING.replace('{column}', definitions.get(menuColumnId)!.header),
+                icon: <Sort sx={{ transform: 'rotate(180deg) scaleX(-1)' }} />,
+                disabled: table.getColumn(menuColumnId)?.getIsSorted() === 'asc',
+                action: () => table.getColumn(menuColumnId)?.toggleSorting(false),
+              },
+              {
+                label: strings.TABLE_SORT_DESCENDING.replace('{column}', definitions.get(menuColumnId)!.header),
+                icon: <Sort />,
+                disabled: table.getColumn(menuColumnId)?.getIsSorted() === 'desc',
+                divider: enableColumnFilters || controlsEnabled,
+                action: () => table.getColumn(menuColumnId)?.toggleSorting(true),
+              },
+            ].map(({ label, icon, disabled, divider, action }) => (
+              <ColumnActionMenuItemV2
+                key={label}
+                icon={icon}
+                disabled={disabled}
+                divider={divider}
+                onClick={() => {
+                  action();
+                  setMenuAnchor(null);
+                }}
+              >
+                {label}
+              </ColumnActionMenuItemV2>
+            ))}
+          {menuColumnId && table.getColumn(menuColumnId)?.getCanFilter() && (
+            <ColumnActionMenuItemV2
+              icon={<FilterListOff />}
+              disabled={!table.getColumn(menuColumnId)?.getIsFiltered()}
+              onClick={() => {
+                table.getColumn(menuColumnId)?.setFilterValue(undefined);
+                setMenuAnchor(null);
+              }}
+            >
+              {strings.TABLE_CLEAR_FILTER}
+            </ColumnActionMenuItemV2>
+          )}
+          {menuColumnId && table.getColumn(menuColumnId)?.getCanFilter() && (
+            <ColumnActionMenuItemV2 icon={<FilterList />} disabled divider={controlsEnabled}>
+              {strings.TABLE_FILTER_BY.replace('{column}', definitions.get(menuColumnId)!.header)}
+            </ColumnActionMenuItemV2>
+          )}
+          {menuColumnId &&
+            enableColumnPinning &&
+            (
+              [
+                { label: strings.TABLE_PIN_START, direction: 'start', rotation: '90deg' },
+                { label: strings.TABLE_PIN_END, direction: 'end', rotation: '-90deg' },
+                { label: strings.TABLE_UNPIN, direction: false, rotation: '0deg' },
+              ] as const
+            ).map(({ label, direction, rotation }) => (
+              <ColumnActionMenuItemV2
+                key={label}
+                icon={<PushPin sx={{ transform: `rotate(${rotation})` }} />}
+                disabled={
+                  !table.getColumn(menuColumnId)?.getCanPin() ||
+                  table.getColumn(menuColumnId)?.getIsPinned() === direction
+                }
+                divider={direction === false && enableHiding}
+                onClick={() => {
+                  table.getColumn(menuColumnId)?.pin(direction);
+                  setMenuAnchor(null);
+                }}
+              >
+                {label}
+              </ColumnActionMenuItemV2>
+            ))}
+          {menuColumnId && enableHiding && (
+            <ColumnActionMenuItemV2
+              icon={<VisibilityOff />}
+              disabled={
+                !table.getColumn(menuColumnId)?.getCanHide() ||
+                (!(enableTopToolbar && showColumnsButton) && orderedColumns.length === 1)
+              }
+              onClick={() => {
+                table.getColumn(menuColumnId)?.toggleVisibility(false);
+                setMenuAnchor(null);
+              }}
+            >
+              {strings.TABLE_HIDE_COLUMN.replace('{column}', definitions.get(menuColumnId)!.header)}
+            </ColumnActionMenuItemV2>
+          )}
+          {menuColumnId && enableHiding && (
+            <ColumnActionMenuItemV2
+              icon={<ViewColumn />}
+              disabled={table.getAllLeafColumns().every((column) => column.getIsVisible() || !column.getCanHide())}
+              onClick={() => {
+                table
+                  .getAllLeafColumns()
+                  .filter((column) => column.getCanHide())
+                  .forEach((column) => column.toggleVisibility(true));
+                setMenuAnchor(null);
+              }}
+            >
+              {strings.TABLE_SHOW_ALL_COLUMNS}
+            </ColumnActionMenuItemV2>
+          )}
+          {!menuColumnId && enableHiding && (
+            <Box display='flex' justifyContent='space-between' px={1} pb={1}>
+              <MuiButton
+                disabled={!hideableColumns.some((column) => column.getIsVisible())}
+                onClick={() => hideableColumns.forEach((column) => column.toggleVisibility(false))}
+              >
+                {strings.TABLE_HIDE_ALL}
+              </MuiButton>
+              <MuiButton
+                disabled={hideableColumns.every((column) => column.getIsVisible())}
+                onClick={() => hideableColumns.forEach((column) => column.toggleVisibility(true))}
+              >
+                {strings.TABLE_SHOW_ALL}
+              </MuiButton>
+            </Box>
+          )}
+          {!menuColumnId && controlsEnabled && <Divider />}
+          {table.getAllLeafColumns().map(
+            (column, index, allColumns) =>
+              !menuColumnId &&
+              controlsEnabled && (
+                <MenuItem key={column.id} disableRipple sx={{ my: 0, py: '6px', pl: '16px' }}>
+                  <FormControlLabel
+                    label={definitions.get(column.id)?.header}
+                    slotProps={{ typography: { sx: { mb: 0 } } }}
+                    control={
+                      <Switch
+                        checked={column.getIsVisible()}
+                        disabled={
+                          !enableHiding ||
+                          !column.getCanHide() ||
+                          (!(enableTopToolbar && showColumnsButton) &&
+                            column.getIsVisible() &&
+                            orderedColumns.length === 1)
+                        }
+                        onChange={column.getToggleVisibilityHandler()}
+                      />
+                    }
+                  />
+                  {enableColumnOrdering && (
+                    <>
+                      <IconButton
+                        aria-label={`${strings.TABLE_MOVE_BACK}: ${definitions.get(column.id)?.header}`}
+                        disabled={index === 0}
+                        onClick={() => moveColumn(column.id, -1)}
+                      >
+                        <ArrowUpward />
+                      </IconButton>
+                      <IconButton
+                        aria-label={`${strings.TABLE_MOVE_FORWARD}: ${definitions.get(column.id)?.header}`}
+                        disabled={index === allColumns.length - 1}
+                        onClick={() => moveColumn(column.id, 1)}
+                      >
+                        <ArrowDownward />
+                      </IconButton>
+                    </>
+                  )}
+                  {enableColumnPinning && (
+                    <TextField
+                      select
+                      size='small'
+                      label={strings.TABLE_PIN}
+                      value={column.getIsPinned() || ''}
+                      onChange={(event) =>
+                        column.pin(
+                          event.target.value === 'start' ? 'start' : event.target.value === 'end' ? 'end' : false
+                        )
+                      }
+                    >
+                      <MenuItem value=''>{strings.TABLE_UNPIN}</MenuItem>
+                      <MenuItem value='start'>{strings.TABLE_PIN_START}</MenuItem>
+                      <MenuItem value='end'>{strings.TABLE_PIN_END}</MenuItem>
+                    </TextField>
+                  )}
+                </MenuItem>
+              )
+          )}
+        </Menu>
         <TableContainer {...containerProps}>
           <Table sx={{ minWidth: table.getTotalSize() }}>
             <TableHead>
@@ -369,8 +659,8 @@ const EditableTableV2 = <TData extends object>({
                     <TableCell
                       key={column.id}
                       sortDirection={column.getIsSorted() || false}
-                      sx={{
-                        ...pinnedStyles(column),
+                      sx={(theme) => ({
+                        ...pinnedStyles(column, theme),
                         bgcolor: 'background.paper',
                         fontWeight: 'bold',
                         p: 2,
@@ -378,7 +668,7 @@ const EditableTableV2 = <TData extends object>({
                         pb: filtersVisible ? '6.4px' : '9.6px',
                         verticalAlign: 'top',
                         '&:hover .MuiIconButton-root': { opacity: 1 },
-                      }}
+                      })}
                     >
                       <Box display='flex' alignItems='center' sx={{ minHeight: '24px' }}>
                         {column.getCanSort() ? (
@@ -402,6 +692,27 @@ const EditableTableV2 = <TData extends object>({
                           </TableSortLabel>
                         ) : (
                           header
+                        )}
+                        {enableColumnActions && (column.getCanSort() || column.getCanFilter() || controlsEnabled) && (
+                          <IconButton
+                            size='small'
+                            sx={{
+                              height: '2rem',
+                              width: '2rem',
+                              m: '-8px -4px',
+                              opacity: 0.3,
+                              transition: 'all 150ms',
+                            }}
+                            aria-label={`${strings.TABLE_COLUMN_ACTIONS}: ${definitions.get(column.id)?.header}`}
+                            aria-haspopup='menu'
+                            aria-expanded={!!menuAnchor && menuColumnId === column.id}
+                            onClick={(event) => {
+                              setMenuColumnId(column.id);
+                              setMenuAnchor(event.currentTarget);
+                            }}
+                          >
+                            <MoreVert sx={{ transform: 'scale(0.9)' }} />
+                          </IconButton>
                         )}
                       </Box>
                       {filtersVisible && column.getCanFilter() && (
@@ -429,54 +740,56 @@ const EditableTableV2 = <TData extends object>({
                     };
                   }}
                 >
-                  {row.getVisibleCells().map((cell) => {
-                    const column = cell.column;
-                    const definition = definitions.get(column.id)!;
-                    const canEdit =
-                      (typeof definition.enableEditing === 'function'
-                        ? definition.enableEditing(row)
-                        : (definition.enableEditing ?? enableEditing)) && enableEditing;
-                    const value = cell.getValue();
-                    return (
-                      <TableCell
-                        key={cell.id}
-                        tabIndex={canEdit ? 0 : undefined}
-                        onClick={canEdit ? (event) => event.stopPropagation() : undefined}
-                        onDoubleClick={canEdit ? () => setEditingCell({ id: cell.id }) : undefined}
-                        onKeyDown={
-                          canEdit
-                            ? (event) => {
-                                if (event.key === 'Enter' || event.key === 'F2') {
-                                  event.preventDefault();
-                                  setEditingCell({ id: cell.id });
+                  {[...row.getStartVisibleCells(), ...row.getCenterVisibleCells(), ...row.getEndVisibleCells()].map(
+                    (cell) => {
+                      const column = cell.column;
+                      const definition = definitions.get(column.id)!;
+                      const canEdit =
+                        (typeof definition.enableEditing === 'function'
+                          ? definition.enableEditing(row)
+                          : (definition.enableEditing ?? enableEditing)) && enableEditing;
+                      const value = cell.getValue();
+                      return (
+                        <TableCell
+                          key={cell.id}
+                          tabIndex={canEdit ? 0 : undefined}
+                          onClick={canEdit ? (event) => event.stopPropagation() : undefined}
+                          onDoubleClick={canEdit ? () => setEditingCell({ id: cell.id }) : undefined}
+                          onKeyDown={
+                            canEdit
+                              ? (event) => {
+                                  if (event.key === 'Enter' || event.key === 'F2') {
+                                    event.preventDefault();
+                                    setEditingCell({ id: cell.id });
+                                  }
                                 }
-                              }
-                            : undefined
-                        }
-                        sx={{
-                          ...pinnedStyles(column),
-                          borderBottom: 'none',
-                          bgcolor: rowIndex % 2 === 0 ? 'TwClrBaseGray025' : 'background.paper',
-                          cursor: canEdit ? 'pointer' : 'inherit',
-                          outlineOffset: '-1px',
-                          '&:hover': { outline: canEdit ? '1px solid' : undefined, outlineColor: 'grey.500' },
-                        }}
-                      >
-                        {editingCell?.id === cell.id ? (
-                          <EditableCellV2
-                            key={cell.id}
-                            cell={cell}
-                            column={definition}
-                            onClose={() => setEditingCell((current) => (current === editingCell ? null : current))}
-                          />
-                        ) : definition.Cell ? (
-                          <definition.Cell {...cell.getContext()} />
-                        ) : (
-                          String(value ?? '')
-                        )}
-                      </TableCell>
-                    );
-                  })}
+                              : undefined
+                          }
+                          sx={(theme) => ({
+                            ...pinnedStyles(column, theme),
+                            borderBottom: 'none',
+                            bgcolor: rowIndex % 2 === 0 ? 'TwClrBaseGray025' : 'background.paper',
+                            cursor: canEdit ? 'pointer' : 'inherit',
+                            outlineOffset: '-1px',
+                            '&:hover': { outline: canEdit ? '1px solid' : undefined, outlineColor: 'grey.500' },
+                          })}
+                        >
+                          {editingCell?.id === cell.id ? (
+                            <EditableCellV2
+                              key={cell.id}
+                              cell={cell}
+                              column={definition}
+                              onClose={() => setEditingCell((current) => (current === editingCell ? null : current))}
+                            />
+                          ) : definition.Cell ? (
+                            <definition.Cell {...cell.getContext()} />
+                          ) : (
+                            String(value ?? '')
+                          )}
+                        </TableCell>
+                      );
+                    }
+                  )}
                 </TableRow>
               ))}
               {!rows.length && (

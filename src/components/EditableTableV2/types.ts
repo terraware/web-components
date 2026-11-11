@@ -60,6 +60,7 @@ export type EditableTableColumnV2<TData extends object> = {
   accessorFn?: (row: TData) => unknown;
   size?: number;
   enableEditing?: boolean | ((row: Row<Features, TData>) => boolean);
+  enableHiding?: boolean;
   Cell?: (context: EditableTableCellContextV2<TData>) => ReactNode;
   filterVariant?: 'text' | 'select' | 'multi-select' | 'range' | 'date-range';
   filterSelectOptions?: string[];
