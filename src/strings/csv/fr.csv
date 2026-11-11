@@ -49,10 +49,19 @@ UPLOAD_FILES,Téléverser des fichiers,b98547be
 UPLOAD_FILES_DESCRIPTION,Parcourir ou glisser-déposer des fichiers.,7c4a7822
 VR,RV,98fd7fc5
 ZOOM,Zoom,07b636df
+TABLE_ALL,Tout,832a8cf5
+TABLE_CLEAR_FILTER,Effacer le filtre,5da35d2b
+TABLE_CLEAR_SEARCH,Effacer la recherche,34aba902
+TABLE_FILTER,Filtrer,51b390ee
+TABLE_FILTER_BY,Filtrer par {column},0e2b5966
+TABLE_FILTERED,Filtré,5ce35c5c
 TABLE_FIRST_PAGE,Première page,2ba1de3f
 TABLE_LAST_PAGE,Dernière page,6eafe34a
+TABLE_MAX,Maximum,96f88e1f
+TABLE_MIN,Minimum,f2a882fd
 TABLE_NEXT_PAGE,Page suivante,be0bb188
 TABLE_NO_ROWS,Aucun enregistrement à afficher,eb47076d
 TABLE_PREVIOUS_PAGE,Page précédente,d87b58b7
 TABLE_ROWS_PER_PAGE,Lignes par page,ff461aa5
 TABLE_SAVE_ERROR,Impossible d’enregistrer les modifications. Veuillez réessayer.,85668916
+TABLE_SEARCH,Rechercher,9f30c236

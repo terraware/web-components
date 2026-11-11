@@ -218,5 +218,11 @@ for (const story of Object.values(index.entries)) {
       caret: 'hide',
       maxDiffPixelRatio: 0.001,
     });
+    if (['editable-table--with-filters', 'editable-table-v2--with-filters'].includes(story.id)) {
+      await page.getByRole('textbox', { name: /^(Filter: Name|Filter by Name)$/ }).fill('Carlos');
+      await expect(page.getByRole('cell', { name: 'Constanza_0', exact: true })).not.toBeVisible();
+      const header = page.getByRole('columnheader', { name: /^Name/ });
+      await expect(header).toHaveScreenshot(`${story.id}-filtered-header.png`);
+    }
   });
 }
