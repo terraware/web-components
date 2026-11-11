@@ -1,8 +1,18 @@
 import React, { useMemo, useState } from 'react';
 
+import { Box, Button } from '@mui/material';
 import { StoryFn } from '@storybook/react';
+import { userEvent, within } from 'storybook/test';
 
 import EditableTableV2, { EditableTableColumnV2 } from '../components/EditableTableV2';
+import {
+  EditableTableShowHideColumnsButtonV2,
+  EditableTableToggleDensePaddingButtonV2,
+  EditableTableToggleFiltersButtonV2,
+  EditableTableToggleFullScreenButtonV2,
+  EditableTableToggleGlobalFilterButtonV2,
+} from '../components/EditableTableV2/ToolbarButtons';
+import EditableTableExportButton from './EditableTableExportButton';
 
 export default { title: 'Editable Table V2', component: EditableTableV2 };
 
@@ -153,6 +163,32 @@ const EditableTableWithStateV2 = ({
       enablePagination={!withoutPagination}
       enableBottomToolbar={!withoutPagination}
       enableGlobalFilter={filtered || showTopToolbar}
+      showColumnsButton={showTopToolbar}
+      showGlobalFilterButton={showTopToolbar}
+      showColumnFiltersButton={filtered || scenario === 'occupationFilter'}
+      showDensityButton={showTopToolbar}
+      showFullScreenButton={showTopToolbar}
+      renderToolbarInternalActions={
+        showTopToolbar
+          ? ({ table }) => (
+              <>
+                <EditableTableExportButton
+                  getRows={() => [
+                    table.getVisibleLeafColumns().map((column) => column.columnDef.header),
+                    ...table
+                      .getPrePaginatedRowModel()
+                      .rows.map((row) => row.getVisibleCells().map((cell) => cell.getValue())),
+                  ]}
+                />
+                <EditableTableToggleGlobalFilterButtonV2 table={table} />
+                {(filtered || scenario === 'occupationFilter') && <EditableTableToggleFiltersButtonV2 table={table} />}
+                <EditableTableShowHideColumnsButtonV2 table={table} />
+                <EditableTableToggleDensePaddingButtonV2 table={table} />
+                <EditableTableToggleFullScreenButtonV2 table={table} />
+              </>
+            )
+          : undefined
+      }
       enableColumnFilters={filtered || scenario === 'occupationFilter'}
       initialSorting={scenario === 'default' && !pinnedColumns ? [{ id: 'name', desc: false }] : undefined}
       enableColumnPinning={pinnedColumns}
@@ -171,6 +207,31 @@ const Template: StoryFn<{ rowCount: number }> = (args) => <EditableTableWithStat
 
 export const Default = Template.bind({});
 Default.args = { rowCount: 50 };
+
+export const WithTopToolbar = () => <EditableTableWithStateV2 rowCount={50} showTopToolbar />;
+
+export const WithCustomToolbarOrder = () => (
+  <EditableTableV2
+    clearAllFiltersLabel='Clear filters'
+    columns={[
+      { id: 'name', header: 'Name', accessorKey: 'name', filterVariant: 'text' },
+      { id: 'occupation', header: 'Occupation', accessorKey: 'occupation', filterVariant: 'text' },
+    ]}
+    data={createRows(5)}
+    enableGlobalFilter
+    enableColumnFilters
+    renderToolbarInternalActions={({ table }) => (
+      <Box display='flex' alignItems='center'>
+        <EditableTableToggleFiltersButtonV2 table={table} />
+        <Button onClick={() => table.resetColumnFilters()}>Reset filters</Button>
+        <EditableTableShowHideColumnsButtonV2 table={table} />
+        <EditableTableToggleDensePaddingButtonV2 table={table} />
+        <EditableTableToggleFullScreenButtonV2 table={table} />
+        <EditableTableToggleGlobalFilterButtonV2 table={table} />
+      </Box>
+    )}
+  />
+);
 
 export const WithFilters = () => <EditableTableWithStateV2 scenario='filters' />;
 
@@ -233,6 +294,7 @@ export const Editable = () => {
       enableEditing
       enableGlobalFilter
       enableColumnFilters
+      showColumnFiltersButton
       enableColumnOrdering
       enableColumnPinning
       stickyFilters
@@ -244,3 +306,15 @@ export const Editable = () => {
     />
   );
 };
+
+const openFilters = async ({ canvasElement }: { canvasElement: HTMLElement }) => {
+  const button = within(canvasElement).getByRole('button', { name: 'Show/Hide filters' });
+  await userEvent.click(button);
+  await userEvent.unhover(button);
+  button.blur();
+};
+
+WithFilters.play = openFilters;
+WithClearAllFilters.play = openFilters;
+WithOccupationFilter.play = openFilters;
+Editable.play = openFilters;

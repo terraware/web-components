@@ -43,12 +43,6 @@ RIGHT_MOUSE,Botón derecho del ratón,d551c809
 SAVE,Guardar,526a3e42
 SHIFT,Shift,4d173d2a
 SWIPE,Deslizar,bc0962fa
-TITLE,Título,a5f8fc0b
-TOUCH_DRAG,Tocar y arrastrar,ff6d48d2
-UPLOAD_FILES,Subir archivos,b98547be
-UPLOAD_FILES_DESCRIPTION,Buscar o arrastrar y soltar archivos.,7c4a7822
-VR,RV,98fd7fc5
-ZOOM,Acercar/alejar,07b636df
 TABLE_ALL,Todos,832a8cf5
 TABLE_CLEAR_FILTER,Borrar filtro,5da35d2b
 TABLE_CLEAR_SEARCH,Borrar búsqueda,34aba902
@@ -79,4 +73,14 @@ TABLE_SHOW_ALL,Mostrar todo,3208186f
 TABLE_SHOW_ALL_COLUMNS,Mostrar todas las columnas,2a5e28e5
 TABLE_SORT_ASCENDING,Ordenar por {column} ascendente,a9a8f74e
 TABLE_SORT_DESCENDING,Ordenar por {column} descendente,48cf7e0a
+TABLE_TOGGLE_DENSITY,Cambiar densidad,8f835a40
+TABLE_TOGGLE_FILTERS,Mostrar/Ocultar filtros,312baea2
+TABLE_TOGGLE_FULLSCREEN,Cambiar a pantalla completa,6bc79fb8
+TABLE_TOGGLE_SEARCH,Mostrar/Ocultar búsqueda,6f191035
 TABLE_UNPIN,Sin fijar,acf61315
+TITLE,Título,a5f8fc0b
+TOUCH_DRAG,Tocar y arrastrar,ff6d48d2
+UPLOAD_FILES,Subir archivos,b98547be
+UPLOAD_FILES_DESCRIPTION,Buscar o arrastrar y soltar archivos.,7c4a7822
+VR,RV,98fd7fc5
+ZOOM,Acercar/alejar,07b636df
