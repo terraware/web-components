@@ -55,3 +55,4 @@ TABLE_NEXT_PAGE,Página siguiente,be0bb188
 TABLE_NO_ROWS,No hay registros para mostrar,eb47076d
 TABLE_PREVIOUS_PAGE,Página anterior,d87b58b7
 TABLE_ROWS_PER_PAGE,Filas por página,ff461aa5
+TABLE_SAVE_ERROR,"No se pudieron guardar los cambios. Por favor, inténtelo de nuevo.",85668916
