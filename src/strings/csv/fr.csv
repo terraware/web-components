@@ -43,12 +43,6 @@ RIGHT_MOUSE,Bouton droit de la souris,d551c809
 SAVE,Sauvegarder,526a3e42
 SHIFT,Maj,4d173d2a
 SWIPE,Glisser,bc0962fa
-TITLE,Titre,a5f8fc0b
-TOUCH_DRAG,Toucher + Glisser,ff6d48d2
-UPLOAD_FILES,Téléverser des fichiers,b98547be
-UPLOAD_FILES_DESCRIPTION,Parcourir ou glisser-déposer des fichiers.,7c4a7822
-VR,RV,98fd7fc5
-ZOOM,Zoom,07b636df
 TABLE_ALL,Tout,832a8cf5
 TABLE_CLEAR_FILTER,Effacer le filtre,5da35d2b
 TABLE_CLEAR_SEARCH,Effacer la recherche,34aba902
@@ -79,4 +73,14 @@ TABLE_SHOW_ALL,Tout afficher,3208186f
 TABLE_SHOW_ALL_COLUMNS,Afficher toutes les colonnes,2a5e28e5
 TABLE_SORT_ASCENDING,Trier par {column} croissant,a9a8f74e
 TABLE_SORT_DESCENDING,Trier par {column} décroissant,48cf7e0a
+TABLE_TOGGLE_DENSITY,Changer la densité,8f835a40
+TABLE_TOGGLE_FILTERS,Afficher/Masquer les filtres,312baea2
+TABLE_TOGGLE_FULLSCREEN,Basculer en plein écran,6bc79fb8
+TABLE_TOGGLE_SEARCH,Afficher/Masquer la recherche,6f191035
 TABLE_UNPIN,Désépinglée,acf61315
+TITLE,Titre,a5f8fc0b
+TOUCH_DRAG,Toucher + Glisser,ff6d48d2
+UPLOAD_FILES,Téléverser des fichiers,b98547be
+UPLOAD_FILES_DESCRIPTION,Parcourir ou glisser-déposer des fichiers.,7c4a7822
+VR,RV,98fd7fc5
+ZOOM,Zoom,07b636df
