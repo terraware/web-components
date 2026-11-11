@@ -6,14 +6,31 @@ import userEvent from '@testing-library/user-event';
 import EditableTableV2, { EditableTableColumnPinningV2, EditableTableColumnV2, EditableTableInstanceV2 } from '.';
 import { WithTopToolbar as WithTopToolbarLegacy } from '../../stories/EditableTable.stories';
 import {
+  Editable,
   WithClearAllFilters,
+  WithColumnDragging,
   WithFilters,
+  WithMrtProps,
   WithOccupationFilter,
+  WithPinnedColumns,
   WithTopToolbar,
 } from '../../stories/EditableTableV2.stories';
 import { getStrings, setLocale } from '../../strings';
 
 type Item = { id: string; name: string; count: number };
+test('renders main table story configurations without React key warnings', () => {
+  const errors = rs.spyOn(console, 'error').mockImplementation(() => {});
+  try {
+    for (const Story of [WithTopToolbar, WithColumnDragging, WithFilters, WithPinnedColumns, WithMrtProps, Editable]) {
+      const { unmount } = render(<Story />);
+      unmount();
+    }
+    expect(errors.mock.calls.filter((args) => args.some((arg) => /unique.*key/i.test(String(arg))))).toEqual([]);
+  } finally {
+    errors.mockRestore();
+  }
+});
+
 const data: Item[] = [
   { id: 'a', name: 'Zebra', count: 3 },
   { id: 'b', name: 'Acacia', count: 1 },

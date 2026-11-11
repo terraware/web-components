@@ -886,7 +886,7 @@ const EditableTableV2 = <TData extends object>({
                         ...(Array.isArray(headCellProps?.sx) ? headCellProps.sx : [headCellProps?.sx]),
                       ]}
                     >
-                      <Box display='flex' alignItems='center' sx={{ minHeight: '24px' }}>
+                      <Box key='content' display='flex' alignItems='center' sx={{ minHeight: '24px' }}>
                         {column.getCanSort() ? (
                           <TableSortLabel
                             active={!!column.getIsSorted()}
@@ -933,7 +933,7 @@ const EditableTableV2 = <TData extends object>({
                         )}
                       </Box>
                       {filtersVisible && column.getCanFilter() && (
-                        <ColumnFilter column={column} definition={definitions.get(column.id)!} />
+                        <ColumnFilter key='filter' column={column} definition={definitions.get(column.id)!} />
                       )}
                     </DraggableColumnHeader>
                   );
