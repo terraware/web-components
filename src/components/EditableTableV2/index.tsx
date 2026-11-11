@@ -350,6 +350,7 @@ const EditableTableV2 = <TData extends object>({
       columns.map((column) => ({
         id: column.id,
         header: column.header,
+        meta: { filterVariant: column.filterVariant, filterSelectOptions: column.filterSelectOptions },
         accessorFn:
           column.accessorFn ?? ((row) => (column.accessorKey !== undefined ? row[column.accessorKey] : undefined)),
         size: column.size,

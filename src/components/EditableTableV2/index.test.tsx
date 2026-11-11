@@ -746,6 +746,45 @@ test.each([{ left: ['name'], right: ['count'] }, { left: ['name'] }, { right: ['
   }
 );
 
+test('exposes typed filter metadata on generated TanStack columns', () => {
+  const variants = ['text', 'select', 'multi-select', 'range', 'date-range', undefined] as const;
+  const filterSelectOptions = ['Zebra', 'Acacia'];
+  const definitions: EditableTableColumnV2<Item>[] = variants.map((filterVariant, index) => ({
+    id: String(index),
+    header: `Column ${index}`,
+    accessorKey: 'name',
+    filterVariant,
+    ...(filterVariant === 'select' || filterVariant === 'multi-select' ? { filterSelectOptions } : {}),
+  }));
+  const inspect = rs.fn(({ table }: { table: EditableTableInstanceV2<Item> }) => {
+    table.getAllLeafColumns().forEach((column, index) => {
+      const variant: EditableTableColumnV2<Item>['filterVariant'] = column.columnDef.meta?.filterVariant;
+      const options: string[] | undefined = column.columnDef.meta?.filterSelectOptions;
+      expect(variant).toBe(variants[index]);
+      expect(options).toEqual(definitions[index].filterSelectOptions);
+    });
+    return null;
+  });
+  const { rerender } = render(
+    <EditableTableV2
+      columns={definitions}
+      data={data}
+      clearAllFiltersLabel='Clear'
+      renderTopToolbarCustomActions={inspect}
+    />
+  );
+  const callsBeforeEmptyData = inspect.mock.calls.length;
+  rerender(
+    <EditableTableV2
+      columns={definitions}
+      data={[]}
+      clearAllFiltersLabel='Clear'
+      renderTopToolbarCustomActions={inspect}
+    />
+  );
+  expect(inspect.mock.calls.length).toBeGreaterThan(callsBeforeEmptyData);
+});
+
 test('round trips controlled left/right pinning through menus and raw TanStack updaters', () => {
   const initialPinning = { left: ['name'], right: [] };
   const onChange = rs.fn();
