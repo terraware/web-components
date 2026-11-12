@@ -45,6 +45,50 @@ test('saves text once on Enter and cancels on Escape', async () => {
   expect(screen.queryByLabelText('Count')).not.toBeInTheDocument();
 });
 
+test('requires a save handler for built-in editors but permits self-saving custom editors', async () => {
+  const user = userEvent.setup();
+  const Example = () => {
+    const [rows, setRows] = useState(data);
+    return (
+      <EditableTableV2
+        columns={[
+          columns[0],
+          {
+            ...columns[1],
+            enableEditing: true,
+            editConfig: {
+              editVariant: 'custom',
+              customEditComponent: ({ row, cancel }) => (
+                <button
+                  onClick={() => {
+                    setRows((current) =>
+                      current.map((item) => (item.id === row.original.id ? { ...item, count: 4 } : item))
+                    );
+                    cancel();
+                  }}
+                >
+                  Save count
+                </button>
+              ),
+            },
+          },
+        ]}
+        data={rows}
+        clearAllFiltersLabel='Clear'
+        enableEditing
+      />
+    );
+  };
+  render(<Example />);
+  fireEvent.doubleClick(screen.getByText('Zebra'));
+  fireEvent.keyDown(screen.getByText('Zebra').closest('td')!, { key: 'Enter' });
+  expect(screen.queryByLabelText('Name')).not.toBeInTheDocument();
+  await user.dblClick(screen.getByText('3'));
+  await user.click(screen.getByRole('button', { name: 'Save count' }));
+  expect(screen.getByText('4')).toBeInTheDocument();
+  expect(screen.queryByRole('button', { name: 'Save count' })).not.toBeInTheDocument();
+});
+
 test.each([false, true])('keeps the current editor open when an older save resolves (reopen: %s)', async (reopen) => {
   let resolveSave!: () => void;
   const onSave = rstest.fn(
@@ -173,7 +217,9 @@ test.each([false, true])(
     const onRowClick = rstest.fn();
     render(
       <EditableTableV2
-        columns={[{ ...columns[0], enableEditing: (row) => row.original.id === 'a' }]}
+        columns={[
+          { ...columns[0], enableEditing: (row) => row.original.id === 'a', editConfig: { onSave: rstest.fn() } },
+        ]}
         data={data}
         clearAllFiltersLabel='Clear'
         enableEditing={enableEditing}
