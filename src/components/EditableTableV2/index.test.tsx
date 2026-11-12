@@ -210,6 +210,34 @@ test('supports custom renderers, custom editors and row clicks', async () => {
   expect(onRowClick).toHaveBeenCalledTimes(1);
 });
 
+test('lets custom editor buttons handle Enter without restarting cell editing', async () => {
+  const user = userEvent.setup();
+  const onSave = rstest.fn();
+  render(
+    <EditableTableV2
+      columns={[
+        {
+          ...columns[0],
+          editConfig: {
+            onSave,
+            editVariant: 'custom',
+            customEditComponent: ({ save }) => <button onClick={() => void save('Oak')}>Save custom</button>,
+          },
+        },
+      ]}
+      data={data}
+      clearAllFiltersLabel='Clear'
+      enableEditing
+    />
+  );
+  screen.getByText('Zebra').closest('td')!.focus();
+  await user.keyboard('{Enter}');
+  screen.getByRole('button', { name: 'Save custom' }).focus();
+  await user.keyboard('{Enter}');
+  await waitFor(() => expect(onSave).toHaveBeenCalledWith(data[0], 'Oak', 'name'));
+  expect(screen.queryByRole('button', { name: 'Save custom' })).not.toBeInTheDocument();
+});
+
 test.each([false, true])(
   'only consumes clicks on cells that can be edited (enableEditing: %s)',
   async (enableEditing) => {
