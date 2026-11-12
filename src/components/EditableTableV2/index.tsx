@@ -211,10 +211,14 @@ const EditableTableV2 = <TData extends object>({
                   {row.getVisibleCells().map((cell) => {
                     const column = cell.column;
                     const definition = definitions.get(column.id)!;
+                    const editConfig = definition.editConfig;
                     const canEdit =
                       (typeof definition.enableEditing === 'function'
                         ? definition.enableEditing(row)
-                        : (definition.enableEditing ?? enableEditing)) && enableEditing;
+                        : (definition.enableEditing ?? enableEditing)) &&
+                      enableEditing &&
+                      (!!editConfig?.onSave ||
+                        (editConfig?.editVariant === 'custom' && !!editConfig.customEditComponent));
                     const value = cell.getValue();
                     return (
                       <TableCell
