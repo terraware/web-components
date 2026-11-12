@@ -73,6 +73,7 @@ export type {
   EditableTableCellContextV2,
   EditableTableColumnV2,
   EditableTableColumnPinningV2,
+  EditableTableEditContextV2,
   EditableTableInstanceV2,
   EditableTableOptionsV2,
   EditableTablePropsV2,

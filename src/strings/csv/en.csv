@@ -49,6 +49,7 @@ UPLOAD_FILES,Upload Files,
 UPLOAD_FILES_DESCRIPTION,Browse or drag and drop files.,
 VR,VR,Virtual Reality
 ZOOM,Zoom,
+TABLE_SAVE_ERROR,Unable to save changes. Please try again.,
 TABLE_NO_ROWS,No records to display,
 TABLE_ROWS_PER_PAGE,Rows per page,
 TABLE_NEXT_PAGE,Next page,
