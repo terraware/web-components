@@ -34,10 +34,12 @@ const EditableTableWithState = ({
   rowCount,
   pinnedColumns = false,
   showTopToolbar = false,
+  columnDragging = false,
 }: {
   rowCount: number;
   pinnedColumns?: boolean;
   showTopToolbar?: boolean;
+  columnDragging?: boolean;
 }) => {
   const [data, setData] = useState<RowData[]>(() => {
     return Array(rowCount)
@@ -205,19 +207,22 @@ const EditableTableWithState = ({
       enableSorting={true}
       enablePagination={true}
       enableGlobalFilter={showTopToolbar}
+      enableColumnOrdering={columnDragging}
       enableColumnFilters={showTopToolbar}
       tableOptions={
         pinnedColumns
           ? { initialState: { columnPinning: { left: ['name', 'middlename'], right: ['pets', 'previousStudies'] } } }
-          : showTopToolbar
-            ? {
-                initialState: {
-                  showGlobalFilter: true,
-                  showColumnFilters: false,
-                  sorting: [{ id: 'name', desc: false }],
-                },
-              }
-            : undefined
+          : columnDragging
+            ? { enableColumnDragging: true, initialState: { showGlobalFilter: true, showColumnFilters: false } }
+            : showTopToolbar
+              ? {
+                  initialState: {
+                    showGlobalFilter: true,
+                    showColumnFilters: false,
+                    sorting: [{ id: 'name', desc: false }],
+                  },
+                }
+              : undefined
       }
       renderToolbarInternalActions={
         showTopToolbar
@@ -258,6 +263,8 @@ Default.args = {
 export const WithPinnedColumns = () => <EditableTableWithState rowCount={50} pinnedColumns />;
 
 export const WithTopToolbar = () => <EditableTableWithState rowCount={50} showTopToolbar />;
+
+export const WithColumnDragging = () => <EditableTableWithState rowCount={10} showTopToolbar columnDragging />;
 
 export const WithFilters: Story = () => {
   const rowCount = 50;
