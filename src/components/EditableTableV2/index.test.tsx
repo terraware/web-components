@@ -5,6 +5,7 @@ import { act, fireEvent, render, screen, waitFor, within } from '@testing-librar
 import userEvent from '@testing-library/user-event';
 
 import EditableTableV2, { EditableTableColumnPinningV2, EditableTableColumnV2, EditableTableInstanceV2 } from '.';
+import { WithClearAllFilters, WithFilters } from '../../stories/EditableTableV2.stories';
 
 type Item = { id: string; name: string; count: number };
 const data: Item[] = [
@@ -12,7 +13,7 @@ const data: Item[] = [
   { id: 'b', name: 'Acacia', count: 1 },
 ];
 const columns: EditableTableColumnV2<Item>[] = [
-  { id: 'name', header: 'Name', accessorKey: 'name' },
+  { id: 'name', header: 'Name', accessorKey: 'name', filterVariant: 'text' },
   { id: 'count', header: 'Count', accessorKey: 'count', enableEditing: false },
 ];
 const rowNames = () =>
@@ -20,6 +21,27 @@ const rowNames = () =>
     .getAllByRole('row')
     .slice(1)
     .map((row) => within(row).getAllByRole('cell')[0].textContent);
+
+test('sorts and filters rows, and clears global and column filters', () => {
+  render(
+    <EditableTableV2
+      columns={columns}
+      data={data}
+      clearAllFiltersLabel='Clear'
+      enableGlobalFilter
+      enableColumnFilters
+      enablePagination={false}
+    />
+  );
+  fireEvent.click(screen.getByText('Name'));
+  expect(rowNames()).toEqual(['Acacia', 'Zebra']);
+  fireEvent.change(screen.getByLabelText('Filter: Name'), { target: { value: 'Zeb' } });
+  expect(rowNames()).toEqual(['Zebra']);
+  fireEvent.change(screen.getByLabelText('Search'), { target: { value: 'missing' } });
+  expect(screen.getByText('No records to display')).toBeInTheDocument();
+  fireEvent.click(screen.getByText('Clear'));
+  expect(rowNames()).toHaveLength(2);
+});
 
 test('saves text once on Enter and cancels on Escape', async () => {
   const onSave = rstest.fn();
@@ -174,6 +196,26 @@ test('paginates with first, last, next and previous controls', () => {
   expect(rowNames()).toEqual(['Acacia']);
 });
 
+test('persists filters and tolerates corrupt storage', () => {
+  localStorage.setItem('table_columnFilters', 'invalid');
+  const props = {
+    columns,
+    data,
+    clearAllFiltersLabel: 'Clear',
+    enableColumnFilters: true,
+    stickyFilters: true,
+    storageKey: 'table',
+  };
+  const view = render(<EditableTableV2 {...props} />);
+  fireEvent.change(screen.getByLabelText('Filter: Name'), { target: { value: 'Zebra' } });
+  expect(JSON.parse(localStorage.getItem('table_columnFilters')!)).toEqual([{ id: 'name', value: 'Zebra' }]);
+  view.unmount();
+  render(<EditableTableV2 {...props} />);
+  expect(rowNames()).toEqual(['Zebra']);
+  fireEvent.click(screen.getByText('Clear'));
+  expect(localStorage.getItem('table_columnFilters')).toBeNull();
+});
+
 test('supports custom renderers, custom editors and row clicks', async () => {
   const user = userEvent.setup();
   const onSave = rstest.fn();
@@ -311,6 +353,20 @@ test('edits select values and saves on blur', async () => {
   await waitFor(() => expect(onSave).toHaveBeenCalledWith(data[0], 'Oak', 'name'));
 });
 
+test('filters numeric ranges', () => {
+  render(
+    <EditableTableV2
+      columns={[{ ...columns[1], filterVariant: 'range' }]}
+      data={data}
+      clearAllFiltersLabel='Clear'
+      enableColumnFilters
+    />
+  );
+  fireEvent.change(screen.getByLabelText('Filter: Count Minimum'), { target: { value: '2' } });
+  expect(screen.queryByText('1')).not.toBeInTheDocument();
+  expect(screen.getByText('3')).toBeInTheDocument();
+});
+
 test('shows unsorted indicators and cycles numeric sorting ascending first', () => {
   render(<EditableTableV2 columns={columns} data={data} clearAllFiltersLabel='Clear' />);
   expect(screen.getAllByTestId('SyncAltIcon')).toHaveLength(2);
@@ -350,6 +406,45 @@ test.each([{ left: ['name'], right: ['count'] }, { left: ['name'] }, { right: ['
   }
 );
 
+test('exposes typed filter metadata on generated TanStack columns', () => {
+  const variants = ['text', 'select', 'multi-select', 'range', 'date-range', undefined] as const;
+  const filterSelectOptions = ['Zebra', 'Acacia'];
+  const definitions: EditableTableColumnV2<Item>[] = variants.map((filterVariant, index) => ({
+    id: String(index),
+    header: `Column ${index}`,
+    accessorKey: 'name',
+    filterVariant,
+    ...(filterVariant === 'select' || filterVariant === 'multi-select' ? { filterSelectOptions } : {}),
+  }));
+  const inspect = rs.fn(({ table }: { table: EditableTableInstanceV2<Item> }) => {
+    table.getAllLeafColumns().forEach((column, index) => {
+      const variant: EditableTableColumnV2<Item>['filterVariant'] = column.columnDef.meta?.filterVariant;
+      const options: string[] | undefined = column.columnDef.meta?.filterSelectOptions;
+      expect(variant).toBe(variants[index]);
+      expect(options).toEqual(definitions[index].filterSelectOptions);
+    });
+    return null;
+  });
+  const { rerender } = render(
+    <EditableTableV2
+      columns={definitions}
+      data={data}
+      clearAllFiltersLabel='Clear'
+      renderToolbarInternalActions={inspect}
+    />
+  );
+  const callsBeforeEmptyData = inspect.mock.calls.length;
+  rerender(
+    <EditableTableV2
+      columns={definitions}
+      data={[]}
+      clearAllFiltersLabel='Clear'
+      renderToolbarInternalActions={inspect}
+    />
+  );
+  expect(inspect.mock.calls.length).toBeGreaterThan(callsBeforeEmptyData);
+});
+
 test('round trips controlled left/right pinning through raw TanStack updaters', () => {
   const initialPinning = { left: ['name'], right: [] };
   const onChange = rs.fn();
@@ -388,6 +483,63 @@ test('round trips controlled left/right pinning through raw TanStack updaters', 
   act(() => table!.setColumnPinning((previous) => ({ start: previous.end, end: [] })));
   expect(screen.getByRole('status', { name: 'Pinning state' })).toHaveTextContent('{"left":["name"],"right":[]}');
 });
+
+test('marks filtered columns and clears search independently from column filters', () => {
+  render(
+    <EditableTableV2
+      columns={columns}
+      data={data}
+      clearAllFiltersLabel='Clear'
+      enableGlobalFilter
+      enableColumnFilters
+    />
+  );
+  expect(screen.queryByLabelText('Filtered: Name')).not.toBeInTheDocument();
+  expect(screen.getByLabelText('Filter: Name')).toHaveAttribute('placeholder', 'Filter by Name');
+  expect(screen.getByLabelText('Search')).toHaveAttribute('placeholder', 'Search');
+  fireEvent.change(screen.getByLabelText('Filter: Name'), { target: { value: 'Zebra' } });
+  const filterIcon = screen.getByLabelText('Filtered: Name');
+  const header = screen.getByRole('columnheader', { name: /Name/ });
+  const sortIcon = header.querySelector('.MuiTableSortLabel-icon')!;
+  expect(filterIcon.compareDocumentPosition(sortIcon) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+  fireEvent.click(filterIcon);
+  expect(header).not.toHaveAttribute('aria-sort');
+  fireEvent.change(screen.getByLabelText('Search'), { target: { value: 'missing' } });
+  fireEvent.click(screen.getByLabelText('Clear search'));
+  expect(rowNames()).toEqual(['Zebra']);
+  expect(screen.getByLabelText('Filtered: Name')).toBeInTheDocument();
+  fireEvent.click(screen.getByText('Clear'));
+  expect(screen.queryByLabelText('Filtered: Name')).not.toBeInTheDocument();
+  expect(rowNames()).toHaveLength(2);
+});
+
+test.each(['select', 'multi-select'] as const)(
+  'supports accessible %s filters and clears empty selections',
+  async (filterVariant) => {
+    const user = userEvent.setup();
+    render(
+      <EditableTableV2
+        columns={[{ ...columns[0], filterVariant, filterSelectOptions: ['Zebra', 'Acacia'] }]}
+        data={data}
+        clearAllFiltersLabel='Clear'
+        enableColumnFilters
+      />
+    );
+    await user.click(screen.getByRole('combobox', { name: 'Filter: Name' }));
+    await user.click(screen.getByRole('option', { name: 'Acacia' }));
+    await user.keyboard('{Escape}');
+    expect(rowNames()).toEqual(['Acacia']);
+    expect(screen.getByLabelText('Filtered: Name')).toBeInTheDocument();
+    if (filterVariant === 'multi-select') {
+      await user.click(screen.getByRole('combobox', { name: 'Filter: Name' }));
+      await user.click(screen.getByRole('option', { name: 'Acacia' }));
+      await user.keyboard('{Escape}');
+      expect(rowNames()).toEqual(['Zebra', 'Acacia']);
+      expect(screen.queryByLabelText('Filtered: Name')).not.toBeInTheDocument();
+      expect(screen.queryByText('Clear')).not.toBeInTheDocument();
+    }
+  }
+);
 
 test('automatically selects alphanumeric sorting with fewer than ten rows', () => {
   render(
