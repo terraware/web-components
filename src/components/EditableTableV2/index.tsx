@@ -229,7 +229,10 @@ const EditableTableV2 = <TData extends object>({
                         onKeyDown={
                           canEdit
                             ? (event) => {
-                                if (event.key === 'Enter' || event.key === 'F2') {
+                                if (
+                                  event.target === event.currentTarget &&
+                                  (event.key === 'Enter' || event.key === 'F2')
+                                ) {
                                   event.preventDefault();
                                   setEditingCell({ id: cell.id });
                                 }
