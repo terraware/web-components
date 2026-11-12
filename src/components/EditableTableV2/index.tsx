@@ -393,6 +393,7 @@ const EditableTableV2 = <TData extends object>({
   };
   const definitions = new Map(columns.map((column) => [column.id, column]));
   const visibleColumns = table.getVisibleLeafColumns();
+  const allColumns = [...table.getStartLeafColumns(), ...table.getCenterLeafColumns(), ...table.getEndLeafColumns()];
   const orderedColumns = [
     ...table.getStartVisibleLeafColumns(),
     ...table.getCenterVisibleLeafColumns(),
@@ -404,12 +405,27 @@ const EditableTableV2 = <TData extends object>({
   const filtersVisible = enableColumnFilters;
 
   const moveColumn = (id: string, offset: number) => {
-    const order = table.getAllLeafColumns().map((column) => column.id);
-    const index = order.indexOf(id);
-    const target = index + offset;
-    if (target >= 0 && target < order.length) {
-      [order[index], order[target]] = [order[target], order[index]];
-      table.setColumnOrder(order);
+    const index = allColumns.findIndex((column) => column.id === id);
+    const column = allColumns[index];
+    const target = allColumns[index + offset];
+    if (!column || !target || column.getIsPinned() !== target.getIsPinned()) {
+      return;
+    }
+    const swap = (order: string[]) => {
+      const from = order.indexOf(id);
+      const to = order.indexOf(target.id);
+      if (from < 0 || to < 0) {
+        return order;
+      }
+      const next = [...order];
+      [next[from], next[to]] = [next[to], next[from]];
+      return next;
+    };
+    const pinned = column.getIsPinned();
+    if (pinned) {
+      table.setColumnPinning((current) => ({ ...current, [pinned]: swap(current[pinned]) }));
+    } else {
+      table.setColumnOrder(swap(table.getAllLeafColumns().map((column) => column.id)));
     }
   };
 
@@ -598,8 +614,8 @@ const EditableTableV2 = <TData extends object>({
             </Box>
           )}
           {!menuColumnId && controlsEnabled && <Divider />}
-          {table.getAllLeafColumns().map(
-            (column, index, allColumns) =>
+          {allColumns.map(
+            (column, index) =>
               !menuColumnId &&
               controlsEnabled && (
                 <MenuItem key={column.id} disableRipple sx={{ my: 0, py: '6px', pl: '16px' }}>
@@ -624,14 +640,14 @@ const EditableTableV2 = <TData extends object>({
                     <>
                       <IconButton
                         aria-label={`${strings.TABLE_MOVE_BACK}: ${definitions.get(column.id)?.header}`}
-                        disabled={index === 0}
+                        disabled={allColumns[index - 1]?.getIsPinned() !== column.getIsPinned()}
                         onClick={() => moveColumn(column.id, -1)}
                       >
                         <ArrowUpward />
                       </IconButton>
                       <IconButton
                         aria-label={`${strings.TABLE_MOVE_FORWARD}: ${definitions.get(column.id)?.header}`}
-                        disabled={index === allColumns.length - 1}
+                        disabled={allColumns[index + 1]?.getIsPinned() !== column.getIsPinned()}
                         onClick={() => moveColumn(column.id, 1)}
                       >
                         <ArrowDownward />

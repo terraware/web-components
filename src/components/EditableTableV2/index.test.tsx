@@ -22,6 +22,39 @@ const rowNames = () =>
     .slice(1)
     .map((row) => within(row).getAllByRole('cell')[0].textContent);
 
+test.each(['left', 'right'] as const)(
+  'moves columns within the %s pin group without crossing its boundaries',
+  (side) => {
+    render(
+      <EditableTableV2
+        columns={[...columns, { id: 'id', header: 'ID', accessorKey: 'id' }]}
+        data={data}
+        clearAllFiltersLabel='Clear'
+        enableColumnOrdering
+        showColumnsButton
+        tableOptions={{ initialState: { columnPinning: { [side]: ['count', 'name'] } } }}
+      />
+    );
+    const expectOrder = (pinned: string[]) => {
+      expect(screen.getAllByRole('columnheader', { hidden: true }).map((header) => header.textContent)).toEqual(
+        side === 'left' ? [...pinned, 'ID'] : ['ID', ...pinned]
+      );
+    };
+    expectOrder(['Count', 'Name']);
+    fireEvent.click(screen.getByRole('button', { name: 'Columns' }));
+    expect(screen.getByRole('button', { name: 'Move column backward: Count' })).toBeDisabled();
+    expect(screen.getByRole('button', { name: 'Move column forward: Name' })).toBeDisabled();
+    expect(screen.getByRole('button', { name: 'Move column backward: ID' })).toBeDisabled();
+    expect(screen.getByRole('button', { name: 'Move column forward: ID' })).toBeDisabled();
+    fireEvent.click(screen.getByRole('button', { name: 'Move column forward: Count' }));
+    expectOrder(['Name', 'Count']);
+    expect(screen.getByRole('button', { name: 'Move column backward: Name' })).toBeDisabled();
+    expect(screen.getByRole('button', { name: 'Move column forward: Count' })).toBeDisabled();
+    fireEvent.click(screen.getByRole('button', { name: 'Move column backward: Count' }));
+    expectOrder(['Count', 'Name']);
+  }
+);
+
 test('uses switches and bulk visibility controls while respecting non-hideable columns', () => {
   render(
     <EditableTableV2
