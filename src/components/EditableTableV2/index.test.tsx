@@ -513,20 +513,33 @@ test('marks filtered columns and clears search independently from column filters
   expect(rowNames()).toHaveLength(2);
 });
 
-test('supports accessible standard select filters', () => {
-  render(
-    <EditableTableV2
-      columns={[{ ...columns[0], filterVariant: 'select', filterSelectOptions: ['Zebra', 'Acacia'] }]}
-      data={data}
-      clearAllFiltersLabel='Clear'
-      enableColumnFilters
-    />
-  );
-  fireEvent.mouseDown(screen.getByRole('combobox', { name: 'Filter: Name' }));
-  fireEvent.click(screen.getByRole('option', { name: 'Acacia' }));
-  expect(rowNames()).toEqual(['Acacia']);
-  expect(screen.getByLabelText('Filtered: Name')).toBeInTheDocument();
-});
+test.each(['select', 'multi-select'] as const)(
+  'supports accessible %s filters and clears empty selections',
+  async (filterVariant) => {
+    const user = userEvent.setup();
+    render(
+      <EditableTableV2
+        columns={[{ ...columns[0], filterVariant, filterSelectOptions: ['Zebra', 'Acacia'] }]}
+        data={data}
+        clearAllFiltersLabel='Clear'
+        enableColumnFilters
+      />
+    );
+    await user.click(screen.getByRole('combobox', { name: 'Filter: Name' }));
+    await user.click(screen.getByRole('option', { name: 'Acacia' }));
+    await user.keyboard('{Escape}');
+    expect(rowNames()).toEqual(['Acacia']);
+    expect(screen.getByLabelText('Filtered: Name')).toBeInTheDocument();
+    if (filterVariant === 'multi-select') {
+      await user.click(screen.getByRole('combobox', { name: 'Filter: Name' }));
+      await user.click(screen.getByRole('option', { name: 'Acacia' }));
+      await user.keyboard('{Escape}');
+      expect(rowNames()).toEqual(['Zebra', 'Acacia']);
+      expect(screen.queryByLabelText('Filtered: Name')).not.toBeInTheDocument();
+      expect(screen.queryByText('Clear')).not.toBeInTheDocument();
+    }
+  }
+);
 
 test('automatically selects alphanumeric sorting with fewer than ten rows', () => {
   render(

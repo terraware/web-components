@@ -134,7 +134,10 @@ const ColumnFilter = <TData extends object>({
       sx={{ minWidth: 120, mx: '-2px', p: 0, width: 'calc(100% + 4px)' }}
       select={select}
       value={value ?? (multiple ? [] : '')}
-      onChange={(event) => column.setFilterValue(event.target.value || undefined)}
+      onChange={(event) => {
+        const next = event.target.value;
+        column.setFilterValue(Array.isArray(next) && !next.length ? undefined : next || undefined);
+      }}
       slotProps={{
         htmlInput: { 'aria-label': label },
         input: {
