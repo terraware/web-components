@@ -17,7 +17,7 @@ import {
   Theme,
   Toolbar,
 } from '@mui/material';
-import { alpha, darken, lighten } from '@mui/material/styles';
+import { alpha, darken, lighten, useTheme } from '@mui/material/styles';
 import { Column, ColumnDef, functionalUpdate, useTable } from '@tanstack/react-table';
 
 import { useStrings } from '../../strings';
@@ -72,6 +72,7 @@ const EditableTableV2 = <TData extends object>({
   sx,
 }: EditableTablePropsV2<TData>) => {
   const strings = useStrings();
+  const theme = useTheme();
   const tableColumns = useMemo<ColumnDef<typeof editableTableFeatures, TData>[]>(
     () =>
       columns.map((column) => ({
@@ -125,6 +126,16 @@ const EditableTableV2 = <TData extends object>({
   const visibleColumns = table.getVisibleLeafColumns();
   const orderedColumns = visibleColumns;
   const rows = table.getRowModel().rows;
+  const pageCountWithoutRowCount =
+    table.options.manualPagination &&
+    table.options.pageCount !== undefined &&
+    table.options.pageCount >= 0 &&
+    table.options.rowCount === undefined;
+  const nextPageButton = { disabled: !table.getCanNextPage() };
+  const lastPageButton = {
+    disabled: !table.getCanNextPage(),
+    onClick: () => table.setPageIndex(Math.max(0, table.getPageCount() - 1)),
+  };
 
   return (
     <Box minHeight='160px' padding={2} sx={sx}>
@@ -244,14 +255,28 @@ const EditableTableV2 = <TData extends object>({
             sx={(theme) => ({ boxShadow: `0 1px 2px -1px ${alpha(theme.palette.grey[700], 0.5)} inset` })}
             showFirstButton
             showLastButton
-            count={table.getRowCount()}
+            count={pageCountWithoutRowCount ? -1 : table.getRowCount()}
+            slotProps={
+              pageCountWithoutRowCount
+                ? {
+                    actions:
+                      theme.direction === 'rtl'
+                        ? { previousButton: nextPageButton, firstButton: lastPageButton }
+                        : { nextButton: nextPageButton, lastButton: lastPageButton },
+                  }
+                : undefined
+            }
             page={table.state.pagination.pageIndex}
             rowsPerPage={table.state.pagination.pageSize}
             rowsPerPageOptions={Array.from(new Set([table.state.pagination.pageSize, 10, 25, 50, 100])).sort(
               (a, b) => a - b
             )}
             labelRowsPerPage={strings.TABLE_ROWS_PER_PAGE}
-            labelDisplayedRows={({ from, to, count }) => `${from}–${to} / ${count}`}
+            labelDisplayedRows={({ from, to, count }) =>
+              pageCountWithoutRowCount
+                ? `${rows.length ? from : 0}–${rows.length ? from + rows.length - 1 : 0}`
+                : `${from}–${to} / ${count}`
+            }
             getItemAriaLabel={(type) =>
               ({
                 first: strings.TABLE_FIRST_PAGE,
