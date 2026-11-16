@@ -83,9 +83,14 @@ const ColumnDragContext = ({ ids, onDragEnd, children }: DragContextProps & { ch
   );
 };
 
+const ColumnDragMenuContent = (props: MenuProps) => {
+  const { active } = useDndContext();
+  return <Menu {...props} disableEscapeKeyDown={!!active || props.disableEscapeKeyDown} />;
+};
+
 export const ColumnDragMenu = ({ ids, onDragEnd, ...props }: DragContextProps & Omit<MenuProps, 'onDragEnd'>) => (
   <ColumnDragContext ids={ids} onDragEnd={onDragEnd}>
-    <Menu {...props} />
+    <ColumnDragMenuContent {...props} />
   </ColumnDragContext>
 );
 
