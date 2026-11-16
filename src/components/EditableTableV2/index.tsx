@@ -244,50 +244,65 @@ const EditableTableV2 = <TData extends object>({
                     : 'auto'),
             }
           : {}),
-        filterFn: (row, id, filterValue: unknown, addMeta) => {
-          if (typeof column.filterFn === 'function') {
-            return column.filterFn(row.original, id, filterValue);
+        filterFn: Object.assign(
+          (
+            row: Parameters<Exclude<ColumnDef<typeof editableTableFeatures, TData>['filterFn'], string | undefined>>[0],
+            id: string,
+            filterValue: unknown,
+            addMeta: Parameters<
+              Exclude<ColumnDef<typeof editableTableFeatures, TData>['filterFn'], string | undefined>
+            >[3]
+          ) => {
+            if (typeof column.filterFn === 'function') {
+              return column.filterFn(row.original, id, filterValue);
+            }
+            if (column.filterFn) {
+              const filter = MRT_FilterFns[column.filterFn] as unknown as (
+                filterRow: typeof row,
+                columnId: string,
+                value: unknown,
+                setMeta: typeof addMeta
+              ) => boolean;
+              return filter(row, id, filterValue, addMeta);
+            }
+            const value = row.getValue<unknown>(id);
+            if (column.filterVariant === 'select') {
+              return String(value ?? '') === String(filterValue);
+            }
+            if (column.filterVariant === 'multi-select') {
+              return (
+                !Array.isArray(filterValue) ||
+                !filterValue.length ||
+                filterValue.some((selected) =>
+                  Array.isArray(value) ? value.includes(selected) : String(value ?? '') === String(selected)
+                )
+              );
+            }
+            if (column.filterVariant === 'range' || column.filterVariant === 'date-range') {
+              const [min, max] = Array.isArray(filterValue) ? filterValue : [];
+              const normalize = (entry: unknown) =>
+                column.filterVariant === 'date-range' ? Date.parse(String(entry)) : Number(entry);
+              const numeric = normalize(value);
+              return (
+                value !== null &&
+                value !== undefined &&
+                value !== '' &&
+                Number.isFinite(numeric) &&
+                (min === '' || min === null || min === undefined || numeric >= normalize(min)) &&
+                (max === '' || max === null || max === undefined || numeric <= normalize(max))
+              );
+            }
+            return String(value ?? '')
+              .toLocaleLowerCase()
+              .includes(String(filterValue).toLocaleLowerCase());
+          },
+          {
+            autoRemove:
+              typeof column.filterFn === 'string'
+                ? (MRT_FilterFns[column.filterFn].autoRemove as (value: unknown) => boolean)
+                : undefined,
           }
-          if (column.filterFn) {
-            const filter = MRT_FilterFns[column.filterFn] as unknown as (
-              filterRow: typeof row,
-              columnId: string,
-              value: unknown,
-              setMeta: typeof addMeta
-            ) => boolean;
-            return filter(row, id, filterValue, addMeta);
-          }
-          const value = row.getValue<unknown>(id);
-          if (column.filterVariant === 'select') {
-            return String(value ?? '') === String(filterValue);
-          }
-          if (column.filterVariant === 'multi-select') {
-            return (
-              !Array.isArray(filterValue) ||
-              !filterValue.length ||
-              filterValue.some((selected) =>
-                Array.isArray(value) ? value.includes(selected) : String(value ?? '') === String(selected)
-              )
-            );
-          }
-          if (column.filterVariant === 'range' || column.filterVariant === 'date-range') {
-            const [min, max] = Array.isArray(filterValue) ? filterValue : [];
-            const normalize = (entry: unknown) =>
-              column.filterVariant === 'date-range' ? Date.parse(String(entry)) : Number(entry);
-            const numeric = normalize(value);
-            return (
-              value !== null &&
-              value !== undefined &&
-              value !== '' &&
-              Number.isFinite(numeric) &&
-              (min === '' || min === null || min === undefined || numeric >= normalize(min)) &&
-              (max === '' || max === null || max === undefined || numeric <= normalize(max))
-            );
-          }
-          return String(value ?? '')
-            .toLocaleLowerCase()
-            .includes(String(filterValue).toLocaleLowerCase());
-        },
+        ),
       })),
     [columns, tableOptions?.defaultColumn]
   );
