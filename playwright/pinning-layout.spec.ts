@@ -37,9 +37,9 @@ test('keeps both pin groups adjacent with intrinsic widths, resizing, and horizo
       await page.screenshot({ path: testInfo.outputPath(`pinned-${width}-${Math.round(scroll)}.png`) });
       await expect
         .poll(async () => {
-        const current = await positions();
+          const current = await positions();
 
-        return Math.max(Math.abs(current[0].right - current[1].x), Math.abs(current[3].right - current[4].x));
+          return Math.max(Math.abs(current[0].right - current[1].x), Math.abs(current[3].right - current[4].x));
         })
         .toBeLessThan(1);
       const cells = await positions();
