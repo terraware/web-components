@@ -703,7 +703,7 @@ const EditableTableV2 = <TData extends object>({
           </Toolbar>
         )}
         <ColumnDragMenu
-          ids={table.getAllLeafColumns().map((column) => column.id)}
+          ids={allColumns.map((column) => column.id)}
           onDragEnd={reorderColumns}
           anchorEl={menuAnchor}
           open={!!menuAnchor}
