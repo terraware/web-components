@@ -765,6 +765,7 @@ const EditableTableV2 = <TData extends object>({
                       select
                       size='small'
                       label={strings.TABLE_PIN}
+                      disabled={!column.getCanPin()}
                       value={column.getIsPinned() === 'start' ? 'left' : column.getIsPinned() === 'end' ? 'right' : ''}
                       onChange={(event) =>
                         column.pin(
