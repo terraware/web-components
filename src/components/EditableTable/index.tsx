@@ -1,6 +1,6 @@
-import React, { type JSX, useCallback, useEffect, useMemo, useState } from 'react';
+import React, { type JSX, type ReactNode, useCallback, useEffect, useMemo, useState } from 'react';
 
-import { Box, MenuItem, SxProps, TextField, useTheme } from '@mui/material';
+import { Box, MenuItem, SxProps, TableContainerProps, TextField, useTheme } from '@mui/material';
 import { SortingFnOption } from '@tanstack/table-core';
 import {
   MaterialReactTable as MRTTable,
@@ -61,7 +61,7 @@ export type EditableTableColumn<TData extends Record<string, any>> = {
   /** Edit configuration for this column */
   editConfig?: ColumnEditConfig<TData>;
   /** Custom cell renderer */
-  Cell?: (props: { cell: MRT_Cell<TData>; row: MRT_Row<TData> }) => JSX.Element | null;
+  Cell?: (props: { cell: MRT_Cell<TData>; row: MRT_Row<TData>; column: MRT_Column<TData> }) => ReactNode;
   /** Filter variant: 'text', 'select', 'multi-select', 'range', 'date-range' */
   filterVariant?: 'text' | 'select' | 'multi-select' | 'range' | 'date-range';
   /** Options for select/multi-select filters */
@@ -85,12 +85,18 @@ export type EditableTableProps<TData extends Record<string, any>> = {
   enableEditing?: boolean;
   /** Whether to enable column ordering (default: false) */
   enableColumnOrdering?: boolean;
+  enableColumnDragging?: boolean;
+  enableColumnActions?: boolean;
+  enableHiding?: boolean;
+  showDensityButton?: boolean;
+  showFullScreenButton?: boolean;
   /** Whether to enable column pinning (default: false) */
   enableColumnPinning?: boolean;
   /** Whether to enable sorting (default: true) */
   enableSorting?: boolean;
   /** Whether to enable global filter/search (default: false) */
   enableGlobalFilter?: boolean;
+  positionGlobalFilter?: 'left' | 'right';
   /** Whether to enable column filters (default: false) */
   enableColumnFilters?: boolean;
   /** Whether to persist column filters in localStorage (default: false) */
@@ -109,7 +115,11 @@ export type EditableTableProps<TData extends Record<string, any>> = {
   /** Callback when a row is clicked */
   onRowClick?: (row: TData) => void;
   /** Custom toolbar actions */
-  renderToolbarInternalActions?: (props: { table: MRT_TableInstance<TData> }) => JSX.Element;
+  renderToolbarInternalActions?: (props: { table: MRT_TableInstance<TData> }) => ReactNode;
+  renderTopToolbarCustomActions?: (props: { table: MRT_TableInstance<TData> }) => ReactNode;
+  muiTableHeadCellProps?: MRT_TableOptions<TData>['muiTableHeadCellProps'];
+  muiTableBodyCellProps?: MRT_TableOptions<TData>['muiTableBodyCellProps'];
+  containerProps?: TableContainerProps;
   sx?: SxProps;
   /** Additional MRT table options to override defaults */
   tableOptions?: Partial<MRT_TableOptions<TData>>;
@@ -122,9 +132,15 @@ export default function EditableTable<TData extends Record<string, any>>({
   enableClearAllFilters = true,
   enableEditing = false,
   enableColumnOrdering = false,
+  enableColumnDragging,
+  enableColumnActions,
+  enableHiding,
+  showDensityButton,
+  showFullScreenButton,
   enableColumnPinning = false,
   enableSorting = true,
   enableGlobalFilter = false,
+  positionGlobalFilter = 'left',
   enableColumnFilters = false,
   stickyFilters = false,
   storageKey,
@@ -135,6 +151,10 @@ export default function EditableTable<TData extends Record<string, any>>({
   onClearAllFilters,
   onRowClick,
   renderToolbarInternalActions,
+  renderTopToolbarCustomActions,
+  muiTableHeadCellProps,
+  muiTableBodyCellProps,
+  containerProps,
   sx,
   tableOptions = {},
 }: EditableTableProps<TData>): JSX.Element {
@@ -295,7 +315,8 @@ export default function EditableTable<TData extends Record<string, any>>({
     [enableGlobalFilter, storageKey, onClearAllFilters]
   );
 
-  const consumerRenderTopToolbarCustomActions = tableOptions?.renderTopToolbarCustomActions;
+  const consumerRenderTopToolbarCustomActions =
+    tableOptions.renderTopToolbarCustomActions ?? renderTopToolbarCustomActions;
   const consumerRenderToolbarInternalActions =
     renderToolbarInternalActions ?? tableOptions?.renderToolbarInternalActions;
 
@@ -334,6 +355,14 @@ export default function EditableTable<TData extends Record<string, any>>({
     data,
     editDisplayMode: 'cell',
     enableColumnOrdering,
+    enableColumnDragging,
+    enableColumnActions,
+    enableHiding,
+    enableDensityToggle: showDensityButton,
+    enableFullScreenToggle: showFullScreenButton,
+    muiTableHeadCellProps,
+    muiTableBodyCellProps,
+    muiTableContainerProps: containerProps,
     enableColumnPinning,
     enableEditing,
     enableSorting,
@@ -343,7 +372,7 @@ export default function EditableTable<TData extends Record<string, any>>({
     enablePagination,
     enableBottomToolbar: enablePagination ? enableBottomToolbar : false,
     enableTopToolbar,
-    positionGlobalFilter: enableGlobalFilter ? 'left' : undefined,
+    positionGlobalFilter: enableGlobalFilter ? positionGlobalFilter : undefined,
     ...(Object.keys(initialStateConfig).length > 0 ? { initialState: initialStateConfig } : {}),
     muiTableBodyProps: {
       sx: {
