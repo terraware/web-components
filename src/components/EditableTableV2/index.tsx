@@ -24,6 +24,7 @@ import {
 } from '@mui/material';
 import { alpha, darken, lighten, useTheme } from '@mui/material/styles';
 import { Column, ColumnDef, ColumnFiltersState, functionalUpdate, useTable } from '@tanstack/react-table';
+import { MRT_FilterFns, MRT_SortingFns } from 'material-react-table';
 
 import { useStrings } from '../../strings';
 import Button from '../Button/Button';
@@ -221,7 +222,6 @@ const EditableTableV2 = <TData extends object>({
           column.accessorFn ?? ((row) => (column.accessorKey !== undefined ? row[column.accessorKey] : undefined)),
         size: column.size,
         enableColumnFilter: !!column.filterVariant,
-        ...(column.sortFn ? { sortFn: column.sortFn } : {}),
         ...(column.enableSorting !== undefined
           ? { enableSorting: column.enableSorting }
           : column.accessorFn ||
@@ -230,9 +230,32 @@ const EditableTableV2 = <TData extends object>({
               ('sortingFn' in column && column.sortingFn)
             ? {}
             : { enableSorting: false }),
-        filterFn: (row, id, filterValue: unknown) => {
-          if (column.filterFn) {
+        ...(column.sortFn || column.sortingFn
+          ? {
+              sortFn:
+                column.sortFn ??
+                (typeof column.sortingFn === 'function'
+                  ? (column.sortingFn as unknown as ColumnDef<typeof editableTableFeatures, TData>['sortFn'])
+                  : column.sortingFn && column.sortingFn !== 'auto'
+                    ? (MRT_SortingFns[column.sortingFn as keyof typeof MRT_SortingFns] as unknown as ColumnDef<
+                        typeof editableTableFeatures,
+                        TData
+                      >['sortFn'])
+                    : 'auto'),
+            }
+          : {}),
+        filterFn: (row, id, filterValue: unknown, addMeta) => {
+          if (typeof column.filterFn === 'function') {
             return column.filterFn(row.original, id, filterValue);
+          }
+          if (column.filterFn) {
+            const filter = MRT_FilterFns[column.filterFn] as unknown as (
+              filterRow: typeof row,
+              columnId: string,
+              value: unknown,
+              setMeta: typeof addMeta
+            ) => boolean;
+            return filter(row, id, filterValue, addMeta);
           }
           const value = row.getValue<unknown>(id);
           if (column.filterVariant === 'select') {

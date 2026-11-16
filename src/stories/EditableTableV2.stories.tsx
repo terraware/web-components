@@ -209,7 +209,7 @@ export const Editable = () => {
         header: 'Target',
         accessorKey: 'target',
         filterVariant: 'range',
-        Cell: ({ cell }) => <strong>{cell.getValue<number>().toFixed(2)}</strong>,
+        Cell: ({ cell }) => <strong>{Number(cell.getValue()).toFixed(2)}</strong>,
         editConfig: { onSave },
       },
     ];

@@ -2,9 +2,7 @@ import { ReactNode } from 'react';
 
 import {
   Cell,
-  CellContext,
   ColumnDef,
-  Row,
   Table,
   TableOptions,
   Updater,
@@ -24,6 +22,10 @@ import {
   sortFns,
   tableFeatures,
 } from '@tanstack/react-table';
+
+import type { ColumnEditConfig, EditableTableColumn } from '../EditableTable';
+import type { EditableTableCellContext, EditableTableEditContext } from '../EditableTable/contexts';
+import type { EditableTableInstance } from '../EditableTable/tableSettings';
 
 type FilterVariant = 'text' | 'select' | 'multi-select' | 'range' | 'date-range';
 type ColumnFilterMeta = { filterVariant?: FilterVariant; filterSelectOptions?: string[] };
@@ -64,31 +66,24 @@ export type EditableTableOptionsV2<TData extends object> = Partial<
   };
   onColumnPinningChange?: (updater: Updater<EditableTableColumnPinningV2>) => void;
 };
-export type EditableTableCellContextV2<TData extends object> = CellContext<Features, TData>;
-
-export type EditableTableEditContextV2<TData extends object> = EditableTableCellContextV2<TData> & {
-  save: (value: unknown) => Promise<void>;
-  cancel: () => void;
-  isSaving: boolean;
+export type EditableTableCellContextV2<TData extends object> = EditableTableCellContext<TData> & {
+  table?: EditableTableInstance<TData>;
 };
 
-export type EditableTableColumnV2<TData extends object> = {
-  id: string;
-  header: string;
-  accessorKey?: keyof TData;
-  accessorFn?: (row: TData) => unknown;
-  size?: number;
+export type EditableTableEditContextV2<TData extends object> = EditableTableEditContext<TData> &
+  EditableTableCellContextV2<TData>;
+
+type Renderer<TContext, TResult = ReactNode> = { render(context: TContext): TResult }['render'];
+
+export type EditableTableColumnV2<TData extends object> = Omit<
+  EditableTableColumn<TData>,
+  'Cell' | 'enableEditing' | 'editConfig'
+> & {
   enableSorting?: boolean;
-  enableEditing?: boolean | ((row: Row<Features, TData>) => boolean);
-  Cell?: (context: EditableTableCellContextV2<TData>) => ReactNode;
-  filterVariant?: FilterVariant;
-  filterSelectOptions?: string[];
-  filterFn?: (row: TData, columnId: string, value: unknown) => boolean;
+  enableEditing?: boolean | Renderer<{ original: TData; id: string }, boolean>;
+  Cell?: Renderer<EditableTableCellContextV2<TData>>;
   sortFn?: ColumnDef<Features, TData>['sortFn'];
-  editConfig?: {
-    onSave?: (row: TData, value: unknown, columnId: string) => void | Promise<void>;
-    editVariant?: 'text' | 'select' | 'custom';
-    selectOptions?: { label: string; value: string | number }[];
-    customEditComponent?: (context: EditableTableEditContextV2<TData>) => ReactNode;
+  editConfig?: Omit<ColumnEditConfig<TData>, 'customEditComponent'> & {
+    customEditComponent?: Renderer<EditableTableEditContextV2<TData>>;
   };
 };

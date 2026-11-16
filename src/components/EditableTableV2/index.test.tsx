@@ -225,7 +225,7 @@ test('supports custom renderers, custom editors and row clicks', async () => {
       columns={[
         {
           ...columns[0],
-          Cell: ({ cell }) => <strong>{cell.getValue<string>()}!</strong>,
+          Cell: ({ cell }) => <strong>{String(cell.getValue())}!</strong>,
           editConfig: {
             onSave,
             editVariant: 'custom',
