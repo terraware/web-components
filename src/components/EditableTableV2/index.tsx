@@ -81,6 +81,14 @@ const EditableTableV2 = <TData extends object>({
           column.accessorFn ?? ((row) => (column.accessorKey !== undefined ? row[column.accessorKey] : undefined)),
         size: column.size,
         ...(column.sortFn ? { sortFn: column.sortFn } : {}),
+        enableSorting:
+          column.enableSorting ??
+          !!(
+            column.accessorFn ||
+            column.accessorKey !== undefined ||
+            column.sortFn ||
+            ('sortingFn' in column && column.sortingFn)
+          ),
       })),
     [columns]
   );

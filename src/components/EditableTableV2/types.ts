@@ -66,6 +66,7 @@ export type EditableTableColumnV2<TData extends object> = {
   accessorKey?: keyof TData;
   accessorFn?: (row: TData) => unknown;
   size?: number;
+  enableSorting?: boolean;
   Cell?: (context: EditableTableCellContextV2<TData>) => ReactNode;
   sortFn?: ColumnDef<Features, TData>['sortFn'];
 };
