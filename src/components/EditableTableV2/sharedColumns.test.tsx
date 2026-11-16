@@ -51,6 +51,30 @@ test.each([
     data,
     clearAllFiltersLabel: 'Clear',
     enableColumnFilters: true,
+    enableColumnDragging: false,
+    enableColumnActions: true,
+    enableHiding: true,
+    positionGlobalFilter: 'right',
+    showDensityButton: false,
+    showFullScreenButton: false,
+    containerProps: { 'aria-label': 'Shared table' },
+    muiTableHeadCellProps: ({
+      column,
+      table,
+    }: Pick<EditableTableCellContext<Item>, 'column'> & EditableTableToolbarContext<Item>) => ({
+      title: `${column.id}:${getTableSettings(table).columnOrder.length}`,
+    }),
+    muiTableBodyCellProps: ({
+      cell,
+      row,
+      column,
+      table,
+    }: EditableTableCellContext<Item> & EditableTableToolbarContext<Item>) => ({
+      title: `${row.original.name}:${column.id}:${String(cell.getValue())}:${getTableSettings(table).sorting.length}`,
+    }),
+    renderTopToolbarCustomActions: ({ table }: EditableTableToolbarContext<Item>) => (
+      <span>Rows: {table.getRowModel().rows.length}</span>
+    ),
     renderToolbarInternalActions: ({ table }: EditableTableToolbarContext<Item>) => (
       <button
         onClick={() =>
@@ -61,7 +85,9 @@ test.each([
       </button>
     ),
   } satisfies Omit<EditableTablePropsV2<Item>, 'tableOptions'> & Omit<EditableTableProps<Item>, 'tableOptions'>;
-  render(<EditableTableV2 {...props} />);
+  const legacyProps: Omit<EditableTableProps<Item>, 'tableOptions'> = props;
+  const compatibleProps: EditableTablePropsV2<Item> = legacyProps;
+  render(<EditableTableV2 {...compatibleProps} />);
   fireEvent.click(screen.getByRole('button', { name: 'Filter 0' }));
   expect(
     screen
