@@ -289,7 +289,12 @@ const EditableTableV2 = <TData extends object>({
                 value !== '' &&
                 Number.isFinite(numeric) &&
                 (min === '' || min === null || min === undefined || numeric >= normalize(min)) &&
-                (max === '' || max === null || max === undefined || numeric <= normalize(max))
+                (max === '' ||
+                  max === null ||
+                  max === undefined ||
+                  (column.filterVariant === 'date-range' && typeof max === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(max)
+                    ? numeric < normalize(max) + 24 * 60 * 60 * 1000
+                    : numeric <= normalize(max)))
               );
             }
             return String(value ?? '')
