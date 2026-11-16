@@ -82,16 +82,16 @@ const EditableTableV2 = <TData extends object>({
           column.accessorFn ?? ((row) => (column.accessorKey !== undefined ? row[column.accessorKey] : undefined)),
         size: column.size,
         ...(column.sortFn ? { sortFn: column.sortFn } : {}),
-        enableSorting:
-          column.enableSorting ??
-          !!(
-            column.accessorFn ||
-            column.accessorKey !== undefined ||
-            column.sortFn ||
-            ('sortingFn' in column && column.sortingFn)
-          ),
+        ...(column.enableSorting !== undefined
+          ? { enableSorting: column.enableSorting }
+          : column.accessorFn ||
+              column.accessorKey !== undefined ||
+              column.sortFn ||
+              ('sortingFn' in column && column.sortingFn)
+            ? {}
+            : { enableSorting: false }),
       })),
-    [columns]
+    [columns, tableOptions?.defaultColumn]
   );
 
   const { state, initialState, onColumnPinningChange, ...options } = tableOptions ?? {};
