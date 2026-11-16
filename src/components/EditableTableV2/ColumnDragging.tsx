@@ -36,30 +36,37 @@ type DragContextProps = { ids: string[]; onDragEnd: (event: DragEndEvent) => voi
 
 const columnKeyboardCoordinates: KeyboardCoordinateGetter = (event, { currentCoordinates, context }) => {
   const { active, over, collisionRect, droppableRects, droppableContainers } = context;
-  const items = active?.data.current?.sortable.items as string[] | undefined;
+  const items = active?.data.current?.sortable?.items as string[] | undefined;
   if (!active || !collisionRect || !items) {
     return;
   }
-  const direction = ['ArrowRight', 'ArrowDown'].includes(event.code)
-    ? 1
-    : ['ArrowLeft', 'ArrowUp'].includes(event.code)
-      ? -1
-      : 0;
-  if (!direction) {
-    return;
-  }
-  const currentId = over?.id ?? active.id;
-  const nextId = items[items.indexOf(String(currentId)) + direction];
-  const current = droppableRects.get(currentId);
-  const next = droppableRects.get(nextId);
-  if (!current || !next || droppableContainers.get(nextId)?.disabled) {
-    return;
-  }
-  const horizontal = event.code === 'ArrowLeft' || event.code === 'ArrowRight';
-  if ((horizontal && next.left === current.left) || (!horizontal && next.top === current.top)) {
+  if (!['ArrowRight', 'ArrowDown', 'ArrowLeft', 'ArrowUp'].includes(event.code)) {
     return;
   }
   event.preventDefault();
+  const currentId = over?.id ?? active.id;
+  const current = droppableRects.get(currentId);
+  if (!current) {
+    return;
+  }
+  const index = items.indexOf(String(currentId));
+  const nextId = [items[index - 1], items[index + 1]].find((id) => {
+    const rect = droppableRects.get(id);
+    if (!rect || droppableContainers.get(id)?.disabled) {
+      return false;
+    }
+    return event.code === 'ArrowRight'
+      ? rect.left > current.left
+      : event.code === 'ArrowLeft'
+        ? rect.left < current.left
+        : event.code === 'ArrowDown'
+          ? rect.top > current.top
+          : rect.top < current.top;
+  });
+  const next = nextId ? droppableRects.get(nextId) : undefined;
+  if (!next) {
+    return;
+  }
   return {
     x: currentCoordinates.x + next.left + next.width / 2 - collisionRect.left - collisionRect.width / 2,
     y: currentCoordinates.y + next.top + next.height / 2 - collisionRect.top - collisionRect.height / 2,
