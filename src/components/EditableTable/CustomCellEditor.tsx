@@ -35,9 +35,7 @@ const CustomCellEditor = <TData extends Record<string, any>>({ cell, table, conf
     finished.current = true;
     setIsSaving(true);
     try {
-      if (value !== (cell.getValue() ?? '')) {
-        await config.onSave?.(cell.row.original, value, cell.column.id);
-      }
+      await config.onSave?.(cell.row.original, value, cell.column.id);
       if (isCurrent()) {
         table.setEditingCell(null);
       }

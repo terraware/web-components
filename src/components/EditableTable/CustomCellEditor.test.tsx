@@ -62,7 +62,7 @@ const deferred = () => {
   return { promise, resolve, reject };
 };
 
-const setup = (onSave: (row: Data, value: unknown, columnId: string) => Promise<void>) => {
+const setup = (onSave: (row: Data, value: unknown, columnId: string) => Promise<void>, editValue = 'Updated') => {
   const columns: EditableTableColumn<Data>[] = [
     {
       id: 'name',
@@ -75,7 +75,7 @@ const setup = (onSave: (row: Data, value: unknown, columnId: string) => Promise<
         customEditComponent: ({ row, save, cancel, isSaving }: EditableTableEditContext<Data>) => (
           <div>
             <span>{`Editing ${row.original.name}: ${isSaving ? 'saving' : 'ready'}`}</span>
-            <button onClick={() => void save('Updated')}>Save</button>
+            <button onClick={() => void save(editValue)}>Save</button>
             <button onClick={cancel}>Cancel</button>
           </div>
         ),
@@ -91,6 +91,15 @@ const setup = (onSave: (row: Data, value: unknown, columnId: string) => Promise<
     />
   );
 };
+
+test('saves even when an edit value happens to equal the display value', async () => {
+  const onSave = rstest.fn().mockResolvedValue(undefined);
+  setup(onSave, 'Alpha');
+  fireEvent.doubleClick(screen.getByText('Alpha'));
+  fireEvent.click(screen.getByText('Save'));
+  await waitFor(() => expect(screen.queryByText('Editing Alpha: saving')).not.toBeInTheDocument());
+  expect(onSave).toHaveBeenCalledWith({ name: 'Alpha' }, 'Alpha', 'name');
+});
 
 test('awaits saves, prevents duplicate submission and keeps failed edits open for retry', async () => {
   const failed = deferred();
