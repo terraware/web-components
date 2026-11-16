@@ -13,6 +13,7 @@ test('keeps both pin groups adjacent with intrinsic widths, resizing, and horizo
     page.getByRole('columnheader').evaluateAll((headers) =>
       headers.map((header) => {
         const { x, right, width } = header.getBoundingClientRect();
+
         return { x, right, width };
       })
     );
@@ -36,8 +37,9 @@ test('keeps both pin groups adjacent with intrinsic widths, resizing, and horizo
       await page.screenshot({ path: testInfo.outputPath(`pinned-${width}-${Math.round(scroll)}.png`) });
       await expect
         .poll(async () => {
-          const cells = await positions();
-          return Math.max(Math.abs(cells[0].right - cells[1].x), Math.abs(cells[3].right - cells[4].x));
+        const current = await positions();
+
+        return Math.max(Math.abs(current[0].right - current[1].x), Math.abs(current[3].right - current[4].x));
         })
         .toBeLessThan(1);
       const cells = await positions();
