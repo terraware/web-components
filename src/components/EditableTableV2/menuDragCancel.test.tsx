@@ -34,7 +34,7 @@ test('Escape cancels a keyboard manager drag before closing the menu', async () 
   await waitFor(() => expect(screen.queryByTestId('column-drag-overlay')).not.toBeInTheDocument());
   expect(menu).toBeVisible();
   expect(handle).not.toHaveAttribute('aria-pressed', 'true');
-  expect(screen.getByRole('columnheader', { name: /Name/ })).toBeInTheDocument();
+  expect(screen.getAllByRole('columnheader', { hidden: true })[0]).toHaveTextContent('Name');
   await user.keyboard('[Escape]');
   await waitFor(() => expect(screen.queryByRole('menu')).not.toBeInTheDocument());
   await user.click(screen.getByRole('button', { name: 'Columns' }));
