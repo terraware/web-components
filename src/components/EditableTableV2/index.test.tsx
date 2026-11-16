@@ -10,6 +10,7 @@ import {
   WithMrtProps,
   WithTopToolbar,
 } from '../../stories/EditableTableV2.stories';
+import { isMrtTable } from '../EditableTable/tableSettings';
 import { EditableTableToggleDensePaddingButtonV2 } from './ToolbarButtons';
 
 type Item = { id: string; name: string; count: number };
@@ -399,7 +400,9 @@ test('custom density control cycles all padding sizes without the default-button
       data={data}
       clearAllFiltersLabel='Clear'
       muiTableBodyCellProps={{ sx: { py: '12px' } }}
-      renderToolbarInternalActions={({ table }) => <EditableTableToggleDensePaddingButtonV2 table={table} />}
+      renderToolbarInternalActions={({ table }) =>
+        !isMrtTable(table) && <EditableTableToggleDensePaddingButtonV2 table={table} />
+      }
     />
   );
   const cell = screen.getByText('Zebra');
@@ -943,7 +946,9 @@ test('round trips controlled left/right pinning through menus and raw TanStack u
         enableColumnPinning
         showColumnsButton
         renderTopToolbarCustomActions={({ table: instance }) => {
-          table = instance;
+          if (!isMrtTable(instance)) {
+            table = instance;
+          }
           return <output aria-label='Pinning state'>{JSON.stringify(columnPinning)}</output>;
         }}
         tableOptions={{

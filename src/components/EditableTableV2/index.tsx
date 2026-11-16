@@ -47,10 +47,11 @@ import {
 } from '@mui/material';
 import { alpha, darken, lighten, useTheme } from '@mui/material/styles';
 import { Column, ColumnDef, ColumnFiltersState, Row, functionalUpdate, useTable } from '@tanstack/react-table';
-import { MRT_FilterFns, MRT_SortingFns } from 'material-react-table';
+import { MRT_FilterFns, MRT_SortingFns, MRT_TableOptions } from 'material-react-table';
 
 import { useStrings } from '../../strings';
 import Button from '../Button/Button';
+import type { EditableTableToolbarContext } from '../EditableTable/tableSettings';
 import {
   ColumnDragBodyCell,
   ColumnDragHandle,
@@ -87,6 +88,9 @@ export type {
   EditableTableOptionsV2,
 } from './types';
 
+type Callback<TArgs, TResult> = { render(args: TArgs): TResult }['render'];
+type CallbackArgs<T> = T extends (args: infer TArgs) => unknown ? TArgs : never;
+
 export type EditableTablePropsV2<TData extends object> = {
   clearAllFiltersLabel: string;
   columns: EditableTableColumnV2<TData>[];
@@ -116,22 +120,30 @@ export type EditableTablePropsV2<TData extends object> = {
   initialSorting?: { id: string; desc: boolean }[];
   onClearAllFilters?: () => void;
   onRowClick?: (row: TData) => void;
-  renderToolbarInternalActions?: (props: { table: EditableTableInstanceV2<TData> }) => ReactNode;
-  renderTopToolbarCustomActions?: (props: { table: EditableTableInstanceV2<TData> }) => ReactNode;
+  renderToolbarInternalActions?: Callback<EditableTableToolbarContext<TData>, ReactNode>;
+  renderTopToolbarCustomActions?: Callback<EditableTableToolbarContext<TData>, ReactNode>;
   muiTableHeadCellProps?:
     | TableCellProps
-    | ((args: {
-        column: Column<typeof editableTableFeatures, TData>;
-        table: EditableTableInstanceV2<TData>;
-      }) => TableCellProps);
+    | Callback<
+        | CallbackArgs<MRT_TableOptions<TData>['muiTableHeadCellProps']>
+        | {
+            column: Column<typeof editableTableFeatures, TData>;
+            table: EditableTableInstanceV2<TData>;
+          },
+        TableCellProps
+      >;
   muiTableBodyCellProps?:
     | TableCellProps
-    | ((args: {
-        cell: EditableTableCellV2<TData>;
-        column: Column<typeof editableTableFeatures, TData>;
-        row: Row<typeof editableTableFeatures, TData>;
-        table: EditableTableInstanceV2<TData>;
-      }) => TableCellProps);
+    | Callback<
+        | CallbackArgs<MRT_TableOptions<TData>['muiTableBodyCellProps']>
+        | {
+            cell: EditableTableCellV2<TData>;
+            column: Column<typeof editableTableFeatures, TData>;
+            row: Row<typeof editableTableFeatures, TData>;
+            table: EditableTableInstanceV2<TData>;
+          },
+        TableCellProps
+      >;
   tableOptions?: EditableTableOptionsV2<TData>;
   containerProps?: TableContainerProps;
   sx?: SxProps<Theme>;
