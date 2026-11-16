@@ -65,7 +65,13 @@ export type { PillListItem } from './components/PillList';
 export type { IconName } from './components/Icon/icons/';
 export type { Size } from './components/Size';
 export type { DropdownItem } from './components/types';
-export type { EditableTableColumn, EditableTableProps } from './components/EditableTable';
+export type {
+  ColumnEditConfig,
+  EditableTableCellContext,
+  EditableTableEditContext,
+  EditableTableColumn,
+  EditableTableProps,
+} from './components/EditableTable';
 export type { EnhancedTableDetailsRow, RendererProps, TableColumnType, TableRowType, SortOrder };
 export type { FormButton } from './components/FormBottomBar';
 export type { PhotoChooserErrorType, PhotoChooserProps } from './components/PhotoChooser';

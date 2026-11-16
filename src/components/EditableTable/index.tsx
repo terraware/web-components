@@ -16,6 +16,10 @@ import {
 } from 'material-react-table';
 
 import Button from '../Button/Button';
+import CustomCellEditor from './CustomCellEditor';
+import type { EditableTableEditContext } from './contexts';
+
+export type { EditableTableCellContext, EditableTableEditContext } from './contexts';
 
 const isActiveFilter = (filter: { id: string; value: unknown }): boolean => {
   if (!filter.value) {
@@ -36,12 +40,14 @@ export type ColumnEditConfig<TData extends Record<string, any>> = {
   /** Options for select variant */
   selectOptions?: { label: string; value: string | number }[];
   /** Custom edit component */
-  customEditComponent?: (props: {
-    cell: MRT_Cell<TData>;
-    row: MRT_Row<TData>;
-    column: MRT_Column<TData>;
-    table: MRT_TableInstance<TData>;
-  }) => JSX.Element;
+  customEditComponent?: (
+    props: EditableTableEditContext<TData> & {
+      cell: MRT_Cell<TData>;
+      row: MRT_Row<TData>;
+      column: MRT_Column<TData>;
+      table: MRT_TableInstance<TData>;
+    }
+  ) => ReactNode;
 };
 
 export type EditableTableColumn<TData extends Record<string, any>> = {
@@ -229,7 +235,9 @@ export default function EditableTable<TData extends Record<string, any>>({
         const { editVariant = 'text', selectOptions, customEditComponent, onSave } = col.editConfig;
 
         if (editVariant === 'custom' && customEditComponent) {
-          mrtCol.Edit = customEditComponent;
+          mrtCol.Edit = ({ cell, table }) => (
+            <CustomCellEditor key={cell.id} cell={cell} table={table} config={col.editConfig!} />
+          );
         } else if (editVariant === 'select' && selectOptions) {
           mrtCol.editVariant = 'select';
           mrtCol.editSelectOptions = selectOptions;
