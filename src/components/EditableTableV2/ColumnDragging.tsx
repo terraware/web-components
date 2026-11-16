@@ -5,6 +5,7 @@ import {
   DndContext,
   DragEndEvent,
   DragOverlay,
+  KeyboardCoordinateGetter,
   KeyboardSensor,
   PointerSensor,
   closestCenter,
@@ -12,7 +13,7 @@ import {
   useSensor,
   useSensors,
 } from '@dnd-kit/core';
-import { SortableContext, sortableKeyboardCoordinates, useSortable } from '@dnd-kit/sortable';
+import { SortableContext, useSortable } from '@dnd-kit/sortable';
 import { DragHandle } from '@mui/icons-material';
 import {
   Box,
@@ -33,11 +34,43 @@ import { useStrings } from '../../strings';
 
 type DragContextProps = { ids: string[]; onDragEnd: (event: DragEndEvent) => void };
 
+const columnKeyboardCoordinates: KeyboardCoordinateGetter = (event, { currentCoordinates, context }) => {
+  const { active, over, collisionRect, droppableRects, droppableContainers } = context;
+  const items = active?.data.current?.sortable.items as string[] | undefined;
+  if (!active || !collisionRect || !items) {
+    return;
+  }
+  const direction = ['ArrowRight', 'ArrowDown'].includes(event.code)
+    ? 1
+    : ['ArrowLeft', 'ArrowUp'].includes(event.code)
+      ? -1
+      : 0;
+  if (!direction) {
+    return;
+  }
+  const currentId = over?.id ?? active.id;
+  const nextId = items[items.indexOf(String(currentId)) + direction];
+  const current = droppableRects.get(currentId);
+  const next = droppableRects.get(nextId);
+  if (!current || !next || droppableContainers.get(nextId)?.disabled) {
+    return;
+  }
+  const horizontal = event.code === 'ArrowLeft' || event.code === 'ArrowRight';
+  if ((horizontal && next.left === current.left) || (!horizontal && next.top === current.top)) {
+    return;
+  }
+  event.preventDefault();
+  return {
+    x: currentCoordinates.x + next.left + next.width / 2 - collisionRect.left - collisionRect.width / 2,
+    y: currentCoordinates.y + next.top + next.height / 2 - collisionRect.top - collisionRect.height / 2,
+  };
+};
+
 const ColumnDragContext = ({ ids, onDragEnd, children }: DragContextProps & { children: ReactNode }) => {
   const [overlay, setOverlay] = useState<{ html: string; rect: ClientRect } | null>(null);
   const sensors = useSensors(
     useSensor(PointerSensor, { activationConstraint: { distance: 5 } }),
-    useSensor(KeyboardSensor, { coordinateGetter: sortableKeyboardCoordinates })
+    useSensor(KeyboardSensor, { coordinateGetter: columnKeyboardCoordinates })
   );
   return (
     <DndContext
