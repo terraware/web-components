@@ -62,7 +62,7 @@ const EditableCellV2 = <TData extends object>({ cell, column, onClose }: Props<T
           onBlur={() => void save(value)}
           onKeyDown={(event) => {
             event.stopPropagation();
-            if (event.key === 'Enter') {
+            if (event.key === 'Enter' && config?.editVariant !== 'select') {
               event.preventDefault();
               void save(value);
             } else if (event.key === 'Escape') {
