@@ -73,7 +73,12 @@ export type {
   EditableTableColumn,
   EditableTableProps,
 } from './components/EditableTable';
-export type { TableSettings, TableSettingsColumn } from './components/EditableTable/tableSettings';
+export type {
+  TableSettings,
+  TableSettingsColumn,
+  EditableTableInstance,
+  EditableTableToolbarContext,
+} from './components/EditableTable/tableSettings';
 export {
   getTableSettings,
   getInitialTableSettings,
@@ -81,6 +86,7 @@ export {
   getTableColumns,
   getVisibleTableColumns,
   isDataColumnId,
+  isMrtTable,
 } from './components/EditableTable/tableSettings';
 export { getColumnPinningV2, setColumnPinningV2, getColumnPinPositionV2 } from './components/EditableTableV2/pinning';
 export type {
