@@ -1,4 +1,4 @@
-import React, { ReactNode, useEffect, useMemo, useState } from 'react';
+import React, { ReactNode, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 
 import {
   ArrowDownward,
@@ -107,7 +107,11 @@ const readFilters = (storageKey?: string): ColumnFiltersState => {
   }
 };
 
-const pinnedStyles = <TData extends object>(column: Column<typeof editableTableFeatures, TData>, theme: Theme) => {
+const pinnedStyles = <TData extends object>(
+  column: Column<typeof editableTableFeatures, TData>,
+  theme: Theme,
+  offsets: Record<string, number>
+) => {
   const position = column.getIsPinned();
   const background = theme.palette.background.default;
   const baseBackground = theme.palette.mode === 'dark' ? lighten(background, 0.05) : background;
@@ -132,8 +136,8 @@ const pinnedStyles = <TData extends object>(column: Column<typeof editableTableF
               : undefined,
       },
       ...(position === 'start'
-        ? { insetInlineStart: column.getStart('start') }
-        : { insetInlineEnd: column.getAfter('end') }),
+        ? { insetInlineStart: offsets[column.id] ?? column.getStart('start') }
+        : { insetInlineEnd: offsets[column.id] ?? column.getAfter('end') }),
     }),
   };
 };
@@ -462,6 +466,46 @@ const EditableTableV2 = <TData extends object>({
     disabled: !table.getCanNextPage(),
     onClick: () => table.setPageIndex(Math.max(0, table.getPageCount() - 1)),
   };
+  const tableRef = useRef<HTMLTableElement>(null);
+  const [renderedWidths, setRenderedWidths] = useState<Record<string, number>>({});
+  const visibleColumnIds = JSON.stringify(orderedColumns.map((column) => column.id));
+  const hasPinnedColumns = orderedColumns.some((column) => column.getIsPinned());
+  useLayoutEffect(() => {
+    if (!tableRef.current || !hasPinnedColumns) {
+      return;
+    }
+    const headers = Array.from(tableRef.current.querySelectorAll<HTMLElement>('thead th[data-column-id]'));
+    const measure = () => {
+      const next: Record<string, number> = {};
+      headers.forEach((header) => {
+        const width = header.getBoundingClientRect().width;
+        if (header.dataset.columnId && width > 0) {
+          next[header.dataset.columnId] = width;
+        }
+      });
+      setRenderedWidths((current) =>
+        Object.keys(current).length === Object.keys(next).length &&
+        Object.keys(next).every((id) => current[id] === next[id])
+          ? current
+          : next
+      );
+    };
+    measure();
+    if (typeof ResizeObserver === 'undefined') {
+      return;
+    }
+    const observer = new ResizeObserver(measure);
+    headers.forEach((header) => observer.observe(header));
+    return () => observer.disconnect();
+  }, [visibleColumnIds, hasPinnedColumns]);
+  const pinnedOffsets: Record<string, number> = {};
+  for (const group of [table.getStartVisibleLeafColumns(), [...table.getEndVisibleLeafColumns()].reverse()]) {
+    let offset = 0;
+    for (const column of group) {
+      pinnedOffsets[column.id] = offset;
+      offset += renderedWidths[column.id] ?? column.getSize();
+    }
+  }
   const controlsEnabled = enableHiding || enableColumnOrdering || enableColumnPinning;
   const hideableColumns = table.getAllLeafColumns().filter((column) => column.getCanHide());
   const filtersVisible = enableColumnFilters;
@@ -738,7 +782,7 @@ const EditableTableV2 = <TData extends object>({
           )}
         </Menu>
         <TableContainer {...containerProps}>
-          <Table sx={{ minWidth: table.getTotalSize() }}>
+          <Table ref={tableRef} sx={{ minWidth: table.getTotalSize() }}>
             <TableHead>
               <TableRow>
                 {orderedColumns.map((column) => {
@@ -760,9 +804,10 @@ const EditableTableV2 = <TData extends object>({
                   return (
                     <TableCell
                       key={column.id}
+                      data-column-id={column.id}
                       sortDirection={column.getIsSorted() || false}
                       sx={(theme) => ({
-                        ...pinnedStyles(column, theme),
+                        ...pinnedStyles(column, theme, pinnedOffsets),
                         bgcolor: 'background.paper',
                         fontWeight: 'bold',
                         p: 2,
@@ -875,7 +920,7 @@ const EditableTableV2 = <TData extends object>({
                               : undefined
                           }
                           sx={(theme) => ({
-                            ...pinnedStyles(column, theme),
+                            ...pinnedStyles(column, theme, pinnedOffsets),
                             borderBottom: 'none',
                             bgcolor: rowIndex % 2 === 0 ? 'TwClrBaseGray025' : 'background.paper',
                             cursor: canEdit ? 'pointer' : 'inherit',

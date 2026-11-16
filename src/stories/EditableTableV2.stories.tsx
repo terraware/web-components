@@ -6,6 +6,30 @@ import EditableTableV2, { EditableTableColumnV2 } from '../components/EditableTa
 
 export default { title: 'Editable Table V2', component: EditableTableV2 };
 
+export const WithOversizedPinnedContent: StoryFn = () => (
+  <EditableTableV2
+    clearAllFiltersLabel='Clear'
+    enableColumnPinning
+    enablePagination={false}
+    columns={[
+      { id: 'leftA', header: 'Left A', accessorKey: 'leftA', size: 120 },
+      { id: 'leftB', header: 'Left B', accessorKey: 'leftB', size: 120 },
+      { id: 'center', header: 'Center', accessorKey: 'center', size: 700 },
+      { id: 'rightA', header: 'Right A', accessorKey: 'rightA', size: 120 },
+      {
+        id: 'rightB',
+        header: 'Right B',
+        accessorKey: 'rightB',
+        size: 120,
+        Cell: () => <div style={{ width: 240 }}>Oversized content</div>,
+      },
+    ]}
+    data={[{ leftA: 'LongUnbrokenPinnedContent'.repeat(2), leftB: 'B', center: 'Center', rightA: 'D', rightB: 'E' }]}
+    tableOptions={{ initialState: { columnPinning: { left: ['leftA', 'leftB'], right: ['rightA', 'rightB'] } } }}
+  />
+);
+WithOversizedPinnedContent.tags = ['no-screenshot'];
+
 type RowData = {
   id: string;
   name: string;
