@@ -280,8 +280,8 @@ const EditableTableV2 = <TData extends object>({
               value !== undefined &&
               value !== '' &&
               Number.isFinite(numeric) &&
-              (min === '' || min === undefined || numeric >= normalize(min)) &&
-              (max === '' || max === undefined || numeric <= normalize(max))
+              (min === '' || min === null || min === undefined || numeric >= normalize(min)) &&
+              (max === '' || max === null || max === undefined || numeric <= normalize(max))
             );
           }
           return String(value ?? '')
