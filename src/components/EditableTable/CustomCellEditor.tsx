@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import { MRT_Cell, MRT_TableInstance } from 'material-react-table';
 
@@ -50,18 +50,17 @@ const CustomCellEditor = <TData extends Record<string, any>>({ cell, table, conf
     }
   };
 
-  const Component = config.customEditComponent;
-  return Component ? (
-    <Component
-      cell={cell}
-      row={cell.row}
-      column={cell.column}
-      table={table}
-      save={save}
-      cancel={cancel}
-      isSaving={isSaving}
-    />
-  ) : null;
+  return (
+    config.customEditComponent?.({
+      cell,
+      row: cell.row,
+      column: cell.column,
+      table,
+      save,
+      cancel,
+      isSaving,
+    }) ?? null
+  );
 };
 
 export default CustomCellEditor;

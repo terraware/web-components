@@ -1,10 +1,56 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { act, fireEvent, render, screen, waitFor } from '@testing-library/react';
 
 import EditableTable, { EditableTableCellContext, EditableTableColumn, EditableTableEditContext } from '.';
 
 type Data = { name: string };
+
+test('keeps focus and typed values when the custom editor callback changes on each render', () => {
+  const data = [{ name: 'Alpha' }];
+  const Harness = () => {
+    const [changes, setChanges] = useState(0);
+    return (
+      <>
+        <span>Changes: {changes}</span>
+        <EditableTable
+          clearAllFiltersLabel='Clear'
+          enableEditing
+          data={data}
+          columns={[
+            {
+              id: 'name',
+              header: 'Name',
+              accessorKey: 'name',
+              editConfig: {
+                editVariant: 'custom',
+                customEditComponent: () => (
+                  <input
+                    aria-label='Name editor'
+                    defaultValue=''
+                    onChange={() => setChanges((previous) => previous + 1)}
+                  />
+                ),
+              },
+            },
+          ]}
+        />
+      </>
+    );
+  };
+  render(<Harness />);
+  fireEvent.doubleClick(screen.getByText('Alpha'));
+  const input = screen.getByRole('textbox', { name: 'Name editor' });
+  input.focus();
+  fireEvent.change(input, { target: { value: '4' } });
+  expect(screen.getByRole('textbox', { name: 'Name editor' })).toBe(input);
+  expect(input).toHaveFocus();
+  expect(input).toHaveValue('4');
+  fireEvent.change(input, { target: { value: '40' } });
+  expect(input).toHaveFocus();
+  expect(input).toHaveValue('40');
+  expect(screen.getByText('Changes: 2')).toBeInTheDocument();
+});
 
 const deferred = () => {
   let resolve!: () => void;
