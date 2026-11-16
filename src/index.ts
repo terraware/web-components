@@ -72,6 +72,15 @@ export type {
   EditableTableColumn,
   EditableTableProps,
 } from './components/EditableTable';
+export type { TableSettings, TableSettingsColumn } from './components/EditableTable/tableSettings';
+export {
+  getTableSettings,
+  getInitialTableSettings,
+  applyTableSettings,
+  getTableColumns,
+  getVisibleTableColumns,
+  isDataColumnId,
+} from './components/EditableTable/tableSettings';
 export type { EnhancedTableDetailsRow, RendererProps, TableColumnType, TableRowType, SortOrder };
 export type { FormButton } from './components/FormBottomBar';
 export type { PhotoChooserErrorType, PhotoChooserProps } from './components/PhotoChooser';
