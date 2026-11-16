@@ -34,9 +34,7 @@ const EditableCellV2 = <TData extends object>({ cell, column, onClose }: Props<T
     setIsSaving(true);
     setFailed(false);
     try {
-      if (nextValue !== (cell.getValue() ?? '')) {
-        await config?.onSave?.(cell.row.original, nextValue, column.id);
-      }
+      await config?.onSave?.(cell.row.original, nextValue, column.id);
       onClose();
     } catch {
       finished.current = false;
@@ -49,7 +47,7 @@ const EditableCellV2 = <TData extends object>({ cell, column, onClose }: Props<T
   return (
     <Box onClick={(event) => event.stopPropagation()} onDoubleClick={(event) => event.stopPropagation()}>
       {config?.editVariant === 'custom' && config.customEditComponent ? (
-        <config.customEditComponent {...cell.getContext()} save={save} cancel={cancel} isSaving={isSaving} />
+        config.customEditComponent({ ...cell.getContext(), save, cancel, isSaving })
       ) : (
         <TextField
           autoFocus
