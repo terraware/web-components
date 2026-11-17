@@ -82,3 +82,26 @@ test('partial apply preserves omitted settings and accepts explicit empty values
     columnVisibility: {},
   });
 });
+
+test('definition columns contain only leaves in definition order despite grouping and reordering', () => {
+  const { result } = renderHook(() =>
+    useMaterialReactTable({
+      columns: [
+        {
+          id: 'group',
+          header: 'Group',
+          columns: [
+            { id: 'a', accessorKey: 'a', header: 'A' },
+            { id: 'nested', header: 'Nested', columns: [{ id: 'b', accessorKey: 'b', header: 'B' }] },
+          ],
+        },
+        { id: 'c', accessorKey: 'c', header: 'C' },
+      ],
+      data: [{ a: 'A', b: 'B', c: 'C' }],
+      enableColumnOrdering: true,
+      initialState: { columnOrder: ['c', 'b', 'a'], columnVisibility: { a: false } },
+    })
+  );
+  expect(getTableColumns(result.current, 'definition').map(({ id }) => id)).toEqual(['a', 'b', 'c']);
+  expect(getTableColumns(result.current, 'display').map(({ id }) => id)).toEqual(['c', 'b', 'a']);
+});
