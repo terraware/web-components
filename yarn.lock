@@ -4920,15 +4920,10 @@ make-dir@^4.0.0:
   dependencies:
     semver "^7.5.3"
 
-mapbox-gl@*:
+mapbox-gl@*, mapbox-gl@~3.33.0:
   version "3.33.0"
   resolved "https://registry.yarnpkg.com/mapbox-gl/-/mapbox-gl-3.33.0.tgz#1b38dd38b6d371d037469598e3089a27e61b88bd"
   integrity sha512-2HpIrVedccHedolZyMVG/7FXdpgmsLTENgEDsX71x3/gKDGfYMf1FCRY0prntknkn/JXcraUKXlBTv7vkr0EXg==
-
-mapbox-gl@^3.35.0:
-  version "3.35.0"
-  resolved "https://registry.yarnpkg.com/mapbox-gl/-/mapbox-gl-3.35.0.tgz#b8fbd1c5d53ffe39a601061c8c4332ab41af3fbf"
-  integrity sha512-kMe3klYmwU8Lw9kPU2tB/AKDcYUfPrhkQU/M67FiYgFDn7rCBllLU4XbUhnUoRjPyIaB7HVT63EO8jbzhoKGMA==
 
 marked@^18.2.1:
   version "18.2.1"
