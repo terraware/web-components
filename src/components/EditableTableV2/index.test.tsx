@@ -213,7 +213,7 @@ test('persists filters and tolerates corrupt storage', () => {
   render(<EditableTableV2 {...props} />);
   expect(rowNames()).toEqual(['Zebra']);
   fireEvent.click(screen.getByText('Clear'));
-  expect(localStorage.getItem('table_columnFilters')).toBeNull();
+  expect(localStorage.getItem('table_columnFilters')).toBe('[]');
 });
 
 test('supports custom renderers, custom editors and row clicks', async () => {

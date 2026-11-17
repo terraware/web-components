@@ -70,14 +70,26 @@ const isActiveFilter = (filter: { value: unknown }) => {
   return values.some((value) => value !== null && value !== undefined && value !== '');
 };
 
-const readFilters = (storageKey?: string): ColumnFiltersState => {
+const readFilters = (storageKey?: string): ColumnFiltersState | undefined => {
   try {
-    const saved: unknown = storageKey ? JSON.parse(localStorage.getItem(`${storageKey}_columnFilters`) ?? '[]') : [];
-    return Array.isArray(saved)
-      ? saved.filter((filter) => filter && typeof filter.id === 'string' && isActiveFilter(filter))
-      : [];
+    const saved: unknown = storageKey
+      ? JSON.parse(localStorage.getItem(`${storageKey}_columnFilters`) ?? 'null')
+      : null;
+    if (
+      Array.isArray(saved) &&
+      saved.every(
+        (filter: unknown): filter is ColumnFiltersState[number] =>
+          typeof filter === 'object' &&
+          filter !== null &&
+          'id' in filter &&
+          typeof filter.id === 'string' &&
+          'value' in filter
+      )
+    ) {
+      return saved.filter(isActiveFilter);
+    }
   } catch {
-    return [];
+    return undefined;
   }
 };
 
@@ -206,11 +218,14 @@ const EditableTableV2 = <TData extends object>({
   const strings = useStrings();
   const theme = useTheme();
   const [editingCell, setEditingCell] = useState<{ id: string } | null>(null);
-  const [columnFilters, setColumnFilters] = useState(() => readFilters(stickyFilters ? storageKey : undefined));
+  const [initialColumnFilters] = useState(() => tableOptions?.initialState?.columnFilters ?? []);
+  const [columnFilters, setColumnFilters] = useState(
+    () => readFilters(stickyFilters ? storageKey : undefined) ?? initialColumnFilters
+  );
 
   useEffect(() => {
-    setColumnFilters(readFilters(stickyFilters ? storageKey : undefined));
-  }, [stickyFilters, storageKey]);
+    setColumnFilters(readFilters(stickyFilters ? storageKey : undefined) ?? initialColumnFilters);
+  }, [stickyFilters, storageKey, initialColumnFilters]);
 
   const tableColumns = useMemo<ColumnDef<typeof editableTableFeatures, TData>[]>(
     () =>
@@ -348,11 +363,7 @@ const EditableTableV2 = <TData extends object>({
         setColumnFilters((previous) => {
           const next = typeof updater === 'function' ? updater(previous) : updater;
           try {
-            if (next.some(isActiveFilter)) {
-              localStorage.setItem(`${storageKey}_columnFilters`, JSON.stringify(next.filter(isActiveFilter)));
-            } else {
-              localStorage.removeItem(`${storageKey}_columnFilters`);
-            }
+            localStorage.setItem(`${storageKey}_columnFilters`, JSON.stringify(next.filter(isActiveFilter)));
           } catch {
             // Tables remain usable when browser storage is unavailable.
           }
