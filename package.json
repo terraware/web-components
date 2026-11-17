@@ -79,7 +79,7 @@
     "@mui/icons-material": "^7.3.11",
     "@mui/material": "^7.3.11",
     "@mui/x-date-pickers": "^8.29.6",
-    "@playwright/test": "^1.65.1",
+    "@playwright/test": "^1.64.1",
     "@rsbuild/core": "^2.3.3",
     "@rsbuild/plugin-react": "^2.1.0",
     "@rsbuild/plugin-sass": "^2.0.1",
