@@ -35,13 +35,16 @@ test.each([
         stickyFilters
         storageKey={storageKey}
         tableOptions={{ initialState: { columnFilters: [{ id: 'name', value: 'Alpha' }] } }}
+        renderToolbarInternalActions={({ table }) => (
+          <button onClick={() => table.getColumn('name')?.setFilterValue('Beta')}>Filter Beta</button>
+        )}
       />
     );
     const rows = () => screen.getAllByRole('cell').map((cell) => cell.textContent);
     const view = render(table());
     expect(rows()).toEqual(expected);
     if (scenario === 'missing') {
-      fireEvent.change(screen.getByLabelText('Filter: Name'), { target: { value: 'Beta' } });
+      fireEvent.click(screen.getByRole('button', { name: 'Filter Beta' }));
       view.rerender(table());
       expect(rows()).toEqual(['Beta']);
       fireEvent.click(screen.getByRole('button', { name: 'Clear all' }));
