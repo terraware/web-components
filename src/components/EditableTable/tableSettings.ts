@@ -121,15 +121,17 @@ export const getTableColumns = <TData extends MRT_RowData>(
   order: 'definition' | 'display'
 ): TableSettingsColumn[] => {
   if (isMrtTable(table)) {
-    return (order === 'definition'
-      ? table.getAllFlatColumns().filter((column) => !column.columns?.length)
-      : table.getAllLeafColumns()
+    return (
+      order === 'definition'
+        ? table.getAllFlatColumns().filter((column) => !column.columns?.length)
+        : table.getAllLeafColumns()
     ).map(toSettingsColumn);
   }
 
-  return (order === 'definition'
-    ? table.getAllFlatColumns().filter((column) => !column.columns?.length)
-    : table.getAllLeafColumns()
+  return (
+    order === 'definition'
+      ? table.getAllFlatColumns().filter((column) => !column.columns?.length)
+      : table.getAllLeafColumns()
   ).map((column) => ({
     id: column.id,
     header: typeof column.columnDef.header === 'string' ? column.columnDef.header : column.id,
