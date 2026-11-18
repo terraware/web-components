@@ -68,6 +68,7 @@ export type EditableTableOptionsV2<TData extends object> = Partial<
 };
 export type EditableTableCellContextV2<TData extends object> = EditableTableCellContext<TData> & {
   table?: EditableTableInstance<TData>;
+  renderedCellValue?: ReactNode;
 };
 
 export type EditableTableEditContextV2<TData extends object> = EditableTableEditContext<TData> &
@@ -80,6 +81,8 @@ export type EditableTableColumnV2<TData extends object> = Omit<
   'Cell' | 'enableEditing' | 'editConfig'
 > & {
   enableSorting?: boolean;
+  enableGlobalFilter?: boolean;
+  enableFilterMatchHighlighting?: boolean;
   enableEditing?: boolean | Renderer<{ original: TData; id: string }, boolean>;
   Cell?: Renderer<EditableTableCellContextV2<TData>>;
   sortFn?: ColumnDef<Features, TData>['sortFn'];

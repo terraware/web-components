@@ -24,6 +24,7 @@
     "csv-parse": "^7.0.0",
     "embla-carousel-react": "^8.6.0",
     "geojson": "^0.5.0",
+    "highlight-words": "2.0.0",
     "luxon": "^3.3.0",
     "marked": "^18.1.1",
     "material-react-table": "^3.2.1",
