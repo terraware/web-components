@@ -3,7 +3,7 @@ import React, { type JSX, KeyboardEventHandler, useState } from 'react';
 import { Box, SxProps } from '@mui/material';
 import { DesktopDatePicker, DesktopDateTimePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterLuxon } from '@mui/x-date-pickers/AdapterLuxon';
-import { DateTime, Settings } from 'luxon';
+import { DateTime } from 'luxon';
 
 import { DateType, getDate, tz } from '../../utils/date';
 import Icon from '../Icon/Icon';
@@ -66,7 +66,7 @@ export default function DatePicker(props: Props): JSX.Element {
   const [minDateTime, setMinDateTime] = useState<DateTime | null>(initializeDate(props.minDate, props.defaultTimeZone));
   const [maxDateTime, setMaxDateTime] = useState<DateTime | null>(initializeDate(props.maxDate, props.defaultTimeZone));
   const locale = props.locale ?? 'en';
-  Settings.defaultZone = tz(props.defaultTimeZone);
+  const timezone = tz(props.defaultTimeZone);
 
   React.useEffect(() => {
     setTemporalValue((prev) => {
@@ -117,6 +117,7 @@ export default function DatePicker(props: Props): JSX.Element {
               }
             }}
             onError={props.onError}
+            timezone={timezone}
             slotProps={{
               textField: {
                 sx: {
@@ -163,6 +164,7 @@ export default function DatePicker(props: Props): JSX.Element {
               }
             }}
             onError={props.onError}
+            timezone={timezone}
             slotProps={{
               textField: {
                 sx: {
