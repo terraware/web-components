@@ -3,7 +3,9 @@ import React, { CSSProperties, ReactNode, useMemo, useState } from 'react';
 import { ArrowDownward, SyncAlt } from '@mui/icons-material';
 import {
   Box,
+  InputLabel,
   Paper,
+  Select,
   SxProps,
   Table,
   TableBody,
@@ -302,16 +304,19 @@ const EditableTableV2 = <TData extends object>({
             showFirstButton
             showLastButton
             count={pageCountWithoutRowCount ? -1 : table.getRowCount()}
-            slotProps={
-              pageCountWithoutRowCount
+            slots={{ selectLabel: InputLabel, select: Select }}
+            slotProps={{
+              selectLabel: { sx: { mb: 0, flexShrink: 0 } },
+              select: { sx: { ml: 1, mr: 4, flexShrink: 0 } },
+              ...(pageCountWithoutRowCount
                 ? {
                     actions:
                       theme.direction === 'rtl'
                         ? { previousButton: nextPageButton, firstButton: lastPageButton }
                         : { nextButton: nextPageButton, lastButton: lastPageButton },
                   }
-                : undefined
-            }
+                : {}),
+            }}
             page={table.state.pagination.pageIndex}
             rowsPerPage={table.state.pagination.pageSize}
             rowsPerPageOptions={Array.from(new Set([table.state.pagination.pageSize, 10, 25, 50, 100])).sort(
