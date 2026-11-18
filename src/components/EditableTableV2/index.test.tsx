@@ -253,11 +253,13 @@ test('paginates and renders pinned columns with sticky offsets', () => {
     />
   );
   expect(rowNames()).toEqual(['Zebra']);
+  expect(screen.getByText('1-1 of 2')).toBeVisible();
   expect(screen.getByLabelText('First page')).toBeDisabled();
   expect(screen.getByLabelText('Last page')).toBeEnabled();
   expect(screen.getByText('Zebra').style.position).toBe('');
   fireEvent.click(screen.getByLabelText('Last page'));
   expect(rowNames()).toEqual(['Acacia']);
+  expect(screen.getByText('2-2 of 2')).toBeVisible();
   expect(screen.getByLabelText('Last page')).toBeDisabled();
   expect(screen.getByLabelText('First page')).toBeEnabled();
   expect(getComputedStyle(screen.getByText('Acacia')).position).toBe('sticky');
