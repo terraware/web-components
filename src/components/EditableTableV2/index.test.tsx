@@ -311,7 +311,7 @@ test('toggles search, column filters, density, and fullscreen in the full V2 too
   expect(rowNames().every((name) => name?.startsWith('Carlos_3'))).toBe(true);
   fireEvent.click(screen.getByRole('button', { name: 'Show/Hide filters' }));
   expect(screen.queryByLabelText('Filter: Name')).not.toBeInTheDocument();
-  const cell = screen.getByText('Carlos_3').closest('td')!;
+  const cell = screen.getByRole('cell', { name: 'Carlos_3' });
   expect(getComputedStyle(cell).paddingTop).toBe('16px');
   fireEvent.click(screen.getByRole('button', { name: 'Toggle density' }));
   expect(getComputedStyle(cell).paddingTop).toBe('4px');
@@ -500,11 +500,13 @@ test('paginates and renders pinned columns with sticky offsets', () => {
     />
   );
   expect(rowNames()).toEqual(['Zebra']);
+  expect(screen.getByText('1-1 of 2')).toBeVisible();
   expect(screen.getByLabelText('First page')).toBeDisabled();
   expect(screen.getByLabelText('Last page')).toBeEnabled();
   expect(screen.getByText('Zebra').style.position).toBe('');
   fireEvent.click(screen.getByLabelText('Last page'));
   expect(rowNames()).toEqual(['Acacia']);
+  expect(screen.getByText('2-2 of 2')).toBeVisible();
   expect(screen.getByLabelText('Last page')).toBeDisabled();
   expect(screen.getByLabelText('First page')).toBeEnabled();
   expect(getComputedStyle(screen.getByText('Acacia')).position).toBe('sticky');
