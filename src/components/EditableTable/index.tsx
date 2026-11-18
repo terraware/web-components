@@ -21,6 +21,9 @@ import type { EditableTableEditContext } from './contexts';
 
 export type { EditableTableCellContext, EditableTableEditContext } from './contexts';
 
+const isStoredFilter = (filter: unknown): filter is MRT_ColumnFiltersState[number] =>
+  typeof filter === 'object' && filter !== null && 'id' in filter && typeof filter.id === 'string' && 'value' in filter;
+
 const isActiveFilter = (filter: { id: string; value: unknown }): boolean => {
   if (!filter.value) {
     return false;
@@ -175,21 +178,20 @@ export default function EditableTable<TData extends Record<string, any>>({
       return [];
     }
 
+    const initialFilters = tableOptions.initialState?.columnFilters ?? [];
     try {
       const saved = localStorage.getItem(`${storageKey}_columnFilters`);
       if (saved) {
-        const parsed = JSON.parse(saved);
+        const parsed: unknown = JSON.parse(saved);
 
-        // Filter out any filters with null or empty values
-        return parsed.filter(isActiveFilter);
+        if (Array.isArray(parsed) && parsed.every(isStoredFilter)) {
+          return parsed.filter(isActiveFilter);
+        }
       }
-
-      return [];
     } catch (error) {
       console.error('Error loading column filters:', error);
-
-      return [];
     }
+    return initialFilters;
   });
 
   // Save column filters to localStorage when they change

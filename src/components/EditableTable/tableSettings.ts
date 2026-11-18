@@ -88,7 +88,10 @@ export const getTableColumns = <TData extends MRT_RowData>(
   table: MRT_TableInstance<TData>,
   order: 'definition' | 'display'
 ): TableSettingsColumn[] =>
-  (order === 'definition' ? table.getAllFlatColumns() : table.getAllLeafColumns()).map(toSettingsColumn);
+  (order === 'definition'
+    ? table.getAllFlatColumns().filter((column) => !column.columns?.length)
+    : table.getAllLeafColumns()
+  ).map(toSettingsColumn);
 
 export const getVisibleTableColumns = <TData extends MRT_RowData>(
   table: MRT_TableInstance<TData>
