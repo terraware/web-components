@@ -46,3 +46,16 @@ test('lets custom renderers opt into renderedCellValue and respects highlighting
   rerender(<EditableTableV2 {...props} enableFilterMatchHighlighting={false} />);
   expect(screen.queryByRole('note')).not.toBeInTheDocument();
 });
+
+test('does not search columns disabled by defaultColumn', () => {
+  const props = {
+    columns: [columns[0], { ...columns[1], enableGlobalFilter: true }],
+    data,
+    clearAllFiltersLabel: 'Clear',
+    enableGlobalFilter: true,
+    tableOptions: { defaultColumn: { enableGlobalFilter: false, size: 240 } },
+  };
+  render(<EditableTableV2 {...props} />);
+  fireEvent.change(screen.getByLabelText('Search'), { target: { value: 'Acacia' } });
+  expect(screen.getByText('No records to display')).toBeVisible();
+});
