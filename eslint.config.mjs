@@ -208,5 +208,15 @@ export default tseslint.config(
       'use-isnan': 'error',
       'valid-typeof': 'off',
     },
+  },
+  {
+    files: ['src/components/EditableTableV2/**/*.{ts,tsx}'],
+    languageOptions: {
+      parser: tseslint.parser,
+      parserOptions: { ecmaFeatures: { jsx: true } },
+    },
+    rules: {
+      'no-restricted-imports': ['error', { paths: ['material-react-table'] }],
+    },
   }
 );

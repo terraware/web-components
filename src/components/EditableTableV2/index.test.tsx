@@ -825,7 +825,7 @@ test('filters numeric ranges', () => {
     />
   );
   fireEvent.click(screen.getByRole('button', { name: 'Show/Hide filters' }));
-  fireEvent.change(screen.getByLabelText('Filter: Count Minimum'), { target: { value: '2' } });
+  fireEvent.change(screen.getByLabelText('Filter: Count Min'), { target: { value: '2' } });
   expect(screen.queryByText('1')).not.toBeInTheDocument();
   expect(screen.getByText('3')).toBeInTheDocument();
 });
