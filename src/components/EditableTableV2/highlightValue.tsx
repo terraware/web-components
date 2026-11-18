@@ -9,7 +9,12 @@ export const highlightValue = (value: unknown, query: unknown, matchExactly: boo
   if (!text || !query || !['string', 'number'].includes(typeof value) || !['string', 'number'].includes(typeof query)) {
     return text;
   }
-  const chunks = highlightWords({ text, query: String(query), matchExactly });
+  let chunks: ReturnType<typeof highlightWords>;
+  try {
+    chunks = highlightWords({ text, query: String(query), matchExactly });
+  } catch {
+    return text;
+  }
   if (!chunks.some((chunk) => chunk.match)) {
     return text;
   }
