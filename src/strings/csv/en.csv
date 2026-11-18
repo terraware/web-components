@@ -51,6 +51,7 @@ VR,VR,Virtual Reality
 ZOOM,Zoom,
 TABLE_NO_ROWS,No records to display,
 TABLE_ROWS_PER_PAGE,Rows per page,
+TABLE_OF,of,
 TABLE_NEXT_PAGE,Next page,
 TABLE_PREVIOUS_PAGE,Previous page,
 TABLE_FIRST_PAGE,First page,

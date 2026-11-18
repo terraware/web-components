@@ -20,7 +20,7 @@ import {
 import { alpha, darken, lighten, useTheme } from '@mui/material/styles';
 import { Column, ColumnDef, functionalUpdate, useTable } from '@tanstack/react-table';
 
-import { useStrings } from '../../strings';
+import { getLocale, useStrings } from '../../strings';
 import { toInternalPinning, toPublicPinning } from './pinning';
 import { EditableTableColumnV2, EditableTableInstanceV2, EditableTableOptionsV2, editableTableFeatures } from './types';
 
@@ -252,7 +252,10 @@ const EditableTableV2 = <TData extends object>({
         {enablePagination && enableBottomToolbar && (
           <TablePagination
             component='div'
-            sx={(theme) => ({ boxShadow: `0 1px 2px -1px ${alpha(theme.palette.grey[700], 0.5)} inset` })}
+            sx={(theme) => ({
+              boxShadow: `0 1px 2px -1px ${alpha(theme.palette.grey[700], 0.5)} inset`,
+              '& .MuiTablePagination-displayedRows': { ...theme.typography.body2, color: 'text.primary' },
+            })}
             showFirstButton
             showLastButton
             count={pageCountWithoutRowCount ? -1 : table.getRowCount()}
@@ -275,7 +278,7 @@ const EditableTableV2 = <TData extends object>({
             labelDisplayedRows={({ from, to, count }) =>
               pageCountWithoutRowCount
                 ? `${rows.length ? from : 0}–${rows.length ? from + rows.length - 1 : 0}`
-                : `${from}–${to} / ${count}`
+                : `${from.toLocaleString(getLocale())}-${to.toLocaleString(getLocale())} ${strings.TABLE_OF} ${count.toLocaleString(getLocale())}`
             }
             getItemAriaLabel={(type) =>
               ({
