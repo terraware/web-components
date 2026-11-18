@@ -162,10 +162,12 @@ test('paginates with first, last, next and previous controls', () => {
     />
   );
   expect(rowNames()).toEqual(['Zebra']);
+  expect(screen.getByText('1-1 of 2')).toBeVisible();
   expect(screen.getByLabelText('First page')).toBeDisabled();
   expect(screen.getByLabelText('Last page')).toBeEnabled();
   fireEvent.click(screen.getByLabelText('Last page'));
   expect(rowNames()).toEqual(['Acacia']);
+  expect(screen.getByText('2-2 of 2')).toBeVisible();
   expect(screen.getByLabelText('Last page')).toBeDisabled();
   expect(screen.getByLabelText('First page')).toBeEnabled();
   fireEvent.click(screen.getByLabelText('First page'));

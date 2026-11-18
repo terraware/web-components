@@ -43,16 +43,17 @@ RIGHT_MOUSE,Bouton droit de la souris,d551c809
 SAVE,Sauvegarder,526a3e42
 SHIFT,Maj,4d173d2a
 SWIPE,Glisser,bc0962fa
+TABLE_FIRST_PAGE,Première page,2ba1de3f
+TABLE_LAST_PAGE,Dernière page,6eafe34a
+TABLE_NEXT_PAGE,Page suivante,be0bb188
+TABLE_NO_ROWS,Aucun enregistrement à afficher,eb47076d
+TABLE_OF,de,e444b9b1
+TABLE_PREVIOUS_PAGE,Page précédente,d87b58b7
+TABLE_ROWS_PER_PAGE,Lignes par page,ff461aa5
 TITLE,Titre,a5f8fc0b
 TOUCH_DRAG,Toucher + Glisser,ff6d48d2
 UPLOAD_FILES,Téléverser des fichiers,b98547be
 UPLOAD_FILES_DESCRIPTION,Parcourir ou glisser-déposer des fichiers.,7c4a7822
 VR,RV,98fd7fc5
 ZOOM,Zoom,07b636df
-TABLE_FIRST_PAGE,Première page,2ba1de3f
-TABLE_LAST_PAGE,Dernière page,6eafe34a
-TABLE_NEXT_PAGE,Page suivante,be0bb188
-TABLE_NO_ROWS,Aucun enregistrement à afficher,eb47076d
-TABLE_PREVIOUS_PAGE,Page précédente,d87b58b7
-TABLE_ROWS_PER_PAGE,Lignes par page,ff461aa5
 TABLE_SAVE_ERROR,Impossible d’enregistrer les modifications. Veuillez réessayer.,85668916
