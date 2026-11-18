@@ -44,11 +44,29 @@ SAVE,Sauvegarder,526a3e42
 SHIFT,Maj,4d173d2a
 SWIPE,Glisser,bc0962fa
 TABLE_ALL,Tout,832a8cf5
+TABLE_AND,et,103ce77f
 TABLE_CLEAR_FILTER,Effacer le filtre,5da35d2b
 TABLE_CLEAR_SEARCH,Effacer la recherche,34aba902
 TABLE_FILTER,Filtrer,51b390ee
+TABLE_FILTER_BETWEEN,Entre,7d23c97d
+TABLE_FILTER_BETWEEN_INCLUSIVE,Entre (inclusif),74846fd9
 TABLE_FILTER_BY,Filtrer par {column},0e2b5966
+TABLE_FILTER_CONTAINS,Contient,cbab27e9
+TABLE_FILTER_EMPTY,Vide,8b8c3443
+TABLE_FILTER_ENDS_WITH,Se termine par,4f0d6bed
+TABLE_FILTER_EQUALS,Égal à,8aed0410
+TABLE_FILTER_FUZZY,Approximatif,db99077c
+TABLE_FILTER_GREATER_THAN,Supérieur à,a98feabd
+TABLE_FILTER_GREATER_THAN_OR_EQUAL_TO,Supérieur ou égal à,18e7c1ac
+TABLE_FILTER_INCLUDES,Inclut,5f7dc85f
+TABLE_FILTER_INCLUDES_ALL,Inclut tout,e61f815b
+TABLE_FILTER_LESS_THAN,Inférieur à,a6179185
+TABLE_FILTER_LESS_THAN_OR_EQUAL_TO,Inférieur ou égal à,a8e1b9b5
+TABLE_FILTER_NOT_EMPTY,Non vide,68554d31
+TABLE_FILTER_NOT_EQUALS,Différent de,04559b38
+TABLE_FILTER_STARTS_WITH,Commence par,bc8c4d1d
 TABLE_FILTERED,Filtré,5ce35c5c
+TABLE_FILTERING_BY,Filtrer par {column} - {filterType} {filterValue},0b741750
 TABLE_FIRST_PAGE,Première page,2ba1de3f
 TABLE_LAST_PAGE,Dernière page,6eafe34a
 TABLE_MAX,Max,7b696111
@@ -56,6 +74,7 @@ TABLE_MIN,Min,145ecf8a
 TABLE_NEXT_PAGE,Page suivante,be0bb188
 TABLE_NO_ROWS,Aucun enregistrement à afficher,eb47076d
 TABLE_OF,de,e444b9b1
+TABLE_OR,ou,30885370
 TABLE_PREVIOUS_PAGE,Page précédente,d87b58b7
 TABLE_ROWS_PER_PAGE,Lignes par page,ff461aa5
 TABLE_SAVE_ERROR,Impossible d’enregistrer les modifications. Veuillez réessayer.,85668916

@@ -28,6 +28,7 @@ import { Column, ColumnDef, ColumnFiltersState, functionalUpdate, useTable } fro
 import { getLocale, useStrings } from '../../strings';
 import Button from '../Button/Button';
 import EditableCellV2 from './EditableCellV2';
+import { filterTooltip } from './filterTooltip';
 import { namedFilterFns, namedSortFns } from './functions';
 import { highlightValue } from './highlightValue';
 import { toInternalPinning, toPublicPinning } from './pinning';
@@ -458,7 +459,10 @@ const EditableTableV2 = <TData extends object>({
                     <>
                       {definitions.get(column.id)?.header}
                       {column.getIsFiltered() && (
-                        <Tooltip title={`${strings.TABLE_FILTERED}: ${definitions.get(column.id)?.header}`}>
+                        <Tooltip
+                          placement='top'
+                          title={filterTooltip(definitions.get(column.id)!, column.getFilterValue(), strings)}
+                        >
                           <FilterAlt
                             sx={{ color: 'action.active', ml: '4px', width: '18px', height: '18px' }}
                             role='img'
