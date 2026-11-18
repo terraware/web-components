@@ -46,7 +46,6 @@ import {
 } from '@mui/material';
 import { alpha, darken, lighten, useTheme } from '@mui/material/styles';
 import { Column, ColumnDef, ColumnFiltersState, functionalUpdate, useTable } from '@tanstack/react-table';
-import { MRT_FilterFns, MRT_SortingFns } from 'material-react-table';
 
 import { useStrings } from '../../strings';
 import Button from '../Button/Button';
@@ -59,6 +58,7 @@ import {
   EditableTableToggleGlobalFilterButtonV2,
   EditableTableToolbarRoot,
 } from './ToolbarButtons';
+import { namedFilterFns, namedSortFns } from './functions';
 import { toInternalPinning, toPublicPinning } from './pinning';
 import { EditableTableColumnV2, EditableTableInstanceV2, EditableTableOptionsV2, editableTableFeatures } from './types';
 
@@ -356,7 +356,7 @@ const EditableTableV2 = <TData extends object>({
                 (typeof column.sortingFn === 'function'
                   ? (column.sortingFn as unknown as ColumnDef<typeof editableTableFeatures, TData>['sortFn'])
                   : column.sortingFn && column.sortingFn !== 'auto'
-                    ? (MRT_SortingFns[column.sortingFn as keyof typeof MRT_SortingFns] as unknown as ColumnDef<
+                    ? (namedSortFns[column.sortingFn as keyof typeof namedSortFns] as unknown as ColumnDef<
                         typeof editableTableFeatures,
                         TData
                       >['sortFn'])
@@ -376,13 +376,16 @@ const EditableTableV2 = <TData extends object>({
               return column.filterFn(row.original, id, filterValue);
             }
             if (column.filterFn) {
-              const filter = MRT_FilterFns[column.filterFn] as unknown as (
-                filterRow: typeof row,
-                columnId: string,
-                value: unknown,
-                setMeta: typeof addMeta
-              ) => boolean;
-              return filter(row, id, filterValue, addMeta);
+              const filter = namedFilterFns[column.filterFn];
+              const resolvedValue = filter.resolveFilterValue?.(filterValue) ?? filterValue;
+              return (
+                filter as unknown as (
+                  filterRow: typeof row,
+                  columnId: string,
+                  value: unknown,
+                  setMeta: typeof addMeta
+                ) => boolean
+              )(row, id, resolvedValue, addMeta);
             }
             const value = row.getValue<unknown>(id);
             if (column.filterVariant === 'select') {
@@ -423,7 +426,7 @@ const EditableTableV2 = <TData extends object>({
           {
             autoRemove:
               typeof column.filterFn === 'string'
-                ? (MRT_FilterFns[column.filterFn].autoRemove as (value: unknown) => boolean)
+                ? (namedFilterFns[column.filterFn].autoRemove as (value: unknown) => boolean)
                 : undefined,
           }
         ),
