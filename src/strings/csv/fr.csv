@@ -62,8 +62,8 @@ TABLE_FIRST_PAGE,Première page,2ba1de3f
 TABLE_HIDE_ALL,Tout masquer,b0d973e4
 TABLE_HIDE_COLUMN,Masquer la colonne {column},b4a87c14
 TABLE_LAST_PAGE,Dernière page,6eafe34a
-TABLE_MAX,Maximum,96f88e1f
-TABLE_MIN,Minimum,f2a882fd
+TABLE_MAX,Max,7b696111
+TABLE_MIN,Min,145ecf8a
 TABLE_MOVE_BACK,Déplacer la colonne vers l’arrière,ccaba4fb
 TABLE_MOVE_FORWARD,Déplacer la colonne vers l’avant,a7cfa4d3
 TABLE_NEXT_PAGE,Page suivante,be0bb188
