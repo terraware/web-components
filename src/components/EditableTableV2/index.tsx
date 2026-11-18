@@ -394,9 +394,9 @@ const EditableTableV2 = <TData extends object>({
         meta: { filterVariant: column.filterVariant, filterSelectOptions: column.filterSelectOptions },
         accessorFn:
           column.accessorFn ?? ((row) => (column.accessorKey !== undefined ? row[column.accessorKey] : undefined)),
-        size: column.size,
         enableHiding: column.enableHiding ?? true,
-        enableGlobalFilter: column.enableGlobalFilter,
+        ...(column.size !== undefined ? { size: column.size } : {}),
+        ...(column.enableGlobalFilter !== undefined ? { enableGlobalFilter: column.enableGlobalFilter } : {}),
         enableColumnFilter: !!column.filterVariant,
         ...(column.enableSorting !== undefined
           ? { enableSorting: column.enableSorting }
