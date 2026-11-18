@@ -543,7 +543,7 @@ const TerrawareTheme: ThemeDictionary = {
     'TwClrTxtOnSuccess': '#FFFFFF',
     'TwClrTxtSuccess': '#1C7C3F',
     'TwClrBgWarning': '#FFAB00',
-    'TwClrBgWarningActive': 'B87B00',
+    'TwClrBgWarningActive': '#B87B00',
     'TwClrBgWarningHover': '#DB9300',
     'TwClrBgWarningTertiary': '#FEF6E6',
     'TwClrBrdrWarning': '#FFAB00',
