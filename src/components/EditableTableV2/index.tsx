@@ -29,6 +29,7 @@ import { getLocale, useStrings } from '../../strings';
 import Button from '../Button/Button';
 import EditableCellV2 from './EditableCellV2';
 import { namedFilterFns, namedSortFns } from './functions';
+import { highlightValue } from './highlightValue';
 import { toInternalPinning, toPublicPinning } from './pinning';
 import { EditableTableColumnV2, EditableTableInstanceV2, EditableTableOptionsV2, editableTableFeatures } from './types';
 
@@ -50,6 +51,7 @@ export type EditableTablePropsV2<TData extends object> = {
   enableEditing?: boolean;
   enableSorting?: boolean;
   enableGlobalFilter?: boolean;
+  enableFilterMatchHighlighting?: boolean;
   enableColumnFilters?: boolean;
   stickyFilters?: boolean;
   storageKey?: string;
@@ -201,6 +203,7 @@ const EditableTableV2 = <TData extends object>({
   enableEditing = false,
   enableSorting = true,
   enableGlobalFilter = false,
+  enableFilterMatchHighlighting = true,
   enableColumnFilters = false,
   stickyFilters = false,
   storageKey,
@@ -236,6 +239,7 @@ const EditableTableV2 = <TData extends object>({
         accessorFn:
           column.accessorFn ?? ((row) => (column.accessorKey !== undefined ? row[column.accessorKey] : undefined)),
         size: column.size,
+        enableGlobalFilter: column.enableGlobalFilter,
         enableColumnFilter: !!column.filterVariant,
         ...(column.enableSorting !== undefined
           ? { enableSorting: column.enableSorting }
@@ -541,6 +545,20 @@ const EditableTableV2 = <TData extends object>({
                       (!!editConfig?.onSave ||
                         (editConfig?.editVariant === 'custom' && !!editConfig.customEditComponent));
                     const value = cell.getValue();
+                    const columnFilter = column.getFilterValue();
+                    const highlightColumnFilter =
+                      columnFilter && (!definition.filterVariant || definition.filterVariant === 'text');
+                    const renderedCellValue = highlightValue(
+                      value,
+                      enableFilterMatchHighlighting && definition.enableFilterMatchHighlighting !== false
+                        ? highlightColumnFilter
+                          ? columnFilter
+                          : column.getCanGlobalFilter()
+                            ? table.state.globalFilter
+                            : undefined
+                        : undefined,
+                      highlightColumnFilter ? definition.filterFn !== 'fuzzy' : true
+                    );
                     return (
                       <TableCell
                         key={cell.id}
@@ -577,9 +595,9 @@ const EditableTableV2 = <TData extends object>({
                             onClose={() => setEditingCell((current) => (current === editingCell ? null : current))}
                           />
                         ) : definition.Cell ? (
-                          <definition.Cell {...cell.getContext()} />
+                          <definition.Cell {...cell.getContext()} renderedCellValue={renderedCellValue} />
                         ) : (
-                          String(value ?? '')
+                          renderedCellValue
                         )}
                       </TableCell>
                     );
