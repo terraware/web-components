@@ -8,6 +8,26 @@ import type { EditableTableCellContext, EditableTableEditContext } from '../Edit
 import { EditableTableToolbarContext, applyTableSettings, getTableSettings } from '../EditableTable/tableSettings';
 
 type Item = { name: string; count: number; tags: string[] };
+
+type CallbackOnly<T> = T extends (args: infer Args) => infer Result ? (args: Args) => Result : never;
+
+test('rejects callbacks that require MRT-only instance APIs', () => {
+  const toolbar: NonNullable<EditableTableProps<Item>['renderTopToolbarCustomActions']> = ({ table }) =>
+    table.getState().pagination.pageIndex;
+  const head: CallbackOnly<EditableTableProps<Item>['muiTableHeadCellProps']> = ({ table }) => ({
+    id: String(table.getState().pagination.pageIndex),
+  });
+  const body: CallbackOnly<EditableTableProps<Item>['muiTableBodyCellProps']> = ({ table }) => ({
+    id: String(table.getState().pagination.pageIndex),
+  });
+  // @ts-expect-error MRT-only toolbar callbacks cannot accept a V2 instance.
+  const unsafeToolbar: EditableTablePropsV2<Item>['renderTopToolbarCustomActions'] = toolbar;
+  // @ts-expect-error MRT-only header callbacks cannot accept a V2 instance.
+  const unsafeHead: EditableTablePropsV2<Item>['muiTableHeadCellProps'] = head;
+  // @ts-expect-error MRT-only body callbacks cannot accept a V2 instance.
+  const unsafeBody: EditableTablePropsV2<Item>['muiTableBodyCellProps'] = body;
+  expect([unsafeToolbar, unsafeHead, unsafeBody]).toEqual([toolbar, head, body]);
+});
 const data: Item[] = [
   { name: 'Zebra', count: 1, tags: ['a'] },
   { name: 'Acacia', count: 2, tags: ['b'] },
@@ -68,6 +88,30 @@ test.each([
     data,
     clearAllFiltersLabel: 'Clear',
     enableColumnFilters: true,
+    enableColumnDragging: false,
+    enableColumnActions: true,
+    enableHiding: true,
+    positionGlobalFilter: 'right',
+    showDensityButton: false,
+    showFullScreenButton: false,
+    containerProps: { 'aria-label': 'Shared table' },
+    muiTableHeadCellProps: ({
+      column,
+      table,
+    }: Pick<EditableTableCellContext<Item>, 'column'> & EditableTableToolbarContext<Item>) => ({
+      title: `${column.id}:${getTableSettings(table).columnOrder.length}`,
+    }),
+    muiTableBodyCellProps: ({
+      cell,
+      row,
+      column,
+      table,
+    }: EditableTableCellContext<Item> & EditableTableToolbarContext<Item>) => ({
+      title: `${row.original.name}:${column.id}:${String(cell.getValue())}:${getTableSettings(table).sorting.length}`,
+    }),
+    renderTopToolbarCustomActions: ({ table }: EditableTableToolbarContext<Item>) => (
+      <span>Rows: {table.getRowModel().rows.length}</span>
+    ),
     renderToolbarInternalActions: ({ table }: EditableTableToolbarContext<Item>) => (
       <button
         onClick={() =>
@@ -78,7 +122,9 @@ test.each([
       </button>
     ),
   } satisfies Omit<EditableTablePropsV2<Item>, 'tableOptions'> & Omit<EditableTableProps<Item>, 'tableOptions'>;
-  render(<EditableTableV2 {...props} />);
+  const legacyProps = props satisfies Omit<EditableTableProps<Item>, 'tableOptions'>;
+  const compatibleProps: EditableTablePropsV2<Item> = legacyProps;
+  render(<EditableTableV2 {...compatibleProps} />);
   fireEvent.click(screen.getByRole('button', { name: 'Filter 0' }));
   expect(
     screen
