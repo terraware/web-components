@@ -150,11 +150,11 @@ const EditableTableV2 = <TData extends object>({
   const pageCountWithoutRowCount =
     table.options.manualPagination &&
     table.options.pageCount !== undefined &&
-    table.options.pageCount >= 0 &&
+    table.options.pageCount >= -1 &&
     table.options.rowCount === undefined;
   const nextPageButton = { disabled: !table.getCanNextPage() };
   const lastPageButton = {
-    disabled: !table.getCanNextPage(),
+    disabled: table.getPageCount() < 0 || !table.getCanNextPage(),
     onClick: () => table.setPageIndex(Math.max(0, table.getPageCount() - 1)),
   };
 
