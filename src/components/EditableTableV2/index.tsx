@@ -295,7 +295,10 @@ const EditableTableV2 = <TData extends object>({
               select: { sx: { ml: 1, mr: 4, flexShrink: 0 } },
               ...(pageCountWithoutRowCount
                 ? {
-                    actions: { nextButton: nextPageButton, lastButton: lastPageButton },
+                    actions:
+                      theme.direction === 'rtl'
+                        ? { previousButton: nextPageButton, firstButton: lastPageButton }
+                        : { nextButton: nextPageButton, lastButton: lastPageButton },
                   }
                 : {}),
             }}
