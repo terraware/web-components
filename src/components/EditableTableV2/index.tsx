@@ -473,6 +473,7 @@ const EditableTableV2 = <TData extends object>({
           }
           return next;
         });
+        options.onColumnFiltersChange?.(updater);
       },
     }),
   });
@@ -492,14 +493,19 @@ const EditableTableV2 = <TData extends object>({
     theme.direction
   );
   const rows = table.getRowModel().rows;
+  useEffect(() => {
+    if (editingCell && !rows.some((row) => row.getVisibleCells().some((cell) => cell.id === editingCell.id))) {
+      setEditingCell(null);
+    }
+  }, [editingCell, rows, visibleColumns]);
   const pageCountWithoutRowCount =
     table.options.manualPagination &&
     table.options.pageCount !== undefined &&
-    table.options.pageCount >= 0 &&
+    table.options.pageCount >= -1 &&
     table.options.rowCount === undefined;
   const nextPageButton = { disabled: !table.getCanNextPage() };
   const lastPageButton = {
-    disabled: !table.getCanNextPage(),
+    disabled: table.getPageCount() < 0 || !table.getCanNextPage(),
     onClick: () => table.setPageIndex(Math.max(0, table.getPageCount() - 1)),
   };
   const tableRef = useRef<HTMLTableElement>(null);
@@ -586,7 +592,7 @@ const EditableTableV2 = <TData extends object>({
               boxSizing: 'border-box',
             }}
           >
-            {enableGlobalFilter && (
+            {table.options.enableGlobalFilter && (
               <TextField
                 placeholder={strings.SEARCH}
                 size='small'
