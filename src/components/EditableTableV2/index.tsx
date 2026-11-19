@@ -1,4 +1,4 @@
-import React, { CSSProperties, ReactNode, useMemo } from 'react';
+import React, { CSSProperties, ReactNode, useMemo, useState } from 'react';
 
 import { ArrowDownward, SyncAlt } from '@mui/icons-material';
 import {
@@ -23,6 +23,7 @@ import { alpha, darken, lighten, useTheme } from '@mui/material/styles';
 import { Column, ColumnDef, functionalUpdate, useTable } from '@tanstack/react-table';
 
 import { getLocale, useStrings } from '../../strings';
+import EditableCellV2 from './EditableCellV2';
 import { toInternalPinning, toPublicPinning } from './pinning';
 import { EditableTableColumnV2, EditableTableInstanceV2, EditableTableOptionsV2, editableTableFeatures } from './types';
 
@@ -31,6 +32,7 @@ export type {
   EditableTableCellContextV2,
   EditableTableCellV2,
   EditableTableColumnV2,
+  EditableTableEditContextV2,
   EditableTableInstanceV2,
   EditableTableOptionsV2,
 } from './types';
@@ -39,6 +41,7 @@ export type EditableTablePropsV2<TData extends object> = {
   clearAllFiltersLabel: string;
   columns: EditableTableColumnV2<TData>[];
   data: TData[];
+  enableEditing?: boolean;
   enableSorting?: boolean;
   enablePagination?: boolean;
   enableBottomToolbar?: boolean;
@@ -74,9 +77,17 @@ const UnsortedIcon = (props: React.ComponentProps<typeof SyncAlt>) => (
   <SyncAlt {...props} style={{ ...props.style, transform: 'rotate(-90deg) scaleX(0.9) translateX(-1px)' }} />
 );
 
+const sameRow = <TData extends object>(previous: TData, next: TData) =>
+  previous === next ||
+  (Object.keys(previous).length === Object.keys(next).length &&
+    (Object.keys(previous) as (keyof TData)[]).every(
+      (key) => Object.prototype.hasOwnProperty.call(next, key) && Object.is(previous[key], next[key])
+    ));
+
 const EditableTableV2 = <TData extends object>({
   columns,
   data,
+  enableEditing = false,
   enableSorting = true,
   enablePagination = true,
   enableBottomToolbar = true,
@@ -90,6 +101,7 @@ const EditableTableV2 = <TData extends object>({
 }: EditableTablePropsV2<TData>) => {
   const strings = useStrings();
   const theme = useTheme();
+  const [editingCell, setEditingCell] = useState<{ id: string; original: TData } | null>(null);
   const tableColumns = useMemo<ColumnDef<typeof editableTableFeatures, TData>[]>(
     () =>
       columns.map((column) => ({
@@ -242,17 +254,58 @@ const EditableTableV2 = <TData extends object>({
                   {row.getVisibleCells().map((cell) => {
                     const column = cell.column;
                     const definition = definitions.get(column.id)!;
+                    const editConfig = definition.editConfig;
+                    const canEdit =
+                      (typeof definition.enableEditing === 'function'
+                        ? definition.enableEditing(row)
+                        : (definition.enableEditing ?? enableEditing)) &&
+                      enableEditing &&
+                      (!!editConfig?.onSave ||
+                        (editConfig?.editVariant === 'custom' && !!editConfig.customEditComponent));
                     const value = cell.getValue();
                     return (
                       <TableCell
                         key={cell.id}
+                        tabIndex={canEdit ? 0 : undefined}
+                        onClick={canEdit ? (event) => event.stopPropagation() : undefined}
+                        onDoubleClick={
+                          canEdit ? () => setEditingCell({ id: cell.id, original: row.original }) : undefined
+                        }
+                        onKeyDown={
+                          canEdit
+                            ? (event) => {
+                                if (
+                                  event.target === event.currentTarget &&
+                                  (event.key === 'Enter' || event.key === 'F2')
+                                ) {
+                                  event.preventDefault();
+                                  setEditingCell({ id: cell.id, original: row.original });
+                                }
+                              }
+                            : undefined
+                        }
                         sx={{
                           ...pinnedStyles(column, theme),
                           borderBottom: 'none',
                           bgcolor: rowIndex % 2 === 0 ? 'TwClrBaseGray025' : 'background.paper',
+                          cursor: canEdit ? 'pointer' : 'inherit',
+                          outlineOffset: '-1px',
+                          '&:hover': { outline: canEdit ? '1px solid' : undefined, outlineColor: 'grey.500' },
                         }}
                       >
-                        {definition.Cell ? <definition.Cell {...cell.getContext()} /> : String(value ?? '')}
+                        {editingCell?.id === cell.id &&
+                        (options.getRowId !== undefined || sameRow(editingCell.original, row.original)) ? (
+                          <EditableCellV2
+                            key={cell.id}
+                            cell={cell}
+                            column={definition}
+                            onClose={() => setEditingCell((current) => (current === editingCell ? null : current))}
+                          />
+                        ) : definition.Cell ? (
+                          <definition.Cell {...cell.getContext()} />
+                        ) : (
+                          String(value ?? '')
+                        )}
                       </TableCell>
                     );
                   })}
