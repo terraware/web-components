@@ -66,6 +66,9 @@ import { highlightValue } from './highlightValue';
 import { toInternalPinning, toPublicPinning } from './pinning';
 import { EditableTableColumnV2, EditableTableInstanceV2, EditableTableOptionsV2, editableTableFeatures } from './types';
 
+let fullScreenTableCount = 0;
+let originalBodyOverflow = '';
+
 export type {
   EditableTableColumnPinningV2,
   EditableTableCellV2,
@@ -595,11 +598,17 @@ const EditableTableV2 = <TData extends object>({
         setFullScreen(false);
       }
     };
-    const overflow = document.body.style.overflow;
-    document.body.style.overflow = 'hidden';
+    if (fullScreenTableCount === 0) {
+      originalBodyOverflow = document.body.style.overflow;
+      document.body.style.overflow = 'hidden';
+    }
+    fullScreenTableCount += 1;
     document.addEventListener('keydown', onKeyDown);
     return () => {
-      document.body.style.overflow = overflow;
+      fullScreenTableCount -= 1;
+      if (fullScreenTableCount === 0) {
+        document.body.style.overflow = originalBodyOverflow;
+      }
       document.removeEventListener('keydown', onKeyDown);
     };
   }, [fullScreen]);
