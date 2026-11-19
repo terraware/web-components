@@ -245,6 +245,7 @@ test('paginates with first, last, next and previous controls', () => {
 });
 
 test('persists filters and tolerates corrupt storage', () => {
+  const onColumnFiltersChange = rstest.fn();
   localStorage.setItem('table_columnFilters', 'invalid');
   const props = {
     columns,
@@ -253,14 +254,18 @@ test('persists filters and tolerates corrupt storage', () => {
     enableColumnFilters: true,
     stickyFilters: true,
     storageKey: 'table',
+    tableOptions: { onColumnFiltersChange },
   };
   const view = render(<EditableTableV2 {...props} />);
   fireEvent.change(screen.getByLabelText('Filter: Name'), { target: { value: 'Zebra' } });
+  expect(onColumnFiltersChange).toHaveBeenCalledTimes(1);
+  expect(onColumnFiltersChange).toHaveBeenLastCalledWith(expect.any(Function));
   expect(JSON.parse(localStorage.getItem('table_columnFilters')!)).toEqual([{ id: 'name', value: 'Zebra' }]);
   view.unmount();
   render(<EditableTableV2 {...props} />);
   expect(rowNames()).toEqual(['Zebra']);
   fireEvent.click(screen.getByText('Clear'));
+  expect(onColumnFiltersChange).toHaveBeenCalledTimes(2);
   expect(localStorage.getItem('table_columnFilters')).toBe('[]');
 });
 

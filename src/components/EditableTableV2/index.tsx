@@ -403,6 +403,7 @@ const EditableTableV2 = <TData extends object>({
           }
           return next;
         });
+        options.onColumnFiltersChange?.(updater);
       },
     }),
   });
