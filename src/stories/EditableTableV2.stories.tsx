@@ -3,7 +3,6 @@ import React, { useMemo, useState } from 'react';
 import { StoryFn } from '@storybook/react';
 
 import EditableTableV2, { EditableTableColumnV2 } from '../components/EditableTableV2';
-import EditableTableExportButton from './EditableTableExportButton';
 
 export default { title: 'Editable Table V2', component: EditableTableV2 };
 
