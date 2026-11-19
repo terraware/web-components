@@ -111,11 +111,21 @@ test('removes only the per-column show-all action and avoids a trailing divider'
 });
 
 test.each([false, true])('merges cell props and preserves table interactions (function form: %s)', (functionForm) => {
+  const headRef = React.createRef<HTMLTableCellElement>();
+  const callbackRef = rs.fn((node: HTMLTableCellElement | null) => {
+    headRef.current = node;
+  });
   const onClick = rs.fn();
   const onDoubleClick = rs.fn();
   const onKeyDown = rs.fn();
   const onRowClick = rs.fn();
-  const headProps = { id: 'consumer-head-id', title: 'Custom head', sx: { padding: '3px' }, onClick };
+  const headProps = {
+    id: 'consumer-head-id',
+    title: 'Custom head',
+    sx: { padding: '3px' },
+    onClick,
+    ref: functionForm ? callbackRef : headRef,
+  };
   const bodyProps = { title: 'Custom body', sx: [{ padding: '5px' }], onClick, onDoubleClick, onKeyDown };
   const head = rs.fn(({ column, table }) => {
     expect(table.getColumn(column.id)).toBe(column);
@@ -127,7 +137,7 @@ test.each([false, true])('merges cell props and preserves table interactions (fu
     expect(table.getRowModel().rows).toContain(row);
     return bodyProps;
   });
-  render(
+  const view = render(
     <EditableTableV2
       columns={[{ ...columns[0], editConfig: { onSave: rs.fn() } }, columns[1]]}
       data={data}
@@ -141,6 +151,11 @@ test.each([false, true])('merges cell props and preserves table interactions (fu
     />
   );
   const headers = screen.getAllByRole('columnheader');
+  expect(headRef.current).toBe(headers[1]);
+  if (functionForm) {
+    expect(callbackRef).toHaveBeenCalledWith(headers[0]);
+    expect(callbackRef).toHaveBeenCalledWith(headers[1]);
+  }
   expect(headers[0]).toHaveAttribute('id', 'consumer-head-id');
   expect(headers[0]).toHaveAttribute('data-pinned', 'true');
   expect(headers[1]).not.toHaveAttribute('data-pinned');
@@ -172,6 +187,8 @@ test.each([false, true])('merges cell props and preserves table interactions (fu
     expect(head).not.toHaveBeenCalled();
     expect(body).not.toHaveBeenCalled();
   }
+  view.unmount();
+  expect(headRef.current).toBeNull();
 });
 
 test.each([
