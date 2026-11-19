@@ -1,14 +1,35 @@
-import React, { CSSProperties, ReactNode, useEffect, useMemo, useState } from 'react';
+import React, { ReactNode, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 
-import { ArrowDownward, Close, FilterAlt, Search, SyncAlt } from '@mui/icons-material';
+import {
+  ArrowDownward,
+  ArrowUpward,
+  ClearAll,
+  Close,
+  FilterAlt,
+  FilterList,
+  FilterListOff,
+  MoreVert,
+  PushPin,
+  Search,
+  Sort,
+  SyncAlt,
+  ViewColumn,
+  VisibilityOff,
+} from '@mui/icons-material';
 import {
   Box,
+  Divider,
+  FormControlLabel,
   IconButton,
   InputAdornment,
   InputLabel,
+  ListItemIcon,
+  Menu,
   MenuItem,
+  Button as MuiButton,
   Paper,
   Select,
+  Switch,
   SxProps,
   Table,
   TableBody,
@@ -52,6 +73,11 @@ export type EditableTablePropsV2<TData extends object> = {
   data: TData[];
   enableClearAllFilters?: boolean;
   enableEditing?: boolean;
+  enableColumnOrdering?: boolean;
+  enableColumnActions?: boolean;
+  showColumnsButton?: boolean;
+  enableColumnPinning?: boolean;
+  enableHiding?: boolean;
   enableSorting?: boolean;
   enableGlobalFilter?: boolean;
   enableFilterMatchHighlighting?: boolean;
@@ -100,25 +126,60 @@ const readFilters = (storageKey?: string): ColumnFiltersState | undefined => {
 
 const pinnedStyles = <TData extends object>(
   column: Column<typeof editableTableFeatures, TData>,
-  theme: Theme
-): CSSProperties => {
+  theme: Theme,
+  offsets: Record<string, number>
+) => {
   const position = column.getIsPinned();
+  const background = theme.palette.background.default;
+  const baseBackground = theme.palette.mode === 'dark' ? lighten(background, 0.05) : background;
   return {
     width: column.getSize(),
     minWidth: column.getSize(),
     ...(position && {
-      position: 'sticky',
+      position: 'sticky' as const,
       zIndex: 1,
-      backgroundColor: theme.palette.background.paper,
+      opacity: 0.97,
+      '&::before': {
+        content: '""',
+        position: 'absolute' as const,
+        inset: 0,
+        zIndex: -1,
+        backgroundColor: alpha(darken(baseBackground, theme.palette.mode === 'dark' ? 0.05 : 0.01), 0.97),
+        boxShadow:
+          position === 'start' && column.getIsLastColumn('start')
+            ? `-4px 0 4px -4px ${alpha(theme.palette.grey[700], 0.5)} inset`
+            : position === 'end' && column.getIsFirstColumn('end')
+              ? `4px 0 4px -4px ${alpha(theme.palette.grey[700], 0.5)} inset`
+              : undefined,
+      },
       ...(position === 'start'
-        ? { [theme.direction === 'rtl' ? 'insetInlineEnd' : 'insetInlineStart']: column.getStart('start') }
-        : { [theme.direction === 'rtl' ? 'insetInlineStart' : 'insetInlineEnd']: column.getAfter('end') }),
+        ? {
+            [theme.direction === 'rtl' ? 'insetInlineEnd' : 'insetInlineStart']:
+              offsets[column.id] ?? column.getStart('start'),
+          }
+        : {
+            [theme.direction === 'rtl' ? 'insetInlineStart' : 'insetInlineEnd']:
+              offsets[column.id] ?? column.getAfter('end'),
+          }),
     }),
   };
 };
 
 const UnsortedIcon = (props: React.ComponentProps<typeof SyncAlt>) => (
   <SyncAlt {...props} style={{ ...props.style, transform: 'rotate(-90deg) scaleX(0.9) translateX(-1px)' }} />
+);
+
+const ColumnActionMenuItemV2 = ({
+  icon,
+  children,
+  ...props
+}: React.ComponentProps<typeof MenuItem> & { icon: ReactNode }) => (
+  <MenuItem sx={{ minWidth: '120px', my: 0, py: '6px' }} {...props}>
+    <Box display='flex' alignItems='center'>
+      <ListItemIcon>{icon}</ListItemIcon>
+      {children}
+    </Box>
+  </MenuItem>
 );
 
 const ColumnFilter = <TData extends object>({
@@ -229,6 +290,11 @@ const EditableTableV2 = <TData extends object>({
   data,
   enableClearAllFilters = true,
   enableEditing = false,
+  enableColumnOrdering = false,
+  enableColumnActions = true,
+  showColumnsButton = false,
+  enableColumnPinning = false,
+  enableHiding = true,
   enableSorting = true,
   enableGlobalFilter = false,
   enableFilterMatchHighlighting = true,
@@ -249,6 +315,8 @@ const EditableTableV2 = <TData extends object>({
   const strings = useStrings();
   const theme = useTheme();
   const [editingCell, setEditingCell] = useState<{ id: string; original: TData } | null>(null);
+  const [menuColumnId, setMenuColumnId] = useState<string | null>(null);
+  const [menuAnchor, setMenuAnchor] = useState<HTMLElement | null>(null);
   const [initialColumnFilters] = useState(() => tableOptions?.initialState?.columnFilters ?? []);
   const [columnFilters, setColumnFilters] = useState(
     () => readFilters(stickyFilters ? storageKey : undefined) ?? initialColumnFilters
@@ -371,6 +439,8 @@ const EditableTableV2 = <TData extends object>({
     data,
     enableSorting,
     sortDescFirst: false,
+    enableColumnPinning,
+    enableHiding,
     enableColumnFilters,
     enableGlobalFilter,
     manualPagination: !enablePagination,
@@ -415,6 +485,7 @@ const EditableTableV2 = <TData extends object>({
   };
   const definitions = new Map(columns.map((column) => [column.id, column]));
   const visibleColumns = table.getVisibleLeafColumns();
+  const allColumns = [...table.getStartLeafColumns(), ...table.getCenterLeafColumns(), ...table.getEndLeafColumns()];
   const orderedColumns = physicalColumnOrder(
     table.getStartVisibleLeafColumns(),
     table.getCenterVisibleLeafColumns(),
@@ -437,7 +508,74 @@ const EditableTableV2 = <TData extends object>({
     disabled: table.getPageCount() < 0 || !table.getCanNextPage(),
     onClick: () => table.setPageIndex(Math.max(0, table.getPageCount() - 1)),
   };
+  const tableRef = useRef<HTMLTableElement>(null);
+  const [renderedWidths, setRenderedWidths] = useState<Record<string, number>>({});
+  const visibleColumnIds = JSON.stringify(orderedColumns.map((column) => column.id));
+  const hasPinnedColumns = orderedColumns.some((column) => column.getIsPinned());
+  useLayoutEffect(() => {
+    if (!tableRef.current || !hasPinnedColumns) {
+      return;
+    }
+    const headers = Array.from(tableRef.current.querySelectorAll<HTMLElement>('thead th[data-column-id]'));
+    const measure = () => {
+      const next: Record<string, number> = {};
+      headers.forEach((header) => {
+        const width = header.getBoundingClientRect().width;
+        if (header.dataset.columnId && width > 0) {
+          next[header.dataset.columnId] = width;
+        }
+      });
+      setRenderedWidths((current) =>
+        Object.keys(current).length === Object.keys(next).length &&
+        Object.keys(next).every((id) => current[id] === next[id])
+          ? current
+          : next
+      );
+    };
+    measure();
+    if (typeof ResizeObserver === 'undefined') {
+      return;
+    }
+    const observer = new ResizeObserver(measure);
+    headers.forEach((header) => observer.observe(header));
+    return () => observer.disconnect();
+  }, [visibleColumnIds, hasPinnedColumns]);
+  const pinnedOffsets: Record<string, number> = {};
+  for (const group of [table.getStartVisibleLeafColumns(), [...table.getEndVisibleLeafColumns()].reverse()]) {
+    let offset = 0;
+    for (const column of group) {
+      pinnedOffsets[column.id] = offset;
+      offset += renderedWidths[column.id] ?? column.getSize();
+    }
+  }
+  const controlsEnabled = enableHiding || enableColumnOrdering || enableColumnPinning;
+  const hideableColumns = table.getAllLeafColumns().filter((column) => column.getCanHide());
   const filtersVisible = enableColumnFilters;
+
+  const moveColumn = (id: string, offset: number) => {
+    const index = allColumns.findIndex((column) => column.id === id);
+    const column = allColumns[index];
+    const target = allColumns[index + offset];
+    if (!column || !target || column.getIsPinned() !== target.getIsPinned()) {
+      return;
+    }
+    const swap = (order: string[]) => {
+      const from = order.indexOf(id);
+      const to = order.indexOf(target.id);
+      if (from < 0 || to < 0) {
+        return order;
+      }
+      const next = [...order];
+      [next[from], next[to]] = [next[to], next[from]];
+      return next;
+    };
+    const pinned = column.getIsPinned();
+    if (pinned) {
+      table.setColumnPinning((current) => ({ ...current, [pinned]: swap(current[pinned]) }));
+    } else {
+      table.setColumnOrder(swap(table.getAllLeafColumns().map((column) => column.id)));
+    }
+  };
 
   return (
     <Box minHeight='160px' padding={2} sx={sx}>
@@ -485,10 +623,209 @@ const EditableTableV2 = <TData extends object>({
               <Button label={clearAllFiltersLabel} priority='ghost' size='small' onClick={clearFilters} />
             )}
             {renderToolbarInternalActions?.({ table })}
+            {showColumnsButton && controlsEnabled && (
+              <IconButton
+                aria-label={strings.TABLE_COLUMNS}
+                onClick={(event) => {
+                  setMenuColumnId(null);
+                  setMenuAnchor(event.currentTarget);
+                }}
+              >
+                <ViewColumn />
+              </IconButton>
+            )}
           </Toolbar>
         )}
+        <Menu anchorEl={menuAnchor} open={!!menuAnchor} onClose={() => setMenuAnchor(null)}>
+          {menuColumnId &&
+            table.getColumn(menuColumnId)?.getCanSort() &&
+            [
+              {
+                label: strings.TABLE_CLEAR_SORTING,
+                icon: <ClearAll />,
+                disabled: !table.getColumn(menuColumnId)?.getIsSorted(),
+                action: () => table.getColumn(menuColumnId)?.clearSorting(),
+              },
+              {
+                label: strings.TABLE_SORT_ASCENDING.replace('{column}', definitions.get(menuColumnId)!.header),
+                icon: <Sort sx={{ transform: 'rotate(180deg) scaleX(-1)' }} />,
+                disabled: table.getColumn(menuColumnId)?.getIsSorted() === 'asc',
+                action: () => table.getColumn(menuColumnId)?.toggleSorting(false),
+              },
+              {
+                label: strings.TABLE_SORT_DESCENDING.replace('{column}', definitions.get(menuColumnId)!.header),
+                icon: <Sort />,
+                disabled: table.getColumn(menuColumnId)?.getIsSorted() === 'desc',
+                divider: table.getColumn(menuColumnId)?.getCanFilter() || enableHiding || enableColumnPinning,
+                action: () => table.getColumn(menuColumnId)?.toggleSorting(true),
+              },
+            ].map(({ label, icon, disabled, divider, action }) => (
+              <ColumnActionMenuItemV2
+                key={label}
+                icon={icon}
+                disabled={disabled}
+                divider={divider}
+                onClick={() => {
+                  action();
+                  setMenuAnchor(null);
+                }}
+              >
+                {label}
+              </ColumnActionMenuItemV2>
+            ))}
+          {menuColumnId && table.getColumn(menuColumnId)?.getCanFilter() && (
+            <ColumnActionMenuItemV2
+              icon={<FilterListOff />}
+              disabled={!table.getColumn(menuColumnId)?.getIsFiltered()}
+              onClick={() => {
+                table.getColumn(menuColumnId)?.setFilterValue(undefined);
+                setMenuAnchor(null);
+              }}
+            >
+              {strings.CLEAR_FILTER}
+            </ColumnActionMenuItemV2>
+          )}
+          {menuColumnId && table.getColumn(menuColumnId)?.getCanFilter() && (
+            <ColumnActionMenuItemV2 icon={<FilterList />} disabled divider={enableHiding || enableColumnPinning}>
+              {strings.FILTER_BY_COLUMN.replace('{column}', definitions.get(menuColumnId)!.header)}
+            </ColumnActionMenuItemV2>
+          )}
+          {menuColumnId &&
+            enableColumnPinning &&
+            (
+              [
+                { label: strings.TABLE_PIN_LEFT, direction: 'start', rotation: '90deg' },
+                { label: strings.TABLE_PIN_RIGHT, direction: 'end', rotation: '-90deg' },
+                { label: strings.TABLE_UNPIN, direction: false, rotation: '0deg' },
+              ] as const
+            ).map(({ label, direction, rotation }) => (
+              <ColumnActionMenuItemV2
+                key={label}
+                icon={<PushPin sx={{ transform: `rotate(${rotation})` }} />}
+                disabled={
+                  !table.getColumn(menuColumnId)?.getCanPin() ||
+                  table.getColumn(menuColumnId)?.getIsPinned() === direction
+                }
+                divider={direction === false && enableHiding}
+                onClick={() => {
+                  table.getColumn(menuColumnId)?.pin(direction);
+                  setMenuAnchor(null);
+                }}
+              >
+                {label}
+              </ColumnActionMenuItemV2>
+            ))}
+          {menuColumnId && enableHiding && (
+            <ColumnActionMenuItemV2
+              icon={<VisibilityOff />}
+              disabled={
+                !table.getColumn(menuColumnId)?.getCanHide() ||
+                (!(enableTopToolbar && showColumnsButton) && orderedColumns.length === 1)
+              }
+              onClick={() => {
+                table.getColumn(menuColumnId)?.toggleVisibility(false);
+                setMenuAnchor(null);
+              }}
+            >
+              {strings.TABLE_HIDE_COLUMN.replace('{column}', definitions.get(menuColumnId)!.header)}
+            </ColumnActionMenuItemV2>
+          )}
+          {menuColumnId && enableHiding && (
+            <ColumnActionMenuItemV2
+              icon={<ViewColumn />}
+              disabled={table.getAllLeafColumns().every((column) => column.getIsVisible() || !column.getCanHide())}
+              onClick={() => {
+                table
+                  .getAllLeafColumns()
+                  .filter((column) => column.getCanHide())
+                  .forEach((column) => column.toggleVisibility(true));
+                setMenuAnchor(null);
+              }}
+            >
+              {strings.TABLE_SHOW_ALL_COLUMNS}
+            </ColumnActionMenuItemV2>
+          )}
+          {!menuColumnId && enableHiding && (
+            <Box display='flex' justifyContent='space-between' px={1} pb={1}>
+              <MuiButton
+                disabled={!hideableColumns.some((column) => column.getIsVisible())}
+                onClick={() => hideableColumns.forEach((column) => column.toggleVisibility(false))}
+              >
+                {strings.TABLE_HIDE_ALL}
+              </MuiButton>
+              <MuiButton
+                disabled={hideableColumns.every((column) => column.getIsVisible())}
+                onClick={() => hideableColumns.forEach((column) => column.toggleVisibility(true))}
+              >
+                {strings.TABLE_SHOW_ALL}
+              </MuiButton>
+            </Box>
+          )}
+          {!menuColumnId && controlsEnabled && <Divider />}
+          {allColumns.map(
+            (column, index) =>
+              !menuColumnId &&
+              controlsEnabled && (
+                <MenuItem key={column.id} disableRipple sx={{ my: 0, py: '6px', pl: '16px' }}>
+                  <FormControlLabel
+                    label={definitions.get(column.id)?.header}
+                    slotProps={{ typography: { sx: { mb: 0 } } }}
+                    control={
+                      <Switch
+                        checked={column.getIsVisible()}
+                        disabled={
+                          !enableHiding ||
+                          !column.getCanHide() ||
+                          (!(enableTopToolbar && (showColumnsButton || renderToolbarInternalActions)) &&
+                            column.getIsVisible() &&
+                            orderedColumns.length === 1)
+                        }
+                        onChange={column.getToggleVisibilityHandler()}
+                      />
+                    }
+                  />
+                  {enableColumnOrdering && (
+                    <>
+                      <IconButton
+                        aria-label={`${strings.TABLE_MOVE_BACK}: ${definitions.get(column.id)?.header}`}
+                        disabled={allColumns[index - 1]?.getIsPinned() !== column.getIsPinned()}
+                        onClick={() => moveColumn(column.id, -1)}
+                      >
+                        <ArrowUpward />
+                      </IconButton>
+                      <IconButton
+                        aria-label={`${strings.TABLE_MOVE_FORWARD}: ${definitions.get(column.id)?.header}`}
+                        disabled={allColumns[index + 1]?.getIsPinned() !== column.getIsPinned()}
+                        onClick={() => moveColumn(column.id, 1)}
+                      >
+                        <ArrowDownward />
+                      </IconButton>
+                    </>
+                  )}
+                  {enableColumnPinning && (
+                    <TextField
+                      select
+                      size='small'
+                      label={strings.TABLE_PIN}
+                      disabled={!column.getCanPin()}
+                      value={column.getIsPinned() === 'start' ? 'left' : column.getIsPinned() === 'end' ? 'right' : ''}
+                      onChange={(event) =>
+                        column.pin(
+                          event.target.value === 'left' ? 'start' : event.target.value === 'right' ? 'end' : false
+                        )
+                      }
+                    >
+                      <MenuItem value=''>{strings.TABLE_UNPIN}</MenuItem>
+                      <MenuItem value='left'>{strings.TABLE_PIN_LEFT}</MenuItem>
+                      <MenuItem value='right'>{strings.TABLE_PIN_RIGHT}</MenuItem>
+                    </TextField>
+                  )}
+                </MenuItem>
+              )
+          )}
+        </Menu>
         <TableContainer {...containerProps}>
-          <Table sx={{ minWidth: table.getTotalSize() }}>
+          <Table ref={tableRef} sx={{ minWidth: table.getTotalSize() }}>
             <TableHead>
               <TableRow>
                 {orderedColumns.map((column) => {
@@ -513,9 +850,10 @@ const EditableTableV2 = <TData extends object>({
                   return (
                     <TableCell
                       key={column.id}
+                      data-column-id={column.id}
                       sortDirection={column.getIsSorted() || false}
-                      sx={{
-                        ...pinnedStyles(column, theme),
+                      sx={(theme) => ({
+                        ...pinnedStyles(column, theme, pinnedOffsets),
                         bgcolor: 'background.paper',
                         fontWeight: 'bold',
                         p: 2,
@@ -523,7 +861,7 @@ const EditableTableV2 = <TData extends object>({
                         pb: filtersVisible ? '6.4px' : '9.6px',
                         verticalAlign: 'top',
                         '&:hover .MuiIconButton-root': { opacity: 1 },
-                      }}
+                      })}
                     >
                       <Box display='flex' alignItems='center' sx={{ minHeight: '24px' }}>
                         {column.getCanSort() ? (
@@ -547,6 +885,27 @@ const EditableTableV2 = <TData extends object>({
                           </TableSortLabel>
                         ) : (
                           header
+                        )}
+                        {enableColumnActions && (column.getCanSort() || column.getCanFilter() || controlsEnabled) && (
+                          <IconButton
+                            size='small'
+                            sx={{
+                              height: '2rem',
+                              width: '2rem',
+                              m: '-8px -4px',
+                              opacity: 0.3,
+                              transition: 'all 150ms',
+                            }}
+                            aria-label={`${strings.TABLE_COLUMN_ACTIONS}: ${definitions.get(column.id)?.header}`}
+                            aria-haspopup='menu'
+                            aria-expanded={!!menuAnchor && menuColumnId === column.id}
+                            onClick={(event) => {
+                              setMenuColumnId(column.id);
+                              setMenuAnchor(event.currentTarget);
+                            }}
+                          >
+                            <MoreVert sx={{ transform: 'scale(0.9)' }} />
+                          </IconButton>
                         )}
                       </Box>
                       {filtersVisible && column.getCanFilter() && (
@@ -626,14 +985,14 @@ const EditableTableV2 = <TData extends object>({
                               }
                             : undefined
                         }
-                        sx={{
-                          ...pinnedStyles(column, theme),
+                        sx={(theme) => ({
+                          ...pinnedStyles(column, theme, pinnedOffsets),
                           borderBottom: 'none',
                           bgcolor: rowIndex % 2 === 0 ? 'TwClrBaseGray025' : 'background.paper',
                           cursor: canEdit ? 'pointer' : 'inherit',
                           outlineOffset: '-1px',
                           '&:hover': { outline: canEdit ? '1px solid' : undefined, outlineColor: 'grey.500' },
-                        }}
+                        })}
                       >
                         {editingCell?.id === cell.id &&
                         (options.getRowId !== undefined || sameRow(editingCell.original, row.original)) ? (

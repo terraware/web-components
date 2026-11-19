@@ -22,7 +22,7 @@ type RowData = {
   previousStudies?: string;
 };
 
-const EditableTableWithState = ({ rowCount }: { rowCount: number }) => {
+const EditableTableWithState = ({ rowCount, pinnedColumns = false }: { rowCount: number; pinnedColumns?: boolean }) => {
   const [data, setData] = useState<RowData[]>(() => {
     return Array(rowCount)
       .fill(null)
@@ -183,7 +183,14 @@ const EditableTableWithState = ({ rowCount }: { rowCount: number }) => {
       enableEditing={true}
       enableSorting={true}
       enablePagination={true}
-      initialSorting={[{ id: 'name', desc: false }]}
+      initialSorting={pinnedColumns ? undefined : [{ id: 'name', desc: false }]}
+      enableColumnPinning={pinnedColumns}
+      sx={pinnedColumns ? { maxWidth: 900 } : undefined}
+      tableOptions={
+        pinnedColumns
+          ? { initialState: { columnPinning: { left: ['name', 'middlename'], right: ['pets', 'previousStudies'] } } }
+          : undefined
+      }
     />
   );
 };
@@ -195,6 +202,8 @@ export const Default = Template.bind({});
 Default.args = {
   rowCount: 50,
 };
+
+export const WithPinnedColumns = () => <EditableTableWithState rowCount={50} pinnedColumns />;
 
 export const WithFilters: Story = () => {
   const rowCount = 50;

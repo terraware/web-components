@@ -43,14 +43,46 @@ RIGHT_MOUSE,Bouton droit de la souris,d551c809
 SAVE,Sauvegarder,526a3e42
 SHIFT,Maj,4d173d2a
 SWIPE,Glisser,bc0962fa
+TITLE,Titre,a5f8fc0b
+TOUCH_DRAG,Toucher + Glisser,ff6d48d2
+UPLOAD_FILES,Téléverser des fichiers,b98547be
+UPLOAD_FILES_DESCRIPTION,Parcourir ou glisser-déposer des fichiers.,7c4a7822
+VR,RV,98fd7fc5
+ZOOM,Zoom,07b636df
 ALL,Tout,832a8cf5
-AND,et,103ce77f
 CLEAR_FILTER,Effacer le filtre,5da35d2b
 CLEAR_SEARCH,Effacer la recherche,34aba902
+TABLE_CLEAR_SORTING,Effacer le tri,9879810b
+TABLE_COLUMN_ACTIONS,Actions de colonne,119371ac
+TABLE_COLUMNS,Colonnes,ee2f54ee
 FILTER,Filtrer,51b390ee
+FILTER_BY_COLUMN,Filtrer par {column},0e2b5966
+FILTERED,Filtré,5ce35c5c
+FIRST_PAGE,Première page,2ba1de3f
+TABLE_HIDE_ALL,Tout masquer,b0d973e4
+TABLE_HIDE_COLUMN,Masquer la colonne {column},b4a87c14
+LAST_PAGE,Dernière page,6eafe34a
+MAX,Max,7b696111
+MIN,Min,145ecf8a
+TABLE_MOVE_BACK,Déplacer la colonne vers l’arrière,ccaba4fb
+TABLE_MOVE_FORWARD,Déplacer la colonne vers l’avant,a7cfa4d3
+NEXT_PAGE,Page suivante,be0bb188
+NO_RECORDS_TO_DISPLAY,Aucun enregistrement à afficher,eb47076d
+TABLE_PIN,Épingler la colonne,f25241a0
+TABLE_PIN_RIGHT,Épingler à droite,6a0b5260
+TABLE_PIN_LEFT,Épingler à gauche,ef1066fe
+PREVIOUS_PAGE,Page précédente,d87b58b7
+ROWS_PER_PAGE,Lignes par page,ff461aa5
+UNABLE_TO_SAVE_CHANGES_PLEASE_TRY_AGAIN,Impossible d’enregistrer les modifications. Veuillez réessayer.,85668916
+SEARCH,Rechercher,9f30c236
+TABLE_SHOW_ALL,Tout afficher,3208186f
+TABLE_SHOW_ALL_COLUMNS,Afficher toutes les colonnes,2a5e28e5
+TABLE_SORT_ASCENDING,Trier par {column} croissant,a9a8f74e
+TABLE_SORT_DESCENDING,Trier par {column} décroissant,48cf7e0a
+TABLE_UNPIN,Désépinglée,acf61315
+AND,et,103ce77f
 BETWEEN,Entre,7d23c97d
 BETWEEN_INCLUSIVE,Entre (inclusif),74846fd9
-FILTER_BY_COLUMN,Filtrer par {column},0e2b5966
 CONTAINS,Contient,cbab27e9
 EMPTY,Vide,8b8c3443
 ENDS_WITH,Se termine par,4f0d6bed
@@ -65,23 +97,6 @@ LESS_THAN_OR_EQUAL_TO,Inférieur ou égal à,a8e1b9b5
 NOT_EMPTY,Non vide,68554d31
 NOT_EQUALS,Différent de,04559b38
 STARTS_WITH,Commence par,bc8c4d1d
-FILTERED,Filtré,5ce35c5c
 FILTERING_BY_COLUMN_FILTER_TYPE_FILTER_VALUE,Filtrer par {column} - {filterType} {filterValue},0b741750
-FIRST_PAGE,Première page,2ba1de3f
-LAST_PAGE,Dernière page,6eafe34a
-MAX,Max,7b696111
-MIN,Min,145ecf8a
-NEXT_PAGE,Page suivante,be0bb188
-NO_RECORDS_TO_DISPLAY,Aucun enregistrement à afficher,eb47076d
 OF,de,e444b9b1
 OR,ou,30885370
-PREVIOUS_PAGE,Page précédente,d87b58b7
-ROWS_PER_PAGE,Lignes par page,ff461aa5
-UNABLE_TO_SAVE_CHANGES_PLEASE_TRY_AGAIN,Impossible d’enregistrer les modifications. Veuillez réessayer.,85668916
-SEARCH,Rechercher,9f30c236
-TITLE,Titre,a5f8fc0b
-TOUCH_DRAG,Toucher + Glisser,ff6d48d2
-UPLOAD_FILES,Téléverser des fichiers,b98547be
-UPLOAD_FILES_DESCRIPTION,Parcourir ou glisser-déposer des fichiers.,7c4a7822
-VR,RV,98fd7fc5
-ZOOM,Zoom,07b636df
