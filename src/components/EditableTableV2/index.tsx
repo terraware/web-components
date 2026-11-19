@@ -315,7 +315,7 @@ const EditableTableV2 = <TData extends object>({
   const strings = useStrings();
   const theme = useTheme();
   const [editingCell, setEditingCell] = useState<{ id: string; original: TData } | null>(null);
-  const [menuColumnId, setMenuColumnId] = useState<string | null>(null);
+  const [actionMenuColumnId, setMenuColumnId] = useState<string | null>(null);
   const [menuAnchor, setMenuAnchor] = useState<HTMLElement | null>(null);
   const [initialColumnFilters] = useState(() => tableOptions?.initialState?.columnFilters ?? []);
   const [columnFilters, setColumnFilters] = useState(
@@ -484,6 +484,13 @@ const EditableTableV2 = <TData extends object>({
     onClearAllFilters?.();
   };
   const definitions = new Map(columns.map((column) => [column.id, column]));
+  const menuColumnId = actionMenuColumnId && definitions.has(actionMenuColumnId) ? actionMenuColumnId : null;
+  useEffect(() => {
+    if (actionMenuColumnId && !menuColumnId) {
+      setMenuColumnId(null);
+      setMenuAnchor(null);
+    }
+  }, [actionMenuColumnId, menuColumnId]);
   const visibleColumns = table.getVisibleLeafColumns();
   const allColumns = [...table.getStartLeafColumns(), ...table.getCenterLeafColumns(), ...table.getEndLeafColumns()];
   const orderedColumns = physicalColumnOrder(
@@ -636,7 +643,11 @@ const EditableTableV2 = <TData extends object>({
             )}
           </Toolbar>
         )}
-        <Menu anchorEl={menuAnchor} open={!!menuAnchor} onClose={() => setMenuAnchor(null)}>
+        <Menu
+          anchorEl={menuAnchor}
+          open={!!menuAnchor && (!actionMenuColumnId || !!menuColumnId)}
+          onClose={() => setMenuAnchor(null)}
+        >
           {menuColumnId &&
             table.getColumn(menuColumnId)?.getCanSort() &&
             [

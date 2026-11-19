@@ -545,6 +545,21 @@ test('shows unsorted indicators and cycles numeric sorting ascending first', () 
   expect(header).not.toHaveAttribute('aria-sort');
 });
 
+test.each([false, true])('closes actions when their column disappears (no remaining columns: %s)', async (empty) => {
+  const table = (definitions: EditableTableColumnV2<Item>[]) => (
+    <EditableTableV2 columns={definitions} data={data} clearAllFiltersLabel='Clear' />
+  );
+  const view = render(table(columns));
+  fireEvent.click(screen.getByLabelText('Column actions: Count'));
+  expect(screen.getByRole('menuitem', { name: 'Hide Count column' })).toBeInTheDocument();
+  view.rerender(table(empty ? [] : [columns[0]]));
+  await waitFor(() => expect(screen.queryByRole('menu')).not.toBeInTheDocument());
+  view.rerender(table(columns));
+  expect(screen.queryByRole('menu')).not.toBeInTheDocument();
+  fireEvent.click(screen.getByLabelText('Column actions: Count'));
+  expect(screen.getByRole('menuitem', { name: 'Hide Count column' })).toBeInTheDocument();
+});
+
 test('offers per-column sorting and visibility actions without a top toolbar', () => {
   render(<EditableTableV2 columns={columns} data={data} clearAllFiltersLabel='Clear' enableTopToolbar={false} />);
   const actions = () => fireEvent.click(screen.getByLabelText('Column actions: Count'));
