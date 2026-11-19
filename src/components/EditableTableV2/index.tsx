@@ -74,6 +74,9 @@ import { highlightValue } from './highlightValue';
 import { toInternalPinning, toPublicPinning } from './pinning';
 import { EditableTableColumnV2, EditableTableInstanceV2, EditableTableOptionsV2, editableTableFeatures } from './types';
 
+let fullScreenTableCount = 0;
+let originalBodyOverflow = '';
+
 export type {
   EditableTableColumnPinningV2,
   EditableTableCellV2,
@@ -346,7 +349,7 @@ const EditableTableV2 = <TData extends object>({
   const [columnFiltersVisible, setColumnFiltersVisible] = useState(false);
   const [density, setDensity] = useState<number>();
   const [fullScreen, setFullScreen] = useState(false);
-  const [menuColumnId, setMenuColumnId] = useState<string | null>(null);
+  const [actionMenuColumnId, setMenuColumnId] = useState<string | null>(null);
   const [menuAnchor, setMenuAnchor] = useState<HTMLElement | null>(null);
   const [columnsButtonCount, setColumnsButtonCount] = useState(0);
   const registerColumnsButton = useCallback(() => {
@@ -509,6 +512,7 @@ const EditableTableV2 = <TData extends object>({
           }
           return next;
         });
+        options.onColumnFiltersChange?.(updater);
       },
     }),
   });
@@ -519,6 +523,13 @@ const EditableTableV2 = <TData extends object>({
     onClearAllFilters?.();
   };
   const definitions = new Map(columns.map((column) => [column.id, column]));
+  const menuColumnId = actionMenuColumnId && definitions.has(actionMenuColumnId) ? actionMenuColumnId : null;
+  useEffect(() => {
+    if (actionMenuColumnId && !menuColumnId) {
+      setMenuColumnId(null);
+      setMenuAnchor(null);
+    }
+  }, [actionMenuColumnId, menuColumnId]);
   const visibleColumns = table.getVisibleLeafColumns();
   const allColumns = [...table.getStartLeafColumns(), ...table.getCenterLeafColumns(), ...table.getEndLeafColumns()];
   const orderedColumns = physicalColumnOrder(
@@ -528,14 +539,19 @@ const EditableTableV2 = <TData extends object>({
     theme.direction
   );
   const rows = table.getRowModel().rows;
+  useEffect(() => {
+    if (editingCell && !rows.some((row) => row.getVisibleCells().some((cell) => cell.id === editingCell.id))) {
+      setEditingCell(null);
+    }
+  }, [editingCell, rows, visibleColumns]);
   const pageCountWithoutRowCount =
     table.options.manualPagination &&
     table.options.pageCount !== undefined &&
-    table.options.pageCount >= 0 &&
+    table.options.pageCount >= -1 &&
     table.options.rowCount === undefined;
   const nextPageButton = { disabled: !table.getCanNextPage() };
   const lastPageButton = {
-    disabled: !table.getCanNextPage(),
+    disabled: table.getPageCount() < 0 || !table.getCanNextPage(),
     onClick: () => table.setPageIndex(Math.max(0, table.getPageCount() - 1)),
   };
   const tableRef = useRef<HTMLTableElement>(null);
@@ -592,11 +608,17 @@ const EditableTableV2 = <TData extends object>({
         setFullScreen(false);
       }
     };
-    const overflow = document.body.style.overflow;
-    document.body.style.overflow = 'hidden';
+    if (fullScreenTableCount === 0) {
+      originalBodyOverflow = document.body.style.overflow;
+      document.body.style.overflow = 'hidden';
+    }
+    fullScreenTableCount += 1;
     document.addEventListener('keydown', onKeyDown);
     return () => {
-      document.body.style.overflow = overflow;
+      fullScreenTableCount -= 1;
+      if (fullScreenTableCount === 0) {
+        document.body.style.overflow = originalBodyOverflow;
+      }
       document.removeEventListener('keydown', onKeyDown);
     };
   }, [fullScreen]);
@@ -690,7 +712,7 @@ const EditableTableV2 = <TData extends object>({
               boxSizing: 'border-box',
             }}
           >
-            {enableGlobalFilter && globalFilterVisible && (
+            {table.options.enableGlobalFilter && globalFilterVisible && (
               <TextField
                 placeholder={strings.SEARCH}
                 size='small'
@@ -725,7 +747,7 @@ const EditableTableV2 = <TData extends object>({
                 renderToolbarInternalActions({ table })
               ) : (
                 <>
-                  {showGlobalFilterButton && enableGlobalFilter && (
+                  {showGlobalFilterButton && table.options.enableGlobalFilter && (
                     <EditableTableToggleGlobalFilterButtonV2 table={table} />
                   )}
                   {showColumnFiltersButton && enableColumnFilters && (
@@ -743,7 +765,7 @@ const EditableTableV2 = <TData extends object>({
           ids={allColumns.map((column) => column.id)}
           onDragEnd={reorderColumns}
           anchorEl={menuAnchor}
-          open={!!menuAnchor}
+          open={!!menuAnchor && (!actionMenuColumnId || !!menuColumnId)}
           onClose={() => setMenuAnchor(null)}
         >
           {menuColumnId &&

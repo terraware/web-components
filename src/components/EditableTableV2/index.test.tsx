@@ -292,6 +292,34 @@ test('custom density control cycles all padding sizes without the default-button
   }
 });
 
+test.each([false, true])('keeps scroll locked until the last fullscreen table exits (reverse: %s)', (reverse) => {
+  const overflow = document.body.style.overflow;
+  document.body.style.overflow = 'scroll';
+  const table = (
+    <StrictMode>
+      <EditableTableV2 columns={columns} data={data} clearAllFiltersLabel='Clear' showFullScreenButton />
+    </StrictMode>
+  );
+  const first = render(table);
+  const second = render(table);
+  const toggle = (view: typeof first) =>
+    fireEvent.click(within(view.container).getByRole('button', { name: 'Toggle full screen' }));
+  try {
+    toggle(first);
+    toggle(second);
+    expect(document.body.style.overflow).toBe('hidden');
+    const [earlier, later] = reverse ? [second, first] : [first, second];
+    earlier.unmount();
+    expect(document.body.style.overflow).toBe('hidden');
+    toggle(later);
+    expect(document.body.style.overflow).toBe('scroll');
+  } finally {
+    first.unmount();
+    second.unmount();
+    document.body.style.overflow = overflow;
+  }
+});
+
 test('toggles search, column filters, density, and fullscreen in the full V2 toolbar story', () => {
   const view = render(<WithTopToolbar />);
   const wrapper = view.container.firstElementChild!;
@@ -353,6 +381,27 @@ test('sorts and filters rows, and clears global and column filters', () => {
   expect(screen.getByText('No records to display')).toBeInTheDocument();
   fireEvent.click(screen.getByText('Clear'));
   expect(rowNames()).toHaveLength(2);
+});
+
+test.each([false, true])('renders search from the effective global-filter option (%s)', (enabled) => {
+  render(
+    <EditableTableV2
+      columns={columns}
+      data={data}
+      clearAllFiltersLabel='Clear'
+      enableGlobalFilter={!enabled}
+      showGlobalFilterButton
+      tableOptions={{ enableGlobalFilter: enabled }}
+    />
+  );
+  if (enabled) {
+    expect(screen.getByRole('button', { name: 'Show/Hide search' })).toBeInTheDocument();
+    fireEvent.change(screen.getByLabelText('Search'), { target: { value: 'Zebra' } });
+    expect(rowNames()).toEqual(['Zebra']);
+  } else {
+    expect(screen.queryByLabelText('Search')).not.toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: 'Show/Hide search' })).not.toBeInTheDocument();
+  }
 });
 
 test('saves text once on Enter and cancels on Escape', async () => {
@@ -459,7 +508,7 @@ test.each([false, true])('keeps the current editor open when an older save resol
   expect(onSave).toHaveBeenCalledTimes(1);
 });
 
-test('clears the edit session when saving removes the row from view', async () => {
+test.each([false, true])('clears the edit session when its row leaves view (saving: %s)', async (saving) => {
   let resolveSave!: () => void;
   const onSave = rstest.fn(
     () =>
@@ -474,14 +523,19 @@ test('clears the edit session when saving removes the row from view', async () =
   const { rerender } = render(table(data));
   fireEvent.doubleClick(screen.getByText('Zebra'));
   fireEvent.change(screen.getByLabelText('Name'), { target: { value: 'Oak' } });
-  fireEvent.keyDown(screen.getByLabelText('Name'), { key: 'Enter' });
-  expect(onSave).toHaveBeenCalledTimes(1);
+  if (saving) {
+    fireEvent.keyDown(screen.getByLabelText('Name'), { key: 'Enter' });
+    expect(onSave).toHaveBeenCalledTimes(1);
+  }
   rerender(table([]));
   expect(screen.queryByLabelText('Name')).not.toBeInTheDocument();
-  await act(async () => resolveSave());
+  if (saving) {
+    await act(async () => resolveSave());
+  }
   rerender(table(data));
   expect(screen.getByText('Zebra')).toBeInTheDocument();
   expect(screen.queryByLabelText('Name')).not.toBeInTheDocument();
+  expect(onSave).toHaveBeenCalledTimes(saving ? 1 : 0);
 });
 
 test('discards drafts when a positional row is replaced', async () => {
@@ -558,6 +612,7 @@ test('paginates with first, last, next and previous controls', () => {
 });
 
 test('persists filters and tolerates corrupt storage', () => {
+  const onColumnFiltersChange = rstest.fn();
   localStorage.setItem('table_columnFilters', 'invalid');
   const props = {
     columns,
@@ -567,15 +622,19 @@ test('persists filters and tolerates corrupt storage', () => {
     showColumnFiltersButton: true,
     stickyFilters: true,
     storageKey: 'table',
+    tableOptions: { onColumnFiltersChange },
   };
   const view = render(<EditableTableV2 {...props} />);
   fireEvent.click(screen.getByRole('button', { name: 'Show/Hide filters' }));
   fireEvent.change(screen.getByLabelText('Filter: Name'), { target: { value: 'Zebra' } });
+  expect(onColumnFiltersChange).toHaveBeenCalledTimes(1);
+  expect(onColumnFiltersChange).toHaveBeenLastCalledWith(expect.any(Function));
   expect(JSON.parse(localStorage.getItem('table_columnFilters')!)).toEqual([{ id: 'name', value: 'Zebra' }]);
   view.unmount();
   render(<EditableTableV2 {...props} />);
   expect(rowNames()).toEqual(['Zebra']);
   fireEvent.click(screen.getByText('Clear'));
+  expect(onColumnFiltersChange).toHaveBeenCalledTimes(2);
   expect(localStorage.getItem('table_columnFilters')).toBe('[]');
 });
 
@@ -766,6 +825,21 @@ test('shows unsorted indicators and cycles numeric sorting ascending first', () 
   expect(rowNames()).toEqual(['Zebra', 'Acacia']);
   fireEvent.click(screen.getByText('Count'));
   expect(header).not.toHaveAttribute('aria-sort');
+});
+
+test.each([false, true])('closes actions when their column disappears (no remaining columns: %s)', async (empty) => {
+  const table = (definitions: EditableTableColumnV2<Item>[]) => (
+    <EditableTableV2 columns={definitions} data={data} clearAllFiltersLabel='Clear' />
+  );
+  const view = render(table(columns));
+  fireEvent.click(screen.getByLabelText('Column actions: Count'));
+  expect(screen.getByRole('menuitem', { name: 'Hide Count column' })).toBeInTheDocument();
+  view.rerender(table(empty ? [] : [columns[0]]));
+  await waitFor(() => expect(screen.queryByRole('menu')).not.toBeInTheDocument());
+  view.rerender(table(columns));
+  expect(screen.queryByRole('menu')).not.toBeInTheDocument();
+  fireEvent.click(screen.getByLabelText('Column actions: Count'));
+  expect(screen.getByRole('menuitem', { name: 'Hide Count column' })).toBeInTheDocument();
 });
 
 test('offers per-column sorting and visibility actions without a top toolbar', () => {
