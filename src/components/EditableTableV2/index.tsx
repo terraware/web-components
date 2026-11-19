@@ -454,7 +454,7 @@ const EditableTableV2 = <TData extends object>({
               boxSizing: 'border-box',
             }}
           >
-            {enableGlobalFilter && (
+            {table.options.enableGlobalFilter && (
               <TextField
                 placeholder={strings.SEARCH}
                 size='small'

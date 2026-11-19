@@ -43,6 +43,24 @@ test('sorts and filters rows, and clears global and column filters', () => {
   expect(rowNames()).toHaveLength(2);
 });
 
+test.each([false, true])('renders search from the effective global-filter option (%s)', (enabled) => {
+  render(
+    <EditableTableV2
+      columns={columns}
+      data={data}
+      clearAllFiltersLabel='Clear'
+      enableGlobalFilter={!enabled}
+      tableOptions={{ enableGlobalFilter: enabled }}
+    />
+  );
+  if (enabled) {
+    fireEvent.change(screen.getByLabelText('Search'), { target: { value: 'Zebra' } });
+    expect(rowNames()).toEqual(['Zebra']);
+  } else {
+    expect(screen.queryByLabelText('Search')).not.toBeInTheDocument();
+  }
+});
+
 test('saves text once on Enter and cancels on Escape', async () => {
   const onSave = rstest.fn();
   render(
