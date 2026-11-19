@@ -89,6 +89,14 @@ export {
   isMrtTable,
 } from './components/EditableTable/tableSettings';
 export { getColumnPinningV2, setColumnPinningV2, getColumnPinPositionV2 } from './components/EditableTableV2/pinning';
+export {
+  EditableTableToggleGlobalFilterButtonV2,
+  EditableTableToggleFiltersButtonV2,
+  EditableTableShowHideColumnsButtonV2,
+  EditableTableToggleDensePaddingButtonV2,
+  EditableTableToggleFullScreenButtonV2,
+} from './components/EditableTableV2/ToolbarButtons';
+
 export type {
   EditableTableCellV2,
   EditableTableCellContextV2,
