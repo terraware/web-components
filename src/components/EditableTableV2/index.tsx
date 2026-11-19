@@ -1,4 +1,4 @@
-import React, { ReactNode, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
+import React, { ReactNode, useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 
 import {
   ArrowDownward,
@@ -18,6 +18,7 @@ import {
 } from '@mui/icons-material';
 import {
   Box,
+  Checkbox,
   Divider,
   FormControlLabel,
   IconButton,
@@ -51,6 +52,14 @@ import { Column, ColumnDef, ColumnFiltersState, functionalUpdate, useTable } fro
 import { getLocale, useStrings } from '../../strings';
 import Button from '../Button/Button';
 import EditableCellV2 from './EditableCellV2';
+import {
+  EditableTableShowHideColumnsButtonV2,
+  EditableTableToggleDensePaddingButtonV2,
+  EditableTableToggleFiltersButtonV2,
+  EditableTableToggleFullScreenButtonV2,
+  EditableTableToggleGlobalFilterButtonV2,
+  EditableTableToolbarRoot,
+} from './ToolbarButtons';
 import { filterTooltip } from './filterTooltip';
 import { namedFilterFns, namedSortFns } from './functions';
 import { highlightValue } from './highlightValue';
@@ -59,8 +68,8 @@ import { EditableTableColumnV2, EditableTableInstanceV2, EditableTableOptionsV2,
 
 export type {
   EditableTableColumnPinningV2,
-  EditableTableCellContextV2,
   EditableTableCellV2,
+  EditableTableCellContextV2,
   EditableTableColumnV2,
   EditableTableEditContextV2,
   EditableTableInstanceV2,
@@ -76,6 +85,10 @@ export type EditableTablePropsV2<TData extends object> = {
   enableColumnOrdering?: boolean;
   enableColumnActions?: boolean;
   showColumnsButton?: boolean;
+  showGlobalFilterButton?: boolean;
+  showColumnFiltersButton?: boolean;
+  showDensityButton?: boolean;
+  showFullScreenButton?: boolean;
   enableColumnPinning?: boolean;
   enableHiding?: boolean;
   enableSorting?: boolean;
@@ -293,6 +306,10 @@ const EditableTableV2 = <TData extends object>({
   enableColumnOrdering = false,
   enableColumnActions = true,
   showColumnsButton = false,
+  showGlobalFilterButton = false,
+  showColumnFiltersButton = false,
+  showDensityButton = false,
+  showFullScreenButton = false,
   enableColumnPinning = false,
   enableHiding = true,
   enableSorting = true,
@@ -315,8 +332,17 @@ const EditableTableV2 = <TData extends object>({
   const strings = useStrings();
   const theme = useTheme();
   const [editingCell, setEditingCell] = useState<{ id: string; original: TData } | null>(null);
+  const [globalFilterVisible, setGlobalFilterVisible] = useState(true);
+  const [columnFiltersVisible, setColumnFiltersVisible] = useState(false);
+  const [density, setDensity] = useState<number>();
+  const [fullScreen, setFullScreen] = useState(false);
   const [actionMenuColumnId, setMenuColumnId] = useState<string | null>(null);
   const [menuAnchor, setMenuAnchor] = useState<HTMLElement | null>(null);
+  const [columnsButtonCount, setColumnsButtonCount] = useState(0);
+  const registerColumnsButton = useCallback(() => {
+    setColumnsButtonCount((count) => count + 1);
+    return () => setColumnsButtonCount((count) => count - 1);
+  }, []);
   const [initialColumnFilters] = useState(() => tableOptions?.initialState?.columnFilters ?? []);
   const [columnFilters, setColumnFilters] = useState(
     () => readFilters(stickyFilters ? storageKey : undefined) ?? initialColumnFilters
@@ -556,8 +582,27 @@ const EditableTableV2 = <TData extends object>({
     }
   }
   const controlsEnabled = enableHiding || enableColumnOrdering || enableColumnPinning;
+  const columnManagerReachable = columnsButtonCount > 0;
   const hideableColumns = table.getAllLeafColumns().filter((column) => column.getCanHide());
-  const filtersVisible = enableColumnFilters;
+  const filtersVisible = enableColumnFilters && columnFiltersVisible;
+
+  useEffect(() => {
+    if (!fullScreen) {
+      return;
+    }
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setFullScreen(false);
+      }
+    };
+    const overflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    document.addEventListener('keydown', onKeyDown);
+    return () => {
+      document.body.style.overflow = overflow;
+      document.removeEventListener('keydown', onKeyDown);
+    };
+  }, [fullScreen]);
 
   const moveColumn = (id: string, offset: number) => {
     const index = allColumns.findIndex((column) => column.id === id);
@@ -585,7 +630,35 @@ const EditableTableV2 = <TData extends object>({
   };
 
   return (
-    <Box minHeight='160px' padding={2} sx={sx}>
+    <EditableTableToolbarRoot
+      value={{
+        table,
+        globalFilterVisible,
+        columnFiltersVisible,
+        density: density ?? 1,
+        fullScreen,
+        registerColumnsButton,
+        toggleGlobalFilter: () => setGlobalFilterVisible((visible) => !visible),
+        toggleColumnFilters: () => setColumnFiltersVisible((visible) => !visible),
+        toggleDensity: () => setDensity((value) => ((value ?? 1) + 2) % 3),
+        toggleFullScreen: () => setFullScreen((value) => !value),
+        openColumns: (anchor) => {
+          setMenuColumnId(null);
+          setMenuAnchor(anchor);
+        },
+      }}
+      minHeight='160px'
+      padding={2}
+      sx={[
+        ...(Array.isArray(sx) ? sx : [sx]),
+        ...(showDensityButton || density !== undefined
+          ? [{ '& td': { py: density === 0 ? '4px' : density === 2 ? '24px' : '16px' } }]
+          : []),
+        ...(fullScreen
+          ? [{ position: 'fixed', inset: 0, m: 0, p: 0, zIndex: 1200, bgcolor: 'background.paper', overflow: 'auto' }]
+          : []),
+      ]}
+    >
       <Paper elevation={0}>
         {enableTopToolbar && (
           <Toolbar
@@ -599,7 +672,7 @@ const EditableTableV2 = <TData extends object>({
               boxSizing: 'border-box',
             }}
           >
-            {table.options.enableGlobalFilter && (
+            {table.options.enableGlobalFilter && globalFilterVisible && (
               <TextField
                 placeholder={strings.SEARCH}
                 size='small'
@@ -629,18 +702,23 @@ const EditableTableV2 = <TData extends object>({
             {enableClearAllFilters && hasFilters && (
               <Button label={clearAllFiltersLabel} priority='ghost' size='small' onClick={clearFilters} />
             )}
-            {renderToolbarInternalActions?.({ table })}
-            {showColumnsButton && controlsEnabled && (
-              <IconButton
-                aria-label={strings.TABLE_COLUMNS}
-                onClick={(event) => {
-                  setMenuColumnId(null);
-                  setMenuAnchor(event.currentTarget);
-                }}
-              >
-                <ViewColumn />
-              </IconButton>
-            )}
+            <Box display='flex' alignItems='center'>
+              {renderToolbarInternalActions ? (
+                renderToolbarInternalActions({ table })
+              ) : (
+                <>
+                  {showGlobalFilterButton && table.options.enableGlobalFilter && (
+                    <EditableTableToggleGlobalFilterButtonV2 table={table} />
+                  )}
+                  {showColumnFiltersButton && enableColumnFilters && (
+                    <EditableTableToggleFiltersButtonV2 table={table} />
+                  )}
+                  {showColumnsButton && controlsEnabled && <EditableTableShowHideColumnsButtonV2 table={table} />}
+                  {showDensityButton && <EditableTableToggleDensePaddingButtonV2 table={table} />}
+                  {showFullScreenButton && <EditableTableToggleFullScreenButtonV2 table={table} />}
+                </>
+              )}
+            </Box>
           </Toolbar>
         )}
         <Menu
@@ -730,8 +808,7 @@ const EditableTableV2 = <TData extends object>({
             <ColumnActionMenuItemV2
               icon={<VisibilityOff />}
               disabled={
-                !table.getColumn(menuColumnId)?.getCanHide() ||
-                (!(enableTopToolbar && showColumnsButton) && orderedColumns.length === 1)
+                !table.getColumn(menuColumnId)?.getCanHide() || (!columnManagerReachable && orderedColumns.length === 1)
               }
               onClick={() => {
                 table.getColumn(menuColumnId)?.toggleVisibility(false);
@@ -759,7 +836,10 @@ const EditableTableV2 = <TData extends object>({
           {!menuColumnId && enableHiding && (
             <Box display='flex' justifyContent='space-between' px={1} pb={1}>
               <MuiButton
-                disabled={!hideableColumns.some((column) => column.getIsVisible())}
+                disabled={
+                  !hideableColumns.some((column) => column.getIsVisible()) ||
+                  (!columnManagerReachable && orderedColumns.every((column) => column.getCanHide()))
+                }
                 onClick={() => hideableColumns.forEach((column) => column.toggleVisibility(false))}
               >
                 {strings.TABLE_HIDE_ALL}
@@ -787,9 +867,7 @@ const EditableTableV2 = <TData extends object>({
                         disabled={
                           !enableHiding ||
                           !column.getCanHide() ||
-                          (!(enableTopToolbar && (showColumnsButton || renderToolbarInternalActions)) &&
-                            column.getIsVisible() &&
-                            orderedColumns.length === 1)
+                          (!columnManagerReachable && column.getIsVisible() && orderedColumns.length === 1)
                         }
                         onChange={column.getToggleVisibilityHandler()}
                       />
@@ -1078,7 +1156,7 @@ const EditableTableV2 = <TData extends object>({
           />
         )}
       </Paper>
-    </Box>
+    </EditableTableToolbarRoot>
   );
 };
 

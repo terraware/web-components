@@ -35,8 +35,10 @@ test('shows the legacy tooltip only while a filter is active and updates it with
       data={[{ name: 'Acacia koa' }]}
       clearAllFiltersLabel='Clear'
       enableColumnFilters
+      showColumnFiltersButton
     />
   );
+  await user.click(screen.getByRole('button', { name: 'Show/Hide filters' }));
   expect(screen.queryByLabelText('Filtered: Name')).not.toBeInTheDocument();
   await user.type(screen.getByLabelText('Filter: Name'), 'aca');
   await user.hover(screen.getByLabelText('Filtered: Name'));
