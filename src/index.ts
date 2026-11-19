@@ -13,6 +13,7 @@ import DialogBox from './components/DialogBox/DialogBox';
 import Divisor from './components/Divisor';
 import Dropdown, { DropdownV1 } from './components/Dropdown';
 import EditableTable from './components/EditableTable';
+import EditableTableV2 from './components/EditableTableV2';
 import ErrorBox from './components/ErrorBox/ErrorBox';
 import FileChooser from './components/FileChooser';
 import FormBottomBar from './components/FormBottomBar';
@@ -72,7 +73,12 @@ export type {
   EditableTableColumn,
   EditableTableProps,
 } from './components/EditableTable';
-export type { TableSettings, TableSettingsColumn } from './components/EditableTable/tableSettings';
+export type {
+  TableSettings,
+  TableSettingsColumn,
+  EditableTableInstance,
+  EditableTableToolbarContext,
+} from './components/EditableTable/tableSettings';
 export {
   getTableSettings,
   getInitialTableSettings,
@@ -80,7 +86,18 @@ export {
   getTableColumns,
   getVisibleTableColumns,
   isDataColumnId,
+  isMrtTable,
 } from './components/EditableTable/tableSettings';
+export { getColumnPinningV2, setColumnPinningV2, getColumnPinPositionV2 } from './components/EditableTableV2/pinning';
+export type {
+  EditableTableCellV2,
+  EditableTableCellContextV2,
+  EditableTableColumnV2,
+  EditableTableColumnPinningV2,
+  EditableTableInstanceV2,
+  EditableTableOptionsV2,
+  EditableTablePropsV2,
+} from './components/EditableTableV2';
 export type { EnhancedTableDetailsRow, RendererProps, TableColumnType, TableRowType, SortOrder };
 export type { FormButton } from './components/FormBottomBar';
 export type { PhotoChooserErrorType, PhotoChooserProps } from './components/PhotoChooser';
@@ -156,6 +173,7 @@ export {
   Svg,
   Table,
   Tabs,
+  EditableTableV2,
   Textfield,
   TextTruncated,
   TimelineSlider,
