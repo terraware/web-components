@@ -111,8 +111,8 @@ const pinnedStyles = <TData extends object>(
       zIndex: 1,
       backgroundColor: theme.palette.background.paper,
       ...(position === 'start'
-        ? { insetInlineStart: column.getStart('start') }
-        : { insetInlineEnd: column.getAfter('end') }),
+        ? { [theme.direction === 'rtl' ? 'insetInlineEnd' : 'insetInlineStart']: column.getStart('start') }
+        : { [theme.direction === 'rtl' ? 'insetInlineStart' : 'insetInlineEnd']: column.getAfter('end') }),
     }),
   };
 };
@@ -219,6 +219,9 @@ const sameRow = <TData extends object>(previous: TData, next: TData) =>
     (Object.keys(previous) as (keyof TData)[]).every(
       (key) => Object.prototype.hasOwnProperty.call(next, key) && Object.is(previous[key], next[key])
     ));
+
+const physicalColumnOrder = <T,>(start: T[], center: T[], end: T[], direction: Theme['direction']) =>
+  direction === 'rtl' ? [...end.toReversed(), ...center, ...start.toReversed()] : [...start, ...center, ...end];
 
 const EditableTableV2 = <TData extends object>({
   clearAllFiltersLabel,
@@ -411,16 +414,26 @@ const EditableTableV2 = <TData extends object>({
   };
   const definitions = new Map(columns.map((column) => [column.id, column]));
   const visibleColumns = table.getVisibleLeafColumns();
-  const orderedColumns = visibleColumns;
+  const orderedColumns = physicalColumnOrder(
+    table.getStartVisibleLeafColumns(),
+    table.getCenterVisibleLeafColumns(),
+    table.getEndVisibleLeafColumns(),
+    theme.direction
+  );
   const rows = table.getRowModel().rows;
+  useEffect(() => {
+    if (editingCell && !rows.some((row) => row.getVisibleCells().some((cell) => cell.id === editingCell.id))) {
+      setEditingCell(null);
+    }
+  }, [editingCell, rows, visibleColumns]);
   const pageCountWithoutRowCount =
     table.options.manualPagination &&
     table.options.pageCount !== undefined &&
-    table.options.pageCount >= 0 &&
+    table.options.pageCount >= -1 &&
     table.options.rowCount === undefined;
   const nextPageButton = { disabled: !table.getCanNextPage() };
   const lastPageButton = {
-    disabled: !table.getCanNextPage(),
+    disabled: table.getPageCount() < 0 || !table.getCanNextPage(),
     onClick: () => table.setPageIndex(Math.max(0, table.getPageCount() - 1)),
   };
   const filtersVisible = enableColumnFilters;
@@ -560,7 +573,12 @@ const EditableTableV2 = <TData extends object>({
                     };
                   }}
                 >
-                  {row.getVisibleCells().map((cell) => {
+                  {physicalColumnOrder(
+                    row.getStartVisibleCells(),
+                    row.getCenterVisibleCells(),
+                    row.getEndVisibleCells(),
+                    theme.direction
+                  ).map((cell) => {
                     const column = cell.column;
                     const definition = definitions.get(column.id)!;
                     const editConfig = definition.editConfig;
