@@ -4,6 +4,7 @@ import { Box, Button } from '@mui/material';
 import { StoryFn } from '@storybook/react';
 import { userEvent, within } from 'storybook/test';
 
+import { isMrtTable } from '../components/EditableTable/tableSettings';
 import EditableTableV2, { EditableTableColumnV2 } from '../components/EditableTableV2';
 import {
   EditableTableShowHideColumnsButtonV2,
@@ -198,23 +199,26 @@ const EditableTableWithStateV2 = ({
       showFullScreenButton={showTopToolbar}
       renderToolbarInternalActions={
         showTopToolbar
-          ? ({ table }) => (
-              <>
-                <EditableTableExportButton
-                  getRows={() => [
-                    table.getVisibleLeafColumns().map((column) => column.columnDef.header),
-                    ...table
-                      .getPrePaginatedRowModel()
-                      .rows.map((row) => row.getVisibleCells().map((cell) => cell.getValue())),
-                  ]}
-                />
-                <EditableTableToggleGlobalFilterButtonV2 table={table} />
-                {(filtered || scenario === 'occupationFilter') && <EditableTableToggleFiltersButtonV2 table={table} />}
-                <EditableTableShowHideColumnsButtonV2 table={table} />
-                <EditableTableToggleDensePaddingButtonV2 table={table} />
-                <EditableTableToggleFullScreenButtonV2 table={table} />
-              </>
-            )
+          ? ({ table }) =>
+              !isMrtTable(table) && (
+                <>
+                  <EditableTableExportButton
+                    getRows={() => [
+                      table.getVisibleLeafColumns().map((column) => column.columnDef.header),
+                      ...table
+                        .getPrePaginatedRowModel()
+                        .rows.map((row) => row.getVisibleCells().map((cell) => cell.getValue())),
+                    ]}
+                  />
+                  <EditableTableToggleGlobalFilterButtonV2 table={table} />
+                  {(filtered || scenario === 'occupationFilter') && (
+                    <EditableTableToggleFiltersButtonV2 table={table} />
+                  )}
+                  <EditableTableShowHideColumnsButtonV2 table={table} />
+                  <EditableTableToggleDensePaddingButtonV2 table={table} />
+                  <EditableTableToggleFullScreenButtonV2 table={table} />
+                </>
+              )
           : undefined
       }
       enableColumnFilters={filtered || scenario === 'occupationFilter'}
@@ -250,16 +254,48 @@ export const WithCustomToolbarOrder = () => (
     data={createRows(5)}
     enableGlobalFilter
     enableColumnFilters
-    renderToolbarInternalActions={({ table }) => (
-      <Box display='flex' alignItems='center'>
-        <EditableTableToggleFiltersButtonV2 table={table} />
-        <Button onClick={() => table.resetColumnFilters()}>Reset filters</Button>
-        <EditableTableShowHideColumnsButtonV2 table={table} />
-        <EditableTableToggleDensePaddingButtonV2 table={table} />
-        <EditableTableToggleFullScreenButtonV2 table={table} />
-        <EditableTableToggleGlobalFilterButtonV2 table={table} />
-      </Box>
+    renderToolbarInternalActions={({ table }) =>
+      !isMrtTable(table) && (
+        <Box display='flex' alignItems='center'>
+          <EditableTableToggleFiltersButtonV2 table={table} />
+          <Button onClick={() => table.resetColumnFilters()}>Reset filters</Button>
+          <EditableTableShowHideColumnsButtonV2 table={table} />
+          <EditableTableToggleDensePaddingButtonV2 table={table} />
+          <EditableTableToggleFullScreenButtonV2 table={table} />
+          <EditableTableToggleGlobalFilterButtonV2 table={table} />
+        </Box>
+      )
+    }
+  />
+);
+
+export const WithMrtProps = () => (
+  <EditableTableV2
+    clearAllFiltersLabel='Clear filters'
+    columns={[
+      { id: 'name', header: 'Name', accessorKey: 'name' },
+      { id: 'occupation', header: 'Occupation', accessorKey: 'occupation' },
+      { id: 'available', header: 'Available', accessorKey: 'available' },
+    ]}
+    data={createRows(5)}
+    enableGlobalFilter
+    positionGlobalFilter='right'
+    enableShowAllColumnsMenuItem={false}
+    enableColumnPinning
+    renderTopToolbarCustomActions={({ table }) => (
+      <Button variant='outlined' onClick={() => table.setGlobalFilter('')}>
+        Reset view ({table.getRowModel().rows.length})
+      </Button>
     )}
+    muiTableHeadCellProps={({ column }) => ({
+      title: column.columnDef.header as string,
+      sx: { padding: '8px', height: '56px', '& .Mui-TableHeadCell-Content-Wrapper': { whiteSpace: 'normal' } },
+    })}
+    muiTableBodyCellProps={({ cell }) => ({
+      title: String(cell.getValue()),
+      sx: { padding: '12px', '&[data-pinned="true"]': { filter: 'brightness(0.97)' } },
+    })}
+    tableOptions={{ initialState: { columnPinning: { left: ['name'], right: [] } } }}
   />
 );
 
