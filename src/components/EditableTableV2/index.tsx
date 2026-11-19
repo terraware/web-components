@@ -141,7 +141,11 @@ const EditableTableV2 = <TData extends object>({
   });
   const definitions = new Map(columns.map((column) => [column.id, column]));
   const visibleColumns = table.getVisibleLeafColumns();
-  const orderedColumns = visibleColumns;
+  const orderedColumns = [
+    ...table.getStartVisibleLeafColumns(),
+    ...table.getCenterVisibleLeafColumns(),
+    ...table.getEndVisibleLeafColumns(),
+  ];
   const rows = table.getRowModel().rows;
   const pageCountWithoutRowCount =
     table.options.manualPagination &&

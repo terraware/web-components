@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { act, render } from '@testing-library/react';
+import { act, render, screen } from '@testing-library/react';
 
 import EditableTableV2, { EditableTableColumnV2, EditableTableInstanceV2 } from '.';
 import {
@@ -15,6 +15,19 @@ const columns: EditableTableColumnV2<Item>[] = [
   { id: 'name', header: 'Name', accessorKey: 'name' },
   { id: 'count', header: 'Count', accessorKey: 'count' },
 ];
+
+test('keeps headers aligned with cells when a non-first column is pinned left', () => {
+  render(
+    <EditableTableV2
+      clearAllFiltersLabel='Clear'
+      columns={columns}
+      data={[{ name: 'Oak', count: 4 }]}
+      tableOptions={{ initialState: { columnPinning: { left: ['count'] } } }}
+    />
+  );
+  expect(screen.getAllByRole('columnheader').map((header) => header.textContent)).toEqual(['Count', 'Name']);
+  expect(screen.getAllByRole('cell').map((cell) => cell.textContent)).toEqual(['4', 'Oak']);
+});
 
 test.each([false, true])('round trips public pinning helpers (controlled=%s)', (controlled) => {
   let table: EditableTableInstanceV2<Item>;
