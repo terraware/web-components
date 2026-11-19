@@ -1,10 +1,16 @@
 import React from 'react';
 
+import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { fireEvent, render, screen } from '@testing-library/react';
 
 import EditableTableV2 from '.';
 
-test.each([5, -1])('navigates manual pageCount %s without claiming a total', (pageCount) => {
+test.each([
+  ['ltr', 5],
+  ['rtl', 5],
+  ['ltr', -1],
+  ['rtl', -1],
+] as const)('navigates %s manual pageCount %s without claiming a total', (direction, pageCount) => {
   const rows = Array.from({ length: 10 }, (_, name) => ({ name }));
   const props = {
     clearAllFiltersLabel: 'Clear',
@@ -15,7 +21,13 @@ test.each([5, -1])('navigates manual pageCount %s without claiming a total', (pa
       initialState: { pagination: { pageIndex: 0, pageSize: 10 } },
     },
   };
-  const { rerender } = render(<EditableTableV2 {...props} data={rows} />);
+  const theme = createTheme({ direction });
+  const table = (data: typeof rows) => (
+    <ThemeProvider theme={theme}>
+      <EditableTableV2 {...props} data={data} />
+    </ThemeProvider>
+  );
+  const { rerender } = render(table(rows));
   expect(screen.getByRole('button', { name: 'Next page' })).toBeEnabled();
   if (pageCount === -1) {
     expect(screen.getByRole('button', { name: 'Last page' })).toBeDisabled();
@@ -30,7 +42,7 @@ test.each([5, -1])('navigates manual pageCount %s without claiming a total', (pa
     return;
   }
   fireEvent.click(screen.getByRole('button', { name: 'Last page' }));
-  rerender(<EditableTableV2 {...props} data={rows.slice(0, 3)} />);
+  rerender(table(rows.slice(0, 3)));
   expect(screen.getByText('41–43')).toBeInTheDocument();
   expect(screen.getByRole('button', { name: 'Next page' })).toBeDisabled();
   expect(screen.getByRole('button', { name: 'Last page' })).toBeDisabled();
