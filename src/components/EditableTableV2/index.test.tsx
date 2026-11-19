@@ -125,7 +125,7 @@ test.each([false, true])('keeps the current editor open when an older save resol
   expect(onSave).toHaveBeenCalledTimes(1);
 });
 
-test('clears the edit session when saving removes the row from view', async () => {
+test.each([false, true])('clears the edit session when its row leaves view (saving: %s)', async (saving) => {
   let resolveSave!: () => void;
   const onSave = rstest.fn(
     () =>
@@ -140,14 +140,19 @@ test('clears the edit session when saving removes the row from view', async () =
   const { rerender } = render(table(data));
   fireEvent.doubleClick(screen.getByText('Zebra'));
   fireEvent.change(screen.getByLabelText('Name'), { target: { value: 'Oak' } });
-  fireEvent.keyDown(screen.getByLabelText('Name'), { key: 'Enter' });
-  expect(onSave).toHaveBeenCalledTimes(1);
+  if (saving) {
+    fireEvent.keyDown(screen.getByLabelText('Name'), { key: 'Enter' });
+    expect(onSave).toHaveBeenCalledTimes(1);
+  }
   rerender(table([]));
   expect(screen.queryByLabelText('Name')).not.toBeInTheDocument();
-  await act(async () => resolveSave());
+  if (saving) {
+    await act(async () => resolveSave());
+  }
   rerender(table(data));
   expect(screen.getByText('Zebra')).toBeInTheDocument();
   expect(screen.queryByLabelText('Name')).not.toBeInTheDocument();
+  expect(onSave).toHaveBeenCalledTimes(saving ? 1 : 0);
 });
 
 test('discards drafts when a positional row is replaced', async () => {

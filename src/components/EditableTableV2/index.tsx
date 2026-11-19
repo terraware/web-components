@@ -1,4 +1,4 @@
-import React, { CSSProperties, ReactNode, useMemo, useState } from 'react';
+import React, { CSSProperties, ReactNode, useEffect, useMemo, useState } from 'react';
 
 import { ArrowDownward, SyncAlt } from '@mui/icons-material';
 import {
@@ -163,6 +163,11 @@ const EditableTableV2 = <TData extends object>({
     theme.direction
   );
   const rows = table.getRowModel().rows;
+  useEffect(() => {
+    if (editingCell && !rows.some((row) => row.getVisibleCells().some((cell) => cell.id === editingCell.id))) {
+      setEditingCell(null);
+    }
+  }, [editingCell, rows, visibleColumns]);
   const pageCountWithoutRowCount =
     table.options.manualPagination &&
     table.options.pageCount !== undefined &&
