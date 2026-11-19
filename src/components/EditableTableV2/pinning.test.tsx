@@ -8,6 +8,7 @@ import {
   EditableTableColumnPinningV2,
   getColumnPinPositionV2,
   getColumnPinningV2,
+  isMrtTable,
   setColumnPinningV2,
 } from '../../index';
 
@@ -54,7 +55,9 @@ test.each([false, true])('round trips public pinning helpers (controlled=%s)', (
             : { initialState: { columnPinning: pinning } }
         }
         renderToolbarInternalActions={({ table: instance }) => {
-          table = instance;
+          if (!isMrtTable(instance)) {
+            table = instance;
+          }
           return null;
         }}
       />
