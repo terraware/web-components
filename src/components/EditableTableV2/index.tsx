@@ -64,8 +64,8 @@ const pinnedStyles = <TData extends object>(
       zIndex: 1,
       backgroundColor: theme.palette.background.paper,
       ...(position === 'start'
-        ? { insetInlineStart: column.getStart('start') }
-        : { insetInlineEnd: column.getAfter('end') }),
+        ? { [theme.direction === 'rtl' ? 'insetInlineEnd' : 'insetInlineStart']: column.getStart('start') }
+        : { [theme.direction === 'rtl' ? 'insetInlineStart' : 'insetInlineEnd']: column.getAfter('end') }),
     }),
   };
 };
@@ -73,6 +73,9 @@ const pinnedStyles = <TData extends object>(
 const UnsortedIcon = (props: React.ComponentProps<typeof SyncAlt>) => (
   <SyncAlt {...props} style={{ ...props.style, transform: 'rotate(-90deg) scaleX(0.9) translateX(-1px)' }} />
 );
+
+const physicalColumnOrder = <T,>(start: T[], center: T[], end: T[], direction: Theme['direction']) =>
+  direction === 'rtl' ? [...end.toReversed(), ...center, ...start.toReversed()] : [...start, ...center, ...end];
 
 const EditableTableV2 = <TData extends object>({
   columns,
@@ -141,11 +144,12 @@ const EditableTableV2 = <TData extends object>({
   });
   const definitions = new Map(columns.map((column) => [column.id, column]));
   const visibleColumns = table.getVisibleLeafColumns();
-  const orderedColumns = [
-    ...table.getStartVisibleLeafColumns(),
-    ...table.getCenterVisibleLeafColumns(),
-    ...table.getEndVisibleLeafColumns(),
-  ];
+  const orderedColumns = physicalColumnOrder(
+    table.getStartVisibleLeafColumns(),
+    table.getCenterVisibleLeafColumns(),
+    table.getEndVisibleLeafColumns(),
+    theme.direction
+  );
   const rows = table.getRowModel().rows;
   const pageCountWithoutRowCount =
     table.options.manualPagination &&
@@ -243,7 +247,12 @@ const EditableTableV2 = <TData extends object>({
                     };
                   }}
                 >
-                  {row.getVisibleCells().map((cell) => {
+                  {physicalColumnOrder(
+                    row.getStartVisibleCells(),
+                    row.getCenterVisibleCells(),
+                    row.getEndVisibleCells(),
+                    theme.direction
+                  ).map((cell) => {
                     const column = cell.column;
                     const definition = definitions.get(column.id)!;
                     const value = cell.getValue();

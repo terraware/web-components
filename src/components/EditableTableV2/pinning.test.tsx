@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 
+import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { act, render, screen } from '@testing-library/react';
 
 import EditableTableV2, { EditableTableColumnV2, EditableTableInstanceV2 } from '.';
@@ -16,17 +17,26 @@ const columns: EditableTableColumnV2<Item>[] = [
   { id: 'count', header: 'Count', accessorKey: 'count' },
 ];
 
-test('keeps headers aligned with cells when a non-first column is pinned left', () => {
+test.each(['ltr', 'rtl'] as const)('keeps headers aligned with physically left-pinned cells in %s', (direction) => {
   render(
-    <EditableTableV2
-      clearAllFiltersLabel='Clear'
-      columns={columns}
-      data={[{ name: 'Oak', count: 4 }]}
-      tableOptions={{ initialState: { columnPinning: { left: ['count'] } } }}
-    />
+    <ThemeProvider theme={createTheme({ direction })}>
+      <EditableTableV2
+        clearAllFiltersLabel='Clear'
+        columns={columns}
+        data={[{ name: 'Oak', count: 4 }]}
+        tableOptions={{ initialState: { columnPinning: { left: ['count'] } } }}
+      />
+    </ThemeProvider>
   );
-  expect(screen.getAllByRole('columnheader').map((header) => header.textContent)).toEqual(['Count', 'Name']);
-  expect(screen.getAllByRole('cell').map((cell) => cell.textContent)).toEqual(['4', 'Oak']);
+  expect(screen.getAllByRole('columnheader').map((header) => header.textContent)).toEqual(
+    direction === 'rtl' ? ['Name', 'Count'] : ['Count', 'Name']
+  );
+  expect(screen.getAllByRole('cell').map((cell) => cell.textContent)).toEqual(
+    direction === 'rtl' ? ['Oak', '4'] : ['4', 'Oak']
+  );
+  expect(screen.getByRole('cell', { name: '4' })).toHaveStyle(
+    direction === 'rtl' ? { insetInlineEnd: '0px' } : { insetInlineStart: '0px' }
+  );
 });
 
 test.each([false, true])('round trips public pinning helpers (controlled=%s)', (controlled) => {
