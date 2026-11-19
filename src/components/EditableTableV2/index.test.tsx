@@ -219,6 +219,34 @@ test('custom density control cycles all padding sizes without the default-button
   }
 });
 
+test.each([false, true])('keeps scroll locked until the last fullscreen table exits (reverse: %s)', (reverse) => {
+  const overflow = document.body.style.overflow;
+  document.body.style.overflow = 'scroll';
+  const table = (
+    <StrictMode>
+      <EditableTableV2 columns={columns} data={data} clearAllFiltersLabel='Clear' showFullScreenButton />
+    </StrictMode>
+  );
+  const first = render(table);
+  const second = render(table);
+  const toggle = (view: typeof first) =>
+    fireEvent.click(within(view.container).getByRole('button', { name: 'Toggle full screen' }));
+  try {
+    toggle(first);
+    toggle(second);
+    expect(document.body.style.overflow).toBe('hidden');
+    const [earlier, later] = reverse ? [second, first] : [first, second];
+    earlier.unmount();
+    expect(document.body.style.overflow).toBe('hidden');
+    toggle(later);
+    expect(document.body.style.overflow).toBe('scroll');
+  } finally {
+    first.unmount();
+    second.unmount();
+    document.body.style.overflow = overflow;
+  }
+});
+
 test('toggles search, column filters, density, and fullscreen in the full V2 toolbar story', () => {
   const view = render(<WithTopToolbar />);
   const wrapper = view.container.firstElementChild!;
