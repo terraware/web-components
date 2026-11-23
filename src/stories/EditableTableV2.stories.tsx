@@ -6,6 +6,30 @@ import EditableTableV2, { EditableTableColumnV2 } from '../components/EditableTa
 
 export default { title: 'Editable Table V2', component: EditableTableV2 };
 
+export const WithOversizedPinnedContent: StoryFn = () => (
+  <EditableTableV2
+    clearAllFiltersLabel='Clear'
+    enableColumnPinning
+    enablePagination={false}
+    columns={[
+      { id: 'leftA', header: 'Left A', accessorKey: 'leftA', size: 120 },
+      { id: 'leftB', header: 'Left B', accessorKey: 'leftB', size: 120 },
+      { id: 'center', header: 'Center', accessorKey: 'center', size: 700 },
+      { id: 'rightA', header: 'Right A', accessorKey: 'rightA', size: 120 },
+      {
+        id: 'rightB',
+        header: 'Right B',
+        accessorKey: 'rightB',
+        size: 120,
+        Cell: () => <div style={{ width: 240 }}>Oversized content</div>,
+      },
+    ]}
+    data={[{ leftA: 'LongUnbrokenPinnedContent'.repeat(2), leftB: 'B', center: 'Center', rightA: 'D', rightB: 'E' }]}
+    tableOptions={{ initialState: { columnPinning: { left: ['leftA', 'leftB'], right: ['rightA', 'rightB'] } } }}
+  />
+);
+WithOversizedPinnedContent.tags = ['no-screenshot'];
+
 type RowData = {
   id: string;
   name: string;
@@ -63,10 +87,12 @@ const EditableTableWithStateV2 = ({
   rowCount = 50,
   scenario = 'default',
   showTopToolbar = false,
+  pinnedColumns = false,
 }: {
   rowCount?: number;
   scenario?: Scenario;
   showTopToolbar?: boolean;
+  pinnedColumns?: boolean;
 }) => {
   const [data, setData] = useState(() => createRows(rowCount));
   const filtered = scenario === 'filters' || scenario === 'clearAllFilters' || showTopToolbar;
@@ -152,7 +178,14 @@ const EditableTableWithStateV2 = ({
       enableBottomToolbar={!withoutPagination}
       enableGlobalFilter={filtered || showTopToolbar}
       enableColumnFilters={filtered || scenario === 'occupationFilter'}
-      initialSorting={scenario === 'default' ? [{ id: 'name', desc: false }] : undefined}
+      initialSorting={scenario === 'default' && !pinnedColumns ? [{ id: 'name', desc: false }] : undefined}
+      enableColumnPinning={pinnedColumns}
+      sx={pinnedColumns ? { maxWidth: 900 } : undefined}
+      tableOptions={
+        pinnedColumns
+          ? { initialState: { columnPinning: { left: ['name', 'middlename'], right: ['pets', 'previousStudies'] } } }
+          : undefined
+      }
       onClearAllFilters={scenario === 'clearAllFilters' ? () => console.log('All filters cleared') : undefined}
     />
   );
@@ -164,6 +197,8 @@ export const Default = Template.bind({});
 Default.args = { rowCount: 50 };
 
 export const WithFilters = () => <EditableTableWithStateV2 scenario='filters' />;
+
+export const WithPinnedColumns = () => <EditableTableWithStateV2 rowCount={50} pinnedColumns />;
 
 export const WithClearAllFilters = () => <EditableTableWithStateV2 scenario='clearAllFilters' />;
 
@@ -222,10 +257,13 @@ export const Editable = () => {
       enableEditing
       enableGlobalFilter
       enableColumnFilters
+      enableColumnOrdering
+      enableColumnPinning
       stickyFilters
       storageKey='editable-table-v2-story'
       tableOptions={{
         getRowId: (row) => row.id,
+        initialState: { columnPinning: { left: ['name'], right: ['target'] } },
       }}
     />
   );
