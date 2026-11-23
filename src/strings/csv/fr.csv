@@ -43,6 +43,13 @@ RIGHT_MOUSE,Bouton droit de la souris,d551c809
 SAVE,Sauvegarder,526a3e42
 SHIFT,Maj,4d173d2a
 SWIPE,Glisser,bc0962fa
+FIRST_PAGE,Première page,2ba1de3f
+LAST_PAGE,Dernière page,6eafe34a
+NEXT_PAGE,Page suivante,be0bb188
+NO_RECORDS_TO_DISPLAY,Aucun enregistrement à afficher,eb47076d
+OF,de,e444b9b1
+PREVIOUS_PAGE,Page précédente,d87b58b7
+ROWS_PER_PAGE,Lignes par page,ff461aa5
 TITLE,Titre,a5f8fc0b
 TOUCH_DRAG,Toucher + Glisser,ff6d48d2
 UPLOAD_FILES,Téléverser des fichiers,b98547be
