@@ -1,9 +1,17 @@
 import React, { useMemo, useState } from 'react';
 
 import { Link, Typography } from '@mui/material';
-import { Story } from '@storybook/react';
+import { StoryFn as Story } from '@storybook/react';
+import {
+  MRT_ShowHideColumnsButton,
+  MRT_ToggleDensePaddingButton,
+  MRT_ToggleFiltersButton,
+  MRT_ToggleFullScreenButton,
+  MRT_ToggleGlobalFilterButton,
+} from 'material-react-table';
 
 import EditableTable, { EditableTableColumn } from '../components/EditableTable';
+import EditableTableExportButton from './EditableTableExportButton';
 
 export default {
   title: 'Editable Table',
@@ -22,7 +30,15 @@ type RowData = {
   previousStudies?: string;
 };
 
-const EditableTableWithState = ({ rowCount, pinnedColumns = false }: { rowCount: number; pinnedColumns?: boolean }) => {
+const EditableTableWithState = ({
+  rowCount,
+  pinnedColumns = false,
+  showTopToolbar = false,
+}: {
+  rowCount: number;
+  pinnedColumns?: boolean;
+  showTopToolbar?: boolean;
+}) => {
   const [data, setData] = useState<RowData[]>(() => {
     return Array(rowCount)
       .fill(null)
@@ -72,6 +88,7 @@ const EditableTableWithState = ({ rowCount, pinnedColumns = false }: { rowCount:
         header: 'Name',
         accessorKey: 'name',
         size: 150,
+        filterVariant: showTopToolbar ? 'text' : undefined,
         editConfig: {
           onSave: (row, value, columnId) => {
             setData((prev) => prev.map((item) => (item.id === row.id ? { ...item, [columnId]: value } : item)));
@@ -105,6 +122,8 @@ const EditableTableWithState = ({ rowCount, pinnedColumns = false }: { rowCount:
         header: 'Occupation',
         accessorKey: 'occupation',
         size: 180,
+        filterVariant: showTopToolbar ? 'select' : undefined,
+        filterSelectOptions: ['Artist', 'Freelancer', 'Business analyst', 'Developer', 'Designer'],
         editConfig: {
           editVariant: 'select',
           selectOptions: [
@@ -124,6 +143,8 @@ const EditableTableWithState = ({ rowCount, pinnedColumns = false }: { rowCount:
         header: 'Available',
         accessorKey: 'available',
         size: 120,
+        filterVariant: showTopToolbar ? 'select' : undefined,
+        filterSelectOptions: ['yes', 'no'],
         editConfig: {
           editVariant: 'select',
           selectOptions: [
@@ -172,7 +193,7 @@ const EditableTableWithState = ({ rowCount, pinnedColumns = false }: { rowCount:
         },
       },
     ],
-    []
+    [showTopToolbar]
   );
 
   return (
@@ -183,14 +204,45 @@ const EditableTableWithState = ({ rowCount, pinnedColumns = false }: { rowCount:
       enableEditing={true}
       enableSorting={true}
       enablePagination={true}
-      initialSorting={pinnedColumns ? undefined : [{ id: 'name', desc: false }]}
-      enableColumnPinning={pinnedColumns}
-      sx={pinnedColumns ? { maxWidth: 900 } : undefined}
+      enableGlobalFilter={showTopToolbar}
+      enableColumnFilters={showTopToolbar}
       tableOptions={
         pinnedColumns
           ? { initialState: { columnPinning: { left: ['name', 'middlename'], right: ['pets', 'previousStudies'] } } }
+          : showTopToolbar
+            ? {
+                initialState: {
+                  showGlobalFilter: true,
+                  showColumnFilters: false,
+                  sorting: [{ id: 'name', desc: false }],
+                },
+              }
+            : undefined
+      }
+      renderToolbarInternalActions={
+        showTopToolbar
+          ? ({ table }) => (
+              <>
+                <EditableTableExportButton
+                  getRows={() => [
+                    table.getVisibleLeafColumns().map((column) => column.columnDef.header),
+                    ...table
+                      .getPrePaginationRowModel()
+                      .rows.map((row) => row.getVisibleCells().map((cell) => cell.getValue())),
+                  ]}
+                />
+                <MRT_ToggleGlobalFilterButton table={table} />
+                <MRT_ToggleFiltersButton table={table} />
+                <MRT_ShowHideColumnsButton table={table} />
+                <MRT_ToggleDensePaddingButton table={table} />
+                <MRT_ToggleFullScreenButton table={table} />
+              </>
+            )
           : undefined
       }
+      initialSorting={pinnedColumns ? undefined : [{ id: 'name', desc: false }]}
+      enableColumnPinning={pinnedColumns}
+      sx={pinnedColumns ? { maxWidth: 900 } : undefined}
     />
   );
 };
@@ -204,6 +256,8 @@ Default.args = {
 };
 
 export const WithPinnedColumns = () => <EditableTableWithState rowCount={50} pinnedColumns />;
+
+export const WithTopToolbar = () => <EditableTableWithState rowCount={50} showTopToolbar />;
 
 export const WithFilters: Story = () => {
   const rowCount = 50;
