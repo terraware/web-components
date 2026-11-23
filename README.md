@@ -70,6 +70,11 @@ You can add a comment to your open pull request with the text "publish rc".
 
 This will publish an RC build to NPM for use in your repo that consumes `web-components` with a tag like `v2.3.58-rc.0`.
 
+## Releasing
+
+Merging a pull request to `main` publishes a new version to NPM if the PR has a `patch`, `minor`, or `major` label.
+When a stack of PRs merges, only the top PR's label is read, so put the label on the top PR.
+
 ## Available Scripts
 
 In the project directory, you can run:
