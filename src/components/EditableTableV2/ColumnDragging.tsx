@@ -29,6 +29,7 @@ import {
   Tooltip,
   useTheme,
 } from '@mui/material';
+import { useForkRef } from '@mui/material/utils';
 
 import { useStrings } from '../../strings';
 
@@ -224,12 +225,19 @@ const useColumnDrag = ({ id, label, enabled }: ColumnDragProps, activeOutlineWid
   return { ref, handle, dragStyles, isDragging };
 };
 
-export const DraggableColumnHeader = ({ id, label, enabled, ...props }: ColumnDragProps & TableCellProps) => {
-  const { ref, handle } = useColumnDrag({ id, label, enabled });
-  const borders = useColumnDragBorders(id, 'top');
+export const DraggableColumnHeader = ({
+  dragId,
+  label,
+  enabled,
+  ref: consumerRef,
+  ...props
+}: Omit<ColumnDragProps, 'id'> & { dragId: string } & TableCellProps) => {
+  const { ref, handle } = useColumnDrag({ id: dragId, label, enabled });
+  const mergedRef = useForkRef(ref, consumerRef);
+  const borders = useColumnDragBorders(dragId, 'top');
   return (
     <DragHandleContext.Provider value={handle}>
-      <TableCell {...props} ref={ref} sx={[...(Array.isArray(props.sx) ? props.sx : [props.sx]), borders]} />
+      <TableCell {...props} ref={mergedRef} sx={[...(Array.isArray(props.sx) ? props.sx : [props.sx]), borders]} />
     </DragHandleContext.Provider>
   );
 };
