@@ -5,17 +5,23 @@
 
 set -euo pipefail
 
-NODE_VERSION=24
 YQ_VERSION=4.45.4
 
 install_node() {
-    if command -v node &>/dev/null && node --version | grep -q "^v${NODE_VERSION}\."; then
-        return
+    local node_version
+    node_version=$(<"$(dirname "${BASH_SOURCE[0]}")/../../.nvmrc")
+    node_version=${node_version%%.*}
+    if ! command -v node &>/dev/null || ! node --version | grep -q "^v${node_version}\."; then
+        echo "Installing Node.js ${node_version}..."
+        curl -fsSL "https://rpm.nodesource.com/setup_${node_version}.x" | sudo bash -
+        sudo dnf install -y nodejs
     fi
-    echo "Installing Node.js ${NODE_VERSION}..."
-    curl -fsSL "https://rpm.nodesource.com/setup_${NODE_VERSION}.x" | sudo bash -
-    sudo dnf install -y nodejs
-    sudo corepack enable
+    if ! command -v yarn &>/dev/null; then
+        if ! command -v corepack &>/dev/null; then
+            sudo npm install --global corepack@0.36.0
+        fi
+        sudo corepack enable yarn
+    fi
 }
 
 install_jq() {
