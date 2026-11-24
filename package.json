@@ -116,7 +116,7 @@
     "jsdom": "^31.0.1",
     "license-report": "^6.5.0",
     "llm-autotranslate": "^1.0.0",
-    "mapbox-gl": "~3.33.0",
+    "mapbox-gl": "~3.35.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-map-gl": "^8.0.4",
