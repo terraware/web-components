@@ -45,6 +45,7 @@ import {
   TextField,
   Theme,
   Toolbar,
+  ToolbarProps,
   Tooltip,
 } from '@mui/material';
 import { alpha, darken, lighten, useTheme } from '@mui/material/styles';
@@ -98,6 +99,19 @@ export type {
 
 type Callback<TArgs, TResult> = (args: TArgs) => TResult;
 type CallbackArgs<T> = T extends (args: infer TArgs) => unknown ? TArgs : never;
+type Density = 'compact' | 'comfortable' | 'spacious';
+const densities = ['compact', 'comfortable', 'spacious'] as const;
+
+const useToolbarState = <T, TInitial>(controlled: T | undefined, initial: TInitial, onChange?: (value: T) => void) => {
+  const [uncontrolled, setUncontrolled] = useState<T | TInitial>(initial);
+  const update = (value: T) => {
+    if (controlled === undefined) {
+      setUncontrolled(value);
+    }
+    onChange?.(value);
+  };
+  return [controlled ?? uncontrolled, update] as const;
+};
 
 export type EditableTablePropsV2<TData extends object> = {
   clearAllFiltersLabel: string;
@@ -107,11 +121,20 @@ export type EditableTablePropsV2<TData extends object> = {
   enableEditing?: boolean;
   enableColumnOrdering?: boolean;
   enableColumnDragging?: boolean;
+  /** Override header dragging without changing the reorder controls in the columns menu. */
+  enableHeaderColumnDragging?: boolean;
   enableColumnActions?: boolean;
+  enableFilterByColumnMenuItem?: boolean;
   enableShowAllColumnsMenuItem?: boolean;
   showColumnsButton?: boolean;
   showGlobalFilterButton?: boolean;
   showColumnFiltersButton?: boolean;
+  showColumnFilters?: boolean;
+  onShowColumnFiltersChange?: (show: boolean) => void;
+  showGlobalFilter?: boolean;
+  onShowGlobalFilterChange?: (show: boolean) => void;
+  density?: Density;
+  onDensityChange?: (density: Density) => void;
   showDensityButton?: boolean;
   showFullScreenButton?: boolean;
   enableColumnPinning?: boolean;
@@ -131,6 +154,7 @@ export type EditableTablePropsV2<TData extends object> = {
   onRowClick?: (row: TData) => void;
   renderToolbarInternalActions?: Callback<EditableTableToolbarContext<TData>, ReactNode>;
   renderTopToolbarCustomActions?: Callback<EditableTableToolbarContext<TData>, ReactNode>;
+  muiTopToolbarProps?: ToolbarProps;
   muiTableHeadCellProps?:
     | TableCellProps
     | Callback<
@@ -354,11 +378,19 @@ const EditableTableV2 = <TData extends object>({
   enableEditing = false,
   enableColumnOrdering = false,
   enableColumnDragging = false,
+  enableHeaderColumnDragging = enableColumnDragging || enableColumnOrdering,
   enableColumnActions = true,
+  enableFilterByColumnMenuItem = false,
   enableShowAllColumnsMenuItem = true,
   showColumnsButton = false,
   showGlobalFilterButton = false,
   showColumnFiltersButton = false,
+  showColumnFilters,
+  onShowColumnFiltersChange,
+  showGlobalFilter,
+  onShowGlobalFilterChange,
+  density: controlledDensity,
+  onDensityChange,
   showDensityButton = false,
   showFullScreenButton = false,
   enableColumnPinning = false,
@@ -378,6 +410,7 @@ const EditableTableV2 = <TData extends object>({
   onRowClick,
   renderToolbarInternalActions,
   renderTopToolbarCustomActions,
+  muiTopToolbarProps,
   muiTableHeadCellProps,
   muiTableBodyCellProps,
   tableOptions,
@@ -387,12 +420,22 @@ const EditableTableV2 = <TData extends object>({
   const strings = useStrings();
   const theme = useTheme();
   const [editingCell, setEditingCell] = useState<{ id: string; original: TData } | null>(null);
-  const [globalFilterVisible, setGlobalFilterVisible] = useState(true);
-  const [columnFiltersVisible, setColumnFiltersVisible] = useState(false);
-  const [density, setDensity] = useState<number>();
+  const [globalFilterVisible, setGlobalFilterVisible] = useToolbarState(
+    showGlobalFilter,
+    true,
+    onShowGlobalFilterChange
+  );
+  const [columnFiltersVisible, setColumnFiltersVisible] = useToolbarState(
+    showColumnFilters,
+    false,
+    onShowColumnFiltersChange
+  );
+  const [density, setDensity] = useToolbarState(controlledDensity, undefined, onDensityChange);
+  const densityIndex = densities.indexOf(density ?? 'comfortable');
   const [fullScreen, setFullScreen] = useState(false);
   const [actionMenuColumnId, setMenuColumnId] = useState<string | null>(null);
   const [menuAnchor, setMenuAnchor] = useState<HTMLElement | null>(null);
+  const filterFocusColumn = useRef<string | null>(null);
   const [columnsButtonCount, setColumnsButtonCount] = useState(0);
   const registerColumnsButton = useCallback(() => {
     setColumnsButtonCount((count) => count + 1);
@@ -744,12 +787,12 @@ const EditableTableV2 = <TData extends object>({
         table,
         globalFilterVisible,
         columnFiltersVisible,
-        density: density ?? 1,
+        density: densityIndex,
         fullScreen,
         registerColumnsButton,
-        toggleGlobalFilter: () => setGlobalFilterVisible((visible) => !visible),
-        toggleColumnFilters: () => setColumnFiltersVisible((visible) => !visible),
-        toggleDensity: () => setDensity((value) => ((value ?? 1) + 2) % 3),
+        toggleGlobalFilter: () => setGlobalFilterVisible(!globalFilterVisible),
+        toggleColumnFilters: () => setColumnFiltersVisible(!columnFiltersVisible),
+        toggleDensity: () => setDensity(densities[(densityIndex + 2) % densities.length]),
         toggleFullScreen: () => setFullScreen((value) => !value),
         openColumns: (anchor) => {
           setMenuColumnId(null);
@@ -761,7 +804,7 @@ const EditableTableV2 = <TData extends object>({
       sx={[
         ...(Array.isArray(sx) ? sx : [sx]),
         ...(showDensityButton || density !== undefined
-          ? [{ '& td': { py: density === 0 ? '4px' : density === 2 ? '24px' : '16px' } }]
+          ? [{ '& td': { py: density === 'compact' ? '4px' : density === 'spacious' ? '24px' : '16px' } }]
           : []),
         ...(fullScreen
           ? [{ position: 'fixed', inset: 0, m: 0, p: 0, zIndex: 1200, bgcolor: 'background.paper', overflow: 'auto' }]
@@ -772,14 +815,18 @@ const EditableTableV2 = <TData extends object>({
         {enableTopToolbar && (
           <Toolbar
             disableGutters
-            sx={{
-              gap: 1,
-              flexWrap: 'wrap',
-              alignItems: 'flex-start',
-              p: 1,
-              minHeight: '56px !important',
-              boxSizing: 'border-box',
-            }}
+            {...muiTopToolbarProps}
+            sx={[
+              {
+                gap: 1,
+                flexWrap: 'wrap',
+                alignItems: 'flex-start',
+                p: 1,
+                minHeight: '56px !important',
+                boxSizing: 'border-box',
+              },
+              ...(Array.isArray(muiTopToolbarProps?.sx) ? muiTopToolbarProps.sx : [muiTopToolbarProps?.sx]),
+            ]}
           >
             {positionGlobalFilter === 'left' && searchField}
             {renderTopToolbarCustomActions?.({ table })}
@@ -813,6 +860,20 @@ const EditableTableV2 = <TData extends object>({
           anchorEl={menuAnchor}
           open={!!menuAnchor && (!actionMenuColumnId || !!menuColumnId)}
           onClose={() => setMenuAnchor(null)}
+          slotProps={{
+            transition: {
+              onExited: () => {
+                const id = filterFocusColumn.current;
+                filterFocusColumn.current = null;
+                if (id !== null) {
+                  const header = Array.from(tableRef.current?.querySelectorAll<HTMLElement>('thead th') ?? []).find(
+                    (cell) => cell.dataset.columnId === id
+                  );
+                  header?.querySelector<HTMLElement>('[role="combobox"], input:not([aria-hidden="true"])')?.focus();
+                }
+              },
+            },
+          }}
         >
           {menuColumnId &&
             table.getColumn(menuColumnId)?.getCanSort() &&
@@ -863,7 +924,18 @@ const EditableTableV2 = <TData extends object>({
             </ColumnActionMenuItemV2>
           )}
           {menuColumnId && table.getColumn(menuColumnId)?.getCanFilter() && (
-            <ColumnActionMenuItemV2 icon={<FilterList />} disabled divider={enableHiding || enableColumnPinning}>
+            <ColumnActionMenuItemV2
+              icon={<FilterList />}
+              disabled={!enableFilterByColumnMenuItem}
+              divider={enableHiding || enableColumnPinning}
+              onClick={() => {
+                filterFocusColumn.current = menuColumnId;
+                if (!columnFiltersVisible) {
+                  setColumnFiltersVisible(true);
+                }
+                setMenuAnchor(null);
+              }}
+            >
               {strings.FILTER_BY_COLUMN.replace('{column}', definitions.get(menuColumnId)!.header)}
             </ColumnActionMenuItemV2>
           )}
@@ -1048,7 +1120,7 @@ const EditableTableV2 = <TData extends object>({
                       data-pinned={column.getIsPinned() ? 'true' : undefined}
                       dragId={column.id}
                       label={definitions.get(column.id)!.header}
-                      enabled={enableColumnDragging || enableColumnOrdering}
+                      enabled={enableHeaderColumnDragging}
                       sortDirection={column.getIsSorted() || false}
                       sx={[
                         (theme) => ({
