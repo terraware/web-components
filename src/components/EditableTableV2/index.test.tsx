@@ -195,6 +195,7 @@ test.each([
   { enableColumnDragging: false, enableColumnOrdering: false, handles: 0 },
   { enableColumnDragging: true, enableColumnOrdering: false, handles: 2 },
   { enableColumnDragging: false, enableColumnOrdering: true, handles: 2 },
+  { enableColumnDragging: false, enableColumnOrdering: true, enableHeaderColumnDragging: false, handles: 0 },
 ])('gates header and manager dragging: %j', (props) => {
   render(<EditableTableV2 columns={columns} data={[]} clearAllFiltersLabel='Clear' showColumnsButton {...props} />);
   expect(screen.queryAllByLabelText(/^Drag column:/)).toHaveLength(props.handles);
@@ -429,6 +430,36 @@ test('custom density control cycles all padding sizes without the default-button
     fireEvent.click(screen.getByRole('button', { name: 'Toggle density' }));
     expect(getComputedStyle(cell).paddingTop).toBe(padding);
   }
+});
+
+test('opens and focuses a controlled column filter from the column menu', async () => {
+  const ControlledTable = () => {
+    const [showColumnFilters, setShowColumnFilters] = useState(false);
+    const [showGlobalFilter, setShowGlobalFilter] = useState(false);
+    return (
+      <EditableTableV2
+        columns={columns}
+        data={data}
+        clearAllFiltersLabel='Clear'
+        enableColumnFilters
+        enableFilterByColumnMenuItem
+        enableGlobalFilter
+        showColumnFilters={showColumnFilters}
+        onShowColumnFiltersChange={setShowColumnFilters}
+        showGlobalFilter={showGlobalFilter}
+        onShowGlobalFilterChange={setShowGlobalFilter}
+        showGlobalFilterButton
+      />
+    );
+  };
+  render(<ControlledTable />);
+  expect(screen.queryByRole('textbox', { name: 'Search' })).not.toBeInTheDocument();
+  expect(screen.queryByRole('textbox', { name: 'Filter: Name' })).not.toBeInTheDocument();
+  fireEvent.click(screen.getByRole('button', { name: 'Show/Hide search' }));
+  expect(screen.getByRole('textbox', { name: 'Search' })).toBeInTheDocument();
+  fireEvent.click(screen.getByLabelText('Column actions: Name'));
+  fireEvent.click(screen.getByRole('menuitem', { name: 'Filter by Name' }));
+  await waitFor(() => expect(screen.getByRole('textbox', { name: 'Filter: Name' })).toHaveFocus());
 });
 
 test.each([false, true])('keeps scroll locked until the last fullscreen table exits (reverse: %s)', (reverse) => {
