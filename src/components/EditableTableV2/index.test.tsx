@@ -10,6 +10,7 @@ import {
   WithMrtProps,
   WithTopToolbar,
 } from '../../stories/EditableTableV2.stories';
+import { getStrings } from '../../strings';
 import { EditableTableToolbarContext, isMrtTable } from '../EditableTable/tableSettings';
 import { EditableTableToggleDensePaddingButtonV2 } from './ToolbarButtons';
 
@@ -829,6 +830,7 @@ test('moves and hides columns using the column controls', () => {
 });
 
 test('does not show the empty message during a load or after results arrive', () => {
+  const defaultEmptyMessage = getStrings().NO_RECORDS_TO_DISPLAY;
   const table = (isLoading: boolean, rows: Item[]) => (
     <EditableTableV2
       columns={columns}
@@ -841,9 +843,11 @@ test('does not show the empty message during a load or after results arrive', ()
   const view = render(table(true, []));
   expect(screen.getByRole('progressbar')).toBeInTheDocument();
   expect(screen.queryByText('No items found')).not.toBeInTheDocument();
+  expect(screen.queryByText(defaultEmptyMessage)).not.toBeInTheDocument();
   view.rerender(table(false, []));
   expect(screen.queryByRole('progressbar')).not.toBeInTheDocument();
   expect(screen.getByText('No items found')).toBeInTheDocument();
+  expect(screen.queryByText(defaultEmptyMessage)).not.toBeInTheDocument();
   view.rerender(table(false, data));
   expect(screen.queryByText('No items found')).not.toBeInTheDocument();
   expect(screen.getByText('Zebra')).toBeInTheDocument();

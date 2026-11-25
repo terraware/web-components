@@ -643,7 +643,6 @@ const EditableTableV2 = <TData extends object>({
     theme.direction
   );
   const rows = table.getRowModel().rows;
-  const emptyRowsFallback = !isLoading && rows.length === 0 ? renderEmptyRowsFallback?.({ table }) : null;
   const getBodyRowProps = (row: Row<typeof editableTableFeatures, TData>): TableRowProps => {
     const { onClick, sx, ...props } =
       (typeof muiTableBodyRowProps === 'function' ? muiTableBodyRowProps({ row, table }) : muiTableBodyRowProps) ?? {};
@@ -1242,11 +1241,6 @@ const EditableTableV2 = <TData extends object>({
               </TableRow>
             </TableHead>
             <TableBody {...muiTableBodyProps}>
-              {emptyRowsFallback != null && (
-                <TableRow>
-                  <TableCell colSpan={Math.max(1, orderedColumns.length)}>{emptyRowsFallback}</TableCell>
-                </TableRow>
-              )}
               {rows.map((row, rowIndex) => (
                 <TableRow {...getBodyRowProps(row)} key={row.id}>
                   {physicalColumnOrder(
@@ -1343,9 +1337,11 @@ const EditableTableV2 = <TData extends object>({
                   })}
                 </TableRow>
               ))}
-              {!rows.length && (
+              {!isLoading && rows.length === 0 && (
                 <TableRow>
-                  <TableCell colSpan={Math.max(1, visibleColumns.length)}>{strings.NO_RECORDS_TO_DISPLAY}</TableCell>
+                  <TableCell colSpan={Math.max(1, visibleColumns.length)}>
+                    {renderEmptyRowsFallback?.({ table }) ?? strings.NO_RECORDS_TO_DISPLAY}
+                  </TableCell>
                 </TableRow>
               )}
             </TableBody>
