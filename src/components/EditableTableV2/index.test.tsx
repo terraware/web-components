@@ -10,6 +10,7 @@ import {
   WithMrtProps,
   WithTopToolbar,
 } from '../../stories/EditableTableV2.stories';
+import { getStrings } from '../../strings';
 import { EditableTableToolbarContext, isMrtTable } from '../EditableTable/tableSettings';
 import { EditableTableToggleDensePaddingButtonV2 } from './ToolbarButtons';
 
@@ -828,10 +829,35 @@ test('moves and hides columns using the column controls', () => {
   expect(screen.getAllByRole('columnheader', { hidden: true })).toHaveLength(1);
 });
 
+test('does not show the empty message during a load or after results arrive', () => {
+  const defaultEmptyMessage = getStrings().NO_RECORDS_TO_DISPLAY;
+  const table = (isLoading: boolean, rows: Item[]) => (
+    <EditableTableV2
+      columns={columns}
+      data={rows}
+      clearAllFiltersLabel='Clear'
+      isLoading={isLoading}
+      renderEmptyRowsFallback={() => 'No items found'}
+    />
+  );
+  const view = render(table(true, []));
+  expect(screen.getByRole('progressbar')).toBeInTheDocument();
+  expect(screen.queryByText('No items found')).not.toBeInTheDocument();
+  expect(screen.queryByText(defaultEmptyMessage)).not.toBeInTheDocument();
+  view.rerender(table(false, []));
+  expect(screen.queryByRole('progressbar')).not.toBeInTheDocument();
+  expect(screen.getByText('No items found')).toBeInTheDocument();
+  expect(screen.queryByText(defaultEmptyMessage)).not.toBeInTheDocument();
+  view.rerender(table(false, data));
+  expect(screen.queryByText('No items found')).not.toBeInTheDocument();
+  expect(screen.getByText('Zebra')).toBeInTheDocument();
+});
+
 test('supports custom renderers, custom editors and row clicks', async () => {
   const user = userEvent.setup();
   const onSave = rstest.fn();
   const onRowClick = rstest.fn();
+  const onCustomRowClick = rstest.fn();
   render(
     <EditableTableV2
       columns={[
@@ -850,6 +876,7 @@ test('supports custom renderers, custom editors and row clicks', async () => {
       clearAllFiltersLabel='Clear'
       enableEditing
       onRowClick={onRowClick}
+      muiTableBodyRowProps={({ row }) => ({ 'aria-label': row.original.name, onClick: onCustomRowClick })}
     />
   );
   await user.click(screen.getByText('Zebra!'));
@@ -859,9 +886,11 @@ test('supports custom renderers, custom editors and row clicks', async () => {
   await user.click(screen.getByText('Save custom'));
   await waitFor(() => expect(onSave).toHaveBeenCalledWith(data[0], 'Oak', 'name'));
   expect(onRowClick).not.toHaveBeenCalled();
+  expect(screen.getByRole('row', { name: 'Zebra' })).toContainElement(screen.getByText('3'));
   await user.click(screen.getByText('3'));
   expect(onRowClick).toHaveBeenCalledWith(data[0]);
   expect(onRowClick).toHaveBeenCalledTimes(1);
+  expect(onCustomRowClick).toHaveBeenCalledTimes(1);
 });
 
 test('lets custom editor buttons handle Enter without restarting cell editing', async () => {

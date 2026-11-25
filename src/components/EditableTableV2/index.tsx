@@ -26,6 +26,7 @@ import {
   IconButton,
   InputAdornment,
   InputLabel,
+  LinearProgress,
   ListItemIcon,
   MenuItem,
   Button as MuiButton,
@@ -35,12 +36,14 @@ import {
   SxProps,
   Table,
   TableBody,
+  TableBodyProps,
   TableCell,
   TableCellProps,
   TableContainerProps,
   TableHead,
   TablePagination,
   TableRow,
+  TableRowProps,
   TableSortLabel,
   TextField,
   Theme,
@@ -149,12 +152,23 @@ export type EditableTablePropsV2<TData extends object> = {
   enablePagination?: boolean;
   enableBottomToolbar?: boolean;
   enableTopToolbar?: boolean;
+  isLoading?: boolean;
+  showLoadingProgress?: boolean;
   initialSorting?: { id: string; desc: boolean }[];
   onClearAllFilters?: () => void;
   onRowClick?: (row: TData) => void;
   renderToolbarInternalActions?: Callback<EditableTableToolbarContext<TData>, ReactNode>;
   renderTopToolbarCustomActions?: Callback<EditableTableToolbarContext<TData>, ReactNode>;
+  renderEmptyRowsFallback?: Callback<EditableTableToolbarContext<TData>, ReactNode>;
   muiTopToolbarProps?: ToolbarProps;
+  muiTableBodyProps?: TableBodyProps;
+  muiTableBodyRowProps?:
+    | TableRowProps
+    | Callback<
+        | CallbackArgs<NonNullable<EditableTableProps<TData>['tableOptions']>['muiTableBodyRowProps']>
+        | { row: Row<typeof editableTableFeatures, TData>; table: EditableTableInstanceV2<TData> },
+        TableRowProps
+      >;
   muiTableHeadCellProps?:
     | TableCellProps
     | Callback<
@@ -405,12 +419,17 @@ const EditableTableV2 = <TData extends object>({
   enablePagination = true,
   enableBottomToolbar = true,
   enableTopToolbar = true,
+  isLoading = false,
+  showLoadingProgress = true,
   initialSorting,
   onClearAllFilters,
   onRowClick,
   renderToolbarInternalActions,
   renderTopToolbarCustomActions,
+  renderEmptyRowsFallback,
   muiTopToolbarProps,
+  muiTableBodyProps,
+  muiTableBodyRowProps,
   muiTableHeadCellProps,
   muiTableBodyCellProps,
   tableOptions,
@@ -624,6 +643,36 @@ const EditableTableV2 = <TData extends object>({
     theme.direction
   );
   const rows = table.getRowModel().rows;
+  const getBodyRowProps = (row: Row<typeof editableTableFeatures, TData>): TableRowProps => {
+    const { onClick, sx, ...props } =
+      (typeof muiTableBodyRowProps === 'function' ? muiTableBodyRowProps({ row, table }) : muiTableBodyRowProps) ?? {};
+    return {
+      ...props,
+      onClick:
+        onClick || onRowClick
+          ? (event) => {
+              onClick?.(event);
+              if (!event.defaultPrevented) {
+                onRowClick?.(row.original);
+              }
+            }
+          : undefined,
+      sx: [
+        (theme) => {
+          const background = theme.palette.background.default;
+          const hoverColor = alpha(
+            theme.palette.mode === 'dark' ? lighten(background, 0.3) : darken(background, 0.3),
+            0.3
+          );
+          return {
+            cursor: onRowClick || onClick ? 'pointer' : 'default',
+            '&:hover > td': { backgroundImage: `linear-gradient(${hoverColor}, ${hoverColor})` },
+          };
+        },
+        ...(Array.isArray(sx) ? sx : [sx]),
+      ],
+    };
+  };
   useEffect(() => {
     if (editingCell && !rows.some((row) => row.getVisibleCells().some((cell) => cell.id === editingCell.id))) {
       setEditingCell(null);
@@ -854,6 +903,7 @@ const EditableTableV2 = <TData extends object>({
             </Box>
           </Toolbar>
         )}
+        {isLoading && showLoadingProgress && <LinearProgress />}
         <ColumnDragMenu
           ids={allColumns.map((column) => column.id)}
           onDragEnd={reorderColumns}
@@ -1086,7 +1136,7 @@ const EditableTableV2 = <TData extends object>({
           ids={orderedColumns.map((column) => column.id)}
           onDragEnd={reorderColumns}
         >
-          <Table ref={tableRef} sx={{ minWidth: table.getTotalSize() }}>
+          <Table ref={tableRef} aria-busy={isLoading || undefined} sx={{ minWidth: table.getTotalSize() }}>
             <TableHead>
               <TableRow>
                 {orderedColumns.map((column) => {
@@ -1190,23 +1240,9 @@ const EditableTableV2 = <TData extends object>({
                 })}
               </TableRow>
             </TableHead>
-            <TableBody>
+            <TableBody {...muiTableBodyProps}>
               {rows.map((row, rowIndex) => (
-                <TableRow
-                  key={row.id}
-                  onClick={onRowClick ? () => onRowClick(row.original) : undefined}
-                  sx={(theme) => {
-                    const background = theme.palette.background.default;
-                    const hoverColor = alpha(
-                      theme.palette.mode === 'dark' ? lighten(background, 0.3) : darken(background, 0.3),
-                      0.3
-                    );
-                    return {
-                      cursor: onRowClick ? 'pointer' : 'default',
-                      '&:hover > td': { backgroundImage: `linear-gradient(${hoverColor}, ${hoverColor})` },
-                    };
-                  }}
-                >
+                <TableRow {...getBodyRowProps(row)} key={row.id}>
                   {physicalColumnOrder(
                     row.getStartVisibleCells(),
                     row.getCenterVisibleCells(),
@@ -1301,9 +1337,11 @@ const EditableTableV2 = <TData extends object>({
                   })}
                 </TableRow>
               ))}
-              {!rows.length && (
+              {!isLoading && rows.length === 0 && (
                 <TableRow>
-                  <TableCell colSpan={Math.max(1, visibleColumns.length)}>{strings.NO_RECORDS_TO_DISPLAY}</TableCell>
+                  <TableCell colSpan={Math.max(1, visibleColumns.length)}>
+                    {renderEmptyRowsFallback?.({ table }) ?? strings.NO_RECORDS_TO_DISPLAY}
+                  </TableCell>
                 </TableRow>
               )}
             </TableBody>
