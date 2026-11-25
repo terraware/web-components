@@ -52,6 +52,8 @@ export type ColumnEditConfig<TData extends Record<string, any>> = {
   ) => ReactNode;
 };
 
+export type EditableTableFilterSelectOption = string | { value: string; label: string };
+
 export type EditableTableColumn<TData extends Record<string, any>> = {
   id: string;
   /** Column header text */
@@ -73,7 +75,7 @@ export type EditableTableColumn<TData extends Record<string, any>> = {
   /** Filter variant: 'text', 'select', 'multi-select', 'range', 'date-range' */
   filterVariant?: 'text' | 'select' | 'multi-select' | 'range' | 'date-range';
   /** Options for select/multi-select filters */
-  filterSelectOptions?: string[];
+  filterSelectOptions?: EditableTableFilterSelectOption[];
   /** Custom filter function */
   filterFn?: 'fuzzy' | 'between' | 'arrIncludesSome' | ((row: TData, columnId: string, filterValue: any) => boolean);
   /** Custom sorting function */

@@ -47,3 +47,42 @@ test('shows the legacy tooltip only while a filter is active and updates it with
   await user.clear(screen.getByLabelText('Filter: Name'));
   expect(screen.queryByLabelText('Filtered: Name')).not.toBeInTheDocument();
 });
+
+test('restores and changes a select filter by code while showing localized labels', async () => {
+  const user = userEvent.setup();
+  render(
+    <EditableTableV2
+      columns={[
+        {
+          id: 'status',
+          header: 'Status',
+          accessorKey: 'status',
+          filterVariant: 'select',
+          filterSelectOptions: [
+            { value: 'active', label: 'Actif' },
+            { value: 'complete', label: 'Terminé' },
+          ],
+        },
+        { id: 'name', header: 'Name', accessorKey: 'name' },
+      ]}
+      data={[
+        { name: 'Oak', status: 'active' },
+        { name: 'Acacia', status: 'complete' },
+      ]}
+      clearAllFiltersLabel='Clear'
+      enableColumnFilters
+      showColumnFilters
+      tableOptions={{ initialState: { columnFilters: [{ id: 'status', value: 'active' }] } }}
+    />
+  );
+  const filter = screen.getByRole('combobox', { name: 'Filter: Status' });
+  expect(filter).toHaveTextContent('Actif');
+  expect(screen.queryByText('Acacia')).not.toBeInTheDocument();
+  await user.click(filter);
+  await user.click(screen.getByRole('option', { name: 'Terminé' }));
+  expect(filter).toHaveTextContent('Terminé');
+  expect(screen.getByText('Acacia')).toBeInTheDocument();
+  expect(screen.queryByText('Oak')).not.toBeInTheDocument();
+  await user.hover(screen.getByLabelText('Filtered: Status'));
+  expect(await screen.findByRole('tooltip')).toHaveTextContent('Filtering by Status - Equals "Terminé"');
+});

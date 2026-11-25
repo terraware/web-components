@@ -1102,7 +1102,7 @@ test('exposes typed filter metadata on generated TanStack columns', () => {
     if (!isMrtTable(table)) {
       table.getAllLeafColumns().forEach((column, index) => {
         const variant: EditableTableColumnV2<Item>['filterVariant'] = column.columnDef.meta?.filterVariant;
-        const options: string[] | undefined = column.columnDef.meta?.filterSelectOptions;
+        const options: EditableTableColumnV2<Item>['filterSelectOptions'] = column.columnDef.meta?.filterSelectOptions;
         expect(variant).toBe(variants[index]);
         expect(options).toEqual(definitions[index].filterSelectOptions);
       });
