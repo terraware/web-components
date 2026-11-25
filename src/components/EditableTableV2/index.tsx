@@ -76,6 +76,7 @@ import {
   EditableTableToolbarRoot,
 } from './ToolbarButtons';
 import { filterTooltip } from './filterTooltip';
+import { getFilterOptionLabel, getFilterOptionValue, toDateInputValue } from './filterValues';
 import { namedFilterFns, namedSortFns } from './functions';
 import { highlightValue } from './highlightValue';
 import { toInternalPinning, toPublicPinning } from './pinning';
@@ -294,6 +295,7 @@ const ColumnFilter = <TData extends object>({
   const placeholder = strings.FILTER_BY_COLUMN.replace('{column}', definition.header);
   const value = column.getFilterValue();
   if (definition.filterVariant === 'range' || definition.filterVariant === 'date-range') {
+    const isDate = definition.filterVariant === 'date-range';
     const range = Array.isArray(value) ? value : ['', ''];
     return (
       <Box display='flex' gap={1}>
@@ -303,15 +305,15 @@ const ColumnFilter = <TData extends object>({
             size='small'
             variant='standard'
             placeholder={index === 0 ? strings.MIN : strings.MAX}
-            type={definition.filterVariant === 'date-range' ? 'date' : 'number'}
-            value={range[index] ?? ''}
+            type={isDate ? 'date' : 'number'}
+            value={isDate ? toDateInputValue(range[index]) : (range[index] ?? '')}
             slotProps={{
               htmlInput: { 'aria-label': `${label} ${index === 0 ? strings.MIN : strings.MAX}` },
             }}
             onChange={(event) => {
               const next = [...range];
               next[index] = event.target.value;
-              column.setFilterValue(next.some((entry) => entry !== '') ? next : undefined);
+              column.setFilterValue(isActiveFilter({ value: next }) ? next : undefined);
             }}
           />
         ))}
@@ -320,6 +322,7 @@ const ColumnFilter = <TData extends object>({
   }
   const multiple = definition.filterVariant === 'multi-select';
   const select = multiple || definition.filterVariant === 'select';
+  const optionLabel = (optionValue: unknown) => getFilterOptionLabel(definition.filterSelectOptions, optionValue);
   return (
     <TextField
       fullWidth
@@ -357,7 +360,7 @@ const ColumnFilter = <TData extends object>({
           displayEmpty: true,
           'aria-label': label,
           renderValue: (selected) =>
-            (Array.isArray(selected) ? selected.join(', ') : String(selected ?? '')) || (
+            (Array.isArray(selected) ? selected.map(optionLabel).join(', ') : optionLabel(selected)) || (
               <Box sx={{ opacity: 0.5 }}>{placeholder}</Box>
             ),
         },
@@ -365,11 +368,14 @@ const ColumnFilter = <TData extends object>({
     >
       {select && !multiple && <MenuItem value=''>{strings.ALL}</MenuItem>}
       {select &&
-        definition.filterSelectOptions?.map((option) => (
-          <MenuItem key={option} value={option}>
-            {option}
-          </MenuItem>
-        ))}
+        definition.filterSelectOptions?.map((option) => {
+          const optionValue = getFilterOptionValue(option);
+          return (
+            <MenuItem key={optionValue} value={optionValue}>
+              {typeof option === 'string' ? option : option.label}
+            </MenuItem>
+          );
+        })}
     </TextField>
   );
 };

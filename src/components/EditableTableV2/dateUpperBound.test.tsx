@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { render, screen } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 
 import EditableTableV2 from '.';
 
@@ -9,6 +9,7 @@ test.each(['2025-01-02', '2025-01-02T12:00:00Z'])('applies the date upper bound 
     <EditableTableV2
       clearAllFiltersLabel='Clear'
       enableColumnFilters
+      showColumnFilters
       columns={[
         { id: 'name', header: 'Name', accessorKey: 'name' },
         { id: 'date', header: 'Date', accessorKey: 'date', filterVariant: 'date-range' },
@@ -18,10 +19,12 @@ test.each(['2025-01-02', '2025-01-02T12:00:00Z'])('applies the date upper bound 
         { name: 'Noon', date: '2025-01-02T12:00:00Z' },
         { name: 'Late', date: '2025-01-02T23:59:59.999Z' },
         { name: 'Next', date: '2025-01-03T00:00:00Z' },
+        { name: 'Undated', date: '' },
       ]}
       tableOptions={{ initialState: { columnFilters: [{ id: 'date', value: [undefined, max] }] } }}
     />
   );
+  expect(screen.getByLabelText('Filter: Date Max')).toHaveValue('2025-01-02');
   expect(screen.getByText('Start')).toBeInTheDocument();
   expect(screen.getByText('Noon')).toBeInTheDocument();
   if (max === '2025-01-02') {
@@ -30,4 +33,7 @@ test.each(['2025-01-02', '2025-01-02T12:00:00Z'])('applies the date upper bound 
     expect(screen.queryByText('Late')).not.toBeInTheDocument();
   }
   expect(screen.queryByText('Next')).not.toBeInTheDocument();
+  expect(screen.queryByText('Undated')).not.toBeInTheDocument();
+  fireEvent.change(screen.getByLabelText('Filter: Date Max'), { target: { value: '' } });
+  expect(screen.getByText('Undated')).toBeInTheDocument();
 });

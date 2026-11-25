@@ -1,4 +1,5 @@
 import { ComponentStrings } from '../../strings';
+import { getFilterOptionLabel } from './filterValues';
 import { EditableTableColumnV2 } from './types';
 
 export const filterTooltip = <TData extends object>(
@@ -45,7 +46,13 @@ export const filterTooltip = <TData extends object>(
   const isRange =
     definition.filterVariant?.includes('range') ||
     ['between', 'betweenInclusive', 'inNumberRange'].includes(filterType);
-  const description = Array.isArray(value) ? value.join(`" ${isRange ? strings.AND : strings.OR} "`) : String(value);
+  const isSelect = definition.filterVariant === 'select' || definition.filterVariant === 'multi-select';
+  const describe = (entry: unknown) => getFilterOptionLabel(definition.filterSelectOptions, entry);
+  const description = Array.isArray(value)
+    ? (isSelect ? value.map(describe) : value).join(`" ${isRange ? strings.AND : strings.OR} "`)
+    : isSelect
+      ? describe(value)
+      : String(value);
 
   return strings.FILTERING_BY_COLUMN_FILTER_TYPE_FILTER_VALUE.replace('{column}', definition.header)
     .replace('{filterType}', labels[filterType] ?? '')

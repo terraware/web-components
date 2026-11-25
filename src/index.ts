@@ -71,6 +71,7 @@ export type {
   EditableTableCellContext,
   EditableTableEditContext,
   EditableTableColumn,
+  EditableTableFilterSelectOption,
   EditableTableProps,
 } from './components/EditableTable';
 export type {

@@ -27,8 +27,7 @@ import type { ColumnEditConfig, EditableTableColumn } from '../EditableTable';
 import type { EditableTableCellContext, EditableTableEditContext } from '../EditableTable/contexts';
 import type { EditableTableInstance } from '../EditableTable/tableSettings';
 
-type FilterVariant = 'text' | 'select' | 'multi-select' | 'range' | 'date-range';
-type ColumnFilterMeta = { filterVariant?: FilterVariant; filterSelectOptions?: string[] };
+type ColumnFilterMeta = Pick<EditableTableColumn<object>, 'filterVariant' | 'filterSelectOptions'>;
 
 export const editableTableFeatures = tableFeatures({
   columnMeta: metaHelper<ColumnFilterMeta>(),
