@@ -5523,10 +5523,10 @@ pkg-dir@^4.1.0:
   dependencies:
     find-up "^4.0.0"
 
-playcanvas@2.24.2:
-  version "2.24.2"
-  resolved "https://registry.yarnpkg.com/playcanvas/-/playcanvas-2.24.2.tgz#174cfdd5303e82139dcefa5410c2aa15ad82fe9a"
-  integrity sha512-kkd+Ru3pGfYAQ72dP+jogR3wZlA9etFb4u4z+f56hsPrwDLi1SepwOL//1ikoJhqlWS49gW7aUi5Un7C+alI0g==
+playcanvas@2.24.3:
+  version "2.24.3"
+  resolved "https://registry.yarnpkg.com/playcanvas/-/playcanvas-2.24.3.tgz#6be2db1b9ea09827d106d964764007b938f691e1"
+  integrity sha512-ai+kWEg3ERFk4ktSmPe/bN+fBb0PObWp1rZI1dixaDbv1NxP6SkwHKVHn9YoKNBNxCJqYs1DCpAicO+HAQ904A==
   dependencies:
     "@types/webxr" "^0.5.24"
     "@webgpu/types" "^0.1.70"
