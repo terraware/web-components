@@ -4165,6 +4165,11 @@ highlight-words@2.0.0:
   resolved "https://registry.yarnpkg.com/highlight-words/-/highlight-words-2.0.0.tgz#06853d68f1f7c8e59d6ef2dd072fe2f64fc93936"
   integrity sha512-If5n+IhSBRXTScE7wl16VPmd+44Vy7kof24EdqhjsZsDuHikpv1OCagVcJFpB4fS4UPUniedlWqrjIO8vWOsIQ==
 
+highlight-words@2.1.1:
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/highlight-words/-/highlight-words-2.1.1.tgz#e4f4bd681ad182dd075b39aec0f111f8d0611ad2"
+  integrity sha512-K61v3Y4R/TqF6rT+uOYW26T/tOgQc6+pUYbetQwZ0pwiHpiuzh9XCuWxgINsCH/v/kHtV9tHj2Tp2vfJoNQ62g==
+
 hoist-non-react-statics@^3.3.1:
   version "3.3.2"
   resolved "https://registry.yarnpkg.com/hoist-non-react-statics/-/hoist-non-react-statics-3.3.2.tgz#ece0acaf71d62c2969c2ec59feff42a4b1a85b45"
